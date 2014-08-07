@@ -7,17 +7,19 @@ require "fae/version"
 Gem::Specification.new do |s|
   s.name        = "fae"
   s.version     = Fae::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Fae."
-  s.description = "TODO: Description of Fae."
-  s.license     = "MIT"
+  s.authors     = ["FINE"]
+  s.email       = ["james@finedesigngroup.com"]
+  s.homepage    = "http://www.wearefine.com"
+  s.summary     = "FINE's Admin Engine"
+  s.description = "FINE's Admin Engine"
+  s.license     = ""
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
-  s.test_files = Dir["test/**/*"]
+  s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
+  s.test_files = Dir["spec/**/*"]
 
   s.add_dependency "rails", "~> 4.1.4"
 
-  s.add_development_dependency "sqlite3"
+  s.add_dependency "devise", "~> 3.2.4"
+
+  # s.add_development_dependency "sqlite3"
 end
