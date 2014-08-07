@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
 
-  mount Fae::Engine => "/fae"
+  mount Fae::Engine => "/admin"
 end
