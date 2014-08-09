@@ -21,4 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "devise", "~> 3.2.4"
 
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "thin"
+  s.add_development_dependency "better_errors"
+  s.add_development_dependency "binding_of_caller"
 end
