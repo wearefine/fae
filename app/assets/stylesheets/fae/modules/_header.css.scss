@@ -1,0 +1,17 @@
+#main_header {
+	position: relative;
+	padding: 25px 20px;
+	background: $c-header-bg;
+	border-bottom: 10px solid $c-custom-highlight;
+}
+
+.main_header-name a {
+	font-size: 24px;
+	color: $c-header-logo;
+}
+
+.main_header-name-fine {
+	margin-left: 10px;
+	font-size: 12px;
+	color: $c-text-sub;
+}

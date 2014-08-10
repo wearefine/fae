@@ -1,0 +1,26 @@
+.hinter-clicker {
+	margin-left: 5px;
+	cursor: pointer;
+	color: $c-custom-highlight;
+
+	&.hovered {
+		position: relative;
+		z-index: 10000;
+	}
+}
+
+#simplemodal-overlay {
+	background: $c-modal-overlay-bg;
+}
+
+#simplemodal-container {
+	padding: 20px;
+	border-top: 4px solid $c-custom-highlight;
+	background: $c-modal-bg;
+	color: $c-modal-text;
+
+	h3 {
+		color: $c-modal-header;
+		margin-bottom: 10px;
+	}
+}

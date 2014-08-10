@@ -1,0 +1,544 @@
+label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold;
+	font-size: 15px;
+	color: $c-text-heavy;
+
+	// this is the helper text
+	h6 {
+		padding-top: 10px;
+		font-size: 13px;
+		color: #999;
+		font-weight: normal;
+		font-style: italic;
+	}
+}
+
+.hint {
+	// hide it so the javascript can do its thing and retain it's size
+	display: inline-block;
+	position: absolute;
+	left: -9999px;
+	visibility: hidden;
+
+	&.simplemodal-data {
+		position: static;
+		visibility: visible;
+	}
+}
+
+input[type=text], input[type=number], input[type=textarea], input[type=url], input[type=tel], input[type=password], input[type=email] {
+	padding: 10px 15px;
+	border: 1px solid $c-border;
+	font-size: 14px;
+	outline: none;
+	@include border-radius(2px);
+	@include transition(border-color, .2s);
+	
+	&:focus {
+  		border-color: $c-custom-highlight;
+  	}
+}
+
+input[type=text], input[type=number] {
+	width: 223px;
+}
+
+input[type=submit], button[type=button], .add-button {
+	display: inline-block;
+	font-size: 13px;
+	cursor: pointer;
+
+	@include border-radius(2px);
+}
+
+input[type=submit], .add-button {
+	color: $c-form-submit;
+	padding: 12px 15px;
+	border: 0;
+
+	@include gradient-vertical($start-color: $c-form-submit-gradient-start, $end-color: $c-form-submit-gradient-end);
+
+	&:hover {
+		color: $c-form-submit; 
+		background: $c-form-submit-gradient-hover;
+	}
+}
+
+textarea {
+	padding: 10px 0 0 15px;
+	border: 1px solid $c-border;
+	font-size: 14px;
+	min-height: 125px;
+	width: 90%;
+	min-width: 223px;
+	max-width: 515px;
+	font-family: $f-lato;
+	outline: none;
+	@include border-radius(2px);
+	@include transition(border-color, .2s);
+
+	&:focus {
+  		border-color: $c-custom-highlight;
+  	}
+}
+
+button[type=button] {
+	color: $c-form-button;
+	padding: 11px 14px;
+	border: 1px solid $c-border;
+
+	@include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+
+	&:hover {
+		background: $c-form-button-gradient-hover;
+	}
+}
+
+input.string {
+	width: 90%;
+	min-width: 223px;
+	max-width: 515px;
+}
+
+.input {
+	margin-bottom: 20px;
+}
+
+#main_content-header-save-cancel {
+	@extend button[type=button];
+	padding: 12px 16px;
+	font-size: 14px;
+}
+
+/* checkboxes */
+.input.boolean {
+	display: block;
+
+	input[type=checkbox] {
+		position: absolute;
+		left: -9999px;
+		visibility: hidden;
+	}
+
+	label {
+		position: relative;
+		padding-left: 35px;
+		margin: 0;
+		cursor: pointer;
+		display: inline-block;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: -6px;
+			left: 0;
+			height: 25px;
+			width: 25px;
+			border: 1px solid $c-border;
+			background: $c-form-checkbox-bg;
+			cursor: pointer;
+
+			@include border-radius(2px);
+		}
+
+		h6 {
+			display: inline-block;
+			padding-top: 0;
+		}
+	}
+
+	.js-active {
+		&:before {
+			border-color: $c-custom-highlight;
+		}
+
+		&:after {
+			@extend .icon-check:before;
+			position: absolute;
+			top: -1px;
+			left: 3px;
+			font-size: 18px;
+			color: $c-custom-highlight;
+			cursor: pointer;
+
+			@include icon-stuff();
+		}
+	}
+}
+
+.checkbox_styled {
+	display: inline-block;
+	
+	input[type=checkbox] {
+		position: absolute;
+		left: -9999px;
+		top: -9999px;
+		visibility: hidden;
+	}
+
+	label {
+		display: inline-block;
+		height: 20px;
+		width: 20px;
+		padding: 2px 0 0 2px;
+		border: 1px solid $c-border;
+		margin-bottom: 0;
+		font-size: 13px;
+		color: $c-text-heavy;
+		background: $c-form-checkbox-bg;
+		cursor: pointer;
+
+		@include border-radius(2px);
+
+		&:before {
+			visibility: hidden;
+		}
+
+		&.js-active:before {
+			visibility: visible;
+		}
+	}
+}
+
+.asset-actions {
+	position: relative;
+	display: inline-block;
+	width: 90%;
+	min-width: 223px;
+	max-width: 515px;
+	padding: 5px 5px 4px 5px;
+	border: 1px solid $c-border;
+	background: $c-form-file-bg-active;
+	font-size: 13px;
+
+	@include border-radius(2px);
+
+	& > img {
+		width: 90px;
+		margin-right: 20px;
+	}
+
+	.icon-delete_x {
+		position: absolute;
+		right: 10px;
+		top: 19px;
+		color: $c-text-sub;
+	}
+}
+
+.asset-actions-image-link {
+	position: relative;
+	bottom: 15px;
+	padding: 5px;
+	margin-right: 10px;
+	font-size: 12px;
+	background: $c-form-file-link-bg;
+	color: $c-form-file-link-text;
+
+	@include border-radius(5px);
+	@include transition(all, .2s);
+
+	&:hover {
+		background: $c-form-file-link-bg-hover;
+	}
+}
+
+/* Hotels Edit COMING SOON to show Reservations starting */
+.hotel_reservations_starting {
+	max-height: 0;
+	margin-bottom: 0;
+	opacity: 0;
+	visibility: hidden;
+	@include transition(all, .2s);
+
+	.hotel_status-coming_soon + & {
+		max-height: 300px;
+		margin-bottom: 10px;
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+/* Select box and Chosen */
+.select, .city_time_zone, .table-filter-area, .date {
+
+	.chosen-container {
+		font-size: 14px;
+
+		.chosen-results {
+			max-height: 140px;
+		}
+	}
+
+	select {
+		min-width: 300px;
+	}
+
+	.chosen-container-active .chosen-single {
+		border-color: $c-border;
+		background: $c-chosen-gradient-hover;
+	}
+
+	.chosen-container-single .chosen-single {
+		height: auto;
+		padding: 7px 15px;
+
+		@include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
+		@include border-radius(2px);
+		@include box-shadow(0);
+	}
+
+	.chosen-container-single .chosen-default {
+		color: $c-text-heavy;
+	}
+
+	.chosen-container-single .chosen-single div b {
+		margin-top: 7px;
+	}
+
+	.chosen-container-multi {
+		max-width: 515px;
+		min-width: 223px;
+		// overriding the inline js chosen makes
+		width: 90% !important;
+
+		.chosen-choices {
+			padding: 5px;
+			border: 1px solid $c-border;
+			background: $c-chosen-bg;
+
+			.li.search-field input[type="text"] {
+				height: auto;
+			}
+
+			li.search-choice {
+				padding: 5px 22px 5px 10px;
+				border: 0;
+				font-size: 12px;
+
+				background: $c-chosen-multi-bg;
+				color: $c-chosen-multi-text;
+
+				.search-choice-close {
+					background: none;
+					background-attachment: fixed;
+					top: 6px;
+					font-size: 10px;
+					color: $c-chosen-multi-delete;
+
+					&:after {
+						@include icon-stuff();
+						@extend .icon-delete_x:before;
+					}
+				}
+			}
+		}
+
+		&.chosen-container-active .chosen-choices {
+			box-shadow: none;
+		}
+
+		li.search-field input[type="text"] {
+			height: 100%;
+		}
+	}
+}
+// overwriting chosen for retina
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
+  .chosen-rtl .chosen-search input[type="text"], .chosen-container-single .chosen-single abbr,
+  .chosen-container-single .chosen-single div b, .chosen-container-single .chosen-search input[type="text"],
+  .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
+  .chosen-container .chosen-results-scroll-down span, .chosen-container .chosen-results-scroll-up span {
+    background-image: url('/images/chosen/chosen-sprite@2x.png') !important;
+  }
+}
+
+// special treatment for date groupings
+// current order is year month day
+.input.date {
+	select {
+		min-width: 50px;
+	}
+
+	// year
+	select:nth-of-type(1), .ie-select-1 {
+		width: 100px;
+	}
+
+	// month
+	select:nth-of-type(2), .ie-select-2 {
+		width: 200px;
+	}
+
+	// day
+	select:nth-of-type(3), .ie-select-3 {
+		width: 75px;
+	}
+
+	//specific chosen stuff for dates
+	.chosen-container {
+		margin-right: 10px;
+	}
+}
+
+// special for hte table filters since they be small
+.table-filter-area {
+
+	.chosen-container {
+		font-size: 12px;
+	}
+
+	select {
+		min-width: 200px;
+	}
+
+	.chosen-container-single .chosen-single {
+		padding: 0px 15px;
+
+		div b {
+			margin-top: 1px;
+		}
+	}
+}
+
+/* Styles needed for the fileinputer */
+.file_input-wrapper {
+	position: relative;
+	display: inline-block;
+	width: 90%;
+	min-width: 223px;
+	max-width: 515px;
+	padding: 5px;
+	border: 1px solid $c-border;
+	background: $c-form-file-bg;
+	font-size: 13px;
+	cursor: pointer;
+
+	@include transition(background, .2s);
+	@include border-radius(2px);
+
+	span {
+		color: $c-text-sub;
+		@include transition(color, .2s);
+	}
+
+	&.js-active {
+		background: $c-form-file-bg-active;
+		
+		span {
+			color: $c-custom-highlight;
+		}
+	}
+}
+
+.file_input-button {
+	color: $c-text;
+	padding: 11px 14px;
+	border: 1px solid $c-border;
+	margin-right: 10px;
+	cursor: pointer;
+
+	@include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+
+	&:hover {
+		background: $c-form-submit-gradient-hover;
+	}
+}
+
+.file_input-delete {
+	display: none;
+	position: absolute;
+	right: 10px;
+	top: 19px;
+	color: $c-text-sub;
+
+	.js-active & {
+		display: block;
+	}
+}
+
+.js-addedit-form {
+	h3 {
+		@extend label;
+		margin-bottom: 20px;
+	}
+}
+
+.js-addedit-form-wrapper {
+	display: none;
+
+	.form_content-wrapper {
+		padding: 30px;
+		border: 1px solid $c-border;
+		border-top: 0;
+		background: $c-form-table-bg;
+	}
+
+	.form_content-header {
+		margin-bottom: 20px;
+		font-size: 16px;
+		color: $c-text-heavy;
+		font-weight: bold;
+	}
+}
+
+.js-add-link {
+	font-size: 12px;
+}
+
+.table-add-link {
+	float: right;
+}
+
+.table-add-link-visible {
+	float: right;
+	font-size: 12px;
+}
+
+.form_content-wrapper-visible {
+	padding: 30px;
+	border: 1px solid $c-border;
+	border-top: 0;
+	background: $c-form-table-bg;
+
+	.input {
+		display: inline-block;
+		vertical-align: top;
+		margin: 0;
+	}
+
+	.select .chosen-container-single .chosen-single {
+		padding: 8px 15px;
+	}
+}
+
+// errors
+.field_with_errors {
+	position: relative;
+	padding-top: 40px;
+
+	.error {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 6px 10px;
+		background: $c-error-bg;
+		color: $c-error-content;
+
+		&:before {
+			@extend .icon-alert;
+			@include icon-stuff();
+			padding-right: 10px;
+		}
+
+		&:after {
+			content: "";
+			position: absolute;
+			bottom: -8px;
+			left: 0;
+			@include right-triangle(10px, $c-error-bg);
+		}
+	}
+}

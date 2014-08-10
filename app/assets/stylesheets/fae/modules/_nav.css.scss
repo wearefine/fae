@@ -1,0 +1,247 @@
+#main_nav {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 210px;
+	height: 100%;
+	overflow: auto;
+	padding: 10px;
+	background: url(/images/bg_tile.gif);
+
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+}
+
+.main_nav-nav > li {
+	margin-bottom: 3px;
+}
+
+.main_nav-sub-nav {
+	display: none;
+	background: $c-nav-sub-bg-active;
+}
+
+%main_nav-all_links {
+	display: block;
+	color: $c-text;
+	@include transition(background, .2s);
+	&:hover {
+		color: $c-nav-link;
+		background: $c-nav-bg-hover;
+	}
+}
+
+.main_nav-link {
+	@extend %main_nav-all_links;
+	padding: 10px;
+
+	.main_nav-accordion & {
+		position: relative;
+
+		&:after {
+			position: absolute;
+			right: 13px;
+			top: 14px;
+			font-size: 8px;
+			color: $c-nav-icons;
+			@include icon_stuff();
+			@extend .icon-chevron_down:before;
+			@include transition(color, .2s);
+		}
+
+		&:hover:after {
+			color: $c-nav-icons-hover;
+		}
+	}
+
+	.accordion-open.main_nav-accordion & {
+		&:after {
+			@extend .icon-chevron_up:before;
+		}
+	}
+}
+
+.main_nav-sub-link {
+	@extend %main_nav-all_links;
+	padding: 10px 10px 10px 20px;
+	font-size: 14px;
+}
+
+.main_nav-link-dashboard a {
+	position: relative;
+
+	&:after {
+		position: absolute;
+		right: 10px;
+		top: 11px;
+		font-size: 15px;
+		color: $c-nav-icons;
+		@include icon_stuff();
+		@extend .icon-home:before;
+		@include transition(color, .2s);
+	}
+
+	&:hover:after {
+		color: $c-nav-icons-hover;
+	}
+}
+
+.main_nav-link-users a {
+	position: relative;
+
+	&:after {
+		position: absolute;
+		right: 10px;
+		top: 11px;
+		font-size: 15px;
+		color: $c-nav-icons;
+		@include icon_stuff();
+		@extend .icon-user:before;
+	}
+
+	&:hover:after {
+		color: $c-nav-icons-hover;
+	}
+}
+
+/* when the main nav is active */
+.main_nav-active {
+	background: $c-nav-sub-bg-active;
+	.main_nav-link {
+		color: $c-nav-link;
+	}
+
+	& .main_nav-sub-nav {
+		display: block;
+	}
+
+	.main_nav-sub-active  {
+		display: block;
+		background: $c-nav-sub-bg-active-highlight;
+
+		.main_nav-sub-link {
+			padding-left: 15px;
+			border-left: 5px solid $c-custom-highlight;
+			color: $c-custom-highlight;
+		}
+	}
+}
+
+.main_nav-active-single {
+	background: $c-nav-sub-bg-active;
+
+	.main_nav-link {
+		padding-left: 5px;
+		border-left: 5px solid $c-custom-highlight;
+		color: $c-custom-highlight;
+	}
+}
+
+
+/* Utility nav. View Site, Support, Username, etc */
+#main_header .utility_nav {
+	position: absolute;
+	right: 20px;
+	top: -webkit-calc(50% - .5em);
+	top: calc(50% - .5em);
+
+
+	.utility_nav-clicked {
+		color: white;
+
+		&:hover {
+			color: white;
+		}
+		
+		& ~ .utility_sub_nav {
+			max-height: 100px;
+		}
+	}
+
+	li {
+		display: inline-block;
+		margin-left: 20px;
+		position: relative;
+
+		ul {
+			width: 124px;
+			max-height: 0;
+			overflow: hidden;
+			background-color: $c-utility-sub-nav-bg;
+			@include border-radius(2px);
+			@include box-shadow(0,0,8px,-2px,$c-box_shadow);
+			position: absolute;
+			top: 30px;
+			right: 0;
+			z-index: 2;
+			@include transition(max-height, .2s, ease-in-out);
+
+			li {
+				display: block;
+				width: 100%;
+				margin-left: 0;
+
+				&:first-of-type {
+					margin-top: 8px;
+				}
+				
+				&:last-of-type {
+					margin-bottom: 8px;
+				}
+
+				a {
+					display: block;
+					background-color: $c-utility-sub-nav-link-bg;
+					font-size: 12px;
+					color: $c-utility-sub-nav-link-color;
+					padding: 10px 15px;
+					@include transition(background-color, .2s, ease-in-out);
+
+					&:hover {
+						background-color: $c-utility-sub-nav-link-bg-hover;
+						color: $c-utility-sub-nav-link-color;
+					}
+				}
+			}
+		}
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
+	a {
+		font-size: 13px;
+		color: $c-text-sub;
+
+		&:hover {
+			color: $c-text-sub-hover;
+		}
+
+		span {
+			display: inline-block;
+			vertical-align: baseline;
+			font-size: 14px;
+			margin-left: 5px;
+
+			&.icon-support {
+				font-size: 16px;
+			}
+
+			&.icon-arrow_down {
+				font-size: 4px;
+				margin-left: 0;
+			}
+		}
+	}
+
+	@include bp(page-header-save-block) {
+		position: relative;
+		top: 0;
+		right: 0;
+		margin-top: 20px;
+	}
+}
+
+.accordion-open {
+	background: $c-nav-sub-bg-active;
+}

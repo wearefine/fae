@@ -1,0 +1,42 @@
+<% image_type = @image.attached_as.to_sym %>
+
+<h1>Crop</h1>
+<%= render 'sizing_info', sizing_info: @sizing_info, image_type: image_type %>
+<%= image_tag @image.asset_url, :id => 'crop' %>
+
+<%= simple_form_for @image, url: commit_crop_path(@image) do |f| %>
+  <%= f.input "redirect", as: :hidden, input_html: {value: params[:redirect]} if params[:redirect].present? %>
+  <% %w[x y w h x2 y2].each do |a| %>
+    <%= f.input "crop_#{a}", as: :hidden %>
+  <% end -%>
+  <%= f.button :submit, 'Crop' %>
+  <%= link_to 'Cancel', params[:redirect] if params[:redirect].present? %>
+<% end -%>
+
+<% content_for :javascript do %>
+  <script type="text/javascript">
+
+    //load crop vals into hidden inputs
+    function get_crop(coords) {
+      $('#image_crop_x').val(coords.x);
+      $('#image_crop_y').val(coords.y);
+      $('#image_crop_x2').val(coords.x2);
+      $('#image_crop_y2').val(coords.y2);
+      $('#image_crop_w').val(coords.w);
+      $('#image_crop_h').val(coords.h);
+    }
+
+    //intantiate jcrop on the image, set it's cropping rules
+    $(function(){       
+      $('#crop').Jcrop({
+        onSelect: get_crop,
+        onUpdate: get_crop,
+        minSize: [<%= @sizing_info[image_type][:min_width] %>,<%= @sizing_info[image_type][:min_height] %>],
+        maxSize: [<%= @sizing_info[image_type][:max_width] %>,<%= @sizing_info[image_type][:max_height] %>],
+        <% if @image.crop_x.present? and @image.crop_y.present? and @image.crop_x2.present? and @image.crop_y2.present? %>
+          <%= "setSelect: [#{@image.crop_x},#{@image.crop_y},#{@image.crop_x2},#{@image.crop_y2}]" %>
+        <% end %>
+      });
+    });
+  </script>
+<% end %>

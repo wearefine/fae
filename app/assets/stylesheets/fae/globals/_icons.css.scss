@@ -1,0 +1,97 @@
+// quick mixin for using icon font in :before :after
+@mixin icon_stuff() {
+	font-family: 'icons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;	
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	@include icon_stuff();
+}
+
+.icon-alert:before {
+	content: "\e617";
+}
+.icon-handle:before {
+	content: "\e616";
+}
+.icon-arrow_up:before {
+	content: "\e615";
+}
+.icon-arrow_down:before {
+	content: "\e600";
+}
+.icon-zoom:before {
+	content: "\e601";
+}
+.icon-users:before {
+	content: "\e602";
+}
+.icon-user:before {
+	content: "\e603";
+}
+.icon-trash:before {
+	content: "\e604";
+}
+.icon-support:before {
+	content: "\e605";
+}
+.icon-sort:before {
+	content: "\e606";
+}
+.icon-settings:before {
+	content: "\e607";
+}
+.icon-search:before {
+	content: "\e608";
+}
+.icon-pulldown:before {
+	content: "\e614";
+}
+.icon-plus:before {
+	content: "\e609";
+}
+.icon-offlink:before {
+	content: "\e60a";
+}
+.icon-menu:before {
+	content: "\e60b";
+}
+.icon-logout:before {
+	content: "\e60c";
+}
+.icon-home:before {
+	content: "\e60d";
+}
+.icon-edit:before {
+	content: "\e60e";
+}
+.icon-delete_x:before {
+	content: "\e60f";
+}
+.icon-chevron_right:before {
+	content: "\e610";
+}
+.icon-chevron_left:before {
+	content: "\e611";
+}
+.icon-check:before {
+	content: "\e612";
+}
+.icon-calendar:before {
+	content: "\e613";
+}
+.icon-chevron_up:before {
+	content: "\e618";
+}
+.icon-chevron_down:before {
+	content: "\e619";
+}

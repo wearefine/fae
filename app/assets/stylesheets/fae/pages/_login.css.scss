@@ -1,0 +1,118 @@
+.login-body {
+	height: auto;
+	background: url(/images/bg_tile.gif);
+}
+
+.login-content {
+	margin: 20px;
+
+	@include bp(login-container) {
+		width: 100%;
+		max-width: 700px;
+		margin: 150px auto 0 auto;
+	}
+}
+
+.login-area {
+	border-top: 10px solid $c-custom-highlight;
+	margin: auto;
+	@include border-radius(5px);
+	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
+	background: $c-login-bg;
+
+	img {
+		display: block;
+		margin: 25px auto 25px auto;
+
+		@include bp(login-container) {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0 12%;
+		}
+	}
+}
+
+.login-form {
+	width: 50%;
+	margin: auto;
+
+	input[type=password], input[type=email] {
+		width: 100%;
+		min-width: 100%;
+	}
+
+	input[type=submit] {
+		margin-top: 20px;
+
+		@include bp(login-submit) {
+			float: right;
+			margin: 0;
+		}
+	}
+
+	@include bp(login-container) {
+		display: inline-block;
+		vertical-align: middle;
+		width: 50%;
+		padding: 35px 23px;
+		border-left: 1px solid $c-border;
+		margin-left: -6px;
+	}
+}
+
+.login-form-password {
+	@extend .login-form;
+	padding: 75px 23px;
+}
+
+.login-form-actions {
+	padding-bottom: 20px;
+	.boolean {
+		margin: 12px 0 0 0;
+	}
+
+	&:after {
+		@include clearfix();
+	}
+
+	@include bp(login-container) {
+		padding: 0;
+	}
+
+	a {
+		display: inline-block;
+		padding-top: 15px;
+		font-size: 13px;
+	}
+}
+
+.login-helper-area {
+	margin-top: 10px;
+	font-size: 13px;
+	color: $c-login-footer-all;
+
+	li {
+		display: inline-block;
+		padding-left: 10px;
+		border-left: 1px solid $c-login-footer-all;
+		margin-left: 10px;
+
+		&:first-child {
+			border: 0;
+			padding: 0;
+			margin: 0;
+		}
+	}
+}
+
+.login-fine {
+	float: right;
+	color: $c-login-footer-all;
+}
+
+.login-label-extra {
+	margin-bottom: 10px;
+	font-weight: bold;
+	font-size: 15px;
+	color: $c-text-heavy;
+}

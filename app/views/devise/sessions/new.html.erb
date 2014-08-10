@@ -1,0 +1,26 @@
+<%= render 'flash_messages' %>
+
+<section class="login-content">
+	<section class="login-area">
+		<img src="/images/logo.png" alt="Kimpton Logo">
+
+		<div class="login-form">
+			<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+			    <%= f.input :email, :required => false, :autofocus => true %>
+			    <%= f.input :password, :required => false %>
+
+			  <div class="login-form-actions">
+			  	<%= f.input :remember_me, :as => :boolean if devise_mapping.rememberable? %>
+			    <%= f.button :submit, "Submit" %>
+			  </div>
+			<% end %>
+		</div>
+	</section>
+
+	<footer class="login-footer">
+		<span class="login-fine">a <img src="/images/fine.png" alt="Kimpton Logo"> admin</span>
+		<ul class="login-helper-area">
+			<li><%= render "devise/shared/links" %></li>
+		</ul>
+	</footer>
+</section>

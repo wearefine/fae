@@ -1,0 +1,120 @@
+/* custom colours */
+$c-custom-text_link: #31a7e6;
+$c-custom-highlight: #31a7e6;
+
+
+/* TYPOGRAPHY */
+$f-lato: "Lato", serif;
+
+/* Colors */
+$c-black: #261c16;
+$c-dark_grey: #303030;
+$c-grey: #595959;
+$c-light_grey: #999;
+$c-lighter_grey: #ccc;
+$c-lightest_grey: #eee;
+$c-almost_white: #f7f7f7;
+$c-white: #fff;
+
+
+/* 
+**  Functional name for colors 
+*/
+$c-body-bg: $c-almost_white;
+$c-text: $c-grey;
+$c-text-sub: $c-light_grey;
+$c-text-sub-hover: $c-lighter_grey;
+$c-text-heavy: #2b2b2b;
+$c-box_shadow: $c-light_grey;
+$c-border: $c-lighter_grey;
+
+/* header area */
+$c-header-bg: $c-black;
+$c-header-logo: $c-white;
+
+/* utility nav area */
+$c-utility-sub-nav-bg: $c-white;
+$c-utility-sub-nav-link-bg: $c-white;
+$c-utility-sub-nav-link-bg-hover: $c-lightest_grey;
+$c-utility-sub-nav-link-color: $c-dark_grey;
+
+/* nav area */
+$c-nav-link: $c-dark_grey;
+$c-nav-bg-hover: #d6d6d6;
+$c-nav-sub-bg-active: #dedede;
+$c-nav-sub-bg-active-highlight: #d6d6d6;
+$c-nav-icons: #999;
+$c-nav-icons-hover: #777;
+
+/* main_content areas */
+$c-content-shadow: $c-lighter_grey;
+$c-content-header-bg: #fdfdfd;
+$c-content-section-title: $c-lightest_grey;
+
+/* tables */
+$c-table-th: #dfdfdf;
+$c-table-th-highlight: #e7e7e7;
+$c-table-tr-even: #f2f2f2;
+$c-table-td: #f9f9f9;
+$c-table-tr-hover: #fefefe;
+$c-table-action_menu-bg: $c-white;
+$c-table-action_menu-link-bg: $c-white;
+$c-tablesorter-icon: $c-light_grey;
+$c-table-filter-header: #222;
+$c-table-filter-input: #333;
+$c-table-filter-submit-bg: $c-light_grey;
+$c-table-filter-submit-bg-hover: #bbb;
+$c-table-filter-reset-bg: #ddd;
+$c-table-filter-reset-bg-hover: #ccc;
+$c-table-filter-reset-text: $c-custom-text_link;
+
+/* forms */
+$c-form-submit: $c-white;
+$c-form-submit-gradient-start: #454545;
+$c-form-submit-gradient-end: #252525;
+$c-form-submit-gradient-hover: #252525;
+$c-form-button: #555;
+$c-form-button-gradient-start: #eee;
+$c-form-button-gradient-end: #e1e1e1;
+$c-form-button-gradient-hover: #e1e1e1;
+$c-form-checkbox-bg: $c-white;
+$c-form-file-bg: $c-almost_white;
+$c-form-file-bg-active: $c-white;
+$c-form-file-link-bg: #f7f7f7;
+$c-form-file-link-bg-hover: #ddd;
+$c-form-file-link-text: $c-custom-text_link;
+$c-form-table-bg: #ebebeb;
+$c-chosen-bg: $c-white;
+$c-chosen-gradient-start: #eee;
+$c-chosen-gradient-end: #e1e1e1;
+$c-chosen-gradient-hover:  #e1e1e1;
+$c-chosen-multi-bg: $c-lightest_grey;
+$c-chosen-multi-text: #555;
+$c-chosen-multi-delete: $c-light_grey;
+
+/* Yes / No Sliders */
+$c-slider-option-selector: $c-white;
+$c-slider-yes-color: $c-white;
+$c-slider-yes-bg: $c-custom-highlight;
+$c-slider-no-color: $c-lighter_grey;
+$c-slider-no-bg: $c-light_grey;
+$c-slider-border: #dedede;
+
+/* Notices and Errors */
+$c-notice-bg: #d8f0d0;
+$c-notice-content: #4c884e;
+$c-warning-bg: #f7f2c8;
+$c-warning-content: #ca953a;
+$c-error-bg: #f6cfcf;
+$c-error-content: #b75553;
+
+/* Modal */
+$c-modal-overlay-bg: $c-lighter_grey;
+$c-modal-bg: #333;
+$c-modal-text: #999;
+$c-modal-header: $c-white;
+
+/* login page */
+$c-login-bg: $c-white;
+$c-login-footer-all: #aaa;
+$c-login-box_shadow: $c-lighter_grey;

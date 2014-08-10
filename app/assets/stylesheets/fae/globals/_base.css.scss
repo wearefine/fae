@@ -1,0 +1,41 @@
+/*  apply a natural box layout model to all elements  for more info: http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
+* { 
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	box-sizing: border-box; 
+}
+
+html, body {
+	height: 100%;
+}
+
+body {
+	font-family: $f-lato;
+	font-size: 16px;
+	color: $c-text;
+	background: $c-body-bg;
+}
+
+a {
+	color: $c-custom-text_link;
+	text-decoration: none;
+
+	@include transition(color, .2s);
+
+	&:hover {
+		color: $c-text;
+	}
+}
+
+h1 {
+	font-size: 30px;
+	color: $c-text-heavy;
+}
+
+h2 {
+	font-size: 18px;
+}
+
+h3 {
+	font-size: 14px;
+}

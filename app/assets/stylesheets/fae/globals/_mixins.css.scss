@@ -1,0 +1,141 @@
+/* Mixins */
+
+@mixin transition($type, $time, $easing: ease-in-out) {
+	-ms-transition: $type $time $easing;
+	-webkit-transition: $type $time $easing;
+	-moz-transition: $type $time $easing;
+	-o-transition: $type $time $easing;
+	transition: $type $time $easing;
+}
+
+@mixin border-radius($radius: 0) {
+	-webkit-border-radius: $radius;
+	border-radius: $radius;
+}
+
+@mixin right-triangle($size: 15px, $color: $c-black) {
+	width: 0px;
+	height: 0px;
+	border-style: solid;
+	border-width: $size $size 0 0;
+	border-color: $color transparent transparent transparent;
+}
+
+@mixin clearfix() {
+	content: "."; 
+	visibility: hidden; 
+	display: block; 
+	height: 0; 
+	clear: both;
+}
+
+@mixin opacity ($opacity) {
+	opacity: $opacity;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" $opacity * 100 ")";
+	filter: alpha(opacity= $opacity * 100);
+	zoom: 1;
+}
+
+@mixin box-shadow( $h: 0, $v: 0, $blur: 0, $spread: 0, $color: $c-box_shadow ){
+	-webkit-box-shadow: $h $v $blur $spread $color;
+	-moz-box-shadow: $h $v $blur $spread $color;
+	box-shadow: $h $v $blur $spread $color;
+}
+
+@mixin box-shadow-inset( $h: 0, $v: 0, $blur: 0, $spread: 0, $color: $c-box_shadow ){
+	-webkit-box-shadow: inset $h $v $blur $spread $color;
+	-moz-box-shadow: inset $h $v $blur $spread $color;
+	box-shadow: inset $h $v $blur $spread $color;
+}
+
+@mixin ghost-center() {
+	content: "";
+	display: inline-block;
+	vertical-align: middle;
+	height: 100%;
+	width: 1px;
+	margin-left: -5px;
+	visibility: hidden;
+}
+
+@mixin user-select($val){
+	-webkit-user-select: $val; /* Chrome all / Safari all */
+	-moz-user-select: $val; /* Firefox all */
+	-ms-user-select: $val; /* IE 10+ */
+	user-select: $val;
+}
+
+@mixin background-image-retina($file, $type, $width, $height) {
+	background-image: url($file + '.' + $type);
+
+	@media (-webkit-min-device-pixel-ratio: 2), (-moz-min-device-pixel-ratio: 2) {
+		& {
+			background-image: url($file + '@2x.' + $type);
+			background-size: $width $height;
+		}
+	}
+}
+
+@mixin transform($value){
+	-webkit-transform: $value;
+	-moz-transform: $value;
+	-ms-transform: $value;
+	-o-transform: $value;
+	transform: $value;
+}
+
+@mixin transform-origin($h, $v){
+	-webkit-transform-origin: $h $v;
+	-moz-transform-origin: $h $v;
+	-o-transform-origin: $h $v;
+	-ms-transform-origin: $h $v;
+	transform-origin: $h $v;
+}
+
+@mixin gradient-vertical($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+	background-image: -webkit-gradient(linear, left $start-percent, left $end-percent, from($start-color), to($end-color));
+	background-image: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
+	background-image:  -moz-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
+	background-image: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0);
+}
+
+@mixin gradient-horizontal($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+	background-image: -webkit-gradient(linear, $start-percent top, $end-percent top, from($start-color), to($end-color));
+	background-image: -webkit-linear-gradient(left, color-stop($start-color $start-percent), color-stop($end-color $end-percent));
+	background-image: -moz-linear-gradient(left, $start-color $start-percent, $end-color $end-percent);
+	background-image:  linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=1);
+}
+
+/* Media Query Fun */
+@mixin bp($point) {
+	$bp: "";
+
+	$desktop: "(min-width: 800px)";
+
+	/* functional names */
+	$page-header-save-block: "(max-width: 615px)";
+	$login-container: "(min-width: 750px)";
+	$login-submit: "(min-width: 475px)";
+	
+	@if $point == page-header-save-block {
+		$bp: $page-header-save-block;
+	} @else if $point == login-container {
+		$bp: $login-container;
+	} @else if $point == login-submit {
+		$bp: $login-submit;
+	} @else if $point == desktop {
+		$bp: $desktop;
+	}
+
+	@if ($useMediaQueries) {
+		@media #{$bp} {
+			@content;
+		}
+	} @else {
+		@content;
+	}
+}

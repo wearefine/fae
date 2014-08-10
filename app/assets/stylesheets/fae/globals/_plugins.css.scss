@@ -1,0 +1,27 @@
+// plugin overrides
+.jcrop-vline,.jcrop-hline{
+    background-image: url(/images/jcrop/Jcrop.gif);
+}
+
+.chosen-container-single .chosen-single abbr, .chosen-container-single .chosen-single div b,
+.chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
+  background-image: url(/images/chosen/chosen-sprite.png);
+}
+
+.chosen-container-single .chosen-search input[type="text"] {
+  background: white url(/images/chosen/chosen-sprite.png) no-repeat 100% -20px;
+  background: url(/images/chosen/chosen-sprite.png) no-repeat 100% -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background: url(/images/chosen/chosen-sprite.png) no-repeat 100% -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url(/images/chosen/chosen-sprite.png) no-repeat 100% -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url(/images/chosen/chosen-sprite.png) no-repeat 100% -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url(/images/chosen/chosen-sprite.png) no-repeat 100% -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+}
+
+.chosen-rtl .chosen-search input[type="text"] {
+  background: url(/images/chosen/chosen-sprite.png) no-repeat -30px -20px;
+  background: url(/images/chosen/chosen-sprite.png) no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background: url(/images/chosen/chosen-sprite.png) no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url(/images/chosen/chosen-sprite.png) no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url(/images/chosen/chosen-sprite.png) no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: url(/images/chosen/chosen-sprite.png) no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+}
