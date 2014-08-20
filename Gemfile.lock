@@ -5,8 +5,6 @@ PATH
       devise (~> 3.2.4)
       rails (~> 4.1.4)
       sass-rails (~> 4.0.3)
-      sprockets
-      uglifier
 
 GEM
   remote: https://rubygems.org/
@@ -77,7 +75,6 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    execjs (2.2.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -198,9 +195,6 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
-    uglifier (2.5.3)
-      execjs (>= 0.3.0)
-      json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
