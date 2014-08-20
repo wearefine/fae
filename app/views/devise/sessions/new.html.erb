@@ -5,12 +5,12 @@
 		<img src="/images/logo.png" alt="Kimpton Logo">
 
 		<div class="login-form">
-			<%= simple_form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-			    <%= f.input :email, :required => false, :autofocus => true %>
-			    <%= f.input :password, :required => false %>
+			<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+			    <%= f.input :email, required: false, autofocus: true %>
+			    <%= f.input :password, required: false %>
 
 			  <div class="login-form-actions">
-			  	<%= f.input :remember_me, :as => :boolean if devise_mapping.rememberable? %>
+			  	<%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
 			    <%= f.button :submit, "Submit" %>
 			  </div>
 			<% end %>

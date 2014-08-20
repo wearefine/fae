@@ -1,8 +1,8 @@
 /*  apply a natural box layout model to all elements  for more info: http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
-* { 
-	-moz-box-sizing: border-box; 
-	-webkit-box-sizing: border-box; 
-	box-sizing: border-box; 
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html, body {
