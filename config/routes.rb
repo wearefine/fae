@@ -8,7 +8,7 @@ Fae::Engine.routes.draw do
   #   post 'login' => 'devise/sessions#create', :as => :user_session
   #   get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
   # end
-  # resources :users
+  resources :users
 
 
   # catch all 404

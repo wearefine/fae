@@ -5,6 +5,7 @@ PATH
       devise (~> 3.2.4)
       rails (~> 4.1.4)
       sass-rails (~> 4.0.3)
+      simple_form (~> 3.0.2)
 
 GEM
   remote: https://rubygems.org/
@@ -171,6 +172,9 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
+    simple_form (3.0.2)
+      actionpack (~> 4.0)
+      activemodel (~> 4.0)
     slop (3.6.0)
     sprockets (2.11.0)
       hike (~> 1.2)

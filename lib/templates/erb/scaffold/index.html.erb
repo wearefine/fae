@@ -1,0 +1,45 @@
+<section class="main_content-header">
+  <div class="main_content-header-wrapper">
+    <h1><%= plural_table_name %></h1>
+
+    <div class="main_content-header-save">
+      <%%= link_to 'New <%= singular_table_name %>', new_<%= singular_table_name %>_path, class: "add-button" %>
+    </div>
+  </div>
+</section>
+
+<%%= render 'flash_messages' %>
+
+<div class="main_content-sections">
+  <section class="main_content-section">
+    <div class="main_content-section-area">
+      <table class="main_table-sort_columns">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th data-sorter="false"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <%% if @<%= plural_table_name %>.present? %>
+            <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+              <tr>
+                <td class="main_table-description-item">Name</td>
+                <td class="main_table-delete">
+                  <%%= link_to <%= singular_table_name %>, method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
+                    <span class="icon-delete_x"></span>
+                  <%% end %>
+                </td>
+              </tr>
+            <%% end %>
+          <%% else %>
+            <tr>
+              <td colspan="2">No <%= plural_table_name %> found.</td>
+            </tr>
+          <%% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

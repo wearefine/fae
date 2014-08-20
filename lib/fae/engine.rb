@@ -1,6 +1,10 @@
+require 'devise'
+
 module Fae
   class Engine < ::Rails::Engine
     isolate_namespace Fae
-    require 'devise'
+
+    # include libraries
+    require 'simple_form'
   end
 end
