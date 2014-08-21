@@ -2,7 +2,7 @@
 
 <section class="login-content">
 	<section class="login-area">
-		<img src="/images/logo.png" alt="Kimpton Logo">
+		<%= image_tag Fae.logo_path, alt: Fae.title %>
 
 		<div class="login-form">
 			<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
