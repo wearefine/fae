@@ -8,8 +8,8 @@ module Fae
     belongs_to :role
 
     validates :email, presence: true
-    validates :role_id, presence: true
-    validates :password, format: { with: /(?=.*\d)(?=.*[a-zA-Z])/, message: 'requires at least one letter and one number' }
+    # validates :role_id, presence: true
+    # validates :password, format: { with: /(?=.*\d)(?=.*[a-zA-Z])/, message: 'requires at least one letter and one number' }
 
     default_scope { order(:first_name, :last_name) }
 

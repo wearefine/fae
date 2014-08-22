@@ -11,7 +11,7 @@ module Fae
     config
   end
 
-  # configuraable defaults
+  # configurable defaults
   class << self
     mattr_accessor :title, :logo_path
     self.title      = "My FINE Admin"

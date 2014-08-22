@@ -1,3 +1,4 @@
+# This migration comes from fae (originally 20140809222030)
 class AddUserTable < ActiveRecord::Migration
   def change
     create_table(:fae_users) do |t|

@@ -1,8 +1,5 @@
 class Image < ActiveRecord::Base
 
-  include CacheBuster
-  include PaperTrailer
-
   attr_accessor :redirect
   mount_uploader :asset, ImageUploader
 

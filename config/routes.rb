@@ -1,5 +1,7 @@
 Fae::Engine.routes.draw do
 
+  resources :roles
+
   root 'pages#home'
 
   devise_for :users, class_name: "Fae::User", module: :devise
