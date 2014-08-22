@@ -5,7 +5,6 @@ module Fae
 
     def index
       @users = User.all
-      @page_title << " | Users"
     end
 
     def show
@@ -13,16 +12,13 @@ module Fae
 
     def new
       @user = User.new
-      @page_title << " | New User"
     end
 
     def edit
-      @page_title << " | Edit User"
     end
 
     def settings
       @user = current_user
-      @page_title << " | Your Settings"
     end
 
     def create

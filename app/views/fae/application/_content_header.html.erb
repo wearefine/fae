@@ -1,0 +1,23 @@
+<section class="main_content-header">
+	<div class="main_content-header-wrapper">
+		<nav class="main_content-breadcrumbs">
+			<ul class="breadcrumbs">
+				<li><%= link_to "All Releases", templates_path %></li>
+			</ul>
+		</nav>
+
+		<h1>Page Title</h1>
+
+		<nav class="main_content-header-section">
+			<ul class="main_content-header-section-links">
+				<li><%= link_to "Section #1", "#section1" %></li>
+				<li><%= link_to "Section #2", "#section2" %></li>
+			</ul>
+		</nav>
+
+		<div class="main_content-header-save">
+			<%= link_to "Cancel", templates_path, id: "main_content-header-save-cancel" %>
+			<input type="submit" value="Save Settings" id="main_content-header-save-submit" />
+		</div>
+	</div>
+</section>

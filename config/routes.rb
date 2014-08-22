@@ -11,6 +11,15 @@ Fae::Engine.routes.draw do
   #   get 'logout' => 'devise/sessions#destroy', :as => :destroy_user_session
   # end
   resources :users
+  get 'settings' => 'users#settings', as: 'settings'
+
+  # AJAX
+  delete 'images/:id/delete_image' => 'images#delete_image', as: :delete_image
+  get 'images/:id/crop_image' => 'images#crop_image', as: :crop_image
+  patch 'images/:id/crop_image' => 'images#crop_image', as: :commit_crop
+
+  post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
+  post 'sort/:object', to: 'utilities#sort', as: 'sort'
 
 
   # catch all 404

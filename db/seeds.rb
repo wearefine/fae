@@ -4,5 +4,6 @@ Fae::User.create(
   last_name: 'admin',
   email: 'admin@finedesigngroup.com',
   password: 'doingfine',
-  role: super_admin
+  role: super_admin,
+  active: true
   )

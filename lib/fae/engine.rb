@@ -6,6 +6,7 @@ module Fae
 
     # include libraries
     require 'simple_form'
+    require 'jquery-ui-rails'
 
     # set config defaults
     config

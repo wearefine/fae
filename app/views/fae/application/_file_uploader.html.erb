@@ -1,0 +1,21 @@
+<%
+helper_text ||= ''
+file_label = helper_text.present? ? helper_text.html_safe : field.to_s.humanize
+cache_field = "#{field.to_s}_cache"
+%>
+
+<div class="field">
+  <%= content_tag :label, file_label %>
+
+  <% if item.send(field).present? %>
+    <div class="asset-actions">
+      <%= link_to 'View', item.send(field).url, target: '_new' %>
+      <%= link_to 'Delete', "/#{item.class.to_s.pluralize.underscore}/#{item.id}/remove_#{field.to_s}", class: 'js-asset-delete-link', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } %>
+    </div>
+  <% end %>
+
+  <div class="asset-inputs" style="<%= "display:none;" unless item.send(field).blank? %>">
+    <%= f.input field, as: :file, label: false %>
+    <%= f.input cache_field, as: :hidden %>
+  </div>
+</div>

@@ -2,10 +2,15 @@ PATH
   remote: .
   specs:
     fae (0.0.1)
+      coffee-rails
       devise (~> 3.2.4)
+      jquery-rails (~> 3.1.1)
+      jquery-ui-rails (~> 4.2.1)
       rails (~> 4.1.4)
+      remotipart
       sass-rails (~> 4.0.3)
       simple_form (~> 3.0.2)
+      uglifier
 
 GEM
   remote: https://rubygems.org/
@@ -63,6 +68,13 @@ GEM
     childprocess (0.5.3)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.1.0)
+    coffee-rails (4.0.1)
+      coffee-script (>= 2.2.0)
+      railties (>= 4.0.0, < 5.0)
+    coffee-script (2.3.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.7.1)
     colorize (0.7.3)
     daemons (1.1.9)
     database_cleaner (1.3.0)
@@ -76,6 +88,7 @@ GEM
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    execjs (2.2.1)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.4.1)
@@ -94,6 +107,11 @@ GEM
       rspec (>= 2.14, < 4.0)
     hike (1.2.3)
     i18n (0.6.11)
+    jquery-rails (3.1.1)
+      railties (>= 3.0, < 5.0)
+      thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.2.1)
+      railties (>= 3.2.16)
     json (1.8.1)
     launchy (2.4.2)
       addressable (~> 2.3)
@@ -141,6 +159,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    remotipart (1.2.1)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -199,6 +218,9 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.1)
       thread_safe (~> 0.1)
+    uglifier (2.5.3)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
@@ -218,7 +240,10 @@ DEPENDENCIES
   factory_girl_rails (~> 4.4.1)
   fae!
   guard-rspec (~> 4.3.1)
+  jquery-rails
+  jquery-ui-rails (~> 4.2.1)
   mysql2
+  remotipart
   rspec-rails (~> 3.0.2)
   selenium-webdriver (~> 2.42.0)
   thin

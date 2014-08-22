@@ -1,0 +1,53 @@
+<% 
+  the_image = item.send(image_name)
+  original_matches_crop = true
+  original = Magick::Image::read(the_image.asset.path).first if the_image.asset.path.present?
+  cropped = Magick::Image::read(the_image.asset.cropped.path).first if the_image.asset.cropped.path.present?
+  if original.present? and cropped.present?
+    if original.columns != cropped.columns and original.rows != cropped.rows
+      original_matches_crop = false
+    end
+  end
+%>
+
+<% image_label = defined?(image_label_pass) ? image_label_pass : image_name.to_s.humanize %>
+<%= '<div class="content">'.html_safe unless defined?(no_div) %>
+  <%= f.simple_fields_for image_name do |i| %>
+    <div class="field">
+      <label><%= image_label %></label>
+      <%= render 'sizing_info', sizing_info: @sizing_info, image_type: image_name.to_s %>
+      <% unless the_image.asset.blank? %>
+        <div class="assetActions">
+          <%= link_to 'Original', the_image.asset.url, class: "image_modal" %>
+          &nbsp;|&nbsp;
+          <% if the_image.asset.cropped.url.present? and original_matches_crop == false %>
+            <%= link_to 'Current Crop', the_image.asset.cropped.url, class: "image_modal" %>
+            &nbsp;|&nbsp;
+          <% end -%>
+          <% if the_image.asset.tablet.url.present? %>
+            <%= link_to 'Tablet', the_image.asset.tablet.url, class: "image_modal" %>
+            &nbsp;|&nbsp;
+          <% end -%>
+          <% if the_image.asset.mobile.url.present? %>
+            <%= link_to 'Mobile', the_image.asset.mobile.url, class: "image_modal" %>
+            &nbsp;|&nbsp;
+          <% end -%>
+          <%= link_to 'New Crop', "#{crop_image_path(the_image.id)}?redirect=#{request.path}" %>
+          &nbsp;|&nbsp;
+          <%= link_to 'Delete', delete_image_path(the_image.id), class: 'imageDeleteLink' %>
+        </div>
+      <% end %>
+      <div id="fileInput" style="<%= "display:none;" unless the_image.asset.blank? %>">
+        <%= i.input :asset, as: :file, label: false, wrapper_html: {class: 'field'} %>
+        <%= i.input :asset_cache, as: :hidden %>
+        <%= i.input :attached_as, as: :hidden, input_html: {value: image_name.to_s} %>
+      </div>
+    </div>
+    <% unless defined?(omit) && omit.include?(:caption) %>
+      <%= i.input :caption, wrapper_html: {class: 'field'} %>
+    <% end %>
+    <% unless defined?(omit) && omit.include?(:alt) %>
+      <%= i.input :alt, wrapper_html: {class: 'field'} %>
+    <% end %>
+  <% end %>
+<%= '</div>'.html_safe unless defined?(no_div) %>

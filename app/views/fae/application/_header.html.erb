@@ -1,0 +1,41 @@
+<header id="main_header">
+  <h1 class="main_header-name">
+    <%= link_to root_path do %>
+      Kimpton Hotels
+      <span class="main_header-name-fine">a FINE admin</span>
+    <% end %>
+  </h1>
+
+  <% if user_signed_in? %>
+    <ul class="utility_nav">
+      <li class="utility_nav-view">
+        <%= link_to "#" do %>
+          View Site
+          <span class="icon-offlink"></span>
+        <% end %>
+        <ul class="utility_sub_nav">
+          <li><%= link_to "Preview Site", "http://preview.kimpton.afinesite.com" %></li>
+          <li><%= link_to "Live Site", "http://www.kimpton.afinesite.com/" %></li>
+        </ul>
+      </li>
+      <li class="utility_nav-support">
+        <%= link_to "#" do %>
+          Support
+          <span class="icon-support"></span>
+        <% end %>
+      </li>
+      <li class="utility_nav-user">
+        <%= link_to "#" do %>
+          <%= current_user.full_name %>
+          <span class="icon-user"></span>
+          <span class="icon-arrow_down"></span>
+        <% end %>
+        <ul class="utility_sub_nav">
+          <li><%= link_to "Log Out", destroy_user_session_path %></li>
+          <li><%= link_to "Your Settings", settings_path %></li>
+        </ul>
+      </li>
+
+    </ul>
+  <% end %>
+</header>

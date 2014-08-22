@@ -28,7 +28,7 @@ module Fae
 
     # Called by Devise to get the proper error message when an user cannot be signed in
     def inactive_message
-      !active? ? :deactivated : super
+      !active? ? :inactive : super
     end
   end
 end

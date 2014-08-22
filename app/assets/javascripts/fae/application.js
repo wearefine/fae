@@ -11,25 +11,23 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.ui.sortable
 //  require jquery.ui.effect-highlight
-//= require turbolinks
 //= require chosen.jquery.min
 //= require jquery.tablesorter.min
 //  require jquery.Jcrop.min
 //= require jquery.simplemodal.1.4.4
 //= require imagesloaded.pkgd.min
-//
-//= require helpers
-//= require accordion
-//= require subnavhighlighter
-//= require sticky
-//= require checkboxer
-//= require fileinputer
-//= require hinter
-//= require ajax_forms
-//= require admin
 //= require touch_punch
+//
+//= require fae/helpers
+//= require fae/accordion
+//= require fae/subnavhighlighter
+//= require fae/sticky
+//= require fae/checkboxer
+//= require fae/fileinputer
+//= require fae/hinter
+//= require fae/ajax_forms
+//= require fae/admin

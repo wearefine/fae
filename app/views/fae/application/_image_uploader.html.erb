@@ -1,0 +1,36 @@
+<%
+# passed in variables
+the_image      = item.send(image_name)
+image_label  ||= image_name.to_s.humanize
+alt_label    ||= "#{image_label} alt text"
+omit         ||= []
+show_thumb   ||= false
+
+%>
+
+<%= f.simple_fields_for image_name do |i| %>
+  <div class="field input">
+    <label><%= image_label.html_safe %></label>
+
+    <% if the_image.asset.present? %>
+      <div class="asset-actions">
+        <%= image_tag image_url_with_failover(the_image, 'mobile') %>
+        <%= link_to 'Original', the_image.asset.url, class: "js-image-modal asset-actions-image-link" %>
+        <%= link_to 'Tablet', the_image.asset.tablet.url, class: "js-image-modal asset-actions-image-link" if the_image.has_tablet %>
+        <%= link_to 'Mobile', the_image.asset.mobile.url, class: "js-image-modal asset-actions-image-link" if the_image.has_mobile %>
+        <%= link_to 'Thumb', the_image.asset.thumb.url, class: "js-image-modal asset-actions-image-link" if show_thumb %>
+        <%= link_to '', delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } if the_image.id.present? %>
+      </div>
+    <% end %>
+
+    <div class="asset-inputs" style="<%= "display:none;" unless the_image.asset.blank? %>">
+      <%= i.input :asset, as: :file, label: false %>
+      <%= i.input :asset_cache, as: :hidden %>
+      <%= i.input :attached_as, as: :hidden, input_html: {value: image_name.to_s} %>
+    </div>
+  </div>
+
+  <%= i.input :caption, label: "#{image_label} caption" unless omit.include?(:caption) %>
+  <%= i.input :alt, label: alt_label.html_safe unless omit.include?(:alt) %>
+
+<% end %>

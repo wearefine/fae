@@ -1,0 +1,57 @@
+<%
+	nav = [
+		{ text: "Dashboard", path: root_path, class_name: "main_nav-link-dashboard" }
+		]
+
+	if current_user.super_admin?
+		nav << { text: "Users", path: users_path, class_name: "main_nav-link-users" }
+	end
+
+%>
+
+<nav id="main_nav">
+	<ul class="main_nav-nav">
+		<%
+			nav.each do |item|
+				main_class = current_page?(item[:path]) ? "main_nav-active-single" : ""
+				main_sub_class = ""
+				hasSublinks = item[:sublinks].present? ? true : false
+
+				# Apply the active state if user is on the page.
+				if hasSublinks
+					# must find out if a sublink is selected as well
+					item[:sublinks].each do |subitem|
+						if current_page?(subitem[:path]) || subitem[:path].match(params[:controller]).present?
+							main_class = "main_nav-active"
+						end
+					end
+
+					# if the main LI has sublinks, we need to add main_nav-accordion to that LI for accordion action
+					# main_nav-active items do not get an accordion class
+					main_class = "main_nav-accordion" if main_class.blank?
+				end
+
+				if item[:class_name].present?
+					main_class << " #{item[:class_name]}"
+				end
+		%>
+			<li class="<%= main_class %>">
+				<%= link_to item[:text], item[:path], class: "main_nav-link" %>
+
+				<% if hasSublinks %>
+					<ul class="main_nav-sub-nav">
+						<%
+							item[:sublinks].each do |subitem|
+								# if the current page is the same as one of these nav items
+								main_sub_class = current_page?(subitem[:path]) ? "main_nav-sub-active" : ""
+						%>
+							<%= content_tag :li, class: main_sub_class do %>
+								<%= link_to subitem[:text], subitem[:path], class: "main_nav-sub-link" %>
+							<% end %>
+						<% end %>
+					</ul>
+				<% end %>
+			</li>
+		<% end %>
+	</ul>
+</nav>

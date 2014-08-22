@@ -1,0 +1,50 @@
+<% if false # disable user log due to performance issues %>
+<% unless params[:action] === 'new' %>
+  <section class="main_content-section" id="user_log_section">
+    <h2 class="main_content-section-title">User Log</h2>
+    <div class="main_content-section-area">
+      <table>
+        <thead>
+          <tr>
+            <th>Session</th>
+            <th>User</th>
+            <th>Modified</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if item.versions.present? %>
+            <% compared_attributes = item.attributes %>
+            <% item.versions.reverse.each do |version| %>
+              <%
+              changed = []
+              if version.event === 'create'
+                changed << "created"
+              else
+                excluded = ['updated_at']
+                compared_attributes.each do |attribute, value|
+                  changed.push(attribute) unless excluded.include?(attribute) || value.to_s == PaperTrail.serializer.load(version.object)[attribute].to_s
+                end
+                compared_attributes = PaperTrail.serializer.load(version.object)
+              end
+              %>
+
+              <% if changed.present? %>
+                <tr>
+                  <td><%= version.created_at %></td>
+                  <td><%= version.user.present? ? version.user.full_name : content_tag(:em, "user no longer exists") %></td>
+                  <td><%= changed.join(', ') %></td>
+                </tr>
+              <% end %>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="3">No logs available.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% end %>
+<% end %>
