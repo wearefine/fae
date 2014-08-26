@@ -1,27 +1,49 @@
-<h1>Listing roles</h1>
+<section class="main_content-header">
+  <div class="main_content-header-wrapper">
+    <h1>Roles</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Position</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="main_content-header-save">
+      <%= link_to 'New Role', new_role_path, class: "add-button" %>
+    </div>
+  </div>
+</section>
 
-  <tbody>
-    <% @roles.each do |role| %>
-      <tr>
-        <td><%= role.name %></td>
-        <td><%= role.position %></td>
-        <td><%= link_to 'Show', role %></td>
-        <td><%= link_to 'Edit', edit_role_path(role) %></td>
-        <td><%= link_to 'Destroy', role, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'flash_messages' %>
 
-<br>
+<div class="main_content-sections">
+  <section class="main_content-section">
+    <div class="main_content-section-area">
+      <table class="main_content-sortable">
+        <thead>
+          <tr>
+            <th class="main_content-sortable-handle-col"></th>
+            <th>Name</th>
+            <th data-sorter="false"></th>
+          </tr>
+        </thead>
 
-<%= link_to 'New Role', new_role_path %>
+        <tbody>
+          <% if @roles.present? %>
+            <% @roles.each do |role| %>
+              <tr id="fae_role_<%= role.id %>">
+                <td class="main_content-sortable-handle">
+                  <span class="icon-sort"></span>
+                </td>
+                <td class="main_table-description-item"><%= link_to role.name, edit_role_path(role) %></td>
+                <td class="main_table-delete">
+                  <%= link_to role, method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
+                    <span class="icon-delete_x"></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="3">No roles found.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

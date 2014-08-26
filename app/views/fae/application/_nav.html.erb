@@ -1,18 +1,7 @@
-<%
-	nav = [
-		{ text: "Dashboard", path: root_path, class_name: "main_nav-link-dashboard" }
-		]
-
-	if current_user.super_admin?
-		nav << { text: "Users", path: users_path, class_name: "main_nav-link-users" }
-	end
-
-%>
-
 <nav id="main_nav">
 	<ul class="main_nav-nav">
 		<%
-			nav.each do |item|
+			@fae_nav_items.each do |item|
 				main_class = current_page?(item[:path]) ? "main_nav-active-single" : ""
 				main_sub_class = ""
 				hasSublinks = item[:sublinks].present? ? true : false

@@ -22,7 +22,7 @@ module Fae
     end
 
     def form_header(item)
-      content_tag :h1, "#{params[:action]} #{item.class.name}".titleize
+      content_tag :h1, "#{params[:action]} #{item.class.name.split('::').last}".titleize
     end
 
     def image_url_with_failover(image, version)

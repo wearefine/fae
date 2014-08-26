@@ -1,27 +1,10 @@
-<%= render 'flash_messages' %>
+<div class="login-form-password">
+	<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+		<%= f.error_notification %>
+    <%= f.input :email, :required => true, :autofocus => true, label: "Your email <h6>We'll send directions to reset your password</h6>".html_safe %>
 
-<section class="login-content">
-	<section class="login-area">
-		<img src="/images/logo.png" alt="Kimpton Logo">
-
-		<div class="login-form-password">
-			<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-				<%= f.error_notification %>
-				<div class="login-label-extra">We'll Send Your Password.</div>
-			    <%= f.input :email, :required => true, :autofocus => true, label: "What Email Do You Use To Sign In?" %>
-
-			  <div class="login-form-actions">
-			  	<%= link_to "Back to Sign In", new_user_session_path %>
-			    <%= f.button :submit, "Submit" %>
-			  </div>
-			<% end %>
-		</div>
-	</section>
-
-	<footer class="login-footer">
-		<span class="login-fine">a <img src="/images/fine.png" alt="Kimpton Logo"> admin</span>
-		<ul class="login-helper-area">
-			<li><%= render "devise/shared/links" %></li>
-		</ul>
-	</footer>
-</section>
+	  <div class="login-form-actions">
+	    <%= f.button :submit, "Submit" %>
+	  </div>
+	<% end %>
+</div>

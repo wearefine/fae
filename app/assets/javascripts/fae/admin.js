@@ -1,8 +1,10 @@
 var Admin = {
 
-    breakpoints: {
-      desktop: 800
-    },
+  breakpoints: {
+    desktop: 800
+  },
+
+  path: '',
 
   init: function(){
     var that = this;
@@ -151,6 +153,7 @@ var Admin = {
       });
     });
 
+    this.set_admin_path();
     this.sortable();
     this.fade_notices();
     this.city_district_selector();
@@ -191,7 +194,7 @@ var Admin = {
         var object = serial.substr(0, serial.indexOf('['));
 
         $.ajax({
-          url: '/sort/'+object,
+          url: '/'+Admin.path+'/sort/'+object,
           type: 'post',
           data: serial,
           dataType: 'script',
@@ -323,13 +326,18 @@ var Admin = {
 
     $type_select: '',
     $ad_fields: ''
+  },
+
+  set_admin_path: function() {
+    var path_array = window.location.pathname.split( '/' );
+    Admin.path = path_array[1];
   }
 };
 
 
 $(function() {
-  Accordion.init();
   Admin.init();
+  Accordion.init();
   AjaxForms.init();
   SubnavHighlighter.init();
 });

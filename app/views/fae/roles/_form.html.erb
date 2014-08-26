@@ -1,25 +1,26 @@
-<%= form_for(@role) do |f| %>
-  <% if @role.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@role.errors.count, "error") %> prohibited this role from being saved:</h2>
+<%= simple_form_for(@role) do |f| %>
+  <section class="main_content-header">
+    <div class="main_content-header-wrapper">
+      <nav class="main_content-breadcrumbs">
+        <ul class="breadcrumbs">
+          <li><%= link_to "All Role", roles_path %></li>
+        </ul>
+      </nav>
 
-      <ul>
-      <% @role.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+      <%= form_header @role %>
+
+      <div class="main_content-header-save">
+        <%= link_to "Cancel", roles_path, id: "main_content-header-save-cancel" %>
+        <%= f.submit "Save Settings" %>
+      </div>
     </div>
-  <% end %>
+  </section>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :position %><br>
-    <%= f.number_field :position %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="main_content-section">
+    <section class="main_content-section">
+      <div class="main_content-section-area">
+        <%= f.input :name %>
+      </div>
+    </section>
   </div>
 <% end %>
