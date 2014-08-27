@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140822224500) do
+ActiveRecord::Schema.define(version: 20140827225157) do
 
   create_table "fae_roles", force: true do |t|
     t.string   "name"
@@ -51,5 +51,22 @@ ActiveRecord::Schema.define(version: 20140822224500) do
   add_index "fae_users", ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true, using: :btree
   add_index "fae_users", ["role_id"], name: "index_fae_users_on_role_id", using: :btree
   add_index "fae_users", ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "releases", force: true do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.text     "intro"
+    t.text     "body"
+    t.string   "vintage"
+    t.string   "price"
+    t.string   "tasting_notes_pdf"
+    t.integer  "wine_id"
+    t.integer  "varietal_id"
+    t.boolean  "on_stage",          default: true
+    t.boolean  "on_prod",           default: false
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @admin_release.name %>
+</p>
+
+<p>
+  <strong>Slug:</strong>
+  <%= @admin_release.slug %>
+</p>
+
+<p>
+  <strong>Intro:</strong>
+  <%= @admin_release.intro %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @admin_release.body %>
+</p>
+
+<p>
+  <strong>Vintage:</strong>
+  <%= @admin_release.vintage %>
+</p>
+
+<p>
+  <strong>Price:</strong>
+  <%= @admin_release.price %>
+</p>
+
+<p>
+  <strong>Tasting notes pdf:</strong>
+  <%= @admin_release.tasting_notes_pdf %>
+</p>
+
+<p>
+  <strong>Wine:</strong>
+  <%= @admin_release.wine_id %>
+</p>
+
+<p>
+  <strong>Varietal:</strong>
+  <%= @admin_release.varietal_id %>
+</p>
+
+<p>
+  <strong>On stage:</strong>
+  <%= @admin_release.on_stage %>
+</p>
+
+<p>
+  <strong>On prod:</strong>
+  <%= @admin_release.on_prod %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @admin_release.position %>
+</p>
+
+<%= link_to 'Edit', edit_admin_release_path(@admin_release) %> |
+<%= link_to 'Back', admin_releases_path %>

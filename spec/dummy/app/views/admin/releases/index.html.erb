@@ -1,0 +1,47 @@
+<h1>Listing admin_releases</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Slug</th>
+      <th>Intro</th>
+      <th>Body</th>
+      <th>Vintage</th>
+      <th>Price</th>
+      <th>Tasting notes pdf</th>
+      <th>Wine</th>
+      <th>Varietal</th>
+      <th>On stage</th>
+      <th>On prod</th>
+      <th>Position</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @admin_releases.each do |admin_release| %>
+      <tr>
+        <td><%= admin_release.name %></td>
+        <td><%= admin_release.slug %></td>
+        <td><%= admin_release.intro %></td>
+        <td><%= admin_release.body %></td>
+        <td><%= admin_release.vintage %></td>
+        <td><%= admin_release.price %></td>
+        <td><%= admin_release.tasting_notes_pdf %></td>
+        <td><%= admin_release.wine_id %></td>
+        <td><%= admin_release.varietal_id %></td>
+        <td><%= admin_release.on_stage %></td>
+        <td><%= admin_release.on_prod %></td>
+        <td><%= admin_release.position %></td>
+        <td><%= link_to 'Show', admin_release %></td>
+        <td><%= link_to 'Edit', edit_admin_release_path(admin_release) %></td>
+        <td><%= link_to 'Destroy', admin_release, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Release', new_admin_release_path %>
