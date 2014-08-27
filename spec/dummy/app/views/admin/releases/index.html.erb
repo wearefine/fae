@@ -1,47 +1,49 @@
-<h1>Listing admin_releases</h1>
+<section class="main_content-header">
+  <div class="main_content-header-wrapper">
+    <h1>Releases</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Slug</th>
-      <th>Intro</th>
-      <th>Body</th>
-      <th>Vintage</th>
-      <th>Price</th>
-      <th>Tasting notes pdf</th>
-      <th>Wine</th>
-      <th>Varietal</th>
-      <th>On stage</th>
-      <th>On prod</th>
-      <th>Position</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="main_content-header-save">
+      <%= link_to 'New Release', new_admin_release_path, class: "add-button" %>
+    </div>
+  </div>
+</section>
 
-  <tbody>
-    <% @admin_releases.each do |admin_release| %>
-      <tr>
-        <td><%= admin_release.name %></td>
-        <td><%= admin_release.slug %></td>
-        <td><%= admin_release.intro %></td>
-        <td><%= admin_release.body %></td>
-        <td><%= admin_release.vintage %></td>
-        <td><%= admin_release.price %></td>
-        <td><%= admin_release.tasting_notes_pdf %></td>
-        <td><%= admin_release.wine_id %></td>
-        <td><%= admin_release.varietal_id %></td>
-        <td><%= admin_release.on_stage %></td>
-        <td><%= admin_release.on_prod %></td>
-        <td><%= admin_release.position %></td>
-        <td><%= link_to 'Show', admin_release %></td>
-        <td><%= link_to 'Edit', edit_admin_release_path(admin_release) %></td>
-        <td><%= link_to 'Destroy', admin_release, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render 'flash_messages' %>
 
-<br>
+<div class="main_content-sections">
+  <section class="main_content-section">
+    <div class="main_content-section-area">
+      <table class="main_content-sortable">
+        <thead>
+          <tr>
+            <th class="main_content-sortable-handle-col"></th>
+            <th>Name</th>
+            <th>Modified</th>
+            <th class="main_table-header-live" data-sorter="false">On Stage</th>
+            <th class="main_table-header-live" data-sorter="false">On Prod</th>
+            <th data-sorter="false"></th>
+          </tr>
+        </thead>
 
-<%= link_to 'New Release', new_admin_release_path %>
+        <tbody>
+          <% @items.each do |item| %>
+            <tr id="release_<%= item.id %>">
+              <td class="main_content-sortable-handle">
+                <span class="icon-sort"></span>
+              </td>
+              <td class="main_table-description-item"><%= link_to item.name, edit_admin_release_path(item) %></td>
+              <td><%= item.updated_at %></td>
+              <td><%= attr_toggle item, :on_stage %></td>
+              <td><%= attr_toggle item, :on_prod %></td>
+              <td class="main_table-delete">
+                <%= link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
+                  <span class="icon-delete_x"></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

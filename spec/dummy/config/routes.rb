@@ -1,9 +1,8 @@
 Rails.application.routes.draw do
+  root 'pages#home'
+
   namespace :admin do
     resources :releases
   end
-
-  root 'pages#home'
-
   mount Fae::Engine => "/admin"
 end

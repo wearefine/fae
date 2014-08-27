@@ -1,65 +1,26 @@
-<%= form_for(@admin_release) do |f| %>
-  <% if @admin_release.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@admin_release.errors.count, "error") %> prohibited this admin_release from being saved:</h2>
+<%= simple_form_for(['admin', @item]) do |f| %>
+  <section class="main_content-header">
+    <div class="main_content-header-wrapper">
+      <nav class="main_content-breadcrumbs">
+        <ul class="breadcrumbs">
+          <li><%= link_to "All Releases", admin_releases_path %></li>
+        </ul>
+      </nav>
 
-      <ul>
-      <% @admin_release.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+      <%= form_header @item %>
+
+      <div class="main_content-header-save">
+        <%= link_to "Cancel", admin_releases_path, id: "main_content-header-save-cancel" %>
+        <%= f.submit "Save Settings" %>
+      </div>
     </div>
-  <% end %>
+  </section>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :slug %><br>
-    <%= f.text_field :slug %>
-  </div>
-  <div class="field">
-    <%= f.label :intro %><br>
-    <%= f.text_area :intro %>
-  </div>
-  <div class="field">
-    <%= f.label :body %><br>
-    <%= f.text_area :body %>
-  </div>
-  <div class="field">
-    <%= f.label :vintage %><br>
-    <%= f.text_field :vintage %>
-  </div>
-  <div class="field">
-    <%= f.label :price %><br>
-    <%= f.text_field :price %>
-  </div>
-  <div class="field">
-    <%= f.label :tasting_notes_pdf %><br>
-    <%= f.text_field :tasting_notes_pdf %>
-  </div>
-  <div class="field">
-    <%= f.label :wine_id %><br>
-    <%= f.number_field :wine_id %>
-  </div>
-  <div class="field">
-    <%= f.label :varietal_id %><br>
-    <%= f.number_field :varietal_id %>
-  </div>
-  <div class="field">
-    <%= f.label :on_stage %><br>
-    <%= f.check_box :on_stage %>
-  </div>
-  <div class="field">
-    <%= f.label :on_prod %><br>
-    <%= f.check_box :on_prod %>
-  </div>
-  <div class="field">
-    <%= f.label :position %><br>
-    <%= f.number_field :position %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="main_content-sections">
+    <section class="main_content-section">
+      <div class="main_content-section-area">
+        <%= f.input :name %>
+      </div>
+    </section>
   </div>
 <% end %>

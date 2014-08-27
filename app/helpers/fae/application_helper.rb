@@ -10,7 +10,7 @@ module Fae
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
       model_name = item.class.to_s.underscore.pluralize
-      url = toggle_path(model_name, item.id.to_s, column)
+      url = fae.toggle_path(model_name, item.id.to_s, column)
 
       link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do
         '<div class="slider-options">
