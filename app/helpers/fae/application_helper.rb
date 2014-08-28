@@ -39,5 +39,11 @@ module Fae
             List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1".html_safe
     end
 
+    def require_locals(local_array, local_assigns)
+      local_array.each do |loc|
+        raise "#{loc} is a required local, please define it when you render this partial" unless local_assigns[loc.to_sym].present?
+      end
+    end
+
   end
 end

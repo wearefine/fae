@@ -23,7 +23,7 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @redirect_path, notice: "#{@klass_humanized} was successfully created."
+        redirect_to @index_path, notice: "#{@klass_humanized} was successfully created."
       else
         build_images
         render action: 'new'
@@ -32,7 +32,7 @@ module Fae
 
     def update
       if @item.update(item_params)
-        redirect_to @redirect_path, notice: "#{@klass_humanized} was successfully updated."
+        redirect_to @index_path, notice: "#{@klass_humanized} was successfully updated."
       else
         build_images
         render action: 'edit'
@@ -41,7 +41,7 @@ module Fae
 
     def destroy
       @item.destroy
-      redirect_to @redirect_path, notice: "#{@klass_humanized} was successfully destroyed."
+      redirect_to @index_path, notice: "#{@klass_humanized} was successfully destroyed."
     end
 
   private
@@ -51,7 +51,8 @@ module Fae
       @klass = klass_base.classify.constantize
       @klass_singular = klass_base.singularize
       @klass_humanized = @klass_singular.humanize
-      @redirect_path = '/'+params[:controller]
+      @index_path = '/'+params[:controller]
+      @new_path = @index_path+'/new'
     end
 
     # Use callbacks to share common setup or constraints between actions.
