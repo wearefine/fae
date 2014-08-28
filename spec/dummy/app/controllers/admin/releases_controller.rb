@@ -1,2 +1,2 @@
-class Admin::ReleasesController < Fae::MainController
+class Admin::ReleasesController < Fae::BaseController
 end

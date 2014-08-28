@@ -1,11 +1,13 @@
 module Fae
-  class MainController < ApplicationController
+  class BaseController < ApplicationController
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
 
+    helper Fae::FormHelper
+
     def index
-      @items = @klass.all
+      @items = @klass.for_admin_index
     end
 
     def new

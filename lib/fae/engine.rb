@@ -8,9 +8,11 @@ module Fae
     require 'simple_form'
     require 'jquery-ui-rails'
 
-    config.to_prepare do
-      ApplicationController.helper(FormHelper)
-    end
+    # config.to_prepare do
+    #   ApplicationController.helper(FormHelper)
+    # end
+
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 
   # configurable defaults
