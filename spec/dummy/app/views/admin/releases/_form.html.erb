@@ -10,8 +10,13 @@
   <div class="main_content-sections">
     <section class="main_content-section">
       <div class="main_content-section-area">
-        <%= f.input :name %>
-        <%# fae_input f, :name %>
+        <%# f.input :name %>
+        <%= fae_input f, :name, {
+          input_html: { class: 'slugger' }
+        } %>
+        <%= fae_input f, :slug, {
+          input_html: { class: 'slug' }
+        } %>
       </div>
     </section>
   </div>
