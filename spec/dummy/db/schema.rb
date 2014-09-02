@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827225157) do
+ActiveRecord::Schema.define(version: 20140902223650) do
 
   create_table "fae_roles", force: true do |t|
     t.string   "name"
@@ -64,6 +64,15 @@ ActiveRecord::Schema.define(version: 20140827225157) do
     t.integer  "varietal_id"
     t.boolean  "on_stage",          default: true
     t.boolean  "on_prod",           default: false
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "wines", force: true do |t|
+    t.string   "name"
+    t.boolean  "on_stage",   default: true
+    t.boolean  "on_prod",    default: false
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
