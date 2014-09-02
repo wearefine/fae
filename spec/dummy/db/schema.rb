@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902223650) do
+ActiveRecord::Schema.define(version: 20140902231710) do
 
   create_table "fae_roles", force: true do |t|
     t.string   "name"
@@ -52,6 +52,14 @@ ActiveRecord::Schema.define(version: 20140902223650) do
   add_index "fae_users", ["role_id"], name: "index_fae_users_on_role_id", using: :btree
   add_index "fae_users", ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true, using: :btree
 
+  create_table "release_selling_points", force: true do |t|
+    t.integer  "release_id"
+    t.integer  "selling_point_id"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "releases", force: true do |t|
     t.string   "name"
     t.string   "slug"
@@ -64,6 +72,24 @@ ActiveRecord::Schema.define(version: 20140902223650) do
     t.integer  "varietal_id"
     t.boolean  "on_stage",          default: true
     t.boolean  "on_prod",           default: false
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "selling_points", force: true do |t|
+    t.string   "name"
+    t.boolean  "on_stage",   default: true
+    t.boolean  "on_prod",    default: false
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "varietals", force: true do |t|
+    t.string   "name"
+    t.boolean  "on_stage",   default: true
+    t.boolean  "on_prod",    default: false
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"

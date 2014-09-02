@@ -1,4 +1,4 @@
-<%= render 'fae/shared/index_header', title: 'Varietals' %>
+<%= render 'fae/shared/index_header', title: 'Selling Points' %>
 
 <div class="main_content-sections">
   <section class="main_content-section">
@@ -21,7 +21,7 @@
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
-              <td class="main_table-description-item"><%= link_to item.name, edit_admin_varietal_path(item) %></td>
+              <td class="main_table-description-item"><%= link_to item.name, edit_admin_selling_point_path(item) %></td>
               <td><%= item.updated_at %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
