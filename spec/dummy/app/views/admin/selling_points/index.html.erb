@@ -1,0 +1,39 @@
+<%= render 'fae/shared/index_header', title: 'Selling Points' %>
+
+<div class="main_content-sections">
+  <section class="main_content-section">
+    <div class="main_content-section-area">
+      <table class="main_content-sortable">
+        <thead>
+          <tr>
+            <th class="main_content-sortable-handle-col"></th>
+            <th>Name</th>
+            <th>Modified</th>
+            <th class="main_table-header-live" data-sorter="false">On Stage</th>
+            <th class="main_table-header-live" data-sorter="false">On Prod</th>
+            <th data-sorter="false"><%= test_method %></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @items.each do |item| %>
+            <tr id="release_<%= item.id %>">
+              <td class="main_content-sortable-handle">
+                <span class="icon-sort"></span>
+              </td>
+              <td class="main_table-description-item"><%= link_to item.name, edit_admin_selling_point_path(item) %></td>
+              <td><%= item.updated_at %></td>
+              <td><%= attr_toggle item, :on_stage %></td>
+              <td><%= attr_toggle item, :on_prod %></td>
+              <td class="main_table-delete">
+                <%= link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
+                  <span class="icon-delete_x"></span>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

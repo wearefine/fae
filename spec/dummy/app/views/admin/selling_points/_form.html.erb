@@ -10,20 +10,7 @@
   <div class="main_content-sections">
     <section class="main_content-section">
       <div class="main_content-section-area">
-        <%# f.input :name %>
-        <%= fae_input f, :name, {
-          input_html: { class: 'slugger' }
-        } %>
-        <%= fae_input f, :slug, {
-          input_html: { class: 'slug' }
-        } %>
-
-        <%= f.association :acclaims, label_method: :publication, value_method: :id %>
-
-        <%= f.association :wine %>
-        <%= f.association :varietal %>
-
-        <%= f.association :selling_points %>
+        <%= f.input :name %>
       </div>
     </section>
   </div>
