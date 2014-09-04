@@ -25,7 +25,7 @@ $c-text: $c-grey;
 $c-text-sub: $c-light_grey;
 $c-text-sub-hover: $c-lighter_grey;
 $c-text-heavy: #2b2b2b;
-$c-box_shadow: $c-light_grey;
+$c-box_shadow: $c-lighter_grey;
 $c-border: $c-lighter_grey;
 
 /* header area */
@@ -111,6 +111,7 @@ $c-error-content: #b75553;
 /* Modal */
 $c-modal-overlay-bg: $c-lighter_grey;
 $c-modal-bg: #333;
+$c-modal-light-bg: #fff;
 $c-modal-text: #999;
 $c-modal-header: $c-white;
 

@@ -13,14 +13,61 @@
 	background: $c-modal-overlay-bg;
 }
 
-#simplemodal-container {
+.simplemodal-container {
+	position: relative;
 	padding: 20px;
 	border-top: 4px solid $c-custom-highlight;
+	background: $c-modal-light-bg;
+	color: $c-text;
+	line-height: 1.2;
+	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
+
+	h3 {
+		color: $c-text;
+		margin-bottom: 10px;
+		font-size: 20px;
+		font-weight: normal;
+	}
+
+	table {
+		width: calc(100% + 40px);
+		margin: 20px -20px -20px -20px;
+	}
+
+	.icon-support {
+		vertical-align: top;
+		margin-right: 3px;
+	}
+}
+
+.simplemodal-container--dark {
 	background: $c-modal-bg;
-	color: $c-modal-text;
+	@include box-shadow(0);
 
 	h3 {
 		color: $c-modal-header;
-		margin-bottom: 10px;
+	}
+}
+
+// used for the sample pages only
+.sample-modals {
+	.simplemodal-container {
+		width: 400px;
+	}
+}
+
+.simplemodal-close {
+	&:before {
+		@include icon-stuff();
+		@extend .icon-delete_x:before;
+		position: absolute;
+		top: 15px;
+		right: 20px;
+		color: $c-modal-text;
+		cursor: pointer;
+
+		.simplemodal-container--dark & {
+			// display: none;
+		}
 	}
 }

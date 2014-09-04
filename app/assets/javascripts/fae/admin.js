@@ -1,15 +1,24 @@
 var Admin = {
 
-  breakpoints: {
-    desktop: 800
-  },
-
-  path: '',
+    breakpoints: {
+      desktop: 800
+    },
 
   init: function(){
     var that = this;
 
-    $("select").chosen();
+    $("select").each(function(index, elm){
+      var $select = $(this);
+      if($select.closest(".multiselect").length === 0) {
+        $select.chosen();
+      }
+    });
+
+    $(".multiselect select").multiSelect({
+      selectableHeader: "<div class='custom-header'>80 Available Items</div>",
+      selectionHeader: "<div class='custom-header'>5 Added Items</div>"
+    });
+
     Admin.image_delete_links();
 
     // input type=file customization
@@ -22,13 +31,25 @@ var Admin = {
     $("th.main_table-checkbox").checkboxer();
 
     // sticket header for the content area
-    $(".main_content-header").sticky();
-    $("#main_nav").sticky({ make_placeholder: false});
+    $(".main_content-header").sticky({ min_tablet: true });
+    $("#main_nav").sticky({ make_placeholder: false, min_tablet: true});
 
     // sort columns in tables if applicable
     $(".main_table-sort_columns").tablesorter();
     $(".main_table-sort_columns-cities").tablesorter({
       sortList: [[1,0]]
+    });
+
+    // button dropdown class toggle
+    $(".button-dropdown").click(function(){
+      $(this).toggleClass("button-dropdown--opened");
+    });
+
+    // button dropdown click anywhere but the dropdown close
+    $("body").click(function(e){
+      if ($(e.target).closest(".button-dropdown").length === 0) {
+        $(".button-dropdown").removeClass("button-dropdown--opened");
+      }
     });
 
     // scroll_to event for non-ajax'd table forms
@@ -153,12 +174,22 @@ var Admin = {
       });
     });
 
-    this.set_admin_path();
     this.sortable();
     this.fade_notices();
     this.city_district_selector();
     this.slugger();
     this.ad_form.init();
+    this.radio_buttons();
+  },
+
+  radio_buttons: function() {
+    $(".radio_collection--vertical, .radio_collection--horizontal").find(".radio").each(function(index, elm){
+      var $area = $(this);
+      if ($(this).find(".radio_collection-bullet").length === 0) {
+        var $bullet = $(document.createElement("span")).addClass("radio_collection-bullet");
+        $bullet.insertAfter($area.find("input"));
+      }
+    });
   },
 
   sortable: function() {
@@ -194,7 +225,7 @@ var Admin = {
         var object = serial.substr(0, serial.indexOf('['));
 
         $.ajax({
-          url: '/'+Admin.path+'/sort/'+object,
+          url: '/sort/'+object,
           type: 'post',
           data: serial,
           dataType: 'script',
@@ -326,18 +357,13 @@ var Admin = {
 
     $type_select: '',
     $ad_fields: ''
-  },
-
-  set_admin_path: function() {
-    var path_array = window.location.pathname.split( '/' );
-    Admin.path = path_array[1];
   }
 };
 
 
 $(function() {
-  Admin.init();
   Accordion.init();
+  Admin.init();
   AjaxForms.init();
   SubnavHighlighter.init();
 });

@@ -21,7 +21,7 @@ module Fae
 
       @fae_nav_items += Fae.nav_items
 
-      if current_user.super_admin?
+      if current_user.try(:super_admin?)
         @fae_nav_items << { text: "Users", path: '#', class_name: "main_nav-link-users", sublinks: [
             { text: "Users", path: users_path },
             { text: "Roles", path: roles_path }
