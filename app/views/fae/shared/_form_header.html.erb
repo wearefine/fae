@@ -2,7 +2,7 @@
 
 <nav class="main_content-breadcrumbs">
   <ul class="breadcrumbs">
-    <li><%= link_to "All Releases", admin_releases_path %></li>
+    <li><%= link_to "All #{@klass_humanized.titleize.pluralize}", @index_path %></li>
   </ul>
 </nav>
 
