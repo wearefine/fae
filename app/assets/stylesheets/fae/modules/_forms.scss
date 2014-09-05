@@ -5,14 +5,31 @@ label {
 	font-size: 15px;
 	color: $c-text-heavy;
 
-	// this is the helper text
-	h6 {
-		padding-top: 10px;
-		font-size: 13px;
-		color: #999;
-		font-weight: normal;
-		font-style: italic;
+	&.required {
+		&:before {
+			content: "*";
+			display: inline-block;
+			padding-right: 3px;
+			color: $c-custom-text_link;
+		}
 	}
+
+	abbr {
+		color: $c-custom-text_link;
+	}
+}
+
+label h6, .helper_text {
+	padding-top: 10px;
+	font-size: 13px;
+	color: #999;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.helper_text {
+	position: relative;
+	bottom: 10px;
 }
 
 .hint {
@@ -202,6 +219,79 @@ input.string {
 	}
 }
 
+.checkbox_collection--vertical.checkbox_collection--vertical {
+	label {
+		display: block;
+		height: 25px;
+		margin-bottom: 15px;
+	}
+}
+
+.checkbox_collection--horizontal.checkbox_collection--horizontal {
+	label {
+		width: 190px;
+		height: 25px;
+		margin-bottom: 15px;
+		margin-right: 10px;
+	}
+}
+
+.radio_collection--vertical {
+	label {
+		cursor: pointer;
+	}
+
+	input[type=radio] {
+		position: absolute;
+		left: -9999em;
+	}
+}
+
+.radio_collection--horizontal {
+	label {
+		display: inline-block;
+		margin-right: 50px;
+		cursor: pointer;
+	}
+
+	input[type=radio] {
+		position: absolute;
+		left: -9999em;
+	}
+}
+
+.radio_collection-bullet {
+	position: relative;
+	bottom: 3px;
+	display: inline-block;
+	vertical-align: middle;
+	height: 22px;
+	width: 22px;
+	margin-right: 5px;
+	background: $c-white;
+	border: 1px solid $c-border;
+	@include border-radius(50%);
+
+	input:checked + label &, input:checked + & {
+		border-color: $c-custom-highlight;
+
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			height: 9px;
+			width: 9px;
+			background: $c-custom-highlight;
+			-webkit-transform: translate(-50%, -50%);
+			-moz-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			@include border-radius(50%);
+		}
+	}
+}
+
 .asset-actions {
 	position: relative;
 	display: inline-block;
@@ -262,7 +352,7 @@ input.string {
 }
 
 /* Select box and Chosen */
-.select, .city_time_zone, .table-filter-area, .date {
+.select, .time, .city_time_zone, .table-filter-area, .date {
 
 	.chosen-container {
 		font-size: 14px;
@@ -274,6 +364,10 @@ input.string {
 
 	select {
 		min-width: 300px;
+	}
+
+	select.small_pulldown {
+		min-width: 150px;
 	}
 
 	.chosen-container-active .chosen-single {
@@ -345,6 +439,12 @@ input.string {
 		}
 	}
 }
+
+// special for time
+.time select {
+	min-width: 75px;
+}
+
 // overwriting chosen for retina
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
   .chosen-rtl .chosen-search input[type="text"], .chosen-container-single .chosen-single abbr,
@@ -353,6 +453,16 @@ input.string {
   .chosen-container .chosen-results-scroll-down span, .chosen-container .chosen-results-scroll-up span {
     background-image: url('/assets/fae/chosen/chosen-sprite@2x.png') !important;
   }
+}
+
+.select-no_search {
+	.chosen-container .chosen-results {
+		padding-top: 5px;
+	}
+
+	.chosen-search {
+		display: none;
+	}
 }
 
 // special treatment for date groupings
@@ -514,6 +624,17 @@ input.string {
 	}
 }
 
+.form_content-wrapper-visible-complex {
+	padding: 30px;
+	border: 1px solid $c-border;
+	border-top: 0;
+	background: $c-form-table-bg;
+
+	.select .chosen-container-single .chosen-single {
+		padding: 8px 15px;
+	}
+}
+
 // errors
 .field_with_errors {
 	position: relative;
@@ -541,4 +662,181 @@ input.string {
 			@include right-triangle(10px, $c-error-bg);
 		}
 	}
+}
+
+// pagination
+.pagination {
+	font-size: 12px;
+	font-weight: bold;
+
+	li {
+		display: inline-block;
+		margin-left: -4px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
+	a {
+		display: block;
+		padding: 10px;
+		min-height: 30px;
+		min-width: 35px;
+		border: 1px solid $c-border;
+		text-align: center;
+		color: $c-grey;
+		@include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+
+		&:hover {
+			color: $c-white;
+			background: $c-custom-highlight;
+		}
+	}
+}
+
+.pagination-ellipsis {
+	span {
+		display: block;
+		padding: 10px;
+		min-height: 30px;
+		min-width: 35px;
+		border: 1px solid $c-border;
+		text-align: center;
+		color: $c-grey;
+		background: $c-lightest_grey;
+	}	
+}
+
+// Inputs with icon
+%input-icon {
+	position: relative;
+	width: 240px;
+
+	input[type=text] {
+		padding-left: 50px;
+	}
+
+	&:before {
+		@include icon-stuff();
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		padding: 10px 12px;
+		border-right: 1px solid $c-lightest_grey;
+		font-size: 17px;
+		color: $c-lighter_grey;
+	}
+}
+
+.input-icon-calendar {
+	@extend %input-icon;
+
+	&:before {
+		@extend .icon-calendar:before;
+	}
+}
+
+// MultiSelect plugin for multiselect pagination-ellipsis
+.ms-container {
+  width: 700px;
+}
+
+.ms-container:after {
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  font-size: 0;
+  clear: both;
+  min-height: 0;
+  visibility: hidden;
+}
+
+.ms-container .ms-selectable, .ms-container .ms-selection {
+  float: left;
+  width: 50%;
+  height: 250px;
+  padding-right: 15px;
+  background: $c-lightest_grey;
+  color: $c-text-heavy;
+  overflow-y: auto;
+}
+
+.ms-container .ms-selection {
+  float: right;
+}
+
+.ms-container .ms-list {
+  position: relative;
+  height: 100%;
+  height: calc(100%-25px);
+  background: $c-white;
+}
+
+.ms-container .ms-list.ms-focus {
+	outline: 0;
+}
+
+.ms-container .ms-optgroup-container {
+  width: 100%;
+}
+
+.ms-container .ms-optgroup-label {
+}
+
+.ms-container .ms-selectable li.ms-elem-selectable, .ms-container .ms-selection li.ms-elem-selection {
+  position: relative;
+  padding: 10px 15px;
+  border-bottom: 1px $c-almost_white solid;
+  border-right: 1px $c-almost_white solid;
+  color: $c-text;
+  font-size: 13px;
+
+  &:after {
+  	content: "Add";
+  	position: absolute;
+  	right: 15px;
+  	top: 9px;
+  	color: $c-custom-text_link;
+  }
+}
+
+.ms-container .ms-selection li.ms-elem-selection {
+	&:after {
+		@include icon-stuff();
+		content: "\e60f";
+		@extend .icon-delete_x:before;
+		color: $c-text-sub;
+	}
+
+	&:before {
+		@include icon-stuff();
+		@extend .icon-check:before;
+		padding-right: 5px;
+		color: $c-custom-highlight;
+	}
+}
+
+.ms-container .ms-selectable li.ms-hover, .ms-container .ms-selection li.ms-hover {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: $c-almost_white;
+}
+
+.ms-container .ms-selectable li.disabled, .ms-container .ms-selection li.disabled {
+  color: $c-almost_white;
+  cursor: text;
+}
+
+.ms-selectable .custom-header, .ms-selection .custom-header {
+	padding: 10px 15px;
+	margin-right: -15px;
+	color: $c-text-heavy;
+	background: $c-lighter_grey;
+	font-size: 14px;
+}
+
+.ms-selection .custom-header {
+	background: $c-light_grey;
 }

@@ -9,15 +9,17 @@ var Admin = {
 
     $("select").each(function(index, elm){
       var $select = $(this);
-      if($select.closest(".multiselect").length === 0) {
+      if($select.hasClass("multiselect")) {
+        $select.multiSelect({
+          selectableHeader: "<div class='custom-header'>80 Available Items</div>",
+          selectionHeader: "<div class='custom-header'>5 Added Items</div>"
+        });
+      } else {
         $select.chosen();
       }
     });
 
-    $(".multiselect select").multiSelect({
-      selectableHeader: "<div class='custom-header'>80 Available Items</div>",
-      selectionHeader: "<div class='custom-header'>5 Added Items</div>"
-    });
+    
 
     Admin.image_delete_links();
 
