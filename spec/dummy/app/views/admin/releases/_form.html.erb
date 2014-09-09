@@ -12,15 +12,13 @@
     
       <!-- Long Field with Helper Text -->
       <%= fae_input f, :name, {
-        helper_text: 'Long Field with Helper Text',
-        required: true
+        helper_text: 'Long Field with Helper Text'
       } %>
 
 
-      <!-- Long Field with Hint Pop Up -->
+      <!-- Long Field -->
       <%= fae_input f, :slug, {
-        required: true,
-        helper_text: 'Long Field with Helper Hint Pop Up',
+        helper_text: 'Long Field with Helper Text',
         hint: '<h3>Markdown Options</h3><br>
           Link | Internal: See my [About](/about/) page for details.<br>
           Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
@@ -30,8 +28,8 @@
     
     
       <!-- Input with icon on left -->
-      <%= fae_input f, :price, {
-        wrapper_class: 'input-icon-calendar'
+      <%= fae_currency f, :price, {
+        helper_text: 'With icon in input'
       } %>
     
     
@@ -43,10 +41,11 @@
       <%= f.association :wine, input_html: { class: 'small_pulldown' } %>
     
     
-      <!--  -->
+      <!-- Multiselect from a dropdown -->
       <%= f.association :acclaims, label_method: :publication, value_method: :id %>
     
-      <!--  -->
+
+      <!-- Multiselect using two panels -->
       <%= f.association :selling_points, input_html: { class: 'multiselect' } %>
     
     
@@ -59,152 +58,19 @@
     
     
       <!-- Text Areas -->
-      <%= f.input :body %>
-    
+      <%= fae_input f, :body, {
+          helper_text: 'Text Area wtih Hint Pop Up',
+          hint: '<h3>Markdown Options</h3><br>
+          Link | Internal: See my [About](/about/) page for details.<br>
+          Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
+          List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
+          List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1'
+        } %>
 
-      <h2 class="main_content-section-title">Needs Integration</h2><br><br>
-      <!-- Large Pulldown - no search. add parent class of select-no_search -->
-      <div class="input select select-no_search">
-        <label for="select1">Large Pulldown No Search</label>
-        <select id="select1">
-          <option value="">Select an Option</option>
-          <option value="1">option 1</option>
-          <option value="2">optoin 2</option>
-          <option value="3">option 3</option>
-        </select>
-      </div>
-    
-      <!-- Indented/Optgroup Select Pulldown -->
-      <div class="input select">
-        <label for="optgroup1">Indented Pulldown</label>
-        <select id="optgroup1">
-        <optgroup label="group1">
-          <option>Option 1.1</option>
-        </optgroup> 
-        <optgroup label="group2">
-          <option>Option 2.1</option>
-          <option>Option 2.2</option>
-        </optgroup>
-        <optgroup label="group3">
-          <option>Option 3.1</option>
-          <option>Option 3.2</option>
-          <option>Option 3.3</option>
-        </optgroup>
-      </select>
-    
-      <br><br>
-    
-      <!-- Pulldown Group -->
-      <div class="input date optional">
-        <label for="select31" class="date optional control-label">Date</label>
-        <select id="select31" class="date optional">
-          <option value="2009">2009</option>
-          <option value="2010">2010</option>
-          <option value="2011">2011</option>
-          <option value="2012">2012</option>
-          <option value="2013">2013</option>
-          <option value="2014">2014</option>
-        </select>
-    
-        <select id="select32" class="date optional">
-          <option value="1">January</option>
-          <option value="2">February</option>
-          <option value="3">March</option>
-          <option value="4">April</option>
-        </select>
-    
-        <select id="select33" class="date optional">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value="6">6</option>
-          <option value="7">7</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-        </select>
-      </div>
-    
-    
+
       <!-- Checkboxes Vertical Stack -->
-      <h3>Checkboxes Vertical Stack</h3>
-      <div class="input boolean optional checkbox_collection--vertical">
-        <label for="checkbox1" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox1" id="checkbox1" class="boolean optional">
-          Option 1
-        </label>
-    
-        <label for="checkbox2" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox2" id="checkbox2" class="boolean optional">
-          Option 2
-        </label>
-    
-        <label for="checkbox3" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox3" id="checkbox3" class="boolean optional">
-          Option 3
-        </label>
-    
-        <label for="checkbox4" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox4" id="checkbox4" class="boolean optional">
-          Option 4
-        </label>
-      </div>
-    
-    
-      <!-- Checkboxes Horizontal Stack -->
-      <h3>Checkboxes Horizontal Stack</h3>
-      <div class="input boolean optional checkbox_collection--horizontal">
-        <label for="checkbox11" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox11" id="checkbox11" class="boolean optional">
-          Option 1
-        </label>
-    
-        <label for="checkbox12" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox12" id="checkbox12" class="boolean optional">
-          Option 2
-        </label>
-    
-        <label for="checkbox13" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox13" id="checkbox13" class="boolean optional">
-          Option 3
-        </label>
-    
-        <label for="checkbox14" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox14" id="checkbox14" class="boolean optional">
-          Option 4
-        </label>
-    
-        <label for="checkbox15" class="boolean optional control-label checkbox">
-          <input type="checkbox" value="1" name="checkbox15" id="checkbox15" class="boolean optional">
-          Option 5
-        </label>
-      </div>
-    
-    
-      <!-- Field with Action Button -->
-      <div class="input">
-        <label for="input1" class="control-label">
-          Field with Action Button
-        </label>
-        <input type="text" class="string" id="input1">
-        <input type="submit" value="Add Item">
-      </div>
-    
-    
-      <!-- Keyword Input Filter Area -->
-      <h3>Keyword Filter Area</h3>
-      <div class="js-filter-form table-filter-area">
-        <h2>Search Something</h2>
-        <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
-      </div>
-    
-      <br><br>
-    
-      <!-- Buttons -->
-      <h3>Buttons</h3>
-      <input type="submit" value="Submit">
-      <button class="file_input-button" type="button">Button</button>
+      <%= f.association :events, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--vertical' } %>
+
     </div>
   </div>
 <% end %>

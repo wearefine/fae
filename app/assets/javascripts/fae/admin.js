@@ -19,6 +19,12 @@ var Admin = {
       }
     });
 
+    $(".datepicker input").datepicker({
+      inline: true,
+      showOtherMonths: true,
+      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    });
+
     
 
     Admin.image_delete_links();
@@ -128,11 +134,11 @@ var Admin = {
         $(this).toggleClass("js-active");
       })
       // for checkboxes
-      .on('click', '.input.boolean label', function(e){
+      .on('click', '.checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
         $(this).toggleClass("js-active");
       })
       // stop the event bubbling and running the above toggleClass twice
-      .on('click', '.input.boolean :checkbox', function(e){
+      .on('click', '.checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
         e.stopPropagation();
       })
       // for ajax forms. gotta hijack before it's submitted for some slide up action.
@@ -147,7 +153,7 @@ var Admin = {
       });
 
     // Run through the checkboxes and see if they are checked. apply js class for styling.
-    $('.input.boolean label').each(function(){
+    $('.checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
       if ($(this).find(":checkbox:checked").length > 0) {
         $(this).addClass("js-active");
       }

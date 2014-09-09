@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.ui.sortable
+//= require jquery.ui.datepicker
 //  require jquery.ui.effect-highlight
 //= require chosen.jquery.min
 //= require jquery.tablesorter.min

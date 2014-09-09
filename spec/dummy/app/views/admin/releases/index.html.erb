@@ -3,28 +3,63 @@
 <div class="main_content-sections">
   <section class="main_content-section">
     <div class="main_content-section-area">
-      <table class="main_content-sortable">
+
+    <!-- Table Filter Area -->
+    <form class="js-filter-form table-filter-area">
+      <h2>Search Releases</h2>
+      
+      <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
+      
+      <div class="table-filter-group">
+        <label for="filter_city">Select Box</label>
+        <select>
+          <option value="">Select an Option</option>
+          <option value="1">option 1</option>
+          <option value="2">optoin 2</option>
+          <option value="3">option 3</option>
+        </select>
+      </div>
+
+      <div class="table-filter-group">
+        <label for="filter_city">Input</label>
+        <input type="text" />
+      </div>
+
+      <div class="table-filter-controls">
+        <input type="submit" value="Apply Filters">
+        <input type="submit" value="Reset Search" class="js-reset-btn table-filter-reset">
+      </div>
+    </form>
+    <!--  -->
+
+      <table class="index_table main_table-sort_columns">
         <thead>
           <tr>
-            <th class="main_content-sortable-handle-col"></th>
             <th>Name</th>
             <th>Modified</th>
+            <th>Slug</th>
+            <th>Price</th>
             <th class="main_table-header-live" data-sorter="false">On Stage</th>
             <th class="main_table-header-live" data-sorter="false">On Prod</th>
-            <th data-sorter="false"><%= test_method %></th>
+            <th class="main_table-header-edit" data-sorter="false">Edit</th>
+            <th class="main_table-header-delete" data-sorter="false">Delete</th>
           </tr>
         </thead>
 
         <tbody>
           <% @items.each do |item| %>
             <tr id="release_<%= item.id %>">
-              <td class="main_content-sortable-handle">
-                <span class="icon-sort"></span>
-              </td>
               <td class="main_table-description-item"><%= link_to item.name, edit_admin_release_path(item) %></td>
               <td><%= item.updated_at %></td>
+              <td><%= item.slug %></td>
+              <td><%= item.price %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
+              <td class="main_table-edit">
+                <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
+                  <span class="icon-edit"></span>
+                <% end %>
+              </td>
               <td class="main_table-delete">
                 <%= link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
                   <span class="icon-delete_x"></span>
