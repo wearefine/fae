@@ -1,43 +1,39 @@
 module Fae
   module FormHelper
 
-    def test_method
-      link_to('test', '#')
-    end
-
     def fae_input(f, attribute, options={})
-      content_tag :div, class: "input #{(options.delete(:wrapper_class) if options[:wrapper_class])}" do
-        
-        concat label_tag("#{@klass_singular}_#{attribute}", attribute.to_s.titleize, class: ('required' if options[:required]))
+      class_option options
+      label_and_hint_for(attribute, options)
 
-        if options[:helper_text]
-          concat content_tag :h6, options[:helper_text], class: 'helper_text'
-        end
-
-        concat f.input_field attribute, options
-
-        if options[:hint]
-          concat content_tag :div, options[:hint].html_safe, class: 'hint'
-        end
-      end
+      f.input attribute, options
     end
 
-    def fae_currency(f, attribute, options={})
-      content_tag :div, class: "input input-icon-currency" do
-        
-        concat label_tag("#{@klass_singular}_#{attribute}", attribute.to_s.titleize, class: ('required' if options[:required]))
 
-        if options[:helper_text]
-          concat content_tag :h6, options[:helper_text], class: 'helper_text'
+    def fae_prefix(f, attribute, options={})
+      if options[:prefix].present?
+        case options[:prefix]
+        when "$"
+          prefix_class = "input-icon-currency"
+        when "%"
+          prefix_class = "input-icon-percentage"
+        else
+          #TODO - we can ignore the fact that their prefix isn't a valid prefix, or we can raise an error
         end
-
-        concat f.input_field attribute, options
-
-        if options[:hint]
-          concat content_tag :div, options[:hint].html_safe, class: 'hint'
-        end
+        options[:wrapper_html] = { class: prefix_class }
       end
+
+      fae_input f, attribute, options
     end
 
+    private
+
+    def label_and_hint_for(attribute, options)
+      options[:label] = "#{ options[:label] || attribute.to_s.titleize }<h6 class='helper_text'>#{options[:helper_text]}</h6>".html_safe if options[:helper_text].present?
+      options[:hint] = options[:hint].html_safe if options[:hint].present?
+    end
+
+    def class_option options
+      options[:input_html] = { class: options[:class] } if options[:class].present?
+    end
   end
 end

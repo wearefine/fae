@@ -9,7 +9,7 @@
 
   <div class="main_content-sections">
   <div class="main_content-section-area">
-    
+
       <!-- Long Field with Helper Text -->
       <%= fae_input f, :name, {
         helper_text: 'Long Field with Helper Text'
@@ -25,38 +25,39 @@
           List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
           List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1'
       } %>
-    
-    
+
+
       <!-- Input with icon on left -->
-      <%= fae_currency f, :price, {
-        helper_text: 'With icon in input'
+      <%= fae_prefix f, :price, {
+        helper_text: 'With icon in input',
+        prefix: '$'
       } %>
-    
-    
+
+
       <!-- Large Pulldown -->
       <%= f.association :varietal %>
-    
-    
+
+
       <!-- Small Pulldown -->
       <%= f.association :wine, input_html: { class: 'small_pulldown' } %>
-    
-    
+
+
       <!-- Multiselect from a dropdown -->
       <%= f.association :acclaims, label_method: :publication, value_method: :id %>
-    
+
 
       <!-- Multiselect using two panels -->
       <%= f.association :selling_points, input_html: { class: 'multiselect' } %>
-    
-    
+
+
       <!-- Radio Buttons Vertical Stack -->
       <%= f.input :on_stage, as: :radio_buttons, wrapper_html: { class: 'radio_collection--vertical' } %>
-    
-    
+
+
       <!-- Radio Buttons Horizontal Stack -->
       <%= f.input :on_prod, as: :radio_buttons, wrapper_html: { class: 'radio_collection--horizontal' } %>
-    
-    
+
+
       <!-- Text Areas -->
       <%= fae_input f, :body, {
           helper_text: 'Text Area wtih Hint Pop Up',
