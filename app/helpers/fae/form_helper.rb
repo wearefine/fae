@@ -24,7 +24,7 @@ module Fae
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
 
-      options[:wrapper_class] = options[:wrapper_class].present? ? options[:wrapper_class] += " #{options[:alignment]}" : options[:alignment]
+      options[:wrapper_class] = options[:wrapper_class].present? ? "#{options[:wrapper_class]} #{options[:alignment]}" : options[:alignment]
       fae_input f, attribute, options
     end
 
@@ -42,6 +42,7 @@ module Fae
 
     def symbol(type, val, options)
       options[:as] = :symbol
+      options[:wrapper_class] = options[:wrapper_class].present? ? "#{options[:wrapper_class]} input symbol--#{type}" : "input symbol--#{type}"
       options[:span_class]  = "input-symbol--#{type}"
       options[:span_class] += " icon-#{val}" if options[:icon].present?
 

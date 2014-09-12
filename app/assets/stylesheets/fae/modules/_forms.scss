@@ -19,17 +19,12 @@ label {
   }
 }
 
-label h6, .helper_text {
+label h6 {
   padding-top: 10px;
   font-size: 13px;
   color: #999;
   font-weight: normal;
   font-style: italic;
-}
-
-.helper_text {
-  position: relative;
-  bottom: 10px;
 }
 
 .hint {
@@ -710,32 +705,43 @@ input.string {
 }
 
 // Inputs with icon
-%input-icon {
+%input-symbol {
+  position: absolute;
+  bottom: 0;
+  border: 0 solid $c-lightest_grey;
+  padding: 15px 16px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: $c-light_grey;
+}
+
+.symbol {
   position: relative;
   width: 240px;
 
-  input[type=text] {
+  input {
+    width: 100%;
+  }
+
+  &.symbol--prefix input {
     padding-left: 50px;
   }
 
-  &:before {
-    @include icon-stuff();
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding:  12px;
-    border-right: 1px solid $c-lightest_grey;
-    font-size: 17px;
-    color: $c-lighter_grey;
+  &.symbol--suffix input {
+    padding-right: 50px;
   }
 }
 
-.input-icon-calendar {
-  @extend %input-icon;
+.input-symbol--prefix {
+  @extend %input-symbol;
+  left: 0;
+  border-right-width: 1px;
+}
 
-  &:before {
-    @extend .icon-calendar:before;
-  }
+.input-symbol--suffix {
+  @extend %input-symbol;
+  right: 0;
+  border-left-width: 1px;
 }
 
 .datepicker {
@@ -754,26 +760,6 @@ input.string {
     bottom: 0;
     padding: 12px;
     font-size: 19px;
-    color: $c-light_grey;
-  }
-}
-
-.input-icon-currency {
-  position: relative;
-  width: 240px;
-
-  input[type=text] {
-    padding-left: 50px;
-  }
-
-  &:before {
-    content: "$";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 15px 16px;
-    border-right: 1px solid $c-lightest_grey;
-    font-size: 14px;
     color: $c-light_grey;
   }
 }
