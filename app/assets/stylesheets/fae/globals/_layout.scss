@@ -8,13 +8,13 @@
 	min-height: calc(100% - 90px); /* roughly the size of the header */
 
 	@include bp(show_nav) {
-		padding-left: 210px; /* must be equal to #main_nav width plus gradient line width */
+		padding-left: $main_nav_width;
 	}
 
 	&:before {
 		content: "";
 		position: absolute;
-		left: 200px; /* must be equal to #main_nav width */
+		left: $main_nav_width - 10px;
 		top: 0;
 		width: 10px;
 		height: 100%;

@@ -2,9 +2,9 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 210px;
+	width: $main_nav_width;
 	height: 100%;
-	margin-left: -210px;
+	margin-left: -$main_nav_width;
 	overflow: auto;
 	padding: 10px 5px 10px 0;
 	background: url(/assets/fae/bg_tile.gif);
