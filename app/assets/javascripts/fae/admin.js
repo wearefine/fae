@@ -25,7 +25,7 @@ var Admin = {
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     });
 
-    
+
 
     Admin.image_delete_links();
 
@@ -39,8 +39,8 @@ var Admin = {
     $("th.main_table-checkbox").checkboxer();
 
     // sticket header for the content area
-    $(".main_content-header").sticky({ min_tablet: true });
-    $("#main_nav").sticky({ make_placeholder: false, min_tablet: true});
+    $(".main_content-header").sticky({ offset: 0, min_desktop: true });
+    $("#main_nav").sticky({ offset: 0, make_placeholder: false, min_desktop: true});
 
     // sort columns in tables if applicable
     $(".main_table-sort_columns").tablesorter();
