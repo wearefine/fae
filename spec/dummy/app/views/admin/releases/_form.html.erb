@@ -28,11 +28,10 @@
 
 
       <!-- Input with icon on left -->
-      <%= fae_prefix f, :price, {
-        helper_text: 'With icon in input',
-        prefix: '$'
-      } %>
-
+      <%= fae_prefix f, :price, 'calendar', {
+        helper_text: 'prefix field here!',
+        icon: true
+        } %>
 
       <!-- Large Pulldown -->
       <%= f.association :varietal %>
