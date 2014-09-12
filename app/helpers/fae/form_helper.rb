@@ -8,8 +8,6 @@ module Fae
       f.input attribute, options
     end
 
-
-
     def fae_prefix(f, attribute, text,  options={})
       symbol 'prefix', text, options
       fae_input f, attribute, options
@@ -17,6 +15,16 @@ module Fae
 
     def fae_suffix(f, attribute, text, options={})
       symbol 'suffix', text, options
+      fae_input f, attribute, options
+    end
+
+    def fae_radio(f, attribute, options={})
+      options[:as] = :radio_collection
+
+      options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
+      options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
+
+      options[:wrapper_class] = options[:wrapper_class].present? ? options[:wrapper_class] += " #{options[:alignment]}" : options[:alignment]
       fae_input f, attribute, options
     end
 
@@ -29,6 +37,7 @@ module Fae
 
     def custom_options options
       options[:input_html] = { class: options[:class] } if options[:class].present?
+      options[:wrapper_html] = { class: options[:wrapper_class]} if options[:wrapper_class].present?
     end
 
     def symbol(type, val, options)

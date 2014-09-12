@@ -187,17 +187,6 @@ var Admin = {
     this.city_district_selector();
     this.slugger();
     this.ad_form.init();
-    this.radio_buttons();
-  },
-
-  radio_buttons: function() {
-    $(".radio_collection--vertical, .radio_collection--horizontal").find(".radio").each(function(index, elm){
-      var $area = $(this);
-      if ($(this).find(".radio_collection-bullet").length === 0) {
-        var $bullet = $(document.createElement("span")).addClass("radio_collection-bullet");
-        $bullet.insertAfter($area.find("input"));
-      }
-    });
   },
 
   sortable: function() {
@@ -216,7 +205,7 @@ var Admin = {
         $helper.children().each(function(index) {
           // Set helper cell sizes to match the original sizes
           $(this).width($originals.eq(index).width());
-          //set the THs width so they don't go collapsey 
+          //set the THs width so they don't go collapsey
           $ths.eq(index).width($ths.eq(index).width());
         });
         return $helper;
