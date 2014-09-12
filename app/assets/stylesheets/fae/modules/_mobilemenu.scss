@@ -1,6 +1,6 @@
 .js-menu-active {
   body {
-    margin-left: 210px;
+    margin-left: $main_nav_width;
   }
 
   #main_nav {
@@ -8,7 +8,7 @@
   }
 
   #main_header {
-    margin-left: 210px;
+    margin-left: $main_nav_width;
   }
 
   #main_nav-menu_button:after {
@@ -34,8 +34,8 @@
   top: 0;
   left: 0;
   height: 100%;
-  width: 210px;
-  margin-left: -210px;
+  width: $main_nav_width;
+  margin-left: -$main_nav_width;
   overflow: auto;
   @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
 

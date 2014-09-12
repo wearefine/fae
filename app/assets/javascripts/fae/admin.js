@@ -222,7 +222,7 @@ var Admin = {
         var object = serial.substr(0, serial.indexOf('['));
 
         $.ajax({
-          url: '/sort/'+object,
+          url: '/'+Admin.path+'/sort/'+object,
           type: 'post',
           data: serial,
           dataType: 'script',
