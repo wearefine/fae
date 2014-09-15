@@ -10,4 +10,7 @@ class Release < ActiveRecord::Base
   has_many :selling_points, through: :release_selling_points
   accepts_nested_attributes_for :release_selling_points
 
+  has_many :event_releases
+  has_many :events, through: :event_releases
+
 end

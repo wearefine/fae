@@ -8,23 +8,70 @@
   </section>
 
   <div class="main_content-sections">
-    <section class="main_content-section">
-      <div class="main_content-section-area">
-        <%# f.input :name %>
-        <%= fae_input f, :name, {
-          input_html: { class: 'slugger' }
+  <div class="main_content-section-area">
+
+      <!-- Long Field with Helper Text -->
+      <%= fae_input f, :name, {
+        helper_text: 'Long Field with Helper Text',
+        hint: '<h3>Markdown options</h3>'
+      } %>
+
+
+      <!-- Long Field -->
+      <%= fae_input f, :slug, {
+        helper_text: 'Long Field with Helper Text',
+        class: 'custom_class',
+        hint: '<h3>Markdown Options</h3><br>
+          Link | Internal: See my [About](/about/) page for details.<br>
+          Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
+          List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
+          List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1'
+      } %>
+
+
+      <!-- Input with icon on left -->
+      <%= fae_prefix f, :price, '$', {
+        helper_text: 'prefix field here!',
         } %>
-        <%= fae_input f, :slug, {
-          input_html: { class: 'slug' }
+
+      <!-- Large Pulldown -->
+      <%= f.association :varietal %>
+
+
+      <!-- Small Pulldown -->
+      <%= f.association :wine, input_html: { class: 'small_pulldown' } %>
+
+
+      <!-- Multiselect from a dropdown -->
+      <%= f.association :acclaims, label_method: :publication, value_method: :id %>
+
+
+      <!-- Multiselect using two panels -->
+      <%= f.association :selling_points, input_html: { class: 'multiselect' } %>
+
+
+      <!-- Radio Buttons Vertical Stack -->
+      <%= fae_radio f, :on_stage %>
+
+
+      <!-- Radio Buttons Horizontal Stack -->
+      <%= fae_radio f, :on_prod, {type: 'inline', class: 'something'} %>
+
+
+      <!-- Text Areas -->
+      <%= fae_input f, :body, {
+          helper_text: 'Text Area wtih Hint Pop Up',
+          hint: '<h3>Markdown Options</h3><br>
+          Link | Internal: See my [About](/about/) page for details.<br>
+          Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
+          List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
+          List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1'
         } %>
 
-        <%= f.association :acclaims, label_method: :publication, value_method: :id %>
 
-        <%= f.association :wine %>
-        <%= f.association :varietal %>
+      <!-- Checkboxes Vertical Stack -->
+      <%= f.association :events, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--vertical' } %>
 
-        <%= f.association :selling_points %>
-      </div>
-    </section>
+    </div>
   </div>
 <% end %>

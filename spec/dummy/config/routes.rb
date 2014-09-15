@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     resources :varietals
     resources :acclaims
     resources :selling_points
+    resources :events
+    resources :people
   end
   mount Fae::Engine => "/admin"
 end

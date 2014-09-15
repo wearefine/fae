@@ -1,29 +1,46 @@
 #main_nav {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
-	width: 210px;
+	width: $main_nav_width;
 	height: 100%;
+	margin-left: -$main_nav_width;
 	overflow: auto;
-	padding: 10px;
+	padding: 10px 5px 10px 0;
 	background: url(/assets/fae/bg_tile.gif);
-
 	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+	@include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
+
+	@include bp(show_nav) {
+		position: absolute;
+		padding: 10px;
+		margin-left: 0;
+	}
 }
 
 .main_nav-nav > li {
 	margin-bottom: 3px;
+
+	&.main_nav-header-mobile {
+		margin-bottom: 0;
+		margin-right: -5px;
+		@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+	}
 }
 
 .main_nav-sub-nav {
-	display: none;
-	background: $c-nav-sub-bg-active;
+	background: url(/assets/fae/bg_tile.gif);
+
+	@include bp(show_nav) {
+		background: $c-nav-sub-bg-active;
+	}
 }
 
 %main_nav-all_links {
 	display: block;
 	color: $c-text;
 	@include transition(background, .2s);
+
 	&:hover {
 		color: $c-nav-link;
 		background: $c-nav-bg-hover;
@@ -55,18 +72,124 @@
 
 	.accordion-open.main_nav-accordion & {
 		&:after {
+			display: none;
 			@extend .icon-chevron_up:before;
+
+			@include bp(show_nav) {
+				display: inline-block;
+			}
 		}
+	}
+}
+
+.header_drawer-content {
+	@extend %main_nav-all_links;
+	position: relative;
+	padding: 15px 10px 15px 20px;
+	cursor: pointer;
+
+  @include bp(show_nav) {
+    display: none;
+    padding: 10px;
+  }
+
+	&:after {
+		position: absolute;
+		right: 13px;
+		top: 18px;
+		font-size: 8px;
+		color: $c-nav-icons;
+		@include icon_stuff();
+		@extend .icon-chevron_right:before;
+		@include transition(color, .2s);
+	}
+
+	&:hover:after {
+		color: $c-nav-icons-hover;
+	}
+}
+
+.header_drawer-content-post {
+  display: none;
+
+  @include bp(show_nav) {
+    display: inline;
+  }
+}
+
+.header_drawer-content-username {
+	display: block;
+	position: relative;
+	padding: 15px 10px 15px 20px;
+	cursor: pointer;
+	color: $c-black;
+	background: $c-lighter_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+  @include bp(show_nav) {
+    display: none;
+  }
+}
+
+.header_drawer-content.header_drawer-content-logout {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-logout:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.header_drawer-content.header_drawer-content-settings {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-settings:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.header_drawer-content.header_drawer-content-support {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-support:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.header_drawer-content.header_drawer-content-viewsite {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-offlink:before;
+		top: 15px;
+		font-size: 16px;
 	}
 }
 
 .main_nav-sub-link {
 	@extend %main_nav-all_links;
-	padding: 10px 10px 10px 20px;
+	padding: 15px 10px 15px 20px;
 	font-size: 14px;
+
+	@include bp(show_nav) {
+		padding: 10px 10px 10px 20px;
+	}
 }
 
-.main_nav-link-dashboard a {
+.main_nav-link-dashboard a, .main_nav-link-dashboard .header_drawer-content {
 	position: relative;
 
 	&:after {
@@ -85,7 +208,7 @@
 	}
 }
 
-.main_nav-link-users a.main_nav-link {
+.main_nav-link-users a, .main_nav-link-users .header_drawer-content {
 	position: relative;
 
 	&:after {
@@ -95,7 +218,7 @@
 		font-size: 15px;
 		color: $c-nav-icons;
 		@include icon_stuff();
-		@extend .icon-user:before;
+		@extend .icon-users:before;
 	}
 
 	&:hover:after {
@@ -104,46 +227,51 @@
 }
 
 /* when the main nav is active */
-.main_nav-active {
-	background: $c-nav-sub-bg-active;
-	.main_nav-link {
-		color: $c-nav-link;
+@include bp(show_nav) {
+	.main_nav-active {
+		background: $c-nav-sub-bg-active;
+		.main_nav-link {
+			color: $c-nav-link;
+		}
+
+		& .main_nav-sub-nav {
+			display: block;
+		}
+
+		.main_nav-sub-active  {
+			display: block;
+			background: $c-nav-sub-bg-active-highlight;
+
+			.main_nav-sub-link {
+				padding-left: 15px;
+				border-left: 5px solid $c-custom-highlight;
+				color: $c-custom-highlight;
+			}
+		}
 	}
 
-	& .main_nav-sub-nav {
-		display: block;
-	}
+	.main_nav-active-single {
+		background: $c-nav-sub-bg-active;
 
-	.main_nav-sub-active  {
-		display: block;
-		background: $c-nav-sub-bg-active-highlight;
-
-		.main_nav-sub-link {
-			padding-left: 15px;
+		.main_nav-link {
+			padding-left: 5px;
 			border-left: 5px solid $c-custom-highlight;
 			color: $c-custom-highlight;
 		}
 	}
 }
 
-.main_nav-active-single {
-	background: $c-nav-sub-bg-active;
-
-	.main_nav-link {
-		padding-left: 5px;
-		border-left: 5px solid $c-custom-highlight;
-		color: $c-custom-highlight;
-	}
-}
-
-
 /* Utility nav. View Site, Support, Username, etc */
 #main_header .utility_nav {
+	display: none;
 	position: absolute;
 	right: 20px;
 	top: -webkit-calc(50% - .5em);
 	top: calc(50% - .5em);
 
+	@include bp(show_nav) {
+		display: block;
+	}
 
 	.utility_nav-clicked {
 		color: white;
@@ -219,22 +347,23 @@
 
 		span {
 			display: inline-block;
-			vertical-align: baseline;
-			font-size: 14px;
+			vertical-align: bottom;
+			font-size: 13px;
 			margin-left: 5px;
 
 			&.icon-support {
-				font-size: 16px;
+				font-size: 15px;
 			}
 
 			&.icon-arrow_down {
-				font-size: 4px;
+				font-size: 3px;
 				margin-left: 0;
+				vertical-align: middle;
 			}
 		}
 	}
 
-	@include bp(page-header-save-block) {
+	@include bp(page_header_save_block) {
 		position: relative;
 		top: 0;
 		right: 0;
@@ -242,6 +371,21 @@
 	}
 }
 
-.accordion-open {
-	background: $c-nav-sub-bg-active;
+@include bp(show_nav) {
+	.accordion-open {
+		background: $c-nav-sub-bg-active;
+	}
+}
+
+#main_nav-menu_button {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 18px;
+	cursor: pointer;
+	color: $c-white;
+
+	@include bp(show_nav) {
+		display: none;
+	}
 }

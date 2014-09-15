@@ -1,3 +1,17 @@
+/* Functions */
+
+/* Helper for finding value in a faux sass hash -- i.e. a list */
+@function match($collection, $value) {
+	@each $item in $collection {
+		$index: index($item, $value);
+		@if $index {
+			$return: if($index == 1, 2, $index);
+			@return nth($item, $return);
+		}
+	}
+	@return false;
+}
+
 /* Mixins */
 
 @mixin transition($type, $time, $easing: ease-in-out) {
@@ -114,25 +128,10 @@
 @mixin bp($point) {
 	$bp: "";
 
-	$desktop: "(min-width: 800px)";
-
-	/* functional names */
-	$page-header-save-block: "(max-width: 615px)";
-	$login-container: "(min-width: 750px)";
-	$login-submit: "(min-width: 475px)";
-	
-	@if $point == page-header-save-block {
-		$bp: $page-header-save-block;
-	} @else if $point == login-container {
-		$bp: $login-container;
-	} @else if $point == login-submit {
-		$bp: $login-submit;
-	} @else if $point == desktop {
-		$bp: $desktop;
-	}
+	$bp: match($breakpoints, $point);
 
 	@if ($useMediaQueries) {
-		@media #{$bp} {
+		@media (#{$bp}) {
 			@content;
 		}
 	} @else {

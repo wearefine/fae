@@ -22,7 +22,7 @@ var Hinter = {
 		// create the visuals
 		this.make_icon();
 		this.clicker();
-		this.hover();
+		// this.hover();
 	},
 
 	make_icon: function(){

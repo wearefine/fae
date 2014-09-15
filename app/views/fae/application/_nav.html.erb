@@ -24,11 +24,15 @@
 					main_class << " #{item[:class_name]}"
 				end
 		%>
-			<li class="<%= main_class %>">
-				<%= link_to item[:text], item[:path], class: "main_nav-link" %>
+			<%= content_tag :li, class: main_class do %>
+        <span class="main_nav-header">
+          <span class="header_drawer-content-post"><%= link_to item[:text], item[:path], class: "main_nav-link" %></span>
+          <span class="header_drawer-content"><%= item[:text] %></span>
+        </span>
 
 				<% if hasSublinks %>
 					<ul class="main_nav-sub-nav">
+						<li class="main_nav-sub-header-mobile"><span><%= item[:text] %></span></li>
 						<%
 							item[:sublinks].each do |subitem|
 								# if the current page is the same as one of these nav items
@@ -40,7 +44,33 @@
 						<% end %>
 					</ul>
 				<% end %>
-			</li>
+			<% end %>
 		<% end %>
+		<% if user_signed_in? %>
+      <li class="main_nav-header-mobile">
+        <span class="header_drawer-content-username"><%= current_user.full_name %></span>
+      </li>
+      <li class="main_nav-header-mobile">
+        <%= link_to "Log Out", "#", class: "header_drawer-content header_drawer-content-logout" %>
+      </li>
+      <li class="main_nav-header-mobile">
+        <%= link_to "Your Settings", "#", class: "header_drawer-content header_drawer-content-settings" %>
+      </li>
+      <li class="main_nav-header-mobile">
+        <%= link_to "Support", "#", class: "header_drawer-content header_drawer-content-support" %>
+      </li>
+
+      <li class="main_nav-header-mobile">
+        <span class="main_nav-header">
+          <span class="header_drawer-content header_drawer-content-viewsite">View Site</span>
+        </span>
+
+        <ul class="main_nav-sub-nav">
+          <li class="main_nav-sub-header-mobile"><span>View Site</span></li>
+          <li><%= link_to "Preview Site", "#", class: "main_nav-sub-link" %></li>
+          <li><%= link_to "Live Site", "#", class: "main_nav-sub-link" %></li>
+        </ul>
+      </li>
+    <% end %>
 	</ul>
 </nav>
