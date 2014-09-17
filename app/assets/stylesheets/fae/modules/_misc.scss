@@ -86,7 +86,12 @@
   }
 }
 
-#main_content > .error {
+.sample .notice {
+  display: block !important;
+  height: 58px !important;
+}
+
+#main_content > .error, .sample .error {
   @extend %alerts;
   border-color: $c-error-content;
   background: $c-error-bg;

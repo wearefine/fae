@@ -1,4 +1,4 @@
-table {
+.index_table {
 	width: 100%;
 	border: 1px solid $c-border;
 	border-collapse: separate;
@@ -11,11 +11,11 @@ table {
 				border-left: 3px solid $c-table-tr-even;
 			}
 		}
-
+		
 		&:hover {
 			td {
 				background: $c-table-tr-hover;
-
+				
 
 				&:first-child {
 					border-left: 3px solid $c-custom-highlight;
@@ -31,44 +31,44 @@ table {
 			}
 		}
 	}
-}
 
-th, td {
-	vertical-align: middle;
-	font-size: 13px;
-	text-align: left;
-}
+	th, td {
+		vertical-align: middle;
+		font-size: 13px;
+		text-align: left;
+	}
 
-th {
-	padding: 15px 10px;
-	border-bottom: 1px solid $c-border;
-	vertical-align: middle;
-	font-weight: bold;
-	color: $c-text-heavy;
-	background: $c-table-th;
-}
-
-td {
-	padding: 14px 10px;
-	background-color: $c-table-td;
-}
-
-tbody {
-	tr {
-		&:hover {
-			td {
-				background: $c-table-tr-hover;
-
-				&:first-child {
-					border-left: 3px solid $c-custom-highlight;
-				}
-			}
-		}
+	th {
+		padding: 15px 10px;
+		border-bottom: 1px solid $c-border;
+		vertical-align: middle;
+		font-weight: bold;
+		color: $c-text-heavy;
+		background: $c-table-th;
 	}
 
 	td {
-		&:first-child {
-			border-left: 3px solid $c-table-td; /* this blends it in to the background */
+		padding: 14px 10px;
+		background-color: $c-table-td;
+	}
+
+	tbody {
+		tr {
+			&:hover {
+				td {
+					background: $c-table-tr-hover;
+
+					&:first-child {
+						border-left: 3px solid $c-custom-highlight;
+					}
+				}
+			}
+		}
+
+		td {
+			&:first-child {
+				border-left: 3px solid $c-table-td; /* this blends it in to the background */
+			}
 		}
 	}
 }
@@ -99,6 +99,10 @@ tbody {
 
 	&:hover {
 		border-color: $c-border;
+	}
+
+	.icon-edit {
+		font-size: 15px;
 	}
 }
 
@@ -147,9 +151,11 @@ tbody {
 .main_table-checkbox {
 	width: 40px;
 	padding-right: 5px;
+	vertical-align: top;
 
 	thead & {
 		padding-left: 15px;
+		vertical-align: middle;
 	}
 }
 
@@ -239,7 +245,7 @@ tbody {
 		&:hover {
 			border-bottom: 1px solid $c-custom-highlight;
 		}
-
+		
 	}
 
 	&.tablesorter-headerAsc, &.tablesorter-headerDesc {
@@ -247,7 +253,7 @@ tbody {
 	}
 
 	&:after {
-		@extend .icon-arrow_down:before;
+		@extend .icon-arrow_down:before; 
 		float: right;
 		margin-top: -2em;
 		font-size: 4px;
@@ -262,7 +268,7 @@ tbody {
 
 	&:after {
 		visibility: visible;
-		@extend .icon-arrow_down:before;
+		@extend .icon-arrow_down:before; 
 	}
 }
 

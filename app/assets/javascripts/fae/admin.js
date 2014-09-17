@@ -1,15 +1,32 @@
 var Admin = {
 
-  breakpoints: {
-    desktop: 800
-  },
-
-  path: '',
+    breakpoints: {
+      desktop: 800
+    },
 
   init: function(){
     var that = this;
 
-    $("select").chosen();
+    $("select").each(function(index, elm){
+      var $select = $(this);
+      if($select.hasClass("multiselect")) {
+        $select.multiSelect({
+          selectableHeader: "<div class='custom-header'>80 Available Items</div>",
+          selectionHeader: "<div class='custom-header'>5 Added Items</div>"
+        });
+      } else {
+        $select.chosen();
+      }
+    });
+
+    $(".datepicker input").datepicker({
+      inline: true,
+      showOtherMonths: true,
+      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    });
+
+
+
     Admin.image_delete_links();
 
     // input type=file customization
@@ -22,13 +39,25 @@ var Admin = {
     $("th.main_table-checkbox").checkboxer();
 
     // sticket header for the content area
-    $(".main_content-header").sticky();
-    $("#main_nav").sticky({ make_placeholder: false});
+    $(".main_content-header").sticky({ offset: 0, min_desktop: true });
+    $("#main_nav").sticky({ offset: 0, make_placeholder: false, min_desktop: true});
 
     // sort columns in tables if applicable
     $(".main_table-sort_columns").tablesorter();
     $(".main_table-sort_columns-cities").tablesorter({
       sortList: [[1,0]]
+    });
+
+    // button dropdown class toggle
+    $(".button-dropdown").click(function(){
+      $(this).toggleClass("button-dropdown--opened");
+    });
+
+    // button dropdown click anywhere but the dropdown close
+    $("body").click(function(e){
+      if ($(e.target).closest(".button-dropdown").length === 0) {
+        $(".button-dropdown").removeClass("button-dropdown--opened");
+      }
     });
 
     // scroll_to event for non-ajax'd table forms
@@ -105,11 +134,11 @@ var Admin = {
         $(this).toggleClass("js-active");
       })
       // for checkboxes
-      .on('click', '.input.boolean label', function(e){
+      .on('click', '.checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
         $(this).toggleClass("js-active");
       })
       // stop the event bubbling and running the above toggleClass twice
-      .on('click', '.input.boolean :checkbox', function(e){
+      .on('click', '.checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
         e.stopPropagation();
       })
       // for ajax forms. gotta hijack before it's submitted for some slide up action.
@@ -124,7 +153,7 @@ var Admin = {
       });
 
     // Run through the checkboxes and see if they are checked. apply js class for styling.
-    $('.input.boolean label').each(function(){
+    $('.checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
       if ($(this).find(":checkbox:checked").length > 0) {
         $(this).addClass("js-active");
       }
@@ -153,7 +182,6 @@ var Admin = {
       });
     });
 
-    this.set_admin_path();
     this.sortable();
     this.fade_notices();
     this.city_district_selector();
@@ -177,7 +205,7 @@ var Admin = {
         $helper.children().each(function(index) {
           // Set helper cell sizes to match the original sizes
           $(this).width($originals.eq(index).width());
-          //set the THs width so they don't go collapsey 
+          //set the THs width so they don't go collapsey
           $ths.eq(index).width($ths.eq(index).width());
         });
         return $helper;
@@ -326,18 +354,13 @@ var Admin = {
 
     $type_select: '',
     $ad_fields: ''
-  },
-
-  set_admin_path: function() {
-    var path_array = window.location.pathname.split( '/' );
-    Admin.path = path_array[1];
   }
 };
 
 
 $(function() {
-  Admin.init();
   Accordion.init();
+  Admin.init();
   AjaxForms.init();
   SubnavHighlighter.init();
 });

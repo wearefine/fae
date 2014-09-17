@@ -14,11 +14,13 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.ui.sortable
+//= require jquery.ui.datepicker
 //  require jquery.ui.effect-highlight
 //= require chosen.jquery.min
 //= require jquery.tablesorter.min
 //  require jquery.Jcrop.min
 //= require jquery.simplemodal.1.4.4
+//= require jquery.multi-select
 //= require imagesloaded.pkgd.min
 //= require touch_punch
 //
@@ -29,5 +31,6 @@
 //= require fae/checkboxer
 //= require fae/fileinputer
 //= require fae/hinter
+//= require fae/mobilemenu
 //= require fae/ajax_forms
 //= require fae/admin

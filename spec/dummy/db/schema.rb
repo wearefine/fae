@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140902233505) do
+ActiveRecord::Schema.define(version: 20140905232047) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -21,6 +21,27 @@ ActiveRecord::Schema.define(version: 20140902233505) do
     t.boolean  "on_prod",     default: false
     t.integer  "position"
     t.integer  "release_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "event_releases", force: true do |t|
+    t.integer  "release_id"
+    t.integer  "event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "event_releases", ["event_id"], name: "index_event_releases_on_event_id", using: :btree
+  add_index "event_releases", ["release_id"], name: "index_event_releases_on_release_id", using: :btree
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "event_type"
+    t.string   "city"
+    t.integer  "person_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -63,6 +84,13 @@ ActiveRecord::Schema.define(version: 20140902233505) do
   add_index "fae_users", ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true, using: :btree
   add_index "fae_users", ["role_id"], name: "index_fae_users_on_role_id", using: :btree
   add_index "fae_users", ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "people", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "event_id"
+  end
 
   create_table "release_selling_points", force: true do |t|
     t.integer  "release_id"

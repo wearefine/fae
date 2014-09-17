@@ -1,4 +1,4 @@
-<%= render 'fae/shared/index_header', title: 'Wines' %>
+<%= render 'fae/shared/index_header', title: 'Events' %>
 
 <div class="main_content-sections">
   <section class="main_content-section">
@@ -9,8 +9,6 @@
             <th class="main_content-sortable-handle-col"></th>
             <th>Name</th>
             <th>Modified</th>
-            <th class="main_table-header-live" data-sorter="false">On Stage</th>
-            <th class="main_table-header-live" data-sorter="false">On Prod</th>
             <th data-sorter="false"></th>
           </tr>
         </thead>
@@ -21,10 +19,8 @@
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
-              <td class="main_table-description-item"><%= link_to item.name, edit_admin_wine_path(item) %></td>
+              <td class="main_table-description-item"><%= link_to item.name, edit_admin_event_path(item) %></td>
               <td><%= item.updated_at %></td>
-              <td><%= attr_toggle item, :on_stage %></td>
-              <td><%= attr_toggle item, :on_prod %></td>
               <td class="main_table-delete">
                 <%= link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
                   <span class="icon-delete_x"></span>

@@ -6,12 +6,15 @@
 	position: relative;
 	min-height: 100%;
 	min-height: calc(100% - 90px); /* roughly the size of the header */
-	padding-left: 210px; /* must be equal to #main_nav width plus gradient line width */
+
+	@include bp(show_nav) {
+		padding-left: $main_nav_width;
+	}
 
 	&:before {
 		content: "";
 		position: absolute;
-		left: 200px; /* must be equal to #main_nav width */
+		left: $main_nav_width - 10px;
 		top: 0;
 		width: 10px;
 		height: 100%;
@@ -22,7 +25,6 @@
 /* content secitons */
 .main_content-section {
 	width: 100%;
-	overflow-x: auto;
 
 	&.extra-bottom-padding {
 		padding-bottom: 200px;
@@ -115,6 +117,10 @@
 	margin-top: 5px;
 	margin-bottom: -15px;
 
+	@include bp(tablet) {
+		padding-right: 240px;
+	}
+
 	a {
 		display: inline-block;
 		vertical-align: top;
@@ -148,15 +154,20 @@
 }
 
 .main_content-header-save {
-	position: absolute;
-	right: 30px;
-	bottom: 0;
+	margin-top: 30px;
+
+	@include bp(tablet) {
+		position: absolute;
+		right: 30px;
+		bottom: 0;
+		margin-top: 0;
+	}
 
 	.main_content-header-section + & {
 		margin-bottom: 30px;
 	}
 
-	@include bp(page-header-save-block) {
+	@include bp(page_header_save_block) {
 		position: relative;
 		top: 0;
 		padding-bottom: 10px;
@@ -175,4 +186,72 @@
 .js-sticky-placeholder {
 	margin-left: -1px;
 	visibility: hidden;
+}
+
+// Button Menu Dropdown
+.button-dropdown.button-dropdown {
+	@extend button[type=button];
+	position: relative;
+	padding: 9px 11px;
+	z-index: 1;
+
+	.icon-settings {
+		font-size: 17px;
+		vertical-align: middle;
+		color: $c-text-sub;
+	}
+
+	&:after {
+		@include icon-stuff();
+		@extend .icon-arrow_down:before;
+		vertical-align: middle;
+		font-size: 5px;
+		color: $c-text-sub;
+	}
+
+	&:hover {
+		&:after, .icon-settings {
+			color: $c-grey;
+		}
+	}
+
+	.button-dropdown-menu {
+		display: none;
+	}
+
+}
+
+.button-dropdown-menu {
+	position: absolute;
+	right: 0;
+	top: 40px;
+	width: 240px;
+	padding: 9px 15px;
+	background: $c-white;
+	z-index: 1;
+	text-align: left;
+
+	@include box-shadow(0, 0, 5px, 1px, $c-box_shadow);
+
+	a {
+		display: block;
+		padding: 5px;
+		color: $c-text;
+	}
+}
+
+.button-dropdown--opened.button-dropdown--opened {
+	&:after, .icon-settings {
+		color: $c-grey;
+	}
+
+	.button-dropdown-menu {
+		display: block;
+	}
+}
+
+.table-button-dropdown {
+	float: right;
+	position: relative;
+	bottom: 10px;
 }

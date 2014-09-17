@@ -1,17 +1,31 @@
 #main_header {
-	position: relative;
-	padding: 25px 20px;
-	background: $c-header-bg;
-	border-bottom: 10px solid $c-custom-highlight;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0 12px 0;
+  background: $c-header-bg;
+  border-bottom: 5px solid $c-custom-highlight;
+  text-align: center;
+  z-index: 1;
+
+  @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
+
+  @include bp(big_header) {
+    position: relative;
+    padding: 25px 20px;
+    border-bottom-width: 10px;
+    text-align: left;
+  }
 }
 
 .main_header-name a {
-	font-size: 24px;
-	color: $c-header-logo;
+  font-size: 24px;
+  color: $c-header-logo;
 }
 
 .main_header-name-fine {
-	margin-left: 10px;
-	font-size: 12px;
-	color: $c-text-sub;
+  margin-left: 10px;
+  font-size: 12px;
+  color: $c-text-sub;
 }
