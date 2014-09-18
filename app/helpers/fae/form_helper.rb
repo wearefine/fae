@@ -8,7 +8,14 @@ module Fae
       f.input attribute, options
     end
 
-    def fae_prefix(f, attribute, text,  options={})
+    def fae_association(f, attribute, options={})
+      custom_options options
+      label_and_hint(attribute, options)
+
+      f.association attribute, options
+    end
+
+    def fae_prefix(f, attribute, text, options={})
       symbol 'prefix', text, options
       fae_input f, attribute, options
     end
@@ -28,16 +35,26 @@ module Fae
       fae_input f, attribute, options
     end
 
-    private
+    def fae_pulldown(f, attribute, options={})
+      if options[:size] == "short"
+        options[:class] = options[:class].present? ? "#{options[:wrapper_class]} small_pulldown" : "small_pulldown"
+      end
 
-    def label_and_hint(attribute, options)
-      options[:label] = "#{ options[:label] || attribute.to_s.titleize }<h6 class='helper_text'>#{options[:helper_text]}</h6>".html_safe if options[:helper_text].present?
-      options[:hint] = options[:hint].html_safe if options[:hint].present?
+      fae_association f, attribute, options
     end
+
+
+
+    private
 
     def custom_options options
       options[:input_html] = { class: options[:class] } if options[:class].present?
       options[:wrapper_html] = { class: options[:wrapper_class]} if options[:wrapper_class].present?
+    end
+
+    def label_and_hint(attribute, options)
+      options[:label] = "#{ options[:label] || attribute.to_s.titleize }<h6 class='helper_text'>#{options[:helper_text]}</h6>".html_safe if options[:helper_text].present?
+      options[:hint] = options[:hint].html_safe if options[:hint].present?
     end
 
     def symbol(type, val, options)

@@ -35,11 +35,11 @@
         } %>
 
       <!-- Large Pulldown -->
-      <%= f.association :varietal %>
+      <%= fae_pulldown f, :varietal %>
 
 
       <!-- Small Pulldown -->
-      <%= f.association :wine, input_html: { class: 'small_pulldown' } %>
+      <%= fae_pulldown f, :wine, {size: "short"} %>
 
 
       <!-- Multiselect from a dropdown -->
@@ -47,7 +47,7 @@
 
 
       <!-- Multiselect using two panels -->
-      <%= f.association :selling_points, input_html: { class: 'multiselect' } %>
+      <%= fae_association f, :selling_points, {class: 'multiselect'} %>
 
 
       <!-- Radio Buttons Vertical Stack -->
@@ -70,6 +70,7 @@
 
 
       <!-- Checkboxes Vertical Stack -->
+      <%#= fae_checkbox f, :events %>
       <%= f.association :events, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--vertical' } %>
 
     </div>
