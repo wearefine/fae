@@ -15,29 +15,50 @@ module Fae
       f.association attribute, options
     end
 
-    def fae_prefix(f, attribute, text, options={})
-      symbol 'prefix', text, options
+    def fae_prefix(f, attribute, options={})
+      raise "undefined method '#{attribute}' for #{f.object}" if is_attribute_or_association?(f, attribute) == false
+      raise "MissingRequiredOption: fae_prefix helper method requires the 'prefix' option." if options[:prefix].blank?
+      symbol 'prefix', options[:prefix], options
       fae_input f, attribute, options
     end
 
-    def fae_suffix(f, attribute, text, options={})
-      symbol 'suffix', text, options
+    def fae_suffix(f, attribute, options={})
+      raise "undefined method '#{attribute}' for #{f.object}" if is_attribute_or_association?(f, attribute) == false
+      raise "MissingRequiredOption: fae_suffix helper method requires the 'suffix' option." if options[:suffix].blank?
+      symbol 'suffix', options[:suffix], options
       fae_input f, attribute, options
     end
+
 
     def fae_radio(f, attribute, options={})
+      raise "MissingRequiredOption: fae_radio requires a 'collection' option with an ActiveRecord#Relation object as its value." if !options.has_key?(:collection) && !f.object.attribute_names.include?(attribute.to_s)
+
       options[:as] = :radio_collection
 
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
 
       options[:wrapper_class] = options[:wrapper_class].present? ? "#{options[:wrapper_class]} #{options[:alignment]}" : options[:alignment]
-      fae_input f, attribute, options
+      association_or_input f, attribute, options
     end
 
     def fae_pulldown(f, attribute, options={})
+      raise "MissingRequiredOption: fae_pulldown requires a multi-dimentional 'collection' or ActiveRecord#Relation object option when using it on an ActiveRecord attribute." if !options.has_key?(:collection) && f.object.attribute_names.include?(attribute.to_s)
+      raise "ImproperOptionValue: The value #{options[:size]} is not a valid option for 'size'. Please use 'short' or 'long'." if options[:size].present? && ['short','long'].include?(options[:size]) == false
+
       if options[:size] == "short"
-        options[:class] = options[:class].present? ? "#{options[:wrapper_class]} small_pulldown" : "small_pulldown"
+        options[:class] = options[:class].present? ? "#{options[:class]} small_pulldown" : "small_pulldown"
+      end
+
+      association_or_input f, attribute, options
+    end
+
+    def fae_multiselect(f, attribute, options={})
+      raise "'#{attribute}' must be an association of #{f.object}" if !is_association?(f, attribute)
+      raise "ImproperOptionValue: The value '#{options[:two_pane]}' is not a valid option for 'two_pane'. Please use a Boolean." if options[:two_pane].present? && !!options[:two_pane] != options[:two_pane]
+
+      if options[:two_pane] == true
+        options[:class] = options[:class].present? ? "#{options[:class]} multiselect" : "multiselect"
       end
 
       fae_association f, attribute, options
@@ -55,6 +76,20 @@ module Fae
     def label_and_hint(attribute, options)
       options[:label] = "#{ options[:label] || attribute.to_s.titleize }<h6 class='helper_text'>#{options[:helper_text]}</h6>".html_safe if options[:helper_text].present?
       options[:hint] = options[:hint].html_safe if options[:hint].present?
+    end
+
+    def is_attribute_or_association?(f, attribute)
+      f.object.respond_to?(attribute)
+    end
+
+    def is_association?(f, attribute)
+      is_attribute_or_association?(f, attribute) && !f.object.attribute_names.include?(attribute.to_s)
+    end
+
+    def association_or_input(f, attribute, options)
+      if is_attribute_or_association?(f, attribute)
+        f.object.attribute_names.include?(attribute.to_s) ? fae_input(f, attribute, options) : fae_association(f, attribute, options)
+      end
     end
 
     def symbol(type, val, options)
