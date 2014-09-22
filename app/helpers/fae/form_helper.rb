@@ -31,8 +31,6 @@ module Fae
 
 
     def fae_radio(f, attribute, options={})
-      raise "MissingRequiredOption: fae_radio requires a 'collection' option with an ActiveRecord#Relation object as its value." if !options.has_key?(:collection) && !f.object.attribute_names.include?(attribute.to_s)
-
       options[:as] = :radio_collection
 
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
@@ -42,8 +40,19 @@ module Fae
       association_or_input f, attribute, options
     end
 
+    def fae_checkbox(f, attribute, options={})
+      options[:as] = :check_boxes
+
+      options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
+      options[:alignment] = 'checkbox_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
+
+      options[:wrapper_class] = options[:wrapper_class].present? ? "#{options[:wrapper_class]} #{options[:alignment]}" : options[:alignment]
+
+      association_or_input f, attribute, options
+    end
+
     def fae_pulldown(f, attribute, options={})
-      raise "MissingRequiredOption: fae_pulldown requires a multi-dimentional 'collection' or ActiveRecord#Relation object option when using it on an ActiveRecord attribute." if !options.has_key?(:collection) && f.object.attribute_names.include?(attribute.to_s)
+      raise "MissingRequiredOption: fae_pulldown requires a 'collection' when using it on an ActiveRecord attribute." if !options.has_key?(:collection) && f.object.attribute_names.include?(attribute.to_s)
       raise "ImproperOptionValue: The value #{options[:size]} is not a valid option for 'size'. Please use 'short' or 'long'." if options[:size].present? && ['short','long'].include?(options[:size]) == false
 
       if options[:size] == "short"

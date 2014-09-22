@@ -55,11 +55,11 @@ The prefix and suffix helpers both have a required option of *prefix* and *suffi
 `fae_prefix f, :amount, prefix: '$'`
 ![Alt text](http://www.afinesite.com/fae/fae_prefix.jpg)
 
-The radio helper allows for an option to align it vertically or horizontally, the default is vertical. It also works for associations with a required 'collection' option that takes a multi-dimentional array or ActiveRecord#Relation object as a value.
-`fae_radio f, :on_prod, alignment: 'stacked'`
+The radio and checkbox helper allows for an option to align it vertically or horizontally, the default is vertical. It also works for associations with an optional 'collection' option that takes an array, multi-dimentional array, or ActiveRecord#Relation object as a value.
+`fae_radio f, :on_prod, type: 'stacked'`
 ![Alt text](http://www.afinesite.com/fae/fae_radio_stacked.png)
 
-`fae_radio f, :on_prod, alignment: 'inline'`
+`fae_checkbox f, :on_prod, type: 'inline'`
 ![Alt text](http://www.afinesite.com/fae/fae_radio_inline.png)
 
 `fae_radio f, :acclaims, collection: Acclaims.all`
@@ -76,6 +76,8 @@ The multiselect helper takes an optional parameter of 'two_pane' which takes a B
 ![Alt text](http://www.afinesite.com/fae/multiselect_dropdown.png)
 `<%= fae_multiselect f, :selling_points, two_pane: true %>`
 ![Alt text](http://www.afinesite.com/fae/multiselect_two_pane.png)
+
+
 
 
 
