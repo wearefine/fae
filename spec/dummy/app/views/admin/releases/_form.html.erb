@@ -30,24 +30,20 @@
 
 
       <!-- Input with icon on left -->
-      <%= fae_prefix f, :price, '$', {
-        helper_text: 'prefix field here!',
-        } %>
+      <%= fae_prefix f, :price, helper_text: 'prefix field here!', prefix: '$' %>
 
       <!-- Large Pulldown -->
-      <%= f.association :varietal %>
+      <%= fae_pulldown f, :varietal %>
 
 
       <!-- Small Pulldown -->
-      <%= f.association :wine, input_html: { class: 'small_pulldown' } %>
+      <%= fae_pulldown f, :wine, size: "short" %>
 
-
-      <!-- Multiselect from a dropdown -->
-      <%= f.association :acclaims, label_method: :publication, value_method: :id %>
-
+      <!-- fae_multiselect {two_pane: false} -->
+      <%= fae_multiselect f, :acclaims, label_method: :publication %>
 
       <!-- Multiselect using two panels -->
-      <%= f.association :selling_points, input_html: { class: 'multiselect' } %>
+      <%= fae_multiselect f, :selling_points, two_pane: true %>
 
 
       <!-- Radio Buttons Vertical Stack -->
@@ -55,7 +51,7 @@
 
 
       <!-- Radio Buttons Horizontal Stack -->
-      <%= fae_radio f, :on_prod, {type: 'inline', class: 'something'} %>
+      <%= fae_radio f, :on_prod, type: 'inline', input_class: 'something' %>
 
 
       <!-- Text Areas -->
@@ -70,7 +66,8 @@
 
 
       <!-- Checkboxes Vertical Stack -->
-      <%= f.association :events, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--vertical' } %>
+      <%= fae_checkbox f, :events %>
+      <%#= f.association :events, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--vertical' } %>
 
     </div>
   </div>

@@ -23,7 +23,7 @@ table_class = ordered ? 'main_content-sortable' : ''
   <%= link_to "Add #{title_singular}", self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link table-add-link' %>
   <%= content_tag :h3, title %>
 
-  <%= render 'flash_messages' %>
+  <%= render 'application/flash_messages' %>
 
   <%= content_tag :table, class: table_class do %>
     <thead>

@@ -10,22 +10,23 @@
   <div class="main_content-sections">
     <section class="main_content-section">
       <div class="main_content-section-area">
-        <%= f.input :name %>
+        <%= fae_input f, :name %>
 
-        <%= f.input :start_date, as: :string, wrapper_html: { class: 'datepicker' } %>
-        <%= f.input :end_date, as: :date %>
+
+        <%= fae_datepicker f, :start_date %>
+
+        <%= f.input :end_date %>
 
         <!-- NO SEARCH -->
-        <%= f.input :event_type, collection: ['Birthday', 'Bar Mitzvah'], wrapper_html: { class: 'select-no_search' } %>
-
+        <%= fae_pulldown f, :event_type, collection: ['Birthday', 'Bar Mitzvah'], search: false %>
 
         <!-- Horizontal Checkboxes -->
-        <%= f.association :people, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--horizontal' } %>
+        <%= fae_checkbox f, :people, type: "inline" %>
 
-        
         <!-- Optgroup examples / Indented Pulldowns -->
         <% states = {'Califonia' => ['Los Angeles', 'San Francisco'], 'Oregon' => ['Portland', 'Boring', 'France']} %>
-        <%= f.input :city, collection: states, as: :grouped_select, group_method: :last, wrapper_html: { class: "select" } %>
+        <%#= fae_grouped_select f, :city, collection: states %>
+        <%= fae_grouped_select f, :city, labels: states.keys , groups: states.values %>
 
       </div>
     </section>
