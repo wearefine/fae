@@ -8,10 +8,7 @@ module Fae
     require 'simple_form'
     require 'jquery-ui-rails'
 
-    # config.to_prepare do
-    #   ApplicationController.helper(FormHelper)
-    # end
-
+    config.railties_order = [:main_app, Fae::Engine, :all]
     config.autoload_paths += %W(#{config.root}/lib)
   end
 

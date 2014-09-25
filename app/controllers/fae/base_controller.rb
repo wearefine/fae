@@ -46,10 +46,11 @@ module Fae
 
   private
 
-    def set_class_variables
+    def set_class_variables(class_name=nil)
       klass_base = params[:controller].split('/').last
+      @klass_name = class_name || klass_base
       @klass = klass_base.classify.constantize
-      @klass_singular = klass_base.singularize
+      @klass_singular = @klass_name.singularize
       @klass_humanized = @klass_singular.humanize
       @index_path = '/'+params[:controller]
       @new_path = @index_path+'/new'
