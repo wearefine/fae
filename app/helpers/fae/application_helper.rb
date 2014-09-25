@@ -21,8 +21,9 @@ module Fae
       end
     end
 
-    def form_header(item)
-      content_tag :h1, "#{params[:action]} #{item.class.name.split('::').last}".titleize
+    def form_header(name)
+      name = name.class.name.split('::').last unless name.is_a? String
+      content_tag :h1, "#{params[:action]} #{name}".titleize
     end
 
     def image_url_with_failover(image, version)
