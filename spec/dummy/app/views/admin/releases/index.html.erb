@@ -50,7 +50,7 @@
           <% @items.each do |item| %>
             <tr id="release_<%= item.id %>">
               <td class="main_table-description-item"><%= link_to item.name, edit_admin_release_path(item) %></td>
-              <td><%= item.updated_at %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td><%= item.slug %></td>
               <td><%= item.price %></td>
               <td><%= attr_toggle item, :on_stage %></td>

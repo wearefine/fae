@@ -20,7 +20,7 @@
                 <span class="icon-sort"></span>
               </td>
               <td class="main_table-description-item"><%= link_to item.name, edit_admin_event_path(item) %></td>
-              <td><%= item.updated_at %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td class="main_table-delete">
                 <%= link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
                   <span class="icon-delete_x"></span>

@@ -22,7 +22,7 @@
                 <span class="icon-sort"></span>
               </td>
               <td class="main_table-description-item"><%= link_to item.name, edit_admin_wine_path(item) %></td>
-              <td><%= item.updated_at %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
               <td class="main_table-delete">

@@ -29,7 +29,7 @@
             <tr>
               <td class="main_table-description-item"><%= link_to "#{user.first_name} #{user.last_name}", edit_user_path(user) %></td>
               <td><%= user.email %></td>
-              <td><%= user.last_sign_in_at %></td>
+              <td><%= fae_date_format user.last_sign_in_at %></td>
               <td><%= attr_toggle user, :active %></td></td>
               <td class="main_table-delete">
                 <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
