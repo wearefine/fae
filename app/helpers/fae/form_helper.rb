@@ -50,7 +50,7 @@ module Fae
     def fae_pulldown(f, attribute, options={})
       raise "MissingRequiredOption: fae_pulldown requires a 'collection' when using it on an ActiveRecord attribute." if !options.has_key?(:collection) && f.object.attribute_names.include?(attribute.to_s)
       raise "ImproperOptionValue: The value #{options[:size]} is not a valid option for 'size'. Please use 'short' or 'long'." if options[:size].present? && ['short','long'].include?(options[:size]) == false
-      raise "ImproperOptionValue: The value #{options[:search]} is not a valid options for 'search'. Please use a Boolean". if options[:search].present? && !!options[:search] != options[:search]
+      raise "ImproperOptionValue: The value #{options[:search]} is not a valid options for 'search'. Please use a Boolean." if options[:search].present? && !!options[:search] != options[:search]
 
       options.update(input_class: "#{options[:input_class]} small_pulldown") if options[:size] == "short"
       options.update(wrapper_class: "#{options[:wrapper_class]} select-no_search") if options[:search] == false

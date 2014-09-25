@@ -25,7 +25,11 @@ var Admin = {
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     });
 
-
+    // daterangepicker instantiation
+    $(".daterangepicker").dateRangePicker({
+      format: "MMM Do, YYYY",
+      separator: ' - '
+    });
 
     Admin.image_delete_links();
 
