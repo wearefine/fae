@@ -643,6 +643,7 @@ input.string {
     padding: 6px 10px;
     background: $c-error-bg;
     color: $c-error-content;
+    font-size: 12px;
 
     &:before {
       @extend .icon-alert;
@@ -658,7 +659,6 @@ input.string {
       @include right-triangle(10px, $c-error-bg);
     }
   }
-}
 
 // pagination
 .pagination {
