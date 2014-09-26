@@ -12,12 +12,13 @@
       <div class="main_content-section-area">
         <%= fae_input f, :name %>
 
-
+        <!-- Date Picker -->
         <%= fae_datepicker f, :start_date %>
 
-        <%= f.input :end_date %>
+        <!-- Date Range Picker -->
+        <%= fae_datepicker f, :start_date, range: true %>
 
-        <%= f.input :start_date, as: :string, input_html: { class: "daterangepicker" } %>
+        <%= f.input :end_date %>
 
         <!-- NO SEARCH -->
         <%= fae_pulldown f, :event_type, collection: ['Birthday', 'Bar Mitzvah'], search: false %>
