@@ -11,7 +11,7 @@ module Fae
     end
 
     def show_404
-      render template: 'pages/error404.html.erb', status: :not_found
+      render template: 'fae/pages/error404.html.erb', status: :not_found
     end
 
     def build_nav
