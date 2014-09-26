@@ -643,6 +643,7 @@ input.string {
     padding: 6px 10px;
     background: $c-error-bg;
     color: $c-error-content;
+    font-size: 12px;
 
     &:before {
       @extend .icon-alert;

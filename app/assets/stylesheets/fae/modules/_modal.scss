@@ -15,16 +15,17 @@
 
 .simplemodal-container {
 	position: relative;
-	padding: 20px;
+	padding: 35px;
 	border-top: 4px solid $c-custom-highlight;
 	background: $c-modal-light-bg;
 	color: $c-text;
-	line-height: 1.2;
+	line-height: 1.5;
+	font-size: 13px;
 	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
 
 	h3 {
 		color: $c-text;
-		margin-bottom: 10px;
+		margin-bottom: 25px;
 		font-size: 20px;
 		font-weight: normal;
 	}
@@ -40,8 +41,26 @@
 	}
 }
 
+.simplemodal-close {
+	&:before {
+		@include icon-stuff();
+		@extend .icon-delete_x:before;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		color: $c-modal-text;
+		cursor: pointer;
+		font-size: 12px;
+
+		.simplemodal-container--dark & {
+			color: $c-white;
+		}
+	}
+}
+
 .simplemodal-container--dark {
 	background: $c-modal-bg;
+	color: $c-light_grey;
 	@include box-shadow(0);
 
 	h3 {
@@ -53,21 +72,5 @@
 .sample-modals {
 	.simplemodal-container {
 		width: 400px;
-	}
-}
-
-.simplemodal-close {
-	&:before {
-		@include icon-stuff();
-		@extend .icon-delete_x:before;
-		position: absolute;
-		top: 15px;
-		right: 20px;
-		color: $c-modal-text;
-		cursor: pointer;
-
-		.simplemodal-container--dark & {
-			// display: none;
-		}
 	}
 }
