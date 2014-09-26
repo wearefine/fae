@@ -17,6 +17,8 @@
 
         <%= f.input :end_date %>
 
+        <%= f.input :start_date, as: :string, input_html: { class: "daterangepicker" } %>
+
         <!-- NO SEARCH -->
         <%= fae_pulldown f, :event_type, collection: ['Birthday', 'Bar Mitzvah'], search: false %>
 
