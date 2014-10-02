@@ -26,10 +26,12 @@ var Admin = {
     });
 
     // daterangepicker instantiation
-    $(".daterangepicker").dateRangePicker({
-      format: "MMM Do, YYYY",
-      separator: ' - '
-    });
+    if ($(".daterangepicker").length > 0) {
+      $(".daterangepicker").dateRangePicker({
+        format: "MMM Do, YYYY",
+        separator: ' - '
+      });
+    };
 
     Admin.image_delete_links();
 
