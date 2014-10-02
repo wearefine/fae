@@ -1,6 +1,10 @@
 module Fae::Concerns::Models::Base
   extend ActiveSupport::Concern
 
+  def display_name
+    name
+  end
+
   module ClassMethods
     def for_admin_index
       order(order_method)
@@ -18,5 +22,6 @@ module Fae::Concerns::Models::Base
         raise "No order_method found, please define for_admin_index as a #{name} class method to set a custom order."
       end
     end
+
   end
 end

@@ -1,21 +1,26 @@
 Fae.setup do |config|
   config.title = "Fae Dummy App"
-  # config.nav_items = [
-  #   {
-  #     text: "Properties", path: "#",
-  #     sublinks: [
-  #       { text: "Hotels", path: "#" },
-  #       { text: "Establishments", path: "#" },
-  #       { text: "Spas", path: "#" },
-  #       { text: "Venues", path: "#" }
-  #     ]
-  #   },
-  #   {
-  #     text: "Amenities", path: "#",
-  #     sublinks: [
-  #       { text: "Amenities", path: "#" },
-  #       { text: "Amenity Categories", path: "#" }
-  #     ]
-  #   }
-  # ]
+  config.nav_items = [
+    {
+      text: "Releases", path: "/admin/releases"
+    },
+    {
+      text: "Wines", path: "/admin/wines"
+    },
+    {
+      text: "Acclaim", path: "/admin/acclaims"
+    },
+    {
+      text: "Varietal", path: "/admin/varietals"
+    },
+    {
+      text: "Selling Point", path: "/admin/selling_points"
+    },
+    {
+      text: "Event", path: "/admin/events"
+    },
+    {
+      text: "Event Hosts", path: "/admin/people"
+    }
+  ]
 end
