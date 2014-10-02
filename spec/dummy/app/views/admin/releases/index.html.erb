@@ -7,9 +7,9 @@
     <!-- Table Filter Area -->
     <form class="js-filter-form table-filter-area">
       <h2>Search Releases</h2>
-      
+
       <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
-      
+
       <div class="table-filter-group">
         <label for="filter_city">Select Box</label>
         <select>
@@ -49,7 +49,7 @@
         <tbody>
           <% @items.each do |item| %>
             <tr id="release_<%= item.id %>">
-              <td class="main_table-description-item"><%= link_to item.name, edit_admin_release_path(item) %></td>
+              <td class="main_table-description-item"><%= link_to item.display_name, edit_admin_release_path(item) %></td>
               <td><%= item.updated_at %></td>
               <td><%= item.slug %></td>
               <td><%= item.price %></td>
