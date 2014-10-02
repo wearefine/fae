@@ -21,7 +21,7 @@
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
-              <td class="main_table-description-item"><%= link_to item.name, edit_admin_wine_path(item) %></td>
+              <td class="main_table-description-item"><%= link_to item.display_name, edit_admin_wine_path(item) %></td>
               <td><%= item.updated_at %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
