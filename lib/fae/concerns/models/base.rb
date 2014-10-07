@@ -1,6 +1,11 @@
 module Fae::Concerns::Models::Base
   extend ActiveSupport::Concern
 
+  def includes
+    before_save start_date = DateTime.parse(start_date)
+    before_save end_date = DateTime.parse(end_date)
+  end
+
   def display_name
     name
   end

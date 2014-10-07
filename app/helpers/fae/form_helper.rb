@@ -69,8 +69,11 @@ module Fae
 
     def fae_datepicker(f, attribute, options={})
 
-
       fae_input f, attribute, as: :string, wrapper_class: 'datepicker'
+    end
+
+    def fae_daterange(f, label, options={})
+      fae_input f, label, as: :date_range
     end
 
     def fae_grouped_select(f, attribute, options={})
