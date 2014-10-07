@@ -1,8 +1,8 @@
 module Fae
   class PagesController < ApplicationController
     def home
-      models = load_all_models
-      recently_updated(models, 25)
+      @models = load_all_models
+      @list = recently_updated(25)
     end
 
     def error404
@@ -22,12 +22,12 @@ module Fae
       models
     end
 
-    def recently_updated(models, num=25)
-      @list = []
-      models.each do |model|
-        @list << model.all.sort_by(&:updated_at).flatten
+    def recently_updated(num=25)
+      list = []
+      @models.each do |m|
+        list << m.all.sort_by(&:updated_at).flatten
       end
-      @list = @list.flatten.sort_by(&:updated_at).reverse.first(num)
+      list.flatten.sort_by(&:updated_at).reverse.first(num)
     end
   end
 end
