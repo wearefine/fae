@@ -70,10 +70,12 @@ var Hinter = {
 	show_modal: function(elm) {
 		var top = $(elm).offset().top - $(window).scrollTop();
 		var left = $(elm).offset().left + 20;
+		var new_height = $(elm).closest('label').siblings(".hint").height() + 80;
+		var new_width = $(elm).closest('label').siblings(".hint").width() + 40;
 
 		$(elm).closest('label').siblings(".hint").modal({
-			minHeight: this.height + 80,
-			minWidth: this.width + 40,
+			minHeight: new_height,
+			minWidth: new_width,
 			position: [top, left],
 			overlayClose: true,
 			opacity: 0,
