@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009155137) do
+ActiveRecord::Schema.define(version: 20141009200746) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20141009155137) do
     t.integer  "event_id"
     t.boolean  "on_stage",   default: true
     t.boolean  "on_prod",    default: false
+    t.integer  "position"
   end
 
   create_table "release_selling_points", force: true do |t|

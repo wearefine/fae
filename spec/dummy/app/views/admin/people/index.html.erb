@@ -27,7 +27,7 @@
               </td>
               <td class="main_table-image"><%= image_tag item.image.asset.thumb.url if item.image.present? %></td>
               <td class="main_table-description-item"><%= link_to item.image.alt, "#"  if item.image.present? %></td>
-              <td><%= item.image.asset.current_path.split('/').last %></td>
+              <td><%= item.image.asset.current_path.split('/').last if item.image.present? %></td>
               <td class="main_table-modified"><%#= fae_date_format item.updated_at %><%= item.updated_at %></td>
               <td class="main_table-modified">PUBLISHED AT HERE</td>
               <td><%= attr_toggle item, :on_stage %></td>
