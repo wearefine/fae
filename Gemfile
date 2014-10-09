@@ -30,7 +30,7 @@ group :test do
 end
 
 gem 'capistrano',  '~> 3.1'
-gem 'capistrano-rails', git: 'git@github.com:jamesmkur/rails.git'
+gem 'capistrano-rails', git: 'https://github.com/jamesmkur/rails.git'
 gem 'capistrano-rvm'
 
 gem 'mysql2'
