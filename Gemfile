@@ -19,7 +19,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'remotipart'
 gem 'carrierwave', '~> 0.10.0'
-gem 'rmagick', require: false
+gem 'rmagick', '~> 2.13.3', require: false
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
