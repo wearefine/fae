@@ -14,6 +14,8 @@ set :rvm_type, :system
 
 set :keep_releases, 5
 
+set :rake, 'cd spec/dummy && rake'
+
 namespace :deploy do
 
   desc 'Restart application'
