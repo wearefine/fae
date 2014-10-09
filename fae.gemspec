@@ -28,7 +28,6 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-ui-rails", '~> 4.2.1'
   s.add_dependency "remotipart"
 
-  s.add_development_dependency "mysql2"
   s.add_development_dependency "thin"
   s.add_development_dependency "better_errors"
   s.add_development_dependency "binding_of_caller"
