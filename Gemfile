@@ -28,3 +28,7 @@ group :test do
   gem 'database_cleaner', '~> 1.3.0'
   gem 'selenium-webdriver', '~> 2.42.0'
 end
+
+gem 'capistrano',  '~> 3.1'
+gem 'capistrano-rails', '~> 1.1'
+gem 'capistrano-rvm'
