@@ -18,6 +18,8 @@ gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'remotipart'
+gem 'carrierwave', '~> 0.10.0'
+gem 'rmagick', require: false
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'

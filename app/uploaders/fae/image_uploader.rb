@@ -26,12 +26,12 @@ module Fae
       process :resize_to_fill => [150,100]
     end
 
-    #create tablet version only if cropping is wider than 1024
+    # #create tablet version only if cropping is wider than 1024
     version :tablet, :if => :is_over_tablet_size? do
       process :resize_to_limit => [1024,0]
     end
 
-    #create mobile version only if cropping is wider than 480
+    # #create mobile version only if cropping is wider than 480
     version :mobile, :if => :is_over_mobile_size? do
       process :resize_to_limit => [480,0]
     end
@@ -44,17 +44,17 @@ module Fae
       end
     end
 
-    #def resize_to_fill_for_tablet(image)
-    #  manipulate! do |image|
-    #    if image.columns.to_i > 1024
-    #      width_percentage = 1024.0/image.columns.to_f
-    #      new_height = width_percentage*image.rows.to_f
-    #      image.resize_to_fill!(1024,new_height.to_i)
+    # def resize_to_fill_for_tablet(image)
+    #  manipulate! do |img|
+    #    if img.columns.to_i > 1024
+    #      width_percentage = 1024.0/img.columns.to_f
+    #      new_height = width_percentage*img.rows.to_f
+    #      img.resize_to_fill!(1024,new_height.to_i)
     #    end
     #  end
-    #end
+    # end
 
-    #detect if crop is over mobile size
+    # #detect if crop is over mobile size
     def is_over_mobile_size?(image)
       IMAGE_LOGGER.info "=== mobile check for image (image_uploader)"
       manipulate! do |image|
@@ -62,18 +62,18 @@ module Fae
       end
     end
 
-    #execute the crop!
-    def crop
-      if model.crop_x_changed? or model.crop_y_changed? or model.crop_w_changed? or model.crop_y_changed?
-        manipulate! do |img|
-          x = model.crop_x.to_i
-          y = model.crop_y.to_i
-          w = model.crop_w.to_i
-          h = model.crop_h.to_i
-          img.crop!(x,y,w,h)
-        end
-      end
-    end
+    # #execute the crop!
+    # def crop
+    #   if model.crop_x_changed? or model.crop_y_changed? or model.crop_w_changed? or model.crop_y_changed?
+    #     manipulate! do |img|
+    #       x = model.crop_x.to_i
+    #       y = model.crop_y.to_i
+    #       w = model.crop_w.to_i
+    #       h = model.crop_h.to_i
+    #       img.crop!(x,y,w,h)
+    #     end
+    #   end
+    # end
 
   end
 end

@@ -1,0 +1,1 @@
+IMAGE_LOGGER = Logger.new(Rails.root.join('log', 'image_processing.log'))

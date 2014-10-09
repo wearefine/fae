@@ -4,6 +4,7 @@ require 'rails/all'
 
 Bundler.require(*Rails.groups)
 require "fae"
+require 'carrierwave'
 
 module Dummy
   class Application < Rails::Application

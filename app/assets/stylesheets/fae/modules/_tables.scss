@@ -11,11 +11,11 @@
 				border-left: 3px solid $c-table-tr-even;
 			}
 		}
-		
+
 		&:hover {
 			td {
 				background: $c-table-tr-hover;
-				
+
 
 				&:first-child {
 					border-left: 3px solid $c-custom-highlight;
@@ -128,6 +128,10 @@
 
 .main_table-modified {
 	text-align: center;
+}
+
+.main_table-image img {
+	min-width: 110px;
 }
 
 .main_table-live {
@@ -245,7 +249,7 @@
 		&:hover {
 			border-bottom: 1px solid $c-custom-highlight;
 		}
-		
+
 	}
 
 	&.tablesorter-headerAsc, &.tablesorter-headerDesc {
@@ -253,7 +257,7 @@
 	}
 
 	&:after {
-		@extend .icon-arrow_down:before; 
+		@extend .icon-arrow_down:before;
 		float: right;
 		margin-top: -2em;
 		font-size: 4px;
@@ -268,7 +272,7 @@
 
 	&:after {
 		visibility: visible;
-		@extend .icon-arrow_down:before; 
+		@extend .icon-arrow_down:before;
 	}
 }
 

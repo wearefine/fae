@@ -67,6 +67,7 @@ module Fae
 
     # if model has images, build them here for nesting
     def build_images
+      @item.build_image if @item.image.blank?
     end
 
   end
