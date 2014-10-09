@@ -7,8 +7,6 @@ module Fae
 
     belongs_to :role
 
-    has_one :image, as: :imageable
-
     validates :email, presence: true
     # validates :role_id, presence: true
     # validates :password, format: { with: /(?=.*\d)(?=.*[a-zA-Z])/, message: 'requires at least one letter and one number' }

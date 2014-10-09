@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <% @items.each do |item| %>
-            <tr>
+            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
