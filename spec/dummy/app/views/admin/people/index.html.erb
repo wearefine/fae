@@ -4,7 +4,7 @@
 <div class="main_content-sections">
   <section class="main_content-section">
     <div class="main_content-section-area">
-      <table class="main_content-sortable">
+      <table class="index_table main_content-sortable">
         <thead>
           <tr>
             <th class="main_content-sortable-handle-col"></th>
@@ -12,7 +12,6 @@
             <th class="main_table-header-description">Alt Text</th>
             <th>File Name</th>
             <th class="main_table-header-modified">Modified</th>
-            <th class="main_table-header-modified">Pub. Date</th>
             <th class="main_table-header-live" data-sorter="false">On Stage</th>
             <th class="main_table-header-live" data-sorter="false">On Prod</th>
             <th class="main_table-header-edit" data-sorter="false">Edit</th>
@@ -28,8 +27,7 @@
               <td class="main_table-image"><%= image_tag item.image.asset.thumb.url if item.image.present? %></td>
               <td class="main_table-description-item"><%= link_to item.image.alt, "#"  if item.image.present? %></td>
               <td><%= item.image.asset.current_path.split('/').last if item.image.present? %></td>
-              <td class="main_table-modified"><%#= fae_date_format item.updated_at %><%= item.updated_at %></td>
-              <td class="main_table-modified">PUBLISHED AT HERE</td>
+              <td class="main_table-modified"><%# TODO -  fae_date_format item.updated_at %><%= item.updated_at %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
               <td class="main_table-edit">
