@@ -14,7 +14,7 @@ set :rvm_type, :system
 
 set :keep_releases, 5
 
-set :rake, 'cd spec/dummy && rake'
+set :rails_path, 'spec/dummy'
 
 namespace :deploy do
 
