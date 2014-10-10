@@ -13,23 +13,19 @@ module Fae
 
     def check_and_set_versions
       unless remove_asset
-        IMAGE_LOGGER.info "check_and_set_versions on Image ##{id}"
         if asset.present?
           if asset.mobile.file.present? && asset.mobile.file.exists?
             update_column(:has_mobile, true)
-            IMAGE_LOGGER.info "== Image has mobile =="
           else
             update_column(:has_mobile, false)
           end
 
           if asset.tablet.file.present? && asset.tablet.file.exists?
             update_column(:has_tablet, true)
-            IMAGE_LOGGER.info "== Image has tablet =="
           else
             update_column(:has_tablet, false)
           end
         else
-          IMAGE_LOGGER.info "== Image has no asset"
         end
       end
     end

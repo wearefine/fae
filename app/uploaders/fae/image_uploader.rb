@@ -38,7 +38,6 @@ module Fae
 
     #detect if crop is over tablet size
     def is_over_tablet_size?(image)
-      IMAGE_LOGGER.info "=== tablet check for image (image_uploader)"
       manipulate! do |image|
         return image.columns.to_i > 1024
       end
@@ -56,7 +55,6 @@ module Fae
 
     # #detect if crop is over mobile size
     def is_over_mobile_size?(image)
-      IMAGE_LOGGER.info "=== mobile check for image (image_uploader)"
       manipulate! do |image|
         return image.columns.to_i > 480
       end
