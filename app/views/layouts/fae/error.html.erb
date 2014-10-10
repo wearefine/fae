@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @page_title %></title>
+  <!--[if lt IE 9]>
+  <![endif]-->
+  <%= stylesheet_link_tag    "fae/application", media: "all", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body class="error">
+
+<section id="error-main_content">
+  <%= yield %>
+</section>
+
+</body>
+</html>

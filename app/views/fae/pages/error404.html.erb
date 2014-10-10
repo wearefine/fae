@@ -1,5 +1,8 @@
-<section class="main_content-header">
-  <div class="main_content-header-wrapper">
-    <h1>Oops! The page you requested can not be found. Please click here to be taken to our home page.</h1>
+<div class="main_content-header-wrapper">
+  <div class="center">
+    <%= image_tag 'fae/error_sad_face.png', class: 'sad_face' %>
+    <h1>Oops!</h1>
   </div>
-</section>
+
+  <p>The page you requested can not be found. Please <%= link_to "click here", fae.root_path %> to be taken to our home page.</p>
+</div>
