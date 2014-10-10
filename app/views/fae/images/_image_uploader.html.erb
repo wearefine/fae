@@ -2,8 +2,8 @@
 
 <%
   # passed in variables
-  image_name ||= :image
-  omit = [:caption]
+  image_name   ||= :image
+  omit           = [:caption]
   the_image      = item.send(image_name)
   image_label  ||= image_name.to_s.humanize
   alt_label    ||= "#{image_label} alt text"
