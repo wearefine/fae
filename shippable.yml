@@ -16,6 +16,7 @@ env:
 before_script:
   - mkdir -p shippable/testresults
   - mysql -e 'create database fae_dummy_test;'
+  - cd spec/dummy && rake db:schema:load RAILS_ENV=test
   - if [ "$BRANCH" == "master" ] ; then DEPLOY_BRANCH="prod" ; fi
 script:
   - rspec -f JUnit -o shippable/testresults/results.xml
