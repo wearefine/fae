@@ -2,6 +2,7 @@ module Fae
   module FormHelper
 
     def fae_input(f, attribute, options={})
+      raise "'#{attribute}' must be an attribute of #{f.object}" if f.object.attribute_names.include?(attribute.to_s)
       custom_options options
       label_and_hint(attribute, options)
 
@@ -9,6 +10,7 @@ module Fae
     end
 
     def fae_association(f, attribute, options={})
+      raise "'#{attribute}' must be an association of #{f.object}" if !is_association?(f, attribute)
       custom_options options
       label_and_hint(attribute, options)
 
@@ -51,29 +53,24 @@ module Fae
       raise "MissingRequiredOption: fae_pulldown requires a 'collection' when using it on an ActiveRecord attribute." if !options.has_key?(:collection) && f.object.attribute_names.include?(attribute.to_s)
       raise "ImproperOptionValue: The value #{options[:size]} is not a valid option for 'size'. Please use 'short' or 'long'." if options[:size].present? && ['short','long'].include?(options[:size]) == false
       raise "ImproperOptionValue: The value #{options[:search]} is not a valid options for 'search'. Please use a Boolean." if options[:search].present? && !!options[:search] != options[:search]
-
       options.update(input_class: "#{options[:input_class]} small_pulldown") if options[:size] == "short"
       options.update(wrapper_class: "#{options[:wrapper_class]} select-no_search") if options[:search] == false
-
       association_or_input f, attribute, options
     end
 
     def fae_multiselect(f, attribute, options={})
-      raise "'#{attribute}' must be an association of #{f.object}" if !is_association?(f, attribute)
       raise "ImproperOptionValue: The value '#{options[:two_pane]}' is not a valid option for 'two_pane'. Please use a Boolean." if options[:two_pane].present? && !!options[:two_pane] != options[:two_pane]
-
       options.update(input_class: "#{options[:input_class]} multiselect") if options[:two_pane] == true
-
       fae_association f, attribute, options
     end
 
     def fae_datepicker(f, attribute, options={})
-
       fae_input f, attribute, as: :string, wrapper_class: 'datepicker'
     end
 
     def fae_daterange(f, label, options={})
-      fae_input f, label, as: :date_range
+      options.update(as: :date_range)
+      fae_input f, label, options
     end
 
     def fae_grouped_select(f, attribute, options={})
@@ -110,7 +107,6 @@ module Fae
     end
 
     def association_or_input(f, attribute, options)
-
       if is_attribute_or_association?(f, attribute)
         f.object.attribute_names.include?(attribute.to_s) ? fae_input(f, attribute, options) : fae_association(f, attribute, options)
       else
