@@ -27,6 +27,8 @@ Gem::Specification.new do |s|
   s.add_dependency "uglifier"
   s.add_dependency "jquery-ui-rails", '~> 4.2.1'
   s.add_dependency "remotipart"
+  s.add_dependency "carrierwave", '~> 0.10.0'
+  s.add_dependency "rmagick", '~> 2.13.3'
 
   s.add_development_dependency "mysql2"
   s.add_development_dependency "thin"

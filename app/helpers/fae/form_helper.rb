@@ -85,10 +85,10 @@ module Fae
     end
 
     def fae_video_url(f, attribute, options={})
-      options.update(helper_text: 'Please enter your YouTube video ID. The video ID is between v= and & of the video’s url. This is typically 11 characters long.', hint: "#{image_tag('fae/youtube_helper.jpg')}")
+      raise "Fae:ImproperOptionValue: can't override helper_text or hint options for fae_video_url" if options[:helper_text].present? || options[:hint].present?
+      options.update helper_text: "Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long.", hint: "#{image_tag('fae/youtube_helper.jpg')}"
       fae_input f, attribute, options
     end
-
 
 
     private

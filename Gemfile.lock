@@ -2,12 +2,14 @@ PATH
   remote: .
   specs:
     fae (0.0.1)
+      carrierwave (~> 0.10.0)
       coffee-rails
       devise (~> 3.2.4)
       jquery-rails (~> 3.1.1)
       jquery-ui-rails (~> 4.2.1)
       rails (~> 4.1.4)
       remotipart
+      rmagick (~> 2.13.3)
       sass-rails (~> 4.0.3)
       simple_form (~> 3.0.2)
       uglifier
@@ -63,6 +65,11 @@ GEM
     capybara-webkit (1.1.0)
       capybara (~> 2.0, >= 2.0.2)
       json
+    carrierwave (0.10.0)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
     celluloid (0.15.2)
       timers (~> 1.1.0)
     childprocess (0.5.3)
@@ -74,7 +81,7 @@ GEM
     coffee-script (2.3.0)
       coffee-script-source
       execjs
-    coffee-script-source (1.7.1)
+    coffee-script-source (1.8.0)
     colorize (0.7.3)
     daemons (1.1.9)
     database_cleaner (1.3.0)
@@ -161,6 +168,7 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     remotipart (1.2.1)
+    rmagick (2.13.3)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -203,7 +211,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.1.3)
+    sprockets-rails (2.1.4)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
@@ -238,6 +246,7 @@ DEPENDENCIES
   capybara (~> 2.4.1)
   capybara-screenshot
   capybara-webkit (~> 1.1.0)
+  carrierwave (~> 0.10.0)
   database_cleaner (~> 1.3.0)
   factory_girl_rails (~> 4.4.1)
   fae!
@@ -247,6 +256,7 @@ DEPENDENCIES
   mysql2
   rails-perftest
   remotipart
+  rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.2)
   ruby-prof
   selenium-webdriver (~> 2.42.0)

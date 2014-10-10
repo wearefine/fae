@@ -15,7 +15,7 @@
 
         <tbody>
           <% @items.each do |item| %>
-            <tr id="release_<%= item.id %>">
+            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>

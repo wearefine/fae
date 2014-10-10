@@ -20,7 +20,7 @@ module Fae
     mattr_accessor :title, :logo_path, :live_url, :stage_url, :support_url, :nav_items, :devise_secret_key, :devise_mailer_sender
 
     self.title        = 'My FINE Admin'
-    self.logo_path    = '/assets/fae/logo.png'
+    self.logo_path    = 'fae/logo.png'
     self.live_url     = '#'
     self.stage_url    = '#'
     self.support_url  = nil

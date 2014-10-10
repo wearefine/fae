@@ -26,7 +26,7 @@
 
         <tbody>
           <% @users.each do |user| %>
-            <tr>
+            <tr id="fae_user_<%= user.id %>">
               <td class="main_table-description-item"><%= link_to "#{user.first_name} #{user.last_name}", edit_user_path(user) %></td>
               <td><%= user.email %></td>
               <td><%= user.last_sign_in_at %></td>
