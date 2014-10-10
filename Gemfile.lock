@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/jamesmkur/rails.git
-  revision: ff4e6e545600c1eeb9f58ac381dfdb8185fc7e28
+  revision: 24b9e2f542b2063ef1665cac708ad785388645e1
   specs:
     capistrano-rails (1.1.2)
       capistrano (~> 3.1)
