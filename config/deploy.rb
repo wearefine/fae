@@ -17,6 +17,14 @@ set :keep_releases, 5
 # variable for forked version of capistrano-rails
 set :rails_path, 'spec/dummy'
 
+server 'fae.afinedevelopment.com',
+  user: 'fae',
+  roles: %w{web app db},
+  port: 8022,
+  ssh_options: {
+    forward_agent: true
+  }
+
 namespace :deploy do
 
   desc 'Restart application'

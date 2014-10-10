@@ -1,14 +1,5 @@
 set :stage, :prod
 
-server 'fae.afinedevelopment.com',
-  user: 'fae',
-  roles: %w{web app db},
-  port: 8022,
-  ssh_options: {
-    forward_agent: true
-  }
-
-
 set :ruby_version, "ruby-2.1.2"
 set :gemset, "fae.afinedevelopment.com"
 set :deploy_to, "/var/www/rails/fae.afinedevelopment.com/prod"
