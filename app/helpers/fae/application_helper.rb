@@ -1,11 +1,6 @@
 module Fae
   module ApplicationHelper
 
-    def amenity_select(amenity_category_id, selected_ids)
-      amenities = Amenity.where(amenity_category_id: amenity_category_id)
-      select_tag "amenity_id", options_for_select(amenities.map{|a| [a.name, a.id] }, disabled: selected_ids), id: "amenities_#{amenity_category_id}", prompt: "Select an amenity"
-    end
-
     def attr_toggle(item, column)
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
@@ -23,12 +18,6 @@ module Fae
 
     def form_header(item)
       content_tag :h1, "#{params[:action]} #{item.class.name.split('::').last}".titleize
-    end
-
-    def image_url_with_failover(image, version)
-      return image.asset.mobile.url if version === 'mobile' && image.has_mobile
-      return image.asset.tablet.url if image.has_tablet
-      return image.asset.url
     end
 
     def markdown_helper

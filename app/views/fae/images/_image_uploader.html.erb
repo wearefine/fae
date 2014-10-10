@@ -18,7 +18,7 @@
 
     <% if the_image.asset.present? %>
       <div class="asset-actions">
-        <%= image_tag image_url_with_failover(the_image, 'mobile') %>
+        <%= image_tag the_image.asset.url %>
         <%= link_to 'Original', the_image.asset.url, class: "js-image-modal asset-actions-image-link" %>
         <%= link_to 'Thumb', the_image.asset.thumb.url, class: "js-image-modal asset-actions-image-link" if show_thumb %>
         <%= link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } if the_image.id.present? %>
