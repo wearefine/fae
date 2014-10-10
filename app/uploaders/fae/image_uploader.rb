@@ -26,40 +26,6 @@ module Fae
       process :resize_to_fill => [150,100]
     end
 
-    # #create tablet version only if cropping is wider than 1024
-    version :tablet, :if => :is_over_tablet_size? do
-      process :resize_to_limit => [1024,0]
-    end
-
-    # #create mobile version only if cropping is wider than 480
-    version :mobile, :if => :is_over_mobile_size? do
-      process :resize_to_limit => [480,0]
-    end
-
-    #detect if crop is over tablet size
-    def is_over_tablet_size?(image)
-      manipulate! do |image|
-        return image.columns.to_i > 1024
-      end
-    end
-
-    # def resize_to_fill_for_tablet(image)
-    #  manipulate! do |img|
-    #    if img.columns.to_i > 1024
-    #      width_percentage = 1024.0/img.columns.to_f
-    #      new_height = width_percentage*img.rows.to_f
-    #      img.resize_to_fill!(1024,new_height.to_i)
-    #    end
-    #  end
-    # end
-
-    # #detect if crop is over mobile size
-    def is_over_mobile_size?(image)
-      manipulate! do |image|
-        return image.columns.to_i > 480
-      end
-    end
-
     # #execute the crop!
     # def crop
     #   if model.crop_x_changed? or model.crop_y_changed? or model.crop_w_changed? or model.crop_y_changed?

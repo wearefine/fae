@@ -6,29 +6,7 @@ module Fae
 
     belongs_to :imageable, polymorphic: true, touch: true
 
-    after_create :check_and_set_versions
-    after_update :check_and_set_versions
-
   private
-
-    def check_and_set_versions
-      unless remove_asset
-        if asset.present?
-          if asset.mobile.file.present? && asset.mobile.file.exists?
-            update_column(:has_mobile, true)
-          else
-            update_column(:has_mobile, false)
-          end
-
-          if asset.tablet.file.present? && asset.tablet.file.exists?
-            update_column(:has_tablet, true)
-          else
-            update_column(:has_tablet, false)
-          end
-        else
-        end
-      end
-    end
 
     # def crop_image
     #   asset.recreate_versions! if crop_x_changed? or crop_y_changed? or crop_x2_changed? or crop_y2_changed?
