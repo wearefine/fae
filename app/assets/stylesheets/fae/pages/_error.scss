@@ -6,26 +6,25 @@
 #error-main_content {
   position: absolute;
   display: inline-block;
-  margin:  auto;
+  margin:  100px auto;
 
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
 
-  width: 700px;
+  max-width: 700px;
+  min-width: 235px;
+  width: 100%;
   height: 330px;
-
   padding: 35px;
   border-top: 8px solid #31a7e6;
-  border-radius: 4px;
+  @include border-radius(4px);
   background: white;
   color: #595959;
   line-height: 1.5;
   font-size: 13px;
-  -webkit-box-shadow: 0 3px 8px 0 #cccccc;
-  -moz-box-shadow: 0 3px 8px 0 #cccccc;
-  box-shadow: 0 3px 8px 0 #cccccc;
+  @include box-shadow(0, 3px, 8px, 0, #cccccc);
 
   p {
     margin-top: 30px;
