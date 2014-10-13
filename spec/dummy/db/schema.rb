@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009200746) do
+ActiveRecord::Schema.define(version: 20141013212642) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -59,8 +59,7 @@ ActiveRecord::Schema.define(version: 20141009200746) do
     t.boolean  "on_prod",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "has_mobile",     default: false
-    t.boolean  "has_tablet",     default: false
+    t.integer  "file_size"
   end
 
   add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
