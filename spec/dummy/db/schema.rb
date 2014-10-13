@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006185920) do
+ActiveRecord::Schema.define(version: 20141009200746) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -45,6 +45,25 @@ ActiveRecord::Schema.define(version: 20141006185920) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "fae_images", force: true do |t|
+    t.string   "name"
+    t.string   "asset"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.string   "alt"
+    t.string   "caption"
+    t.integer  "position",       default: 0
+    t.string   "attached_as"
+    t.boolean  "on_stage",       default: true
+    t.boolean  "on_prod",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "has_mobile",     default: false
+    t.boolean  "has_tablet",     default: false
+  end
+
+  add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
 
   create_table "fae_roles", force: true do |t|
     t.string   "name"
@@ -90,6 +109,9 @@ ActiveRecord::Schema.define(version: 20141006185920) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "event_id"
+    t.boolean  "on_stage",   default: true
+    t.boolean  "on_prod",    default: false
+    t.integer  "position"
   end
 
   create_table "release_selling_points", force: true do |t|

@@ -43,7 +43,7 @@ Fire up the server:
 $ rails s
 ```
 
-### Helper Methods
+### Form Helper Methods
 
 All FAE helper methods add the ability to use simpler syntax for input class and wrapper class - respectively 'class' and 'wrapper_class'
 ```
@@ -92,7 +92,15 @@ or
 ![Alt text](http://www.afinesite.com/fae/fae_grouped_select.png)
 
 
+### Application Helper Methods
 
+The image_form helper method takes the form object and the object that attaches to the Image relationship. The following optional params are available
+*image_name*: the action image relationships name, defaults to :image
+*image_label*: defaults to the image_name
+*alt_label*: defaults to "#{image_label} alt text"
+*omit*: an array containing :caption and/or :alt, defaults to [:caption]
+*show_thumb*: defaults to false
+`<%= load_nested_image_form f, @item %>`
 
 
 

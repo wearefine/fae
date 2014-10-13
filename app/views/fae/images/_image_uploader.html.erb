@@ -1,10 +1,14 @@
+<% require_locals ['item', 'f'], local_assigns %>
+
 <%
-# passed in variables
-the_image      = item.send(image_name)
-image_label  ||= image_name.to_s.humanize
-alt_label    ||= "#{image_label} alt text"
-omit         ||= []
-show_thumb   ||= false
+  # passed in variables
+  image_name   ||= :image
+  omit           = [:caption]
+  the_image      = item.send(image_name)
+  image_label  ||= image_name.to_s.humanize
+  alt_label    ||= "#{image_label} alt text"
+  omit         ||= [:caption]
+  show_thumb   ||= false
 
 %>
 
@@ -14,12 +18,10 @@ show_thumb   ||= false
 
     <% if the_image.asset.present? %>
       <div class="asset-actions">
-        <%= image_tag image_url_with_failover(the_image, 'mobile') %>
+        <%= image_tag the_image.asset.url %>
         <%= link_to 'Original', the_image.asset.url, class: "js-image-modal asset-actions-image-link" %>
-        <%= link_to 'Tablet', the_image.asset.tablet.url, class: "js-image-modal asset-actions-image-link" if the_image.has_tablet %>
-        <%= link_to 'Mobile', the_image.asset.mobile.url, class: "js-image-modal asset-actions-image-link" if the_image.has_mobile %>
         <%= link_to 'Thumb', the_image.asset.thumb.url, class: "js-image-modal asset-actions-image-link" if show_thumb %>
-        <%= link_to '', delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } if the_image.id.present? %>
+        <%= link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } if the_image.id.present? %>
       </div>
     <% end %>
 

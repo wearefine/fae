@@ -14,5 +14,14 @@ test:
   <<: *base
   database: fae_dummy_test
 
+remote_development:
+  <<: *base
+  database: fae_dev
+  username: fae
+  password: sh45&rEDnap
+
 production:
   <<: *base
+  database: fae
+  username: fae
+  password: sh45&rEDnap
