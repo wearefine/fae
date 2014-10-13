@@ -1,6 +1,14 @@
 # encoding: utf-8
 module Fae
   class ImageUploader < CarrierWave::Uploader::Base
+    include CarrierWave::MimeTypes
+
+    process :save_file_size_in_model
+
+    def save_file_size_in_model
+      model.file_size = file.size
+    end
+
 
     # Include RMagick or MiniMagick support:
     include CarrierWave::RMagick
