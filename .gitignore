@@ -10,5 +10,7 @@ spec/dummy/.sass-cache
 spec/dummy/public/system/uploads/*
 spec/dummy/public/uploads/*
 
+.ruby-gemset
+.ruby-version
 .rvmrc
 .DS_Store
