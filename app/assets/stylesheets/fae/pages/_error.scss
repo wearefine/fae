@@ -1,18 +1,16 @@
 .error {
   background-image: url('/assets/fae/error_bg.jpg');
   overflow: hidden;
+  padding-top: 0;
 }
 
-#error-main_content {
+.error-main_content {
   position: absolute;
   display: inline-block;
-  margin:  100px auto;
-
-  top: 0;
+  margin: auto;
+  top: 100px;
   right: 0;
-  bottom: 0;
   left: 0;
-
   max-width: 700px;
   min-width: 235px;
   width: 100%;
