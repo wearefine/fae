@@ -5,6 +5,7 @@ branches:
   only:
     - dev
     - master
+cache: true
 notifications:
    email: false
 env:
