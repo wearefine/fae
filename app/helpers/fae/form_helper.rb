@@ -96,6 +96,7 @@ module Fae
     def custom_options(options)
       options[:input_html] = { class: options[:input_class] } if options[:input_class].present?
       options.update(wrapper_class: "#{options[:wrapper_class]} input") if options[:wrapper_class].present?
+      options.update(validate: true) unless options[:validate].present? && options[:validate] == false
     end
 
     def label_and_hint(attribute, options)
