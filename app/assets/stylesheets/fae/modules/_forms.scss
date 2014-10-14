@@ -5,15 +5,6 @@ label {
   font-size: 15px;
   color: $c-text-heavy;
 
-  &.required {
-    &:before {
-      content: "*";
-      display: inline-block;
-      padding-right: 3px;
-      color: $c-custom-text_link;
-    }
-  }
-
   abbr {
     color: $c-custom-text_link;
   }
