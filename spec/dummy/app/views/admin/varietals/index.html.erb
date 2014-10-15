@@ -1,4 +1,4 @@
-<%= render 'fae/shared/index_header', title: 'Varietals' %>
+<%= render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}" %>
 
 <div class="main_content-sections">
   <section class="main_content-section">
@@ -22,7 +22,7 @@
                 <span class="icon-sort"></span>
               </td>
               <td class="main_table-description-item"><%= link_to item.display_name, edit_admin_varietal_path(item) %></td>
-              <td><%= item.updated_at %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
               <td class="main_table-delete">

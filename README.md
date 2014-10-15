@@ -102,6 +102,9 @@ The image_form helper method takes the form object and the object that attaches 
 *show_thumb*: defaults to false
 `<%= load_nested_image_form f, @item %>`
 
+The fae_date_format method takes a Date/DateTime object and an optional timezone string as its second parameter. It simply displays dates in a uniform way accross all implementations
+
+
 
 
 
