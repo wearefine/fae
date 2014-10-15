@@ -5,6 +5,7 @@ class Release < ActiveRecord::Base
   validates :name, exclusion: %w(admin danny)
   validates :price, numericality: {greater_than: 12}
   validates :video_url, format: /[a-zA-Z0-9_-]{11}/
+  validates :wine_id, presence: true
 
   belongs_to :wine
   belongs_to :varietal
