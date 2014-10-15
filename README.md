@@ -78,5 +78,5 @@ The fae_date_format method takes a Date/DateTime object and an optional timezone
 
 ## Contributing/Maintenance
 
-Maintenance specific information can be found in [CONTRIBUTING.md](/fae/src/CONTRIBUTING.md)
+Maintenance specific information can be found in [CONTRIBUTING.md](/wearefine/fae/src/master/CONTRIBUTING.md)
 
