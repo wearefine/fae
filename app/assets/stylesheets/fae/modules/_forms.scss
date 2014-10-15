@@ -639,6 +639,7 @@ input.string {
     background: $c-error-bg;
     color: $c-error-content;
     font-size: 12px;
+    overflow: visible;
 
     &:before {
       @extend .icon-alert;
@@ -655,6 +656,17 @@ input.string {
     }
   }
 }
+
+.input {
+  .valid {
+    border: 1px solid $c-notice-content;
+  }
+  .invalid {
+    border: 1px solid $c-error-content;
+  }
+}
+
+
 
 // pagination
 .pagination {

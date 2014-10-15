@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
   s.add_dependency "remotipart"
   s.add_dependency "carrierwave", '~> 0.10.0'
   s.add_dependency "rmagick", '~> 2.13.3'
+  s.add_dependency "judge", '~> 2.0.4'
   s.add_dependency "judge-simple_form", '~> 0.4.0'
 
   s.add_development_dependency "thin"
