@@ -26,7 +26,7 @@
         <%= fae_checkbox f, :people, type: "inline" %>
 
         <!-- Optgroup examples / Indented Pulldowns -->
-        <% states = {'Califonia' => ['Los Angeles', 'San Francisco'], 'Oregon' => ['Portland', 'Boring', 'France']} %>
+        <% states = {'Califonia' => ['Los Angeles', 'San Francisco'], 'Oregon' => ['Portland', 'Boring']} %>
         <%#= fae_grouped_select f, :city, collection: states %>
         <%= fae_grouped_select f, :city, labels: states.keys , groups: states.values %>
 
