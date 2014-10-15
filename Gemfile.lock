@@ -288,6 +288,7 @@ DEPENDENCIES
   guard-rspec (~> 4.3.1)
   jquery-rails
   jquery-ui-rails (~> 4.2.1)
+  judge-simple_form (~> 0.4.0)
   mysql2
   rails-perftest
   remotipart
