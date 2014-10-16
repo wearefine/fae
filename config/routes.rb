@@ -1,5 +1,7 @@
 Fae::Engine.routes.draw do
 
+  mount Judge::Engine => '/judge'
+
   resources :roles
 
   root 'pages#home'

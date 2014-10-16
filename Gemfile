@@ -20,6 +20,7 @@ gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'remotipart'
 gem 'carrierwave', '~> 0.10.0'
 gem 'rmagick', '~> 2.13.3', require: false
+gem 'judge-simple_form', '~> 0.4.0'
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
