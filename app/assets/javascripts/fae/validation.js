@@ -10,30 +10,8 @@ var Validator = {
   },
 
   formValidate: function() {
-    var isValid;
-    $('form input[type=submit]').on('click',function(e) {
-      e.preventDefault();
-      isValid = true;
-
-      $('[data-validate]').each(function(i) {
-        $obj = $(this);
-        if ($obj.data('validate').length) {
-          $elm = $obj;
-          judge.validate($elm[0], {
-            valid: function() {
-              Validator.createSuccessClass($elm);
-            },
-            invalid: function(input, messages) {
-              isValid = false;
-              Validator.labelNameInMessage($elm, messages);
-              Validator.createOrReplaceError($elm, messages);
-            }
-          });
-        }
-      });
-      if (isValid) { $('form').submit() };
-    });
-
+    var IS_VALID;
+    Validator.attemptSubmit();
   },
 
   validate: function(){
@@ -44,12 +22,12 @@ var Validator = {
           validationInput = Validator.isChosen(validationInput);
           $('body').on('blur', Validator.vars.chosen_select, function() {
             var $chosenInput = $(this);
-            Validator.judge( $chosenInput );
+            Validator.judgeIt( $chosenInput );
           });
         } else {
           validationInput.on('blur', function(){
             $input = $(this);
-            Validator.judge( $input );
+            Validator.judgeIt( $input );
           });
         }
       }
@@ -58,12 +36,26 @@ var Validator = {
 
   // private functions
 
-  judge: function($input) {
+  attemptSubmit: function(){
+    $('form').on('submit',function(e) {
+      IS_VALID = true;
+      $('[data-validate]').each(function(i) {
+        var $validationInput = $(this);
+        if ($validationInput.data('validate').length) {
+          Validator.judgeIt($validationInput);
+        }
+      });
+      if (IS_VALID === false) {e.preventDefault();}
+    });
+  },
+
+  judgeIt: function($input) {
     judge.validate($input[0], {
       valid: function() {
         Validator.createSuccessClass($input);
       },
       invalid: function(input, messages) {
+        IS_VALID = false;
         Validator.labelNameInMessage($input, messages);
         Validator.createOrReplaceError($input, messages);
       }
