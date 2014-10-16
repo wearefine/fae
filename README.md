@@ -2,13 +2,18 @@
 
 ## Installation
 
-* add the gem to your Gemfile
+Add the gem to your Gemfile
 
-		gem 'fae', :git => 'git@bitbucket.org:wearefine/fae.git’
+```ruby
+gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git'
+```
+Run the installer
 
-* configure devise
+```
+$ rails g fae:install
+```
 
-		$ rails generate devise:install
+Restart your server
 
 ## Usage
 
