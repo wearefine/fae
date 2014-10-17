@@ -5,6 +5,7 @@ module Fae
 
     def index
       @users = current_user.super_admin? ? User.all : User.public_users
+      flash[:notice] = 'User changes have not been saved.' if params[:cancelled]
     end
 
     def show
@@ -39,9 +40,9 @@ module Fae
 
       if @user.update(user_params)
         if current_user.super_admin?
-          redirect_to users_path, notice: 'User was successfully updated.'
+          redirect_to users_path, notice: 'User account updated.'
         else
-          redirect_to root_path, notice: 'User was successfully updated.'
+          redirect_to fae_root_path, notice: 'User account updated.'
         end
       else
         render action: 'edit'

@@ -8,6 +8,7 @@ module Fae
     belongs_to :role
 
     validates :email, presence: true
+    validates_uniqueness_of :email, message: "That email address is already in use. Give another one a go."
     validates :password, confirmation: true
     # validates :role_id, presence: true
     # validates :password, format: { with: /(?=.*\d)(?=.*[a-zA-Z])/, message: 'requires at least one letter and one number' }
