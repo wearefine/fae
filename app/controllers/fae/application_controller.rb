@@ -10,6 +10,10 @@ module Fae
       redirect_to root_path, notice: 'You are not authorized to view that page.' unless current_user.super_admin?
     end
 
+    def admin_only
+      redirect_to root_path, notice: 'You are not authorized to view that page.' unless current_user.super_admin? || current_user.admin?
+    end
+
     def show_404
       render template: 'fae/pages/error404.html.erb', layout: 'fae/error.html.erb', status: :not_found
     end
@@ -22,12 +26,11 @@ module Fae
 
         @fae_nav_items += Fae.nav_items
 
-        if current_user.super_admin?
-          @fae_nav_items << { text: "Users", path: '#', class_name: "main_nav-link-users", sublinks: [
-              { text: "Users", path: users_path },
-              { text: "Roles", path: roles_path }
-            ]
-          }
+        if current_user.admin? || current_user.super_admin?
+          sublinks = []
+          sublinks << { text: "Users", path: users_path } if current_user.admin? || current_user.super_admin?
+          sublinks << { text: "Roles", path: roles_path } if current_user.super_admin?
+          @fae_nav_items << { text: "Admin", path: '#', class_name: "main_nav-link-users", sublinks: sublinks}
         end
       end
     end

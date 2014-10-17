@@ -1,10 +1,10 @@
 module Fae
   class UsersController < ApplicationController
-    before_filter :super_admin_only, except: [:settings, :update]
+    before_filter :admin_only, except: [:settings, :update]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
 
     def index
-      @users = User.all
+      @users = current_user.super_admin? ? User.all : User.public_users
     end
 
     def show
@@ -12,9 +12,11 @@ module Fae
 
     def new
       @user = User.new
+      set_role_collection
     end
 
     def edit
+      set_role_collection
     end
 
     def settings
@@ -55,6 +57,11 @@ module Fae
     end
 
     private
+
+      def set_role_collection
+        @role_collection = Role.all if current_user.super_admin?
+        @role_collection = Role.public_roles if current_user.admin?
+      end
 
       def set_user
         @user = User.find(params[:id])

@@ -31,7 +31,7 @@
       <%= f.input :email %>
       <%= f.input :password %>
       <%= f.input :password_confirmation %>
-      <%= f.association :role if current_user.super_admin? %>
+      <%= f.association :role, collection: @role_collection if current_user.admin? || current_user.super_admin? %>
     </div>
   </section>
 </div>
