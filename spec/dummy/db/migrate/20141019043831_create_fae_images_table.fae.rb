@@ -1,3 +1,4 @@
+# This migration comes from fae (originally 20141008180718)
 class CreateFaeImagesTable < ActiveRecord::Migration
   def change
     create_table(:fae_images) do |t|

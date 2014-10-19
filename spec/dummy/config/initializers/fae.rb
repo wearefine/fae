@@ -1,5 +1,4 @@
 Fae.setup do |config|
-  config.title = "Fae Dummy App"
   config.nav_items = [
     {
       text: "Releases", path: "/admin/releases"

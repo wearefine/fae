@@ -25,6 +25,7 @@ module Fae
     #the model itself, re-uploading a new one would break.
     def delete_image
       image = Image.where(id: params[:id]).first
+      # require 'pry'; binding.pry
       image.remove_asset = true
       image.save
       render :nothing => true

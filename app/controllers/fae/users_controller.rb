@@ -2,6 +2,7 @@ module Fae
   class UsersController < ApplicationController
     before_filter :admin_only, except: [:settings, :update]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
+    before_action :set_role_collection, only: [:new, :edit, :settings]
 
     def index
       @users = current_user.super_admin? ? User.all : User.public_users
@@ -13,11 +14,9 @@ module Fae
 
     def new
       @user = User.new
-      set_role_collection
     end
 
     def edit
-      set_role_collection
     end
 
     def settings
@@ -42,7 +41,7 @@ module Fae
         if current_user.super_admin?
           redirect_to users_path, notice: 'User account updated.'
         else
-          redirect_to fae_root_path, notice: 'User account updated.'
+          redirect_to fae.root_path, notice: 'User account updated.'
         end
       else
         render action: 'edit'

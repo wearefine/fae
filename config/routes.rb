@@ -2,8 +2,6 @@ Fae::Engine.routes.draw do
 
   mount Judge::Engine => '/judge'
 
-  resources :roles
-
   root 'pages#home'
 
   devise_for :users, class_name: "Fae::User", module: :devise, skip: [:sessions]
@@ -23,6 +21,10 @@ Fae::Engine.routes.draw do
   post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
   post 'sort/:object', to: 'utilities#sort', as: 'sort'
 
+  resources :roles
+
+  get '/root' => 'options#edit', as: :option
+  match '/root' => 'options#update', via: [:put, :patch]
 
   # catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]

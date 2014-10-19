@@ -4,8 +4,8 @@ module Fae
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
 
-    helper Fae::FormHelper
-    helper Fae::ViewHelper
+    helper FormHelper
+    helper ViewHelper
 
     def index
       @items = @klass.for_admin_index
