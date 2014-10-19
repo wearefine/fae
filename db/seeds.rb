@@ -11,7 +11,9 @@ Fae::User.create(
   active: true
   )
 
-option = Fae::Option.new({title: 'My FINE Admin', singleton_guard: 0})
-option.build_logo
-option.build_favicon
-option.save!
+if Fae::Option.first.blank?
+  option = Fae::Option.new({title: 'My FINE Admin', singleton_guard: 0})
+  option.build_logo
+  option.build_favicon
+  option.save!
+end
