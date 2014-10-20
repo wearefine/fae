@@ -19,10 +19,11 @@ before_script:
   - mysql -e 'create database if not exists fae_dummy_test;'
   - cd spec/dummy && rake db:schema:load RAILS_ENV=test && cd ../../
   - if [ "$BRANCH" == "master" ] ; then DEPLOY_BRANCH="prod" ; fi
+  - git clone git@github.com:wearefine/shippable-setup.git
 script:
   - rspec -f JUnit -o shippable/testresults/results.xml
   - ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@bitbucket.org; cap $DEPLOY_BRANCH deploy'
 after_failure:
-  - python slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
+  - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
 after_success:
-  - python slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN -s
+  - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN -s
