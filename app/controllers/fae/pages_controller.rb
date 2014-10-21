@@ -1,6 +1,8 @@
 module Fae
   class PagesController < ApplicationController
 
+    before_filter :authenticate_user!
+
     def home
       @models = load_all_models
       @list = recently_updated
@@ -10,9 +12,7 @@ module Fae
       return show_404
     end
 
-
-    private
-
+  private
 
     def load_all_models
       models = []
