@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021181927) do
+ActiveRecord::Schema.define(version: 20141021183653) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(version: 20141021181927) do
   create_table "fae_roles", force: true do |t|
     t.string   "name"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fae_text_areas", force: true do |t|
+    t.integer  "contentable"
+    t.string   "label"
+    t.text     "content"
+    t.integer  "position",    default: 0
+    t.boolean  "on_stage",    default: true
+    t.boolean  "on_prod",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
