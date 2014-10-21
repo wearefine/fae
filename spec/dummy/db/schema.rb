@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141021161543) do
+ActiveRecord::Schema.define(version: 20141021181927) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -45,6 +45,22 @@ ActiveRecord::Schema.define(version: 20141021161543) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "fae_files", force: true do |t|
+    t.string   "name"
+    t.string   "asset"
+    t.integer  "fileable_id"
+    t.string   "fileable_type"
+    t.integer  "file_size"
+    t.integer  "position",      default: 0
+    t.string   "attached_as"
+    t.boolean  "on_stage",      default: true
+    t.boolean  "on_prod",       default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
 
   create_table "fae_images", force: true do |t|
     t.string   "name"
