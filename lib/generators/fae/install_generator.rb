@@ -3,8 +3,10 @@ module Fae
     def install
       run 'bundle install'
       route "mount Fae::Engine => '/admin'"
-      # copy templates and genreators
+      # copy templates and generators
+      # build fae initializer and generate key
       rake 'db:migrate'
+      # seed db
     end
   end
 end
