@@ -5,7 +5,6 @@ module Fae
     mount_uploader :asset, Fae::ImageUploader
 
     belongs_to :imageable, polymorphic: true, touch: true
-    belongs_to :faviconable, polymorphic: true, touch: true
 
   private
 
