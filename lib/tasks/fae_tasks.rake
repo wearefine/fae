@@ -2,12 +2,11 @@ namespace :fae do
   desc "Seeds the parent app with Fae's defaults"
   task :seed_db => :environment do
     Fae::Role.delete_all
-    super_admin = Fae::Role.create(name: 'Super Admin', position: 0)
-    Fae::Role.create([
-      {name: 'Admin', position: 1},
-      {name: 'User', position: 2}
-      ])
+    super_admin = Fae::Role.create(name: 'super admin', position: 0)
+                  Fae::Role.create(name: 'admin', position: 1)
+                  Fae::Role.create(name: 'user', position: 2)
 
+    Fae::User.where(email: 'admin@finedesigngroup.com').delete_all
     Fae::User.create(
       first_name: 'FINE',
       last_name: 'admin',
@@ -16,5 +15,12 @@ namespace :fae do
       role: super_admin,
       active: true
       )
+
+    if Fae::Option.first.blank?
+      option = Fae::Option.new({title: 'My FINE Admin', singleton_guard: 0})
+      option.build_logo
+      option.build_favicon
+      option.save!
+    end
   end
 end

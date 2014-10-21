@@ -8,8 +8,9 @@ module Fae
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../../../tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       # build fae initializer and generate key
+      rake 'fae:install:migrations'
       rake 'db:migrate'
-      # seed db
+      rake 'fae:seed_db'
     end
 
     private
