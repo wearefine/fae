@@ -2,13 +2,18 @@
 
 ## Installation
 
-* add the gem to your Gemfile
+Add the gem to your Gemfile
 
-		gem 'fae', :git => 'git@bitbucket.org:wearefine/fae.git’
+```ruby
+gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git'
+```
+Run the installer
 
-* configure devise
+```
+$ rails g fae:install
+```
 
-		$ rails generate devise:install
+Restart your server
 
 ## Usage
 
@@ -16,60 +21,125 @@
 
 All FAE helper methods add the ability to use simpler syntax for input class and wrapper class - respectively 'class' and 'wrapper_class'
 
-```
+```ruby
 fae_input f, :state, wrapper_class: 'special_wrapper', class: 'special_input'
 fae_association f, :child, wrapper_class: 'unique_wrapper', class: 'unique_input'
 ```
 
+#### Prefix and suffix
+
 The prefix and suffix helpers both have a required option of *prefix* and *suffix*, there is an optional *icon* option which takes a boolean and activates some preset icons if the prefix/suffix option is named correctly
-`fae_prefix f, :amount, prefix: '$'`
+
+```ruby
+fae_prefix f, :amount, prefix: '$'
+```
+
 ![Alt text](http://www.afinesite.com/fae/fae_prefix.jpg)
 
-`fae_suffix f, :start_date, suffix: 'calendar', icon: true`
+```ruby
+fae_suffix f, :start_date, suffix: 'calendar', icon: true
+```
+
 ![Alt text](http://www.afinesite.com/fae/fae_suffix.jpg)
 
+#### Radio and checkbox
+
 The radio and checkbox helper allows for an option to align it vertically or horizontally, the default is vertical. It also works for associations with an optional 'collection' option that takes an array, multi-dimentional array, or ActiveRecord#Relation object as a value.
-`fae_radio f, :on_prod, type: 'stacked'`
+
+```ruby
+fae_radio f, :on_prod, type: 'stacked'
+```
+
 ![Alt text](http://www.afinesite.com/fae/fae_radio_stacked.png)
 
-`fae_checkbox f, :on_prod, type: 'inline'`
+```ruby
+fae_checkbox f, :on_prod, type: 'inline'
+```
+
 ![Alt text](http://www.afinesite.com/fae/fae_radio_inline.png)
 
-`fae_radio f, :acclaims, collection: Acclaims.all`
+```ruby
+fae_radio f, :acclaims, collection: Acclaims.all
+```
+
+#### Pulldown
 
 The pulldown helper adds a dropdown with a search field on your associations or model attributes. It takes a *size* option that accepts 'short' or 'long', 'long' is the default. This helper by default works on associations and inputs, if you want to use it on inputs you must specify a 'collection' as a multi-dimentional array or an ActiveRecord#Relation object as a value. The `search` option defaults to true, but is optional and takes a boolean.
-`fae_pulldown f, :wine`
+
+```ruby
+fae_pulldown f, :wine
+```
+
 ![Alt text](http://www.afinesite.com/fae/long_pulldown.png)
-`fae_pulldown f, :wine, size: 'short'`
+
+```ruby
+fae_pulldown f, :wine, size: 'short'
+```
+
 ![Alt text](http://www.afinesite.com/fae/short_pulldown.png)
-`fae_pulldown f, :price, collection: [['$1.00',1],['$2.00',2]]` or `fae_pulldown f, :price, collection [1,2]`
+
+```ruby
+fae_pulldown f, :price, collection: [['$1.00',1],['$2.00',2]]` or `fae_pulldown f, :price, collection [1,2]
+```
+
+#### Multiselect
 
 The multiselect helper takes an optional parameter of 'two_pane' which takes a Boolean. This method is restricted to ActiveRecord#Relation's.
-`<%= fae_multiselect f, :acclaims, label_method: :publication %>`
+
+```ruby
+<%= fae_multiselect f, :acclaims, label_method: :publication %>
+```
+
 ![Alt text](http://www.afinesite.com/fae/multiselect_dropdown.png)
-`<%= fae_multiselect f, :selling_points, two_pane: true %>`
+
+```ruby
+<%= fae_multiselect f, :selling_points, two_pane: true %>
+```
+
 ![Alt text](http://www.afinesite.com/fae/multiselect_two_pane.png)
 
-The datepicker helper simply displays a field with a calendar icon that applies a single calendar dropdown
-`<%= fae_datepicker f, :published_at %>`
-![Alt text](http://www.afinesite.com/fae/datepicker.png)
-
-The daterange helper sets up two fields that work together to form a date range. By default it applies to the `start_date` and `end_date` attribute, but this can be overridden with their perspective options.
-`<%= fae_daterange f, :display_dates %>`
-![Alt text](http://www.afinesite.com/fae/daterange-default.png)
-`<%= fae_daterange f, :event_dates, start_date: :beginning_date, end_date: :final_date %>`
-![Alt text](http://www.afinesite.com/fae/daterange-custom.png)
+#### Grouped Select
 
 The grouped_select helper takes either a `collection` option or the `labels` and `groups` options. The `labels` and `groups` options must be contain arrays of equal length.
-```
+
+```ruby
 <% states = {'Califonia' => ['Los Angeles', 'San Francisco'], 'Oregon' => ['Portland', 'Boring', 'France']} %>
 <%= fae_grouped_select f, :city, collection: states %>
 ```
+
 or
-```
+
+```ruby
 <%= fae_grouped_select f, :city, labels: states.keys , groups: states.values %>
 ```
+
 ![Alt text](http://www.afinesite.com/fae/fae_grouped_select.png)
+
+#### Datepicker
+
+The datepicker helper simply displays a field with a calendar icon that applies a single calendar dropdown
+
+```ruby
+<%= fae_datepicker f, :published_at %>
+```
+
+![Alt text](http://www.afinesite.com/fae/datepicker.png)
+
+#### Daterange
+
+The daterange helper sets up two fields that work together to form a date range. By default it applies to the `start_date` and `end_date` attribute, but this can be overridden with their perspective options.
+
+```ruby
+<%= fae_daterange f, :display_dates %>
+```
+
+![Alt text](http://www.afinesite.com/fae/daterange-default.png)
+
+```ruby
+<%= fae_daterange f, :event_dates, start_date: :beginning_date, end_date: :final_date %>
+```
+
+![Alt text](http://www.afinesite.com/fae/daterange-custom.png)
 
 
 ### Application Helper Methods

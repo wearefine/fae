@@ -8,6 +8,9 @@ module Fae
     # include libraries
     require 'simple_form'
     require 'jquery-ui-rails'
+    require 'remotipart'
+    require 'judge'
+    require 'judge/simple_form'
 
     config.railties_order = [:main_app, Fae::Engine, :all]
     config.autoload_paths += %W(#{config.root}/lib)
