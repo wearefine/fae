@@ -35,7 +35,6 @@ module Fae
     def fae_radio(f, attribute, options={})
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
-
       options.update(as: :radio_collection, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}")
       association_or_input f, attribute, options
     end
@@ -43,9 +42,7 @@ module Fae
     def fae_checkbox(f, attribute, options={})
       options[:alignment] = 'checkbox_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'checkbox_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
-
       options.update(as: :check_boxes, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}")
-
       association_or_input f, attribute, options
     end
 
@@ -57,7 +54,6 @@ module Fae
 
       options.update(input_class: "#{options[:input_class]} small_pulldown") if options[:size] == "short"
       options.update(wrapper_class: "#{options[:wrapper_class]} select-no_search") if options[:search] == false
-
       association_or_input f, attribute, options
     end
 
@@ -66,7 +62,6 @@ module Fae
       raise "Fae::ImproperOptionValue: The value '#{options[:two_pane]}' is not a valid option for 'two_pane'. Please use a Boolean." if options[:two_pane].present? && !!options[:two_pane] != options[:two_pane]
 
       options.update(input_class: "#{options[:input_class]} multiselect") if options[:two_pane] == true
-
       fae_association f, attribute, options
     end
 
@@ -80,6 +75,11 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def fae_daterange(f, label, options={})
+      options.update(as: :date_range)
+      fae_input f, label, options
+    end
+
     def fae_grouped_select(f, attribute, options={})
       raise "Fae::MissingRequiredOption: fae_grouped_select requires a `collection` option or `groups` and `labels` options." if !options.has_key?(:collection) && !options.has_key?(:groups) && !options.has_key?(:labels)
       raise "Fae::MissingRequiredOption: fae_grouped_select required a `labels` option with a value containing an array when using the `groups` option." if options[:groups].present? && options[:labels].blank?
@@ -87,7 +87,6 @@ module Fae
 
       options[:collection] ||= group_options_for_collection(options[:labels], options[:groups])
       options.update(as: :grouped_select, group_method: :last, wrapper_class: "#{options[:wrapper_class]} select")
-
       association_or_input f, attribute, options
     end
 
@@ -123,7 +122,6 @@ module Fae
     end
 
     def association_or_input(f, attribute, options)
-
       if is_attribute_or_association?(f, attribute)
         f.object.attribute_names.include?(attribute.to_s) ? fae_input(f, attribute, options) : fae_association(f, attribute, options)
       else
@@ -136,7 +134,6 @@ module Fae
       options[:wrapper_class] = options[:wrapper_class].present? ? "#{options[:wrapper_class]} input symbol--#{type}" : "input symbol--#{type}"
       options[:span_class]  = "input-symbol--#{type}"
       options[:span_class] += " icon-#{val}" if options[:icon].present?
-
       options[:content_text] = val if options[:icon].blank?
     end
 

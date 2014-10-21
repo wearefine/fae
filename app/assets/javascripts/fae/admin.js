@@ -28,8 +28,20 @@ var Admin = {
     // daterangepicker instantiation
     if ($(".daterangepicker").length > 0) {
       $(".daterangepicker").dateRangePicker({
-        format: "MMM Do, YYYY",
-        separator: ' - '
+        format: "MMM DD, YYYY",
+        separator : ' to ',
+        getValue: function()
+        {
+          if ($('input[id$="start_date"]').val() && $('input[id$="end_date"]').val() )
+            return $('input[id$="start_date"]').val() + ' to ' + $('input[id$="end_date"]').val();
+          else
+            return '';
+        },
+        setValue: function(s,s1,s2)
+        {
+          $('input[id$="start_date"]').val(s1);
+          $('input[id$="end_date"]').val(s2);
+        }
       });
     };
 

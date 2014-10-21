@@ -16,9 +16,7 @@
         <%= fae_datepicker f, :start_date %>
 
         <!-- Date Range Picker -->
-        <%= fae_datepicker f, :start_date, range: true %>
-
-        <%= f.input :end_date %>
+        <%= fae_daterange f, :display_dates %>
 
         <!-- NO SEARCH -->
         <%= fae_pulldown f, :event_type, collection: ['Birthday', 'Bar Mitzvah'], search: false %>

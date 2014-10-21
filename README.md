@@ -50,6 +50,16 @@ The multiselect helper takes an optional parameter of 'two_pane' which takes a B
 `<%= fae_multiselect f, :selling_points, two_pane: true %>`
 ![Alt text](http://www.afinesite.com/fae/multiselect_two_pane.png)
 
+The datepicker helper simply displays a field with a calendar icon that applies a single calendar dropdown
+`<%= fae_datepicker f, :published_at %>`
+![Alt text](http://www.afinesite.com/fae/datepicker.png)
+
+The daterange helper sets up two fields that work together to form a date range. By default it applies to the `start_date` and `end_date` attribute, but this can be overridden with their perspective options.
+`<%= fae_daterange f, :display_dates %>`
+![Alt text](http://www.afinesite.com/fae/daterange-default.png)
+`<%= fae_daterange f, :event_dates, start_date: :beginning_date, end_date: :final_date %>`
+![Alt text](http://www.afinesite.com/fae/daterange-custom.png)
+
 The grouped_select helper takes either a `collection` option or the `labels` and `groups` options. The `labels` and `groups` options must be contain arrays of equal length.
 ```
 <% states = {'Califonia' => ['Los Angeles', 'San Francisco'], 'Oregon' => ['Portland', 'Boring', 'France']} %>
@@ -79,4 +89,6 @@ The fae_date_format method takes a Date/DateTime object and an optional timezone
 ## Contributing/Maintenance
 
 Maintenance specific information can be found in [CONTRIBUTING.md](/wearefine/fae/src/master/CONTRIBUTING.md)
+
+
 
