@@ -381,4 +381,5 @@ $(function() {
   Admin.init();
   AjaxForms.init();
   SubnavHighlighter.init();
+  Validator.init();
 });

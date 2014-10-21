@@ -10,42 +10,12 @@
 
 		$ rails generate devise:install
 
-## Maintainer notes
+## Usage
 
-### Dummy App
-
-There is a dummy app included in the Engine source. To get it running, follow these steps.
-
-Cd to the dummy app:
-
-```
-$ cd spec/dummy
-```
-
-Create the DB if you haven't already and migrate:
-
-```
-$ rake db:create:all
-$ rake db:migrate
-$ rake db:test:prepare
-```
-
-Seed the DB if you haven't already:
-
-```
-$ rails console
-> Fae::Engine.load_seed
-```
-
-Fire up the server:
-
-```
-$ rails s
-```
-
-### Helper Methods
+### Form Helper Methods
 
 All FAE helper methods add the ability to use simpler syntax for input class and wrapper class - respectively 'class' and 'wrapper_class'
+
 ```
 fae_input f, :state, wrapper_class: 'special_wrapper', class: 'special_input'
 fae_association f, :child, wrapper_class: 'unique_wrapper', class: 'unique_input'
@@ -102,9 +72,23 @@ or
 ![Alt text](http://www.afinesite.com/fae/fae_grouped_select.png)
 
 
+### Application Helper Methods
 
+The image_form helper method takes the form object and the object that attaches to the Image relationship. The following optional params are available:
 
+*image_name*: the action image relationships name, defaults to :image  
+*image_label*: defaults to the image_name  
+*alt_label*: defaults to "#{image_label} alt text"  
+*omit*: an array containing :caption and/or :alt, defaults to [:caption]  
+*show_thumb*: defaults to false  
 
+`<%= load_nested_image_form f, @item %>`
+
+The fae_date_format method takes a Date/DateTime object and an optional timezone string as its second parameter. It simply displays dates in a uniform way accross all implementations.
+
+## Contributing/Maintenance
+
+Maintenance specific information can be found in [CONTRIBUTING.md](/wearefine/fae/src/master/CONTRIBUTING.md)
 
 
 

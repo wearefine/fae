@@ -1,4 +1,4 @@
-<%= render 'fae/shared/index_header', title: 'Releases' %>
+<%= render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}" %>
 
 <div class="main_content-sections">
   <section class="main_content-section">
@@ -6,7 +6,7 @@
 
     <!-- Table Filter Area -->
     <form class="js-filter-form table-filter-area">
-      <h2>Search Releases</h2>
+      <h2>Search <%= @klass_humanized.pluralize %></h2>
 
       <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
 
@@ -48,9 +48,9 @@
 
         <tbody>
           <% @items.each do |item| %>
-            <tr id="release_<%= item.id %>">
+            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
               <td class="main_table-description-item"><%= link_to item.display_name, edit_admin_release_path(item) %></td>
-              <td><%= item.updated_at %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td><%= item.slug %></td>
               <td><%= item.price %></td>
               <td><%= attr_toggle item, :on_stage %></td>

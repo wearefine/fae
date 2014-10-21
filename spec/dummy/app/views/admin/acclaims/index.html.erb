@@ -1,4 +1,4 @@
-<%= render 'fae/shared/index_header', title: 'Acclaims' %>
+<%= render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}" %>
 
 <div class="main_content-sections">
   <section class="main_content-section">
@@ -17,12 +17,12 @@
 
         <tbody>
           <% @items.each do |item| %>
-            <tr id="release_<%= item.id %>">
+            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
               <td class="main_table-description-item"><%= link_to item.display_name, edit_admin_acclaim_path(item) %></td>
-              <td><%= item.updated_at %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
               <td class="main_table-delete">

@@ -24,11 +24,9 @@ module Fae
     #here we just remove the asset from the attached image model, because if we deleted
     #the model itself, re-uploading a new one would break.
     def delete_image
-      IMAGE_LOGGER.info "Delete image ##{params[:id]} called (image_controller)"
       image = Image.where(id: params[:id]).first
       image.remove_asset = true
       image.save
-      IMAGE_LOGGER.info "Delete image ##{params[:id]} complete (image_controller)"
       render :nothing => true
     end
 

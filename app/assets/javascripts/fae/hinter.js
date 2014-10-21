@@ -50,7 +50,7 @@ var Hinter = {
 		});
 	},
 
-	// Allow hover to do the same as a clicking 
+	// Allow hover to do the same as a clicking
 	hover: function(){
 		var that = this;
 
@@ -70,15 +70,23 @@ var Hinter = {
 	show_modal: function(elm) {
 		var top = $(elm).offset().top - $(window).scrollTop();
 		var left = $(elm).offset().left + 20;
+		var new_height = $(elm).closest('label').siblings(".hint").height() + 80;
+		var new_width = $(elm).closest('label').siblings(".hint").width() + 40;
+		var $hint = $(elm).closest('label').siblings(".hint");
 
-		$(elm).closest('label').siblings(".hint").modal({
-			minHeight: this.height + 80,
-			minWidth: this.width + 40,
-			position: [top, left],
-			overlayClose: true,
-			opacity: 0,
-			containerCss: { position: "absolute" }
-		});
+		$hint.modal({
+      minHeight: new_height,
+      minWidth: new_width,
+      position: [top, left],
+      overlayClose: true,
+      opacity: 0,
+      containerCss: { position: "absolute" },
+      onShow: function(){
+      	if ($hint.find('.dark').length) {
+      		$('#simplemodal-container').addClass('simplemodal-container--dark')
+      	};
+      }
+    });
 	}
 };
 

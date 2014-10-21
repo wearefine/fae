@@ -25,6 +25,9 @@
 //= require jquery.daterangepicker
 //= require imagesloaded.pkgd.min
 //= require touch_punch
+//= require underscore
+//= require json2
+//= require judge
 //
 //= require fae/helpers
 //= require fae/accordion
@@ -35,4 +38,5 @@
 //= require fae/hinter
 //= require fae/mobilemenu
 //= require fae/ajax_forms
+//= require fae/validation
 //= require fae/admin
