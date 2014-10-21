@@ -8,6 +8,11 @@ module Fae
 
     include CarrierWave::MimeTypes
     process :set_content_type
+    process :save_file_size_in_model
+
+    def save_file_size_in_model
+      model.file_size = file.size
+    end
 
     # Override the directory where uploaded files will be stored.
     # This is a sensible default for uploaders that are meant to be mounted:
