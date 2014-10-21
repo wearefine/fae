@@ -1,0 +1,28 @@
+<%= simple_form_for(@option) do |f| %>
+  <section class="main_content-header">
+    <div class="main_content-header-wrapper">
+
+      <%= form_header @option %>
+
+      <div class="main_content-header-save">
+        <%= link_to "Cancel", roles_path, id: "main_content-header-save-cancel" %>
+        <%= f.submit "Save Settings" %>
+      </div>
+    </div>
+  </section>
+
+  <div class="main_content-section">
+    <section class="main_content-section">
+      <div class="main_content-section-area">
+            <%= f.input :title %>
+            <%= f.input :time_zone %>
+            <%= f.input :colorway %>
+            <%= f.input :stage_url %>
+            <%= f.input :live_url %>
+
+            <%= image_form f, @option, image_name: :logo %>
+            <%= image_form f, @option, image_name: :favicon %>
+      </div>
+    </section>
+  </div>
+<% end %>

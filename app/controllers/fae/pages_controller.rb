@@ -1,8 +1,9 @@
 module Fae
   class PagesController < ApplicationController
+
     def home
       @models = load_all_models
-      @list = recently_updated(25)
+      @list = recently_updated
     end
 
     def error404

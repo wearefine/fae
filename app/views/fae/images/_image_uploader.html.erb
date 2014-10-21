@@ -3,7 +3,6 @@
 <%
   # passed in variables
   image_name   ||= :image
-  omit           = [:caption]
   the_image      = item.send(image_name)
   image_label  ||= image_name.to_s.humanize
   alt_label    ||= "#{image_label} alt text"
@@ -21,11 +20,11 @@
         <%= image_tag the_image.asset.url %>
         <%= link_to 'Original', the_image.asset.url, class: "js-image-modal asset-actions-image-link" %>
         <%= link_to 'Thumb', the_image.asset.thumb.url, class: "js-image-modal asset-actions-image-link" if show_thumb %>
-        <%= link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } if the_image.id.present? %>
+        <%= link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, 'data-confirm' => 'Are you sure?' if the_image.id.present? %>
       </div>
     <% end %>
 
-    <div class="asset-inputs" style="<%= "display:none;" unless the_image.asset.blank? %>">
+    <div class="asset-inputs" style="<%= "display:none;" if the_image.asset.present? %>">
       <%= i.input :asset, as: :file, label: false %>
       <%= i.input :asset_cache, as: :hidden %>
       <%= i.input :attached_as, as: :hidden, input_html: {value: image_name.to_s} %>

@@ -17,7 +17,7 @@
       <% end %>
 
       <div class="main_content-header-save">
-        <%= link_to "Cancel", users_path, id: "main_content-header-save-cancel" %>
+        <%= link_to "Cancel", users_path(cancelled: true), id: "main_content-header-save-cancel" %>
         <%= f.submit "Save Settings" %>
       </div>
     </div>
@@ -31,7 +31,7 @@
       <%= f.input :email %>
       <%= f.input :password %>
       <%= f.input :password_confirmation %>
-      <%= f.association :role if current_user.super_admin? %>
+      <%= f.association :role, collection: @role_collection if current_user.admin? || current_user.super_admin? %>
     </div>
   </section>
 </div>
