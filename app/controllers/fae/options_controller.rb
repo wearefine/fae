@@ -2,7 +2,7 @@ module Fae
   class OptionsController < ApplicationController
 
     def edit
-      @option = Option.first
+      @option = Option.first || Option.instance
     end
 
     # PATCH/PUT /options/1

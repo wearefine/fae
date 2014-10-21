@@ -3,10 +3,16 @@ module Fae
 
     validates_inclusion_of :singleton_guard, :in => [0]
 
-    has_one :logo, as: :imageable, class_name: 'Fae::Image', dependent: :destroy
+    has_one :logo, -> { where(attached_as: 'logo' ) },
+      as: :imageable,
+      class_name: 'Fae::Image',
+      dependent: :destroy
     accepts_nested_attributes_for :logo, allow_destroy: true
 
-    has_one :favicon, as: :faviconable, class_name: 'Fae::Image', dependent: :destroy
+    has_one :favicon, -> { where(attached_as: 'favicon' ) },
+      as: :imageable,
+      class_name: 'Fae::Image',
+      dependent: :destroy
     accepts_nested_attributes_for :favicon, allow_destroy: true
 
     def self.instance

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141019043833) do
+ActiveRecord::Schema.define(version: 20141021161543) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -51,20 +51,17 @@ ActiveRecord::Schema.define(version: 20141019043833) do
     t.string   "asset"
     t.integer  "imageable_id"
     t.string   "imageable_type"
-    t.integer  "faviconable_id"
-    t.string   "faviconable_type"
     t.string   "alt"
     t.string   "caption"
-    t.integer  "position",         default: 0
+    t.integer  "position",       default: 0
     t.string   "attached_as"
-    t.boolean  "on_stage",         default: true
-    t.boolean  "on_prod",          default: false
+    t.boolean  "on_stage",       default: true
+    t.boolean  "on_prod",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "file_size"
   end
 
-  add_index "fae_images", ["faviconable_id", "faviconable_type"], name: "index_fae_images_on_faviconable_id_and_faviconable_type", using: :btree
   add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
 
   create_table "fae_options", force: true do |t|
