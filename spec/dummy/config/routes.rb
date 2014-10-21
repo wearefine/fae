@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     resources :events
     resources :people
   end
-  mount Fae::Engine => "/admin"
+
+  mount Fae::Engine => '/admin'
 end
