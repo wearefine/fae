@@ -18,7 +18,7 @@ module Fae
     def self.instance
       # there will be only one row, and its ID must be '1'
       begin
-        find(1)
+        first
       rescue ActiveRecord::RecordNotFound
         # slight race condition here, but it will only happen once
         row = Option.new({title: 'My FINE Admin'})
