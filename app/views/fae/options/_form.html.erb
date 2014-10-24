@@ -11,10 +11,12 @@
     </div>
   </section>
 
+  <%= render 'flash_messages' %>
+
   <div class="main_content-section">
     <section class="main_content-section">
       <div class="main_content-section-area">
-            <%= f.input :title %>
+            <%= f.input :title, label: "Project Name" %>
             <%= f.input :time_zone %>
             <%= f.input :colorway %>
             <%= f.input :stage_url %>

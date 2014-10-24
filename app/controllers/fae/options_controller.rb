@@ -8,7 +8,8 @@ module Fae
     # PATCH/PUT /options/1
     def update
       if @option.update(option_params)
-        render :edit, notice: 'Option was successfully updated.'
+        flash[:notice] = 'Option was successfully updated.'
+        redirect_to :action => :edit
       else
         render :edit
       end

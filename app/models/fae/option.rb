@@ -2,6 +2,7 @@ module Fae
   class Option < ActiveRecord::Base
 
     validates_inclusion_of :singleton_guard, :in => [0]
+    validates_presence_of :title, :time_zone, :colorway, :live_url
 
     has_one :logo, -> { where(attached_as: 'logo' ) },
       as: :imageable,
