@@ -66,12 +66,7 @@ module Fae
     end
 
     def fae_datepicker(f, attribute, options={})
-      raise "Fae::ImproperOptionValue: The value '#{options[:range]}' is not a valid option for 'range'. Please use a Boolean." if options[:range].present? && !!options[:range] != options[:range]
-
-      options.update(as: :string)
-
-      options[:range] ? options[:input_class] = 'daterangepicker' : options[:wrapper_class] = 'datepicker'
-
+      options.update(as: :string, wrapper_class: 'datepicker')
       fae_input f, attribute, options
     end
 
