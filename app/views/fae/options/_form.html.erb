@@ -16,14 +16,14 @@
   <div class="main_content-section">
     <section class="main_content-section">
       <div class="main_content-section-area">
-            <%= f.input :title, label: "Project Name" %>
-            <%= f.input :time_zone %>
-            <%= f.input :colorway %>
-            <%= f.input :stage_url %>
-            <%= f.input :live_url %>
+        <%= f.input :title, label: "Project Name" %>
+        <%= f.input :time_zone %>
+        <%= f.input :colorway %>
+        <%= f.input :stage_url %>
+        <%= f.input :live_url %>
 
-            <%= image_form f, @option, image_name: :logo %>
-            <%= image_form f, @option, image_name: :favicon %>
+        <%= image_form f, @option, image_name: :logo, required: true %>
+        <%= image_form f, @option, image_name: :favicon %>
       </div>
     </section>
   </div>

@@ -8,12 +8,13 @@
   alt_label    ||= "#{image_label} alt text"
   omit         ||= [:caption]
   show_thumb   ||= false
+  required     ||= false
 
 %>
 
 <%= f.simple_fields_for image_name do |i| %>
   <div class="field input">
-    <label><%= image_label.html_safe %></label>
+    <label class=<%= "required" if required %>><%= "<abbr title='required'>*</abbr> ".html_safe if required %><%= image_label.html_safe %></label>
 
     <% if the_image.asset.present? %>
       <div class="asset-actions">
