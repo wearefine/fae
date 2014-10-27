@@ -7,7 +7,7 @@ module Fae
 
     belongs_to :role
 
-    validates :email, presence: true
+    validates_presence_of :first_name, :email, :role
     validates_uniqueness_of :email, message: "That email address is already in use. Give another one a go."
     validates :password, confirmation: true
     # validates :role_id, presence: true
