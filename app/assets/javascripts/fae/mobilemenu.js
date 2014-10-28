@@ -3,6 +3,7 @@ var MobileMenu = {
   trigger_selector: "#main_nav-menu_button",
   header_selector: ".main_nav-header",
   sub_header_selector: ".main_nav-sub-header-mobile",
+  sub_header_section_selector: ".main_nav-sub-nav",
   toggle_class: "js-menu-active",
   toggle_level_class: "js-menu-level-active",
   drawer_closed: true,
@@ -56,7 +57,16 @@ var MobileMenu = {
     $(this.header_selector).click(function(e){
       if (!$(this).hasClass("js-menu-header-active") && $(window).width() < that.default_screen_width) {
         e.preventDefault();
-        $(this).closest("li").addClass(that.toggle_level_class);
+        var $parent = $(this).closest("li");
+        var link_url = $(this).data("link");
+
+        // Add JS toggle class
+        $parent.addClass(that.toggle_level_class);
+
+        // If the element does not have sublinks, then go to the desired page
+        if ($parent.find(that.sub_header_section_selector).length === 0 && typeof link_url !== "undefined") {
+          location.href = link_url;
+        }
       }
     });
   },

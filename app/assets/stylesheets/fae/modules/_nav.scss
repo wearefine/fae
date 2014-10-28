@@ -104,6 +104,10 @@
 		@include transition(color, .2s);
 	}
 
+	&.header_drawer-content-only:after {
+		display: none;
+	}
+
 	&:hover:after {
 		color: $c-nav-icons-hover;
 	}
