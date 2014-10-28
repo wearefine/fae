@@ -18,6 +18,8 @@ gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'remotipart'
+gem 'carrierwave', '~> 0.10.0'
+gem 'rmagick', '~> 2.13.3', require: false
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
@@ -27,4 +29,12 @@ group :test do
   gem 'guard-rspec', '~> 4.3.1'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'selenium-webdriver', '~> 2.42.0'
+  gem "yarjuf"
 end
+
+gem 'capistrano',  '~> 3.1'
+# gem 'capistrano-rails', path: '/Library/WebServer/Documents/work/open_source/capistrano-rails'
+gem 'capistrano-rails', git: 'https://github.com/jamesmkur/rails.git'
+gem 'capistrano-rvm'
+
+gem 'mysql2'

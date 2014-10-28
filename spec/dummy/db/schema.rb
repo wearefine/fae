@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006185920) do
+ActiveRecord::Schema.define(version: 20141021184641) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -46,9 +46,76 @@ ActiveRecord::Schema.define(version: 20141006185920) do
     t.datetime "updated_at"
   end
 
+  create_table "fae_files", force: true do |t|
+    t.string   "name"
+    t.string   "asset"
+    t.integer  "fileable_id"
+    t.string   "fileable_type"
+    t.integer  "file_size"
+    t.integer  "position",      default: 0
+    t.string   "attached_as"
+    t.boolean  "on_stage",      default: true
+    t.boolean  "on_prod",       default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
+
+  create_table "fae_images", force: true do |t|
+    t.string   "name"
+    t.string   "asset"
+    t.integer  "imageable_id"
+    t.string   "imageable_type"
+    t.string   "alt"
+    t.string   "caption"
+    t.integer  "position",       default: 0
+    t.string   "attached_as"
+    t.boolean  "on_stage",       default: true
+    t.boolean  "on_prod",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "file_size"
+  end
+
+  add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
+
+  create_table "fae_options", force: true do |t|
+    t.string   "title"
+    t.string   "time_zone"
+    t.string   "colorway"
+    t.string   "stage_url"
+    t.string   "live_url"
+    t.integer  "singleton_guard"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
+
+  create_table "fae_pages", force: true do |t|
+    t.string   "title"
+    t.integer  "position",   default: 0
+    t.boolean  "on_stage",   default: true
+    t.boolean  "on_prod",    default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "fae_roles", force: true do |t|
     t.string   "name"
     t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fae_text_areas", force: true do |t|
+    t.integer  "contentable"
+    t.string   "label"
+    t.text     "content"
+    t.integer  "position",    default: 0
+    t.boolean  "on_stage",    default: true
+    t.boolean  "on_prod",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -90,6 +157,9 @@ ActiveRecord::Schema.define(version: 20141006185920) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "event_id"
+    t.boolean  "on_stage",   default: true
+    t.boolean  "on_prod",    default: false
+    t.integer  "position"
   end
 
   create_table "release_selling_points", force: true do |t|

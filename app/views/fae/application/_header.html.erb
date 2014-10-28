@@ -2,7 +2,7 @@
   <span class="icon-menu" id="main_nav-menu_button"></span>
   <h1 class="main_header-name">
     <%= link_to root_path do %>
-      <%= Fae.title %>
+      <%= @option.title %>
       <span class="main_header-name-fine">a FINE admin</span>
     <% end %>
   </h1>
@@ -15,18 +15,10 @@
           <span class="icon-offlink"></span>
         <% end %>
         <ul class="utility_sub_nav">
-          <li><%= link_to "Stage Site", Fae.stage_url %></li>
-          <li><%= link_to "Live Site", Fae.live_url %></li>
+          <li><%= link_to "Stage Site", "//#{@option.stage_url}" %></li>
+          <li><%= link_to "Live Site",  "//#{@option.live_url}"  %></li>
         </ul>
       </li>
-      <% if Fae.support_url.present? %>
-        <li class="utility_nav-support">
-          <%= link_to Fae.support_url do %>
-            Support
-            <span class="icon-support"></span>
-          <% end %>
-        </li>
-      <% end %>
       <li class="utility_nav-user">
         <%= link_to "#" do %>
           <%= current_user.full_name %>

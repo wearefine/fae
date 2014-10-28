@@ -15,8 +15,7 @@
           <% @list.each do |item| %>
             <tr id="release_<%= item.id %>">
               <td class="main_table-description-item"><%= link_to item.display_name, edit_polymorphic_path([main_app, :admin, item]) %></td>
-              <td><%= item.updated_at %></td>
-              <%#= fae_date_format item.updated_at %>
+              <td><%= fae_date_format item.updated_at %></td>
             </tr>
           <% end %>
         </tbody>
@@ -24,5 +23,3 @@
     </div>
   </section>
 </div>
-
-<%= render 'flash_messages' %>

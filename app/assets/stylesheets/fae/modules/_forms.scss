@@ -5,15 +5,6 @@ label {
   font-size: 15px;
   color: $c-text-heavy;
 
-  &.required {
-    &:before {
-      content: "*";
-      display: inline-block;
-      padding-right: 3px;
-      color: $c-custom-text_link;
-    }
-  }
-
   abbr {
     color: $c-custom-text_link;
   }
@@ -493,6 +484,10 @@ input.string {
   }
 }
 
+.daterangepicker-seperator {
+  margin: 0 15px;
+}
+
 // special for hte table filters since they be small
 .table-filter-area {
 
@@ -648,6 +643,7 @@ input.string {
     background: $c-error-bg;
     color: $c-error-content;
     font-size: 12px;
+    overflow: visible;
 
     &:before {
       @extend .icon-alert;
@@ -664,6 +660,17 @@ input.string {
     }
   }
 }
+
+.input {
+  .valid {
+    border: 1px solid $c-notice-content;
+  }
+  .invalid {
+    border: 1px solid $c-error-content;
+  }
+}
+
+
 
 // pagination
 .pagination {
@@ -714,8 +721,8 @@ input.string {
   position: absolute;
   bottom: 0;
   border: 0 solid $c-lightest_grey;
-  padding: 15px 16px;
-  margin-bottom: 0;
+  padding: 14px 16px 13px;
+  margin-bottom: 1px;
   font-size: 14px;
   color: $c-light_grey;
 }

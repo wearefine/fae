@@ -6,6 +6,15 @@ spec/dummy/db/*.sqlite3-journal
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/.sass-cache
+spec/dummy/public/system/uploads/*
+spec/dummy/public/uploads/*
 
+spec/dummy/public/system/uploads/*
+spec/dummy/public/uploads/*
+
+.ruby-gemset
+.ruby-version
 .rvmrc
+.ruby-gemset
+.ruby-version
 .DS_Store

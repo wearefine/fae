@@ -1,7 +1,7 @@
 <%= simple_form_for(['admin', @item]) do |f| %>
   <section class="main_content-header">
     <div class="main_content-header-wrapper">
-      <%= render 'fae/shared/form_header', item: @item %>
+      <%= render 'fae/shared/form_header', header: @klass_name  %>
       <%# render 'fae/shared/form_nav', sections: [title, anchor] %>
       <%= render 'fae/shared/form_buttons', f: f %>
     </div>
@@ -13,7 +13,7 @@
       <!-- Long Field with Helper Text -->
       <%= fae_input f, :name, {
         helper_text: 'Long Field with Helper Text',
-        hint: '<h3>Markdown options</h3>'
+        hint: "<h3>Markdown options</h3>"
       } %>
 
 
@@ -21,7 +21,7 @@
       <%= fae_input f, :slug, {
         helper_text: 'Long Field with Helper Text',
         class: 'custom_class',
-        hint: '<h3>Markdown Options</h3><br>
+        dark_hint: '<h3>Markdown Options</h3><br>
           Link | Internal: See my [About](/about/) page for details.<br>
           Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
           List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
