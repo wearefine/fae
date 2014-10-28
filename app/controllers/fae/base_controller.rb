@@ -48,9 +48,9 @@ module Fae
   private
 
     def set_class_variables(class_name=nil)
-      klass_base = params[:controller].split('/').last
-      @klass_name = class_name || klass_base
-      @klass = klass_base.classify.constantize
+      @klass_base = params[:controller].split('/').last
+      @klass_name = class_name || @klass_base
+      @klass = @klass_base.classify.constantize
       @klass_singular = @klass_name.singularize
       @klass_humanized = @klass_singular.humanize
       @index_path = '/'+params[:controller]
@@ -64,7 +64,7 @@ module Fae
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(@klass_singular).permit!
+      params.require(@klass_base.singularize).permit!
     end
 
     # if model has images, build them here for nesting
