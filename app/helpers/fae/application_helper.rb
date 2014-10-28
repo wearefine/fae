@@ -35,8 +35,8 @@ module Fae
       end
     end
 
-    def image_form(f, item, image_name: nil, image_label: nil, alt_label: nil, omit: nil, show_thumb: nil)
-      render 'fae/images/image_uploader', f: f, item: item, image_name: image_name, image_label: image_label, alt_label: alt_label, omit: omit, show_thumb: show_thumb
+    def image_form(f, item, image_name: nil, image_label: nil, alt_label: nil, omit: nil, show_thumb: nil, required: nil)
+      render 'fae/images/image_uploader', f: f, item: item, image_name: image_name, image_label: image_label, alt_label: alt_label, omit: omit, show_thumb: show_thumb, required: required
     end
 
   end

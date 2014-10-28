@@ -120,6 +120,7 @@ The image_form helper method takes the form object and the object that attaches 
 *<em>alt_label</em>: defaults to "#{image_label} alt text"
 *<em>omit</em>: an array containing :caption and/or :alt, defaults to [:caption]
 *<em>show_thumb</em>: defaults to false
+*<em>required</em>: defaults to false
 
 ```ruby
   image_form f, @item

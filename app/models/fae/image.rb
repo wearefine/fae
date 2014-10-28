@@ -4,7 +4,13 @@ module Fae
     attr_accessor :redirect
     mount_uploader :asset, Fae::ImageUploader
 
+    validate :asset_exists_for_options
+
     belongs_to :imageable, polymorphic: true, touch: true
+
+    def asset_exists_for_options
+      errors.add(:asset, "can't be empty") if imageable_type == "Fae::Option" && attached_as == "logo" && asset.blank?
+    end
 
   private
 
