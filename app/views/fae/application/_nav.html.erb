@@ -25,10 +25,15 @@
 				end
 		%>
 			<%= content_tag :li, class: main_class do %>
-        <span class="main_nav-header">
+        <%= content_tag :span, class: "main_nav-header", data: {link: item[:path]} do %>
           <span class="header_drawer-content-post"><%= link_to item[:text], item[:path], class: "main_nav-link" %></span>
-          <span class="header_drawer-content"><%= item[:text] %></span>
-        </span>
+
+          <%
+            header_drawer_class = "header_drawer-content"
+            header_drawer_class << " header_drawer-content-only" if !hasSublinks
+          %>
+          <%= content_tag :span, item[:text], class: header_drawer_class %>
+        <% end %>
 
 				<% if hasSublinks %>
 					<ul class="main_nav-sub-nav">
