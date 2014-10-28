@@ -60,9 +60,10 @@ var MobileMenu = {
         var $parent = $(this).closest("li");
         var link_url = $(this).data("link");
 
-        // 
+        // Add JS toggle class
         $parent.addClass(that.toggle_level_class);
 
+        // If the element does not have sublinks, then go to the desired page
         if ($parent.find(that.sub_header_section_selector).length === 0 && typeof link_url !== "undefined") {
           location.href = link_url;
         }
