@@ -2,6 +2,7 @@ module Fae
   class ScaffoldGenerator < Rails::Generators::NamedBase
     source_root File.expand_path('../templates', __FILE__)
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
+    class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
 
     @@live_flags = ['active','live','on_stage','on_prod']
     @@attributes_flat = ''
@@ -27,6 +28,10 @@ module Fae
         inject_position_scope
         inject_display_field
       end
+    end
+
+    def generate_controller_file
+      template "controllers/scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
     end
 
     private
