@@ -1,8 +1,5 @@
 module Fae
   class User < ActiveRecord::Base
-    include Fae::Concerns::Models::Base
-
-
     # Include default devise modules. Others available are:
     # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable,
@@ -30,10 +27,6 @@ module Fae
 
     def full_name
       "#{first_name} #{last_name}"
-    end
-
-    def display_name
-      full_name
     end
 
     # Called by Devise to see if an user can currently be signed in
