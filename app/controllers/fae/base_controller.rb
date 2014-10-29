@@ -5,7 +5,6 @@ module Fae
     before_action :set_item, only: [:edit, :update, :destroy]
 
     helper FormHelper
-    helper ViewHelper
 
     def index
       @items = @klass.for_admin_index
