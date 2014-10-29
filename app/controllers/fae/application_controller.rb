@@ -1,5 +1,6 @@
 class Fae::ApplicationController < ActionController::Base
 
+  helper Fae::ApplicationHelper
   helper Fae::ViewHelper
 
   before_filter :authenticate_user!
