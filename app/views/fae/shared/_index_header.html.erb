@@ -1,13 +1,16 @@
 <% require_locals ['title'], local_assigns %>
 <% title = title.pluralize %>
+<% new_button = !local_assigns[:new_button].eql?(false) %>
 
 <section class="main_content-header">
   <div class="main_content-header-wrapper">
     <%= content_tag :h1, title %>
 
-    <div class="main_content-header-save">
-      <%= link_to "New #{title.singularize}", @new_path, class: "add-button" %>
-    </div>
+    <% if new_button %>
+      <div class="main_content-header-save">
+        <%= link_to "New #{title.singularize}", @new_path, class: "add-button" %>
+      </div>
+    <% end %>
   </div>
 </section>
 
