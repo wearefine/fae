@@ -3,11 +3,17 @@ module Fae
     source_root File.expand_path('../templates', __FILE__)
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
+    class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
 
     @@attributes_flat = ''
     @@attribute_names = []
     @@has_position = false
     @@display_field = ''
+
+    def check_template_support
+      supported_templates = ['slim']
+      raise "Fae::UnsupportedTemplate: the template engine you defined isn't supported" unless supported_templates.include?(options.template)
+    end
 
     def set_globals
       if attributes.present?
@@ -24,7 +30,7 @@ module Fae
         destroy = `rails destroy model #{file_name}`
         puts destroy
       else
-        generate "model #{file_name} #{@@attributes_flat} --test-framework=false"
+        generate "model #{file_name} #{@@attributes_flat}"
         inject_position_scope
         inject_display_field
       end
@@ -39,11 +45,10 @@ module Fae
       @form_attrs = set_form_attrs
       @has_position = @@has_position
       @display_field = @@display_field
-      # @attrs_for_form = set_attrs_for_form
-      template "views/index.html.slim", "app/views/admin/#{plural_file_name}/index.html.slim"
-      template "views/_form.html.slim", "app/views/admin/#{plural_file_name}/_form.html.slim"
-      copy_file "views/new.html.slim", "app/views/admin/#{plural_file_name}/new.html.slim"
-      copy_file "views/edit.html.slim", "app/views/admin/#{plural_file_name}/edit.html.slim"
+      template "views/index.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"
+      template "views/_form.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
+      copy_file "views/new.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
+      copy_file "views/edit.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/edit.html.#{options.template}"
     end
 
   private
