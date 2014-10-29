@@ -24,7 +24,7 @@
         <!-- Optgroup examples / Indented Pulldowns -->
         <% states = {'Califonia' => ['Los Angeles', 'San Francisco'], 'Oregon' => ['Portland', 'Boring']} %>
         <%#= fae_grouped_select f, :city, collection: states %>
-        <%= fae_grouped_select f, :city, labels: states.keys , groups: states.values %>
+        <%= fae_grouped_select f, :city, labels: states.keys , groups: states.values, required: true %>
 
       </div>
     </section>
