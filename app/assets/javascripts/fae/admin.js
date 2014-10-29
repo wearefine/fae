@@ -11,13 +11,30 @@ var Admin = {
       var $select = $(this);
       if($select.hasClass("multiselect")) {
         $select.multiSelect({
-          selectableHeader: "<div class='custom-header'>80 Available Items</div>",
-          selectionHeader: "<div class='custom-header'>5 Added Items</div>"
+          selectableHeader: "<div class='custom-header'></div>",
+          selectionHeader: "<div class='custom-header'></div>"
         });
+        var selectableCount = $select.next('.ms-container').find('.ms-selectable li').not('.ms-selected').length
+        var selectedCount = $select.next('.ms-container').find('.ms-selection .ms-selected').length;
+        $('.ms-selectable .custom-header').text(selectableCount + " Available Items");
+        $('.ms-selection .custom-header').text(selectedCount + " Added Items");
       } else {
         $select.chosen();
       }
     });
+
+    var $selectable = $('.ms-selectable .custom-header');
+    var $selection = $('.ms-selection .custom-header');
+
+    $('.ms-selectable li').on('click', function(){
+      $selectable.text(parseInt($selectable.text())-1 + " Available Items");
+      $selection.text(parseInt($selection.text())+1 + " Added Items");
+    });
+
+    $('.ms-selection li').on('click', function(){
+      $selectable.text(parseInt($selectable.text())+1 + " Available Items");
+      $selection.text(parseInt($selection.text())-1 + " Added Items");
+    })
 
     $(".datepicker input").datepicker({
       dateFormat: "M dd, yy",

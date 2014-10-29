@@ -799,7 +799,6 @@ input.string {
   padding-right: 15px;
   background: $c-lightest_grey;
   color: $c-text-heavy;
-  overflow-y: auto;
 }
 
 .ms-container .ms-selection {
@@ -809,8 +808,9 @@ input.string {
 .ms-container .ms-list {
   position: relative;
   height: 100%;
-  height: calc(100%-25px);
+  height: calc(100% - 25px);
   background: $c-white;
+  overflow-y: auto;
 }
 
 .ms-container .ms-list.ms-focus {
@@ -841,7 +841,14 @@ input.string {
   }
 }
 
+.ms-container .ms-selectable li.ms-elem-selectable {
+  padding-right: 45px
+}
+
 .ms-container .ms-selection li.ms-elem-selection {
+  padding-right: 30px;
+  padding-left: 35px;
+
   &:after {
     @include icon-stuff();
     content: "\e60f";
@@ -853,6 +860,7 @@ input.string {
     @include icon-stuff();
     @extend .icon-check:before;
     padding-right: 5px;
+    margin-left: -19px;
     color: $c-custom-highlight;
   }
 }
