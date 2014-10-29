@@ -34,7 +34,14 @@ module Fae
       template "controllers/scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
     end
 
-    private
+    def generate_view_files
+      template "views/index.html.slim", "app/views/admin/#{plural_file_name}/index.html.slim"
+      template "views/_form.html.slim", "app/views/admin/#{plural_file_name}/_form.html.slim"
+      copy_file "views/new.html.slim", "app/views/admin/#{plural_file_name}/new.html.slim"
+      copy_file "views/edit.html.slim", "app/views/admin/#{plural_file_name}/edit.html.slim"
+    end
+
+  private
 
     def inject_display_field
       display_name = ''
