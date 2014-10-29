@@ -4,10 +4,10 @@ module Fae
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
 
-    @@live_flags = ['active','live','on_stage','on_prod']
     @@attributes_flat = ''
-    @@attribute_names = ''
+    @@attribute_names = []
     @@has_position = false
+    @@display_field = ''
 
     def set_globals
       if attributes.present?
@@ -35,6 +35,11 @@ module Fae
     end
 
     def generate_view_files
+      @toggle_attrs = set_toggle_attrs
+      @form_attrs = set_form_attrs
+      @has_position = @@has_position
+      @display_field = @@display_field
+      # @attrs_for_form = set_attrs_for_form
       template "views/index.html.slim", "app/views/admin/#{plural_file_name}/index.html.slim"
       template "views/_form.html.slim", "app/views/admin/#{plural_file_name}/_form.html.slim"
       copy_file "views/new.html.slim", "app/views/admin/#{plural_file_name}/new.html.slim"
@@ -43,18 +48,26 @@ module Fae
 
   private
 
+    def set_toggle_attrs
+      ['active', 'on_stage', 'on_prod'] & @@attribute_names
+    end
+
+    def set_form_attrs
+      rejected_attrs = ['position', 'on_stage', 'on_prod']
+      @@attribute_names.delete_if { |i| rejected_attrs.include?(i)}
+    end
+
     def inject_display_field
-      display_name = ''
       if @@attribute_names.include? 'name'
-        display_name = 'name'
+        @@display_field = 'name'
       elsif @@attribute_names.include? 'title'
-        display_name = 'title'
+        @@display_field = 'title'
       end
 
-      if display_name.present?
+      if @@display_field.present?
         inject_into_file "app/models/#{file_name}.rb", after: "ActiveRecord::Base\n" do <<-RUBY
 \n  def display_field
-    #{display_name}
+    #{@@display_field}
   end\n
 RUBY
         end

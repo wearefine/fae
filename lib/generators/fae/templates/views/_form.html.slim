@@ -7,4 +7,6 @@
   .main_content-sections
     section.main_content-section
       .main_content-section-area
-        = fae_input, f, :name
+<% @form_attrs.each do |attr| -%>
+        = fae_input, f, :<%= attr %>
+<% end -%>
