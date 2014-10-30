@@ -53,7 +53,6 @@ module Fae
       @klass_singular = @klass_name.singularize
       @klass_humanized = @klass_singular.humanize
       @index_path = '/'+params[:controller]
-      @cancelled_path = @index_path+'?cancelled=true'
       @new_path = @index_path+'/new'
     end
 

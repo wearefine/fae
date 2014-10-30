@@ -1,6 +1,6 @@
 <% require_locals ['f'], local_assigns %>
 
 <div class="main_content-header-save">
-  <%= link_to "Cancel", @cancelled_path, id: "main_content-header-save-cancel" %>
+  <%= link_to "Cancel", @index_path+'?cancelled=true', id: "main_content-header-save-cancel" %>
   <%= f.submit "Save Settings" %>
 </div>
