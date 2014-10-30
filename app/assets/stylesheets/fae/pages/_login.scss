@@ -1,10 +1,12 @@
 .login-body {
 	height: auto;
+	padding-top: 0;
 	background: url(/assets/fae/bg_tile.gif);
 }
 
 .login-content {
 	margin: 20px;
+	padding-top: 55px;
 
 	@include bp(login-container) {
 		width: 100%;

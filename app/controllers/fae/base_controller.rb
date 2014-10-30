@@ -41,7 +41,7 @@ module Fae
 
     def destroy
       @item.destroy
-      redirect_to @index_path, notice: "#{@klass_humanized} was successfully removed."
+      redirect_to @index_path
     end
 
   private

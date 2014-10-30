@@ -46,9 +46,14 @@ private
     end
   end
 
-  # redirect to Fae root path on sign out
+  # redirect to login after sign out
   def after_sign_out_path_for(resource_or_scope)
     fae.new_user_session_path
+  end
+
+  # redirect to requested page after sign in
+  def after_sign_in_path_for(resource)
+    request.env['omniauth.origin'] || stored_location_for(resource) || fae.root_path
   end
 
 end
