@@ -18,7 +18,7 @@ module Fae
       models = []
       Rails.application.eager_load! #fresh load of all models since Rails caches activerecord queries.
       ActiveRecord::Base.descendants.map do |x|
-        models << x unless ["ActiveRecord::SchemaMigration", "Fae::", "ReleaseSellingPoint"].any? {|name| x.name.include?(name) }
+        models << x unless ["ActiveRecord::SchemaMigration", "Fae::"].any? {|name| x.name.include?(name) || !"name".in?(x.attribute_names) }
       end
       models
     end
