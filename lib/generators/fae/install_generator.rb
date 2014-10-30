@@ -1,7 +1,7 @@
 module Fae
   class InstallGenerator < Rails::Generators::Base
-
     source_root File.expand_path('../templates', __FILE__)
+    class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
 
     def install
       run 'bundle install'
@@ -17,11 +17,11 @@ module Fae
   private
 
     def add_route
-      inject_into_file "config/routes.rb", before: "end" do <<-RUBY
-  namespace :admin do
+      inject_into_file "config/routes.rb", after: "Application.routes.draw do\n" do <<-RUBY
+\n  namespace :#{options.namespace} do
   end
   # mount Fae below your admin namespec
-  mount Fae::Engine => '/admin'\n
+  mount Fae::Engine => '/#{options.namespace}'\n
 RUBY
       end
     end
