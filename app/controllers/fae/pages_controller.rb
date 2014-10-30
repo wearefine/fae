@@ -15,12 +15,9 @@ module Fae
   private
 
     def load_all_models
-      models = []
-      Rails.application.eager_load! #fresh load of all models since Rails caches activerecord queries.
-      ActiveRecord::Base.descendants.map do |x|
-        models << x unless ["ActiveRecord::SchemaMigration", "Fae::"].any? {|name| x.name.include?(name) || !"name".in?(x.attribute_names) }
-      end
-      models
+      # load of all models since Rails caches activerecord queries.
+      Rails.application.eager_load!
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['::'] || !m.instance_methods.include?(:display_field) }
     end
 
     def recently_updated(num=25)
