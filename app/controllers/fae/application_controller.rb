@@ -5,13 +5,13 @@ class Fae::ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :build_nav
   before_filter :set_option
+  before_filter :detect_cancellation
 
+  def detect_cancellation
+    flash.now[:alert] = 'User changes have not been saved.' if params[:cancelled].present? && params[:cancelled]== "true"
+  end
 
 private
-
-  def restricted
-    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'}
-  end
 
   def super_admin_only
     redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin?
@@ -28,6 +28,8 @@ private
   def set_option
     @option = Fae::Option.first
   end
+
+
 
   def build_nav
     if current_user
