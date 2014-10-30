@@ -93,20 +93,21 @@
 
 #main_content > .error, .sample .error {
   @extend %alerts;
-  border-color: $c-error-content;
-  background: $c-error-bg;
-  color: $c-error-content;
+  border-color: $c-warning-content;
+  background: $c-warning-bg;
+  color: $c-warning-content;
 
   &:before {
     @extend .icon-alert:before;
   }
+
 }
 
 .alert {
   @extend %alerts;
-  border-color: $c-warning-content;
-  background: $c-warning-bg;
-  color: $c-warning-content;
+  border-color: $c-error-content;
+  background: $c-error-bg;
+  color: $c-error-content;
 
   &:before {
     @extend .icon-alert:before;
