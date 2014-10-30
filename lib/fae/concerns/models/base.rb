@@ -1,10 +1,6 @@
 module Fae::Concerns::Models::Base
   extend ActiveSupport::Concern
 
-  def display_name
-    name
-  end
-
   module ClassMethods
     def for_admin_index
       order(order_method)

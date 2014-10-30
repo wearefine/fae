@@ -19,7 +19,7 @@
               td.main_content-sortable-handle
                 span.icon-sort
               td.main_table-description-item
-                = link_to item.display_name, edit_admin_wine_path(item)
+                = link_to item.display_field, edit_admin_wine_path(item)
               td = fae_date_format item.updated_at
               td = attr_toggle item, :on_stage
               td = attr_toggle item, :on_prod
