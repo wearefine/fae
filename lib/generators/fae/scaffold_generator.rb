@@ -31,8 +31,9 @@ module Fae
         puts destroy
       else
         generate "model #{file_name} #{@@attributes_flat}"
-        inject_position_scope
+        inject_concern
         inject_display_field
+        inject_position_scope
       end
     end
 
@@ -62,6 +63,13 @@ module Fae
       @@attribute_names.delete_if { |i| rejected_attrs.include?(i)}
     end
 
+    def inject_concern
+      inject_into_file "app/models/#{file_name}.rb", after: "ActiveRecord::Base\n" do <<-RUBY
+  include Fae::Concerns::Models::Base\n
+RUBY
+      end
+    end
+
     def inject_display_field
       if @@attribute_names.include? 'name'
         @@display_field = 'name'
@@ -70,10 +78,10 @@ module Fae
       end
 
       if @@display_field.present?
-        inject_into_file "app/models/#{file_name}.rb", after: "ActiveRecord::Base\n" do <<-RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
 \n  def display_field
     #{@@display_field}
-  end\n
+  end
 RUBY
         end
       end
@@ -81,9 +89,9 @@ RUBY
 
     def inject_position_scope
       if @@has_position
-        inject_into_file "app/models/#{file_name}.rb", after: "ActiveRecord::Base\n" do <<-RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
 \n  acts_as_list add_new_at: :top
-  default_scope order: :position\n
+  default_scope order: :position
 RUBY
         end
       end
