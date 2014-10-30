@@ -20,9 +20,10 @@
 	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
 	background: $c-login-bg;
 
-	img {
+	img, h1 {
 		display: block;
-		margin: 25px auto 25px auto;
+		margin: 25px auto;
+		text-align: center;
 
 		@include bp(login-container) {
 			display: inline-block;

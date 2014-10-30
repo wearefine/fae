@@ -16,8 +16,11 @@
 
   <section class="login-content">
     <section class="login-area">
-    <%= image_tag 'fae/logo.png', alt: @option.title if @option.logo.asset.blank? %>
-    <%= image_tag @option.logo.asset.url, alt: @option.try(:title) if @option.logo.asset.present? %>
+    <% if @option.logo.present? && @option.logo.asset.present? %>
+      <%= image_tag @option.logo.asset.url, alt: @option.title %>
+    <% else %>
+      <%= content_tag :h1, @option.title %>
+    <% end %>
 
       <%= yield %>
 
