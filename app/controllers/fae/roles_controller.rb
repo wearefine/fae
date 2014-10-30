@@ -1,6 +1,6 @@
 module Fae
   class RolesController < ApplicationController
-    before_filter :super_admin_only
+    before_filter :restricted
     before_action :set_role, only: [:show, :edit, :update, :destroy]
 
     def index

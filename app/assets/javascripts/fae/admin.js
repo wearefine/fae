@@ -278,7 +278,8 @@ var Admin = {
   },
 
   fade_notices: function() {
-    $('.notice').delay(3000).slideUp('fast');
+    $('.notice, .alert, .error').delay(3000).slideUp('fast');
+    $()
   },
 
   city_district_selector: function() {

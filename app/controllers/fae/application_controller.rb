@@ -9,12 +9,16 @@ class Fae::ApplicationController < ActionController::Base
 
 private
 
+  def restricted
+    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'}
+  end
+
   def super_admin_only
-    redirect_to fae.root_path, notice: 'You are not authorized to view that page.' unless current_user.super_admin?
+    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin?
   end
 
   def admin_only
-    redirect_to fae.root_path, notice: 'You are not authorized to view that page.' unless current_user.super_admin? || current_user.admin?
+    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin? || current_user.admin?
   end
 
   def show_404
@@ -44,7 +48,7 @@ private
 
   # redirect to Fae root path on sign out
   def after_sign_out_path_for(resource_or_scope)
-    fae.root_path
+    fae.new_user_session_path
   end
 
 end

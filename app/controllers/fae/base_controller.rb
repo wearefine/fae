@@ -23,7 +23,7 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @index_path, notice: "#{@klass_humanized} was successfully created."
+        redirect_to @index_path, notice: "Success. You’ve done good."
       else
         build_images
         render action: 'new'
@@ -32,7 +32,7 @@ module Fae
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: "#{@klass_humanized} was successfully updated."
+        redirect_to @index_path, notice: "Success. You’ve done good."
       else
         build_images
         render action: 'edit'
@@ -41,7 +41,7 @@ module Fae
 
     def destroy
       @item.destroy
-      redirect_to @index_path, notice: "#{@klass_humanized} was successfully destroyed."
+      redirect_to @index_path, notice: "#{@klass_humanized} was successfully removed."
     end
 
   private
