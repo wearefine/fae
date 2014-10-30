@@ -13,6 +13,10 @@ module Fae
     require 'judge/simple_form'
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.to_prepare do
+      ApplicationController.helper(ApplicationHelper)
+    end
   end
 
   # configurable defaults
