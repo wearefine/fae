@@ -7,6 +7,7 @@ module Fae
       generate_model
       generate_controller_file
       generate_view_files
+      add_route
     end
 
   end

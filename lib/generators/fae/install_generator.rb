@@ -5,7 +5,7 @@ module Fae
 
     def install
       run 'bundle install'
-      route "mount Fae::Engine => '/admin'"
+      add_route
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       build_initializer
@@ -15,6 +15,16 @@ module Fae
     end
 
   private
+
+    def add_route
+      inject_into_file "config/routes.rb", before: "end" do <<-RUBY
+  namespace :admin do
+  end
+  # mount Fae below your admin namespec
+  mount Fae::Engine => '/admin'\n
+RUBY
+      end
+    end
 
     def build_initializer
       copy_file File.expand_path(File.join(__FILE__, "../templates/initializers/fae.rb")), "config/initializers/fae.rb"

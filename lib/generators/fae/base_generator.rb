@@ -56,6 +56,13 @@ module Fae
       copy_file "views/edit.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/edit.html.#{options.template}"
     end
 
+    def add_route
+      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n" do <<-RUBY
+    resources :#{plural_file_name}
+RUBY
+      end
+    end
+
     ## Helper Methods
 
     def set_toggle_attrs
