@@ -23,25 +23,25 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @index_path, notice: "#{@klass_humanized} was successfully created."
+        redirect_to @index_path, notice: "Success. You’ve done good."
       else
         build_images
-        render action: 'new'
+        render action: 'new', error: "Let’s slow down a bit. Check your form for errors."
       end
     end
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: "#{@klass_humanized} was successfully updated."
+        redirect_to @index_path, notice: "Success. You’ve done good."
       else
         build_images
-        render action: 'edit'
+        render action: 'edit', error: "Let’s slow down a bit. Check your form for errors."
       end
     end
 
     def destroy
       @item.destroy
-      redirect_to @index_path, notice: "#{@klass_humanized} was successfully destroyed."
+      redirect_to @index_path, notice: "Item was successfully removed"
     end
 
   private
@@ -53,6 +53,7 @@ module Fae
       @klass_singular = @klass_name.singularize
       @klass_humanized = @klass_singular.humanize
       @index_path = '/'+params[:controller]
+      @cancelled_path = @index_path+'?cancelled=true'
       @new_path = @index_path+'/new'
     end
 

@@ -5,16 +5,16 @@ class Fae::ApplicationController < ActionController::Base
   before_filter :authenticate_user!
   before_filter :build_nav
   before_filter :set_option
-
+  before_filter :detect_cancellation
 
 private
 
   def super_admin_only
-    redirect_to fae.root_path, notice: 'You are not authorized to view that page.' unless current_user.super_admin?
+    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin?
   end
 
   def admin_only
-    redirect_to fae.root_path, notice: 'You are not authorized to view that page.' unless current_user.super_admin? || current_user.admin?
+    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin? || current_user.admin?
   end
 
   def show_404
@@ -23,6 +23,10 @@ private
 
   def set_option
     @option = Fae::Option.first
+  end
+
+  def detect_cancellation
+    flash.now[:alert] = 'User changes have not been saved.' if params[:cancelled].present? && params[:cancelled]== "true"
   end
 
   def build_nav
@@ -42,9 +46,14 @@ private
     end
   end
 
-  # redirect to Fae root path on sign out
+  # redirect to login after sign out
   def after_sign_out_path_for(resource_or_scope)
-    fae.root_path
+    fae.new_user_session_path
+  end
+
+  # redirect to requested page after sign in
+  def after_sign_in_path_for(resource)
+    request.env['omniauth.origin'] || stored_location_for(resource) || fae.root_path
   end
 
 end
