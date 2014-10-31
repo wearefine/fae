@@ -279,7 +279,7 @@ var Admin = {
   },
 
   fade_notices: function() {
-    $('.notice, .alert, .error').delay(3000).slideUp('fast');
+    $('.notice, .alert, .error').not('.input .error').delay(3000).slideUp('fast');
     $()
   },
 

@@ -32,7 +32,7 @@
               <td><%= user.email %></td>
               <td><%= user.role.name %></td>
               <td><%= fae_date_format user.last_sign_in_at if user.last_sign_in_at.present? %></td>
-              <td><%= attr_toggle user, :active %></td></td>
+              <td><%= attr_toggle user, :active unless current_user == user %></td>
               <td class="main_table-delete">
                 <%= link_to user, method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
                   <span class="icon-delete_x"></span>
