@@ -195,7 +195,7 @@ var Admin = {
     this.slugger();
     this.ad_form.init();
     this.selects();
-    this.detect_cancelled_urls()
+    this.detect_cancelled_urls();
   },
 
   sortable: function() {
@@ -280,7 +280,6 @@ var Admin = {
 
   fade_notices: function() {
     $('.notice, .alert, .error').not('.input .error').delay(3000).slideUp('fast');
-    $()
   },
 
   city_district_selector: function() {
@@ -401,7 +400,7 @@ var Admin = {
   },
 
   detect_cancelled_urls: function() {
-    var params = window.location.search
+    var params = window.location.search;
     if (params.length > 0) {
       if (params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
         window.history.replaceState(null, null, window.location.pathname);

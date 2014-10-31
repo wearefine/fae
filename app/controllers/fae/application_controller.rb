@@ -7,10 +7,6 @@ class Fae::ApplicationController < ActionController::Base
   before_filter :set_option
   before_filter :detect_cancellation
 
-  def detect_cancellation
-    flash.now[:alert] = 'User changes have not been saved.' if params[:cancelled].present? && params[:cancelled]== "true"
-  end
-
 private
 
   def super_admin_only
@@ -29,7 +25,9 @@ private
     @option = Fae::Option.first
   end
 
-
+  def detect_cancellation
+    flash.now[:alert] = 'User changes have not been saved.' if params[:cancelled].present? && params[:cancelled]== "true"
+  end
 
   def build_nav
     if current_user
