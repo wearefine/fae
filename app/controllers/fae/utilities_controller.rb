@@ -3,7 +3,7 @@ module Fae
 
     def toggle
       if request.xhr?
-        klass = params[:object].classify.constantize
+        klass = params[:object].gsub('fae_', 'fae/').classify.constantize
         item = klass.find(params[:id])
         item.toggle(params[:attr]).save(validate: false)
       end
