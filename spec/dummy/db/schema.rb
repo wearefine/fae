@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027234702) do
+ActiveRecord::Schema.define(version: 20141105221151) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -101,7 +101,10 @@ ActiveRecord::Schema.define(version: 20141027234702) do
     t.boolean  "on_prod",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
+
+  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
 
   create_table "fae_roles", force: true do |t|
     t.string   "name"
@@ -111,15 +114,43 @@ ActiveRecord::Schema.define(version: 20141027234702) do
   end
 
   create_table "fae_text_areas", force: true do |t|
-    t.integer  "contentable"
     t.string   "label"
     t.text     "content"
-    t.integer  "position",    default: 0
-    t.boolean  "on_stage",    default: true
-    t.boolean  "on_prod",     default: false
+    t.integer  "position",         default: 0
+    t.boolean  "on_stage",         default: true
+    t.boolean  "on_prod",          default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "contentable_id"
+    t.string   "contentable_type"
+    t.string   "attached_as"
+  end
+
+  add_index "fae_text_areas", ["attached_as"], name: "index_fae_text_areas_on_attached_as", using: :btree
+  add_index "fae_text_areas", ["contentable_id"], name: "index_fae_text_areas_on_contentable_id", using: :btree
+  add_index "fae_text_areas", ["contentable_type"], name: "index_fae_text_areas_on_contentable_type", using: :btree
+  add_index "fae_text_areas", ["on_prod"], name: "index_fae_text_areas_on_on_prod", using: :btree
+  add_index "fae_text_areas", ["on_stage"], name: "index_fae_text_areas_on_on_stage", using: :btree
+  add_index "fae_text_areas", ["position"], name: "index_fae_text_areas_on_position", using: :btree
+
+  create_table "fae_text_fields", force: true do |t|
+    t.integer  "contentable_id"
+    t.string   "contentable_type"
+    t.string   "attatched_as"
+    t.string   "label"
+    t.string   "content"
+    t.integer  "position",         default: 0
+    t.boolean  "on_stage",         default: true
+    t.boolean  "on_prod",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "fae_text_fields", ["attatched_as"], name: "index_fae_text_fields_on_attatched_as", using: :btree
+  add_index "fae_text_fields", ["contentable_id", "contentable_type"], name: "index_fae_text_fields_on_contentable_id_and_contentable_type", using: :btree
+  add_index "fae_text_fields", ["on_prod"], name: "index_fae_text_fields_on_on_prod", using: :btree
+  add_index "fae_text_fields", ["on_stage"], name: "index_fae_text_fields_on_on_stage", using: :btree
+  add_index "fae_text_fields", ["position"], name: "index_fae_text_fields_on_position", using: :btree
 
   create_table "fae_users", force: true do |t|
     t.string   "email",                  default: "", null: false
