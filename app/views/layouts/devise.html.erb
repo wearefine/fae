@@ -19,7 +19,7 @@
     <% if @option.logo.present? && @option.logo.asset.present? %>
       <%= image_tag @option.logo.asset.url, alt: @option.title %>
     <% else %>
-      <%= content_tag :h1, @option.title %>
+      <%= image_tag 'fae/fine.png', alt: "FINE logo" %>
     <% end %>
 
       <%= yield %>
@@ -27,7 +27,7 @@
         </section>
 
     <footer class="login-footer">
-      <span class="login-fine">a <img src="fae/fine.png" alt="FINE Logo"> admin</span>
+      <span class="login-fine">a <%= image_tag 'fae/fine_footer.png', alt: "FINE logo" %> admin</span>
       <ul class="login-helper-area">
         <li><%= render "devise/shared/links" %></li>
       </ul>
