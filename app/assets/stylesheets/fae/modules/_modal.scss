@@ -15,6 +15,7 @@
 
 .simplemodal-container {
 	position: relative;
+	height: auto !important;
 	padding: 35px;
 	border-top: 4px solid $c-custom-highlight;
 	background: $c-modal-light-bg;

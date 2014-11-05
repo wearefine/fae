@@ -21,8 +21,6 @@ Fae::Engine.routes.draw do
   post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
   post 'sort/:object', to: 'utilities#sort', as: 'sort'
 
-  resources :roles
-
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]
 

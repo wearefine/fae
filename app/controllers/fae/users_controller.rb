@@ -6,7 +6,6 @@ module Fae
 
     def index
       @users = current_user.super_admin? ? User.all : User.public_users
-      flash[:notice] = 'User changes have not been saved.' if params[:cancelled]
     end
 
     def show
@@ -29,7 +28,7 @@ module Fae
       if @user.save
         redirect_to users_path, notice: 'User was successfully created.'
       else
-        render action: 'new'
+        render action: 'new', error: "Let’s slow down a bit. Check your form for errors."
       end
     end
 
@@ -38,13 +37,10 @@ module Fae
       params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
 
       if @user.update(user_params)
-        if current_user.super_admin?
-          redirect_to users_path, notice: 'User account updated.'
-        else
-          redirect_to fae.root_path, notice: 'User account updated.'
-        end
+        path = current_user.super_admin? ? users_path : fae.root_path
+        redirect_to path, notice: 'User account updated.'
       else
-        render action: 'edit'
+        render action: 'edit', error: "Let’s slow down a bit. Check your form for errors."
       end
     end
 

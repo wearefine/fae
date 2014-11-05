@@ -9,12 +9,12 @@ en:
     failure:
       already_authenticated: "You are already signed in."
       inactive: "Your account is not activated yet."
-      invalid: "Invalid email or password."
+      invalid: "You’ll need a user and a password that works. We’re sticklers for this stuff."
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account will be locked."
-      not_found_in_database: "Invalid email or password."
+      not_found_in_database: "You’ll need a user and a password that works. We’re sticklers for this stuff."
       timeout: "Your session expired. Please sign in again to continue."
-      unauthenticated: "You need to sign in or sign up before continuing."
+      unauthenticated: "You need to sign in before moving on."
       unconfirmed: "You have to confirm your account before continuing."
     mailer:
       confirmation_instructions:
@@ -41,8 +41,8 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address."
       updated: "You updated your account successfully."
     sessions:
-      signed_in: "Signed in successfully."
-      signed_out: "Signed out successfully."
+      signed_in: "You’re here, officially."
+      signed_out: "Goodbye for now."
     unlocks:
       send_instructions: "You will receive an email with instructions about how to unlock your account in a few minutes."
       send_paranoid_instructions: "If your account exists, you will receive an email with instructions about how to unlock it in a few minutes."

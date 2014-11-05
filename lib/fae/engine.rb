@@ -13,6 +13,10 @@ module Fae
     require 'judge/simple_form'
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.to_prepare do
+      ApplicationController.helper(ApplicationHelper)
+    end
   end
 
   # configurable defaults
@@ -21,7 +25,7 @@ module Fae
     self.nav_items = []
 
     # the secret key can't be hard coded here, but must be generated in Fae install script
-    self.devise_secret_key = '79a3e96fecbdd893853495ff502cd387e22c9049fd30ff691115b8a0b074505be4edef6139e4be1a0a9ff407442224dbe99d94986e2abd64fd0aa01153f5be0d'
+    self.devise_secret_key = ''
     self.devise_mailer_sender = 'change-me@example.com'
   end
 

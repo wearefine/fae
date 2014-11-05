@@ -1,6 +1,10 @@
 class Release < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
+  def display_field
+    name
+  end
+
   validates :name, presence: true, length: {in: 3..14}
   validates :name, exclusion: %w(admin danny)
   validates :price, numericality: {greater_than: 12}

@@ -7,18 +7,6 @@ var Admin = {
   init: function(){
     var that = this;
 
-    $("select").each(function(index, elm){
-      var $select = $(this);
-      if($select.hasClass("multiselect")) {
-        $select.multiSelect({
-          selectableHeader: "<div class='custom-header'>80 Available Items</div>",
-          selectionHeader: "<div class='custom-header'>5 Added Items</div>"
-        });
-      } else {
-        $select.chosen();
-      }
-    });
-
     $(".datepicker input").datepicker({
       dateFormat: "M dd, yy",
       inline: true,
@@ -206,6 +194,8 @@ var Admin = {
     this.city_district_selector();
     this.slugger();
     this.ad_form.init();
+    this.selects();
+    this.detect_cancelled_urls();
   },
 
   sortable: function() {
@@ -289,7 +279,7 @@ var Admin = {
   },
 
   fade_notices: function() {
-    $('.notice').delay(3000).slideUp('fast');
+    $('.notice, .alert, .error').not('.input .error').delay(3000).slideUp('fast');
   },
 
   city_district_selector: function() {
@@ -373,6 +363,49 @@ var Admin = {
 
     $type_select: '',
     $ad_fields: ''
+  },
+
+  selects: function() {
+    var availableItemsStr = " Available Items";
+    var addedItemsStr = " Added Items";
+
+    $("select").each(function(index, elm){
+      var $select = $(this);
+      if($select.hasClass("multiselect")) {
+        $select.multiSelect({
+          selectableHeader: "<div class='custom-header'></div>",
+          selectionHeader: "<div class='custom-header'></div>"
+        });
+        var selectableCount = $select.next('.ms-container').find('.ms-selectable li').not('.ms-selected').length
+        var selectedCount = $select.next('.ms-container').find('.ms-selection .ms-selected').length;
+        $('.ms-selectable .custom-header').text(selectableCount + availableItemsStr);
+        $('.ms-selection .custom-header').text(selectedCount + addedItemsStr);
+      } else {
+        $select.chosen();
+      }
+    });
+
+    var $selectable = $('.ms-selectable .custom-header');
+    var $selection = $('.ms-selection .custom-header');
+
+    $('.ms-selectable li').on('click', function(){
+      $selectable.text(parseInt($selectable.text()) -1 + availableItemsStr);
+      $selection.text(parseInt($selection.text()) +1 + addedItemsStr);
+    });
+
+    $('.ms-selection li').on('click', function(){
+      $selectable.text(parseInt($selectable.text()) + 1 + availableItemsStr);
+      $selection.text(parseInt($selection.text()) -1 + addedItemsStr);
+    })
+  },
+
+  detect_cancelled_urls: function() {
+    var params = window.location.search;
+    if (params.length > 0) {
+      if (params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
+        window.history.replaceState(null, null, window.location.pathname);
+      }
+    };
   }
 };
 

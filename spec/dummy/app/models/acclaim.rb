@@ -1,7 +1,7 @@
 class Acclaim < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
-  def display_name
+  def display_field
     publication
   end
 

@@ -1,10 +1,12 @@
 .login-body {
 	height: auto;
+	padding-top: 0;
 	background: url(/assets/fae/bg_tile.gif);
 }
 
 .login-content {
 	margin: 20px;
+	padding-top: 55px;
 
 	@include bp(login-container) {
 		width: 100%;
@@ -20,9 +22,10 @@
 	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
 	background: $c-login-bg;
 
-	img {
+	img, h1 {
 		display: block;
-		margin: 25px auto 25px auto;
+		margin: 25px auto;
+		text-align: center;
 
 		@include bp(login-container) {
 			display: inline-block;
