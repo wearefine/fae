@@ -90,8 +90,8 @@ RUBY
 
       inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
 \n  def fae_display_field
-  #{@@display_field}
-end
+    #{@@display_field}
+  end
 RUBY
       end
 
