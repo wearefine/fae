@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
-  def display_field
+  def fae_display_field
     name
   end
 

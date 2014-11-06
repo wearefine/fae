@@ -17,7 +17,7 @@ module Fae
     def load_all_models
       # load of all models since Rails caches activerecord queries.
       Rails.application.eager_load!
-      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:display_field) }
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) }
     end
 
     def recently_updated(num=25)

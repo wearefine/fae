@@ -88,14 +88,13 @@ RUBY
         @@display_field = 'title'
       end
 
-      if @@display_field.present?
-        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
-\n  def display_field
-    #{@@display_field}
-  end
+      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
+\n  def fae_display_field
+  #{@@display_field}
+end
 RUBY
-        end
       end
+
     end
 
     def inject_position_scope
