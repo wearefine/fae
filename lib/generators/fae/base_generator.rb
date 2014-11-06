@@ -37,7 +37,6 @@ module Fae
     def generate_model
       generate "model #{file_name} #{@@attributes_flat}"
       inject_concern
-      inject_display_field
       inject_position_scope
     end
 
@@ -82,7 +81,7 @@ RUBY
       end
     end
 
-    def inject_display_field
+    def inject_display_field_to_model
       if @@attribute_names.include? 'name'
         @@display_field = 'name'
       elsif @@attribute_names.include? 'title'
