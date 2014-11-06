@@ -1,7 +1,6 @@
 <% require_locals ['f'], local_assigns %>
 
 <div class="main_content-header-save">
-  <%= require 'pry'; binding.pry %>
   <% if local_assigns[:item].present? %>
     <%= link_to "Delete", ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_content-header-delete'  %>
   <% end %>
