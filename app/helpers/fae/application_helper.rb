@@ -4,7 +4,7 @@ module Fae
     def attr_toggle(item, column)
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
-      model_name = item.class.to_s.underscore.pluralize
+      model_name = item.class.to_s.include?("Fae::") ? item.class.to_s.gsub('::','').underscore.pluralize : item.class.to_s.underscore.pluralize
       url = fae.toggle_path(model_name, item.id.to_s, column)
 
       link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do

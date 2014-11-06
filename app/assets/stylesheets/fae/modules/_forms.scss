@@ -113,6 +113,18 @@ input.string {
   margin-bottom: 20px;
 }
 
+.main_content-header-delete {
+  color: #ce0202;
+  margin-right: 20px;
+
+  &:before {
+    @include icon_stuff();
+    @extend .icon-delete_x:before;
+    font-size: 12px;
+    margin-right: 6px;
+  }
+}
+
 #main_content-header-save-cancel {
   @extend button[type=button];
   padding: 12px 16px;
