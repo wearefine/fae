@@ -102,7 +102,7 @@ RUBY
       if @@has_position
         inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
 \n  acts_as_list add_new_at: :top
-  default_scope order: :position
+  default_scope { order(:position) }
 RUBY
         end
       end
