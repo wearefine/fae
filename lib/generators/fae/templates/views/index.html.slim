@@ -29,7 +29,7 @@
                   span.icon-sort
 <% end -%>
                 td.main_table-description-item
-                  = link_to item.fae_display_field, edit_<%= options.namespace %>_<%= class_name.downcase %>_path(item)
+                  = link_to item.fae_display_field, edit_<%= options.namespace %>_<%= class_name.underscore %>_path(item)
                 td = fae_date_format item.updated_at
 <% @toggle_attrs.each do |attr| -%>
                 td = attr_toggle item, :<%= attr %>
