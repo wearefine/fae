@@ -7,7 +7,7 @@ module Fae
     helper FormHelper
 
     def index
-      @items = @klass.for_admin_index
+      @items = @klass.for_fae_index
     end
 
     def new
