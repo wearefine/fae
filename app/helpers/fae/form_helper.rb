@@ -109,11 +109,11 @@ module Fae
     end
 
     def is_attribute_or_association?(f, attribute)
-      f.object.respond_to?(attribute)
+      f.object.has_attribute?(attribute) || is_association?(f, attribute)
     end
 
     def is_association?(f, attribute)
-      is_attribute_or_association?(f, attribute) && !f.object.attribute_names.include?(attribute.to_s)
+      f.object.class.reflections.include?(attribute)
     end
 
     def association_or_input(f, attribute, options)
