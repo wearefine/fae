@@ -20,7 +20,7 @@ module Fae
       if attributes.present?
         attributes.each do |arg|
           @@attributes_flat << "#{arg.name}:#{arg.type} "
-          if arg.name['_id'] || arg.type === 'references'
+          if arg.name['_id'] || arg.type.to_s == 'references'
             @@association_names << arg.name.gsub('_id', '')
           else
             @@attribute_names << arg.name
