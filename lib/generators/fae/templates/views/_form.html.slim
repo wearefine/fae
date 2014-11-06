@@ -10,3 +10,7 @@
 <% @form_attrs.each do |attr| -%>
         = fae_input f, :<%= attr %>
 <% end -%>
+
+<% @association_names.each do |attr| -%>
+        = fae_association f, :<%= attr %>
+<% end -%>
