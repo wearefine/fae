@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141105221151) do
+ActiveRecord::Schema.define(version: 20141106223652) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -183,6 +183,15 @@ ActiveRecord::Schema.define(version: 20141105221151) do
   add_index "fae_users", ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true, using: :btree
   add_index "fae_users", ["role_id"], name: "index_fae_users_on_role_id", using: :btree
   add_index "fae_users", ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "locations", force: true do |t|
+    t.string   "name"
+    t.integer  "contact_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "locations", ["contact_id"], name: "index_locations_on_contact_id", using: :btree
 
   create_table "people", force: true do |t|
     t.string   "name"

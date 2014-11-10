@@ -2,7 +2,7 @@
 
 ## Installation
 
-Add the gem to your Gemfile
+Add the gem to your Gemfile and run `bundle install`
 
 ```ruby
 gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git'

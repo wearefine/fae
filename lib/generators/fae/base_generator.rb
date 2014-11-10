@@ -7,6 +7,7 @@ module Fae
 
     @@attributes_flat = ''
     @@attribute_names = []
+    @@association_names = []
     @@has_position = false
     @@display_field = ''
 
@@ -19,7 +20,11 @@ module Fae
       if attributes.present?
         attributes.each do |arg|
           @@attributes_flat << "#{arg.name}:#{arg.type} "
-          @@attribute_names << arg.name
+          if arg.name['_id'] || arg.type.to_s == 'references'
+            @@association_names << arg.name.gsub('_id', '')
+          else
+            @@attribute_names << arg.name
+          end
           @@has_position = true if arg.name === 'position'
         end
       end
@@ -30,15 +35,9 @@ module Fae
     ## Generator Methods
 
     def generate_model
-      if behavior == :revoke
-        destroy = `rails destroy model #{file_name}`
-        puts destroy
-      else
-        generate "model #{file_name} #{@@attributes_flat}"
-        inject_concern
-        inject_display_field
-        inject_position_scope
-      end
+      generate "model #{file_name} #{@@attributes_flat}"
+      inject_concern
+      inject_position_scope
     end
 
     def generate_controller_file
@@ -48,6 +47,7 @@ module Fae
     def generate_view_files
       @toggle_attrs = set_toggle_attrs
       @form_attrs = set_form_attrs
+      @association_names = @@association_names
       @has_position = @@has_position
       @display_field = @@display_field
       template "views/index.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"
@@ -81,28 +81,27 @@ RUBY
       end
     end
 
-    def inject_display_field
+    def inject_display_field_to_model
       if @@attribute_names.include? 'name'
         @@display_field = 'name'
       elsif @@attribute_names.include? 'title'
         @@display_field = 'title'
       end
 
-      if @@display_field.present?
-        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
-\n  def display_field
+      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
+\n  def fae_display_field
     #{@@display_field}
   end
 RUBY
-        end
       end
+
     end
 
     def inject_position_scope
       if @@has_position
         inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
 \n  acts_as_list add_new_at: :top
-  default_scope order: :position
+  default_scope { order(:position) }
 RUBY
         end
       end

@@ -7,10 +7,6 @@
   .main_content-sections
     section.main_content-section
       .main_content-section-area
-<% @form_attrs.each do |attr| -%>
-        = fae_input f, :<%= attr %>
-<% end -%>
+        = fae_prefix f, :name
 
-<% @association_names.each do |attr| -%>
-        = fae_association f, :<%= attr %>
-<% end -%>
+        = fae_association f, :contact, collection: Person.all

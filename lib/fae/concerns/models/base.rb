@@ -2,7 +2,7 @@ module Fae::Concerns::Models::Base
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def for_admin_index
+    def for_fae_index
       order(order_method)
     end
 
@@ -15,7 +15,7 @@ module Fae::Concerns::Models::Base
       elsif klass.column_names.include? 'title'
         return :title
       else
-        raise "No order_method found, please define for_admin_index as a #{name} class method to set a custom order."
+        raise "No order_method found, please define for_fae_index as a #{name} class method to set a custom scope."
       end
     end
 
