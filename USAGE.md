@@ -129,3 +129,20 @@ The image_form helper method takes the form object and the object that attaches 
 
 ####fae_date_format
 The fae_date_format method takes a Date/DateTime object and an optional timezone string as its second parameter. It simply displays dates in a uniform way accross all implementations.
+
+###Fae Partials
+
+####_index_header.html.erb
+
+* required variables
+  * title: <em>string</em>
+* optional variables
+  * new_button: <em>boolean</em>
+  * button_text: <em>string</em>
+
+####_form_buttons.html.erb
+
+* required variables
+  * f: <em>form builder</em>
+* optional variables
+  * delete_item: <em>instance variable for object to be deleted</em>

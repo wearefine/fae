@@ -1,9 +1,9 @@
 <% require_locals ['f'], local_assigns %>
-<% item ||= nil %>
+<% delete_item ||= nil %>
 
 <div class="main_content-header-save">
-  <% if item.present? && params[:action] == 'edit' %>
-    <%= link_to "Delete", ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_content-header-delete'  %>
+  <% if delete_item.present? && params[:action] == 'edit' %>
+    <%= link_to "Delete", ['admin', delete_item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_content-header-delete'  %>
   <% end %>
   <%= link_to "Cancel", @index_path+'?cancelled=true', id: "main_content-header-save-cancel" %>
   <%= f.submit "Save Settings" %>
