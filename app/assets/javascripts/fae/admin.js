@@ -313,25 +313,24 @@ var Admin = {
     var $slug = $('.slug');
     if ($slug.val() !== '') {
       $('.slugger').removeClass('slugger');
-      $('.select-slugger').removeClass('select-slugger');
     }
     $('.slugger').keyup(function(){
-      slug_text = Admin.digest_slug();
-      $slug.val(slug_text);
-    });
-    $('.select-slugger').change(function(){
       slug_text = Admin.digest_slug();
       $slug.val(slug_text);
     });
   },
 
   digest_slug: function() {
-    var slug_text = $('.slugger').val();
-    var city = $('.select-slugger').find('option:selected').html();
-    if (city) {
-      slug_text += ' '+city;
+    var $slug = $('.slugger');
+    var slug_text = []
+    if ($slug.length > 1)  {
+      $slug.each(function() {
+        slug_text.push($(this).val());
+      })
+    } else {
+      slug_text = $('.slugger').val();
     }
-    slug_text = slug_text.toLowerCase().replace('.','').replace(/[^a-zA-Z0-9.]+/g,'-');
+    slug_text = slug_text.join(' ').toLowerCase().replace('.','').replace('\'','').replace(/[^a-zA-Z0-9.]+/g,'-');
     return slug_text;
   },
 
