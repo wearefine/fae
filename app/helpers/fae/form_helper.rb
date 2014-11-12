@@ -2,7 +2,7 @@ module Fae
   module FormHelper
 
     def fae_input(f, attribute, options={})
-      custom_options options
+      custom_options attribute, options
       label_and_hint(attribute, options)
       list_order f, attribute, options
 
@@ -10,7 +10,7 @@ module Fae
     end
 
     def fae_association(f, attribute, options={})
-      custom_options options
+      custom_options attribute, options
       label_and_hint(attribute, options)
       list_order f, attribute, options
 
@@ -87,15 +87,16 @@ module Fae
 
     def fae_video_url(f, attribute, options={})
       raise "Fae:ImproperOptionValue: can't override helper_text or hint options for fae_video_url" if options[:helper_text].present? || options[:hint].present?
-      options.update(helper_text: "Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long.", hint: "#{image_tag('fae/youtube_helper.jpg')}", input_class: "youtube-api")
+      options.update(helper_text: "Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long.", hint: "#{image_tag('fae/youtube_helper.jpg')}", input_class: "#{options[:input_class]} youtube-api")
       fae_input f, attribute, options
     end
 
 
     private
 
-    def custom_options(options)
+    def custom_options(attribute, options)
       options[:input_html] = { class: options[:input_class] } if options[:input_class].present?
+      options[:input_html] = { class: "#{options[:input_html][:class]} slug"} if attribute == :slug
       options.update(wrapper_class: "#{options[:wrapper_class]} input") if options[:wrapper_class].present?
       options.update(validate: true) unless options[:validate].present? && options[:validate] == false
     end

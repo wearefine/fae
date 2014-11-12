@@ -12,6 +12,7 @@
 
       <!-- Long Field with Helper Text -->
       <%= fae_input f, :name, {
+        input_class: 'slugger',
         helper_text: 'Long Field with Helper Text',
         hint: "<h3>Markdown options</h3>"
       } %>
@@ -20,7 +21,7 @@
       <!-- Long Field -->
       <%= fae_input f, :slug, {
         helper_text: 'Long Field with Helper Text',
-        class: 'custom_class',
+        input_class: 'custom_class',
         dark_hint: '<h3>Markdown Options</h3><br>
           Link | Internal: See my [About](/about/) page for details.<br>
           Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
@@ -33,7 +34,9 @@
       <%= fae_prefix f, :price, helper_text: 'prefix field here!', prefix: '$' %>
 
       <!-- Input for video urls -->
-      <%= fae_video_url f, :video_url %>
+      <%= fae_video_url f, :video_url, {
+        input_class: 'slugger'
+      } %>
 
       <!-- Large Pulldown -->
       <%= fae_pulldown f, :varietal %>
