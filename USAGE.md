@@ -145,4 +145,4 @@ The fae_date_format method takes a Date/DateTime object and an optional timezone
 * required variables
   * f: <em>form builder</em>
 * optional variables
-  * delete_item: <em>instance variable for object to be deleted</em>
+  * item: <em>instance variable for object to be deleted</em>

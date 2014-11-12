@@ -2,9 +2,15 @@
   section.main_content-header
     .main_content-header-wrapper
       = render 'fae/shared/form_header', header: @klass_name
-      = render 'fae/shared/form_buttons', f: f, delete_item: @item
+      = render 'fae/shared/form_buttons', f: f, item: @item
 
   .main_content-sections
     section.main_content-section
       .main_content-section-area
-        = fae_input f, :name
+<% @form_attrs.each do |attr| -%>
+        = fae_input f, :<%= attr %>
+<% end -%>
+
+<% @association_names.each do |attr| -%>
+        = fae_association f, :<%= attr %>
+<% end -%>
