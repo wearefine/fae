@@ -323,14 +323,10 @@ var Admin = {
   digest_slug: function() {
     var $slug = $('.slugger');
     var slug_text = []
-    if ($slug.length > 1)  {
-      $slug.each(function() {
-        slug_text.push($(this).val());
-      })
-    } else {
-      slug_text = $('.slugger').val();
-    }
-    slug_text = slug_text.join(' ').toLowerCase().replace('.','').replace('\'','').replace(/[^a-zA-Z0-9.]+/g,'-');
+    $slug.each(function() {
+      slug_text.push($(this).val());
+    })
+    slug_text = slug_text.join(' ').toLowerCase().replace(/\\|\'/g,'').replace(/[^a-zA-Z0-9.]+/g,'-');
     return slug_text;
   },
 
