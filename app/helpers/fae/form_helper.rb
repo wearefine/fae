@@ -95,8 +95,8 @@ module Fae
     private
 
     def custom_options(attribute, options)
-      options[:input_html] = { class: options[:input_class] } if options[:input_class].present?
-      options[:input_html] = { class: "#{options[:input_html][:class]} slug"} if attribute == :slug
+      add_input_class(options, options[:input_class]) if options[:input_class].present?
+      add_input_class(options, 'slug') if attribute == :slug
       options.update(wrapper_class: "#{options[:wrapper_class]} input") if options[:wrapper_class].present?
       options.update(validate: true) unless options[:validate].present? && options[:validate] == false
     end
@@ -144,6 +144,14 @@ module Fae
 
     def to_class attribute
       attribute.to_s.classify.constantize
+    end
+
+    def add_input_class(options, class_name)
+      if options.key?(:input_html)
+        options[:input_html] = { class: "#{options[:input_html][:class]} #{class_name}" }
+      else
+        options[:input_html] = { class: class_name }
+      end
     end
 
     def list_order f, attribute, options
