@@ -48,7 +48,7 @@
 
   <% unless omit.include?(:alt)
     options = { label: alt_label.html_safe }
-    options[:helper_text] = "#{caption_helper_text}" if caption_helper_text.present?
+    options[:helper_text] = "#{caption_helper_text}" if alt_helper_text.present?
   %>
     <%= fae_input i, :alt, options %>
   <% end %>
