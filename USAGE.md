@@ -122,6 +122,9 @@ The method takes the form object and the object that attaches to the Image relat
 *<em>omit</em>: an array containing :caption and/or :alt, defaults to [:caption]
 *<em>show_thumb</em>: defaults to false
 *<em>required</em>: defaults to false
+*<em>helper_text</em>: defaults to ""
+*<em>alt_helper_text</em>: defaults to ""
+*<em>caption_helper_text</em>: defaults to ""
 
 ```ruby
   image_form f, @item
