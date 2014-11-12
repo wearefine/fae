@@ -113,7 +113,8 @@ The markdown_helper supplies a string of markdown helper information
 The require_locals method is intended to be used at the beginning of any partial that pulls in a local variable from the page that renders it. It takes a Array of strings containing the variables that are required and the local_assigns view helper method
 
 ####image_form
-The image_form helper method takes the form object and the object that attaches to the Image relationship. The following optional params are available:
+This helper will place a nested form partial in your view, you still need to build the image in your controller
+The method takes the form object and the object that attaches to the Image relationship. The following optional params are available:
 
 *<em>image_name</em>: the action image relationships name, defaults to :image
 *<em>image_label</em>: defaults to the image_name
@@ -121,6 +122,9 @@ The image_form helper method takes the form object and the object that attaches 
 *<em>omit</em>: an array containing :caption and/or :alt, defaults to [:caption]
 *<em>show_thumb</em>: defaults to false
 *<em>required</em>: defaults to false
+*<em>helper_text</em>: defaults to ""
+*<em>alt_helper_text</em>: defaults to ""
+*<em>caption_helper_text</em>: defaults to ""
 
 ```ruby
   image_form f, @item

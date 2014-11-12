@@ -6,6 +6,9 @@
   the_image      = item.send(image_name)
   image_label  ||= image_name.to_s.humanize
   alt_label    ||= "#{image_label} alt text"
+  helper_text  ||= ""
+  alt_helper_text   ||= ""
+  caption_helper_text ||= ""
   omit         ||= [:caption]
   show_thumb   ||= false
   required     ||= false
@@ -17,6 +20,7 @@
     <%= content_tag :label, class: ('required' if required) do  %>
       <%= content_tag :abbr, '*', title: 'required' if required %>
       <%= image_label.html_safe %>
+      <%= content_tag :h6, "#{helper_text}", class: 'helper_text' if helper_text.present? %>
     <% end %>
 
     <% if the_image.asset.present? %>
@@ -35,7 +39,17 @@
     </div>
   </div>
 
-  <%= i.input :caption, label: "#{image_label} caption" unless omit.include?(:caption) %>
-  <%= i.input :alt, label: alt_label.html_safe unless omit.include?(:alt) %>
+  <% unless omit.include?(:caption)
+    options = {label: "#{image_label} caption"}
+    options[:helper_text] = "#{caption_helper_text}" if caption_helper_text.present?
+  %>
+    <%= fae_input i, :caption, options %>
+  <% end %>
 
+  <% unless omit.include?(:alt)
+    options = { label: alt_label.html_safe }
+    options[:helper_text] = "#{caption_helper_text}" if caption_helper_text.present?
+  %>
+    <%= fae_input i, :alt, options %>
+  <% end %>
 <% end %>
