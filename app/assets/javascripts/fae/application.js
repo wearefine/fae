@@ -40,3 +40,5 @@
 //= require fae/ajax_forms
 //= require fae/validation
 //= require fae/admin
+
+//= require judge_path
