@@ -324,7 +324,9 @@ var Admin = {
     var $slug = $('.slugger');
     var slug_text = []
     $slug.each(function() {
-      slug_text.push($(this).val());
+      if ($(this).val().length > 0) {
+        slug_text.push($(this).val());
+      }
     })
     slug_text = slug_text.join(' ').toLowerCase().replace(/\\|\'/g,'').replace(/[^a-zA-Z0-9.]+/g,'-');
     return slug_text;
