@@ -38,6 +38,10 @@ RUBY
     def build_judge_requirements
       copy_file File.expand_path(File.join(__FILE__, "../templates/initializers/judge.rb")), "config/initializers/judge.rb"
       copy_file File.expand_path(File.join(__FILE__, "../templates/assets/judge_path.js")), "app/assets/javascripts/judge_path.js"
+      inject_into_file "app/assets/javascripts/judge_path.js", after: "// define the judge path to use the mounted path" do <<-RUBY
+\njudge.enginePath = "/#{options.namespace}/judge";
+RUBY
+      end
     end
 
   end
