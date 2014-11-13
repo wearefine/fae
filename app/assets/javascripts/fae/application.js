@@ -28,6 +28,7 @@
 //= require underscore
 //= require json2
 //= require judge
+//= require fae/judge_path
 //
 //= require fae/helpers
 //= require fae/accordion

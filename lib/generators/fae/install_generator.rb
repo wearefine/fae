@@ -9,6 +9,7 @@ module Fae
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       build_initializer
+      build_judge_initializer
       rake 'fae:install:migrations'
       rake 'db:migrate'
       rake 'fae:seed_db'
@@ -32,6 +33,10 @@ RUBY
 \n  config.devise_secret_key = '#{SecureRandom.hex(64)}'\n
 RUBY
       end
+    end
+
+    def build_judge_initializer
+      copy_file File.expand_path(File.join(__FILE__, "../templates/initializers/judge.rb")), "config/initializers/judge.rb"
     end
 
   end
