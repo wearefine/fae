@@ -28,6 +28,7 @@
 //= require underscore
 //= require json2
 //= require judge
+//= require fae/judge_path
 //
 //= require fae/helpers
 //= require fae/accordion
@@ -40,5 +41,3 @@
 //= require fae/ajax_forms
 //= require fae/validation
 //= require fae/admin
-
-//= require judge_path

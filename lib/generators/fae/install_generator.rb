@@ -9,7 +9,7 @@ module Fae
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       build_initializer
-      built_judge_requirements
+      build_judge_initializer
       rake 'fae:install:migrations'
       rake 'db:migrate'
       rake 'fae:seed_db'
@@ -35,13 +35,8 @@ RUBY
       end
     end
 
-    def build_judge_requirements
+    def build_judge_initializer
       copy_file File.expand_path(File.join(__FILE__, "../templates/initializers/judge.rb")), "config/initializers/judge.rb"
-      copy_file File.expand_path(File.join(__FILE__, "../templates/assets/judge_path.js")), "app/assets/javascripts/judge_path.js"
-      inject_into_file "app/assets/javascripts/judge_path.js", after: "// define the judge path to use the mounted path" do <<-RUBY
-\njudge.enginePath = "/#{options.namespace}/judge";
-RUBY
-      end
     end
 
   end
