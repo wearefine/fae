@@ -1,4 +1,5 @@
 var Admin = {
+    path: '<%= Rails.application.routes.url_helpers.fae_path %>',
 
     breakpoints: {
       desktop: 800
@@ -231,7 +232,7 @@ var Admin = {
         var object = serial.substr(0, serial.indexOf('['));
 
         $.ajax({
-          url: '/'+Admin.path+'/sort/'+object,
+          url: Admin.path+'/sort/'+object,
           type: 'post',
           data: serial,
           dataType: 'script',
