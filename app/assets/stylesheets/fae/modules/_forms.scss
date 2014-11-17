@@ -6,7 +6,7 @@ label {
   color: $c-text-heavy;
 
   abbr {
-    color: $c-custom-text_link;
+    color: $c-custom-highlight;
   }
 }
 
@@ -849,7 +849,7 @@ input.string {
     position: absolute;
     right: 15px;
     top: 9px;
-    color: $c-custom-text_link;
+    color: $c-custom-highlight;
   }
 }
 
@@ -1015,7 +1015,7 @@ input.string {
 }
 
 .ui-datepicker-calendar .ui-state-hover {
-  color: $c-custom-text_link;
+  color: $c-custom-highlight;
 }
 
 .ui-datepicker-calendar .ui-state-active {
