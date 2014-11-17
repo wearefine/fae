@@ -1,8 +1,8 @@
 /*  apply a natural box layout model to all elements  for more info: http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
-* { 
-	-moz-box-sizing: border-box; 
-	-webkit-box-sizing: border-box; 
-	box-sizing: border-box; 
+* {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html, body {
@@ -24,7 +24,7 @@ body {
 }
 
 a {
-	color: $c-custom-text_link;
+	color: $c-custom-highlight;
 	text-decoration: none;
 
 	@include transition(color, .2s);

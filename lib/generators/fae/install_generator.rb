@@ -8,6 +8,7 @@ module Fae
       add_route
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
+      add_fae_variables
       build_initializer
       build_judge_initializer
       rake 'fae:install:migrations'
@@ -25,6 +26,10 @@ module Fae
   mount Fae::Engine => '/#{options.namespace}'\n
 RUBY
       end
+    end
+
+    def add_fae_variables
+      copy_file File.expand_path(File.join(__FILE__, '../templates/assets/fae_variables.scss')), 'app/assets/stylesheets/fae_variables.scss'
     end
 
     def build_initializer
