@@ -6,8 +6,7 @@ describe Fae::Option do
     context 'when no option object is present' do
       it 'should create a new instance' do
         starting_options = Fae::Option.all.length
-        # Fae::Option.instance
-        FactoryGirl.create(:fae_option)
+        Fae::Option.instance
         ending_options = Fae::Option.all.length
 
         expect(starting_options).to eq(0)

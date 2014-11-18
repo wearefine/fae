@@ -17,16 +17,15 @@ module Fae
     accepts_nested_attributes_for :favicon, allow_destroy: true
 
     def self.instance
-      # this grabs the first instance, only one can exist
-      begin
-        first
-      rescue ActiveRecord::RecordNotFound
-        # slight race condition here, but it will only happen once if the seed file failed
-        row = Option.new({title: 'My FINE Admin', time_zone: 'Pacific Time (US & Canada)'})
-        row.singleton_guard = 0
-        row.save!
-        row
+      instance = first
+
+      if instance.blank?
+        instance = Option.new({title: 'My FINE Admin', time_zone: 'Pacific Time (US & Canada)'})
+        instance.singleton_guard = 0
+        instance.save!
       end
+
+      instance
     end
   end
 end
