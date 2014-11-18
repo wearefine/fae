@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe Fae::User do
 
+  it { should validate_presence_of(:first_name) }
+  it { should validate_presence_of(:email) }
+  it { should validate_presence_of(:role) }
+  it { should validate_uniqueness_of(:email) }
+  it { should validate_confirmation_of(:password) }
+
   describe '#public_users' do
     it 'should assign public users' do
       super_admin = FactoryGirl.create(:fae_role, name: 'super admin')

@@ -2,6 +2,9 @@ require 'rails_helper'
 
 describe Fae::Option do
 
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:time_zone) }
+
   describe '#instance' do
     context 'when no option object is present' do
       it 'should create a new instance' do
