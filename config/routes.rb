@@ -14,6 +14,7 @@ Fae::Engine.routes.draw do
   get 'settings' => 'users#settings', as: 'settings'
 
   # AJAX
+  delete 'files/:id/delete_file' => 'files#delete_file', as: :delete_file
   delete 'images/:id/delete_image' => 'images#delete_image', as: :delete_image
   get 'images/:id/crop_image' => 'images#crop_image', as: :crop_image
   patch 'images/:id/crop_image' => 'images#crop_image', as: :commit_crop

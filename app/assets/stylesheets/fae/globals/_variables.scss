@@ -1,8 +1,3 @@
-/* custom colours */
-$c-custom-text_link: #31a7e6;
-$c-custom-highlight: #31a7e6;
-
-
 /* widths, padding, margins, and the like */
 $main_nav_width: 210px;
 
@@ -20,8 +15,8 @@ $c-almost_white: #f7f7f7;
 $c-white: #fff;
 
 
-/* 
-**  Functional name for colors 
+/*
+**  Functional name for colors
 */
 $c-body-bg: $c-almost_white;
 $c-text: $c-grey;
@@ -69,7 +64,7 @@ $c-table-filter-submit-bg: $c-light_grey;
 $c-table-filter-submit-bg-hover: #bbb;
 $c-table-filter-reset-bg: #ddd;
 $c-table-filter-reset-bg-hover: #ccc;
-$c-table-filter-reset-text: $c-custom-text_link;
+$c-table-filter-reset-text: $c-custom-highlight;
 
 /* forms */
 $c-form-submit: $c-white;
@@ -85,7 +80,7 @@ $c-form-file-bg: $c-almost_white;
 $c-form-file-bg-active: $c-white;
 $c-form-file-link-bg: #f7f7f7;
 $c-form-file-link-bg-hover: #ddd;
-$c-form-file-link-text: $c-custom-text_link;
+$c-form-file-link-text: $c-custom-highlight;
 $c-form-table-bg: #ebebeb;
 $c-chosen-bg: $c-white;
 $c-chosen-gradient-start: #eee;
