@@ -319,6 +319,10 @@ input.string {
     top: 19px;
     color: $c-text-sub;
   }
+
+  &--files a {
+    line-height: 32px;
+  }
 }
 
 .asset-actions-image-link {

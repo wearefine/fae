@@ -1,21 +1,31 @@
+<% require_locals ['item', 'f'], local_assigns %>
+
 <%
-helper_text ||= ''
-file_label = helper_text.present? ? helper_text.html_safe : field.to_s.humanize
-cache_field = "#{field.to_s}_cache"
+  # passed in variables
+  file_name   ||= :file
+  the_file      = item.send(file_name)
+  file_label  ||= file_name.to_s.humanize
+  helper_text  ||= ""
+  required     ||= false
 %>
 
-<div class="field">
-  <%= content_tag :label, file_label %>
+<%= f.simple_fields_for file_name do |i| %>
+  <div class='input field'>
+    <%= content_tag :label, class: ('required' if required) do  %>
+      <%= content_tag :abbr, '*', title: 'required' if required %>
+      <%= file_label.html_safe %>
+      <%= content_tag :h6, "#{helper_text}", class: 'helper_text' if helper_text.present? %>
+    <% end %>
 
-  <% if item.send(field).present? %>
-    <div class="asset-actions">
-      <%= link_to 'View', item.send(field).url, target: '_new' %>
-      <%= link_to 'Delete', "/#{item.class.to_s.pluralize.underscore}/#{item.id}/remove_#{field.to_s}", class: 'js-asset-delete-link', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } %>
+    <% if the_file.asset.present? %>
+      <div class='asset-actions asset-actions--files'>
+        <%= link_to 'View', the_file.asset.url, target: '_blank'  %>
+        <%= link_to 'Delete', fae.delete_file_path(the_file.id), class: 'js-asset-delete-link', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+    <div class='asset-inputs' style= <%='display:none;' unless the_file.asset.blank? %> >
+      <%= i.input :asset, as: :file, label: false %>
+      <%= i.input :asset_cache, as: :hidden %>
     </div>
-  <% end %>
-
-  <div class="asset-inputs" style="<%= "display:none;" unless item.send(field).blank? %>">
-    <%= f.input field, as: :file, label: false %>
-    <%= f.input cache_field, as: :hidden %>
   </div>
-</div>
+<% end %>
