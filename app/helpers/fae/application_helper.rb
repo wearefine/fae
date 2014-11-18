@@ -39,5 +39,8 @@ module Fae
       render 'fae/images/image_uploader', f: f, item: item, image_name: image_name, image_label: image_label, alt_label: alt_label, omit: omit, show_thumb: show_thumb, required: required, helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text
     end
 
+    def file_form(f, item, file_name: nil, file_label: nil, helper_text: nil, required: nil)
+      render 'fae/application/file_uploader', f: f, item: item, file_name: file_name, file_label: file_label, required: required, helper_text: helper_text
+    end
   end
 end

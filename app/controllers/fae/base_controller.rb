@@ -12,11 +12,11 @@ module Fae
 
     def new
       @item = @klass.new
-      build_images
+      build_assets
     end
 
     def edit
-      build_images
+      build_assets
     end
 
     def create
@@ -25,7 +25,7 @@ module Fae
       if @item.save
         redirect_to @index_path, notice: "Success. You’ve done good."
       else
-        build_images
+        build_assets
         render action: 'new', error: "Let’s slow down a bit. Check your form for errors."
       end
     end
@@ -34,7 +34,7 @@ module Fae
       if @item.update(item_params)
         redirect_to @index_path, notice: "Success. You’ve done good."
       else
-        build_images
+        build_assets
         render action: 'edit', error: "Let’s slow down a bit. Check your form for errors."
       end
     end
@@ -67,8 +67,8 @@ module Fae
       params.require(@klass_base.singularize).permit!
     end
 
-    # if model has images, build them here for nesting
-    def build_images
+    # if model has images or files, build them here for nesting
+    def build_assets
     end
 
   end

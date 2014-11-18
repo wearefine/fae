@@ -13,6 +13,7 @@
         <%= f.input :score %>
         <%= f.input :publication %>
         <%= fae_datepicker f, :publication_date %>
+        <%= file_form f, @item, file_name: :pdf %>
         <%= f.input :description %>
       </div>
     </section>
