@@ -22,7 +22,7 @@ module Fae
         first
       rescue ActiveRecord::RecordNotFound
         # slight race condition here, but it will only happen once if the seed file failed
-        row = Option.new({title: 'My FINE Admin'})
+        row = Option.new({title: 'My FINE Admin', time_zone: 'Pacific Time (US & Canada)'})
         row.singleton_guard = 0
         row.save!
         row
