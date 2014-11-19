@@ -31,6 +31,7 @@ group :test do
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
+  gem 'pry'
 end
 
 gem 'capistrano',  '~> 3.1'

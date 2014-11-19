@@ -11,6 +11,7 @@ require 'factory_girl_rails'
 require 'database_cleaner'
 require 'rspec/rails'
 require 'shoulda/matchers'
+require 'pry'
 
 # File.dirname(__FILE__) used because Rails.root is the dummy app
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
