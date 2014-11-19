@@ -321,7 +321,7 @@ input.string {
     color: $c-text-sub;
   }
 
-  &--files a {
+  &.asset-actions--files a {
     line-height: 32px;
   }
 }

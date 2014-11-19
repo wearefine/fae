@@ -22,6 +22,11 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
 
+  config.infer_spec_type_from_file_location!
+
+  # Include named routes
+  config.include Rails.application.routes.url_helpers
+
   # Use capybara-webkit as the JS driver
   Capybara.javascript_driver = :webkit
 
