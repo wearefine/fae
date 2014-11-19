@@ -6,6 +6,7 @@
   the_image      = item.send(image_name)
   image_label  ||= image_name.to_s.humanize
   alt_label    ||= "#{image_label} alt text"
+  caption_label ||= "#{image_label} caption"
   helper_text  ||= ""
   alt_helper_text   ||= ""
   caption_helper_text ||= ""
@@ -40,15 +41,15 @@
   </div>
 
   <% unless omit.include?(:caption)
-    options = {label: "#{image_label} caption"}
-    options[:helper_text] = "#{caption_helper_text}" if caption_helper_text.present?
+    options = {label: caption_label.html_safe}
+    options[:helper_text] = caption_helper_text if caption_helper_text.present?
   %>
     <%= fae_input i, :caption, options %>
   <% end %>
 
   <% unless omit.include?(:alt)
     options = { label: alt_label.html_safe }
-    options[:helper_text] = "#{caption_helper_text}" if alt_helper_text.present?
+    options[:helper_text] = alt_helper_text if alt_helper_text.present?
   %>
     <%= fae_input i, :alt, options %>
   <% end %>
