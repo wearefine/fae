@@ -29,7 +29,8 @@ group :test do
   gem 'guard-rspec', '~> 4.3.1'
   gem 'database_cleaner', '~> 1.3.0'
   gem 'selenium-webdriver', '~> 2.42.0'
-  gem "yarjuf"
+  gem 'shoulda-matchers', require: false
+  gem 'yarjuf'
 end
 
 gem 'capistrano',  '~> 3.1'
