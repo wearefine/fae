@@ -40,8 +40,11 @@ module Fae
     end
 
     def destroy
-      @item.destroy
-      redirect_to @index_path, notice: "Item was successfully removed"
+      if @item.destroy
+        redirect_to @index_path, notice: 'Item was successfully removed'
+      else
+        redirect_to @index_path, flash: { error: 'This item has associated objects that prevent it from being removed.' }
+      end
     end
 
   private
