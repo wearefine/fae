@@ -233,6 +233,8 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
+    shoulda-matchers (2.7.0)
+      activesupport (>= 3.0.0)
     simple_form (3.0.2)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -305,6 +307,7 @@ DEPENDENCIES
   rspec-rails (~> 3.0.2)
   ruby-prof
   selenium-webdriver (~> 2.42.0)
+  shoulda-matchers
   slim
   thin
   yarjuf
