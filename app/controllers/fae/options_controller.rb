@@ -1,6 +1,8 @@
 module Fae
   class OptionsController < ApplicationController
 
+    before_filter :super_admin_only
+
     def edit
       @option = Option.first || Option.instance
       @option.build_logo if @option.logo.blank?

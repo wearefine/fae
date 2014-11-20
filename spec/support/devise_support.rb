@@ -5,14 +5,14 @@ def super_admin_login
   login(user)
 end
 
-def super_admin_login
+def admin_login
   role = FactoryGirl.create(:fae_role, name: 'admin')
   user = FactoryGirl.create(:fae_user, first_name: 'Admin', role: role)
 
   login(user)
 end
 
-def super_admin_login
+def user_login
   role = FactoryGirl.create(:fae_role, name: 'user')
   user = FactoryGirl.create(:fae_user, first_name: 'User', role: role)
 
