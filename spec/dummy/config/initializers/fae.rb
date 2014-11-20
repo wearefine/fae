@@ -23,6 +23,9 @@ Fae.setup do |config|
     },
     {
       text: "Event Hosts", path: "/admin/people"
+    },
+    {
+      text: "Locations", path: "/admin/locations"
     }
   ]
 end

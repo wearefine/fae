@@ -3,7 +3,7 @@ module Fae
 
     def fae_input(f, attribute, options={})
       custom_options attribute, options
-      label_and_hint(attribute, options)
+      label_and_hint attribute, options
       list_order f, attribute, options
 
       f.input attribute, options
@@ -11,7 +11,7 @@ module Fae
 
     def fae_association(f, attribute, options={})
       custom_options attribute, options
-      label_and_hint(attribute, options)
+      label_and_hint attribute, options
       list_order f, attribute, options
 
       f.association attribute, options
@@ -154,15 +154,13 @@ module Fae
       end
     end
 
+    # sets collection to class.for_fae_index if not defined
     def list_order f, attribute, options
-      if is_association?(f, attribute)
-        raise "Fae::ImproperOptionValue: Can't order `#{attribute}` by unrecognized `#{options[:order_by]}` attribute." if to_class(attribute).attribute_names.include?(options[:order_by].to_s) == false && options[:order_by].present?
-        raise "Fae::AttributeOverride: The `collection` option overrides the `order_by` option. Please specify your ordering in the `collection` option." if options[:collection].present? && options[:order_by].present?
-        options[:prompt] = "Select One" unless options[:two_pane] == true
-        options[:order_by] = 'name' if to_class(attribute).attribute_names.include?('name') && options[:order_by].blank?
-        options[:order_direction] = options[:order_direction].present? ? options[:order_direction] : 'ASC'
-        if options[:order_by].present? && to_class(attribute).attribute_names.include?(options[:order_by].to_s) && options[:collection].blank?
-          options[:collection] = to_class(attribute).order("#{options[:order_by].to_s} #{options[:order_direction]}")
+      if is_association?(f, attribute) && !options[:collection]
+        begin
+          options[:collection] = to_class(attribute).for_fae_index
+        rescue NameError
+          raise "Fae::MissingCollection: `#{attribute}` isn't an orderable class, define your order using the `collection` option."
         end
       end
 
