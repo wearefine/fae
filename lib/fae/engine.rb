@@ -13,7 +13,7 @@ module Fae
     require 'judge/simple_form'
     require 'acts_as_list'
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib concerns)
 
     config.to_prepare do
       ApplicationController.helper(ApplicationHelper)
