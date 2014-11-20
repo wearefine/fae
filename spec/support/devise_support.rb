@@ -31,8 +31,18 @@ module SignInRequestHelper
   end
 end
 
+module SignInFeatureHelper
+  def login(user)
+    visit fae.new_user_session_path
+    fill_in 'user_email', with: user.email
+    fill_in 'user_password', with: user.password
+    click_button 'Submit'
+  end
+end
+
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include SignInControllerHelper, type: :controller
   config.include SignInRequestHelper, type: :request
+  config.include SignInFeatureHelper, type: :feature
 end
