@@ -1,43 +1,43 @@
 @font-face {
     font-family: 'Lato';
-    src:asset_url('lato-regular-webfont.eot');
-    src:asset_url('lato-regular-webfont.eot?#iefix') format('embedded-opentype'),
-        asset_url('lato-regular-webfont.woff') format('woff'),
-        asset_url('lato-regular-webfont.ttf') format('truetype'),
-        asset_url('lato-regular-webfont.svg#lato_regular') format('svg');
+    src:asset_url('fae/lato-regular-webfont.eot');
+    src:asset_url('fae/lato-regular-webfont.eot?#iefix') format('embedded-opentype'),
+        asset_url('fae/lato-regular-webfont.woff') format('woff'),
+        asset_url('fae/lato-regular-webfont.ttf') format('truetype'),
+        asset_url('fae/lato-regular-webfont.svg#lato_regular') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Lato';
-    src: asset_url('lato-light-webfont.eot');
-    src: asset_url('lato-light-webfont.eot?#iefix') format('embedded-opentype'),
-         asset_url('lato-light-webfont.woff') format('woff'),
-         asset_url('lato-light-webfont.ttf') format('truetype'),
-         asset_url('lato-light-webfont.svg#lato_light') format('svg');
+    src: asset_url('fae/lato-light-webfont.eot');
+    src: asset_url('fae/lato-light-webfont.eot?#iefix') format('embedded-opentype'),
+         asset_url('fae/lato-light-webfont.woff') format('woff'),
+         asset_url('fae/lato-light-webfont.ttf') format('truetype'),
+         asset_url('fae/lato-light-webfont.svg#lato_light') format('svg');
     font-weight: 200;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Lato';
-    src: asset_url('lato-bold-webfont.eot');
-    src: asset_url('lato-bold-webfont.eot?#iefix') format('embedded-opentype'),
-         asset_url('lato-bold-webfont.woff') format('woff'),
-         asset_url('lato-bold-webfont.ttf') format('truetype'),
-         asset_url('lato-bold-webfont.svg#lato_bold') format('svg');
+    src: asset_url('fae/lato-bold-webfont.eot');
+    src: asset_url('fae/lato-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         asset_url('fae/lato-bold-webfont.woff') format('woff'),
+         asset_url('fae/lato-bold-webfont.ttf') format('truetype'),
+         asset_url('fae/lato-bold-webfont.svg#lato_bold') format('svg');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'icons';
-    src: asset_url('icons.eot');
-    src: asset_url('icons.eot?#iefix') format('embedded-opentype'),
-         asset_url('icons.woff') format('woff'),
-         asset_url('icons.ttf') format('truetype'),
-         asset_url('icons.svg#icons') format('svg');
+    src: asset_url('fae/icons.eot');
+    src: asset_url('fae/icons.eot?#iefix') format('embedded-opentype'),
+         asset_url('fae/icons.woff') format('woff'),
+         asset_url('fae/icons.ttf') format('truetype'),
+         asset_url('fae/icons.svg#icons') format('svg');
     font-weight: normal;
     font-style: normal;
 }
