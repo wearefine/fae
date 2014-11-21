@@ -59,4 +59,7 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 
+  # Stop running tests on first caught fail, this is best used with config.order = "defined"
+  # config.fail_fast = true
+
 end
