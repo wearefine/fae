@@ -4,7 +4,6 @@ feature 'fae_input' do
 
   scenario 'should display input, label, helper and classes' do
     admin_login
-
     visit new_admin_release_path
 
     # label
@@ -20,5 +19,10 @@ feature 'fae_input' do
       expect(page).to have_content('Text Area wtih Hint Pop Up')
     end
   end
+
+  # scenario 'should display hint', js: true do
+  #   admin_login
+  #   visit new_admin_release_path
+  # end
 
 end
