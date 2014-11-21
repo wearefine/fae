@@ -13,9 +13,9 @@ describe Fae::User do
       super_admin = FactoryGirl.create(:fae_role, name: 'super admin')
       admin = FactoryGirl.create(:fae_role, name: 'admin')
       user = FactoryGirl.create(:fae_role, name: 'user')
-      super_user = FactoryGirl.create(:fae_user, role: super_admin)
-      admin_user = FactoryGirl.create(:fae_user, role: admin)
-      user_user = FactoryGirl.create(:fae_user, role: user)
+      super_user = FactoryGirl.create(:fae_user, first_name: 'Andy', role: super_admin)
+      admin_user = FactoryGirl.create(:fae_user, first_name: 'Barbara', role: admin)
+      user_user = FactoryGirl.create(:fae_user, first_name: 'Cory', role: user)
 
       expect(Fae::User.public_users).to eq([admin_user, user_user])
     end

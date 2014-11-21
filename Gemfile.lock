@@ -301,6 +301,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails (~> 4.2.1)
   mysql2
+  pry
   rails-perftest
   remotipart
   rmagick (~> 2.13.3)

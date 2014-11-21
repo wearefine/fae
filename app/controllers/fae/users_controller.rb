@@ -8,9 +8,6 @@ module Fae
       @users = current_user.super_admin? ? User.all : User.public_users
     end
 
-    def show
-    end
-
     def new
       @user = User.new
     end

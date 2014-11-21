@@ -19,7 +19,7 @@
     <% if @option.logo.present? && @option.logo.asset.present? %>
       <%= image_tag @option.logo.asset.url, alt: @option.title %>
     <% else %>
-      <%= image_tag 'fae/fine.png', alt: "FINE logo" %>
+      <%= content_tag :h1, @option.title %>
     <% end %>
 
       <%= yield %>

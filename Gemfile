@@ -13,13 +13,14 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
-gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
-
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'remotipart'
 gem 'carrierwave', '~> 0.10.0'
 gem 'rmagick', '~> 2.13.3', require: false
+gem 'slim'
+
+gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
@@ -31,6 +32,7 @@ group :test do
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
+  gem 'pry'
 end
 
 gem 'capistrano',  '~> 3.1'

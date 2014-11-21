@@ -6,6 +6,7 @@ FactoryGirl.define do
     email
     sequence(:password) { |n| "Passw0rd#{n}" }
     password_confirmation { password }
+    active true
 
     association :role, factory: :fae_role
   end

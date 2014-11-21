@@ -22,7 +22,7 @@ private
   end
 
   def set_option
-    @option = Fae::Option.first
+    @option = Fae::Option.instance
   end
 
   def detect_cancellation

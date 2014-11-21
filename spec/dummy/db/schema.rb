@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 20141120052810) do
     t.boolean  "on_prod",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "required",      default: false
   end
 
   add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
@@ -78,7 +77,6 @@ ActiveRecord::Schema.define(version: 20141120052810) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "file_size"
-    t.boolean  "required",       default: false
   end
 
   add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
