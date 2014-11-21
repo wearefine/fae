@@ -5,6 +5,7 @@ module Fae
       custom_options attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
+      set_prompt f, attribute, options
 
       f.input attribute, options
     end
@@ -13,6 +14,7 @@ module Fae
       custom_options attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
+      set_prompt f, attribute, options
 
       f.association attribute, options
     end
@@ -142,7 +144,7 @@ module Fae
       collection
     end
 
-    def to_class attribute
+    def to_class(attribute)
       attribute.to_s.classify.constantize
     end
 
@@ -155,7 +157,7 @@ module Fae
     end
 
     # sets collection to class.for_fae_index if not defined
-    def list_order f, attribute, options
+    def list_order(f, attribute, options)
       if is_association?(f, attribute) && !options[:collection]
         begin
           options[:collection] = to_class(attribute).for_fae_index
@@ -163,8 +165,11 @@ module Fae
           raise "Fae::MissingCollection: `#{attribute}` isn't an orderable class, define your order using the `collection` option."
         end
       end
+    end
 
-
+    # sets default prompt for pulldowns
+    def set_prompt(f, attribute, options)
+      options[:prompt] = 'Select One' if is_association?(f, attribute) && !options[:prompt] && !options[:two_pane]
     end
 
   end
