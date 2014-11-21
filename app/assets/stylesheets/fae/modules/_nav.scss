@@ -7,7 +7,7 @@
 	margin-left: -$main_nav_width;
 	overflow: auto;
 	padding: 10px 5px 10px 0;
-	background: image-url("bg_tile.gif");
+	background: url(bg_tile.gif);
 	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
 	@include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
 
@@ -29,7 +29,7 @@
 }
 
 .main_nav-sub-nav {
-	background: image-url("bg_tile.gif");
+	background: url(bg_tile.gif);
 
 	@include bp(show_nav) {
 		background: $c-nav-sub-bg-active;
