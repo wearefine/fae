@@ -21,7 +21,7 @@ before_script:
   - if [ "$BRANCH" == "master" ] ; then DEPLOY_BRANCH="prod" ; fi
   - git clone git@github.com:wearefine/shippable-setup.git
 script:
-  - rspec -f JUnit -o shippable/testresults/results.xml
+  - xvfb-run rspec -f JUnit -o shippable/testresults/results.xml
   - ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@bitbucket.org; cap $DEPLOY_BRANCH deploy'
 after_failure:
   - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN

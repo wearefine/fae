@@ -29,17 +29,8 @@ I/A  - input or association
 * **O**  __dark_hint__: string
     + can’t be used with hint
 
-* **O**  __order_by__: string
-    + defaults to ‘name'
-    + must be an attribute
-    + the collection option overrides order_by
-
 * **O**  __prompt__: string
     + defaults to 'Select One’
-
-* **O**  __order_direction__: string
-    + defaults to ‘ASC’
-    + must be ‘ASC’ or ‘DESC’
 
 
 
