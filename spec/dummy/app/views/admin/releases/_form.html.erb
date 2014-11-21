@@ -62,6 +62,9 @@
 
       <!-- Text Areas -->
       <%= fae_input f, :body, {
+          label: 'Body Content',
+          wrapper_class: 'release_body-text_area--wrapper',
+          input_class: 'release_body-text_area',
           helper_text: 'Text Area wtih Hint Pop Up',
           hint: '<h3>Markdown Options</h3><br>
           Link | Internal: See my [About](/about/) page for details.<br>
