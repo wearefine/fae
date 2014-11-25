@@ -3,8 +3,9 @@
 
 <div class="main_content-header-save">
   <% if item.present? && params[:action] == 'edit' %>
-    <%= link_to "Delete", ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_content-header-delete'  %>
+    <% path = params[:static_page].present? ? main_app.admin_content_blocks_path : ['admin', item] %>
+    <%= link_to "Delete", path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_content-header-delete'  %>
   <% end %>
-  <%= link_to "Cancel", @index_path+'?cancelled=true', id: "main_content-header-save-cancel" %>
+  <%= link_to "Cancel", @cancelled_path, id: "main_content-header-save-cancel" %>
   <%= f.submit "Save Settings" %>
 </div>

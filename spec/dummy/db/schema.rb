@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141120052810) do
+ActiveRecord::Schema.define(version: 20141125061631) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -96,7 +96,14 @@ ActiveRecord::Schema.define(version: 20141120052810) do
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
 
-  create_table "fae_pages", force: true do |t|
+  create_table "fae_roles", force: true do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fae_static_pages", force: true do |t|
     t.string   "title"
     t.integer  "position",   default: 0
     t.boolean  "on_stage",   default: true
@@ -104,16 +111,10 @@ ActiveRecord::Schema.define(version: 20141120052810) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.string   "subclass"
   end
 
-  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
-
-  create_table "fae_roles", force: true do |t|
-    t.string   "name"
-    t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "fae_static_pages", ["slug"], name: "index_fae_static_pages_on_slug", using: :btree
 
   create_table "fae_text_areas", force: true do |t|
     t.string   "label"
@@ -138,7 +139,7 @@ ActiveRecord::Schema.define(version: 20141120052810) do
   create_table "fae_text_fields", force: true do |t|
     t.integer  "contentable_id"
     t.string   "contentable_type"
-    t.string   "attatched_as"
+    t.string   "attached_as"
     t.string   "label"
     t.string   "content"
     t.integer  "position",         default: 0
@@ -148,7 +149,7 @@ ActiveRecord::Schema.define(version: 20141120052810) do
     t.datetime "updated_at"
   end
 
-  add_index "fae_text_fields", ["attatched_as"], name: "index_fae_text_fields_on_attatched_as", using: :btree
+  add_index "fae_text_fields", ["attached_as"], name: "index_fae_text_fields_on_attached_as", using: :btree
   add_index "fae_text_fields", ["contentable_id", "contentable_type"], name: "index_fae_text_fields_on_contentable_id_and_contentable_type", using: :btree
   add_index "fae_text_fields", ["on_prod"], name: "index_fae_text_fields_on_on_prod", using: :btree
   add_index "fae_text_fields", ["on_stage"], name: "index_fae_text_fields_on_on_stage", using: :btree

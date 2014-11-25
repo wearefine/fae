@@ -25,6 +25,9 @@ Fae::Engine.routes.draw do
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]
 
+  match 'static_page/:id' => 'static_pages#update', via: [:put, :patch], as: :update_static_page
+  get 'static_page/:id/edit' => 'static_pages#edit', as: 'edit_static_page'
+
   # catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
 end

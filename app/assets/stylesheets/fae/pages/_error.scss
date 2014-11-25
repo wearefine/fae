@@ -16,7 +16,7 @@
   width: 100%;
   height: 330px;
   padding: 35px;
-  border-top: 8px solid #31a7e6;
+  border-top: 8px solid $c-custom-highlight;
   @include border-radius(4px);
   background: white;
   color: #595959;
