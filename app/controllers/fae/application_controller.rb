@@ -26,7 +26,7 @@ private
   end
 
   def detect_cancellation
-    flash.now[:alert] = 'User changes have not been saved.' if params[:cancelled].present? && params[:cancelled]== "true"
+    flash.now[:alert] = 'Your changes were not saved.' if params[:cancelled].present? && params[:cancelled]== "true"
   end
 
   def build_nav
