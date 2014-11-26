@@ -43,8 +43,8 @@ module Fae
       render 'fae/application/file_uploader', f: f, item: item, file_name: file_name, file_label: file_label, required: required, helper_text: helper_text
     end
 
-    def fae_content_form(f, attribute)
-      render 'fae/application/content_uploader', f: f, attribute: attribute
+    def fae_content_form(f, attribute, label: nil)
+      render 'fae/application/content_uploader', f: f, attribute: attribute, label: label
     end
   end
 end
