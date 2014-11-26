@@ -111,7 +111,6 @@ ActiveRecord::Schema.define(version: 20141125061631) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
-    t.string   "subclass"
   end
 
   add_index "fae_static_pages", ["slug"], name: "index_fae_static_pages_on_slug", using: :btree

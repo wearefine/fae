@@ -1,6 +1,6 @@
 <section class="main_content-header">
   <div class="main_content-header-wrapper">
-    <h1>Static Pages</h1>
+    <h1>Pages</h1>
   </div>
 </section>
 
@@ -20,7 +20,7 @@
         <tbody>
           <% @items.each do |item| %>
             <tr id="fae_content_block_<%= item.id %>">
-              <td class="main_table-description-item"><%= link_to item.title, main_app.admin_edit_content_block_path(item.slug) %></td>
+              <td class="main_table-description-item"><%= link_to item.title, fae.edit_content_block_path(item.slug) %></td>
               <td class="main_table-edit">
                 <%= link_to fae.edit_static_page_path(item), class: "main_table-action" do %>
                   <span class="icon-edit"></span>

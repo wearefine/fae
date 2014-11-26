@@ -127,7 +127,7 @@ The method takes the form object and the object that attaches to the Image relat
 *<em>caption_helper_text</em>: defaults to ""
 
 ```ruby
-  image_form f, @item
+  fae_image_form f, @item
 ```
 ![Alt text](http://www.afinesite.com/fae/documentation/image_form.png')
 
