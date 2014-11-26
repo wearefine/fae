@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125061631) do
+ActiveRecord::Schema.define(version: 20141126180655) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
