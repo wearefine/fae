@@ -1,5 +1,7 @@
 <% require_locals ['attribute', 'f'], local_assigns %>
 
+<% label ||= attribute.to_s.titleize %>
+
 <%= f.simple_fields_for attribute.to_sym do |i| %>
-  <%= i.input :content, label: attribute.to_s.titleize %>
+  <%= i.input :content, label: label %>
 <% end %>

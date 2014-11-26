@@ -10,7 +10,6 @@ module Fae
     end
 
     def edit
-      return render :edit if params[:id].present?
       build_assocs
       params[:static_page] = true
       render params[:slug]
@@ -29,11 +28,7 @@ module Fae
 
     # Use callbacks to share common setup or constraints between actions.
     def set_item
-      if params[:id].present?
-        @item = Fae::StaticPage.find_by_id(params[:id])
-      elsif params[:slug].present?
-        @item = "#{params[:slug].titleize}Page".constantize.instance
-      end
+      @item = "#{params[:slug].titleize}Page".constantize.instance
     end
 
     # set up variables so that fae partial forms work
@@ -53,7 +48,7 @@ module Fae
 
     def build_assocs
       # create has_one associations
-      @item.class.fields.each do |key, value|
+      @item.fae_fields.each do |key, value|
         @item.class.send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: :contentable, class_name: value.to_s, dependent: :destroy
         @item.class.send :accepts_nested_attributes_for, key, allow_destroy: true
       end

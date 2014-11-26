@@ -13,7 +13,6 @@
         <thead>
           <tr>
             <th>Name</th>
-            <%= content_tag :th, 'Edit', class: 'main_table-header-edit', data: {sorter: false} if current_user.super_admin? %>
           </tr>
         </thead>
 
@@ -21,11 +20,6 @@
           <% @items.each do |item| %>
             <tr id="fae_content_block_<%= item.id %>">
               <td class="main_table-description-item"><%= link_to item.title, fae.edit_content_block_path(item.slug) %></td>
-              <td class="main_table-edit">
-                <%= link_to fae.edit_static_page_path(item), class: "main_table-action" do %>
-                  <span class="icon-edit"></span>
-                <% end if current_user.super_admin?%>
-              </td>
             </tr>
           <% end %>
         </tbody>
