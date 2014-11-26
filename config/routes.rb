@@ -25,6 +25,10 @@ Fae::Engine.routes.draw do
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]
 
+  get 'pages' => '/admin/content_blocks#index', as: 'static_pages'
+  get 'content_blocks/:slug' => '/admin/content_blocks#edit', as: 'edit_content_block'
+  match 'content_blocks/:slug/update' => '/admin/content_blocks#update', via: [:put, :patch], as: 'update_content_block'
+
   # catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
 end

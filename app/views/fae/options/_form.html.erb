@@ -22,8 +22,8 @@
         <%= f.input :stage_url %>
         <%= f.input :live_url %>
 
-        <%= image_form f, @option, image_name: :logo, required: true %>
-        <%= image_form f, @option, image_name: :favicon %>
+        <%= fae_image_form f, @option, image_name: :logo, required: true %>
+        <%= fae_image_form f, @option, image_name: :favicon %>
       </div>
     </section>
   </div>
