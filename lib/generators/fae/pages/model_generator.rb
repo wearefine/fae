@@ -9,7 +9,6 @@ module Fae
       @@attributes = {}
 
       def set_globals
-        establish_AR_connections
         if attributes.present?
           attributes.each do |attr|
             @@attributes[attr.name.to_sym] = convert_attr_type(attr.type)
@@ -34,23 +33,21 @@ module Fae
         template "views/static_page_form.html.#{options.template}", "app/views/#{options.namespace}/content_blocks/#{file_name.singularize}.html.#{options.template}"
       end
 
-      def establish_AR_connections
-        Fae::TextField.connection
-        Fae::TextArea.connection
-        Fae::Image.connection
-        Fae::File.connection
+      def connect_object object
+        object.constantize.connection
+        object
       end
 
       def convert_attr_type(type)
         case type.to_s
         when "string"
-          "Fae::TextField"
+          connect_object "Fae::TextField"
         when "text"
-          "Fae::TextArea"
+          connect_object "Fae::TextArea"
         when "image"
-          "Fae::Image"
+          connect_object "Fae::Image"
         when "file"
-          "Fae::File"
+          connect_object "Fae::File"
         else
           type
         end
