@@ -1,0 +1,20 @@
+= simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
+  section.main_content-header
+    .main_content-header-wrapper
+      = render 'fae/shared/form_header', header: @item
+      = render 'fae/shared/form_buttons', f: f
+
+  .main_content-sections
+    section.main_content-section
+      .main_content-section-area
+        = fae_input f, :title
+
+<% @attributes.each do |attr, type| -%>
+<% if ["Fae::TextArea", "Fae::TextField"].include? type -%>
+        = fae_content_form f, :<%= attr %>
+<% elsif "Fae::Image" == type -%>
+        = fae_image_form f, @item, image_name: :<%= attr %>
+<% elsif "Fae::File" == type -%>
+        = fae_file_form f, @item, file_name: :<%= attr %>
+<% end -%>
+<% end -%>
