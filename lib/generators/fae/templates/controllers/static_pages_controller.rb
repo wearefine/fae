@@ -3,6 +3,6 @@ class <%= options.namespace.capitalize %>::ContentBlocksController < Fae::Static
   private
 
   def fae_pages
-    pages = []
+    []
   end
 end
