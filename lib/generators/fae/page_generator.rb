@@ -19,13 +19,17 @@ module Fae
       generate_static_page_controller
       generate_static_page_model
       generate_static_page_view
-      inject_into_file "app/controllers/#{options.namespace}/content_blocks_controller.rb", "#{class_name}Page, ", before: ']'
     end
 
     private
 
     def generate_static_page_controller
-      template 'controllers/static_pages_controller.rb', "app/controllers/#{options.namespace}/content_blocks_controller.rb"
+      file = "app/controllers/#{options.namespace}/content_blocks_controller.rb"
+      if ::File.exists?(Rails.root.join(file).to_s)
+        inject_into_file "app/controllers/#{options.namespace}/content_blocks_controller.rb", ", #{class_name}Page", before: ']'
+      else
+        template 'controllers/static_pages_controller.rb', file
+      end
     end
 
     def generate_static_page_model
