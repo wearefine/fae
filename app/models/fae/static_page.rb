@@ -4,7 +4,7 @@ module Fae
     def self.instance
       row = find_by_slug(@slug)
       if row.blank?
-        row = StaticPage.create(title: @slug.humanize, slug: @slug)
+        row = StaticPage.create(title: @slug.titleize, slug: @slug)
       end
       row
     end

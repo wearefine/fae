@@ -1,7 +1,7 @@
-class <%= class_name %>Page < Fae::StaticPage
+class <%= class_name.singularize %>Page < Fae::StaticPage
   include Fae::Concerns::Models::Base
 
-  @slug = '<%= file_name %>'
+  @slug = '<%= file_name.singularize %>'
 
   # required to set the has_one associations, the static controller will build these associations dynamically
   def fae_fields
