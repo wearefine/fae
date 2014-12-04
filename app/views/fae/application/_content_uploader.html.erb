@@ -1,9 +1,7 @@
 <% require_locals ['attribute', 'f'], local_assigns %>
 
-<% hint = f.object.send(attribute).class == Fae::TextArea ? markdown_helper : nil %>
-
 <% label ||= attribute.to_s.titleize %>
 
 <%= f.simple_fields_for attribute.to_sym do |i| %>
-  <%= fae_input i, :content, label: label, hint: hint %>
+  <%= i.input :content, label: label %>
 <% end %>
