@@ -47,12 +47,6 @@ module Fae
     end
 
     def build_assocs
-      # create has_one associations
-      @item.fae_fields.each do |key, value|
-        @item.class.send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: :contentable, class_name: value.to_s, dependent: :destroy
-        @item.class.send :accepts_nested_attributes_for, key, allow_destroy: true
-      end
-
       @item.class.reflect_on_all_associations.each do |assoc|
         # call the assocation or create it if it doesn't exist
         if @item.send(:"#{assoc.name}").present?
