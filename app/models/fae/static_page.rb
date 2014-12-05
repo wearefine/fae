@@ -1,31 +1,29 @@
 module Fae
   class StaticPage < ActiveRecord::Base
-
-    after_initialize :set_assocs
+    include Fae::Concerns::Models::Base
 
     def self.instance
-      row = find_by_slug(@slug)
-      if row.blank?
-        row = StaticPage.create(title: @slug.titleize, slug: @slug)
-      end
+      set_assocs
+      row = includes(assocs_for_includes).references(assocs_for_includes).find_by_slug(@slug)
+      row = StaticPage.create(title: @slug.titleize, slug: @slug) if row.blank?
       row
     end
 
-    def fae_fields
+    def self.fae_fields
       {}
     end
 
   private
 
-    def set_assocs
+    def self.set_assocs
       # create has_one associations
-      self.fae_fields.each do |key, value|
-        self.class.send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(value), class_name: value.to_s, dependent: :destroy
-        self.class.send :accepts_nested_attributes_for, key, allow_destroy: true
+      fae_fields.each do |key, value|
+        send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(value), class_name: value.to_s, dependent: :destroy
+        send :accepts_nested_attributes_for, key, allow_destroy: true
       end
     end
 
-    def poly_sym(assoc)
+    def self.poly_sym(assoc)
       case assoc.name
       when 'Fae::TextField', 'Fae::TextArea'
         return :contentable
@@ -34,6 +32,10 @@ module Fae
       when 'Fae::File'
         return :fileable
       end
+    end
+
+    def self.assocs_for_includes
+      fae_fields.map { |key, value| key.to_sym }
     end
 
   end

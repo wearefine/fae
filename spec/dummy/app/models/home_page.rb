@@ -1,10 +1,9 @@
 class HomePage < Fae::StaticPage
-  include Fae::Concerns::Models::Base
 
   @slug = 'home'
 
   # required to set the has_one associations, Fae::StaticPage will build these associations dynamically
-  def fae_fields
+  def self.fae_fields
     {
       hero: Fae::TextField,
       introduction: Fae::TextArea,
