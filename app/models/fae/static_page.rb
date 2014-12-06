@@ -4,7 +4,7 @@ module Fae
 
     def self.instance
       set_assocs
-      row = includes(assocs_for_includes).references(assocs_for_includes).find_by_slug(@slug)
+      row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
       row = StaticPage.create(title: @slug.titleize, slug: @slug) if row.blank?
       row
     end
@@ -32,10 +32,6 @@ module Fae
       when 'Fae::File'
         return :fileable
       end
-    end
-
-    def self.assocs_for_includes
-      fae_fields.map { |key, value| key.to_sym }
     end
 
   end
