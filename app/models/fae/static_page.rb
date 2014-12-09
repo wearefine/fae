@@ -4,9 +4,7 @@ module Fae
 
     def self.instance
       set_assocs
-      row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
-      row = StaticPage.create(title: @slug.titleize, slug: @slug) if row.blank?
-      row
+      includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug) || StaticPage.create(title: @slug.titleize, slug: @slug)
     end
 
     def self.fae_fields
@@ -20,6 +18,7 @@ module Fae
       fae_fields.each do |key, value|
         send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(value), class_name: value.to_s, dependent: :destroy
         send :accepts_nested_attributes_for, key, allow_destroy: true
+        send :define_method, :"#{key}_content", -> { send(key.to_sym).try(:content) }
       end
     end
 

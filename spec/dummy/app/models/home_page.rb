@@ -18,7 +18,7 @@ class HomePage < Fae::StaticPage
       body_copy_9: Fae::TextArea,
       body_copy_10: Fae::TextArea,
       hero_image: Fae::Image,
-      welocme_pdf: Fae::File
+      welcome_pdf: Fae::File
     }
   end
 
