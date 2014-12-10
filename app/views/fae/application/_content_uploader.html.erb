@@ -1,7 +1,9 @@
 <% require_locals ['attribute', 'f'], local_assigns %>
 
 <% label ||= attribute.to_s.titleize %>
+<% label = "#{ label }<h6 class='helper_text'>#{helper_text}</h6>".html_safe if helper_text.present? %>
+<% hint ||= nil %>
 
 <%= f.simple_fields_for attribute.to_sym do |i| %>
-  <%= i.input :content, label: label %>
+  <%= i.input :content, label: label, hint: hint %>
 <% end %>
