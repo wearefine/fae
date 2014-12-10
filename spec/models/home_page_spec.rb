@@ -38,16 +38,21 @@ describe HomePage do
       before(:each) do
         FactoryGirl.create(:home_page)
         @home_page = HomePage.instance
-        @home_page.create_hero(attached_as: 'hero')
       end
 
       it 'should respond_to default method' do
+        @home_page.create_hero(attached_as: 'hero')
         expect(@home_page.respond_to?(:hero_content)).to be_truthy
       end
 
       it 'should return assoc.content' do
-        @home_page.hero.content = "You're my hero!!"
+        @home_page.create_hero(attached_as: 'hero', content: "You're my hero!!")
         expect(@home_page.hero_content).to eq("You're my hero!!")
+      end
+
+      it 'should do something' do
+        expect(@home_page.hero).to be_nil
+        expect(@home_page.hero_content).to be_nil
       end
     end
 

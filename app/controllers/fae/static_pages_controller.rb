@@ -48,12 +48,7 @@ module Fae
 
     def build_assocs
       @item.class.reflect_on_all_associations.each do |assoc|
-        # call the assocation or create it if it doesn't exist
-        if @item.send(:"#{assoc.name}").present?
-          @item.send(:"#{assoc.name}")
-        else
-          @item.send(:"create_#{assoc.name}", attached_as: assoc.name.to_s)
-        end
+        @item.send(:"create_#{assoc.name}", attached_as: assoc.name.to_s) if @item.send(:"#{assoc.name}").blank?
       end
     end
   end

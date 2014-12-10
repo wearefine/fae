@@ -4,7 +4,6 @@ module Fae
 
     def self.instance
       set_assocs
-      # includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug) || StaticPage.create(title: @slug.titleize, slug: @slug)
       row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
       row = StaticPage.create(title: @slug.titleize, slug: @slug) if row.blank?
       row
