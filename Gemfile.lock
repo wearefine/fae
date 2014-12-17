@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    fae (0.0.6)
+    fae (0.0.7)
       acts_as_list (~> 0.4.0)
       carrierwave (~> 0.10.0)
       coffee-rails
