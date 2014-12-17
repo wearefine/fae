@@ -1,5 +1,4 @@
 <% require_locals ['title'], local_assigns %>
-<% title = title.pluralize %>
 <% new_button = !local_assigns[:new_button].eql?(false) %>
 <% button_text ||= "New #{title.singularize}" %>
 
