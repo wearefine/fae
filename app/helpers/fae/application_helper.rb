@@ -21,12 +21,26 @@ module Fae
       content_tag :h1, "#{params[:action]} #{name}".titleize
     end
 
-    def markdown_helper
-      "<h3>Markdown Options</h3><br>
-            Link | Internal: See my [About](/about/) page for details.<br>
-            Link | External: This is [an example](http://example.com/ \"Title\") inline link.<br>
-            List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
-            List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1".html_safe
+    def markdown_helper(headers: true, emphasis: true)
+      helper = "<h3>Markdown Options</h3>
+            <p>
+              Link | Internal: See my [About](/about/) page for details.<br>
+              Link | External: This is [an example](http://example.com/ \"Title\") inline link.<br>
+              List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
+              List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1
+            </p>"
+      helper += "<h3>Emphasis</h3>
+            <p>
+              Add italics with _underscores_<br>
+              Add bold with double **astricks**<br>
+              Add combined emphasis with **astricks and _underscores_**
+            </p>" if emphasis
+      helper += "<h3>Headers</h3>
+            <p>
+              ##### H5 text<br>
+              ###### H6 text
+            </p>" if headers
+      helper.html_safe
     end
 
     def require_locals(local_array, local_assigns)
