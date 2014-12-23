@@ -51,10 +51,11 @@
       <!-- Multiselect using two panels -->
       <%= fae_multiselect f, :selling_points, two_pane: true %>
 
+      <!-- Checkboxes are the defult when displaying booleans -->
+      <%= fae_input f, :featured %>
 
       <!-- Radio Buttons Vertical Stack -->
       <%= fae_radio f, :on_stage %>
-
 
       <!-- Radio Buttons Horizontal Stack -->
       <%= fae_radio f, :on_prod, type: 'inline', input_class: 'something' %>
