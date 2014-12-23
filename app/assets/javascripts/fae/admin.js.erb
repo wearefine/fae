@@ -142,11 +142,11 @@ var Admin = {
         $(this).toggleClass("js-active");
       })
       // for checkboxes
-      .on('click', '.checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
+      .on('click', '.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
         $(this).toggleClass("js-active");
       })
       // stop the event bubbling and running the above toggleClass twice
-      .on('click', '.checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
+      .on('click', '.boolean :checkbox, .checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
         e.stopPropagation();
       })
       // for ajax forms. gotta hijack before it's submitted for some slide up action.
@@ -161,7 +161,7 @@ var Admin = {
       });
 
     // Run through the checkboxes and see if they are checked. apply js class for styling.
-    $('.checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
+    $('.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
       if ($(this).find(":checkbox:checked").length > 0) {
         $(this).addClass("js-active");
       }
@@ -379,7 +379,7 @@ var Admin = {
         $('.ms-selectable .custom-header').text(selectableCount + availableItemsStr);
         $('.ms-selection .custom-header').text(selectedCount + addedItemsStr);
       } else {
-        $select.chosen();
+        $select.fae_chosen();
       }
     });
 

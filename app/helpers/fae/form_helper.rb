@@ -54,7 +54,8 @@ module Fae
       raise "Fae::ImproperOptionValue: The value #{options[:search]} is not a valid option for 'search'. Please use a Boolean." if options[:search].present? && !!options[:search] != options[:search]
 
 
-      options.update(input_class: "#{options[:input_class]} small_pulldown") if options[:size] == "short"
+      add_input_class(options, 'small_pulldown') if options[:size] == "short"
+      add_input_class(options, 'select-search') if options[:search]
       options.update(wrapper_class: "#{options[:wrapper_class]} select-no_search") if options[:search] == false
       association_or_input f, attribute, options
     end

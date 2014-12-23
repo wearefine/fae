@@ -81,6 +81,9 @@ I/A  - input or association
 
 * **O**  __search__: boolean
 
+    + defaults to chosen's `disable_search_threshold` set to 10
+    + set to boolean to explicitly show or hide search
+
 
 ###fae_multiselect (**A**)
 
