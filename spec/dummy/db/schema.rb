@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141126180655) do
+ActiveRecord::Schema.define(version: 20141223225922) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 20141126180655) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "video_url"
+    t.boolean  "featured"
   end
 
   create_table "selling_points", force: true do |t|
