@@ -49,6 +49,10 @@ module Fae
       end
     end
 
+    def fae_path
+      Rails.application.routes.url_helpers.fae_path[1..-1]
+    end
+
     def fae_image_form(f, item, image_name: nil, image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil)
       render 'fae/images/image_uploader', f: f, item: item, image_name: image_name, image_label: image_label, alt_label: alt_label, caption_label: caption_label, omit: omit, show_thumb: show_thumb, required: required, helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text
     end
@@ -59,6 +63,10 @@ module Fae
 
     def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil)
       render 'fae/application/content_uploader', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text
+    end
+
+    def fae_nested_form(assoc, parent_item, items: items, assoc_name: assoc_name, assoc_name_singular: assoc_name_singular, title: title, title_singular: title_singular, new_path: new_path, edit_path: edit_path, ordered: ordered, has_thumb: has_thumb, cols: cols)
+      render 'fae/application/nested_table_advanced', assoc: assoc, parent_item: parent_item, items: items, assoc_name: assoc_name, assoc_name_singular: assoc_name_singular, title: title, title_singular: title_singular, new_path: new_path, edit_path: edit_path, ordered: ordered, has_thumb: has_thumb, cols: cols
     end
   end
 end

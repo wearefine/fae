@@ -1,4 +1,5 @@
 <%
+require_locals(['assoc', 'parent_item'], local_assigns)
 # assoc: required name of parent item's association, ex: :restaurant_bars
 # parent_item: parent object
 # items: ActiveRecord object of items assoicated to parent odject
@@ -6,8 +7,8 @@ assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
 assoc_name_singular ||= assoc_name.singularize          # 'restaurant_bar'
 title               ||= assoc_name.humanize             # 'Restaurant Bars'
 title_singular      ||= assoc_name_singular.humanize    # 'Restaurant Bar'
-new_path            ||= "new_#{assoc_name_singular}_path"
-edit_path           ||= "edit_#{assoc_name_singular}_path"
+new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
+edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
 
 ordered             ||= false
 has_thumb           ||= false
@@ -15,7 +16,7 @@ cols                ||= []
 colspan = cols.length + 1
 colspan += 1 if ordered
 colspan += 1 if has_thumb
-table_class = ordered ? 'main_content-sortable' : ''
+table_class = ordered ? 'main_content-sortable index_table' : 'index_table'
 %>
 
 <section class="js-addedit-form">
@@ -23,7 +24,7 @@ table_class = ordered ? 'main_content-sortable' : ''
   <%= link_to "Add #{title_singular}", self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link table-add-link' %>
   <%= content_tag :h3, title %>
 
-  <%= render 'application/flash_messages' %>
+  <%= render 'fae/application/flash_messages' %>
 
   <%= content_tag :table, class: table_class do %>
     <thead>
@@ -63,7 +64,7 @@ table_class = ordered ? 'main_content-sortable' : ''
             <% end %>
 
             <td class="main_table-delete">
-              <%= link_to '', "/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: 'Are you sure?' }, class: 'js-delete-link icon-delete_x', remote: true %>
+              <%= link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: 'Are you sure?' }, class: 'js-delete-link icon-delete_x', remote: true %>
             </td>
 
           <% end %>
