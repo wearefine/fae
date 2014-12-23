@@ -63,7 +63,7 @@ var AjaxForms = {
           html = $(data)[0].value;
         }
 
-        if ($(html)[0].className === 'js-addedit-form') {
+        if ($(html)[2].className === 'main_content-section-area') {
           // we're returning the table, replace everything
 
           var $form_wrapper = $(this).find('.js-addedit-form-wrapper');
@@ -71,10 +71,10 @@ var AjaxForms = {
           // if there's a form wrap, slide it up before replacing content
           if ($form_wrapper.length) {
             $form_wrapper.slideUp(function(){
-              AjaxForms.addedit_replace_and_reinit($this, html, $target);
+              AjaxForms.addedit_replace_and_reinit($this, $(html)[2].innerHTML, $target);
             });
           } else {
-            AjaxForms.addedit_replace_and_reinit($this, html, $target);
+            AjaxForms.addedit_replace_and_reinit($this, $(html)[2].innerHTML, $target);
           }
 
           if (!$target.hasClass("js-delete-link")) {
@@ -103,6 +103,7 @@ var AjaxForms = {
   },
 
   addedit_replace_and_reinit: function($this, html, $target) {
+
     $this.html(html)
       .find(".select select").chosen();
 

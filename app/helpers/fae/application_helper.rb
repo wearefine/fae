@@ -65,8 +65,5 @@ module Fae
       render 'fae/application/content_uploader', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text
     end
 
-    def fae_nested_form(assoc, parent_item, items: items, assoc_name: assoc_name, assoc_name_singular: assoc_name_singular, title: title, title_singular: title_singular, new_path: new_path, edit_path: edit_path, ordered: ordered, has_thumb: has_thumb, cols: cols)
-      render 'fae/application/nested_table_advanced', assoc: assoc, parent_item: parent_item, items: items, assoc_name: assoc_name, assoc_name_singular: assoc_name_singular, title: title, title_singular: title_singular, new_path: new_path, edit_path: edit_path, ordered: ordered, has_thumb: has_thumb, cols: cols
-    end
   end
 end
