@@ -35,6 +35,7 @@
 //= require fae/subnavhighlighter
 //= require fae/sticky
 //= require fae/checkboxer
+//= require fae/fae_chosen
 //= require fae/fileinputer
 //= require fae/hinter
 //= require fae/mobilemenu
