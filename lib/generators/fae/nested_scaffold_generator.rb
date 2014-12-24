@@ -43,7 +43,7 @@ RUBY
 
       def inject_belongs_to_into_model_spec
         if options.parent_model.present?
-          gsub_file "spec/models/#{file_name}_spec.rb", 'pending "add some examples to (or delete) #{__FILE__}"', "it { is_expected.to belong_to(:#{options.parent_model.underscore}).touch(:true) }"
+          gsub_file "spec/models/#{file_name}_spec.rb", 'pending "add some examples to (or delete) #{__FILE__}"', "it { is_expected.to belongs_to(:#{options.parent_model.underscore}).touch(:true) }"
         end
       end
 
