@@ -5,7 +5,7 @@ module Fae
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
 
-    @@attributes_flat = ''
+    @@attributes_flat = []
     @@attribute_names = []
     @@association_names = []
     @@has_position = false
@@ -19,7 +19,7 @@ module Fae
     def set_globals
       if attributes.present?
         attributes.each do |arg|
-          @@attributes_flat << "#{arg.name}:#{arg.type} "
+          @@attributes_flat << "#{arg.name}:#{arg.type}"
           if arg.name['_id'] || arg.type.to_s == 'references'
             @@association_names << arg.name.gsub('_id', '')
           else
@@ -27,6 +27,10 @@ module Fae
           end
           @@has_position = true if arg.name === 'position'
         end
+
+        @@attributes_flat = @@attributes_flat.uniq.join(' ')
+        @@association_names.uniq!
+        @@attribute_names.uniq!
       end
     end
 
