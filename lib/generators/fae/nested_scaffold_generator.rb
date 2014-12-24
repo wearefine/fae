@@ -6,9 +6,6 @@ module Fae
 
     def go
       generate_nested_model_file
-      # generate_nested_controller_file
-      # generate_view_files
-      # add_route
     end
 
 
@@ -17,7 +14,6 @@ module Fae
       def generate_nested_model_file
         generate "model #{file_name} #{@@attributes_flat}"
         inject_touch_option_into_model
-        inject_belongs_to_into_model_spec
       end
 
       def generate_nested_controller_file
@@ -38,12 +34,6 @@ module Fae
 , touch: true
 RUBY
           end
-        end
-      end
-
-      def inject_belongs_to_into_model_spec
-        if options.parent_model.present?
-          gsub_file "spec/models/#{file_name}_spec.rb", 'pending "add some examples to (or delete) #{__FILE__}"', "it { is_expected.to belongs_to(:#{options.parent_model.underscore}).touch(:true) }"
         end
       end
 
