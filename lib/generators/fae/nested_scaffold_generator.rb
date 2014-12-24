@@ -15,7 +15,6 @@ module Fae
     private
 
       def generate_nested_model_file
-        add_association_into_model
         generate "model #{file_name} #{@@attributes_flat}"
         inject_touch_option_into_model
         inject_belongs_to_into_model_spec
@@ -31,11 +30,6 @@ module Fae
         template "views/_form_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
         template "views/new_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
         template "views/edit_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/edit.html.#{options.template}"
-      end
-
-      def add_association_into_model
-        @@attributes_flat << " #{options.parent_model.underscore}:references" if options[:parent_model].present?
-        @@attributes_flat = @@attributes_flat.split(' ').uniq.join(' ')
       end
 
       def inject_touch_option_into_model
