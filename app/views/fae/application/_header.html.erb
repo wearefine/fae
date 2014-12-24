@@ -11,11 +11,12 @@
     <ul class="utility_nav">
       <% li_class = @option.stage_url.present? ? 'utility_nav-view' : '' %>
       <%= content_tag :li, class: li_class do %>
-        <%= link_to @option.live_url do %>
-          View Site
-          <span class="icon-offlink"></span>
-        <% end %>
-        <% if @option.stage_url.present? %>
+        <% if @option.live_url.present? %>
+          <%= link_to @option.live_url do %>
+            View Site
+            <span class="icon-offlink"></span>
+          <% end %>
+        <% elsif @option.stage_url.present? %>
           <ul class="utility_sub_nav">
             <li><%= link_to 'Live Site',  @option.live_url  %></li>
             <li><%= link_to 'Stage Site', @option.stage_url %></li>

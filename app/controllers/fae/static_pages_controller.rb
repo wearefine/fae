@@ -48,7 +48,7 @@ module Fae
 
     def build_assocs
       @item.class.reflect_on_all_associations.each do |assoc|
-        @item.send(:"create_#{assoc.name}", attached_as: assoc.name.to_s) if @item.send(:"#{assoc.name}").blank?
+        @item.send(:"create_#{assoc.name}", attached_as: assoc.name.to_s) if assoc.macro == :has_one && @item.send(:"#{assoc.name}").blank?
       end
     end
   end
