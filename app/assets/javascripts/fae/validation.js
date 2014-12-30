@@ -36,25 +36,6 @@ var Validator = {
     });
   },
 
- //  $('.myElements').each(function () {
- //   var elem = $(this);
-
- //   // Save current value of element
- //   elem.data('oldVal', elem.val());
-
- //   // Look for changes in the value
- //   elem.bind("propertychange change click keyup input paste", function (event){
- //      // If value has changed...
- //      if (elem.data('oldVal') != elem.val()) {
- //       // Updated stored value
- //       elem.data('oldVal', elem.val());
-
- //       // Do action
- //       ....
- //     }
- //   });
- // });
-
   // private functions
 
   attemptSubmit: function () {
@@ -101,7 +82,7 @@ var Validator = {
     var i, siblings, index;
     for (i = messages.length - 1; i >= 0; i--) {
       siblings = elm.siblings('label');
-      if (siblings.get(0).childNodes[0].nodeName === "ABBR") { index = 1;}
+      if (siblings.get(0).childNodes[0].nodeName === "ABBR") { index = 1; }
       index = index || 0;
       messages[i] = siblings.get(0).childNodes[index].nodeValue + " " + messages[i];
     }
