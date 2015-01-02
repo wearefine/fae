@@ -11,7 +11,14 @@ var Validator = {
   },
 
   formValidate: function () {
-    this.attemptSubmit();
+    var that = this;
+    $('form').on('submit', function (e) {
+      that.vars.IS_VALID = true;
+      $('[data-validate]').each(function () {
+        if ($(this).data('validate').length) that.judgeIt($(this));
+      });
+      if (that.vars.IS_VALID === false) e.preventDefault();
+    });
   },
 
   validate: function () {
@@ -24,35 +31,19 @@ var Validator = {
           $validationInput = that.isChosen($validationInput);
           $('body').on('propertychange change click keyup input paste', that.vars.chosen_select, function () {
             var $chosenInput = $(this);
-            if (originalValue !== $(this).val()) { that.judgeIt($chosenInput); }
+            if (originalValue !== $chosenInput.val()) that.judgeIt($chosenInput);
           });
         } else {
           $validationInput.on('propertychange change click keyup input paste', function () {
             var $input = $(this);
-            if (originalValue !== $(this).val()) { that.judgeIt($input); }
+            if (originalValue !== $input.val()) that.judgeIt($input);
           });
         }
       }
     });
   },
 
-  // private functions
-
-  attemptSubmit: function () {
-    var that = this;
-    $('form').on('submit', function (e) {
-      that.vars.IS_VALID = true;
-      $('[data-validate]').each(function () {
-        var $validationInput = $(this);
-        if ($validationInput.data('validate').length) {
-          that.judgeIt($validationInput);
-        }
-      });
-      if (that.vars.IS_VALID === false) {
-        e.preventDefault();
-      }
-    });
-  },
+  // 'private functions'
 
   judgeIt: function ($input) {
     var that = this;
@@ -69,8 +60,7 @@ var Validator = {
   },
 
   isChosen: function (input) {
-    var that = this;
-    input.siblings(that.vars.chosen_select);
+    input.siblings(this.vars.chosen_select);
   },
 
   createSuccessClass: function ($input) {
@@ -82,7 +72,7 @@ var Validator = {
     var i, siblings, index;
     for (i = messages.length - 1; i >= 0; i--) {
       siblings = elm.siblings('label');
-      if (siblings.get(0).childNodes[0].nodeName === "ABBR") { index = 1; }
+      if (siblings.get(0).childNodes[0].nodeName === "ABBR") index = 1;
       index = index || 0;
       messages[i] = siblings.get(0).childNodes[index].nodeValue + " " + messages[i];
     }
