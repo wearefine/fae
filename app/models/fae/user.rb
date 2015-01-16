@@ -1,5 +1,8 @@
 module Fae
   class User < ActiveRecord::Base
+
+    include Fae::UserConcern
+
     # Include default devise modules. Others available are:
     # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable,
