@@ -53,6 +53,22 @@ describe Fae::User do
     end
   end
 
+  describe '.user?' do
+    it 'should return true when user is a user' do
+      user_role = FactoryGirl.create(:fae_role, name: 'user')
+      user = FactoryGirl.build(:fae_user, role: user_role)
+
+      expect(user.user?).to eq(true)
+    end
+
+    it 'should return false when user is not a user' do
+      admin_role = FactoryGirl.create(:fae_role, name: 'admin')
+      user = FactoryGirl.build(:fae_user, role: admin_role)
+
+      expect(user.user?).to eq(false)
+    end
+  end
+
   describe '.full_name' do
     it 'should return full name' do
       user = FactoryGirl.build(:fae_user, first_name: 'John', last_name: 'Doe')
