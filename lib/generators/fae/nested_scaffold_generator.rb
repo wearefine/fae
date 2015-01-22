@@ -6,6 +6,8 @@ module Fae
 
     def go
       generate_nested_model_file
+      generate_nested_controller_file
+      generate_view_files
     end
 
 

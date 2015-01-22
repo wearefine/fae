@@ -1,8 +1,10 @@
-class <%= options.namespace.capitalize %>::ContentBlocksController < Fae::StaticPagesController
+module <%= options.namespace.capitalize %>
+  class ContentBlocksController < Fae::StaticPagesController
 
-  private
+    private
 
-  def fae_pages
-    [<%= "#{class_name.singularize}Page" %>]
+    def fae_pages
+      [<%= "#{class_name.singularize}Page" %>]
+    end
   end
 end
