@@ -49,15 +49,5 @@ module Fae
       end
     end
 
-    def nested_column(item, col, is_first)
-      if is_first
-        content_tag :td, link_to(item.send(col), self.send(edit_path, item), class: 'js-edit-link'), class: 'main_table-description-item'
-      elsif item.class.columns_hash[col.to_s].type === :boolean
-        content_tag :td, attr_toggle(item, col)
-      else
-        content_tag :td, item.send(col)
-      end
-    end
-
   end
 end
