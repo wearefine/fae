@@ -15,11 +15,10 @@ $ rails g fae:install
 
 Restart your server
 
-## Usage/Documentation
+## Documentation
 
-Usage specific information can be found in [USAGE.md](/wearefine/fae/src/master/USAGE.md)
-
-Documentation information on helper methods and scaffold generators can be found in [DOCUMENTATION.md](/wearefine/fae/src/master/DOCUMENTATION.md)
+- [Main documentation and usage](/wearefine/fae/src/master/docs/index.md)
+- [Form and view helpers](/wearefine/fae/src/master/docs/helpers.md)
 
 ## Contributing/Maintenance
 
