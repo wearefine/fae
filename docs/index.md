@@ -8,6 +8,8 @@ This doc needs to be structured to talk about...
 	- Fae::Concerns::Models::Base
 	- fae_display_field
 - controllers
+  - set_class_variables
+  - build_assets
 - form helpers (intro and link to helpers index)
 	- slugs
 - view helpers (intro and link to helpers index)
