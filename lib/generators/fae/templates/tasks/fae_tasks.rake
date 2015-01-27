@@ -6,11 +6,11 @@ namespace :fae do
                   Fae::Role.create(name: 'admin', position: 1)
                   Fae::Role.create(name: 'user', position: 2)
 
-    Fae::User.where(email: 'admin@finedesigngroup.com').delete_all
+    Fae::User.where(email: 'admin@wearefine.com').delete_all
     Fae::User.create(
       first_name: 'FINE',
       last_name: 'admin',
-      email: 'admin@finedesigngroup.com',
+      email: 'admin@wearefine.com',
       password: 'doingfine',
       role: super_admin,
       active: true

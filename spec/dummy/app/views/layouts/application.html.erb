@@ -2,13 +2,26 @@
 <html>
 <head>
   <title>Dummy</title>
+  <%= stylesheet_link_tag    'fae/application', media: 'all', 'data-turbolinks-track' => true %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+<header id="main_header">
+  <span class="icon-menu" id="main_nav-menu_button"></span>
+  <h1 class="main_header-name">
+    <%= link_to root_path do %>
+      The Fae Dummy
+      <span class="main_header-name-fine">a FINE admin</span>
+    <% end %>
+  </h1>
+</header>
+
+<section id="dummy_content">
+  <%= yield %>
+</section>
 
 </body>
 </html>
