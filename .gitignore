@@ -18,3 +18,5 @@ spec/dummy/public/uploads/*
 .ruby-gemset
 .ruby-version
 .DS_Store
+
+.rubocop.yml
