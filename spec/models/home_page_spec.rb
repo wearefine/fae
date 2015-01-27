@@ -31,7 +31,7 @@ describe HomePage do
       FactoryGirl.create(:home_page)
       home_page = HomePage.instance
 
-      expect(home_page).to respond_to(:hero, :introduction, :body_copy_1, :body_copy_2, :body_copy_3, :body_copy_4, :body_copy_5, :body_copy_6, :body_copy_7, :body_copy_8, :body_copy_9, :body_copy_10, :hero_image, :welcome_pdf)
+      expect(home_page).to respond_to(:hero, :introduction, :body, :welcome_pdf)
     end
 
     context 'when association has been created' do
