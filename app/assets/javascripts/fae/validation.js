@@ -15,7 +15,7 @@ var Validator = {
     $('form').on('submit', function (e) {
       self.vars.IS_VALID = true;
       $('[data-validate]').each(function () {
-        if ($(this).data('validate').length > 0) {
+        if ($(this).data('validate').length) {
           self.judge_it($(this));
         }
       });
@@ -30,7 +30,7 @@ var Validator = {
     var self = this;
     $('[data-validate]').each(function () {
       var $validation_element = $event_trigger = $(this);
-      if ($(this).data('validate').length) {
+      if ($validation_element.data('validate').length) {
         if (self.is_chosen($validation_element)) {
           $event_trigger = self.chosen_input($validation_element);
         }
@@ -68,7 +68,7 @@ var Validator = {
 
   // returns a BOOL based on if the input is a chosen input
   is_chosen: function ($input) {
-    return $input.next('.chosen-container').length > 0;
+    return $input.next('.chosen-container').length;
   },
 
 
@@ -109,9 +109,9 @@ var Validator = {
   set_chosen_input: function ($input) {
     var $styled_input = $input;
     if (this.is_chosen($input)) {
-      if ($input.next('.chosen-container').find('.chosen-single').length > 0) {
+      if ($input.next('.chosen-container').find('.chosen-single').length) {
         $styled_input = $input.next('.chosen-container').find('.chosen-single');
-      } else if ($input.next('.chosen-container').find('.chosen-choices').length > 0) {
+      } else if ($input.next('.chosen-container').find('.chosen-choices').length) {
         $styled_input = $input.next('.chosen-container').find('.chosen-choices');
       }
     }
