@@ -680,10 +680,10 @@ input.string {
 
 .input {
   .valid {
-    border: 1px solid $c-notice-content;
+    border: 1px solid $c-notice-content !important;
   }
   .invalid {
-    border: 1px solid $c-error-content;
+    border: 1px solid $c-error-content !important;
   }
 }
 
