@@ -1,18 +1,14 @@
 .login-body {
 	height: auto;
-	padding-top: 0;
+	padding: 0 20px;
 	background: image-url('fae/bg_tile.gif');
 }
 
 .login-content {
-	margin: 20px;
+	width: 100%;
+	max-width: 750px;
 	padding-top: 55px;
-
-	@include bp(login-container) {
-		width: 100%;
-		max-width: 700px;
-		margin: 150px auto 0 auto;
-	}
+	margin: 20px auto;
 }
 
 .login-area {
@@ -26,12 +22,6 @@
 		display: block;
 		margin: 25px auto;
 		text-align: center;
-
-		@include bp(login-container) {
-			display: inline-block;
-			vertical-align: middle;
-			margin: 0 12%;
-		}
 	}
 }
 
