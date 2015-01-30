@@ -63,7 +63,7 @@ var AjaxForms = {
           html = $(data)[0].value;
         }
 
-        if ($(html)[2].className === 'main_content-section-area') {
+        if ($(html)[2] && $(html)[2].className === 'main_content-section-area') {
           // we're returning the table, replace everything
 
           var $form_wrapper = $(this).find('.js-addedit-form-wrapper');
