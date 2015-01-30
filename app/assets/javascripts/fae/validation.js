@@ -2,89 +2,121 @@ var Validator = {
 
   init: function () {
     this.validate();
-    this.formValidate();
+    this.form_validate();
   },
 
   vars: {
-    IS_VALID: '',
-    chosen_select: '.chosen-container .chosen-search input'
+    IS_VALID: ''
   },
 
-  formValidate: function () {
-    var that = this;
+  // validate the entire form on submit and stop it if the form is invalid
+  form_validate: function () {
+    var self = this;
     $('form').on('submit', function (e) {
-      that.vars.IS_VALID = true;
+      self.vars.IS_VALID = true;
       $('[data-validate]').each(function () {
-        if ($(this).data('validate').length) that.judgeIt($(this));
-      });
-      if (that.vars.IS_VALID === false) e.preventDefault();
-    });
-  },
-
-  validate: function () {
-    var that = this;
-    $('[data-validate]').each(function () {
-      var $validationInput = $(this);
-      var originalValue = $validationInput.val();
-      if ($validationInput.data('validate').length) {
-        if ($validationInput.siblings('.chosen-container').length) {
-          $validationInput = that.isChosen($validationInput);
-          $('body').on('propertychange change click keyup input paste', that.vars.chosen_select, function () {
-            var $chosenInput = $(this);
-            if (originalValue !== $chosenInput.val()) that.judgeIt($chosenInput);
-          });
-        } else {
-          $validationInput.on('propertychange change click keyup input paste', function () {
-            var $input = $(this);
-            if (originalValue !== $input.val()) that.judgeIt($input);
-          });
+        if ($(this).data('validate').length) {
+          self.judge_it($(this));
         }
+      });
+      if (self.vars.IS_VALID === false) {
+        e.preventDefault();
       }
     });
   },
+
+  // validate individual judge elements on the blur event
+  validate: function () {
+    var self = this;
+    $('[data-validate]').each(function () {
+      var $validation_element = $event_trigger = $(this);
+      if ($validation_element.data('validate').length) {
+        if (self.is_chosen($validation_element)) {
+          $event_trigger = self.chosen_input($validation_element);
+        }
+        $event_trigger.blur(function () {
+          self.judge_it($validation_element);
+        });
+      }
+    });
+  },
+
+
 
   // 'private functions'
 
-  judgeIt: function ($input) {
-    var that = this;
+  // main judge call
+  judge_it: function ($input) {
+    var self = this;
     judge.validate($input[0], {
       valid: function () {
-        that.createSuccessClass($input);
+        self.create_success_class($input);
       },
       invalid: function (input, messages) {
-        that.vars.IS_VALID = false;
-        that.labelNameInMessage($input, messages);
-        that.createOrReplaceError($input, messages);
+        self.vars.IS_VALID = false;
+        self.label_named_message($input, messages);
+        self.create_or_replace_error($input, messages);
       }
     });
   },
 
-  isChosen: function (input) {
-    input.siblings(this.vars.chosen_select);
+
+  // sets the input element that is focused on chosen elements
+  chosen_input: function ($input) {
+    return $input.next('.chosen-container').find('input');
   },
 
-  createSuccessClass: function ($input) {
-    $input.addClass('valid').removeClass('invalid');
-    $input.parent().removeClass('field_with_errors').children('.error').remove();
+  // returns a BOOL based on if the input is a chosen input
+  is_chosen: function ($input) {
+    return $input.next('.chosen-container').length;
   },
 
-  labelNameInMessage: function (elm, messages) {
+
+
+  label_named_message: function (elm, messages) {
     var i, siblings, index;
     for (i = messages.length - 1; i >= 0; i--) {
       siblings = elm.siblings('label');
-      if (siblings.get(0).childNodes[0].nodeName === "ABBR") index = 1;
+      if (siblings.get(0).childNodes[0].nodeName === "ABBR") { index = 1; }
       index = index || 0;
       messages[i] = siblings.get(0).childNodes[index].nodeValue + " " + messages[i];
     }
   },
 
-  createOrReplaceError: function ($input, messages) {
-    $input.addClass('invalid').removeClass('valid');
+
+
+  // adds and removes the appropriate classes to display the success styles
+  create_success_class: function ($input) {
+    var $styled_input = this.set_chosen_input($input);
+    $styled_input.addClass('valid').removeClass('invalid');
+
+    $input.parent().removeClass('field_with_errors').children('.error').remove();
+  },
+
+  // adds and removes the appropriate classes to display the error styles
+  create_or_replace_error: function ($input, messages) {
+    var $styled_input = this.set_chosen_input($input);
+    $styled_input.addClass('invalid').removeClass('valid');
+
     if ($input.parent('.input').children('.error').length) {
       $input.parent('.input').children('.error').text(messages.join(','));
     } else {
       $input.parent('.input').addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
     }
+  },
+
+  // a DRY method for setting the element that should take the .valid or .invalid style
+  set_chosen_input: function ($input) {
+    var $styled_input = $input;
+    if (this.is_chosen($input)) {
+      if ($input.next('.chosen-container').find('.chosen-single').length) {
+        $styled_input = $input.next('.chosen-container').find('.chosen-single');
+      } else if ($input.next('.chosen-container').find('.chosen-choices').length) {
+        $styled_input = $input.next('.chosen-container').find('.chosen-choices');
+      }
+    }
+
+    return $styled_input;
   }
 
 
