@@ -53,10 +53,10 @@ module Fae
       # if item's attribute is an association
       if item.class.reflections.include?(attribute)
         # display associaiton's fae_display_field
-        item.send(col).fae_display_field
+        item.send(attribute).fae_display_field
       else
         # otherwise it's an attribute so display it's value
-        item.send(col)
+        item.send(attribute)
       end
     end
 
