@@ -82,10 +82,9 @@ var AjaxForms = {
           }
         } else if ($(html)[0].className === 'form_content-wrapper') {
           // we're returning the form due to an error, just replace the form
-          $this.find('.form_content-wrapper')
-            .replaceWith(html)
-            .find(".select select").fae_chosen();
-            $this.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
+          $this.find('.form_content-wrapper').replaceWith(html);
+          $this.find('.select select').fae_chosen();
+          $this.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
 
           Admin.scroll_to($this.find('.js-addedit-form-wrapper'));
         }
