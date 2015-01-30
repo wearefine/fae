@@ -63,11 +63,11 @@ edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
 
               <% cols.each do |col| %>
                 <% if col === cols.first %>
-                  <td class="main_table-description-item"><%= link_to item.send(col), self.send(edit_path, item), class: 'js-edit-link' %></td>
+                  <td class="main_table-description-item"><%= link_to col_name(item, col), self.send(edit_path, item), class: 'js-edit-link' %></td>
                 <% elsif item.class.columns_hash[col.to_s].type === :boolean %>
                   <td><%= attr_toggle item, col %></td>
                 <% else %>
-                  <%= content_tag :td, item.send(col) %>
+                  <%= content_tag :td, col_name(item, col) %>
                 <% end %>
               <% end %>
 
