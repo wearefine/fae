@@ -21,44 +21,32 @@ module <%= options.namespace.capitalize %>
     def create
       @item = <%= class_name %>.new(permitted_params)
 
-      respond_to do |format|
-        if @item.save
-          format.html {
+      if @item.save
 <% if options.parent_model.present? -%>
-            @parent_item = @item.<%= options.parent_model.underscore %>
+        @parent_item = @item.<%= options.parent_model.underscore %>
 <% else -%>
-            # 'belongs_to_association' should be replaced with the actual association name
-            # @parent_item = @item.belongs_to_association
+        # 'belongs_to_association' should be replaced with the actual association name
+        # @parent_item = @item.belongs_to_association
 <% end -%>
-            flash[:notice] = "Item successfully created."
-            render template: '<%= options.namespace %>/<%= plural_file_name %>/table'
-          }
-          format.json { render action: 'show', status: :created, location: @item }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @item.errors, status: :unprocessable_entity }
-        end
+        flash[:notice] = 'Item successfully created.'
+        render template: '<%= options.namespace %>/<%= plural_file_name %>/table'
+      else
+        render action: 'new'
       end
     end
 
     def update
-      respond_to do |format|
-        if @item.update(permitted_params)
-          format.html {
+      if @item.update(permitted_params)
 <% if options.parent_model.present? -%>
-            @parent_item = @item.<%= options.parent_model.underscore %>
+        @parent_item = @item.<%= options.parent_model.underscore %>
 <% else -%>
-            # 'belongs_to_association' should be replaced with the actual association name
-            # @parent_item = @item.belongs_to_association
+        # 'belongs_to_association' should be replaced with the actual association name
+        # @parent_item = @item.belongs_to_association
 <% end -%>
-            flash[:notice] = "Item successfully updated."
-            render template: '<%= options.namespace %>/<%= plural_file_name %>/table'
-          }
-          format.json { render action: 'show', status: :created, location: @item }
-        else
-          format.html { render action: 'edit' }
-          format.json { render json: @item.errors, status: :unprocessable_entity }
-        end
+        flash[:notice] = 'Item successfully updated.'
+        render template: '<%= options.namespace %>/<%= plural_file_name %>/table'
+      else
+        render action: 'edit'
       end
     end
 
@@ -69,14 +57,13 @@ module <%= options.namespace.capitalize %>
       # 'belongs_to_association' should be replaced with the actual association name
       # @parent_item = @item.belongs_to_association
 <% end -%>
-      @item.destroy
-      respond_to do |format|
-        format.html {
-          flash[:notice] = "Item successfully removed."
-          render template: '<%= options.namespace %>/<%= plural_file_name %>/table'
-        }
-        format.json { head :no_content }
+
+      if @item.destroy
+        flash[:notice] = 'Item successfully removed.'
+      else
+        flash[:alert] = 'There was a problem removing your item.'
       end
+      render template: '<%= options.namespace %>/<%= plural_file_name %>/table'
     end
 
     private
