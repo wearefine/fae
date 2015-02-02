@@ -7,7 +7,9 @@ Fae.setup do |config|
       text: 'Releases', path: '/admin/releases'
     },
     {
-      text: 'Wines', path: '/admin/wines'
+      text: 'Wines Dropdown', path: '#', sublinks: [
+        { text: 'Wines', path: '/admin/wines' }
+      ]
     },
     {
       text: 'Acclaim', path: '/admin/acclaims'
