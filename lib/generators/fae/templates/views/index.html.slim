@@ -18,7 +18,7 @@
             th.main_table-header-live data-sorter="false" <%= attr.humanize %>
 <% num_columns += 1 -%>
 <% end -%>
-            th data-sorter="false"
+            th.main_table-header-delete data-sorter="false" Delete
 
         tbody
           - if @items.present?
