@@ -12,7 +12,7 @@
       <% li_class = @option.stage_url.present? ? 'utility_nav-view' : '' %>
       <%= content_tag :li, class: li_class do %>
         <% if @option.live_url.present? %>
-          <%= link_to @option.live_url do %>
+          <%= link_to @option.live_url, target: '_blank' do %>
             View Site
             <span class="icon-offlink"></span>
           <% end %>
