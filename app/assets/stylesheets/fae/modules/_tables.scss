@@ -38,6 +38,11 @@
 		text-align: left;
 	}
 
+	.main_table-edit, .main_table-delete, 
+	.main_table-header-delete, .main_table-header-edit {
+		text-align: center;
+	}
+
 	th {
 		padding: 15px 10px;
 		border-bottom: 1px solid $c-border;
