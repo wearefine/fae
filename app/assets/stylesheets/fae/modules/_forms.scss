@@ -242,7 +242,14 @@ input.string {
 
 .radio_collection--vertical {
   label {
+    display: inline;
     cursor: pointer;
+    line-height: 1.75;
+
+    &:after {
+      content: '\a';
+      white-space: pre;
+    }
   }
 
   input[type=radio] {
