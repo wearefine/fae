@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128230143) do
+ActiveRecord::Schema.define(version: 20141223225922) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 20150128230143) do
     t.boolean  "on_prod",       default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "required",      default: false
   end
 
   add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
@@ -78,7 +77,6 @@ ActiveRecord::Schema.define(version: 20150128230143) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "file_size"
-    t.boolean  "required",       default: false
   end
 
   add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
@@ -240,17 +238,6 @@ ActiveRecord::Schema.define(version: 20150128230143) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "tasting_notes", force: true do |t|
-    t.string   "name"
-    t.boolean  "active"
-    t.integer  "position"
-    t.integer  "release_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
 
   create_table "varietals", force: true do |t|
     t.string   "name"
