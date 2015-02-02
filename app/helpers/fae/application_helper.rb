@@ -60,5 +60,11 @@ module Fae
       end
     end
 
+    private
+
+    def nav_path_current?(path)
+      current_page?(path) || path[1..-1].classify == params[:controller].classify
+    end
+
   end
 end
