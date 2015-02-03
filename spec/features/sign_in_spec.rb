@@ -8,7 +8,7 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'password'
     click_button 'Submit'
 
-    expect(page).to have_content('You’ll need a user and a password that works.')
+    expect(page).to have_content('You’ll need a user name and a password that works.')
     expect(page).to_not have_content('Welcome')
   end
 
@@ -18,7 +18,7 @@ feature 'Sign In' do
     fill_in 'user_email', with: 'test@test.com'
     click_button 'Submit'
 
-    expect(page).to have_content('You’ll need a user and a password that works.')
+    expect(page).to have_content('You’ll need a user name and a password that works.')
     expect(page).to_not have_content('Welcome')
   end
 
@@ -29,7 +29,7 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'password'
     click_button 'Submit'
 
-    expect(page).to have_content('You’ll need a user and a password that works.')
+    expect(page).to have_content('You’ll need a user name and a password that works.')
     expect(page).to_not have_content('Welcome')
   end
 
