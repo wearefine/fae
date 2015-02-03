@@ -27,7 +27,9 @@
         </section>
 
     <footer class="login-footer">
-      <span class="login-fine">a <%= image_tag 'fae/fine_footer.png', alt: "FINE logo" %> admin</span>
+      <%= link_to 'http://www.wearefine.com', class: 'login-fine', target: '_blank' do %>
+        a <%= image_tag 'fae/fine_footer.png', alt: 'FINE logo' %> admin
+      <% end %>
       <ul class="login-helper-area">
         <li><%= render "devise/shared/links" %></li>
       </ul>
