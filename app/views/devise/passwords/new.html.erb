@@ -1,10 +1,11 @@
 <div class="login-form-password">
-	<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+	<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
 		<%= f.error_notification %>
-    <%= f.input :email, :required => true, :autofocus => true, label: "Your email <h6>We'll send directions to reset your password</h6>".html_safe %>
+    <%= f.label :email, 'Your email <h6>We&rsquo;ll send directions to reset your password</h6>'.html_safe %>
+    <%= f.input :email, required: true, autofocus: true, label: false %>
 
 	  <div class="login-form-actions">
-	    <%= f.button :submit, "Submit" %>
+	    <%= f.button :submit, 'Submit' %>
 	  </div>
 	<% end %>
 </div>
