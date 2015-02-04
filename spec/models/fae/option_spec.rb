@@ -28,4 +28,16 @@ describe Fae::Option do
     end
   end
 
+  describe 'concerns' do
+    it 'should allow instance methods through Fae::OptionConcern' do
+      option = FactoryGirl.create(:fae_option)
+
+      expect(option.instance_says_what).to eq('Fae::Option instance: what?')
+    end
+
+    it 'should allow class methods through Fae::OptionConcern' do
+      expect(Fae::Option.class_says_what).to eq('Fae::Option class: what?')
+    end
+  end
+
 end
