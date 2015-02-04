@@ -17,14 +17,15 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
-  s.add_dependency "rails", "~> 4.1.4"
+  # Rails dependencies
+  s.add_dependency "rails", "~> 4.1.0"
+  s.add_dependency "sass-rails", '>= 5.0.0'
+  s.add_dependency "sass", '>= 3.4.0'
+  s.add_dependency "jquery-rails", '>= 3.1.1'
+
+  # other dependencies
   s.add_dependency "devise", "~> 3.2.4"
   s.add_dependency "simple_form", '~> 3.0.2'
-  s.add_dependency "jquery-rails", '~> 3.1.1'
-
-  s.add_dependency "sass-rails", '~> 5.0.0.beta1'
-  s.add_dependency "coffee-rails"
-  s.add_dependency "uglifier"
   s.add_dependency "jquery-ui-rails", '~> 4.2.1'
   s.add_dependency "remotipart"
   s.add_dependency "carrierwave", '~> 0.10.0'
