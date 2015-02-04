@@ -11,7 +11,9 @@ Fae::Engine.routes.draw do
     get 'logout' => '/devise/sessions#destroy', as: :destroy_user_session
   end
   resources :users
+
   get 'settings' => 'users#settings', as: 'settings'
+  get 'help' => 'pages#help', as: 'help'
 
   # AJAX
   delete 'files/:id/delete_file' => 'files#delete_file', as: :delete_file
