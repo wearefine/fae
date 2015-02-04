@@ -8,6 +8,11 @@ module Fae
       @list = recently_updated
     end
 
+    def help
+      require 'browser'
+      @browser = Browser.new(ua: request.user_agent, accept_language: 'en-us')
+    end
+
     def error404
       return show_404
     end

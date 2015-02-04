@@ -22,6 +22,28 @@ describe 'pages#home' do
 
 end
 
+describe 'pages#help' do
+
+  context 'when user is logged out' do
+    it 'should redirect to the login page' do
+      get fae.help_path
+
+      expect(response.status).to eq(302)
+      expect(response).to redirect_to(fae.new_user_session_path)
+    end
+  end
+
+  context 'when user is logged in' do
+    it 'should render help page' do
+      super_admin_login
+      get fae.help_path
+
+      expect(response.status).to eq(200)
+    end
+  end
+
+end
+
 describe 'pages#error404' do
 
   context 'when user is logged out' do
