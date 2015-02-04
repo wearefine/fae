@@ -13,6 +13,14 @@ describe 'Global nav' do
         expect(sublink[:text]).to match /Users|Root Settings/
       end
     end
+
+    it 'should display nav_items from concern' do
+      super_admin_login
+      get fae_path
+
+      nav_items = assigns[:fae_nav_items]
+      expect(nav_items.second[:text]).to eq('Releases')
+    end
   end
 
   context 'when user is admin' do
