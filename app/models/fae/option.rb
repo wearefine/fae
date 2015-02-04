@@ -1,6 +1,8 @@
 module Fae
   class Option < ActiveRecord::Base
 
+    include Fae::OptionConcern
+
     validates_inclusion_of :singleton_guard, :in => [0]
     validates_presence_of :title, :time_zone
 

@@ -1,5 +1,7 @@
 module Fae
   class Image < ActiveRecord::Base
+
+    include Fae::ImageConcern
     include Fae::AssetsValidatable
 
     attr_accessor :redirect

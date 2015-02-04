@@ -1,5 +1,7 @@
 module Fae
   class StaticPage < ActiveRecord::Base
+
+    include Fae::StaticPageConcern
     include Fae::Concerns::Models::Base
 
     def self.instance

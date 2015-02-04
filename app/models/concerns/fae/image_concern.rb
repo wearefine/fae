@@ -1,0 +1,1 @@
+module Fae::ImageConcern; end
