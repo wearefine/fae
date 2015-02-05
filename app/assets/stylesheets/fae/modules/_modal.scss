@@ -15,7 +15,8 @@
 
 .simplemodal-container {
 	position: relative;
-	height: auto !important;
+	max-height: 75%;
+	max-width: 75%;
 	padding: 35px;
 	border-top: 4px solid $c-custom-highlight;
 	background: $c-modal-light-bg;
@@ -46,7 +47,8 @@
 	}
 
 	img {
-		width: 100%;
+		max-width: 100%;
+		max-height: 100%;
 	}
 }
 
