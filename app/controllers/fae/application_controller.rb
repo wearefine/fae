@@ -1,6 +1,5 @@
 class Fae::ApplicationController < ActionController::Base
   include Fae::NavItems
-  include Rails.application.routes.url_helpers
 
   helper Fae::ViewHelper
 
