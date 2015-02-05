@@ -72,8 +72,8 @@
 
         <ul class="main_nav-sub-nav">
           <li class="main_nav-sub-header-mobile"><span>View Site</span></li>
-          <li><%= link_to "Preview Site", "//#{@option.stage_url}", target: '_blank', class: "main_nav-sub-link" %></li>
-          <li><%= link_to "Live Site", "//#{@option.live_url}", target: '_blank', class: "main_nav-sub-link" %></li>
+          <li><%= link_to "Preview Site", @option.stage_url, class: "main_nav-sub-link" %></li>
+          <li><%= link_to "Live Site", @option.live_url, class: "main_nav-sub-link" %></li>
         </ul>
       </li>
     <% end %>
