@@ -67,6 +67,10 @@
 						border-left: 3px solid $c-custom-highlight;
 					}
 				}
+
+				.icon-edit, .icon-delete_x {
+					color: $c-custom-highlight;
+				}
 			}
 		}
 
