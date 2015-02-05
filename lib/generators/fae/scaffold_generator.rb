@@ -9,6 +9,7 @@ module Fae
       generate_controller_file
       generate_view_files
       add_route
+      inject_nav_item
     end
 
   end

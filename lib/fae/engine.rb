@@ -29,10 +29,8 @@ module Fae
 
   # configurable defaults
   class << self
-    mattr_accessor :nav_items, :devise_secret_key, :devise_mailer_sender
-    self.nav_items = []
+    mattr_accessor :devise_secret_key, :devise_mailer_sender
 
-    # the secret key can't be hard coded here, but must be generated in Fae install script
     self.devise_secret_key = ''
     self.devise_mailer_sender = 'change-me@example.com'
   end

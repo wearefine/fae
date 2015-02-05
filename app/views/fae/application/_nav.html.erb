@@ -2,6 +2,8 @@
   <ul class="main_nav-nav">
     <%
       @fae_nav_items.each do |item|
+        item[:path] ||= '#'
+
         main_class = nav_path_current?(item[:path]) ? "main_nav-active-single" : ""
 
         main_sub_class = ""
@@ -40,6 +42,7 @@
             <li class="main_nav-sub-header-mobile"><span><%= item[:text] %></span></li>
             <%
               item[:sublinks].each do |subitem|
+                subitem[:path] ||= '#'
                 # if the current page is the same as one of these nav items
                 main_sub_class = nav_path_current?(subitem[:path]) ? "main_nav-sub-active" : ""
             %>

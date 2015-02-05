@@ -9,6 +9,7 @@ module Fae
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       add_fae_variables
+      add_nav_items_concern
       build_initializer
       build_judge_initializer
       rake 'fae:install:migrations'
@@ -30,6 +31,10 @@ RUBY
 
     def add_fae_variables
       copy_file File.expand_path(File.join(__FILE__, '../templates/assets/fae_variables.scss')), 'app/assets/stylesheets/fae_variables.scss'
+    end
+
+    def add_nav_items_concern
+      copy_file File.expand_path(File.join(__FILE__, '../templates/controllers/concerns/nav_items.rb')), 'app/controllers/concerns/fae/nav_items.rb'
     end
 
     def build_initializer
