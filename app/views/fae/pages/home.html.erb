@@ -7,7 +7,8 @@
         <thead>
           <tr>
             <th>Name</th>
-            <th>Modified</th>
+            <th>Type</th>
+            <th class="main_table-header-modified">Latest Changes</th>
           </tr>
         </thead>
 
@@ -15,6 +16,7 @@
           <% @list.each do |item| %>
             <tr id="release_<%= item.id %>">
               <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_polymorphic_path([main_app, :admin, item]) %></td>
+              <td><%= item.class.to_s %></td>
               <td><%= fae_date_format item.updated_at %></td>
             </tr>
           <% end %>
