@@ -23,6 +23,14 @@
           </ul>
         <% end %>
       <% end %>
+      
+      <li class="utility_nav-support">
+        <%= link_to @option.live_url do %>
+          Support
+          <span class="icon-support"></span>
+        <% end %>
+      </li>
+
       <li class="utility_nav-user">
         <%= link_to "#" do %>
           <%= current_user.full_name %>
@@ -32,7 +40,6 @@
         <ul class="utility_sub_nav">
           <li><%= link_to "Log Out", fae.destroy_user_session_path %></li>
           <li><%= link_to "Your Settings", fae.settings_path %></li>
-          <li><%= link_to 'Help', fae.help_path %></li>
         </ul>
       </li>
 
