@@ -111,5 +111,10 @@ RUBY
       end
     end
 
+    def inject_nav_item
+      line = "\t{ text: '#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path },\n\t\t\t"
+      inject_into_file 'app/controllers/concerns/fae/nav_items.rb', line, before: ']'
+    end
+
   end
 end

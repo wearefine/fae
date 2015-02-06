@@ -1,4 +1,5 @@
 class Fae::ApplicationController < ActionController::Base
+  include Fae::NavItems
 
   helper Fae::ViewHelper
 
@@ -35,7 +36,7 @@ private
         { text: "Dashboard", path: fae.root_path, class_name: "main_nav-link-dashboard" }
         ]
 
-      @fae_nav_items += Fae.nav_items
+      @fae_nav_items += nav_items if nav_items.present?
 
       if current_user.super_admin?
         sublinks = []

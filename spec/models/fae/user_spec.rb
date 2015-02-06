@@ -77,4 +77,16 @@ describe Fae::User do
     end
   end
 
+  describe 'concerns' do
+    it 'should allow instance methods through Fae::UserConcern' do
+      user = FactoryGirl.create(:fae_user)
+
+      expect(user.instance_says_what).to eq('Fae::User instance: what?')
+    end
+
+    it 'should allow class methods through Fae::UserConcern' do
+      expect(Fae::User.class_says_what).to eq('Fae::User class: what?')
+    end
+  end
+
 end

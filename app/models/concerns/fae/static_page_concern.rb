@@ -1,0 +1,1 @@
+module Fae::StaticPageConcern; end
