@@ -8,6 +8,8 @@ class Fae::ApplicationController < ActionController::Base
   before_filter :set_option
   before_filter :detect_cancellation
 
+  include Fae::ApplicationControllerConcern
+
 private
 
   def super_admin_only
