@@ -69,15 +69,19 @@
       </li>
 
       <li class="main_nav-header-mobile">
-        <span class="main_nav-header">
-          <span class="header_drawer-content header_drawer-content-viewsite">View Site</span>
-        </span>
+        <% if @option.stage_url.present? %>
+          <span class="main_nav-header">
+            <span class="header_drawer-content header_drawer-content-viewsite">View Site</span>
+          </span>
 
-        <ul class="main_nav-sub-nav">
-          <li class="main_nav-sub-header-mobile"><span>View Site</span></li>
-          <li><%= link_to "Preview Site", @option.stage_url, class: "main_nav-sub-link" %></li>
-          <li><%= link_to "Live Site", @option.live_url, class: "main_nav-sub-link" %></li>
-        </ul>
+          <ul class="main_nav-sub-nav">
+            <li class="main_nav-sub-header-mobile"><span>View Site</span></li>
+            <li><%= link_to "Preview Site", @option.stage_url, target: '_blank', class: "main_nav-sub-link" %></li>
+            <li><%= link_to "Live Site", @option.live_url, target: '_blank', class: "main_nav-sub-link" %></li>
+          </ul>
+        <% else %>
+          <%= link_to "Preview Site", @option.stage_url, target: '_blank', class: "header_drawer-content header_drawer-content-viewsite" %>
+        <% end %>
       </li>
     <% end %>
   </ul>

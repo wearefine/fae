@@ -4,7 +4,7 @@ module Fae
     include Fae::OptionConcern
 
     validates_inclusion_of :singleton_guard, :in => [0]
-    validates_presence_of :title, :time_zone
+    validates_presence_of :title, :time_zone, :live_url
 
     has_one :logo, -> { where(attached_as: 'logo' ) },
       as: :imageable,

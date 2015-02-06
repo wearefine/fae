@@ -4,6 +4,7 @@ describe Fae::Option do
 
   it { should validate_presence_of(:title) }
   it { should validate_presence_of(:time_zone) }
+  it { should validate_presence_of(:live_url) }
 
   describe '#instance' do
     context 'when no option object is present' do
