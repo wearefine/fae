@@ -16,15 +16,16 @@
 
   <section class="login-content">
     <section class="login-area">
-    <% if @option.logo.present? && @option.logo.asset.present? %>
-      <%= image_tag @option.logo.asset.url, alt: @option.title %>
-    <% else %>
-      <%= content_tag :h1, @option.title %>
-    <% end %>
-
+      <div class="login-logo">
+        <% if @option.logo.present? && @option.logo.asset.present? %>
+          <%= image_tag @option.logo.asset.url, alt: @option.title %>
+        <% else %>
+          <%= content_tag :h1, @option.title %>
+        <% end %>
+      </div>
       <%= yield %>
 
-        </section>
+    </section>
 
     <footer class="login-footer">
       <%= link_to 'http://www.wearefine.com', class: 'login-fine', target: '_blank' do %>
