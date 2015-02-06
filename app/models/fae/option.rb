@@ -4,7 +4,7 @@ module Fae
     include Fae::OptionConcern
 
     validates_inclusion_of :singleton_guard, :in => [0]
-    validates_presence_of :title, :time_zone
+    validates_presence_of :title, :time_zone, :live_url
 
     has_one :logo, -> { where(attached_as: 'logo' ) },
       as: :imageable,
@@ -22,7 +22,7 @@ module Fae
       instance = first
 
       if instance.blank?
-        instance = Option.new({title: 'My FINE Admin', time_zone: 'Pacific Time (US & Canada)'})
+        instance = Option.new({title: 'My FINE Admin', time_zone: 'Pacific Time (US & Canada)', live_url: 'http://www.wearefine.com'})
         instance.singleton_guard = 0
         instance.save!
       end
