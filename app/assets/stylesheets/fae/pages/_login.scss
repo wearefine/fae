@@ -10,7 +10,7 @@
 
 .login-content {
 	width: 100%;
-	max-width: 750px;
+	max-width: 700px;
 	padding-top: 55px;
 	margin: 20px auto;
 }
@@ -41,13 +41,13 @@
 	input[type=submit] {
 		margin-top: 20px;
 
-		@include bp(login-submit) {
+		@include bp(login_submit) {
 			float: right;
 			margin: 0;
 		}
 	}
 
-	@include bp(login-container) {
+	@include bp(login_container) {
 		display: inline-block;
 		vertical-align: middle;
 		width: 50%;
@@ -57,9 +57,22 @@
 	}
 }
 
+.login-logo {
+	@include bp(login_container) {
+		display: inline-block;
+		vertical-align: center;
+		width: 50%;
+	}
+}
+
 .login-form-password {
 	@extend .login-form;
+	width: 75%;
 	padding: 75px 23px;
+
+		@include bp(login_container) {
+			width: 50%;
+		}
 }
 
 .login-form-actions {
@@ -72,7 +85,7 @@
 		@include clearfix();
 	}
 
-	@include bp(login-container) {
+	@include bp(login_container) {
 		padding: 0;
 	}
 
@@ -112,4 +125,14 @@
 	font-weight: bold;
 	font-size: 15px;
 	color: $c-text-heavy;
+}
+
+.login-form-password {
+	label {
+		margin-bottom: 10px;
+	}
+
+	label + label {
+		margin-bottom: 15px;
+	}
 }
