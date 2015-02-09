@@ -97,29 +97,18 @@ var Admin = {
     //image modals
     $(".js-image-modal").click(function(e){
       e.preventDefault();
-      var that = this;
-      // grab the image container and image
-      var $image_container = $(this).next(".image-modal-container");
-      var $image = $image_container.find("img");
+      var $this = $(this);
 
-      // only create the image if it is not there
-      if ($image_container.length === 0) {
-        // create teh image container and image if not there
-        $image_container = $(document.createElement("div")).addClass("image-modal-container").css({
-          position: "absolute",
-          left: "-9999px"
-        });
-        $image = $(document.createElement("img")).attr("src", $(that).attr("href"));
-        $image.appendTo($image_container);
-        $image_container.insertAfter($(this));
-      }
-      // when the image is loaded then slap it up in a modal
-      $image_container.imagesLoaded().done(function(){
-        $image.modal({
-          minHeight: $image.height() + 80,
-          minWidth: $image.width() + 40,
-          overlayClose: true
-        });
+      // create invisi-image to get natural width/height
+      var image = new Image();
+      image.src = $this.attr('src');
+      var image_width = image.width;
+      var image_height = image.height;
+
+      $this.modal({
+        minHeight: image_height,
+        minWidth: image_width,
+        overlayClose: true
       });
     });
 
