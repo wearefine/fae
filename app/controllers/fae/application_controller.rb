@@ -1,5 +1,6 @@
 class Fae::ApplicationController < ActionController::Base
   include Fae::NavItems
+  include Fae::ApplicationControllerConcern
 
   helper Fae::ViewHelper
 
@@ -7,6 +8,7 @@ class Fae::ApplicationController < ActionController::Base
   before_filter :build_nav
   before_filter :set_option
   before_filter :detect_cancellation
+
 
 private
 
