@@ -92,11 +92,11 @@ textarea {
     }
 }
 
-button[type=button] {
+button[type=button], a.file_input-button {
   color: $c-form-button;
   padding: 11px 14px;
   border: 1px solid $c-border;
-
+  @include border-radius(3px);
   @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
 
   &:hover {
@@ -319,6 +319,7 @@ input.string {
   & > img {
     width: 90px;
     margin-right: 20px;
+    cursor: pointer;
   }
 
   .icon-delete_x {
@@ -331,6 +332,12 @@ input.string {
   &.asset-actions--files a {
     line-height: 32px;
   }
+}
+
+.asset-actions a.file_input-button {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
 }
 
 .asset-actions-image-link {
@@ -348,6 +355,13 @@ input.string {
   &:hover {
     background: $c-form-file-link-bg-hover;
   }
+}
+
+.asset-actions-image-name {
+  position: absolute;
+  top: 19px;
+  left: 118px;
+  color: $c-custom-highlight;
 }
 
 /* Hotels Edit COMING SOON to show Reservations starting */
