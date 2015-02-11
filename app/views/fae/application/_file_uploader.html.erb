@@ -19,8 +19,8 @@
 
     <% if the_file.asset.present? %>
       <div class='asset-actions asset-actions--files'>
-        <%= link_to 'View', the_file.asset.url, target: '_blank'  %>
-        <%= link_to 'Delete', fae.delete_file_path(the_file.id), class: 'js-asset-delete-link', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } %>
+        <%= link_to 'Replace File', fae.delete_file_path(the_file.id), class: 'file_input-button js-asset-delete-link', remote: true, method: :delete, defaults: { confirm: 'Are you sure?' } %>
+        <%= link_to the_file.asset.file.filename, the_file.asset.url, target: '_blank'  %>
       </div>
     <% end %>
     <div class='asset-inputs' style= <%='display:none;' unless the_file.asset.blank? %> >
