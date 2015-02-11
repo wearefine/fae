@@ -19,7 +19,26 @@ label h6 {
   line-height: 1.3;
 }
 
-.hint {
+.markdown-support {
+  position: relative;
+  display: inline-block;
+  padding-left: 7px;
+  color: $c-custom-highlight;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:after {
+    position: absolute;
+    @include icon_stuff();
+    @extend .icon-support:before;
+    padding-left: 7px;
+    text-decoration: none;
+    top: 1px;
+    right: -20px;
+  }
+}
+
+.hint, .markdown-hint {
   // hide it so the javascript can do its thing and retain it's size
   display: inline-block;
   position: absolute;

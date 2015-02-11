@@ -179,6 +179,18 @@ var Admin = {
       });
     });
 
+    // initialize modal for markdown-hint
+    $('.markdown-support').click(function(){
+      var markdown_hint_width  = $('.markdown-hint').width() + 40;
+      $('.markdown-hint-wrapper').modal({
+        minHeight: 430,
+        minWidth: markdown_hint_width,
+        overlayClose: true,
+        zIndex: 1100
+      });
+    });
+
+
     this.sortable();
     this.fade_notices();
     this.city_district_selector();
