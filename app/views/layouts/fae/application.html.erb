@@ -17,6 +17,10 @@
   <%= render "nav" if user_signed_in? %>
   <%= yield %>
 </section>
+<div class="markdown-hint">
+  <%= content_tag :div, markdown_helper, class: 'markdown-hint-wrapper' %>
+</div>
+
 
 </body>
 </html>
