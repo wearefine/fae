@@ -114,6 +114,22 @@ input.string {
   margin-bottom: 20px;
 }
 
+::-webkit-input-placeholder {
+   color: $c-lighter_grey;
+}
+
+:-moz-placeholder {
+   color: $c-lighter_grey;  
+}
+
+::-moz-placeholder {
+   color: $c-lighter_grey;  
+}
+
+:-ms-input-placeholder {  
+   color: $c-lighter_grey;  
+}
+
 .main_content-header-delete {
   color: #ce0202;
   margin-right: 20px;
@@ -677,7 +693,7 @@ input.string {
     position: absolute;
     top: 0;
     left: 0;
-    padding: 6px 10px;
+    padding: 6px 5px;
     background: $c-error-bg;
     color: $c-error-content;
     font-size: 12px;
@@ -802,7 +818,7 @@ input.string {
     padding-right: 50px;
   }
 
-  &:before {
+  label:before {
     @include icon-stuff();
     @extend .icon-calendar:before;
     position: absolute;

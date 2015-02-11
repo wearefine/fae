@@ -96,6 +96,12 @@
 	}
 }
 
+input.login-form-actions-submit[type="submit"] {
+	@include bp(login_submit) {
+		margin-top: -27px;
+	}
+}
+
 .login-helper-area {
 	margin-top: 10px;
 	font-size: 13px;
