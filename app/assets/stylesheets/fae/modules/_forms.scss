@@ -133,6 +133,22 @@ input.string {
   margin-bottom: 20px;
 }
 
+::-webkit-input-placeholder {
+   color: $c-lighter_grey;
+}
+
+:-moz-placeholder {
+   color: $c-lighter_grey;  
+}
+
+::-moz-placeholder {
+   color: $c-lighter_grey;  
+}
+
+:-ms-input-placeholder {  
+   color: $c-lighter_grey;  
+}
+
 .main_content-header-delete {
   color: #ce0202;
   margin-right: 20px;

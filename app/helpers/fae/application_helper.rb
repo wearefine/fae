@@ -32,8 +32,8 @@ module Fae
       helper += "<h3>Emphasis</h3>
             <p>
               Add italics with _underscores_<br>
-              Add bold with double **astricks**<br>
-              Add combined emphasis with **astricks and _underscores_**
+              Add bold with double **asterisks**<br>
+              Add combined emphasis with **asterisks and _underscores_**
             </p>" if emphasis
       helper += "<h3>Headers</h3>
             <p>
