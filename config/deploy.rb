@@ -8,7 +8,7 @@ set :scm, :git
 # set :pty, true
 
 # set :linked_files, %w{config/database.yml}
-# set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets public/system public/assets}
+set :linked_dirs, %w{ tmp/pids }
 
 set :rvm_type, :system
 
@@ -52,7 +52,7 @@ namespace :deploy do
 
   after 'deploy:symlink:release', :symlink_dummy_files do
     on roles(:app) do
-      %w(log tmp/pids tmp/cache tmp/sockets public/system public/assets).each do |path|
+      %w(log tmp/cache tmp/sockets public/system public/assets).each do |path|
         execute "rm -rf #{release_path}/spec/dummy/#{path}"
         execute "ln -s #{shared_path}/#{path} #{release_path}/spec/dummy/#{path}"
       end
