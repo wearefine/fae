@@ -54,7 +54,7 @@ namespace :deploy do
     on roles(:app) do
       %w(log tmp/pids tmp/cache tmp/sockets public/system public/assets).each do |path|
         execute "rm -rf #{release_path}/spec/dummy/#{path}"
-        execute "ln -s #{release_path}/spec/dummy/log #{shared_path}/#{path}"
+        execute "ln -s #{shared_path}/#{path} #{release_path}/spec/dummy/#{path}"
       end
     end
   end
