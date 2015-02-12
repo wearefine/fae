@@ -8,7 +8,7 @@ set :scm, :git
 # set :pty, true
 
 # set :linked_files, %w{config/database.yml}
-set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets public/system public/assets}
+set :linked_dirs, %w{ tmp/pids }
 
 set :rvm_type, :system
 
@@ -45,8 +45,17 @@ namespace :deploy do
   # deploy:restart not firing, so I added this hack for now
   after 'deploy:symlink:release', :restart_hack do
     on roles(:app) do
-      execute "ln -s #{shared_path}/restart.txt #{release_path}/tmp/restart.txt"
-      execute :touch, release_path.join('tmp','restart.txt')
+      execute "ln -s #{shared_path}/restart.txt #{release_path}/spec/dummy/tmp/restart.txt"
+      execute :touch, release_path.join('spec', 'dummy', 'tmp','restart.txt')
+    end
+  end
+
+  after 'deploy:symlink:release', :symlink_dummy_files do
+    on roles(:app) do
+      %w(log tmp/cache tmp/sockets public/system public/assets).each do |path|
+        execute "rm -rf #{release_path}/spec/dummy/#{path}"
+        execute "ln -s #{shared_path}/#{path} #{release_path}/spec/dummy/#{path}"
+      end
     end
   end
 
