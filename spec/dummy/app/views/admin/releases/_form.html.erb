@@ -36,14 +36,14 @@
         <%= fae_input f, :slug, helper_text: 'text input (populated from name and vintage)' %>
 
         <!-- Textareas -->
-        <%= fae_input f, :intro, helper_text: 'texterea' %>
+        <%= fae_input f, :intro, helper_text: 'texterea', markdown: true %>
 
         <%= fae_input f, :body,
             label: 'Body Content',
             wrapper_class: 'release_body-text_area--wrapper',
             input_class: 'release_body-text_area',
             helper_text: 'textarea',
-            hint: markdown_helper %>
+            markdown: true %>
 
         <!-- Prefix -->
         <%= fae_prefix f, :price, helper_text: 'prefix', prefix: '$', placeholder: '50.00' %>

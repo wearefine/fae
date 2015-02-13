@@ -24,9 +24,18 @@ feature 'fae_input' do
     admin_login
     visit new_admin_release_path
 
-    expect(page).to_not have_content('Markdown Options')
-    page.find('.release_body-text_area--wrapper .hinter-clicker').click
-    expect(page).to have_content('Markdown Options')
+    expect(page).to_not have_content('Normal Hint')
+    page.find('.release_name .hinter-clicker').click
+    expect(page).to have_content('Normal Hint')
+  end
+
+    scenario 'should display dark hint when clicked', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    expect(page).to_not have_content('Dark Hint')
+    page.find('.release_vintage .hinter-clicker').click
+    expect(page).to have_content('Dark Hint')
   end
 
 end
