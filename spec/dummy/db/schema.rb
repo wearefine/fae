@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223225922) do
+ActiveRecord::Schema.define(version: 20150213173312) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20141223225922) do
     t.datetime "updated_at"
     t.date     "publication_date"
   end
+
+  create_table "aromas", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.integer  "position"
+    t.boolean  "live"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "release_id"
+  end
+
+  add_index "aromas", ["release_id"], name: "index_aromas_on_release_id", using: :btree
 
   create_table "event_releases", force: true do |t|
     t.integer  "release_id"
@@ -230,6 +242,7 @@ ActiveRecord::Schema.define(version: 20141223225922) do
     t.datetime "updated_at"
     t.string   "video_url"
     t.boolean  "featured"
+    t.string   "weight"
   end
 
   create_table "selling_points", force: true do |t|

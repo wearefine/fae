@@ -14,6 +14,7 @@ class Release < ActiveRecord::Base
   belongs_to :varietal
 
   has_many :acclaims
+  has_many :aromas
 
   has_many :release_selling_points
   has_many :selling_points, through: :release_selling_points

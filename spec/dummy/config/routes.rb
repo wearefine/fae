@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :selling_points
     resources :events
     resources :people
+    resources :aromas
   end
 
   mount Fae::Engine => '/admin'

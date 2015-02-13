@@ -318,7 +318,7 @@ var Admin = {
         slug_text.push($(this).val());
       }
     })
-    slug_text = slug_text.join(' ').toLowerCase().replace(/\\|\'/g,'').replace(/[^a-zA-Z0-9.]+/g,'-');
+    slug_text = slug_text.join(' ').toLowerCase().replace(/\\|\'/g,'').replace(/[^a-zA-Z0-9]+/g,'-').replace(/(^-)|(-$)/g, "");
     return slug_text;
   },
 

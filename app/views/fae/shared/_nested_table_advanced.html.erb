@@ -6,6 +6,7 @@ require_locals(['assoc', 'parent_item'], local_assigns)
 # optional locals
 assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
 title               ||= assoc_name.humanize             # 'Restaurant Bars'
+header              ||= title
 ordered             ||= false
 has_thumb           ||= false
 cols                ||= []
@@ -24,7 +25,7 @@ new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
 edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
 %>
 
-<%= content_tag :h2, title, class: 'main_content-section-title' %>
+<%= content_tag :h2, header, class: 'main_content-section-title' %>
 <div class="main_content-section-area">
 
   <section class="js-addedit-form">

@@ -3,82 +3,96 @@
     <div class="main_content-header-wrapper">
       <%= render 'fae/shared/form_header', header: @klass_name  %>
       <%# render 'fae/shared/form_nav', sections: [title, anchor] %>
+      <nav class="main_content-header-section">
+        <ul class="main_content-header-section-links">
+          <li><a href="#general_info">General Info</a></li>
+          <li><a href="#associations_section">Associations</a></li>
+          <li><a href="#aromas_section">Aromas</a></li>
+        </ul>
+      </nav>
       <%= render 'fae/shared/form_buttons', f: f, item: @item %>
     </div>
   </section>
 
   <div class="main_content-sections">
-  <div class="main_content-section-area">
+    <section class="main_content-section" id="general_info">
+      <div class="main_content-section-area">
 
-      <!-- Long Field with Helper Text -->
-      <%= fae_input f, :name, {
-        input_class: 'slugger',
-        helper_text: 'Long Field with Helper Text',
-        hint: "<h3>Markdown options</h3>"
-      } %>
+        <%= fae_input f, :name,
+          input_class: 'slugger',
+          helper_text: 'text input',
+          hint: '<h3>Normal Hint</h3><p>Yes, HTML is allowed</p>'.html_safe
+        %>
 
+        <%= fae_input f, :vintage,
+          input_class: 'slugger',
+          helper_text: 'text input',
+          dark_hint: '<h3>Dark Hint</h3><p>Yes, HTML is allowed</p>'.html_safe
+        %>
 
-      <!-- Long Field -->
-      <%= fae_input f, :slug, {
-        helper_text: 'Long Field with Helper Text',
-        input_class: 'custom_class',
-        dark_hint: '<h3>Markdown Options</h3><br>
-          Link | Internal: See my [About](/about/) page for details.<br>
-          Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
-          List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
-          List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1'
-      } %>
+        <%= fae_input f, :slug, helper_text: 'text input (populated from name and vintage)' %>
 
+        <%= fae_input f, :intro, helper_text: 'texterea' %>
 
-      <!-- Input with icon on left -->
-      <%= fae_prefix f, :price, helper_text: 'prefix field here!', prefix: '$', placeholder: '50.00' %>
+        <!-- Text Areas -->
+        <%= fae_input f, :body,
+            label: 'Body Content',
+            wrapper_class: 'release_body-text_area--wrapper',
+            input_class: 'release_body-text_area',
+            helper_text: 'textarea',
+            hint: markdown_helper %>
 
-      <!-- Input for video urls -->
-      <%= fae_video_url f, :video_url, {
-        input_class: 'slugger'
-      } %>
+        <!-- Prefix -->
+        <%= fae_prefix f, :price, helper_text: 'prefix', prefix: '$', placeholder: '50.00' %>
 
-      <!-- Large Pulldown -->
-      <%= fae_pulldown f, :varietal %>
+        <%= fae_suffix f, :weight, helper_text: 'suffix', suffix: 'lbs' %>
 
+        <!-- Input for video urls -->
+        <%= fae_video_url f, :video_url, helper_text: "video url (default helper: Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long.)" %>
 
-      <!-- Small Pulldown -->
-      <%= fae_pulldown f, :wine, size: "short" %>
+        <!-- Checkboxes are the defult when displaying booleans -->
+        <%= fae_input f, :featured, helper_text: 'checkbox' %>
 
-      <!-- fae_multiselect {two_pane: false} -->
-      <%= fae_multiselect f, :acclaims, label_method: :publication %>
+        <!-- Radio Buttons Vertical Stack -->
+        <%= fae_radio f, :on_stage, helper_text: 'radio verital'  %>
 
-      <!-- Multiselect using two panels -->
-      <%= fae_multiselect f, :selling_points, two_pane: true %>
+        <!-- Radio Buttons Horizontal Stack -->
+        <%= fae_radio f, :on_prod, type: 'inline', input_class: 'something', helper_text: 'radio Horizontal' %>
 
-      <!-- Checkboxes are the defult when displaying booleans -->
-      <%= fae_input f, :featured %>
+      </div>
+    </section>
 
-      <!-- Radio Buttons Vertical Stack -->
-      <%= fae_radio f, :on_stage %>
+    <section class="main_content-section" id="associations_section">
+      <%= content_tag :h2, 'Associations', class: 'main_content-section-title' %>
+      <div class="main_content-section-area">
 
-      <!-- Radio Buttons Horizontal Stack -->
-      <%= fae_radio f, :on_prod, type: 'inline', input_class: 'something' %>
+        <!-- Large Pulldown -->
+        <%= fae_pulldown f, :varietal, helper_text: 'pulldown' %>
 
+        <!-- Small Pulldown -->
+        <%= fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short'  %>
 
-      <!-- Text Areas -->
-      <%= fae_input f, :body, {
-          label: 'Body Content',
-          wrapper_class: 'release_body-text_area--wrapper',
-          input_class: 'release_body-text_area',
-          helper_text: 'Text Area wtih Hint Pop Up',
-          hint: '<h3>Markdown Options</h3><br>
-          Link | Internal: See my [About](/about/) page for details.<br>
-          Link | External: This is [an example](http://example.com/ "Title") inline link.<br>
-          List | Bullets: add an asterick with a space before the text, eg: * this will have bullets<br>
-          List | Numbered: Numbers with a period and a space before the text, eg: 1. this will be item 1'
-        } %>
+        <!-- fae_multiselect {two_pane: false} -->
+        <%= fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'mutliselect' %>
 
+        <!-- Multiselect using two panels -->
+        <%= fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect' %>
 
-      <!-- Checkboxes Vertical Stack -->
-      <%= fae_checkbox f, :events %>
-      <%#= f.association :events, as: :check_boxes, wrapper_html: { class: 'checkbox_collection--vertical' } %>
+        <!-- Checkboxes Vertical Stack -->
+        <%= fae_checkbox f, :events, helper_text: 'checkboxes verital' %>
 
-    </div>
+      </div>
+    </section>
   </div>
+<% end %>
+
+<% if params[:action] == 'edit' %>
+  <section class="main_content-section" id="aromas_section">
+    <%= render 'fae/shared/nested_table_advanced',
+      assoc: :aromas,
+      parent_item: @item,
+      cols: [:name, :live],
+      ordered: true,
+      header: 'Aromas (nested table)' %>
+  </section>
 <% end %>
