@@ -1,12 +1,12 @@
 .hinter-clicker {
-	margin-left: 5px;
-	cursor: pointer;
-	color: $c-custom-highlight;
+  margin-left: 5px;
+  cursor: pointer;
+  color: $c-custom-highlight;
 
-	&.hovered {
-		position: relative;
-		z-index: 10000;
-	}
+  &.hovered {
+    position: relative;
+    z-index: 10000;
+  }
 }
 
 #simplemodal-overlay {
@@ -23,6 +23,7 @@
 	color: $c-text;
 	line-height: 1.5;
 	font-size: 13px;
+	overflow: scroll;
 	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
 
 	h3 {

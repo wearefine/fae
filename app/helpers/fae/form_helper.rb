@@ -37,14 +37,14 @@ module Fae
     def fae_radio(f, attribute, options={})
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
-      options.update(as: :radio_collection, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}")
+      options.update(as: :radio_collection, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}", no_label_div: true)
       association_or_input f, attribute, options
     end
 
     def fae_checkbox(f, attribute, options={})
       options[:alignment] = 'checkbox_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'checkbox_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
-      options.update(as: :check_boxes, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}")
+      options.update(as: :check_boxes, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}", no_label_div: true)
       association_or_input f, attribute, options
     end
 
@@ -52,7 +52,6 @@ module Fae
       raise "Fae::MissingRequiredOption: fae_pulldown requires a 'collection' when using it on an ActiveRecord attribute." if !options.has_key?(:collection) && f.object.attribute_names.include?(attribute.to_s)
       raise "Fae::ImproperOptionValue: The value #{options[:size]} is not a valid option for 'size'. Please use 'short' or 'long'." if options[:size].present? && ['short','long'].include?(options[:size]) == false
       raise "Fae::ImproperOptionValue: The value #{options[:search]} is not a valid option for 'search'. Please use a Boolean." if options[:search].present? && !!options[:search] != options[:search]
-
 
       add_input_class(options, 'small_pulldown') if options[:size] == "short"
       add_input_class(options, 'select-search') if options[:search]
@@ -107,7 +106,15 @@ module Fae
     def label_and_hint(attribute, options)
       raise "Fae::ConflictingOptions: the `hint` and `dark_hint` options must not be used at the same time." if options[:hint].present? && options[:dark_hint].present?
 
-      options[:label] = "#{ options[:label] || attribute.to_s.titleize }<h6 class='helper_text'>#{options[:helper_text]}</h6>".html_safe if options[:helper_text].present?
+      label = options[:label] || attribute.to_s.titleize
+      if options[:markdown].present? || options[:helper_text].present?
+        label += content_tag :h6, class: 'helper_text' do
+          concat(options[:helper_text]) if options[:helper_text].present?
+          concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown].present?
+        end
+      end
+      options[:label] = label.html_safe
+
       options[:hint] = "#{options[:hint]}".html_safe if options[:hint].present?
       options[:hint] = "<div class='dark'>#{options[:dark_hint]}</div>".html_safe if options[:dark_hint].present?
     end
