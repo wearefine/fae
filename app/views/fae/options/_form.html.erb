@@ -21,8 +21,8 @@
         <%= f.input :live_url, label: 'Live URL <h6>Include http:// for external links.</h6>'.html_safe %>
         <%= f.input :stage_url, label: 'Stage URL <h6>Include http:// for external links.</h6>'.html_safe %>
 
-        <%= fae_image_form f, @option, image_name: :logo, required: true %>
-        <%= fae_image_form f, @option, image_name: :favicon %>
+        <%= fae_image_form f, :logo, required: true %>
+        <%= fae_image_form f, :favicon %>
       </div>
     </section>
   </div>

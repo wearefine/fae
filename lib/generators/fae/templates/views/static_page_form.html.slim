@@ -13,8 +13,8 @@
 <% if ["Fae::TextArea", "Fae::TextField"].include? type -%>
         = fae_content_form f, :<%= attr %>
 <% elsif "Fae::Image" == type -%>
-        = fae_image_form f, @item, image_name: :<%= attr %>
+        = fae_image_form f, :<%= attr %>
 <% elsif "Fae::File" == type -%>
-        = fae_file_form f, @item, file_name: :<%= attr %>
+        = fae_file_form f, :<%= attr %>
 <% end -%>
 <% end -%>

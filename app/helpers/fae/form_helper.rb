@@ -73,9 +73,11 @@ module Fae
       fae_input f, attribute, options
     end
 
-    def fae_daterange(f, label, options={})
-      options.update(as: :date_range)
-      fae_input f, label, options
+    def fae_daterange(f, attr_array, options={})
+      raise "Fae::MissingRequiredOption: fae_daterange requires the 'label' option." if options[:label].blank?
+      raise "Fae::MalformedArgument: fae_daterange requires an array of two attributes as it's second argument." unless attr_array.present? && attr_array.is_a?(Array) && attr_array.length == 2
+      options.update(as: :date_range, start_date: attr_array.first, end_date: attr_array.second)
+      fae_input f, options[:label], options
     end
 
     def fae_grouped_select(f, attribute, options={})

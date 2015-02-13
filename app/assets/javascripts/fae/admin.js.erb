@@ -22,15 +22,15 @@ var Admin = {
         separator : ' to ',
         getValue: function()
         {
-          if ($('input[id$="start_date"]').val() && $('input[id$="end_date"]').val() )
-            return $('input[id$="start_date"]').val() + ' to ' + $('input[id$="end_date"]').val();
+          if ($('.js-start_date').val() && $('.js-end_date').val() )
+            return $('.js-start_date').val() + ' to ' + $('.js-end_date').val();
           else
             return '';
         },
         setValue: function(s,s1,s2)
         {
-          $('input[id$="start_date"]').val(s1);
-          $('input[id$="end_date"]').val(s2);
+          $('.js-start_date').val(s1);
+          $('.js-end_date').val(s2);
         }
       });
     };

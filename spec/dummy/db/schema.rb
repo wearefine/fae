@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213173312) do
+ActiveRecord::Schema.define(version: 20150213185222) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -243,6 +243,9 @@ ActiveRecord::Schema.define(version: 20150213173312) do
     t.string   "video_url"
     t.boolean  "featured"
     t.string   "weight"
+    t.date     "release_date"
+    t.date     "show"
+    t.date     "hide"
   end
 
   create_table "selling_points", force: true do |t|
@@ -253,6 +256,17 @@ ActiveRecord::Schema.define(version: 20150213173312) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tasting_notes", force: true do |t|
+    t.string   "name"
+    t.boolean  "active"
+    t.integer  "position"
+    t.integer  "release_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
 
   create_table "varietals", force: true do |t|
     t.string   "name"
