@@ -2,23 +2,28 @@
 
 <div class="main_content-sections">
   <section class="main_content-section help-section">
+    <h2 class="main_content-section-title">Contact Us</h2>
     <div class="main_content-section-area">
-      <h3>Please contact us with any issues or questions you may have.</h3>
       <p>
-        <a href="http://www.wearefine.com" target="_blank">wearefine.com</a><br>
-        <a href="mailto:fae@wearefine.com">fae@wearefine.com</a><br>
-        <a href="tel:15032433463">503.243.3463</a>
+        <strong>Phone:</strong> 503.243.3463<br>
+        <strong>Email:</strong> <a href="mailto:fae@wearefine.com">fae@wearefine.com</a><br>
+        <strong>Website:</strong> <a href="http://www.wearefine.com" target="_blank">wearefine.com</a>
       </p>
+    </div>
+  </section>
 
-      <h3>If you are reporting a bug, please include this helpful information:</h3>
-      <p>Fae v<%= Fae::VERSION %></p>
+  <section class="main_content-section help-section">
+    <h2 class="main_content-section-title">Reporting A Bug?</h2>
+    <div class="main_content-section-area">
+      <h3>Please include this helpful information:</h3>
       <p>
-        <em>date:</em> <%= Time.now %><br>
-        <em>site: </em> <%= request.url %><br>
-        <em>env:</em> <%= Rails.env %><br>
-        <em>browser:</em> <%= @browser.name %> <%= @browser.full_version %><br>
-        <em>platform:</em> <%= @browser.platform %><br>
-        <em>user:</em> <%= current_user.id %>
+        <strong>Version:</strong> Fae v<%= Fae::VERSION %><br>
+        <strong>Date:</strong> <%= Time.now %><br>
+        <strong>Site: </strong> <%= request.url %><br>
+        <strong>Env:</strong> <%= Rails.env %><br>
+        <strong>Browser:</strong> <%= @browser.name %> <%= @browser.full_version %><br>
+        <strong>Platform:</strong> <%= @browser.platform %><br>
+        <strong>User ID:</strong> <%= current_user.id %>
       </p>
     </div>
   </section>

@@ -1,14 +1,18 @@
 .help-section {
   h3 {
+    color: $c-text-heavy;
+    font-size: 20px;
     padding-top: 10px;
   }
 
   p {
-    line-height: 1.2;
-    margin-bottom: 20px;
+    color: $c-text-heavy;
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 0;
   }
 
-  em {
-    text-transform: uppercase;
+  strong {
+    font-weight: bold;
   }
 }
