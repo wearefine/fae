@@ -17,9 +17,9 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "What'cho want?"
-      fill_in 'Vintage', with: "So what'cho want?!"
-      expect(find_field('Slug').value).to eq('whatcho-want-so-whatcho-want')
+      fill_in 'Name', with: "So what'cho what'cho"
+      fill_in 'Vintage', with: "What'cho want?!"
+      expect(find_field('Slug').value).to eq('so-whatcho-whatcho-whatcho-want')
     end
   end
 

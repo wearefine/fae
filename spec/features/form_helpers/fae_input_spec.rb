@@ -29,7 +29,7 @@ feature 'fae_input' do
     expect(page).to have_content('Normal Hint')
   end
 
-    scenario 'should display dark hint when clicked', js: true do
+  scenario 'should display dark hint when clicked', js: true do
     admin_login
     visit new_admin_release_path
 
