@@ -13,7 +13,7 @@
         <%= fae_input f, :name %>
 
         <!-- Date Range Picker -->
-        <%= fae_daterange f, :display_dates %>
+        <%= fae_daterange f, [:start_date, :end_date], label: 'Display dates' %>
 
         <!-- NO SEARCH -->
         <%= fae_pulldown f, :event_type, collection: ['Birthday', 'Bar Mitzvah'], search: false %>

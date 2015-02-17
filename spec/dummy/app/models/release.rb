@@ -14,6 +14,7 @@ class Release < ActiveRecord::Base
   belongs_to :varietal
 
   has_many :acclaims
+  has_many :aromas
 
   has_many :release_selling_points
   has_many :selling_points, through: :release_selling_points
@@ -21,5 +22,11 @@ class Release < ActiveRecord::Base
 
   has_many :event_releases
   has_many :events, through: :event_releases
+
+  has_one :bottle_shot, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
+  accepts_nested_attributes_for :bottle_shot, allow_destroy: true
+
+  has_one :label_pdf, as: :fileable, class_name: '::Fae::File', dependent: :destroy
+  accepts_nested_attributes_for :label_pdf, allow_destroy: true
 
 end

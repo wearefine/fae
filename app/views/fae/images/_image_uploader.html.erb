@@ -1,7 +1,8 @@
-<% require_locals ['item', 'f'], local_assigns %>
+<% require_locals ['f'], local_assigns %>
 
 <%
   # passed in variables
+  item         ||= f.object
   image_name   ||= :image
   the_image      = item.send(image_name)
   image_label  ||= image_name.to_s.humanize

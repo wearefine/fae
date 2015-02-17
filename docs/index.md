@@ -47,6 +47,7 @@ The method takes the form object and the object that attaches to the Image relat
 *<em>image_name</em>: the action image relationships name, defaults to :image
 *<em>image_label</em>: defaults to the image_name
 *<em>alt_label</em>: defaults to "#{image_label} alt text"
+*<em>alt_label</em>: defaults to "#{image_label} alt text"
 *<em>omit</em>: an array containing :caption and/or :alt, defaults to [:caption]
 *<em>show_thumb</em>: defaults to false
 *<em>required</em>: defaults to false
@@ -55,7 +56,7 @@ The method takes the form object and the object that attaches to the Image relat
 *<em>caption_helper_text</em>: defaults to ""
 
 ```ruby
-  fae_image_form f, @item
+  fae_image_form f, :bottle_shot
 ```
 ![Alt text](http://www.afinesite.com/fae/documentation/image_form.png')
 
