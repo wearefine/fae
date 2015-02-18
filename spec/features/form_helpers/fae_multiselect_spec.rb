@@ -6,8 +6,8 @@ feature 'fae_multiselect' do
 
   scenario 'should display two-pane when `two_pane: true`'
 
-  scenerio 'should use label_method if set'
+  scenario 'should use label_method if set'
 
-  scenerio 'should use collection if set'
+  scenario 'should use collection if set'
 
 end
