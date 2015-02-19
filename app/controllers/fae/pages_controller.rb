@@ -4,7 +4,6 @@ module Fae
     before_filter :authenticate_user!
 
     def home
-      @models = load_all_models
       @list = recently_updated
     end
 
@@ -19,15 +18,15 @@ module Fae
 
   private
 
-    def load_all_models
+    def all_models
       # load of all models since Rails caches activerecord queries.
       Rails.application.eager_load!
-      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) }
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
     end
 
     def recently_updated(num=25)
       list = []
-      @models.each do |m|
+      all_models.each do |m|
         list << m.all.sort_by(&:updated_at).flatten
       end
       list.flatten.sort_by(&:updated_at).reverse.first(num)

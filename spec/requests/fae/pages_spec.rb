@@ -18,6 +18,37 @@ describe 'pages#home' do
 
       expect(response.status).to eq(200)
     end
+
+    it 'should list all recently updated objects, ordered by most recent first' do
+      wine = FactoryGirl.create(:wine)
+      sleep 1
+      release = FactoryGirl.create(:release, wine: wine)
+
+      super_admin_login
+      get fae_path
+
+      expect(assigns(:list)).to eq([release, wine])
+    end
+
+    it 'should exlude Fae models from dashboard list' do
+      fae_role = FactoryGirl.create(:fae_role)
+      wine = FactoryGirl.create(:wine)
+
+      super_admin_login
+      get fae_path
+
+      expect(assigns(:list)).to include(wine)
+      expect(assigns(:list)).to_not include(fae_role)
+    end
+
+    it 'should exlude Fae.dashoard_exclusions from dashboard list' do
+      varietal = FactoryGirl.create(:varietal)
+
+      super_admin_login
+      get fae_path
+
+      expect(assigns(:list)).to_not include(varietal)
+    end
   end
 
 end
