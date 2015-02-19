@@ -18,7 +18,7 @@
                   = link_to item.fae_display_field, edit_admin_location_path(item)
                 td = fae_date_format item.updated_at
                 td.main_table-delete
-                  = link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do
+                  = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
                     span.icon-delete_x
           - else
             tr

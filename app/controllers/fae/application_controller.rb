@@ -13,11 +13,11 @@ class Fae::ApplicationController < ActionController::Base
 private
 
   def super_admin_only
-    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin?
+    redirect_to fae.root_path, flash: { error: t('fae.unauthorized_error') } unless current_user.super_admin?
   end
 
   def admin_only
-    redirect_to fae.root_path, flash: {error: 'You are not authorized to view that page.'} unless current_user.super_admin? || current_user.admin?
+    redirect_to fae.root_path, flash: { error: t('fae.unauthorized_error') } unless current_user.super_admin? || current_user.admin?
   end
 
   def show_404

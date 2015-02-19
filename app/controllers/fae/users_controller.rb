@@ -23,9 +23,9 @@ module Fae
       @user = User.new(user_params)
 
       if @user.save
-        redirect_to users_path, notice: 'User was successfully created.'
+        redirect_to users_path, notice: t('fae.save_notice')
       else
-        render action: 'new', error: "Let’s slow down a bit. Check your form for errors."
+        render action: 'new', error: t('fae.save_error')
       end
     end
 
@@ -35,9 +35,9 @@ module Fae
 
       if @user.update(user_params)
         path = current_user.super_admin? ? users_path : fae.root_path
-        redirect_to path, notice: 'User account updated.'
+        redirect_to path, notice: t('fae.save_notice')
       else
-        render action: 'edit', error: "Let’s slow down a bit. Check your form for errors."
+        render action: 'edit', error: t('fae.save_error')
       end
     end
 

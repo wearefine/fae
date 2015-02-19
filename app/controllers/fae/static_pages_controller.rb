@@ -17,10 +17,10 @@ module Fae
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: 'Success. You’ve done good.'
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assocs
-        render action: 'edit', error: 'Let’s slow down a bit. Check your form for errors.'
+        render action: 'edit', error: t('fae.save_error')
       end
     end
 

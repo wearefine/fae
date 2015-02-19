@@ -23,27 +23,27 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @index_path, notice: "Success. You’ve done good."
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        render action: 'new', error: "Let’s slow down a bit. Check your form for errors."
+        render action: 'new', error: t('fae.save_error')
       end
     end
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: "Success. You’ve done good."
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        render action: 'edit', error: "Let’s slow down a bit. Check your form for errors."
+        render action: 'edit', error: t('fae.save_error')
       end
     end
 
     def destroy
       if @item.destroy
-        redirect_to @index_path, notice: 'Item was successfully removed'
+        redirect_to @index_path, notice: t('fae.delete_notice')
       else
-        redirect_to @index_path, flash: { error: 'This item has associated objects that prevent it from being removed.' }
+        redirect_to @index_path, flash: { error: t('fae.delete_error') }
       end
     end
 

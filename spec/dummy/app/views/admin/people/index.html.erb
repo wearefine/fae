@@ -28,7 +28,7 @@
               <td><%= attr_toggle item, :on_stage %></td>
               <td><%= attr_toggle item, :on_prod %></td>
               <td class="main_table-delete">
-                <%= link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do %>
+                <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
                   <span class="icon-delete_x"></span>
                 <% end %>
               </td>
