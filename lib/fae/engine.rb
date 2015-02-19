@@ -31,7 +31,7 @@ module Fae
   class << self
     mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions
 
-    self.devise_secret_key = ''
+    self.devise_secret_key    = ''
     self.devise_mailer_sender = 'change-me@example.com'
     self.dashboard_exclusions = []
   end

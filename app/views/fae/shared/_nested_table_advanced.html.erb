@@ -73,7 +73,7 @@ edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
               <% end %>
 
               <td class="main_table-delete">
-                <%= link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: 'Are you sure?' }, class: 'js-delete-link icon-delete_x', remote: true %>
+                <%= link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true %>
               </td>
 
             <% end %>

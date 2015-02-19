@@ -1,0 +1,8 @@
+en:
+  fae:
+    save_notice: 'Success. You’ve done good.'
+    save_error: 'Let’s slow down a bit. Check your form for errors.'
+    delete_notice: 'Item was successfully removed.'
+    delete_error: 'This item has associated objects that prevent it from being removed.'
+    delete_confirmation: 'Are you sure you want to permanently delete this item?'
+    unauthorized_error: 'You are not authorized to view that page.'

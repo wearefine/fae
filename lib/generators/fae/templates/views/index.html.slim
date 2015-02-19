@@ -35,7 +35,7 @@
                 td = attr_toggle item, :<%= attr %>
 <% end -%>
                 td.main_table-delete
-                  = link_to ['admin', item], method: :delete, data: { confirm: 'Are you sure?' }, class: 'main_table-action' do
+                  = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
                     span.icon-delete_x
           - else
             tr
