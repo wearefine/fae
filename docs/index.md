@@ -13,6 +13,7 @@ This doc needs to be structured to talk about...
 - form helpers (intro and link to helpers index)
 	- slugs
 - view helpers (intro and link to helpers index)
+- custom helpers with fae_helper.rb
 - pages
 - overridding files
 
