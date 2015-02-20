@@ -407,11 +407,14 @@ var Admin = {
   },
 
   add_cancel_param: function() {
-    $('form').on('change', 'input, textarea, select', function() {
+    var update_cancel = function () {
       var $cancel_btn = $('#main_content-header-save-cancel');
       var new_href = $cancel_btn.attr('href') + '?cancelled=true';
       $cancel_btn.attr('href', new_href);
-    });
+      $('form').off('change', 'input, textarea, select', update_cancel);
+    }
+
+    $('form').on('change', 'input, textarea, select', update_cancel);
   }
 };
 
