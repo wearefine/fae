@@ -9,12 +9,11 @@ module Fae
       model.file_size = file.size
     end
 
-
     # Include RMagick or MiniMagick support:
     include CarrierWave::RMagick
 
     def extension_white_list
-      %w(jpg jpeg gif png)
+      %w(jpg jpeg gif png ico)
     end
 
     # Override the directory where uploaded files will be stored.
