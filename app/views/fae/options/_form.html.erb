@@ -16,10 +16,10 @@
   <div class="main_content-section">
     <section class="main_content-section">
       <div class="main_content-section-area">
-        <%= f.input :title, label: "Project Name" %>
-        <%= f.input :time_zone %>
-        <%= f.input :live_url, label: 'Live URL <h6>Include http:// for external links.</h6>'.html_safe %>
-        <%= f.input :stage_url, label: 'Stage URL <h6>Include http:// for external links.</h6>'.html_safe %>
+        <%= fae_input f, :title, label: "Project Name" %>
+        <%= fae_input f, :time_zone, wrapper_class: 'select' %>
+        <%= fae_input f, :live_url, label: 'Live URL <h6>Include http:// for external links.</h6>'.html_safe %>
+        <%= fae_input f, :stage_url, label: 'Stage URL <h6>Include http:// for external links.</h6>'.html_safe %>
 
         <%= fae_image_form f, :logo, required: true %>
         <%= fae_image_form f, :favicon %>
