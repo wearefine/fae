@@ -123,7 +123,7 @@ var AjaxForms = {
 
   delete_no_form: function() {
     // on deletes that don't exist in a form like file upload area
-    $('.js-asset-delete-link').on('click', function(){
+    $('.js-asset-delete-link').on('ajax:success', function(){
       var $this = $(this);
       if (!$this.closest('.js-addedit-form-wrapper').length) {
         var $parent = $this.closest('.asset-actions');
