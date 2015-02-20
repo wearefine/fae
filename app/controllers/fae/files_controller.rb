@@ -6,7 +6,7 @@ module Fae
     # here we just remove the asset from the attached file model, because if we deleted
     # the model itself, re-uploading a new one would break.
     def delete_file
-      file = File.find_by_id(params[:id])
+      file = Fae::File.find_by_id(params[:id])
       file.remove_asset = true
       file.save
       render nothing: true
