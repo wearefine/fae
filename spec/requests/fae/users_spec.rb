@@ -5,15 +5,17 @@ describe 'users#index' do
   let(:edit_user) { FactoryGirl.create(:fae_user) }
 
   context 'when role is super admin' do
-    it 'should be able to access users' do
+    before do
       super_admin_login
+    end
+
+    it 'should be able to access users' do
       get fae.users_path
 
       expect(response.status).to eq(200)
     end
 
     it 'should be able to access user edit page' do
-      super_admin_login
       get fae.edit_user_path(edit_user)
 
       expect(response.status).to eq(200)
@@ -21,15 +23,17 @@ describe 'users#index' do
   end
 
   context 'when role is admin' do
-    it 'should be able to access users' do
+    before do
       admin_login
+    end
+
+    it 'should be able to access users' do
       get fae.users_path
 
       expect(response.status).to eq(200)
     end
 
     it 'should be able to access user edit page' do
-      admin_login
       get fae.edit_user_path(edit_user)
 
       expect(response.status).to eq(200)
@@ -37,8 +41,11 @@ describe 'users#index' do
   end
 
   context 'when role is user' do
-    it "shouldn't be able to access users" do
+    before do
       user_login
+    end
+
+    it "shouldn't be able to access users" do
       get fae.users_path
 
       expect(response.status).to eq(302)
@@ -46,7 +53,6 @@ describe 'users#index' do
     end
 
     it "shouldn't be able to access users" do
-      user_login
       get fae.edit_user_path(edit_user)
 
       expect(response.status).to eq(302)
