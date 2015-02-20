@@ -71,7 +71,7 @@ var FileInputer = {
 
 		// this is to get the filename and present it next to the button
 		this.$input.on("change", function(){
-			that.$text.text($(this).val());
+			that.$text.text($(this).val().replace("C:\\fakepath\\", ""));
 
 			if ($(this).val() !== "") {
 				that.$inputer.addClass(that.options.active_class);

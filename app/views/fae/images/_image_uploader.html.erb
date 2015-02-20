@@ -29,8 +29,8 @@
       <div class="asset-actions">
         <%= content_tag :span, the_image.asset.file.filename, class: "asset-actions-image-name" %>
         <%= image_tag the_image.asset.url, class: 'js-image-modal' %>
-        <%= link_to 'Replace Image', the_image.asset.url, class: 'js-asset-delete-link asset-actions-image-link', remote: true, method: :delete, 'data-confirm' => 'Are you sure?' if the_image.id.present? %>
-        <%= link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, 'data-confirm' => 'Are you sure?' if the_image.id.present? %>
+        <%= link_to 'Replace Image', the_image.asset.url, class: 'js-asset-delete-link asset-actions-image-link', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present? %>
+        <%= link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-delete_x', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present? %>
       </div>
     <% end %>
 
