@@ -198,6 +198,7 @@ var Admin = {
     this.ad_form.init();
     this.selects();
     this.detect_cancelled_urls();
+    this.add_cancel_param();
   },
 
   sortable: function() {
@@ -400,11 +401,17 @@ var Admin = {
 
   detect_cancelled_urls: function() {
     var params = window.location.search;
-    if (params.length > 0) {
-      if (params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
-        window.history.replaceState(null, null, window.location.pathname);
-      }
+    if (params.length > 0 && params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
+      window.history.replaceState(null, null, window.location.pathname);
     };
+  },
+
+  add_cancel_param: function() {
+    $('form').on('change', 'input, textarea, select', function() {
+      var $cancel_btn = $('#main_content-header-save-cancel');
+      var new_href = $cancel_btn.attr('href') + '?cancelled=true';
+      $cancel_btn.attr('href', new_href);
+    });
   }
 };
 
