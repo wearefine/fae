@@ -37,7 +37,6 @@ module Fae
       @klass_singular = @klass_name.singularize
       @klass_humanized = @klass_singular.humanize
       @index_path = "#{Rails.application.routes.url_helpers.fae_path}/#{@klass_name.underscore.downcase}"
-      @cancelled_path = "#{@index_path}?cancelled=true"
     end
 
     # Only allow a trusted parameter "white list" through.

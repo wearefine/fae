@@ -20,6 +20,7 @@ var Validator = {
         }
       });
       if (self.vars.IS_VALID === false) {
+        Admin.scroll_to($('span.error').first());
         e.preventDefault();
       }
     });

@@ -17,7 +17,7 @@
       <% end %>
 
       <div class="main_content-header-save">
-        <%= link_to "Cancel", users_path(cancelled: true), id: "main_content-header-save-cancel" %>
+        <%= link_to "Cancel", users_path, id: "main_content-header-save-cancel" %>
         <%= f.submit "Save Settings" %>
       </div>
     </div>
@@ -26,12 +26,12 @@
 <div class="main_content-section">
   <section class="main_content-section">
     <div class="main_content-section-area">
-      <%= f.input :first_name %>
-      <%= f.input :last_name %>
-      <%= f.input :email %>
-      <%= f.input :password %>
-      <%= f.input :password_confirmation %>
-      <%= f.association :role, collection: @role_collection if current_user.admin? || current_user.super_admin? %>
+      <%= fae_input f, :first_name %>
+      <%= fae_input f, :last_name %>
+      <%= fae_input f, :email %>
+      <%= fae_input f, :password, helper_text: 'To update your password, fill out the fields below. Otherwise leave blank. Passwords must contain at least 8 characters.' %>
+      <%= fae_input f, :password_confirmation %>
+      <%= fae_association f, :role, collection: @role_collection if current_user.admin? || current_user.super_admin? %>
     </div>
   </section>
 </div>

@@ -12,9 +12,10 @@ module Fae
 
     validates_presence_of :first_name, :email, :role
     validates_uniqueness_of :email, message: "That email address is already in use. Give another one a go."
-    validates :password, confirmation: true
-    # validates :role_id, presence: true
-    # validates :password, format: { with: /(?=.*\d)(?=.*[a-zA-Z])/, message: 'requires at least one letter and one number' }
+    validates :password,
+      confirmation: true,
+      length: { minimum: 8 }
+    validates :role_id, presence: true
 
     default_scope { order(:first_name, :last_name) }
 
