@@ -1,10 +1,6 @@
 # Fae Installation and Usage
 
-- installation (yes again)
-- generators
-- models
-	- Fae::Concerns::Models::Base
-	- fae_display_field
+
 - controllers
   - set_class_variables
   - build_assets
@@ -107,7 +103,7 @@ rails g fae:scaffold Person first_name last_name title body:text date_of_birth:d
 
 ### fae:nested_scaffold
 
-```ruby
+```bash
 rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel]
 ```
 
@@ -119,13 +115,13 @@ The nested scaffold creates a model that will be nested in another object's form
 
 ### fae:page
 
-```ruby
-rails g fae:page [page_name] [field:type] [field:type]
+```bash
+rails g fae:page [PageName] [field:type] [field:type]
 ```
 
 | option 	| description |
 |-----------|-------------|
-| page_name | the name of the page |
+| PageName	| the name of the page |
 | field 	| the name of the content block |
 | type 		| the type of the content block (see table below) |
 
@@ -135,6 +131,151 @@ rails g fae:page [page_name] [field:type] [field:type]
 | text 			| Fae::TextArea |
 | image			| Fae::Image |
 | file			| Fae::File |
+
+The page generatator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
+
+- creates or adds to `app/controllers/admin/content_blocks_controller.rb`
+- creates a `#{page_name}_page.rb` model
+- creates a form view in `app/views/admin/content_blocks/#{page_name}.html.slim`
+
+#### Example
+
+```bash
+rails g fae:page AboutUs title:string introduction:text body:text header_image:image
+```
+
+## Models
+
+A generated model will start off with sensible defaults based on the attributes you used in the generator. Here are some common custom additions you should be aware of.
+
+### Fae's Base Model Concern
+
+To allow Fae to push out any model specific updates to your application models, include the concern at the top of the class body:
+
+```ruby
+class Release < ActiveRecord::Base
+  include Fae::Concerns::Models::Base
+  # ...
+end
+```
+
+### fae_display_field
+
+Fae uses `fae_display_field` in a our table views. Defining it as a class method that returns the value of one or multpile attributes is required for those tables to display properly.
+
+If the model is generated, then it will use `name` or `title` by default.
+
+#### Examples
+
+```ruby
+def fae_display_field
+  title
+end
+```
+
+```ruby
+def fae_display_field
+  "#{last_name}, #{first_name}"
+end
+```
+
+### Nested Resources
+
+If you use nested resource routes and want updates on those objects to show up in the dashboard, you'll need to define it's parent for Fae to know how to link them.
+
+To do this, add a class method called `fae_parent` pointing to the underscored association to the parent object. Here is an example:
+
+routes.rb
+```ruby
+namespace :admin do
+  resources :groups do
+    resources :people
+  end
+end
+```
+
+models/person.rb
+```ruby
+# if this is the parent
+belongs_to :group
+
+# then you'll define this
+def fae_parent
+  group
+end
+```
+
+### Validation
+
+Fae doesn't deal with any validation definitions in your application models, you'll have to add those.
+
+#### Judge and Uniquness
+
+Fae uses [Judge](https://github.com/joecorcoran/judge) to automatically add client side validation from the declarations in the models. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
+
+```ruby
+Judge.configure do
+  expose Release, :name
+end
+```
+
+### Image and File Associations
+
+Fae provides models for images and files: `Fae::Image` and `Fae::File` rescpectively. These models come with their own attributes, validations and uploaders and can be polymorphically associated to your application models.
+
+Here's a basic example:
+
+```ruby
+has_one :bottle_shot, -> { where(attached_as: 'bottle_shot') },
+  as: :imageable,
+  class_name: '::Fae::Image',
+  dependent: :destroy
+accepts_nested_attributes_for :bottle_shot, allow_destroy: true
+```
+
+Here's the breakdown:
+
+`has_one :bottle_shot` sets the name of the custom association.
+
+`-> { where(attached_as: 'bottle_shot') }` sets the scope of the association. If we have more than one `Fae::Image` we need to set the `attached_as` to distiguish it from other images assoicated to that model.
+
+`as: :imageable, class_name: '::Fae::Image'` defines the polymorphic association.
+
+`dependent: :destroy` will make sure the image object is destroyed along with the parent object.
+
+`accepts_nested_attributes_for :bottle_shot, allow_destroy: true` allows the image/file uploader to be nested in the parent object's form in Fae.
+
+#### Other Examples
+
+An onject with many gallery images:
+
+```ruby 
+has_many :gallery_images, -> { where(attached_as: 'gallery_images') },
+  as: :imageable,
+  class_name: '::Fae::Image',
+  dependent: :destroy
+accepts_nested_attributes_for :gallery_images, allow_destroy: true
+```
+
+A file example:
+
+```ruby
+has_one :tasting_notes_pdf, -> { where(attached_as: 'tasting_notes_pdf') },
+  as: :fileable,
+  class_name: '::Fae::File',
+  dependent: :destroy
+accepts_nested_attributes_for :tasting_notes_pdf, allow_destroy: true
+```
+
+If the object only has one image association, you can get away with omitting the scope:
+
+```ruby
+has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
+accepts_nested_attributes_for :image, allow_destroy: true
+```
+
+
+
 
 
 
