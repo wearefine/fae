@@ -1,6 +1,4 @@
-# Usage
-
-This doc needs to be structured to talk about...
+# Fae Installation and Usage
 
 - installation (yes again)
 - generators
@@ -16,6 +14,129 @@ This doc needs to be structured to talk about...
 - custom helpers with fae_helper.rb
 - pages
 - overridding files
+
+
+## Installation
+
+Add the gem to your Gemfile and run `bundle install`
+
+```ruby
+gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git'
+```
+Run the installer
+
+```bash
+$ rails g fae:install
+```
+
+After the installer completes, visit `/admin` and setup your first user account. That should atomatically log you in to your blank Fae instance.
+
+### fae:install
+
+Fae's installer will do the following:
+
+- add Fae's namespace and route to `config/routes.rb`
+- add `app/assets/stylesheets/fae_variables.scss` for UI color management
+- add `app/controllers/concerns/fae/nav_items.rb` to manage main navigation
+- add Fae's initializer: `config/initializers/fae.rb`
+- add `config/initializers/judge.rb` for validation config
+- copies over migrations from Fae
+- runs `rake db:migrate`
+- seeds the DB with Fae defaults
+
+### DB Seed
+
+Fae comes with a rake task to seed the DB with defaults:
+
+```bash
+rake fae:seed_db
+```
+
+If you ran the installer, the task will be run automatically. But if you are setting up an established Fae instance locally or deploying to a server, running this will get you setup with some defaults.
+
+### Version management
+
+Fae follows semantic versioning, so you can expect the following format: `major.minor.patch`. Patch versions add bugfixes, minor versions add backwards comapitble features and major versions add non-backward complatible features.
+
+Until Fae is publically released we'll maintain branches for each major release and tag each patch. You can add arguments to the gem claration to help lock in a version if you are running `bundle update`:
+
+```ruby
+gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git', branch: 'v1'
+gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
+```
+
+## Generators
+
+Once you have Fae installed, you're ready to start generating your data model. Fae comes with a few generators that work similarly to the ones in Rails. The idea is scaffolding a model with these generators will give you a section to create, edit and delete objects.
+
+### fae:scaffold
+
+```ruby
+rails g fae:scaffold [ModelName] [field:type] [field:type]
+```
+| option | description |
+|-|-|
+| ModelName | singular camelcased model name |
+| field | the attributes column name |
+| type | the column type (defaults to `string`), find all options in [Rails' documentaion](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column) |
+
+This is Fae's main generator. It will create the following:
+
+- model
+- controller and views for fully CRUDable section
+- migration
+- resource routes
+- link in `app/controllers/concerns/fae/nav_items.rb`
+
+#### Special Attributes
+
+**name**/**title** will automatically be set as the model's `fae_display_field`.
+
+**position** will automatically make the section's index table sortable, be ignored from the form and add acts_as_list and default_scope to the model.
+
+**on_prod**/**on_stage**/**active** will automatically be flag fields in the section's index and ignored in the form.
+
+***_id**/***:references** will automatically be setup as an association in the form.
+
+#### Example
+
+```bash
+rails g fae:scaffold Person first_name last_name title body:text date_of_birth:date position:integer on_stage:boolean on_prod:boolean group:references
+```
+
+
+### fae:nested_scaffold
+
+```ruby
+rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel]
+```
+
+| option | description |
+|-|-|
+| `[--parent-model=ParentModel]` | an optional flag that adds the association to the generated model.|
+
+The nested scaffold creates a model that will be nested in another object's form via the `nested_table_advanced` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to server the nested form.
+
+### fae:page
+
+```ruby
+rails g fae:page [page_name] [field:type] [field:type]
+```
+
+| option 	| description |
+|-----------|-------------|
+| page_name | the name of the page |
+| field 	| the name of the content block |
+| type 		| the type of the content block (see table below) |
+
+| content block | associated object |
+|---------------|-------------------|
+| string 		| Fae::TextField |
+| text 			| Fae::TextArea |
+| image			| Fae::Image |
+| file			| Fae::File |
+
+
 
 
 
