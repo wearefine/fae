@@ -109,14 +109,15 @@ module Fae
     def label_and_hint(attribute, options)
       raise "Fae::ConflictingOptions: the `hint` and `dark_hint` options must not be used at the same time." if options[:hint].present? && options[:dark_hint].present?
 
-      label = options[:label] || attribute.to_s.titleize
+      attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
+      label = options[:label] || attribute_name
       if options[:markdown].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
           concat(options[:helper_text]) if options[:helper_text].present?
           concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown].present?
         end
       end
-      options[:label] = label.html_safe
+      options[:label] = label.html_safe if label.present?
 
       options[:hint] = "#{options[:hint]}".html_safe if options[:hint].present?
       options[:hint] = "<div class='dark'>#{options[:dark_hint]}</div>".html_safe if options[:dark_hint].present?

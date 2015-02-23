@@ -38,4 +38,13 @@ feature 'fae_input' do
     expect(page).to have_content('Dark Hint')
   end
 
+  scenario 'should hide label on hidden fields', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_created_at') do
+      expect(page).to_not have_content('Created at')
+    end
+  end
+
 end
