@@ -60,6 +60,10 @@ module Fae
       end
     end
 
+    def fae_scope
+      fae.root_path.gsub('/', '')
+    end
+
     private
 
     def nav_path_current?(path)
