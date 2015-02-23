@@ -69,6 +69,9 @@
         <!-- Daterange -->
         <%= fae_daterange f, [:show, :hide], label: 'Show/Hide', helper_text: 'daterange' %>
 
+        <!-- Hidden -->
+        <%= fae_input f, :created_at, as: :hidden %>
+
       </div>
     </section>
 
