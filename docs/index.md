@@ -1,13 +1,7 @@
 # Fae Installation and Usage
 
+[TOC]
 
-- controllers
-  - set_class_variables
-  - build_assets
-- form helpers (intro and link to helpers index)
-	- slugs
-- view helpers (intro and link to helpers index)
-- custom helpers with fae_helper.rb
 - pages
 - overridding files
 
@@ -274,71 +268,94 @@ has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
 accepts_nested_attributes_for :image, allow_destroy: true
 ```
 
+## Controllers
 
-
-
-
-
-
-
-###Application Helper Methods
-
-####attr_toggle
-The attr_toggle helper method takes an AR object and an attribute. It then creates the html necessary for a working fae on/off toggle switch
-```ruby
-  attr_toggle item, :on_stage
-```
-![Alt text](http://www.afinesite.com/fae/documentation/attr_toggle.png')
-
-####form_header
-The form_header helper method creates an h1 tag in the format of "params[:action] name"
-
-edit page input: `form_header @user` renders `<%= "<h1>Edit User</h1>" %>`
-
-new page input: `form_header 'Special Releases'` renders `<%= "<h1>New Special Releases</h1>" %>`
-
-####markdown_helper
-The markdown_helper supplies a string of markdown helper information
-
-####require_locals
-The require_locals method is intended to be used at the beginning of any partial that pulls in a local variable from the page that renders it. It takes a Array of strings containing the variables that are required and the local_assigns view helper method
-
-####image_form
-This helper will place a nested form partial in your view, you still need to build the image in your controller
-The method takes the form object and the object that attaches to the Image relationship. The following optional params are available:
-
-*<em>image_name</em>: the action image relationships name, defaults to :image
-*<em>image_label</em>: defaults to the image_name
-*<em>alt_label</em>: defaults to "#{image_label} alt text"
-*<em>alt_label</em>: defaults to "#{image_label} alt text"
-*<em>omit</em>: an array containing :caption and/or :alt, defaults to [:caption]
-*<em>show_thumb</em>: defaults to false
-*<em>required</em>: defaults to false
-*<em>helper_text</em>: defaults to ""
-*<em>alt_helper_text</em>: defaults to ""
-*<em>caption_helper_text</em>: defaults to ""
+Controllers that manage models in Fae should be namespaced and inherit from `Fae::BaseController`. Controllers that are generated have this already in place:
 
 ```ruby
-  fae_image_form f, :bottle_shot
+module Admin
+  class PeopleController < Fae::BaseController
+    # ...
+  end
+end
 ```
-![Alt text](http://www.afinesite.com/fae/documentation/image_form.png')
 
-####fae_date_format
-The fae_date_format method takes a Date/DateTime object and an optional timezone string as its second parameter. It simply displays dates in a uniform way accross all implementations.
+For a standard Fae section you can pretty much leave your controller empty. Most of the magic happens in [Fae::BaseController](https://bitbucket.org/wearefine/fae/src/master/app/controllers/fae/base_controller.rb). But there are a few things you should know about.
 
-###Fae Partials
+### Building Assets
 
-####_index_header.html.erb
+If the section manages objects with associated images or files, you'll need to build those objects by overridding the `build_assets` private method.
 
-* required variables
-  * title: <em>string</em>
-* optional variables
-  * new_button: <em>boolean</em>
-  * button_text: <em>string</em>
+```ruby
+module Admin
+  class WinesController < Fae::BaseController
 
-####_form_buttons.html.erb
+    private
 
-* required variables
-  * f: <em>form builder</em>
-* optional variables
-  * item: <em>instance variable for object to be deleted</em>
+    def build_assets
+      @item.build_bottle_shot if @item.bottle_shot.blank?
+      @item.build_label_pdf if @item.label_pdf.blank?
+    end
+  end
+end
+```
+
+### Custom Titles in Views
+
+If you'd like to change the generated titles in the Fae views, you can do so with the following `before_action`.
+
+```ruby
+module Admin
+  class WinesController < Fae::BaseController
+    before_action do
+      set_class_variables 'Vinos'
+    end
+  end
+end
+```
+
+This will affect the add button text and index/form page titles.
+
+
+## Form Helpers
+
+[Click here for full documentation on Fae's form helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-form-helpers)
+
+Generated forms start you off on a good place to manage the object's content, but chances are you'll want to customize them and add more fields as you data model evolves. Fae provides a number of form helpers to help you leverage Fae's built in features will allowing customization when needed.
+
+Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers it to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
+
+## View Helpers and Paritals
+
+Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
+
+[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
+[Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
+
+## Custom Helpers
+
+If you want to add your own helper methods for your Fae views, simply create and add them to `app/helpers/fae/fae_helper.rb`. 
+
+```ruby
+module Fae
+  module FaeHelper
+    # ...
+  end
+end
+```
+
+## Content Blocks (aka Pages)
+
+Fae has a built in system to handle content blocks that are statically wired to pages in your site. This is for content that isn't tied to an object in your data model, like home, about and terms content.
+
+The system is just your basic inherited singleton with dynamic polymorphic associations.
+
+
+
+
+
+
+
+
+
+
