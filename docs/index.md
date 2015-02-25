@@ -2,8 +2,9 @@
 
 [TOC]
 
-
+---
 ## Installation
+---
 
 Add the gem to your Gemfile and run `bundle install`
 
@@ -16,7 +17,7 @@ Run the installer
 $ rails g fae:install
 ```
 
-After the installer completes, visit `/admin` and setup your first user account. That should atomatically log you in to your blank Fae instance.
+After the installer completes, visit `/admin` and setup your first user account. That should automatically log you in to your blank Fae instance.
 
 ### fae:install
 
@@ -43,7 +44,7 @@ If you ran the installer, the task will be run automatically. But if you are set
 
 ### Version management
 
-Fae follows semantic versioning, so you can expect the following format: `major.minor.patch`. Patch versions add bugfixes, minor versions add backwards comapitble features and major versions add non-backward complatible features.
+Fae follows semantic versioning, so you can expect the following format: `major.minor.patch`. Patch versions add bugfixes, minor versions add backwards compilable features and major versions add non-backward compatible features.
 
 Until Fae is publically released we'll maintain branches for each major release and tag each patch. You can add arguments to the gem claration to help lock in a version if you are running `bundle update`:
 
@@ -63,7 +64,7 @@ rails g fae:scaffold [ModelName] [field:type] [field:type]
 ```
 | option | description |
 |-|-|
-| ModelName | singular camelcased model name |
+| ModelName | singular camel-cased model name |
 | field | the attributes column name |
 | type | the column type (defaults to `string`), find all options in [Rails' documentaion](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column) |
 
@@ -83,7 +84,7 @@ This is Fae's main generator. It will create the following:
 
 **on_prod**/**on_stage**/**active** will automatically be flag fields in the section's index and ignored in the form.
 
-***_id**/***:references** will automatically be setup as an association in the form.
+**_id**/**:references** will automatically be setup as an association in the form.
 
 #### Example
 
@@ -123,7 +124,7 @@ rails g fae:page [PageName] [field:type] [field:type]
 | image			| Fae::Image |
 | file			| Fae::File |
 
-The page generatator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
+The page generator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
 
 - creates or adds to `app/controllers/admin/content_blocks_controller.rb`
 - creates a `#{page_name}_page.rb` model
@@ -152,7 +153,7 @@ end
 
 ### fae_display_field
 
-Fae uses `fae_display_field` in a our table views. Defining it as a class method that returns the value of one or multpile attributes is required for those tables to display properly.
+Fae uses `fae_display_field` in a our table views. Defining it as a class method that returns the value of one or multiple attributes is required for those tables to display properly.
 
 If the model is generated, then it will use `name` or `title` by default.
 
@@ -200,7 +201,7 @@ end
 
 Fae doesn't deal with any validation definitions in your application models, you'll have to add those.
 
-#### Judge and Uniquness
+#### Judge and Uniqueness
 
 Fae uses [Judge](https://github.com/joecorcoran/judge) to automatically add client side validation from the declarations in the models. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
 
@@ -212,7 +213,7 @@ end
 
 ### Image and File Associations
 
-Fae provides models for images and files: `Fae::Image` and `Fae::File` rescpectively. These models come with their own attributes, validations and uploaders and can be polymorphically associated to your application models.
+Fae provides models for images and files: `Fae::Image` and `Fae::File` respectively. These models come with their own attributes, validations and uploaders and can be polymorphically associated to your application models.
 
 Here's a basic example:
 
@@ -228,7 +229,7 @@ Here's the breakdown:
 
 `has_one :bottle_shot` sets the name of the custom association.
 
-`-> { where(attached_as: 'bottle_shot') }` sets the scope of the association. If we have more than one `Fae::Image` we need to set the `attached_as` to distiguish it from other images assoicated to that model.
+`-> { where(attached_as: 'bottle_shot') }` sets the scope of the association. If we have more than one `Fae::Image` we need to set the `attached_as` to distinguish it from other images associated to that model.
 
 `as: :imageable, class_name: '::Fae::Image'` defines the polymorphic association.
 
@@ -240,7 +241,7 @@ Here's the breakdown:
 
 An onject with many gallery images:
 
-```ruby 
+```ruby
 has_many :gallery_images, -> { where(attached_as: 'gallery_images') },
   as: :imageable,
   class_name: '::Fae::Image',
@@ -281,7 +282,7 @@ For a standard Fae section you can pretty much leave your controller empty. Most
 
 ### Building Assets
 
-If the section manages objects with associated images or files, you'll need to build those objects by overridding the `build_assets` private method.
+If the section manages objects with associated images or files, you'll need to build those objects by overriding the `build_assets` private method.
 
 ```ruby
 module Admin
@@ -396,16 +397,16 @@ Generated forms start you off on a good place to manage the object's content, bu
 
 Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers it to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
 
-## View Helpers and Paritals
+## View Helpers and Partials
 
 Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
 
-[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
+[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)    
 [Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
 
 ## Custom Helpers
 
-If you want to add your own helper methods for your Fae views, simply create and add them to `app/helpers/fae/fae_helper.rb`. 
+If you want to add your own helper methods for your Fae views, simply create and add them to `app/helpers/fae/fae_helper.rb`.
 
 ```ruby
 module Fae
@@ -534,7 +535,7 @@ If you need to create custom classes, it's recommended you inherit from a Fae cl
 
 ### Fae Model Concerns
 
-Each one of Fae's models has a built in concern. You can create that concern in your application to easily inject logic into built in models, following Rails' concern pattern. E.g. adding methods to `app/models/concerns/fae/role_concern.rb` will make them accesible to `Fae::Role`.
+Each one of Fae's models has a built in concern. You can create that concern in your application to easily inject logic into built in models, following Rails' concern pattern. E.g. adding methods to `app/models/concerns/fae/role_concern.rb` will make them accessible to `Fae::Role`.
 
 #### Example: Adding OAuth2 logic to Fae::User
 
@@ -588,7 +589,7 @@ end
 | Fae::User                  | app/models/concerns/user_concern.rb |
 
 
-### Overidding Classes
+### Overriding Classes
 
 If there's no way to inherit from or inject into a Fae class, your last effort would be to override it. To do that, simply copy the Fae class into your application in the same path found in Fae and customize it from there.
 
