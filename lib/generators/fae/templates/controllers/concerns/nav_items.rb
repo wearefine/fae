@@ -10,10 +10,11 @@ module Fae
     #
     # format:
     #   { text: 'Cities', path: main_app.admin_cities_path, class: 'if-you-want' },
-    #   {
-    #     text: 'Items with subnav', sublinks: {
-    #       text: 'Item Sublink 1', path: main_app.admin_some_path,
-    #       text: 'Item Sublink 2', path: main_app.admin_someother_path
+    #     {
+    #       text: 'Items with sublinks', sublinks: [
+    #         { text: 'Item Sublink 1', path: main_app.admin_some_path },
+    #         { text: 'Item Sublink 2', path: main_app.admin_someother_path }
+    #       ]
     #     }
     #   },
     #   { text: 'Pages', path: fae.pages_path }

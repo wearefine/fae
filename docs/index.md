@@ -2,9 +2,6 @@
 
 [TOC]
 
-- pages
-- overridding files
-
 
 ## Installation
 
@@ -316,6 +313,80 @@ end
 
 This will affect the add button text and index/form page titles.
 
+## Navigation Items
+
+When you use the generators, a link to the section appears in the main navigation of the admin. This is done by automatically adding to `app/controllers/concerns/fae/nav_items.rb`. However, this file is available for you to customize the nav however you'd like.
+
+The navigation is built of of the array set in the `nav_items` method. Each array item is a hash with these available keys:
+
+| Key | Type | Description |
+|-|-|
+| text | string | the link's text |
+| path | string or named route | the link's href (defaults to '#') |
+| class | string | an added class to the link |
+| sublinks | array of hashes | nested links to be displayed in a dropdown |
+
+### Named Routes in nav_items.rb
+
+Since the `nav_items` concern hooks directly into Fae, named routes need context using the following prefixes:
+
+```ruby
+def nav_items
+  [
+    # use `main_app.` for application routes (even in your admin)
+    { text: 'Cities', path: main_app.admin_cities_path },
+    # use `fae.` for Fae routes
+    { text: 'Pages', path: fae.pages_path }
+  ]
+end
+```
+
+### Sublinks
+
+When sublinks are present, the main nav item will trigger a drawer holding the sublinks to open/close. Add sublinks using the following format:
+
+```ruby
+def nav_items
+  [
+    {
+      text: 'Items with sublinks', sublinks: [
+        { text: 'Item Sublink 1', path: main_app.admin_some_path },
+        { text: 'Item Sublink 2', path: main_app.admin_someother_path }
+      ]
+    }
+  ]
+end
+```
+
+### Dynamic Content in Nav
+
+Dynamic content is allowed in the the `nav_items` concern. Here's an example:
+
+```ruby
+module Fae
+  module NavItems
+    extend ActiveSupport::Concern
+
+    def nav_items
+      [
+        { text: 'Releases', path: main_app.admin_releases_path },
+        { text: 'Tiers', sublinks: tier_sublinks }
+      ]
+    end
+
+    private
+
+    def tier_sublinks
+      tiers_arr = [{ text: 'New Tier', path: main_app.new_admin_tier_path }]
+      Tier.each do |tier|
+        tiers_arr << { text: tier.name, path: main_app.edit_admin_tier_path(tier) }
+      end
+      tiers_arr
+    end
+
+  end
+end
+```
 
 ## Form Helpers
 
@@ -344,18 +415,183 @@ module Fae
 end
 ```
 
-## Content Blocks (aka Pages)
+## Pages and Content Blocks
 
-Fae has a built in system to handle content blocks that are statically wired to pages in your site. This is for content that isn't tied to an object in your data model, like home, about and terms content.
+Fae has a built in system to handle content blocks that are statically wired to pages in your site. This is for content that isn't tied to an object in your data model, e.g. home, about and terms content.
 
-The system is just your basic inherited singleton with dynamic polymorphic associations.
+The system is just your basic inherited singleton with dynamic polymorphic associations. Kidding aside, the complexity of the system is hidden and "it just works™" if you use the generators and/or follow the conventions. This allows for dynamic content blocks that can be added without database migrations and wired up without static IDs!
+
+### Pages vs Content Blocks
+
+**Pages** are groups of **content blocks** based on the actual pages they appear on the site. For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
+
+### Generating Pages
+
+It is highly recommended you use the built in generator to add pages, especially if it's the first page in the admin. Let's do that for our example:
+
+```bash
+rails g fae:page AboutUs hero_image:image hero_text:string introduction:text body:text annual_report:file
+```
+
+This will generate...
+
+`app/models/about_us_page.rb`
+```ruby
+class AboutUsPage < Fae::StaticPage
+
+  @slug = 'about_us'
+
+  # required to set the has_one associations, Fae::StaticPage will build these associations dynamically
+  def self.fae_fields
+    {
+      hero_image: Fae::Image,
+      hero_text: Fae::TextField
+      introduction: Fae::TextArea,
+      body: Fae::TextArea,
+      annual_report: Fae::File
+    }
+  end
+
+end
+```
+
+`app/views/fae/pages/about_us.html.slim`
+```ruby
+= simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
+  section.main_content-header
+    .main_content-header-wrapper
+      = render 'fae/shared/form_header', header: @item
+      = render 'fae/shared/form_buttons', f: f
+
+  .main_content-sections
+    section.main_content-section
+      .main_content-section-area
+        = fae_input f, :title
+
+        = fae_image_form f, :hero_image
+        = fae_content_form f, :hero_text
+        = fae_content_form f, :introduction
+        = fae_content_form f, :body
+        = fae_file_form f, :annual_report
+```
+
+Since this is the first page the generator will create `app/controllers/admin/content_blocks_controller.rb`, otherwise it would just add to the `fae_pages` array.
 
 
+```ruby
+module Admin
+  class ContentBlocksController < Fae::StaticPagesController
+
+    private
+
+    def fae_pages
+      [AboutUsPage]
+    end
+  end
+end
+```
+
+### Adding Content Blocks
+
+Chances are you'll need to add content blocks to a page after it's been generated. To do so simply:
+
+- add the new content blocks to `fae_fields` in the `AboutUsPage` model
+- add the appropriate form elements to the form at `about_us.html.slim`
+	- `fae_content_form` for `Fae::TextField` and `Fae::TextArea`
+	- `fae_image_form` for `Fae::Image`
+	- `fae_file_form` for `Fae::File`
+
+### Getting Your Content Blocks
+
+Each page generated is a singleton model and each content block is an association to a Fae model.
+
+To get an instance of your page:
+
+```ruby
+@about_us_page = AboutUsPage.instance
+```
+
+Then to get content from a `Fae::TextField` and `Fae::TextArea`:
+
+```ruby
+# for `Fae::TextField` or `Fae::TextArea`
+@about_us_page.hero_text.content
+# ... or ...
+@about_us_page.hero_text_content
+
+# for `Fae::Image` or `Fae::File`
+@about_us_page.hero_image.asset.url
+# for `Fae::Image` only
+@about_us_page.hero_image.asset.alt
+@about_us_page.hero_image.asset.caption
+```
+
+## Customization
+
+Fae is meant to allow some radically customization. You can stray completely from Fae's generators and helpers and build your own admin section. However, if you stray from Fae standards you lose the benefit of future bug fixes and feature Fae may provide.
+
+If you need to create custom classes, it's recommended you inherit from a Fae class and if you need to update a Fae class, look for a concern to inject into first.
+
+### Fae Model Concerns
+
+Each one of Fae's models has a built in concern. You can create that concern in your application to easily inject logic into built in models, following Rails' concern pattern. E.g. adding methods to `app/models/concerns/fae/role_concern.rb` will make them accesible to `Fae::Role`.
+
+#### Example: Adding OAuth2 logic to Fae::User
+
+Say we wanted to add a lookup class method to `Fae::User` to allow for Google OAuth2 authentication. We simply need to add the following to our application:
+
+`app/models/concerns/fae/user_concern.rb`
+```ruby
+module Fae
+  module UserConcern
+    extend ActiveSupport::Concern
+
+    included do
+      # overidde Fae::User devise settings
+      devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
+    end
+
+    module ClassMethods
+      # add new class method to Fae::User
+      def self.find_for_google_oauth2(access_token, signed_in_resource = nil)
+        data = access_token.info
+        user = Fae::User.find_by_email(data['email'])
+
+        unless user
+          user = Fae::User.create(
+            first_name: data['name'],
+            email: data['email'],
+            role_id: 3,
+            active: 1,
+            password: Devise.friendly_token[0, 20]
+          )
+        end
+        user
+      end
+    end
+
+  end
+end
+```
+
+#### Available Fae Concerns
+
+| Fae Class                  | Concern Path |
+|----------------------------|--------------|
+| Fae::ApplicationController | app/controllers/concerns/application_controller_concern.rb |
+| Fae::File                  | app/models/concerns/file_concern.rb |
+| Fae::Image                 | app/models/concerns/image_concern.rb |
+| Fae::Option                | app/models/concerns/option_concern.rb |
+| Fae::StaticPage            | app/models/concerns/static_page_concern.rb |
+| Fae::TextArea              | app/models/concerns/text_area_concern.rb |
+| Fae::TextField             | app/models/concerns/text_field_concern.rb |
+| Fae::User                  | app/models/concerns/user_concern.rb |
 
 
+### Overidding Classes
 
+If there's no way to inherit from or inject into a Fae class, your last effort would be to override it. To do that, simply copy the Fae class into your application in the same path found in Fae and customize it from there.
 
-
-
+E.g. if you need to customize Fae's `image_controller.rb`, copy the file from Fae into your application at `app/controllers/fae/image_controller.rb`.
 
 
