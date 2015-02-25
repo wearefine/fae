@@ -3,8 +3,8 @@
 [TOC]
 
 ---
-## Installation
----
+
+# Installation
 
 Add the gem to your Gemfile and run `bundle install`
 
@@ -19,7 +19,7 @@ $ rails g fae:install
 
 After the installer completes, visit `/admin` and setup your first user account. That should automatically log you in to your blank Fae instance.
 
-### fae:install
+## fae:install
 
 Fae's installer will do the following:
 
@@ -32,7 +32,7 @@ Fae's installer will do the following:
 - runs `rake db:migrate`
 - seeds the DB with Fae defaults
 
-### DB Seed
+## DB Seed
 
 Fae comes with a rake task to seed the DB with defaults:
 
@@ -42,7 +42,7 @@ rake fae:seed_db
 
 If you ran the installer, the task will be run automatically. But if you are setting up an established Fae instance locally or deploying to a server, running this will get you setup with some defaults.
 
-### Version management
+## Version management
 
 Fae follows semantic versioning, so you can expect the following format: `major.minor.patch`. Patch versions add bugfixes, minor versions add backwards compilable features and major versions add non-backward compatible features.
 
@@ -53,11 +53,13 @@ gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git', branch: 'v1'
 gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
 ```
 
-## Generators
+---
+
+# Generators
 
 Once you have Fae installed, you're ready to start generating your data model. Fae comes with a few generators that work similarly to the ones in Rails. The idea is scaffolding a model with these generators will give you a section to create, edit and delete objects.
 
-### fae:scaffold
+## fae:scaffold
 
 ```ruby
 rails g fae:scaffold [ModelName] [field:type] [field:type]
@@ -76,7 +78,7 @@ This is Fae's main generator. It will create the following:
 - resource routes
 - link in `app/controllers/concerns/fae/nav_items.rb`
 
-#### Special Attributes
+### Special Attributes
 
 **name**/**title** will automatically be set as the model's `fae_display_field`.
 
@@ -86,14 +88,14 @@ This is Fae's main generator. It will create the following:
 
 **_id**/**:references** will automatically be setup as an association in the form.
 
-#### Example
+### Example
 
 ```bash
 rails g fae:scaffold Person first_name last_name title body:text date_of_birth:date position:integer on_stage:boolean on_prod:boolean group:references
 ```
 
 
-### fae:nested_scaffold
+## fae:nested_scaffold
 
 ```bash
 rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel]
@@ -105,7 +107,7 @@ rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-mode
 
 The nested scaffold creates a model that will be nested in another object's form via the `nested_table_advanced` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to server the nested form.
 
-### fae:page
+## fae:page
 
 ```bash
 rails g fae:page [PageName] [field:type] [field:type]
@@ -130,17 +132,19 @@ The page generator scaffolds a page into Fae's content blocks system. More on th
 - creates a `#{page_name}_page.rb` model
 - creates a form view in `app/views/admin/content_blocks/#{page_name}.html.slim`
 
-#### Example
+### Example
 
 ```bash
 rails g fae:page AboutUs title:string introduction:text body:text header_image:image
 ```
 
-## Models
+---
+
+# Models
 
 A generated model will start off with sensible defaults based on the attributes you used in the generator. Here are some common custom additions you should be aware of.
 
-### Fae's Base Model Concern
+## Fae's Base Model Concern
 
 To allow Fae to push out any model specific updates to your application models, include the concern at the top of the class body:
 
@@ -151,13 +155,13 @@ class Release < ActiveRecord::Base
 end
 ```
 
-### fae_display_field
+## fae_display_field
 
 Fae uses `fae_display_field` in a our table views. Defining it as a class method that returns the value of one or multiple attributes is required for those tables to display properly.
 
 If the model is generated, then it will use `name` or `title` by default.
 
-#### Examples
+### Examples
 
 ```ruby
 def fae_display_field
@@ -171,7 +175,7 @@ def fae_display_field
 end
 ```
 
-### Nested Resources
+## Nested Resources
 
 If you use nested resource routes and want updates on those objects to show up in the dashboard, you'll need to define it's parent for Fae to know how to link them.
 
@@ -197,11 +201,11 @@ def fae_parent
 end
 ```
 
-### Validation
+## Validation
 
 Fae doesn't deal with any validation definitions in your application models, you'll have to add those.
 
-#### Judge and Uniqueness
+### Judge and Uniqueness
 
 Fae uses [Judge](https://github.com/joecorcoran/judge) to automatically add client side validation from the declarations in the models. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
 
@@ -211,7 +215,7 @@ Judge.configure do
 end
 ```
 
-### Image and File Associations
+## Image and File Associations
 
 Fae provides models for images and files: `Fae::Image` and `Fae::File` respectively. These models come with their own attributes, validations and uploaders and can be polymorphically associated to your application models.
 
@@ -237,7 +241,7 @@ Here's the breakdown:
 
 `accepts_nested_attributes_for :bottle_shot, allow_destroy: true` allows the image/file uploader to be nested in the parent object's form in Fae.
 
-#### Other Examples
+### Other Examples
 
 An onject with many gallery images:
 
@@ -266,7 +270,9 @@ has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
 accepts_nested_attributes_for :image, allow_destroy: true
 ```
 
-## Controllers
+---
+
+# Controllers
 
 Controllers that manage models in Fae should be namespaced and inherit from `Fae::BaseController`. Controllers that are generated have this already in place:
 
@@ -280,7 +286,7 @@ end
 
 For a standard Fae section you can pretty much leave your controller empty. Most of the magic happens in [Fae::BaseController](https://bitbucket.org/wearefine/fae/src/master/app/controllers/fae/base_controller.rb). But there are a few things you should know about.
 
-### Building Assets
+## Building Assets
 
 If the section manages objects with associated images or files, you'll need to build those objects by overriding the `build_assets` private method.
 
@@ -298,7 +304,7 @@ module Admin
 end
 ```
 
-### Custom Titles in Views
+## Custom Titles in Views
 
 If you'd like to change the generated titles in the Fae views, you can do so with the following `before_action`.
 
@@ -314,7 +320,9 @@ end
 
 This will affect the add button text and index/form page titles.
 
-## Navigation Items
+---
+
+# Navigation Items
 
 When you use the generators, a link to the section appears in the main navigation of the admin. This is done by automatically adding to `app/controllers/concerns/fae/nav_items.rb`. However, this file is available for you to customize the nav however you'd like.
 
@@ -327,7 +335,7 @@ The navigation is built of of the array set in the `nav_items` method. Each arra
 | class | string | an added class to the link |
 | sublinks | array of hashes | nested links to be displayed in a dropdown |
 
-### Named Routes in nav_items.rb
+## Named Routes in nav_items.rb
 
 Since the `nav_items` concern hooks directly into Fae, named routes need context using the following prefixes:
 
@@ -342,7 +350,7 @@ def nav_items
 end
 ```
 
-### Sublinks
+## Sublinks
 
 When sublinks are present, the main nav item will trigger a drawer holding the sublinks to open/close. Add sublinks using the following format:
 
@@ -359,7 +367,7 @@ def nav_items
 end
 ```
 
-### Dynamic Content in Nav
+## Dynamic Content in Nav
 
 Dynamic content is allowed in the the `nav_items` concern. Here's an example:
 
@@ -389,7 +397,9 @@ module Fae
 end
 ```
 
-## Form Helpers
+---
+
+# Form Helpers
 
 [Click here for full documentation on Fae's form helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-form-helpers)
 
@@ -397,14 +407,18 @@ Generated forms start you off on a good place to manage the object's content, bu
 
 Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers it to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
 
-## View Helpers and Partials
+---
+
+# View Helpers and Partials
 
 Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
 
 [Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)    
 [Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
 
-## Custom Helpers
+---
+
+# Custom Helpers
 
 If you want to add your own helper methods for your Fae views, simply create and add them to `app/helpers/fae/fae_helper.rb`.
 
@@ -416,17 +430,19 @@ module Fae
 end
 ```
 
-## Pages and Content Blocks
+---
+
+# Pages and Content Blocks
 
 Fae has a built in system to handle content blocks that are statically wired to pages in your site. This is for content that isn't tied to an object in your data model, e.g. home, about and terms content.
 
 The system is just your basic inherited singleton with dynamic polymorphic associations. Kidding aside, the complexity of the system is hidden and "it just works™" if you use the generators and/or follow the conventions. This allows for dynamic content blocks that can be added without database migrations and wired up without static IDs!
 
-### Pages vs Content Blocks
+## Pages vs Content Blocks
 
 **Pages** are groups of **content blocks** based on the actual pages they appear on the site. For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
 
-### Generating Pages
+## Generating Pages
 
 It is highly recommended you use the built in generator to add pages, especially if it's the first page in the admin. Let's do that for our example:
 
@@ -492,7 +508,7 @@ module Admin
 end
 ```
 
-### Adding Content Blocks
+## Adding Content Blocks
 
 Chances are you'll need to add content blocks to a page after it's been generated. To do so simply:
 
@@ -502,7 +518,7 @@ Chances are you'll need to add content blocks to a page after it's been generate
 	- `fae_image_form` for `Fae::Image`
 	- `fae_file_form` for `Fae::File`
 
-### Getting Your Content Blocks
+## Getting Your Content Blocks
 
 Each page generated is a singleton model and each content block is an association to a Fae model.
 
@@ -527,17 +543,19 @@ Then to get content from a `Fae::TextField` and `Fae::TextArea`:
 @about_us_page.hero_image.asset.caption
 ```
 
-## Customization
+---
+
+# Customization
 
 Fae is meant to allow some radically customization. You can stray completely from Fae's generators and helpers and build your own admin section. However, if you stray from Fae standards you lose the benefit of future bug fixes and feature Fae may provide.
 
 If you need to create custom classes, it's recommended you inherit from a Fae class and if you need to update a Fae class, look for a concern to inject into first.
 
-### Fae Model Concerns
+## Fae Model Concerns
 
 Each one of Fae's models has a built in concern. You can create that concern in your application to easily inject logic into built in models, following Rails' concern pattern. E.g. adding methods to `app/models/concerns/fae/role_concern.rb` will make them accessible to `Fae::Role`.
 
-#### Example: Adding OAuth2 logic to Fae::User
+### Example: Adding OAuth2 logic to Fae::User
 
 Say we wanted to add a lookup class method to `Fae::User` to allow for Google OAuth2 authentication. We simply need to add the following to our application:
 
@@ -575,7 +593,7 @@ module Fae
 end
 ```
 
-#### Available Fae Concerns
+### Available Fae Concerns
 
 | Fae Class                  | Concern Path |
 |----------------------------|--------------|
@@ -589,7 +607,7 @@ end
 | Fae::User                  | app/models/concerns/user_concern.rb |
 
 
-### Overriding Classes
+## Overriding Classes
 
 If there's no way to inherit from or inject into a Fae class, your last effort would be to override it. To do that, simply copy the Fae class into your application in the same path found in Fae and customize it from there.
 
