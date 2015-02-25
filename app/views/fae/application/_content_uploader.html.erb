@@ -4,7 +4,7 @@
 <% helper_text ||= "" %>
 <% markdown ||= false %>
 <% if markdown.present? || helper_text.present?
-     label = content_tag :h6, class: 'helper_text' do
+     label += content_tag :h6, class: 'helper_text' do
        concat(helper_text) if helper_text.present?
        concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown.present?
      end
