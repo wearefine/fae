@@ -53,8 +53,8 @@
               <td><%= fae_date_format item.updated_at %></td>
               <td><%= item.slug %></td>
               <td><%= item.price %></td>
-              <td><%= attr_toggle item, :on_stage %></td>
-              <td><%= attr_toggle item, :on_prod %></td>
+              <td><%= fae_toggle item, :on_stage %></td>
+              <td><%= fae_toggle item, :on_prod %></td>
               <td class="main_table-edit">
                 <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
                   <span class="icon-edit"></span>

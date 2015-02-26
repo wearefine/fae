@@ -21,5 +21,22 @@ module Fae
       render 'fae/application/content_uploader', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown
     end
 
+    def attr_toggle(item, column)
+      active = item.send(column)
+      link_class = active ? 'slider-yes-selected' : ''
+      model_name = item.class.to_s.include?("Fae::") ? item.class.to_s.gsub('::','').underscore.pluralize : item.class.to_s.underscore.pluralize
+      url = fae.toggle_path(model_name, item.id.to_s, column)
+
+      link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do
+        '<div class="slider-options">
+          <div class="slider-option slider-option-yes">Yes</div>
+          <div class="slider-option-selector"></div>
+          <div class="slider-option slider-option-no">No</div>
+        </div>'.html_safe
+      end
+    end
+    # for backwards compatibility
+    alias_method :fae_toggle, :attr_toggle
+
   end
 end
