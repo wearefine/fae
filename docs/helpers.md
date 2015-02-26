@@ -2,11 +2,13 @@
 
 [TOC]
 
-## Form Helpers
+---
+
+# Form Helpers
 
 Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers it to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
 
-### Format
+## Format
 
 All form helpers are in the following format:
 
@@ -20,7 +22,7 @@ fae_method_name(f, attribute, options)
 | attribute | **(required)** The attribute the form element is displaying. It's recommended you use symbols over strings. |
 | options | An optional hash of options to customize the form element. |
 
-#### Global Options
+### Global Options
 
 | option | type | default | description |
 |-|-|-|-|-|
@@ -34,7 +36,7 @@ fae_method_name(f, attribute, options)
 | validate | boolean | true | triggers `judge` to validate element |
 
 
-### fae_input(f, attribute, options)
+## fae_input
 
 *attributes only*
 
@@ -53,7 +55,7 @@ A textarea with Fae's built-in markdown hint:
 fae_input f, :description, hint: markdown_helper
 ```
 
-### fae_association(f, attribute, options)
+## fae_association
 
 *associations only*
 
@@ -70,19 +72,43 @@ A dropdown listing active people
 fae_association f, :people, collection: Person.active
 ```
 
-### fae_checkbox(f, attribute, options)
+## fae_checkbox
 
 | option | type | default | description |
 |-|-|-|-|-|
 | type | 'stacked' or 'inline' | stacked | determines how multiple checkboxes are displayed |
 
-### fae_radio(f, attribute, options)
+**Examples**
+
+A single attribute checkbox
+```ruby
+fae_checkbox f, :active
+```
+
+Inline has_many collection of checkboxes
+```ruby
+fae_checkbox f, :promos, type: 'inline', collection: Promo.live
+```
+
+## fae_radio
 
 | option | type | default | description |
 |-|-|-|-|-|
 | type | 'stacked' or 'inline' | stacked | determines how multiple checkboxes are displayed |
 
-### fae_pulldown(f, attribute, options)
+**Examples**
+
+A single attribute radio
+```ruby
+fae_radio f, :active, type: 'inline'
+```
+
+A belongs_to association
+```ruby
+fae_radio f, :wine
+```
+
+## fae_pulldown
 
 | option | type | default | description |
 |-|-|-|-|-|
@@ -90,7 +116,14 @@ fae_association f, :people, collection: Person.active
 | size | 'long' or 'short' | long | determines the size of the pulldown |
 | search | boolean | search is displayed with more than 10 items | determines whether or not to show the search bar |
 
-### fae_multiselect(f, attribute, options)
+**Examples**
+
+A short pulldown of a belongs_to association
+```ruby
+fae_pulldown f, :wine, size: 'short', collection: Wine.order(:name)
+```
+
+## fae_multiselect
 
 *associations only*
 
@@ -98,7 +131,19 @@ fae_association f, :people, collection: Person.active
 |-|-|-|-|-|
 | two_pane | boolean | false | By default this will display a chosen style multiselect, setting this to true will display the 'two pane' style. |
 
-### fae_grouped_select(f, attribute, options)
+**Examples**
+
+A chosen style mutliselect with custom label_method
+```ruby
+fae_multiselect f, :acclaims, label_method: :publication
+```
+
+A two pane style multiselect
+```ruby
+fae_multiselect f, :selling_points, two_pane: true
+```
+
+## fae_grouped_select
 
 | option | type | default | description |
 |-|-|-|-|-|
@@ -106,20 +151,29 @@ fae_association f, :people, collection: Person.active
 | groups | array of strings | | must be used with labels |
 | labels | array of strings | | must be used with groups |
 
-### fae_datepicker(f, attribute, options)
+## fae_datepicker
 
 *attributes only*
 
-### fae_daterangepicker(f, attribute, options)
+**Examples**
+
+```ruby
+fae_datepicker f, :release_date
+```
+
+## fae_daterangepicker
 
 *attributes only*
 
-| option | type | default | description |
-|-|-|-|-|-|
-| start_date | symbol | | start date for the date picker picker |
-| end_date | symbol | | end date for the date picker picker |
+The daterangepicker is a little different: instead of a single attribute, it accepts an array of two attributes.
 
-### fae_prefix(f, attribute, options)
+**Examples**
+
+```ruby
+fae_daterangepicker f, [:start_date, :end_date], label: 'Start/End dates'
+```
+
+## fae_prefix
 
 *attributes only*
 
@@ -128,7 +182,13 @@ fae_association f, :people, collection: Person.active
 | prefix | string | | **(required)** string to appear in prefix box |
 | icon | boolean | false | determines whether or not to display prefix icon |
 
-### fae_suffix(f, attribute, options)
+**Examples**
+
+```ruby
+fae_prefix f, :price, prefix: '$', placeholder: '50.00'
+```
+
+## fae_suffix
 
 *attributes only*
 
@@ -137,18 +197,49 @@ fae_association f, :people, collection: Person.active
 | suffix | string | | **(required)** string to appear in suffix box |
 | icon | boolean | false | determines whether or not to display prefix icon |
 
-### fae_video_url(f, attribute, options)
+**Examples**
+
+```ruby
+fae_suffix f, :weight, suffix: 'lbs'
+```
+
+## fae_video_url(f, attribute, options)
 
 *attributes only*
 
-## View Helpers
+This helper is a normal fae_input, but provides a custom helper and hint specific to extracting Youtube IDs.
 
-### attr_toggle
-The attr_toggle helper method takes an AR object and an attribute. It then creates the html necessary for a working fae on/off toggle switch
+**Examples**
+
 ```ruby
-  attr_toggle item, :on_stage
+fae_video_url f, :video_url
 ```
-![Alt text](http://www.afinesite.com/fae/documentation/attr_toggle.png')
+
+---
+
+# View Helpers
+
+- fae_date_format
+- attr_toggle
+- markdown_helper
+- form_header
+- require_locals
+
+## fae_date_format
+
+The fae_date_format helper formats a DateTime object in Fae's preferred method.
+
+```ruby
+fae_date_format item.updated_at
+```
+
+## fae_toggle
+
+The fae_toggle helper method takes an AR object and attribute. It then creates the HTML necessary for a working Fae on/off toggle switch.
+
+```ruby
+fae_toggle item, :on_prod
+```
 
 ### form_header
 The form_header helper method creates an h1 tag in the format of "params[:action] name"
