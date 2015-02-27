@@ -30,7 +30,7 @@ fae_method_name(f, attribute, options)
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal (cannot be combined with `dark_hint`) |
 | dark_hint | string | | text that appears in a dark color scheme (cannot be combined with `hint`) |
-| markdown | boolean | | activator for the modal helper text |
+| markdown | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
 | wrapper_class | string | | a class to add to the wrapper element |
 | validate | boolean | true | triggers `judge` to validate element |
@@ -203,7 +203,7 @@ fae_prefix f, :price, prefix: '$', placeholder: '50.00'
 fae_suffix f, :weight, suffix: 'lbs'
 ```
 
-## fae_video_url(f, attribute, options)
+## fae_video_url
 
 *attributes only*
 
@@ -217,13 +217,74 @@ fae_video_url f, :video_url
 
 ---
 
-# View Helpers
+# Nested Form Helpers
 
-- fae_date_format
-- attr_toggle
-- markdown_helper
-- form_header
-- require_locals
+
+## fae_image_form
+
+*Fae::Image association only*
+
+| option | type | default | description |
+|-|-|-|-|-|
+| label         | string | image_name.to_s.humanize | the uploader's label |
+| helper_text         | string | | the uploader's helper text|
+| alt_label           | string | "#{image_label} alt text" | the alt field's label |
+| alt_helper_text     | string | | the alt field's helper text |
+| caption_label       | string | "#{image_label} caption" | the caption field's label |
+| caption_helper_text | string | | the caption field's helper text |
+| show_alt            | boolean | true | displays the alt field, label and helper text |
+| show_caption        | boolean | false | displays the caption field, label and helper text |
+| required            | boolean | false | adds required validation to the uploader |
+
+
+**Examples**
+
+```ruby
+fae_image_form f, :logo, label: 'Corporate Logo', required: true
+```
+
+## fae_file_form
+
+*Fae::File association only*
+
+| option | type | default | description |
+|-|-|-|-|-|
+| label         | string | file_name.to_s.humanize | the uploader's label |
+| helper_text   | string | | the uploader's helper text|
+| required      | boolean | false | adds required validation to the uploader |
+
+image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
+
+
+**Examples**
+
+```ruby
+fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
+```
+
+## fae_content_form
+
+*Fae::TextField and Fae::TextArea association only*
+
+| option | type | default | description |
+|-|-|-|-|-|
+| label         | string | attribute.to_s.titleize | the fields's label |
+| helper_text   | string | | the fields's helper text |
+| hint          | string | | the fields's hint text (supports HTML) |
+| markdown      | boolean | false | displays support text and hint for markdown |
+
+image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
+
+
+**Examples**
+
+```ruby
+fae_content_form f, :body, markdown: true
+```
+
+---
+
+# View Helpers
 
 ## fae_date_format
 
@@ -241,57 +302,122 @@ The fae_toggle helper method takes an AR object and attribute. It then creates t
 fae_toggle item, :on_prod
 ```
 
-### form_header
-The form_header helper method creates an h1 tag in the format of "params[:action] name"
+## form_header
 
-edit page input: `form_header @user` renders `<%= "<h1>Edit User</h1>" %>`
-
-new page input: `form_header 'Special Releases'` renders `<%= "<h1>New Special Releases</h1>" %>`
-
-### markdown_helper
-The markdown_helper supplies a string of markdown helper information
-
-### require_locals
-The require_locals method is intended to be used at the beginning of any partial that pulls in a local variable from the page that renders it. It takes a Array of strings containing the variables that are required and the local_assigns view helper method
-
-### image_form
-This helper will place a nested form partial in your view, you still need to build the image in your controller
-The method takes the form object and the object that attaches to the Image relationship. The following optional params are available:
-
-*<em>image_name</em>: the action image relationships name, defaults to :image
-*<em>image_label</em>: defaults to the image_name
-*<em>alt_label</em>: defaults to "#{image_label} alt text"
-*<em>alt_label</em>: defaults to "#{image_label} alt text"
-*<em>omit</em>: an array containing :caption and/or :alt, defaults to [:caption]
-*<em>show_thumb</em>: defaults to false
-*<em>required</em>: defaults to false
-*<em>helper_text</em>: defaults to ""
-*<em>alt_helper_text</em>: defaults to ""
-*<em>caption_helper_text</em>: defaults to ""
+The form_header helper takes an AR object or string to render an `<h1>` based on the action.
 
 ```ruby
-  fae_image_form f, :bottle_shot
+form_header @user
 ```
-![Alt text](http://www.afinesite.com/fae/documentation/image_form.png')
+renders `<h1>Edit User</h1>` on the edit page
 
-### fae_date_format
-The fae_date_format method takes a Date/DateTime object and an optional timezone string as its second parameter. It simply displays dates in a uniform way accross all implementations.
+```ruby
+form_header 'Release'
+```
+renders `<h1>New Release</h1>` on the new page
 
-## Fae Partials
+## require_locals
 
-### _index_header.html.erb
+The require_locals method is intended to be used at the beginning of any partial that pulls in a local variable from the page that renders it. It takes a Array of strings containing the variables that are required and the local_assigns view helper method.
 
-* required variables
-  * title: <em>string</em>
-* optional variables
-  * new_button: <em>boolean</em>
-  * button_text: <em>string</em>
+If one of the locals aren't set when the partial is called and error will be raised with an informative message.
 
-### _form_buttons.html.erb
+```ruby
+require_locals ['item', 'text'], local_assigns
+```
 
-* required variables
-  * f: <em>form builder</em>
-* optional variables
-  * item: <em>instance variable for object to be deleted</em>
+---
+
+# Fae Partials
+
+## index_header
+
+Displays page title, add button and flash messages.
+
+| option | type | default | description |
+|-|-|-|-|
+| title | string | @klass_humanized.pluralize | the page's H1 |
+| new_button | boolean | true | displays the add button |
+| button_text | string | "Add #{title.singularize}" | add button text |
+
+**Examples**
+
+Standard implementation
+```ruby
+render 'fae/shared/index_header'
+```
+
+Custom header
+```ruby
+render 'fae/shared/index_header', title: 'Something Entirely Different', new_button: false
+```
+
+## form_header
+
+Displays breadcrumb links and form title.
+
+| option | type | description |
+|-|-|-|
+| header | ActiveRecord object | **(required)** passed to form_header helper method  |
+
+**Examples**
+
+Standard implementation
+```ruby
+render 'fae/shared/form_header', header: @item
+```
+
+## form_buttons
+
+Displays form's save and cancel buttons.
+
+| option | type | default | description |
+|-|-|-|-|
+| save_button_text   | string | 'Save Settings' | save button text  |
+| cancel_button_text | string | 'Cancel' | cancel button text  |
+
+**Examples**
+
+Standard implementation
+```ruby
+render 'fae/shared/form_buttons'
+```
+
+With custom text
+```ruby
+render 'fae/shared/form_buttons', save_button_text: 'Yes!', cancel_button_text: 'Nope :('
+```
+
+## nested_table
+
+The nested table works in tandum with a nested model, typically created by the nested scaffold generator, to display an nested ajax form for creating associated items in the edit form.
+
+The nested_table should go after the main form ends and should only placed on the edit page (it required the parent_item to be present to associate new items to).
+
+| option | type | default | description |
+|-|-|-|-|
+| assoc   | symbol | | **(required)** the association's name  |
+| parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
+| cols | array of symbols | [] | an array of attributes to display on the list view | 
+| title | string | assoc.to_s.humanize | the H3 directly above the form |
+| header | string | title | the section's header |
+| add_button_text | string | "Add #{title.singularize}" | the add button's text |
+| ordered | boolean | false | allows list view to be sortable, which is saved to a `position` atttribute |
+| has_thumb | boolean | false | displays a thumbnail in the list view (only applicatble to `Fae::Image`)
+| assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
+
+
+**Examples**
+
+Full SLIM implementation with section wrapper and edit page conditional
+```slim
+- if params[:action] == 'edit'
+  section.main_content-section
+    = render 'fae/shared/nested_table',
+      assoc: :tasting_notes,
+      parent_item: @item,
+      cols: [:name, :author, :live],
+      ordered: true
+```
 
 
