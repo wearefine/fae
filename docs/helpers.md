@@ -40,7 +40,7 @@ fae_method_name(f, attribute, options)
 
 *attributes only*
 
-fae_input is the basic input method derived from simple_form's f.input. What it displays will depend on the column type of the attribute. See [simple_form's documentation](https://github.com/plataformatec/simple_form#available-input-types-and-defaults-for-each-column-type) to learn more.
+fae_input is the basic input method derived from simple_form's f.input. What it displays will depend on the column type of the attribute. See [simple_form's documentationn](https://github.com/plataformatec/simple_form#available-input-types-and-defaults-for-each-column-type) to learn more.
 
 
 **Examples**
@@ -59,7 +59,7 @@ fae_input f, :description, hint: markdown_helper
 
 *associations only*
 
-fae_association is directly derived from simple_form's f.association. Again, the element it renders deplends on the association type.
+fae_association is directly derived from simple_form's f.association. Again, the element it renders depends on the association type.
 
 | option | type | default | description |
 |-|-|-|-|-|
@@ -133,7 +133,7 @@ fae_pulldown f, :wine, size: 'short', collection: Wine.order(:name)
 
 **Examples**
 
-A chosen style mutliselect with custom label_method
+A chosen style multiselect with custom label_method
 ```ruby
 fae_multiselect f, :acclaims, label_method: :publication
 ```
@@ -207,7 +207,7 @@ fae_suffix f, :weight, suffix: 'lbs'
 
 *attributes only*
 
-This helper is a normal fae_input, but provides a custom helper and hint specific to extracting Youtube IDs.
+This helper is a normal fae_input, but provides a custom helper and hint specific to extracting YouTube IDs.
 
 **Examples**
 
@@ -269,8 +269,8 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 | option | type | default | description |
 |-|-|-|-|-|
 | label         | string | attribute.to_s.titleize | the fields's label |
-| helper_text   | string | | the fields's helper text |
-| hint          | string | | the fields's hint text (supports HTML) |
+| helper_text   | string | | the field's helper text |
+| hint          | string | | the field's hint text (supports HTML) |
 | markdown      | boolean | false | displays support text and hint for markdown |
 
 image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
@@ -390,7 +390,7 @@ render 'fae/shared/form_buttons', save_button_text: 'Yes!', cancel_button_text: 
 
 ## nested_table
 
-The nested table works in tandum with a nested model, typically created by the nested scaffold generator, to display an nested ajax form for creating associated items in the edit form.
+The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display an nested ajax form for creating associated items in the edit form.
 
 The nested_table should go after the main form ends and should only placed on the edit page (it required the parent_item to be present to associate new items to).
 
@@ -398,12 +398,12 @@ The nested_table should go after the main form ends and should only placed on th
 |-|-|-|-|
 | assoc   | symbol | | **(required)** the association's name  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
-| cols | array of symbols | [] | an array of attributes to display on the list view | 
+| cols | array of symbols | [] | an array of attributes to display on the list view |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
 | header | string | title | the section's header |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
 | ordered | boolean | false | allows list view to be sortable, which is saved to a `position` atttribute |
-| has_thumb | boolean | false | displays a thumbnail in the list view (only applicatble to `Fae::Image`)
+| has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
 
 
