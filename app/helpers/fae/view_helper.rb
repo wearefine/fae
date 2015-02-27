@@ -9,12 +9,12 @@ module Fae
       Rails.application.routes.url_helpers.fae_path[1..-1]
     end
 
-    def fae_image_form(f, image_name, image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil)
-      render 'fae/images/image_uploader', f: f, image_name: image_name, image_label: image_label, alt_label: alt_label, caption_label: caption_label, omit: omit, show_thumb: show_thumb, required: required, helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text
+    def fae_image_form(f, image_name, label: nil, alt_label: nil, caption_label: nil, show_alt: nil, show_caption: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil)
+      render 'fae/images/image_uploader', f: f, image_name: image_name, label: label, alt_label: alt_label, caption_label: caption_label, show_alt: show_alt, show_caption: show_caption, required: required, helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text
     end
 
-    def fae_file_form(f, file_name, file_label: nil, helper_text: nil, required: nil)
-      render 'fae/application/file_uploader', f: f, file_name: file_name, file_label: file_label, required: required, helper_text: helper_text
+    def fae_file_form(f, file_name, label: nil, helper_text: nil, required: nil)
+      render 'fae/application/file_uploader', f: f, file_name: file_name, label: label, required: required, helper_text: helper_text
     end
 
     def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil)
