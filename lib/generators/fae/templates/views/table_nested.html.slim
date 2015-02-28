@@ -1,4 +1,4 @@
-= render 'fae/shared/nested_table_advanced',
+= render 'fae/shared/nested_table',
   assoc: :<%= file_name.pluralize %>,
   parent_item: @parent_item,
   cols: [<%= @form_attrs.map {|attr| ":#{attr}"}.join(', ') %>]
