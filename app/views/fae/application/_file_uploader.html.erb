@@ -1,20 +1,19 @@
 <% require_locals ['f'], local_assigns %>
 
 <%
-  # passed in variables
   item        ||= f.object
   file_name   ||= :file
   the_file      = item.send(file_name)
-  file_label  ||= file_name.to_s.humanize
-  helper_text  ||= ""
-  required     ||= false
+  label       ||= file_name.to_s.humanize
+  helper_text ||= ""
+  required    ||= false
 %>
 
 <%= f.simple_fields_for file_name do |i| %>
   <div class='input field'>
     <%= content_tag :label, class: ('required' if required) do  %>
       <%= content_tag :abbr, '*', title: 'required' if required %>
-      <%= file_label.html_safe %>
+      <%= label.html_safe %>
       <%= content_tag :h6, helper_text, class: 'helper_text' if helper_text.present? %>
     <% end %>
 

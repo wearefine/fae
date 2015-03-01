@@ -21,8 +21,8 @@
               td.main_table-description-item
                 = link_to item.fae_display_field, edit_admin_wine_path(item)
               td = fae_date_format item.updated_at
-              td = attr_toggle item, :on_stage
-              td = attr_toggle item, :on_prod
+              td = fae_toggle item, :on_stage
+              td = fae_toggle item, :on_prod
               td.main_table-delete
                 = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
                   span.icon-delete_x

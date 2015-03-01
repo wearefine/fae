@@ -115,7 +115,7 @@
 <!-- Nested Table -->
 <% if params[:action] == 'edit' %>
   <section class="main_content-section" id="aromas_section">
-    <%= render 'fae/shared/nested_table_advanced',
+    <%= render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,
       cols: [:name, :live],
