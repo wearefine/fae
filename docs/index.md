@@ -24,7 +24,8 @@ After the installer completes, visit `/admin` and setup your first user account.
 Fae's installer will do the following:
 
 - add Fae's namespace and route to `config/routes.rb`
-- add `app/assets/stylesheets/fae_variables.scss` for UI color management
+- add `app/assets/stylesheets/fae.scss` for UI color management and custom CSS
+- add `app/assets/javascripts/fae.js` for custom JS
 - add `app/controllers/concerns/fae/nav_items.rb` to manage main navigation
 - add Fae's initializer: `config/initializers/fae.rb`
 - add `config/initializers/judge.rb` for validation config
@@ -612,5 +613,34 @@ end
 If there's no way to inherit from or inject into a Fae class, your last effort would be to override it. To do that, simply copy the Fae class into your application in the same path found in Fae and customize it from there.
 
 E.g. if you need to customize Fae's `image_controller.rb`, copy the file from Fae into your application at `app/controllers/fae/image_controller.rb`.
+
+## Custom JS/CSS
+
+Fae creates two files in your assets pipeline that allow custom JS and CSS in your admin.
+
+### fae.js
+
+`app/assets/javascripts/fae.js` compiles into `fae/application.js`. As noted in the file, you can use it as a mainfest (to add a lot of JS) or to simply add JS directly to.
+
+#### Example: fae.js as a Manifest File
+
+```js
+// This file is compiled into fae/application.js
+// use this as another manifest file if you have a lot of javascript to add
+// or just add your javascript directly to this file
+//
+//= require admin/plugins
+//= require admin/main
+```
+
+### fae.scss
+
+`app/assets/stylesheets/fae.scss` compiles into `fae/application.css`. Styles added to this files will be declared before other Fae styles. This file also provide a SCSS variable for Fae's highlight color: `$c-custom-highlight` (which defaults to #31a7e6).
+
+```css
+// Do Not Delete this page! FAE depends on it in order to set its highlight color.
+// $c-custom-highlight: '#000';
+```
+
 
 
