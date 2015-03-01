@@ -49,10 +49,37 @@ module Fae
       fae.root_path.gsub('/', '')
     end
 
+    def page_title
+      if @page_title.present?
+        @page_title
+      else
+        default_page_title
+      end
+    end
+
     private
 
     def nav_path_current?(path)
       current_page?(path) || path[1..-1].classify == params[:controller].classify
+    end
+
+    def default_page_title
+      pieces = [@option.title]
+      pieces << page_title_piece unless @page_title_piece.present?
+      pieces << @page_title_piece if @page_title_piece.present?
+      pieces.join ' | '
+    end
+
+    def page_title_piece
+      action = params[:action].humanize.titleize unless params[:action] == 'index'
+      controller = controller_title unless params[:controller] == 'fae/pages'
+      controller = controller.singularize if params[:action] == 'new' || params[:action] == 'edit'
+
+      "#{action} #{controller}".strip
+    end
+
+    def controller_title
+      params[:controller].gsub(/fae\/|#{fae_scope}\//, '').humanize.titleize
     end
 
   end
