@@ -30,7 +30,7 @@ img#crop src=@image.asset_url
         onUpdate: get_crop,
         minSize: [#{@sizing_info[image_type][:min_width]},#{@sizing_info[image_type][:min_height]}],
         maxSize: [#{@sizing_info[image_type][:max_width]},#{@sizing_info[image_type][:max_height]}],
-        - if @image.crop_x.present? and @image.crop_y.present? and @image.crop_x2.present? and @image.crop_y2.present?
-          setSelect: [#{@image.crop_x},#{@image.crop_y},#{@image.crop_x2},#{@image.crop_y2}]
+
+        #{"setSelect: [#{@image.crop_x},#{@image.crop_y},#{@image.crop_x2},#{@image.crop_y2}]" if @image.crop_x.present? and @image.crop_y.present? and @image.crop_x2.present? and @image.crop_y2.present?}
       });
     });
