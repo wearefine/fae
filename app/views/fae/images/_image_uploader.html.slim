@@ -1,17 +1,17 @@
 ruby:
   require_locals ['f'], local_assigns
   item                ||= f.object
-    image_name          ||= :image
-    the_image             = item.send(image_name)
-    label               ||= image_name.to_s.humanize
-    alt_label           ||= "#{label} alt text"
-    caption_label       ||= "#{label} caption"
-    helper_text         ||= ""
-    alt_helper_text     ||= ""
-    caption_helper_text ||= ""
-    show_alt            ||= true
-    show_caption        ||= false
-    required            ||= false
+  image_name          ||= :image
+  the_image             = item.send(image_name)
+  label               ||= image_name.to_s.humanize
+  alt_label           ||= "#{label} alt text"
+  caption_label       ||= "#{label} caption"
+  helper_text         ||= ""
+  alt_helper_text     ||= ""
+  caption_helper_text ||= ""
+  show_alt            ||= true
+  show_caption        ||= false
+  required            ||= false
 
 = f.simple_fields_for image_name do |i|
   .field.input
