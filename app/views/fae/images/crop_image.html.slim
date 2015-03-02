@@ -1,20 +1,17 @@
-<% image_type = @image.attached_as.to_sym %>
+- image_type = @image.attached_as.to_sym
+h1 Crop
+== render 'sizing_info', sizing_info: @sizing_info, image_type: image_type
+img#crop src=@image.asset_url
 
-<h1>Crop</h1>
-<%= render 'sizing_info', sizing_info: @sizing_info, image_type: image_type %>
-<%= image_tag @image.asset_url, :id => 'crop' %>
+= simple_form_for @image, url: commit_crop_path(@image) do |f|
+  = f.input "redirect", as: :hidden, input_html: {value: params[:redirect]} if params[:redirect].present?
+  - %w[x y w h x2 y2].each do |a|
+    = f.input "crop_#{a}", as: :hidden
+  = f.button :submit, 'Crop'
+  = link_to 'Cancel', params[:redirect] if params[:redirect].present?
 
-<%= simple_form_for @image, url: commit_crop_path(@image) do |f| %>
-  <%= f.input "redirect", as: :hidden, input_html: {value: params[:redirect]} if params[:redirect].present? %>
-  <% %w[x y w h x2 y2].each do |a| %>
-    <%= f.input "crop_#{a}", as: :hidden %>
-  <% end -%>
-  <%= f.button :submit, 'Crop' %>
-  <%= link_to 'Cancel', params[:redirect] if params[:redirect].present? %>
-<% end -%>
-
-<% content_for :javascript do %>
-  <script type="text/javascript">
+== content_for :javascript
+  javascript:
 
     //load crop vals into hidden inputs
     function get_crop(coords) {
@@ -27,7 +24,7 @@
     }
 
     //intantiate jcrop on the image, set it's cropping rules
-    $(function(){       
+    $(function(){
       $('#crop').Jcrop({
         onSelect: get_crop,
         onUpdate: get_crop,
@@ -38,5 +35,3 @@
         <% end %>
       });
     });
-  </script>
-<% end %>

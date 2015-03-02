@@ -1,0 +1,19 @@
+= simple_form_for(@option) do |f|
+  section.main_content-header
+    .main_content-header-wrapper
+      = form_header @option
+      .main_content-header-save
+        a#main_content-header-save-cancel href=fae.root_path(cancelled: true) Cancel
+        = f.submit "Save Settings"
+
+  = render 'flash_messages'
+
+  .main_content-section
+    section.main_content-section
+      .main_content-section-area
+        = fae_input f, :title, label: "Project Name"
+        = fae_input f, :time_zone, wrapper_class: 'select'
+        = fae_input f, :live_url, label: 'Live URL <h6>Include http:// for external links.</h6>'.html_safe
+        = fae_input f, :stage_url, label: 'Stage URL <h6>Include http:// for external links.</h6>'.html_safe
+        = fae_image_form f, :logo, required: true
+        = fae_image_form f, :favicon

@@ -1,0 +1,10 @@
+.login-form-password
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+    = f.error_notification
+    = f.label :email, "We'll Send Your Password."
+    = f.label :email, "What Email Do You Use To Sign In?"
+    = f.input :email, required: true, autofocus: true, label: false
+    .login-form-actions
+      = f.button :submit, 'Submit'
+      - if controller_name != 'sessions'
+        = link_to "Back to Sign In", new_session_path(resource_name)
