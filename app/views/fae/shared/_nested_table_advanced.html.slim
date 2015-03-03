@@ -1,10 +1,9 @@
-<%
-  # this file is meant for backwards compatibiliy
-  # DO NOT delete this partial
-  # DO NOT intentially use this partial
-  # use 'fae/shared/nested_table' directly
-%>
-<%= render 'fae/shared/nested_table',
+/ this file is meant for backwards compatibiliy
+/ DO NOT delete this partial
+/ DO NOT intentially use this partial
+/ 'fae/shared/nested_table' directly
+
+== render 'fae/shared/nested_table',
   assoc:                assoc,
   parent_item:          parent_item,
   assoc_name:           (assoc_name ||= nil),
@@ -17,4 +16,3 @@
   title_singular:       (title_singular ||= nil),
   new_path:             (new_path ||= nil),
   edit_path:            (edit_path ||= nil)
-%>

@@ -1,0 +1,71 @@
+nav#main_nav
+  ul.main_nav-nav
+    - @fae_nav_items.each do |item|
+      ruby:
+        item[:path] ||= '#'
+
+        main_class = nav_path_current?(item[:path]) ? "main_nav-active-single" : ""
+
+        main_sub_class = ""
+        hasSublinks = item[:sublinks].present? ? true : false
+
+        # Apply the active state if user is on the page.
+        if hasSublinks
+          # must find out if a sublink is selected as well
+          item[:sublinks].each do |subitem|
+            # fail if subitem[:text] = 'selling points'
+            main_class = "main_nav-active" if nav_path_current?(subitem[:path])
+          end
+
+          # if the main LI has sublinks, we need to add main_nav-accordion to that LI for accordion action
+          # main_nav-active items do not get an accordion class
+          main_class = "main_nav-accordion" if main_class.blank?
+        end
+
+        if item[:class_name].present?
+          main_class << " #{item[:class_name]}"
+        end
+
+      li class=main_class
+        span.main_nav-header data-link=item[:path]
+          span.header_drawer-content-post
+            a.main_nav-link href=item[:path] = item[:text]
+
+          - header_drawer_class = "header_drawer-content"
+          - header_drawer_class << " header_drawer-content-only" if !hasSublinks
+
+          span class=header_drawer_class = item[:text]
+
+        - if hasSublinks
+          ul.main_nav-sub-nav
+            li.main_nav-sub-header-mobile
+              span = item[:text]
+            - item[:sublinks].each do |subitem|
+              - subitem[:path] ||= '#'
+              / if the current page is the same as one of these nav items
+              - main_sub_class = nav_path_current?(subitem[:path]) ? "main_nav-sub-active" : ""
+              li class=main_sub_class
+                a.main_nav-sub-link href=subitem[:path] = subitem[:text]
+
+    - if user_signed_in?
+      li.main_nav-header-mobile
+        span.header_drawer-content-username = current_user.full_name
+      li.main_nav-header-mobile
+        a.header_drawer-content.header_drawer-content-logout href=fae.destroy_user_session_path Log Out
+      li.main_nav-header-mobile
+        a.header_drawer-content.header_drawer-content-settings href=fae.settings_path Your Settings
+      li.main_nav-header-mobile
+        a.header_drawer-content.header_drawer-content-support href=fae.help_path Support
+      li.main_nav-header-mobile
+        - if @option.stage_url.present?
+          span.main_nav-header
+            span.header_drawer-content.header_drawer-content-viewsite View Site
+          ul.main_nav-sub-nav
+            li.main_nav-sub-header-mobile
+              span View Site
+            li
+              a.main_nav-sub-link href=@option.stage_url target="_blank" Preview Site
+            li
+              a.main_nav-sub-link href=@option.live_url target="_blank" Live Site
+        - else
+          a.header_drawer-content.header_drawer-content-viewsite href=@option.stage_url target="_blank" Preview Site

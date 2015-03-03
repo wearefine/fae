@@ -1,0 +1,7 @@
+- save_button_text   ||= 'Save Settings'
+- cancel_button_text ||= 'Cancel'
+
+.main_content-header-save
+  a#main_content-header-save-cancel href=@index_path = cancel_button_text
+  | &nbsp;
+  input name="commit" type="submit" value=save_button_text

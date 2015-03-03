@@ -1,0 +1,25 @@
+= simple_form_for(@user, html: {multipart: true, novalidate: true}) do |f|
+  section.main_content-header
+    .main_content-header-wrapper
+      nav.main_content-breadcrumbs
+        ul.breadcrumbs
+          - if current_user.super_admin?
+            li: a href=users_path All Users
+      - if params[:action] === 'settings'
+        h1 Your Settings
+      - else
+        = form_header @user
+      .main_content-header-save
+        a#main_content-header-save-cancel href=users_path Cancel
+        = f.submit "Save Settings"
+
+  .main_content-section
+    section.main_content-section
+      .main_content-section-area
+        = fae_input f, :first_name
+        = fae_input f, :last_name
+        = fae_input f, :email
+        = fae_input f, :password, helper_text: 'To update your password, fill out the fields below. Otherwise leave blank. Passwords must contain at least 8 characters.'
+        = fae_input f, :password_confirmation
+        - if current_user.admin? || current_user.super_admin?
+          = fae_association f, :role, collection: @role_collection

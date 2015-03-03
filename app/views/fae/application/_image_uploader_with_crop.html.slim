@@ -1,0 +1,50 @@
+ruby:
+  the_image = item.send(image_name)
+  original_matches_crop = true
+  original = Magick::Image::read(the_image.asset.path).first if the_image.asset.path.present?
+  cropped = Magick::Image::read(the_image.asset.cropped.path).first if the_image.asset.cropped.path.present?
+  if original.present? and cropped.present?
+    if original.columns != cropped.columns and original.rows != cropped.rows
+      original_matches_crop = false
+    end
+  end
+  image_label = defined?(image_label_pass) ? image_label_pass : image_name.to_s.humanize
+
+= '<div class="content">'.html_safe unless defined?(no_div)
+  = f.simple_fields_for image_name do |i|
+    .field
+      label = image_label
+      == render 'sizing_info', sizing_info: @sizing_info, image_type: image_name.to_s
+
+      - unless the_image.asset.blank?
+        .assetActions
+          a.image_modal href=the_image.asset.url Original
+          | &nbsp;|&nbsp;
+
+          - if the_image.asset.cropped.url.present? and original_matches_crop == false
+            a.image_modal href=the_image.asset.cropped.url Current Crop
+            | &nbsp;|&nbsp;
+
+          - if the_image.asset.tablet.url.present?
+            a.image_modal href=the_image.asset.tablet.url Tablet
+            | &nbsp;|&nbsp;
+
+          - if the_image.asset.mobile.url.present?
+            a.image_modal href=the_image.asset.mobile.url Mobile
+            | &nbsp;|&nbsp;
+
+          a href="#{crop_image_path(the_image.id)}?redirect=#{request.path}" New Crop
+          | &nbsp;|&nbsp;
+
+          a.imageDeleteLink href=delete_image_path(the_image.id) Delete
+
+    .fileInput style="#{'display:none;' unless the_image.asset.blank?}"
+      = i.input :asset, as: :file, label: false, wrapper_html: {class: 'field'}
+      = i.input :asset_cache, as: :hidden
+      = i.input :attached_as, as: :hidden, input_html: {value: image_name.to_s}
+      - unless defined?(omit) && omit.include?(:caption)
+        = i.input :caption, wrapper_html: {class: 'field'}
+      - unless defined?(omit) && omit.include?(:alt)
+        = i.input :alt, wrapper_html: {class: 'field'}
+
+= '</div>'.html_safe unless defined?(no_div)

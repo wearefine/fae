@@ -1,0 +1,10 @@
+doctype html
+html
+  head
+    title = @page_title
+    = stylesheet_link_tag    "fae/application", media: "all"
+    = csrf_meta_tags
+
+  body.error
+    section.error-main_content
+      == yield

@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title = @page_title
+
+    - if @option.favicon.present? && @option.favicon.asset.present?
+      link href=@option.favicon.asset_url rel="shortcut icon"
+    == stylesheet_link_tag    "fae/application", media: "all"
+    == javascript_include_tag "fae/application"
+    == csrf_meta_tags
+
+  body.login-body
+    == render 'flash_messages'
+
+    section.login-content
+      section.login-area
+        .login-logo
+          - if @option.logo.present? && @option.logo.asset.present?
+            = image_tag @option.logo.asset.url, alt: @option.title
+          - else
+            h1 = @option.title
+
+        == yield
+
+      footer.login-footer
+        a.login-fine href="http://www.wearefine.com" target="_blank"
+          | a&nbsp;
+          = image_tag 'fae/fine_footer.png', alt: 'FINE logo'
+          | &nbsp;admin
+
+        ul.login-helper-area
+          li == render "devise/shared/links"
+          li Fae v #{Fae::VERSION}
