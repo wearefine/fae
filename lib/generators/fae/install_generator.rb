@@ -8,7 +8,7 @@ module Fae
       add_route
       # copy templates and generators
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
-      add_fae_variables
+      add_fae_assets
       add_nav_items_concern
       build_initializer
       build_judge_initializer
@@ -29,8 +29,9 @@ RUBY
       end
     end
 
-    def add_fae_variables
-      copy_file File.expand_path(File.join(__FILE__, '../templates/assets/fae_variables.scss')), 'app/assets/stylesheets/fae_variables.scss'
+    def add_fae_assets
+      copy_file File.expand_path(File.join(__FILE__, '../templates/assets/fae.scss')), 'app/assets/stylesheets/fae.scss'
+      copy_file File.expand_path(File.join(__FILE__, '../templates/assets/fae.js')), 'app/assets/javascripts/fae.js'
     end
 
     def add_nav_items_concern

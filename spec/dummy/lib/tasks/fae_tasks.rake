@@ -20,7 +20,8 @@ namespace :fae do
       option = Fae::Option.new({
         title: 'My FINE Admin',
         singleton_guard: 0,
-        time_zone: 'Pacific Time (US & Canada)'
+        time_zone: 'Pacific Time (US & Canada)',
+        live_url: 'http://www.wearefine.com'
         })
       option.save!
     end

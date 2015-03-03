@@ -8,7 +8,7 @@
 /* used for universal style sheet */
 $useMediaQueries: true;
 $c-custom-highlight: #31a7e6;
-@import "fae_variables";
+@import "fae";
 
 @import "globals/all";
 @import "modules/all";
