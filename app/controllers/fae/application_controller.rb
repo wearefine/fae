@@ -21,7 +21,7 @@ private
   end
 
   def show_404
-    render template: 'fae/pages/error404.html.erb', layout: 'fae/error.html.erb', status: :not_found
+    render template: 'fae/pages/error404.html.slim', layout: 'fae/error.html.slim', status: :not_found
   end
 
   def set_option

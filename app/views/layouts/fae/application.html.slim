@@ -1,0 +1,18 @@
+doctype html
+html
+  head
+    title = page_title
+    - if @option.favicon.present? && @option.favicon.asset.present?
+      link href=@option.favicon.asset_url rel="shortcut icon"
+    == stylesheet_link_tag "fae/application", media: "all"
+    == javascript_include_tag "fae/application"
+    == csrf_meta_tags
+
+  body
+    == render "header"
+    section#main_content
+      == render "nav" if user_signed_in?
+      == yield
+
+    .markdown-hint
+      .markdown-hint-wrapper = markdown_helper

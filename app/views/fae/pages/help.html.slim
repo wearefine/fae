@@ -1,0 +1,50 @@
+= render 'fae/shared/index_header', title: 'Need some help?', new_button: false
+.main_content-sections
+  section.main_content-section.help-section
+    h2.main_content-section-title
+      | Contact Us
+    .main_content-section-area
+      p
+        strong Phone:
+        |  503.243.3463
+        br
+        strong Email:
+        a href="mailto:fae@wearefine.com" fae@wearefine.com
+        br
+        strong Website:
+        a href="http://www.wearefine.com" target="_blank" wearefine.com
+
+  section.main_content-section.help-section
+    h2.main_content-section-title Reporting A Bug?
+    .main_content-section-area
+      h3 Please include this helpful information:
+      p
+        strong Version:
+        | Fae v
+        = Fae::VERSION
+        br
+
+        strong Date:
+        = Time.now
+        br
+
+        strong Site:
+        = request.url
+        br
+
+        strong Env:
+        = Rails.env
+        br
+
+        strong Browser:
+        = @browser.name
+        | &nbsp;
+        = @browser.full_version
+        br
+
+        strong Platform:
+        = @browser.platform
+        br
+
+        strong User ID:
+        = current_user.id
