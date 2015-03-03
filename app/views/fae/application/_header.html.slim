@@ -1,0 +1,30 @@
+header#main_header
+  span#main_nav-menu_button.icon-menu
+  h1.main_header-name
+    a href=root_path
+      = @option.title
+      span.main_header-name-fine a FINE admin
+  - if user_signed_in?
+    ul.utility_nav
+      li class="#{@option.stage_url.present? ? 'utility_nav-view' : ''}"
+        a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
+          | View Site
+          span.icon-offlink
+        - if @option.stage_url.present?
+          ul.utility_sub_nav
+            li: a href=@option.live_url target="_blank" Live Site
+            li: a href=@option.stage_url target="_blank" Stage Site
+
+      li.utility_nav-support
+        a href=fae.help_path
+          |  Support
+          span.icon-support
+
+      li.utility_nav-user
+        a href="#"
+          = current_user.full_name
+          span.icon-user
+          span.icon-arrow_down
+        ul.utility_sub_nav
+          li: a href=fae.destroy_user_session_path Log Out
+          li: a href=fae.settings_path Your Settings

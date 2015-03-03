@@ -1,0 +1,38 @@
+- if false # disable user log due to performance issues
+  - unless params[:action] === 'new'
+    section#user_log_section.main_content-section
+      h2.main_content-section-title User Log
+
+      .main_content-section-area
+        table
+          thead
+            tr
+              th Session
+              th User
+              th Modified
+          tbody
+            - if item.versions.present?
+
+              - compared_attributes = item.attributes
+              - item.versions.reverse.each do |version|
+                ruby:
+                  changed = []
+                  if version.event === 'create'
+                    changed << "created"
+                  else
+                    excluded = ['updated_at']
+                    compared_attributes.each do |attribute, value|
+                      changed.push(attribute) unless excluded.include?(attribute) || value.to_s == PaperTrail.serializer.load(version.object)[attribute].to_s
+                    end
+                    compared_attributes = PaperTrail.serializer.load(version.object)
+                  end
+
+                - if changed.present?
+                  tr
+                    td = version.created_at
+                    td = version.user.present? ? version.user.full_name : content_tag(:em, "user no longer exists")
+                    td = changed.join(', ')
+
+            - else
+              tr
+                td colspan="3" No logs available.
