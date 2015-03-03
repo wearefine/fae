@@ -1,0 +1,6 @@
+- require_locals ['header'], local_assigns
+nav.main_content-breadcrumbs
+  ul.breadcrumbs
+    li: a href=@index_path All #{@klass_name.titleize.pluralize}
+
+= form_header header

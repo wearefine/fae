@@ -1,9 +1,0 @@
-<%
-  save_button_text   ||= 'Save Settings'
-  cancel_button_text ||= 'Cancel'
-%>
-
-<div class="main_content-header-save">
-  <%= link_to cancel_button_text, @index_path, id: "main_content-header-save-cancel" %>
-  <%= tag :input, value: save_button_text, name: 'commit', type: 'submit' %>
-</div>
