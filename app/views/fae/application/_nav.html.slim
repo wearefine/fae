@@ -36,16 +36,17 @@ nav#main_nav
 
           span class=header_drawer_class = item[:text]
 
-      - if hasSublinks
-        ul.main_nav-sub-nav
-          li.main_nav-sub-header-mobile
-            span = item[:text]
-          - item[:sublinks].each do |subitem|
-            - subitem[:path] ||= '#'
-            / if the current page is the same as one of these nav items
-            - main_sub_class = nav_path_current?(subitem[:path]) ? "main_nav-sub-active" : ""
-            li class=main_sub_class
-              a.main_nav-sub-link href=subitem[:path] = subitem[:text]
+        - if hasSublinks
+          ul.main_nav-sub-nav
+            li.main_nav-sub-header-mobile
+              span = item[:text]
+            - item[:sublinks].each do |subitem|
+              - subitem[:path] ||= '#'
+              / if the current page is the same as one of these nav items
+              - main_sub_class = nav_path_current?(subitem[:path]) ? "main_nav-sub-active" : ""
+              li class=main_sub_class
+                a.main_nav-sub-link href=subitem[:path] = subitem[:text]
+
     - if user_signed_in?
       li.main_nav-header-mobile
         span.header_drawer-content-username = current_user.full_name
