@@ -9,7 +9,7 @@ ruby:
   helper_text         ||= ""
   alt_helper_text     ||= ""
   caption_helper_text ||= ""
-  show_alt            ||= true
+  show_alt              = true if show_alt.nil?
   show_caption        ||= false
   required            ||= false
 
