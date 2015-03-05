@@ -12,7 +12,8 @@ module Fae
         { text: 'Event',          path: main_app.admin_events_path },
         { text: 'Event Hosts',    path: main_app.admin_people_path },
         { text: 'Locations',      path: main_app.admin_locations_path },
-        { text: 'Pages',          path: fae.pages_path }
+        { text: 'Pages',          path: fae.pages_path },
+        # scaffold inject marker
       ]
     end
 

@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resources :coaches
+    resources :players
+    resources :teams
     resources :locations
     resources :releases
     resources :wines
