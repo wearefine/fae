@@ -176,6 +176,25 @@ def fae_display_field
 end
 ```
 
+## for_fae_index
+
+Fae uses a class method called `for_fae_index` as a scope for index views and associated content in form elements. This method is inherited from `Fae::Concerns::Models::Base`.
+
+By default, this method uses position, name, or title attributes. If it can't find any of those it will raise the following exception:
+
+```
+No order_method found, please define for_fae_index as a #{model_name} class method to set a custom scope.
+```
+
+To override the default or get rid of this exception, simple define the class method in your model:
+
+```ruby
+def self.for_fae_index
+  order(:first_name)
+end
+```
+
+
 ## Nested Resources
 
 If you use nested resource routes and want updates on those objects to show up in the dashboard, you'll need to define it's parent for Fae to know how to link them.

@@ -49,14 +49,14 @@ module Fae
 
   private
 
-    def set_class_variables(class_name=nil)
-      @klass_base = params[:controller].split('/').last
-      @klass_name = class_name || @klass_base
-      @klass = @klass_base.classify.constantize
-      @klass_singular = @klass_base.singularize
-      @klass_humanized = @klass_name.singularize.humanize
-      @index_path = '/'+params[:controller]
-      @new_path = @index_path+'/new'
+    def set_class_variables(class_name = nil)
+      klass_base = params[:controller].split('/').last
+      @klass_name = class_name || klass_base              # used in form views
+      @klass = klass_base.classify.constantize            # used as class reference in this controller
+      @klass_singular = klass_base.singularize            # used in index views
+      @klass_humanized = @klass_name.singularize.humanize # used in index views
+      @index_path = '/' + params[:controller]             # used in form_header and form_buttons partials
+      @new_path = @index_path + '/new'                    # used in index_header partial
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -66,7 +66,7 @@ module Fae
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(@klass_base.singularize).permit!
+      params.require(@klass_singular).permit!
     end
 
     # if model has images or files, build them here for nesting

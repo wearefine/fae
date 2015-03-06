@@ -47,6 +47,17 @@ nav#main_nav
               li class=main_sub_class
                 a.main_nav-sub-link href=subitem[:path] = subitem[:text]
 
+                - if subitem[:sublinks].present?
+                  ul.main_nav-sub-nav
+                    li.main_nav-sub-header-mobile
+                      span = subitem[:text]
+                    - subitem[:sublinks].each do |subsubitem|
+                      - subsubitem[:path] ||= '#'
+                      / if the current page is the same as one of these nav items
+                      - sub_sub_class = nav_path_current?(subsubitem[:path]) ? "main_nav-sub-active" : ""
+                      li class=sub_sub_class
+                        a.main_nav-sub-link href=subsubitem[:path] = subsubitem[:text]
+
     - if user_signed_in?
       li.main_nav-header-mobile
         span.header_drawer-content-username = current_user.full_name

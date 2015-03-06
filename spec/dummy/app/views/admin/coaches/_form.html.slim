@@ -1,7 +1,11 @@
-= simple_form_for(['admin', @item]) do |f|
+= simple_form_for(['admin', @parent_item, @item]) do |f|
   section.main_content-header
     .main_content-header-wrapper
-      = render 'fae/shared/form_header', header: @klass_name
+      nav.main_content-breadcrumbs
+        ul.breadcrumbs
+          li: a href=@index_path All #{@klass_name.titleize.pluralize}
+
+      h1 New #{@parent_item.name} Coach
       = render 'fae/shared/form_buttons'
 
   .main_content-sections
@@ -11,5 +15,3 @@
         = fae_input f, :last_name
         = fae_input f, :role
         = fae_input f, :bio
-
-        = fae_association f, :team
