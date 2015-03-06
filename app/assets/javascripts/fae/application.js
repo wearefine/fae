@@ -32,6 +32,7 @@
 //
 //= require fae/helpers
 //= require fae/accordion
+//= require fae/navigation
 //= require fae/subnavhighlighter
 //= require fae/sticky
 //= require fae/checkboxer

@@ -34,6 +34,11 @@
 	@include bp(show_nav) {
 		background: $c-nav-sub-bg-active;
 	}
+
+	.main_nav-sub-nav {
+		background: $c-nav-sub-bg-active-highlight;
+		padding-left: 10px;
+	}
 }
 
 %main_nav-all_links {
@@ -70,7 +75,7 @@
 		}
 	}
 
-	.accordion-open.main_nav-accordion & {
+	.main_nav-accordion.accordion-open & {
 		&:after {
 			display: none;
 			@extend .icon-chevron_up:before;
@@ -80,6 +85,11 @@
 			}
 		}
 	}
+}
+
+.sub_nav-accordion.accordion-open {
+
+	background: #d8d8d8;
 }
 
 .header_drawer-content {
