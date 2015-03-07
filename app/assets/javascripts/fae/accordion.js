@@ -3,7 +3,7 @@ var Accordion = {
 	status: true, // used as an "off" and "on" flag for the general Accordion
 	containter_selector: ".main_nav-accordion, .sub_nav-accordion",
 	trigger_selector: ".main_nav-link, .main_nav-sub-link",
-	sibling_selector: ".main_nav-sub-nav",
+	sibling_selector: ".main_nav-sub-nav, .main_nav-third-nav",
 	current: null,
 
 	navs: [
@@ -26,7 +26,7 @@ var Accordion = {
 				trigger: $this.find(self.trigger_selector).first(),
 				subnav: $this.find(self.sibling_selector).first(),
 				opened: false,
-				class_name: $this[0].className
+				class_name: $this[0].classList[0]
 			});
 		});
 

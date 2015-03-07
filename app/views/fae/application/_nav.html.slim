@@ -30,13 +30,13 @@ nav#main_nav
                 a.main_nav-sub-link href=subitem[:path] = subitem[:text]
 
                 - if subitem[:sublinks].present?
-                  ul.main_nav-sub-nav
-                    li.main_nav-sub-header-mobile
+                  ul.main_nav-third-nav
+                    li.main_nav-third-header-mobile
                       span = subitem[:text]
-                    - subitem[:sublinks].each do |subsubitem|
-                      - subsubitem[:path] ||= '#'
+                    - subitem[:sublinks].each do |thirditem|
+                      - thirditem[:path] ||= '#'
                       li
-                        a.main_nav-sub-link href=subsubitem[:path] = subsubitem[:text]
+                        a.main_nav-third-link href=thirditem[:path] = thirditem[:text]
 
     - if user_signed_in?
       li.main_nav-header-mobile
