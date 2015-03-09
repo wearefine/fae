@@ -278,6 +278,22 @@
 	}
 }
 
+.main_nav-link-admin ul {
+	li:last-child {
+		a {
+			&:after {
+				position: absolute;
+				right: 10px;
+				top: 11px;
+				font-size: 15px;
+				color: $c-nav-icons;
+				@include icon_stuff();
+				@extend .icon-settings:before;
+			}
+		}
+	}
+}
+
 /* when the main nav is active */
 @include bp(show_nav) {
 	.main_nav-active {
