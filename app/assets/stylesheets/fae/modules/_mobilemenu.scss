@@ -22,11 +22,10 @@
   }
 }
 
-.js-menu-level-active {
-  .main_nav-sub-nav, .main_nav-third-nav {
-    margin-left: 0;
-    z-index: 1;
-  }
+.js-menu-level-active .main_nav-sub-nav,
+.js-sub-menu-level-active .main_nav-third-nav {
+  margin-left: 0;
+  z-index: 1;
 }
 
 .main_nav-sub-nav, .main_nav-third-nav {

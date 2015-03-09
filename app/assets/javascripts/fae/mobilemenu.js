@@ -2,10 +2,11 @@ var MobileMenu = {
   mobile_container: "#main_nav",
   trigger_selector: "#main_nav-menu_button",
   header_selector: ".main_nav-header",
-  sub_header_selector: ".main_nav-sub-header-mobile",
+  sub_header_selector: ".main_nav-sub-header-mobile, .main_nav-third-header-mobile",
   sub_header_section_selector: ".main_nav-sub-nav",
   toggle_class: "js-menu-active",
   toggle_level_class: "js-menu-level-active",
+  sub_toggle_level_class: "js-sub-menu-level-active",
   drawer_closed: true,
   default_screen_width: 1024,
 
@@ -14,6 +15,7 @@ var MobileMenu = {
     this.header_clicks();
     this.resizer();
     this.sub_header_clicks();
+    this.third_nav_clicks();
     this.link_clicks();
 
     //get a reference to the trigger
@@ -21,16 +23,16 @@ var MobileMenu = {
   },
 
   open_drawer: function() {
-    var that = this;
+    var self = this;
 
     $(this.trigger_selector).click(function(e){
       e.preventDefault();
       var $html = $("html");
       // check to see if the html has the toggle class...which means it's opened
-      if ($html.hasClass(that.toggle_class)) {
-        that.close_all();
+      if ($html.hasClass(self.toggle_class)) {
+        self.close_all();
       } else {
-        $("html").addClass(that.toggle_class);
+        $("html").addClass(self.toggle_class);
       }
     });
   },
@@ -39,52 +41,67 @@ var MobileMenu = {
     // remove the HTML class which closes the first level
     $("html").removeClass(this.toggle_class);
 
-    // remove the class if a second level item is opened
-    $(this.header_selector).closest("li").removeClass(this.toggle_level_class);
+    // remove toggle_level_class and sub_toggle_level_class classes
+    $('.' + this.toggle_level_class).removeClass(this.toggle_level_class);
+    $('.' + this.sub_toggle_level_class).removeClass(this.sub_toggle_level_class);
   },
 
   link_clicks: function() {
-    var that = this;
+    var self = this;
 
     $(this.mobile_container).find("a").click(function(){
-      that.close_all();
+      self.close_all();
     });
   },
 
   header_clicks: function() {
-    var that = this;
+    var self = this;
     // close the menus if clicked on an actual link
     $(this.header_selector).click(function(e){
-      if (!$(this).hasClass("js-menu-header-active") && $(window).width() < that.default_screen_width) {
+      if (!$(this).hasClass("js-menu-header-active") && $(window).width() < self.default_screen_width) {
         e.preventDefault();
         var $parent = $(this).closest("li");
         var link_url = $(this).data("link");
 
         // Add JS toggle class
-        $parent.addClass(that.toggle_level_class);
+        $parent.addClass(self.toggle_level_class);
 
         // If the element does not have sublinks, then go to the desired page
-        if ($parent.find(that.sub_header_section_selector).length === 0 && typeof link_url !== "undefined") {
+        if ($parent.find(self.sub_header_section_selector).length === 0 && typeof link_url !== "undefined") {
           location.href = link_url;
         }
       }
     });
   },
 
+  third_nav_clicks: function() {
+    var self = this;
+    $('.main_nav-sub-link.with-third_nav').click(function(e){
+      if ($(window).width() < self.default_screen_width) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        $(this).parent().addClass(self.sub_toggle_level_class);
+      }
+    });
+  },
+
   sub_header_clicks: function() {
-    var that = this;
+    var self = this;
     $(this.sub_header_selector).click(function(e){
       e.preventDefault();
-      $("." + that.toggle_level_class).removeClass(that.toggle_level_class);
+      $(this)
+        .closest("." + self.toggle_level_class + ", ." + self.sub_toggle_level_class)
+        .removeClass(self.toggle_level_class)
+        .removeClass(self.sub_toggle_level_class);
     });
   },
 
   resizer: function() {
-    var that = this;
+    var self = this;
     // use smart resizer so it doesn't happen at every pixel
     $(window).smartresize(function(){
-      if ($(window).width() >= that.default_screen_width){
-        that.close_all();
+      if ($(window).width() >= self.default_screen_width){
+        self.close_all();
       }
     });
   },

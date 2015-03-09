@@ -206,6 +206,35 @@
 	}
 }
 
+.main_nav-sub-link {
+	&.with-third_nav {
+		position: relative;
+
+		&:after {
+			position: absolute;
+			right: 13px;
+			top: 18px;
+			font-size: 8px;
+			color: $c-nav-icons;
+			@include icon_stuff();
+			@extend .icon-chevron_right:before;
+			@include transition(color, .2s);
+
+			@include bp(show_nav) {
+				content: "\e619";
+
+				.sub_nav-accordion.accordion-open & {
+					content: "\e618";
+				}
+
+				.main_nav-sub-active--no_highlight & {
+					content: "";
+				}
+			}
+		}
+	}
+}
+
 .main_nav-third-link {
 	@include bp(show_nav) {
 		padding: 10px 10px 10px 30px;
