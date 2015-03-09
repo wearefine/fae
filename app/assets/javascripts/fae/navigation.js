@@ -8,12 +8,15 @@ var FaeNavigation = {
 
   select_current_nav_item: function() {
     var self = this;
-    var current_base_url = window.location.pathname.replace(/\/new|\/edit/, '');
+    var current_base_url = window.location.pathname;
+    var url_without_edit_new = current_base_url.replace(/\/new|\/edit/, '');
     $('#main_nav a').each(function(){
       var $this = $(this);
-      if ($this.attr('href').replace(/\/new|\/edit/, '') === current_base_url) {
+      var link = $this.attr('href');
+      if (link === url_without_edit_new || link === current_base_url) {
         $this.addClass('current');
         self.current_items.push($this);
+        return false;
       }
     });
   },
