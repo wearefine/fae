@@ -11,7 +11,7 @@ module Fae
     belongs_to :role
 
     validates_presence_of :first_name, :email, :role
-    validates_uniqueness_of :email, message: "That email address is already in use. Give another one a go."
+    validates_uniqueness_of :email, message: 'That email address is already in use. Give another one a go.'
     validates :password,
       confirmation: true,
       length: { minimum: 8 }
@@ -19,18 +19,18 @@ module Fae
 
     default_scope { order(:first_name, :last_name) }
 
-    scope :public_users, -> {joins(:role).where.not('fae_roles.name = ?', 'super admin')}
+    scope :public_users, -> { joins(:role).where.not('fae_roles.name = ?', 'super admin') }
 
     def super_admin?
-      role.name == "super admin"
+      role.name == 'super admin'
     end
 
     def admin?
-      role.name == "admin"
+      role.name == 'admin'
     end
 
     def user?
-      role.name == "user"
+      role.name == 'user'
     end
 
     def full_name
