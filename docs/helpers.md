@@ -52,7 +52,7 @@ fae_input f, :first_name, wrapper_class: 'special_wrapper', helper_text: 'No mor
 
 A textarea with Fae's built-in markdown hint:
 ```ruby
-fae_input f, :description, hint: markdown_helper
+fae_input f, :description, markdown: true
 ```
 
 ## fae_association
@@ -420,4 +420,15 @@ Full SLIM implementation with section wrapper and edit page conditional
       ordered: true
 ```
 
+## Add-ons
 
+### Slug generation
+
+Auto-generate a slug from a field. Only populates if the `slug` input is blank.
+
+**Examples**
+
+```slim
+= fae_input f, :name, input_class: 'slugger'
+= fae_input f, :slug, helper_text: 'Populated from name'
+```
