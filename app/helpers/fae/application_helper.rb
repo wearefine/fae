@@ -3,7 +3,9 @@ module Fae
 
     def form_header(name)
       name = name.class.name.split('::').last unless name.is_a? String
-      content_tag :h1, "#{params[:action]} #{name}".titleize
+      form_title = "#{params[:action]} #{name}".titleize
+      form_title = form_title.singularize if params[:action] == 'edit'
+      content_tag :h1, form_title
     end
 
     def markdown_helper(headers: true, emphasis: true)
