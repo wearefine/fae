@@ -21,7 +21,7 @@ section.main_content-header
 
         tbody
           - @users.each do |user|
-            td id="fae_user_#{user.id}"
+            tr id="fae_user_#{user.id}"
               td.main_table-description-item
                 a href=edit_user_path(user) #{user.first_name} #{user.last_name}
               td = user.email
