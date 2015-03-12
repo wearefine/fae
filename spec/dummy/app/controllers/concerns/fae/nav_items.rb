@@ -12,7 +12,9 @@ module Fae
         { text: 'Event',          path: main_app.admin_events_path },
         { text: 'Event Hosts',    path: main_app.admin_people_path },
         { text: 'Locations',      path: main_app.admin_locations_path },
-        { text: 'Pages',          path: fae.pages_path }
+        { text: 'Teams',          sublinks: team_sublinks },
+        { text: 'Pages',          path: fae.pages_path },
+        # scaffold inject marker
       ]
     end
 
@@ -24,6 +26,20 @@ module Fae
         wines_arr << { text: wine.name, path: main_app.edit_admin_wine_path(wine) }
       end
       wines_arr
+    end
+
+    def team_sublinks
+      teams_arr = []
+      Team.order(:name).each do |team|
+        teams_arr << {
+          text: team.name,
+          sublinks: [
+            { text: 'Coaches', path: main_app.admin_team_coaches_path(team) },
+            { text: 'Players', path: main_app.admin_team_players_path(team) }
+          ]
+        }
+      end
+      teams_arr << { text: 'Edit Teams', path: main_app.admin_teams_path }
     end
 
   end

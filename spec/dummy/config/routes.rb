@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     resources :events
     resources :people
     resources :aromas
+    resources :teams do
+      resources :coaches
+      resources :players
+    end
   end
 
   mount Fae::Engine => '/admin'

@@ -26,7 +26,7 @@ gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'capybara', '~> 2.4.1'
-  gem 'capybara-webkit', '~> 1.1.0'
+  gem 'capybara-webkit', '~> 1.4.1'
   gem 'capybara-screenshot'
   gem 'guard-rspec', '~> 4.3.1'
   gem 'database_cleaner', '~> 1.3.0'

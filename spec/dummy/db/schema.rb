@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213185222) do
+ActiveRecord::Schema.define(version: 20150305215901) do
 
   create_table "acclaims", force: true do |t|
     t.string   "score"
@@ -37,6 +37,18 @@ ActiveRecord::Schema.define(version: 20150213185222) do
   end
 
   add_index "aromas", ["release_id"], name: "index_aromas_on_release_id", using: :btree
+
+  create_table "coaches", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "role"
+    t.text     "bio"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "coaches", ["team_id"], name: "index_coaches_on_team_id", using: :btree
 
   create_table "event_releases", force: true do |t|
     t.integer  "release_id"
@@ -217,6 +229,18 @@ ActiveRecord::Schema.define(version: 20150213185222) do
     t.integer  "position"
   end
 
+  create_table "players", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "number"
+    t.text     "bio"
+    t.integer  "team_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
+
   create_table "release_selling_points", force: true do |t|
     t.integer  "release_id"
     t.integer  "selling_point_id"
@@ -267,6 +291,14 @@ ActiveRecord::Schema.define(version: 20150213185222) do
   end
 
   add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
+
+  create_table "teams", force: true do |t|
+    t.string   "name"
+    t.string   "city"
+    t.text     "history"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "varietals", force: true do |t|
     t.string   "name"

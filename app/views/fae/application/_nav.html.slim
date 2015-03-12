@@ -3,49 +3,42 @@ nav#main_nav
     - @fae_nav_items.each do |item|
       ruby:
         item[:path] ||= '#'
-
-        main_class = nav_path_current?(item[:path]) ? "main_nav-active-single" : ""
-
-        main_sub_class = ""
-        hasSublinks = item[:sublinks].present? ? true : false
-
-        # Apply the active state if user is on the page.
-        if hasSublinks
-          # must find out if a sublink is selected as well
-          item[:sublinks].each do |subitem|
-            # fail if subitem[:text] = 'selling points'
-            main_class = "main_nav-active" if nav_path_current?(subitem[:path])
-          end
-
-          # if the main LI has sublinks, we need to add main_nav-accordion to that LI for accordion action
-          # main_nav-active items do not get an accordion class
-          main_class = "main_nav-accordion" if main_class.blank?
-        end
-
-        if item[:class_name].present?
-          main_class << " #{item[:class_name]}"
-        end
+        main_class = item[:sublinks].present? ? 'main_nav-accordion' : ''
+        main_class << " #{item[:class_name]}" if item[:class_name].present?
+        header_drawer_class = 'header_drawer-content'
+        header_drawer_class << ' header_drawer-content-only' unless item[:sublinks].present?
 
       li class=main_class
         span.main_nav-header data-link=item[:path]
           span.header_drawer-content-post
             a.main_nav-link href=item[:path] = item[:text]
 
-          - header_drawer_class = "header_drawer-content"
-          - header_drawer_class << " header_drawer-content-only" if !hasSublinks
-
           span class=header_drawer_class = item[:text]
 
-        - if hasSublinks
+        - if item[:sublinks].present?
           ul.main_nav-sub-nav
             li.main_nav-sub-header-mobile
               span = item[:text]
+
             - item[:sublinks].each do |subitem|
-              - subitem[:path] ||= '#'
-              / if the current page is the same as one of these nav items
-              - main_sub_class = nav_path_current?(subitem[:path]) ? "main_nav-sub-active" : ""
-              li class=main_sub_class
-                a.main_nav-sub-link href=subitem[:path] = subitem[:text]
+              ruby:
+                subitem[:path] ||= '#'
+                sub_class = subitem[:sublinks].present? ? 'sub_nav-accordion' : ''
+                sub_class << " #{item[:class_name]}" if item[:class_name].present?
+                link_class = 'main_nav-sub-link'
+                link_class << ' with-third_nav' if subitem[:sublinks].present?
+
+              li class=sub_class
+                a class=link_class href=subitem[:path] = subitem[:text]
+
+                - if subitem[:sublinks].present?
+                  ul.main_nav-third-nav
+                    li.main_nav-third-header-mobile
+                      span = subitem[:text]
+                    - subitem[:sublinks].each do |thirditem|
+                      - thirditem[:path] ||= '#'
+                      li
+                        a.main_nav-third-link href=thirditem[:path] = thirditem[:text]
 
     - if user_signed_in?
       li.main_nav-header-mobile
@@ -57,7 +50,7 @@ nav#main_nav
       li.main_nav-header-mobile
         a.header_drawer-content.header_drawer-content-support href=fae.help_path Support
       li.main_nav-header-mobile
-        - if @option.stage_url.present?
+        - if @option.stage_url.present? || @option.live_url.present?
           span.main_nav-header
             span.header_drawer-content.header_drawer-content-viewsite View Site
           ul.main_nav-sub-nav

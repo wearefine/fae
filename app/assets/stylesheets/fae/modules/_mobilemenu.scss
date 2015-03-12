@@ -22,14 +22,13 @@
   }
 }
 
-.js-menu-level-active {
-  .main_nav-sub-nav {
-    margin-left: 0;
-    z-index: 1;
-  }
+.js-menu-level-active .main_nav-sub-nav,
+.js-sub-menu-level-active .main_nav-third-nav {
+  margin-left: 0;
+  z-index: 1;
 }
 
-.main_nav-sub-nav {
+.main_nav-sub-nav, .main_nav-third-nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -48,7 +47,7 @@
   }
 }
 
-.main_nav-sub-header-mobile {
+.main_nav-sub-header-mobile, .main_nav-third-header-mobile {
   padding: 20px;
   cursor: pointer;
   background-color: $c-light_grey;

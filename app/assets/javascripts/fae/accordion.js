@@ -1,9 +1,9 @@
 var Accordion = {
 	initialized: false, // used as a indicator that the Accordion was initially ran
 	status: true, // used as an "off" and "on" flag for the general Accordion
-	containter_selector: ".main_nav-accordion",
-	trigger_selector: ".main_nav-link",
-	sibling_selector: ".main_nav-sub-nav",
+	containter_selector: ".main_nav-accordion, .sub_nav-accordion",
+	trigger_selector: ".main_nav-link, .main_nav-sub-link",
+	sibling_selector: ".main_nav-sub-nav, .main_nav-third-nav",
 	current: null,
 
 	navs: [
@@ -15,16 +15,18 @@ var Accordion = {
 	],
 
 	init: function() {
-		var that = this;
+		var self = this;
 
 		// create an object of knowledge for each nav item
 		$.each($(this.containter_selector), function(index, container){
-			that.navs.push({
+			var $this = $(this);
+			self.navs.push({
 				name: "nav" + index,
-				container: $(this),
-				trigger: $(this).find(that.trigger_selector),
-				subnav: $(this).find(that.sibling_selector),
-				opened: false
+				container: $this,
+				trigger: $this.find(self.trigger_selector).first(),
+				subnav: $this.find(self.sibling_selector).first(),
+				opened: false,
+				class_name: $this[0].classList[0]
 			});
 		});
 
@@ -34,13 +36,13 @@ var Accordion = {
 	},
 
 	resizer: function () {
-		var that = this;
+		var self = this;
 		if (this.initialized === false) {
 			$(window).on("resize", function(){
 				if ($(window).width() < Admin.breakpoints.desktop) {
-					that.destroy();
+					self.destroy();
 				} else if ($(window).width() >= Admin.breakpoints.desktop) {
-					that.init();
+					self.init();
 				}
 			});
 
@@ -49,22 +51,21 @@ var Accordion = {
 	},
 
 	clicker: function() {
-		var that = this;
+		var self = this;
 
 		$.each(this.navs, function(index, nav){
 			$(nav.trigger).click(function(e){
+				// store nav.opened locally as closeLevel() overrides it
+				var was_opened = nav.opened;
 				// prevent default
 				e.preventDefault();
 
-				if (nav.opened) {
-					// close all first
-					that.closeAll();
-				} else {
-					// close all first
-					that.closeAll();
+				// close all first
+				self.closeLevel(nav.class_name);
 
-					//open the clicked item if it was not just opened
-					that.open(nav);
+				if (!was_opened) {
+					// open the clicked item if it was not just opened
+					self.open(nav);
 				}
 			});
 		});
@@ -90,10 +91,19 @@ var Accordion = {
 	},
 
 	closeAll: function() {
-		var that = this;
+		var self = this;
 
 		$.each(this.navs, function(index, nav){
-			that.close(nav);
+			self.close(nav);
+		});
+	},
+
+	closeLevel: function(level_class) {
+		var self = this;
+		$.each(this.navs, function(index, nav){
+			if (nav.class_name === level_class) {
+				self.close(nav);
+			}
 		});
 	},
 

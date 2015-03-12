@@ -190,7 +190,6 @@ var Admin = {
       });
     });
 
-
     this.sortable();
     this.fade_notices();
     this.city_district_selector();
@@ -420,6 +419,7 @@ var Admin = {
 
 
 $(function() {
+  FaeNavigation.init();
   Accordion.init();
   Admin.init();
   AjaxForms.init();
