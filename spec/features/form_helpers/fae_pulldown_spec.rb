@@ -33,13 +33,13 @@ feature 'fae_pulldown' do
   end
 
   scenario 'should order by defined collection' do
-    FactoryGirl.create_list(:wine, 3)
+    db_wines = FactoryGirl.create_list(:wine, 3)
 
     admin_login
     visit new_admin_release_path
 
     wines = page.all(:css, '#release_wine_id option')
-    expect( wines.last ).to have_content('Wine Name 3')
+    expect( wines.last ).to have_content(db_wines.last.name)
   end
 
 end

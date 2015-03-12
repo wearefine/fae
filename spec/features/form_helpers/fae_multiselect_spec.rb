@@ -21,15 +21,14 @@ feature 'fae_multiselect' do
     visit new_admin_release_path
 
     # wrapper_class
-    expect(page).to have_css('div.release_selling_points')
-    expect(page).to have_css('div.ms-container')
+    within('div.release_selling_points') do
+      expect(page).to have_css('div.ms-container div.ms-selectable')
+      expect(page).to have_css('div.ms-container div.ms-selection')
 
-    expect(page).to have_css('div.ms-container div.ms-selectable')
-    expect(page).to have_css('div.ms-container div.ms-selection')
-
-    expect(page).to_not have_css('div.ms-selection', text: 'new one')
-    page.find('div.ms-selectable .ms-elem-selectable').click
-    expect(page).to have_css('div.ms-selection', text: 'new one')
+      expect(page).to_not have_css('div.ms-selection', text: 'new one')
+      page.find('div.ms-selectable .ms-elem-selectable').click
+      expect(page).to have_css('div.ms-selection', text: 'new one')
+    end
   end
 
   scenario 'should use label_method if set' do
