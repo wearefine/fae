@@ -24,10 +24,8 @@ feature 'fae_multiselect' do
     expect(page).to have_css('div.release_selling_points')
     expect(page).to have_css('div.ms-container')
 
-    within('div.ms-container') do
-      expect(page).to have_css('div.ms-selectable')
-      expect(page).to have_css('div.ms-selection')
-    end
+    expect(page).to have_css('div.ms-container div.ms-selectable')
+    expect(page).to have_css('div.ms-container div.ms-selection')
 
     expect(page).to_not have_css('div.ms-selection', text: 'new one')
     page.find('div.ms-selectable .ms-elem-selectable').click
