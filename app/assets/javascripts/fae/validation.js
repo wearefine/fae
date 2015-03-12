@@ -145,7 +145,7 @@ var Validator = {
       this.$password_field = $('#user_password');
       this.$password_confirmation_field = $('#user_password_confirmation');
 
-      if (this.$password_field.length) {
+      if (this.$password_confirmation_field.length) {
         Validator.strip_validation(this.$password_field, 'confirmation');
         this.add_custom_validation();
       }
@@ -159,7 +159,7 @@ var Validator = {
       $('form').on('submit', function(ev) {
         Validator.vars.IS_VALID = true;
         self.validate_confirmation(self);
-        if (Validator.vars.IS_VALID = false) {
+        if (!Validator.vars.IS_VALID) {
           ev.preventDefault();
         }
       });
