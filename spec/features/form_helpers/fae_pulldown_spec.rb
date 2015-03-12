@@ -32,6 +32,14 @@ feature 'fae_pulldown' do
     expect(page).to_not have_css('#release_varietal_id_chosen.chosen-container-single-nosearch')
   end
 
-  scenario 'should order by defined collection'
+  scenario 'should order by defined collection' do
+    FactoryGirl.create_list(:wine, 3)
+
+    admin_login
+    visit new_admin_release_path
+
+    wines = page.all(:css, '#release_wine_id option')
+    expect( wines.last ).to have_content('Wine Name 3')
+  end
 
 end
