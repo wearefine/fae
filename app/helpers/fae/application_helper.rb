@@ -67,12 +67,13 @@ module Fae
 
     def default_page_title
       pieces = [@option.title]
-      pieces << page_title_piece unless @page_title_piece.present?
-      pieces << @page_title_piece if @page_title_piece.present?
+      pieces << page_title_piece
       pieces.join ' | '
     end
 
     def page_title_piece
+      return @page_title_piece if @page_title_piece.present?
+
       action = params[:action].humanize.titleize unless params[:action] == 'index'
       controller = controller_title unless params[:controller] == 'fae/pages'
       controller = controller.singularize if params[:action] == 'new' || params[:action] == 'edit'

@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title = @page_title
+    title Login | #{@option.title}
 
     - if @option.favicon.present? && @option.favicon.asset.present?
       link href=@option.favicon.asset_url rel="shortcut icon"
