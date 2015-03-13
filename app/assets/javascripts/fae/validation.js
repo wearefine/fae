@@ -1,6 +1,7 @@
 var Validator = {
 
   init: function () {
+    this.password_confirmation_validation.init();
     this.validate();
     this.form_validate();
   },
@@ -118,6 +119,62 @@ var Validator = {
     }
 
     return $styled_input;
+  },
+
+  // strips a fields Judge validation
+  // $field: input fields as a jQuery object
+  // kind: the kind of validation (e.g. 'presence' or 'confirmation')
+  strip_validation: function($field, kind) {
+    var validations = $field.data('validate');
+    for (var i = 0; i < validations.length; i++) {
+      if (validations[i]['kind'] === kind) {
+        validations.splice(i, 1);
+      }
+      validations[i] = JSON.stringify(validations[i]);
+    }
+    $field.attr('data-validate', '[' + validations + ']');
+  },
+
+  // Judge validates confirmation on the original field
+  // this is a hack to remove Judge's validation and add it to the confirmation field
+  password_confirmation_validation: {
+    $password_field: null,
+    $password_confirmation_field: null,
+
+    init: function() {
+      this.$password_field = $('#user_password');
+      this.$password_confirmation_field = $('#user_password_confirmation');
+
+      if (this.$password_confirmation_field.length) {
+        Validator.strip_validation(this.$password_field, 'confirmation');
+        this.add_custom_validation();
+      }
+    },
+
+    add_custom_validation: function() {
+      var self = this;
+      this.$password_confirmation_field.on('blur', function() {
+        self.validate_confirmation(self);
+      });
+      $('form').on('submit', function(ev) {
+        Validator.vars.IS_VALID = true;
+        self.validate_confirmation(self);
+        if (!Validator.vars.IS_VALID) {
+          ev.preventDefault();
+        }
+      });
+    },
+
+    validate_confirmation: function(self) {
+      if (self.$password_field.val() == self.$password_confirmation_field.val()) {
+        Validator.create_success_class(self.$password_confirmation_field);
+      } else {
+        var message = ['must match Password'];
+        Validator.vars.IS_VALID = false;
+        Validator.label_named_message(self.$password_confirmation_field, message);
+        Validator.create_or_replace_error(self.$password_confirmation_field, message);
+      }
+    }
   }
 
 
