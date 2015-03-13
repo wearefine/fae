@@ -4,6 +4,7 @@ describe 'pages#home' do
 
   context 'when user is logged out' do
     it 'should redirect to the login page' do
+      create_super_user
       get fae_path
 
       expect(response.status).to eq(302)
@@ -57,6 +58,7 @@ describe 'pages#help' do
 
   context 'when user is logged out' do
     it 'should redirect to the login page' do
+      create_super_user
       get fae.help_path
 
       expect(response.status).to eq(302)
@@ -79,6 +81,7 @@ describe 'pages#error404' do
 
   context 'when user is logged out' do
     it 'should redirect to the login page' do
+      create_super_user
       get '/admin/nothinghere'
 
       expect(response.status).to eq(302)

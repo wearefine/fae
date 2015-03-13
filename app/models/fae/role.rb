@@ -1,6 +1,5 @@
 module Fae
   class Role < ActiveRecord::Base
-
     include Fae::RoleConcern
 
     has_many :users

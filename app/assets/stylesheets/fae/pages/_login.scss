@@ -33,7 +33,7 @@
 	width: 50%;
 	margin: auto;
 
-	input[type=password], input[type=email] {
+	input[type=text], input[type=password], input[type=email] {
 		width: 100%;
 		min-width: 100%;
 	}
@@ -140,5 +140,17 @@ input.login-form-actions-submit[type="submit"] {
 
 	label + label {
 		margin-bottom: 15px;
+	}
+}
+
+.first_user-form {
+	@extend .login-form;
+
+	p {
+		margin-bottom: 30px;
+	}
+
+	input[type=submit] {
+		float: none;
 	}
 }

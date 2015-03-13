@@ -1,11 +1,12 @@
 def super_admin_login
-  role = FactoryGirl.create(:fae_role, name: 'super admin')
-  user = FactoryGirl.create(:fae_user, first_name: 'SuperAdmin', role: role)
+  user = create_super_user
 
   login(user)
 end
 
 def admin_login
+  create_super_user
+
   role = FactoryGirl.create(:fae_role, name: 'admin')
   user = FactoryGirl.create(:fae_user, first_name: 'Admin', role: role)
 
@@ -13,10 +14,20 @@ def admin_login
 end
 
 def user_login
+  create_super_user
+
   role = FactoryGirl.create(:fae_role, name: 'user')
   user = FactoryGirl.create(:fae_user, first_name: 'User', role: role)
 
   login(user)
+end
+
+# this method creates a super admin
+# which is required for the admin to function properly
+# without a super admin most pages will redirect to a fae.first_user_path
+def create_super_user
+  role = FactoryGirl.create(:fae_role, name: 'super admin')
+  FactoryGirl.create(:fae_user, first_name: 'SuperAdmin', role: role)
 end
 
 module SignInControllerHelper

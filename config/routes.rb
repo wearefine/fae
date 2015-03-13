@@ -15,6 +15,9 @@ Fae::Engine.routes.draw do
   get 'settings' => 'users#settings', as: 'settings'
   get 'help' => 'pages#help', as: 'help'
 
+  get 'first_user' => 'setup#first_user'
+  post 'first_user' => 'setup#create_first_user'
+
   # AJAX
   delete 'files/:id/delete_file' => 'files#delete_file', as: :delete_file
   delete 'images/:id/delete_image' => 'images#delete_image', as: :delete_image
@@ -33,4 +36,5 @@ Fae::Engine.routes.draw do
 
   # catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
+
 end

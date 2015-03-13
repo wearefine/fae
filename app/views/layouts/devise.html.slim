@@ -10,7 +10,7 @@ html
     == csrf_meta_tags
 
   body.login-body
-    == render 'flash_messages'
+    == render 'fae/application/flash_messages'
 
     section.login-content
       section.login-area
@@ -29,5 +29,5 @@ html
           | &nbsp;admin
 
         ul.login-helper-area
-          li == render "devise/shared/links"
+          li == render "devise/shared/links" unless params[:controller] == 'fae/setup'
           li Fae v #{Fae::VERSION}
