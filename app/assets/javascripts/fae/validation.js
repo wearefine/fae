@@ -142,18 +142,20 @@ var Validator = {
     $password_confirmation_field: null,
 
     init: function() {
-      this.$password_field = $('#user_password');
-      this.$password_confirmation_field = $('#user_password_confirmation');
+      var self = this;
 
-      if (this.$password_confirmation_field.length) {
-        Validator.strip_validation(this.$password_field, 'confirmation');
-        this.add_custom_validation();
+      self.$password_field = $('#user_password');
+      self.$password_confirmation_field = $('#user_password_confirmation');
+
+      if (self.$password_confirmation_field.length) {
+        Validator.strip_validation(self.$password_field, 'confirmation');
+        self.add_custom_validation();
       }
     },
 
     add_custom_validation: function() {
       var self = this;
-      this.$password_confirmation_field.on('blur', function() {
+      self.$password_confirmation_field.on('blur', function() {
         self.validate_confirmation(self);
       });
       $('form').on('submit', function(ev) {
