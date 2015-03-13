@@ -13,7 +13,7 @@ module Fae
     def create_first_user
       @user         = Fae::User.new(user_params)
       super_admin   = Fae::Role.find_by_name('super admin')
-      @user.role = super_admin
+      @user.role    = super_admin
       @user.active  = true
 
       if @user.save
