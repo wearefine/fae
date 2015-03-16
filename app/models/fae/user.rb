@@ -20,6 +20,7 @@ module Fae
         multiline: true
       }
     validates :password,
+      presence: { on: :create },
       confirmation: true,
       length: { minimum: 8, allow_blank: true }
     validates :role_id, presence: true
