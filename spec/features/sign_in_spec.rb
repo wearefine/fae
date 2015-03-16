@@ -2,6 +2,10 @@ require 'spec_helper'
 
 feature 'Sign In' do
 
+  before :each do
+    create_super_user
+  end
+
   scenario 'when user leaves out email' do
     visit fae.new_user_session_path
 

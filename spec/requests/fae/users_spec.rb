@@ -62,6 +62,7 @@ describe 'users#index' do
 
   context 'when logged out' do
     it "shouldn't be able to access users" do
+      create_super_user
       get fae.users_path
 
       expect(response.status).to eq(302)

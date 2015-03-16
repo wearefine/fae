@@ -20,6 +20,7 @@ module Fae
     default_scope { order(:first_name, :last_name) }
 
     scope :public_users, -> { joins(:role).where.not('fae_roles.name = ?', 'super admin') }
+    scope :live_super_admins, -> { joins(:role).where(active: true, fae_roles: { name: 'super admin' }) }
 
     def super_admin?
       role.name == 'super admin'
