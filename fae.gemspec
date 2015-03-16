@@ -5,13 +5,13 @@ require "fae/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "fae"
+  s.name        = "fae-rails"
   s.version     = Fae::VERSION
   s.authors     = ["FINE"]
-  s.email       = ["james@finedesigngroup.com"]
-  s.homepage    = "http://www.wearefine.com"
+  s.email       = ["fae@wearefine.com"]
+  s.homepage    = "https://bitbucket.org/wearefine/fae"
   s.summary     = "FINE's Admin Engine"
-  s.description = "FINE's Admin Engine"
+  s.description = "A DSL and convention based Admin for Rails."
   s.license     = ""
 
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
