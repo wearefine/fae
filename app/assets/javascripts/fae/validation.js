@@ -2,6 +2,7 @@ var Validator = {
 
   init: function () {
     this.password_confirmation_validation.init();
+    this.password_presence_conditional();
     this.validate();
     this.form_validate();
   },
@@ -127,9 +128,18 @@ var Validator = {
   strip_validation: function($field, kind) {
     var validations = $field.data('validate');
     for (var i = 0; i < validations.length; i++) {
+      // validation items can be strings or JSON objects
+      // let's convert the strings to JSON so we're dealing with consistent types
+      if (typeof validations[i] == 'string' || validations[i] instanceof String) {
+        validations[i] = JSON.parse(validations[i]);
+      }
+
+      // if the kind matches, remove it from the array
       if (validations[i]['kind'] === kind) {
         validations.splice(i, 1);
       }
+
+      // convert JSON back to a string
       validations[i] = JSON.stringify(validations[i]);
     }
     $field.attr('data-validate', '[' + validations + ']');
@@ -176,6 +186,16 @@ var Validator = {
         Validator.label_named_message(self.$password_confirmation_field, message);
         Validator.create_or_replace_error(self.$password_confirmation_field, message);
       }
+    }
+  },
+
+  // Judge always read the `on: :create` validations,
+  // so we need to strip the password presence validation
+  // on the user edit form
+  password_presence_conditional: function() {
+    var $edit_user_password = $('.edit_user #user_password');
+    if ($edit_user_password.length) {
+      this.strip_validation($edit_user_password, 'presence');
     }
   }
 

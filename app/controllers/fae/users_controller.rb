@@ -5,11 +5,11 @@ module Fae
     before_action :set_role_collection, except: [:index, :destroy]
 
     def index
-      @users = current_user.super_admin? ? User.all : User.public_users
+      @users = current_user.super_admin? ? Fae::User.all : Fae::User.public_users
     end
 
     def new
-      @user = User.new
+      @user = Fae::User.new
     end
 
     def edit
@@ -20,7 +20,7 @@ module Fae
     end
 
     def create
-      @user = User.new(user_params)
+      @user = Fae::User.new(user_params)
 
       if @user.save
         redirect_to users_path, notice: t('fae.save_notice')
@@ -57,7 +57,7 @@ module Fae
       end
 
       def set_user
-        @user = User.find(params[:id])
+        @user = Fae::User.find(params[:id])
       end
 
       def user_params

@@ -1,3 +1,1 @@
-Judge.configure do
-  expose Fae::User, :email
-end
+Judge.config.exposed[Fae::User] = [:email]

@@ -4,8 +4,8 @@ describe Fae::User do
 
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:email) }
-  it { should validate_presence_of(:role) }
-  it { should validate_uniqueness_of(:email) }
+  it { should validate_presence_of(:role_id) }
+  it { should validate_uniqueness_of(:email).with_message('That email address is already in use. Give another one a go.') }
   it { should validate_confirmation_of(:password) }
 
   describe '#public_users' do

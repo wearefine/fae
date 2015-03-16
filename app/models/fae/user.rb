@@ -6,15 +6,23 @@ module Fae
     # Include default devise modules. Others available are:
     # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
     devise :database_authenticatable,
-           :recoverable, :rememberable, :trackable, :validatable
+           :recoverable, :rememberable, :trackable
 
     belongs_to :role
 
-    validates_presence_of :first_name, :email, :role
-    validates_uniqueness_of :email, message: 'That email address is already in use. Give another one a go.'
+    validates :first_name, presence: true
+    validates :email,
+      presence: true,
+      uniqueness: { message: 'That email address is already in use. Give another one a go.' },
+      format: {
+        with: /^\s*(([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[\s\/,;]*)+$/i,
+        message: 'is invalid',
+        multiline: true
+      }
     validates :password,
+      presence: { on: :create },
       confirmation: true,
-      length: { minimum: 8 }
+      length: { minimum: 8, allow_blank: true }
     validates :role_id, presence: true
 
     default_scope { order(:first_name, :last_name) }
