@@ -1,3 +1,1 @@
-Judge.configure do
-  expose Release, :name
-end
+Judge.config.exposed[Release] = [:name]
