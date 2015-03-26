@@ -10,7 +10,8 @@
       - else
         = form_header @user
       .main_content-header-save
-        a#main_content-header-save-cancel href=users_path Cancel
+        - cancel_path = params[:action] == 'settings' ? root_path : users_path
+        a#main_content-header-save-cancel href=cancel_path Cancel
         = f.submit "Save Settings"
 
   .main_content-section
