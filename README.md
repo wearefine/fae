@@ -7,7 +7,7 @@ Fae is an admin engine for Rails unlike any other. Like most Rails admins, Fae p
 Add the gem to your Gemfile and run `bundle install`
 
 ```ruby
-gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git'
+gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git'
 ```
 Run the installer
 

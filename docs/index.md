@@ -9,7 +9,7 @@
 Add the gem to your Gemfile and run `bundle install`
 
 ```ruby
-gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git'
+gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git'
 ```
 Run the installer
 
@@ -50,8 +50,8 @@ Fae follows semantic versioning, so you can expect the following format: `major.
 Until Fae is publically released we'll maintain branches for each major release and tag each patch. You can add arguments to the gem claration to help lock in a version if you are running `bundle update`:
 
 ```ruby
-gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git', branch: 'v1'
-gem 'fae', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
+gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git', branch: 'v1'
+gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
 ```
 
 ---
