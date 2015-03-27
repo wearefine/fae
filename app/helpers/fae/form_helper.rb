@@ -128,7 +128,7 @@ module Fae
     end
 
     def is_association?(f, attribute)
-      f.object.class.reflections.include?(attribute)
+      f.object.class.reflections.include?(attribute) || f.object.class.reflections.include?(attribute.to_s)
     end
 
     def association_or_input(f, attribute, options)
