@@ -138,15 +138,15 @@ input.string {
 }
 
 :-moz-placeholder {
-   color: $c-lighter_grey;  
+   color: $c-lighter_grey;
 }
 
 ::-moz-placeholder {
-   color: $c-lighter_grey;  
+   color: $c-lighter_grey;
 }
 
-:-ms-input-placeholder {  
-   color: $c-lighter_grey;  
+:-ms-input-placeholder {
+   color: $c-lighter_grey;
 }
 
 .main_content-header-delete {
@@ -648,7 +648,7 @@ input.string {
   display: none;
 
   .form_content-wrapper {
-    padding: 30px;
+    padding: 30px 30px 30px 40px;
     border: 1px solid $c-border;
     border-top: 0;
     background: $c-form-table-bg;
