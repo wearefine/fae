@@ -21,8 +21,7 @@ $ rake db:test:prepare
 Seed the DB if you haven't already:
 
 ```
-$ rails console
-> Fae::Engine.load_seed
+$ rake fae:seed_db
 ```
 
 Fire up the server:
