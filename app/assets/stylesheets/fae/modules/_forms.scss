@@ -350,16 +350,19 @@ input.string {
   @include border-radius(2px);
 
   & > img {
-    width: 90px;
+    width: 20%;
     margin-right: 20px;
     cursor: pointer;
+    float: left;
+    display: block;
   }
 
   .icon-delete_x {
-    position: absolute;
-    right: 10px;
-    top: 19px;
+    float: left;
+    display: block;
+    width: 5%;
     color: $c-text-sub;
+    padding-top: 15px;
   }
 
   &.asset-actions--files a {
@@ -374,14 +377,12 @@ input.string {
 }
 
 .asset-actions-image-link {
-  position: relative;
-  bottom: 15px;
   padding: 5px;
-  margin-right: 10px;
   font-size: 12px;
   background: $c-form-file-link-bg;
   color: $c-form-file-link-text;
-
+  display: inline-block;
+  margin-top: 7px;
   @include border-radius(5px);
   @include transition(all, .2s);
 
@@ -389,11 +390,13 @@ input.string {
     background: $c-form-file-link-bg-hover;
   }
 }
-
+.asset-actions-title {
+  float: left;
+  display: block;
+  width: 70%;
+  padding: 10px 7px 0 0;
+}
 .asset-actions-image-name {
-  position: absolute;
-  top: 19px;
-  left: 118px;
   color: $c-custom-highlight;
 }
 
