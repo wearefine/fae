@@ -1,0 +1,17 @@
+textarea {
+  padding: 10px 0 0 15px;
+  border: 1px solid $c-border;
+  font-size: 14px;
+  min-height: 125px;
+  width: 90%;
+  min-width: 223px;
+  max-width: 515px;
+  font-family: $f-lato;
+  outline: none;
+  @include border-radius(2px);
+  @include transition(border-color, .2s);
+
+  &:focus {
+      border-color: $c-custom-highlight;
+    }
+}

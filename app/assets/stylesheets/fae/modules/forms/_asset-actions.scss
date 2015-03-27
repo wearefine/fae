@@ -1,0 +1,64 @@
+
+.asset-actions {
+  position: relative;
+  display: inline-block;
+  width: 90%;
+  min-width: 223px;
+  max-width: 515px;
+  padding: 5px 5px 4px 5px;
+  border: 1px solid $c-border;
+  background: $c-form-file-bg-active;
+  font-size: 13px;
+
+  @include border-radius(2px);
+
+  & > img {
+    width: 20%;
+    margin-right: 20px;
+    cursor: pointer;
+    float: left;
+    display: block;
+  }
+
+  .icon-delete_x {
+    float: left;
+    display: block;
+    width: 5%;
+    color: $c-text-sub;
+    padding-top: 15px;
+  }
+
+  &.asset-actions--files a {
+    line-height: 32px;
+  }
+}
+
+.asset-actions a.file_input-button {
+  display: inline-block;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.asset-actions-image-link {
+  padding: 5px;
+  font-size: 12px;
+  background: $c-form-file-link-bg;
+  color: $c-form-file-link-text;
+  display: inline-block;
+  margin-top: 7px;
+  @include border-radius(5px);
+  @include transition(all, .2s);
+
+  &:hover {
+    background: $c-form-file-link-bg-hover;
+  }
+}
+.asset-actions-title {
+  float: left;
+  display: block;
+  width: 70%;
+  padding: 10px 7px 0 0;
+}
+.asset-actions-image-name {
+  color: $c-custom-highlight;
+}

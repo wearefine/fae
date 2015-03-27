@@ -74,26 +74,6 @@ var Admin = {
       that.scroll_to($parent.find("tbody tr:last-child"), 90);
     });
 
-    var HotelStatusClasser = function(select){
-      var $status = $(select).closest(".hotel_status");
-      var status_class = "hotel_status-coming_soon";
-      var status_text = "coming soon"; // all lower case
-      var selected_text = $(select).find("option:selected").text().toLowerCase();
-
-      // if the selected option text is the same as the status text
-      $status.toggleClass(status_class, selected_text === status_text);
-    };
-
-    // on load, if hotel status is 'coming soon' add the appropriate class
-    $(".hotel_status select").each(function(){
-      HotelStatusClasser(this);
-
-      //hide show "Reservation Starting"
-      $(this).on("change", function(){
-        HotelStatusClasser(this);
-      });
-    });
-
     //image modals
     $(".js-image-modal").click(function(e){
       e.preventDefault();

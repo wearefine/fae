@@ -1,0 +1,20 @@
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  color: $c-text-heavy;
+
+  abbr {
+    color: $c-custom-highlight;
+  }
+}
+
+label h6 {
+  padding-top: 10px;
+  font-size: 13px;
+  color: #999;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.3;
+}
