@@ -1,0 +1,39 @@
+// errors
+.field_with_errors {
+  position: relative;
+  padding-top: 40px;
+
+  .error {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 6px 5px;
+    background: $c-error-bg;
+    color: $c-error-content;
+    font-size: 12px;
+    overflow: visible;
+
+    &:before {
+      @extend .icon-alert;
+      @include icon-stuff();
+      padding-right: 10px;
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      @include right-triangle(10px, $c-error-bg);
+    }
+  }
+}
+
+.input {
+  .valid {
+    border: 1px solid $c-notice-content !important;
+  }
+  .invalid {
+    border: 1px solid $c-error-content !important;
+  }
+}

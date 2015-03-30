@@ -1,0 +1,66 @@
+::-webkit-input-placeholder {
+   color: $c-lighter_grey;
+}
+
+:-moz-placeholder {
+   color: $c-lighter_grey;
+}
+
+::-moz-placeholder {
+   color: $c-lighter_grey;
+}
+
+:-ms-input-placeholder {
+   color: $c-lighter_grey;
+}
+
+input.string {
+  width: 90%;
+  min-width: 223px;
+  max-width: 515px;
+}
+
+input[type=text], input[type=number] {
+  width: 223px;
+}
+
+
+// Inputs with icon
+%input-symbol {
+  position: absolute;
+  bottom: 0;
+  border: 0 solid $c-lightest_grey;
+  padding: 14px 16px 13px;
+  margin-bottom: 1px;
+  font-size: 14px;
+  color: $c-light_grey;
+}
+
+.symbol {
+  position: relative;
+  width: 240px;
+
+  input {
+    width: 100%;
+  }
+
+  &.symbol--prefix input {
+    padding-left: 50px;
+  }
+
+  &.symbol--suffix input {
+    padding-right: 50px;
+  }
+}
+
+.input-symbol--prefix {
+  @extend %input-symbol;
+  left: 0;
+  border-right-width: 1px;
+}
+
+.input-symbol--suffix {
+  @extend %input-symbol;
+  right: 0;
+  border-left-width: 1px;
+}
