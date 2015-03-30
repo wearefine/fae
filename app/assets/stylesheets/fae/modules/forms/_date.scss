@@ -200,12 +200,12 @@
 }
 
 .date-picker-wrapper {
+  @include box-shadow(0, 0, 10px, 0, $c-box_shadow);
   background: $c-border;
   font-family: inherit;
   padding: 0;
   width: 380px;
   border: 0;
-  @include box-shadow(0, 0, 10px, 0, $c-box_shadow);
   margin-top: 5px;
   &.no-shortcuts {
     padding-bottom: 0;
@@ -234,14 +234,14 @@
         }
         .next {
           &:before {
-            color: $c-white;
             @extend .icon-chevron_right:before;
+            color: $c-white;
           }
         }
         .prev {
           &:before {
-            color: $c-white;
             @extend .icon-chevron_left:before;
+            color: $c-white;
           }
         }
       }
