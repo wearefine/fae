@@ -5,6 +5,11 @@
 - enhancements
 - bugs
 
+## 1.1.0
+
+- enhancements
+- bugs
+
 ## 1.0.1
 
 - enhancements
