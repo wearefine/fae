@@ -20,6 +20,7 @@ var Admin = {
       $(".daterangepicker").dateRangePicker({
         format: "MMM DD, YYYY",
         separator : ' to ',
+        showShortcuts: false,
         getValue: function()
         {
           if ($('.js-start_date').val() && $('.js-end_date').val() )
