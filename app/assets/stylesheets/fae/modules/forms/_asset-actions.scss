@@ -28,8 +28,15 @@
     padding-top: 15px;
   }
 
-  &.asset-actions--files a {
-    line-height: 32px;
+  &.asset-actions--files {
+    a {
+      line-height: 32px;
+    }
+    .icon-delete_x {
+      padding-top: 0;
+      right: 0;
+      line-height: 16px;
+    }
   }
 }
 

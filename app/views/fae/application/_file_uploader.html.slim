@@ -20,6 +20,8 @@ ruby:
       .asset-actions.asset-actions--files
         = link_to 'Replace File', fae.delete_file_path(the_file.id), class: 'file_input-button js-asset-delete-link', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
 
+        = link_to '', fae.delete_file_path(the_file.id), class: 'icon-delete_x file_input-delete js-asset-delete-link', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+
         a href=the_file.asset.url target="_blank" = the_file.asset.file.filename
 
     .asset-inputs style="#{'display: none;' unless the_file.asset.blank?}"
