@@ -5,6 +5,12 @@
 - enhancements
 - bugs
 
+## 1.0.2
+
+- enhancements
+    + [#44577](https://issues.afinedevelopment.com/issues/44577): add delete button back to file uploader
+    + [#45147](https://issues.afinedevelopment.com/issues/45147): update date range picker styles
+
 ## 1.0.1
 
 - enhancements
