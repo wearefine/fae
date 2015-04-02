@@ -192,3 +192,102 @@
     color: $c-light_grey;
   }
 }
+
+// Daterange picker
+// This looks whack and overly specific, but it's because it's overriding the vendor styles
+.date-picker {
+  font-family: inherit;
+}
+
+.date-picker-wrapper {
+  @include box-shadow(0, 0, 10px, 0, $c-box_shadow);
+  background: $c-border;
+  font-family: inherit;
+  padding: 0;
+  width: 380px;
+  border: 0;
+  margin-top: 5px;
+  &.no-shortcuts {
+    padding-bottom: 0;
+  }
+  .month-wrapper {
+    background-color: $c-border;
+    border: 0;
+    padding: 0;
+    table {
+      font-weight: bold;
+      .caption {
+        background: $c-black;
+        color: $c-white;
+        height: 30px;
+        font-weight: bold;
+        .prev,
+        .next {
+          @include icon-stuff();
+          color: $c-black;
+          &:hover {
+            background: none;
+            &:before {
+              color: $c-grey;
+            }
+          }
+        }
+        .next {
+          &:before {
+            @extend .icon-chevron_right:before;
+            color: $c-white;
+          }
+        }
+        .prev {
+          &:before {
+            @extend .icon-chevron_left:before;
+            color: $c-white;
+          }
+        }
+      }
+      .week-name {
+        background: $c-white;
+        border-bottom: 1px solid $c-border;
+        color: $c-black;
+        line-height: 1;
+        font-weight: 400;
+        th {
+          font-size: 6pt;
+          text-transform: uppercase;
+          color: $c-grey;
+        }
+      }
+      .day {
+        @include gradient-vertical($start-color: $c-lightest_grey, $end-color:$c-nav-sub-bg-active);
+        height: 30px;
+        padding: 6px;
+        border-right: 1px solid $c-border;
+        &.lastMonth,
+        &.nextMonth {
+          background: $c-white;
+          color: $c-border;
+        }
+        &.checked,
+        &.toMonth.valid.checked {
+          background: $c-custom-highlight;
+          color: $c-white;
+        }
+        &.real-today.checked {
+          background: $c-custom-highlight;
+        }
+      }
+      div.day {
+        &.lastMonth,
+        &.nextMonth {
+          color: $c-border;
+        }
+      }
+    }
+  }
+  .drp_top-bar {
+    display: none;
+  }
+  .gap {
+    display: none !important; //overrides JS display: block;
+  }
+}
