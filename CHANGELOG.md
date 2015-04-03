@@ -5,6 +5,11 @@
 - enhancements
 - bugs
 
+## 1.0.3
+
+- bugs
+    + [#45917](https://issues.afinedevelopment.com/issues/45917): image upload file path now wraps if too long
+
 ## 1.0.2
 
 - enhancements
