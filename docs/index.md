@@ -106,7 +106,7 @@ rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-mode
 |-|-|
 | `[--parent-model=ParentModel]` | an optional flag that adds the association to the generated model.|
 
-The nested scaffold creates a model that will be nested in another object's form via the `nested_table_advanced` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to server the nested form.
+The nested scaffold creates a model that will be nested in another object's form via the `nested_table_advanced` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
 
 ## fae:page
 
