@@ -236,7 +236,6 @@ fae_video_url f, :video_url
 | show_caption        | boolean | false | displays the caption field, label and helper text |
 | required            | boolean | false | adds required validation to the uploader |
 
-
 **Examples**
 
 ```ruby
