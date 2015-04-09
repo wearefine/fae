@@ -8,6 +8,7 @@
 ## 1.1.0
 
 - enhancements
+  + [#41106](https://issues.afinedevelopment.com/issues/41106): set max image and file upload
 - bugs
 
 ## 1.0.1
