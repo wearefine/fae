@@ -87,6 +87,7 @@ var FileInputer = {
 		var that = this;
 		var limit = parseInt( this.$input.attr('data-limit') );
 		var size = this.$input.get(0).files[0].size / 1024 / 1024;
+		var error_msg = this.$input.attr('data-exceeded').replace('###', limit);
 
 		if(size > limit) {
 			alert( this.$input.attr('data-exceeded') );

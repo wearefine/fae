@@ -56,6 +56,33 @@ gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
 
 ---
 
+# Fae Initializer
+
+Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
+
+| key | type | default | description
+|-|-|-|-| 
+| devise_secret_key | string | | unique Devise hash
+| devise_mailer_sender | string | change-me@example.com | address used to send Devise notifications (i.e. forgot password emails)
+| dashboard_exclusions  | array | [] | array of models to hide in the dashboard
+| max_image_upload_size | integer | 2 | ceiling for image uploads in MB
+| max_file_upload_size | integer | 5 | ceiling for file uploads in MB
+
+### Example
+
+```ruby
+Fae.setup do |config|
+
+  config.devise_secret_key = '79a3e96fecbdd893853495ff502cd387e22c9049fd30ff691115b8a0b074505be4edef6139e4be1a0a9ff407442224dbe99d94986e2abd64fd0aa01153f5be0d'
+
+  # models to exclude from dashboard list
+  config.dashboard_exclusions = %w( Varietal )
+
+end
+```
+
+---
+
 # Generators
 
 Once you have Fae installed, you're ready to start generating your data model. Fae comes with a few generators that work similarly to the ones in Rails. The idea is scaffolding a model with these generators will give you a section to create, edit and delete objects.
