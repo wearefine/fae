@@ -8,7 +8,9 @@
 ## 1.1.0
 
 - enhancements
+  + [#246508](https://issues.afinedevelopment.com/issues/246508): markdown helper text content updates
   + [#41106](https://issues.afinedevelopment.com/issues/41106): set max image and file upload
+
 - bugs
 
 ## 1.0.3
