@@ -84,13 +84,14 @@ var FileInputer = {
 	},
 
 	check_size: function() {
-		var that = this;
 		var limit = parseInt( this.$input.attr('data-limit') );
 		var size = this.$input.get(0).files[0].size / 1024 / 1024;
-		var error_msg = this.$input.attr('data-exceeded').replace('###', limit);
+		var error_obj = $('<span />', { class: 'error' })
+		error_obj.text( this.$input.attr('data-exceeded').replace('###', limit) )
 
 		if(size > limit) {
-			alert( this.$input.attr('data-exceeded') );
+			this.$input.after( error_obj );
+			$(this.elm).addClass('field_with_errors');
 			return false;
 		} else {
 			return true;
