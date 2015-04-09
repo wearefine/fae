@@ -8,7 +8,7 @@ module Fae
       content_tag :h1, form_title
     end
 
-    def markdown_helper(links: true, formatting: true, headings: true, list: true, paragraph: true)
+    def markdown_helper(links: true, formatting: true, emphasis: true, headers: true, list: true, paragraph: true)
       helper = "<h3>Markdown Options</h3>"
       helper += "<h4>Links</h4>
             <p>
@@ -23,14 +23,14 @@ module Fae
               <br>
               Bold  **bold**<br>
               Italicize _italic_
-            </p>" if formatting
-      helper += "<h4>Headings</h4>
+            </p>" if formatting || emphasis
+      helper += "<h4>Headers</h4>
             <p>
               Use up to six hashtags to identify the importance of the section header.<br>
               <br>
               Page Header: # Page Header<br>
               Sub Header: ## Sub Header
-            </p>" if headings
+            </p>" if headers
       helper += "<h4>List</h4>
             <p>
               Format lists by swapping out the characters that lead the list item.</br>
