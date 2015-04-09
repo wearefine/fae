@@ -18,7 +18,7 @@ module Fae
     end
 
     def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil)
-      render 'fae/application/content_uploader', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_options: markdown_options
+      render 'fae/application/content_uploader', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown
     end
 
     def attr_toggle(item, column)
