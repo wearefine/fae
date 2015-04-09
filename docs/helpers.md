@@ -235,6 +235,7 @@ fae_video_url f, :video_url
 | show_alt            | boolean | true | displays the alt field, label and helper text |
 | show_caption        | boolean | false | displays the caption field, label and helper text |
 | required            | boolean | false | adds required validation to the uploader |
+| limit               | integer | 5 | sets upload limit in MB |
 
 
 **Examples**
@@ -252,8 +253,9 @@ fae_image_form f, :logo, label: 'Corporate Logo', required: true
 | label         | string | file_name.to_s.humanize | the uploader's label |
 | helper_text   | string | | the uploader's helper text|
 | required      | boolean | false | adds required validation to the uploader |
+| limit         | integer | 5 | sets upload limit in MB |
 
-image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
+image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil, limit: nil
 
 
 **Examples**

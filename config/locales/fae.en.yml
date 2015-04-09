@@ -6,3 +6,5 @@ en:
     delete_error: 'This item has associated objects that prevent it from being removed.'
     delete_confirmation: 'Are you sure you want to permanently delete this item?'
     unauthorized_error: 'You are not authorized to view that page.'
+    exceeded_image_upload: "Let's aim for smaller. This image is too big. Got another?"
+    exceeded_file_upload: "Let's aim for smaller. This file is too big. Got another?"

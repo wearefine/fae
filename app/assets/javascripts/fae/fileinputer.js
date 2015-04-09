@@ -70,13 +70,31 @@ var FileInputer = {
 		var that = this;
 
 		// this is to get the filename and present it next to the button
-		this.$input.on("change", function(){
-			that.$text.text($(this).val().replace("C:\\fakepath\\", ""));
-
-			if ($(this).val() !== "") {
-				that.$inputer.addClass(that.options.active_class);
+		this.$input.on("change", function(e){
+			if(that.check_size()) {
+				that.$text.text($(this).val().replace("C:\\fakepath\\", ""));
+	
+				if ($(this).val() !== "") {
+					that.$inputer.addClass(that.options.active_class);
+				}
+			} else {
+				e.preventDefault();
 			}
 		});
+	},
+
+	check_size: function() {
+		var that = this;
+		var limit = parseInt( this.$input.attr('data-limit') );
+		var size = this.$input.get(0).files[0].size / 1024 / 1024;
+
+		if(size > limit) {
+			alert( this.$input.attr('data-exceeded') );
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 };
 
