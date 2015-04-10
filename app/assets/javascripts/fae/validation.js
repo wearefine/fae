@@ -197,7 +197,7 @@ var Validator = {
     if ($edit_user_password.length) {
       this.strip_validation($edit_user_password, 'presence');
     }
-  }
+  },
 
   counter: function(){
     var text_max = 99;
@@ -209,7 +209,7 @@ var Validator = {
 
         $('#textarea_feedback').html(text_remaining + ' characters remaining');
     });
-
+  }
 
 
 
