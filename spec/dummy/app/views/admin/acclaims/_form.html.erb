@@ -12,7 +12,7 @@
       <div class="main_content-section-area">
         <%= f.input :score %>
         <%= f.input :publication %>
-        <%= fae_datepicker f, :publication_date, validate: true %>
+        <%= fae_datepicker f, :publication_date %>
         <%= fae_file_form f, :pdf %>
         <%= fae_input f, :description, markdown: true %>
       </div>
