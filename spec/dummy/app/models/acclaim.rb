@@ -1,8 +1,6 @@
 class Acclaim < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
-  validates :publication_date, presence: true
-
   has_one :pdf,
           as: :fileable,
           class_name: '::Fae::File',
