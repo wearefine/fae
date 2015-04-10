@@ -39,10 +39,8 @@ var Validator = {
         }
         $event_trigger.blur(function () {
           if (!$(this).hasClass("hasDatepicker")) {
-            console.log("no sauce");
             self.judge_it($validation_element);
           } else {
-            console.log("special sauce");
             setTimeout(function(){ self.judge_it($validation_element); }, 500);
           }
         });
