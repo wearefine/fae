@@ -34,7 +34,7 @@ var Validator = {
     var self = this;
     $('[data-validate]').each(function () {
       var $validation_element = $(this);
-      var $event_trigger = $(this);
+      var $event_trigger = $validation_element;
       if ($validation_element.data('validate').length) {
         if (self.is_chosen($validation_element)) {
           $event_trigger = self.chosen_input($validation_element);
@@ -213,10 +213,10 @@ var Validator = {
     find_length_validations: function() {
       var self = this;
       $('[data-validate]').each(function () {
-        var _this = this;
-        if ($(_this).data('validate').length > 0 ) {
-          var $elem = $(this);
-          var validations = $(this).data('validate');
+        var $this = $(this);
+        if ($this.data('validate').length ) {
+          var $elem = $this;
+          var validations = $this.data('validate');
           $.grep(validations, function(item){
             if (item.kind == "length"){
               var max = item.options.maximum;
@@ -252,7 +252,7 @@ var Validator = {
     create_counter_elem: function($elem, max, current, text){
       $( "<div class='counter' data-max="+max+" data-current="+ current +"><p>" + text + "</p></div>" ).insertAfter( $elem );
       if (current < 0 || $elem.val().length >= 100){
-        $(".characters-left").css("color", "red");
+        $(".characters-left").addClass("overCount");
       }
     },
 

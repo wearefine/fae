@@ -44,6 +44,9 @@
     font-size: 13px;
     span {
       color: green;
+      &.overCount {
+        color: red;
+      }
     }
   }
 }
