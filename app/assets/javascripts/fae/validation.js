@@ -5,6 +5,7 @@ var Validator = {
     this.password_presence_conditional();
     this.validate();
     this.form_validate();
+    this.length_counter.init();
   },
 
   vars: {
@@ -32,7 +33,8 @@ var Validator = {
   validate: function () {
     var self = this;
     $('[data-validate]').each(function () {
-      var $validation_element = $event_trigger = $(this);
+      var $validation_element = $(this);
+      var $event_trigger = $(this);
       if ($validation_element.data('validate').length) {
         if (self.is_chosen($validation_element)) {
           $event_trigger = self.chosen_input($validation_element);
@@ -47,8 +49,6 @@ var Validator = {
       }
     });
   },
-
-
 
   // 'private functions'
 
@@ -203,22 +203,67 @@ var Validator = {
     }
   },
 
-  counter: function(){
-    var text_max = 99;
-    $('#textarea_feedback').html(text_max + ' characters remaining');
+  length_counter: {
 
-    $('#textarea').keyup(function() {
-        var text_length = $('#textarea').val().length;
-        var text_remaining = text_max - text_length;
+    init: function(){
+      var self = this;
+      self.find_length_validations();
+    },
 
-        $('#textarea_feedback').html(text_remaining + ' characters remaining');
-    });
-  }
+    find_length_validations: function() {
+      var self = this;
+      $('[data-validate]').each(function () {
+        var _this = this;
+        if ($(_this).data('validate').length > 0 ) {
+          var $elem = $(this);
+          var validations = $(this).data('validate');
+          $.grep(validations, function(item){
+            if (item.kind == "length"){
+              var max = item.options.maximum;
+              self.set_counter($elem, max);
+            }
+          });
+        }
+      });
+    },
 
+    set_counter: function($elem, max, current) {
+      current = current || 0;
 
+      var text = this._create_counter_text($elem, max, current);
 
+      if ($elem.siblings(".counter").length) {
+        $elem.siblings('.counter').remove();
+        this.create_counter_elem($elem, max, current, text);
+      } else {
+        this.create_counter_elem($elem, max, current, text);
+        this.add_counter_listener($elem, max);
+      }
+    },
 
-  }
+    _create_counter_text: function($elem, max, current) {
+      var prep = "Maximum Characters: " + max;
+      if (current > 0 || $elem.val().length > 0) {
+        prep += " / <span class='characters-left'>Characters Left: " + current + "</span>";
+      }
+      return prep;
+    },
+
+    create_counter_elem: function($elem, max, current, text){
+      $( "<div class='counter' data-max="+max+" data-current="+ current +"><p>" + text + "</p></div>" ).insertAfter( $elem );
+      if (current < 0 || $elem.val().length >= 100){
+        $(".characters-left").css("color", "red");
+      }
+    },
+
+    add_counter_listener: function($elem, max) {
+      var self = this;
+      $elem.keyup(function() {
+        var current = (max - ($elem.val().length));
+        self.set_counter($elem, max, current);
+      });
+    }
+  },
 
 
 };

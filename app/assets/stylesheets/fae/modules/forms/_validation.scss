@@ -37,3 +37,13 @@
     border: 1px solid $c-error-content !important;
   }
 }
+
+.counter {
+  p {
+    padding-top: 10px;
+    font-size: 13px;
+    span {
+      color: green;
+    }
+  }
+}
