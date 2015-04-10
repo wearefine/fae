@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'fae_file_form' do
 
-  scenario 'should display updloader', js: true do
+  scenario 'should display uploader', js: true do
     admin_login
     visit new_admin_release_path
 
