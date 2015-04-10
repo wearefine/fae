@@ -38,7 +38,11 @@ var Validator = {
           $event_trigger = self.chosen_input($validation_element);
         }
         $event_trigger.blur(function () {
-          self.judge_it($validation_element);
+          if (!$(this).hasClass("hasDatepicker")) {
+            self.judge_it($validation_element);
+          } else {
+            setTimeout(function(){ self.judge_it($validation_element); }, 500);
+          }
         });
       }
     });
