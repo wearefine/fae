@@ -12,6 +12,7 @@
   + [#41106](https://issues.afinedevelopment.com/issues/41106): set max image and file upload
 
 - bugs
+  + [#46027](https://issues.afinedevelopment.com/issues/46027]): fixed validation date picker bug
 
 ## 1.0.3
 
