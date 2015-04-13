@@ -5,6 +5,11 @@
 - enhancements
 - bugs
 
+## 1.1
+
+- enhancements
+    + [#45625](https://issues.afinedevelopment.com/issues/45625): add export to csv for index pages
+
 ## 1.0.3
 
 - bugs
