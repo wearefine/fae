@@ -1,11 +1,15 @@
 - title       ||= @klass_humanized.pluralize
 - new_button    = !local_assigns[:new_button].eql?(false)
 - button_text ||= "Add #{title.singularize}"
+- csv = true
 section.main_content-header
   .main_content-header-wrapper
     h1 = title
     - if new_button
       .main_content-header-save
         a.add-button href=@new_path = button_text
+    - if csv
+      .main_content-header-csv
+        a.add-button href=@index_csv_path = "Export to CSV"
 
 == render 'flash_messages'

@@ -1,5 +1,6 @@
 module Fae
   class BaseController < ApplicationController
+    require 'csv'
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
@@ -8,6 +9,14 @@ module Fae
 
     def index
       @items = @klass.for_fae_index
+      respond_to do |format|
+        format.html
+        format.csv do
+          # binding.pry
+          headers['Content-Disposition'] = "attachment; filename=\"#{@items.name.parameterize}.csv\""
+          headers['Content-Type'] ||= 'text/csv'
+        end
+      end
     end
 
     def new
@@ -56,6 +65,7 @@ module Fae
       @klass_singular = klass_base.singularize            # used in index views
       @klass_humanized = @klass_name.singularize.humanize # used in index views
       @index_path = '/' + params[:controller]             # used in form_header and form_buttons partials
+      @index_csv_path = '/' + params[:controller] + ".csv"             # used in form_header and form_buttons partials
       @new_path = @index_path + '/new'                    # used in index_header partial
     end
 
