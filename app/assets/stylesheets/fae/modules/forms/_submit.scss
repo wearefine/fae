@@ -19,15 +19,16 @@ input[type=submit], .add-button {
   }
 }
 
-.csv-button {
-  color: $c-form-submit;
+input[type=submit], .csv-button {
+  color: $c-form-button;
   padding: 12px 15px;
   border: 0;
-  background-color: $c-form-csv;
+
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
 
   &:hover {
-    color: $c-form-submit;
-    background: $c-form-csv-hover;
+    color: $c-form-button;
+    background: $c-form-button-gradient-hover;
   }
 }
 
