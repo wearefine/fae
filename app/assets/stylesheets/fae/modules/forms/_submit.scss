@@ -23,12 +23,11 @@ input[type=submit], .add-button {
   color: $c-form-submit;
   padding: 12px 15px;
   border: 0;
-
-  @include gradient-vertical($start-color: $c-form-submit-gradient-start-csv, $end-color: $c-form-submit-gradient-end-csv);
+  background-color: $c-form-csv;
 
   &:hover {
     color: $c-form-submit;
-    background: $c-form-submit-gradient-hover-csv;
+    background: $c-form-csv-hover;
   }
 }
 
