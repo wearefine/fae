@@ -1,7 +1,7 @@
 - title       ||= @klass_humanized.pluralize
 - new_button    = !local_assigns[:new_button].eql?(false)
 - button_text ||= "Add #{title.singularize}"
-- csv ||= true
+- csv ||= @csv
 section.main_content-header
   .main_content-header-wrapper
     h1 = title
