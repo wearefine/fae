@@ -12,8 +12,7 @@ module Fae
       respond_to do |format|
         format.html
         format.csv do
-          # binding.pry
-          headers['Content-Disposition'] = "attachment; filename=\"#{@items.name.parameterize}.csv\""
+          headers['Content-Disposition'] = "attachment; filename=\"#{@items.name.parameterize + "_" + Time.now.to_s(:filename)}.csv\""
           headers['Content-Type'] ||= 'text/csv'
         end
       end
