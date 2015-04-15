@@ -9,7 +9,6 @@ module Fae
 
     def index
       @items = @klass.for_fae_index
-      @csv = true
       respond_to do |format|
         format.html
         format.csv do
