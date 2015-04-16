@@ -11,5 +11,16 @@ class Acclaim < ActiveRecord::Base
     publication
   end
 
+
+  # def self.to_csv
+  #   binding.pry
+  #   CSV.generate do |csv|
+  #     csv << column_names
+  #     all.each do |item|
+  #       csv << item.attributes.values_at(*column_names)
+  #     end
+  #   end
+  # end
+
   belongs_to :release
 end
