@@ -61,7 +61,7 @@ gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
 Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 
 | key | type | default | description
-|-|-|-|-| 
+|-|-|-|-|
 | devise_secret_key | string | | unique Devise hash
 | devise_mailer_sender | string | change-me@example.com | address used to send Devise notifications (i.e. forgot password emails)
 | dashboard_exclusions  | array | [] | array of models to hide in the dashboard
@@ -220,6 +220,10 @@ def self.for_fae_index
   order(:first_name)
 end
 ```
+
+## to_csv
+
+Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::Concerns::Models::Base`. It is meant to be called from the index action.
 
 
 ## Nested Resources
@@ -462,7 +466,7 @@ Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simpl
 
 Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
 
-[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)    
+[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
 [Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
 
 ---
