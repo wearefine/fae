@@ -70,13 +70,33 @@ var FileInputer = {
 		var that = this;
 
 		// this is to get the filename and present it next to the button
-		this.$input.on("change", function(){
-			that.$text.text($(this).val().replace("C:\\fakepath\\", ""));
-
-			if ($(this).val() !== "") {
-				that.$inputer.addClass(that.options.active_class);
+		this.$input.on("change", function(e){
+			if(that.check_size()) {
+				that.$text.text($(this).val().replace("C:\\fakepath\\", ""));
+	
+				if ($(this).val() !== "") {
+					that.$inputer.addClass(that.options.active_class);
+				}
+			} else {
+				e.preventDefault();
 			}
 		});
+	},
+
+	check_size: function() {
+		var limit = parseInt( this.$input.attr('data-limit') );
+		var size = this.$input.get(0).files[0].size / 1024 / 1024;
+		var error_obj = $('<span />', { class: 'error' })
+		error_obj.text( this.$input.attr('data-exceeded').replace('###', limit) )
+
+		if(size > limit) {
+			this.$input.after( error_obj );
+			$(this.elm).addClass('field_with_errors');
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 };
 

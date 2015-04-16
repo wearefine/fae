@@ -80,6 +80,26 @@
 	}
 }
 
+.main_content-section-toggles {
+	list-style: none;
+	margin: -15px 0 30px 0;
+	li {
+		display: inline-block;
+		a {
+			display: block;
+			padding: 11px 13px 10px;
+			color: $c-text-sub;
+			font-size: 13px;
+			@include border-radius(0 0 3px 3px);
+			@include transition-multiple(color 0s, background 0.4s);
+			&.active,
+			&:hover {
+				background: $c-custom-highlight;
+				color: $c-white;
+			}
+		}
+	}
+}
 
 .main_content-breadcrumbs {
 	padding-bottom: 5px;
