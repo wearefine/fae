@@ -11,7 +11,7 @@ module Fae
       @items = @klass.for_fae_index
       respond_to do |format|
         format.html
-        format.csv { send_data @items.to_csv, filename: @items.name.parameterize + Time.now.to_s(:filename) + '.csv'  }
+        format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_s(:filename) + '.csv'  }
       end
     end
 
