@@ -1,4 +1,6 @@
 module Fae::Concerns::Models::Base
+  require 'pry'
+  require 'csv'
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -20,6 +22,7 @@ module Fae::Concerns::Models::Base
     end
 
     def to_csv
+      binding.pry
       CSV.generate do |csv|
         csv << column_names
         all.each do |item|

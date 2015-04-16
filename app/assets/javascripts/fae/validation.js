@@ -58,10 +58,8 @@ var Validator = {
     judge.validate($input[0], {
       valid: function () {
         self.create_success_class($input);
-        console.log("valid");
       },
       invalid: function (input, messages) {
-        console.log("is not valid");
         self.vars.IS_VALID = false;
         self.label_named_message($input, messages);
         self.create_or_replace_error($input, messages);
