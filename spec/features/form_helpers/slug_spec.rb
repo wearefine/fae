@@ -19,7 +19,7 @@ feature 'slug' do
 
       fill_in 'Name', with: "So what'cho what'cho"
       fill_in 'Vintage', with: "What'cho want?!"
-      expect(find_field('Slug').value).to eq('so-whatcho-wh-whatcho-want')
+      expect(find_field('Slug').value).to eq('so-whatcho-wha-whatcho-want')
     end
   end
 
