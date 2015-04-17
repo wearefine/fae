@@ -5,6 +5,7 @@ var Validator = {
     this.password_presence_conditional();
     this.validate();
     this.form_validate();
+    this.length_counter.init();
   },
 
   vars: {
@@ -32,7 +33,8 @@ var Validator = {
   validate: function () {
     var self = this;
     $('[data-validate]').each(function () {
-      var $validation_element = $event_trigger = $(this);
+      var $validation_element = $(this);
+      var $event_trigger = $validation_element;
       if ($validation_element.data('validate').length) {
         if (self.is_chosen($validation_element)) {
           $event_trigger = self.chosen_input($validation_element);
@@ -47,8 +49,6 @@ var Validator = {
       }
     });
   },
-
-
 
   // 'private functions'
 
@@ -201,7 +201,75 @@ var Validator = {
     if ($edit_user_password.length) {
       this.strip_validation($edit_user_password, 'presence');
     }
-  }
+  },
+
+  length_counter: {
+
+    init: function(){
+      this.find_length_validations();
+    },
+
+    find_length_validations: function() {
+      var self = this;
+      $('[data-validate]').each(function () {
+        var $this = $(this);
+        if ($this.data('validate').length ) {
+          var validations = $this.data('validate');
+          $.grep(validations, function(item){
+            if (item.kind == 'length'){
+              var max = item.options.maximum;
+              self.set_counter($this, max);
+            }
+          });
+        }
+      });
+    },
+
+    set_counter: function($elem, max, current) {
+      current = current || 0 + (max - $elem.val().length);
+
+      var text = this._create_counter_text($elem, max, current);
+
+      if ($elem.siblings('.counter').length) {
+        $elem.siblings('.counter').remove();
+        this.create_counter_elem($elem, max, current, text);
+      } else {
+        this.create_counter_elem($elem, max, current, text);
+        this.add_counter_listener($elem, max);
+      }
+    },
+
+    _create_counter_text: function($elem, max, current) {
+      var prep = "Maximum Characters: " + max;
+      if (current > 0 || $elem.val().length > 0) {
+        prep += " / <span class='characters-left'>Characters Left: " + current + "</span>";
+      }
+      return prep;
+    },
+
+    create_counter_elem: function($elem, max, current, text){
+      $( "<div class='counter' data-max="+max+" data-current="+ current +"><p>" + text + "</p></div>" ).insertAfter( $elem );
+      if (current <= 0 || $elem.val().length >= 100){
+        $elem.siblings('.counter').children('p').children('.characters-left').addClass('overCount');
+      }
+    },
+
+    add_counter_listener: function($elem, max) {
+      var self = this;
+      $elem.keyup(function() {
+        var current = (max - ($elem.val().length));
+        self.set_counter($elem, max, current);
+      });
+      $elem.keypress(function(e) {
+        var current = (max - $elem.val().length);
+        if (current <= 0) {
+          if (e.keyCode !== 8 || e.keyCode !== 46) {
+            e.preventDefault();
+          }
+        }
+      });
+    }
+  },
 
 
 };
