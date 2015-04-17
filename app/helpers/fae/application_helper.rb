@@ -79,6 +79,16 @@ module Fae
       end
     end
 
+
+    def fae_filter_form(options)
+
+    end
+
+
+    def fae_filter_select(attribute, options)
+
+    end
+
     private
 
     def nav_path_current?(path)

@@ -47,6 +47,17 @@ module Fae
       end
     end
 
+    def filter
+      # protect xhr
+      if params[:commit] === "Reset Search"
+        @items = @klass.filter_all
+      else
+        @items = @klass.filter(params[:model])
+      end
+
+      render :index, layout: false
+    end
+
   private
 
     def set_class_variables(class_name = nil)

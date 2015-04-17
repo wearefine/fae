@@ -19,5 +19,18 @@ module Fae::Concerns::Models::Base
       end
     end
 
+    def filter_all
+    end
+
+    def filter(params)
+      search = {}
+      search['wines.slug'] = params[:wine] if params[:wine].present?
+
+      unscoped
+      .includes(:wine)
+      .where(search).order('wine.position')
+      .active
+    end
+
   end
 end
