@@ -8,7 +8,7 @@ feature 'slug' do
       visit new_admin_release_path
 
       fill_in 'Name', with: "!St. John's @#!*  What?"
-      expect(find_field('Slug').value).to eq('st-johns-what')
+      expect(find_field('Slug').value).to eq('st-johns')
     end
   end
 
@@ -19,7 +19,7 @@ feature 'slug' do
 
       fill_in 'Name', with: "So what'cho what'cho"
       fill_in 'Vintage', with: "What'cho want?!"
-      expect(find_field('Slug').value).to eq('so-whatcho-whatcho-whatcho-want')
+      expect(find_field('Slug').value).to eq('so-whatcho-wh-whatcho-want')
     end
   end
 
