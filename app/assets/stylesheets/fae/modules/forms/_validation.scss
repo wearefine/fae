@@ -43,9 +43,9 @@
     padding-top: 10px;
     font-size: 13px;
     span {
-      color: green;
+      color: $c-notice-content;
       &.overCount {
-        color: red;
+        color: $c-error-content;
       }
     }
   }

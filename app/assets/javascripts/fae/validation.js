@@ -214,12 +214,11 @@ var Validator = {
       $('[data-validate]').each(function () {
         var $this = $(this);
         if ($this.data('validate').length ) {
-          var $elem = $this;
           var validations = $this.data('validate');
           $.grep(validations, function(item){
-            if (item.kind == "length"){
+            if (item.kind == 'length'){
               var max = item.options.maximum;
-              self.set_counter($elem, max);
+              self.set_counter($this, max);
             }
           });
         }
@@ -231,7 +230,7 @@ var Validator = {
 
       var text = this._create_counter_text($elem, max, current);
 
-      if ($elem.siblings(".counter").length) {
+      if ($elem.siblings('.counter').length) {
         $elem.siblings('.counter').remove();
         this.create_counter_elem($elem, max, current, text);
       } else {
@@ -251,7 +250,7 @@ var Validator = {
     create_counter_elem: function($elem, max, current, text){
       $( "<div class='counter' data-max="+max+" data-current="+ current +"><p>" + text + "</p></div>" ).insertAfter( $elem );
       if (current <= 0 || $elem.val().length >= 100){
-        $elem.siblings(".counter").children("p").children(".characters-left").addClass("overCount");
+        $elem.siblings('.counter').children('p').children('.characters-left').addClass('overCount');
       }
     },
 
