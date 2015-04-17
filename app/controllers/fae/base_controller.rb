@@ -1,6 +1,5 @@
 module Fae
   class BaseController < ApplicationController
-    require 'pry'
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
