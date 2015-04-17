@@ -228,7 +228,7 @@ var Validator = {
     },
 
     set_counter: function($elem, max, current) {
-      current = current || 0;
+      current = current || 0 + (max - $elem.val().length);
 
       var text = this._create_counter_text($elem, max, current);
 
@@ -251,8 +251,8 @@ var Validator = {
 
     create_counter_elem: function($elem, max, current, text){
       $( "<div class='counter' data-max="+max+" data-current="+ current +"><p>" + text + "</p></div>" ).insertAfter( $elem );
-      if (current < 0 || $elem.val().length >= 100){
-        $(".characters-left").addClass("overCount");
+      if (current <= 0 || $elem.val().length >= 100){
+        $elem.siblings(".counter").children("p").children(".characters-left").addClass("overCount");
       }
     },
 
@@ -261,6 +261,14 @@ var Validator = {
       $elem.keyup(function() {
         var current = (max - ($elem.val().length));
         self.set_counter($elem, max, current);
+      });
+      $elem.keypress(function(e) {
+        var current = (max - $elem.val().length);
+        if (current <= 0) {
+          if (e.keyCode !== 8 || e.keyCode !== 46) {
+            e.preventDefault();
+          }
+        }
       });
     }
   },
