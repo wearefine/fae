@@ -206,8 +206,7 @@ var Validator = {
   length_counter: {
 
     init: function(){
-      var self = this;
-      self.find_length_validations();
+      this.find_length_validations();
     },
 
     find_length_validations: function() {
