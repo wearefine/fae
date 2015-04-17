@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'fae_export_csv' do
 
-  scenario 'if items not present export to csv button should be present', js: true do
+  scenario 'if items not present export to csv button should not be present', js: true do
     admin_login
     visit admin_releases_path
 
