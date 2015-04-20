@@ -4,8 +4,6 @@ FactoryGirl.define do
     sequence(:name) { |n| "Release Name #{n}" }
     release_date { 10.days.ago }
 
-    release_date { 10.days.ago }
-
     wine
   end
 
