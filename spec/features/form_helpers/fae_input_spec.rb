@@ -47,4 +47,23 @@ feature 'fae_input' do
     end
   end
 
+  scenario 'should have maximum characters on fields with maximum length validations', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_intro') do
+      expect(page).to have_content('Maximum Characters: 100')
+    end
+  end
+
+  scenario 'should have maximum characters on fields with maximum length validations', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_intro') do
+      fill_in "text", with: "My release information"
+      expect(page).to have_content('Characters Left: 78')
+    end
+  end
+
 end
