@@ -281,17 +281,6 @@ ActiveRecord::Schema.define(version: 20150305215901) do
     t.datetime "updated_at"
   end
 
-  create_table "tasting_notes", force: true do |t|
-    t.string   "name"
-    t.boolean  "active"
-    t.integer  "position"
-    t.integer  "release_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
-
   create_table "teams", force: true do |t|
     t.string   "name"
     t.string   "city"

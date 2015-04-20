@@ -1,4 +1,4 @@
-input[type=submit], button[type=button], .add-button {
+input[type=submit], button[type=button], .add-button, .csv-button {
   display: inline-block;
   font-size: 13px;
   cursor: pointer;
@@ -19,12 +19,37 @@ input[type=submit], .add-button {
   }
 }
 
+input[type=submit] {
+  color: $c-form-button;
+  padding: 12px 15px;
+  border: 0;
+
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+
+  &:hover {
+    color: $c-form-button;
+    background: $c-form-button-gradient-hover;
+  }
+}
+
 button[type=button], a.file_input-button {
   color: $c-form-button;
   padding: 11px 14px;
   border: 1px solid $c-border;
   @include border-radius(3px);
   @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+
+  &:hover {
+    background: $c-form-button-gradient-hover;
+  }
+}
+
+.csv-button {
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+  color: $c-form-button;
+  border: 1px solid $c-border;
+  @include border-radius(3px);
+  padding: 11px 15px;
 
   &:hover {
     background: $c-form-button-gradient-hover;

@@ -338,6 +338,7 @@ Displays page title, add button and flash messages.
 | title | string | @klass_humanized.pluralize | the page's H1 |
 | new_button | boolean | true | displays the add button |
 | button_text | string | "Add #{title.singularize}" | add button text |
+| csv | boolean | false | adds export to csv button |
 
 **Examples**
 
@@ -348,7 +349,7 @@ render 'fae/shared/index_header'
 
 Custom header
 ```ruby
-render 'fae/shared/index_header', title: 'Something Entirely Different', new_button: false
+render 'fae/shared/index_header', title: 'Something Entirely Different', new_button: false, csv: true
 ```
 
 ## form_header

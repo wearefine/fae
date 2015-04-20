@@ -1,4 +1,5 @@
 module Fae::Concerns::Models::Base
+  require 'csv'
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -16,6 +17,15 @@ module Fae::Concerns::Models::Base
         return :title
       else
         raise "No order_method found, please define for_fae_index as a #{name} class method to set a custom scope."
+      end
+    end
+
+    def to_csv
+      CSV.generate do |csv|
+        csv << column_names
+        all.each do |item|
+          csv << item.attributes.values_at(*column_names)
+        end
       end
     end
 
