@@ -8,11 +8,13 @@
 ## 1.1.0
 
 - enhancements
+  + [#44718](https://issues.afinedevelopment.com/issues/44718): added counter for fields with a max length.
   + [#246508](https://issues.afinedevelopment.com/issues/246508): markdown helper text content updates
   + [#41106](https://issues.afinedevelopment.com/issues/41106): set max image and file upload
 
 - bugs
   + [#46027](https://issues.afinedevelopment.com/issues/46027]): fixed validation date picker bug
+  + [#46247](https://issues.afinedevelopment.com/issues/46247): remove periods from slugs
 
 ## 1.0.3
 

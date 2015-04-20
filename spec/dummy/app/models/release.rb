@@ -5,10 +5,11 @@ class Release < ActiveRecord::Base
     name
   end
 
-  validates :name, presence: true, length: {in: 3..14}, uniqueness: true, exclusion: %w(admin danny)
+  validates :name, presence: true, length: {in: 3..15}, uniqueness: true, exclusion: %w(admin danny)
   validates :price, numericality: {greater_than: 12}, allow_blank: true
   validates :video_url, format: /[a-zA-Z0-9_-]{11}/, allow_blank: true
   validates :wine_id, presence: true
+  validates :intro, length: { maximum: 100 }
   validates :release_date, presence: true
 
   belongs_to :wine
