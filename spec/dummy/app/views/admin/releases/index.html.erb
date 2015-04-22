@@ -4,33 +4,10 @@
   <section class="main_content-section">
     <div class="main_content-section-area">
 
-    <!-- Table Filter Area -->
-    <form class="js-filter-form table-filter-area">
-      <h2>Search <%= @klass_humanized.pluralize %></h2>
+      <%= fae_filter_form title: 'Search Releases', search: true, class: 'test-test' do %>
 
-      <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
+      <% end %>
 
-      <div class="table-filter-group">
-        <label for="filter_city">Select Box</label>
-        <select>
-          <option value="">Select an Option</option>
-          <option value="1">option 1</option>
-          <option value="2">optoin 2</option>
-          <option value="3">option 3</option>
-        </select>
-      </div>
-
-      <div class="table-filter-group">
-        <label for="filter_city">Input</label>
-        <input type="text" />
-      </div>
-
-      <div class="table-filter-controls">
-        <input type="submit" value="Apply Filters">
-        <input type="submit" value="Reset Search" class="js-reset-btn table-filter-reset">
-      </div>
-    </form>
-    <!--  -->
 
       <table class="index_table main_table-sort_columns">
         <thead>

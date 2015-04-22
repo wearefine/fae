@@ -1,5 +1,6 @@
 module Fae
   class BaseController < ApplicationController
+    require 'pry'
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
@@ -48,6 +49,7 @@ module Fae
     end
 
     def filter
+      binding.pry
       # protect xhr
       if params[:commit] === "Reset Search"
         @items = @klass.filter_all

@@ -13,6 +13,9 @@ var AjaxForms = {
   set_elements: function() {
     this.$addedit_form = $('.js-addedit-form');
     this.$filter_form = $('.js-filter-form');
+    // console.log(this.$addedit_form.html());
+    // console.log("TOOT");
+    // console.log(this.$filter_form.html());
   },
 
   addedit_links: function() {
@@ -110,15 +113,31 @@ var AjaxForms = {
   },
 
   filter_submission: function() {
-    this.$filter_form
-      .on('ajax:success', function(evt, data, status, xhr){
-        $(this).next('table').replaceWith($(data).find('table'));
-      })
-      .on('click', '.js-reset-btn', function(ev) {
-        var form = $(this).closest('form')[0];
-        form.reset();
-        $(form).find('select').val('').trigger('chosen:updated');
-      });
+    var $this = $(this.$filter_form);
+
+    $this.on( "submit", function(ev) {
+      ev.preventDefault();
+      var serial = $this.serialize();
+      var object = serial.substr(0, serial.indexOf('['));
+
+      console.log($this);
+      console.log(serial);
+      console.log(object);
+      // $.ajax({
+      //   url: Admin.path +'/filter/'+ object,
+      //   type: 'post',
+      //   data: serial,
+      //   dataType: 'script',
+      //   complete: function(data){
+      //     $(this).next('table').replaceWith($(data).find('table'));
+      //   }
+      // });
+    });
+    $this.on('click', '.js-reset-btn', function(ev) {
+      var form = $(this).closest('form')[0];
+      form.reset();
+      $(form).find('select').val('').trigger('chosen:updated');
+    });
   },
 
   delete_no_form: function() {

@@ -81,12 +81,38 @@ module Fae
 
 
     def fae_filter_form(options)
-
+      <form class="js-filter-form table-filter-area #{ options[:class] if options[:class].present? }">
+        if options[:title]
+          <h2><%= options[:title] %></h2>
+        else
+          <h2>Search <%= @klass_humanized.pluralize %></h2>
+        end
+        if options[:search]
+          <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
+        end
+        <div class="table-filter-controls">
+          <input type="submit" value="Apply Filters" class="js-filter-btn">
+          <input type="submit" value="Reset Search" class="js-reset-btn table-filter-reset">
+        </div>
+      </form>
     end
 
 
     def fae_filter_select(attribute, options)
+      #       <div class="table-filter-group">
+      #   <label for="filter_select">Select Box</label>
+      #   <select>
+      #     <option value="">Select an Option</option>
+      #     <option value="1">option 1</option>
+      #     <option value="2">optoin 2</option>
+      #     <option value="3">option 3</option>
+      #   </select>
+      # </div>
 
+      # <div class="table-filter-group">
+      #   <label for="filter_input">Input</label>
+      #   <input type="text" />
+      # </div>
     end
 
     private

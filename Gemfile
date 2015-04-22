@@ -3,7 +3,7 @@ source "https://rubygems.org"
 # Declare your gem's dependencies in fae.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
-gemspec
+# gemspec
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or
@@ -21,7 +21,10 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'rmagick', '~> 2.13.3', require: false
 gem 'slim'
 
-gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
+group :test, :development do
+  gem 'rspec-rails', '~> 3.0.2'
+  gem 'pry'
+end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
@@ -33,7 +36,6 @@ group :test do
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
-  gem 'pry'
 end
 
 gem 'capistrano',  '~> 3.1'

@@ -20,16 +20,20 @@ module Fae::Concerns::Models::Base
     end
 
     def filter_all
+      binding.pry
+      for_fae_index
     end
 
     def filter(params)
+      binding.pry
       search = {}
-      search['wines.slug'] = params[:wine] if params[:wine].present?
+      # detect all keys in the params object and append them to the search object.
+      # get all params to use in the includes call
+      # search['wines.slug'] = params[:wine] if params.present?
 
       unscoped
       .includes(:wine)
-      .where(search).order('wine.position')
-      .active
+      .where(search)
     end
 
   end
