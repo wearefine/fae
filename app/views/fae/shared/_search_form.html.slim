@@ -1,16 +1,6 @@
-form.js-filter-form.table-filter-area class="#{ class_name if class_name.present? }"
-  h2 = title.present? ? "#{title}" : "Search #{ @klass_humanized.pluralize }"
-
-  - if search
-    input.table-filter-keyword-input type="text" placeholder="Search by Keyword"
-
-  .table-filter-controls
-    input.js-filter-btn type="submit" value="Apply Filters"
-    input.js-reset-btn.table-filter-reset type="submit" value="Reset Search"
-
 = simple_form_for ['admin', @items.first], html: { class: "js-filter-form table-filter-area"} do |f|
   h2 = title.present? ? "#{title}" : "Search #{ @klass_humanized.pluralize }"
   = fae_input f, :filter, input_class: 'table-filter-keyword-input'
   .table-filter-controls
-    = f.button :submit, class: "js-filter-btn" "Apply Filters"
-    = f.button :submit, class: "js-reset-btn table-filter-reset" "Reset Search"
+    = f.button :submit, "Apply Filters", class: "js-filter-btn"
+    = f.button :submit, "Reset Search", class: "js-reset-btn table-filter-reset"
