@@ -38,5 +38,30 @@ module Fae
     # for backwards compatibility
     alias_method :fae_toggle, :attr_toggle
 
+    def fae_filter_form(options)
+      options[:class_name] ||= ""
+      options[:search] ||= false
+      options[:title] ||= ""
+      (render 'fae/shared/search_form', options).html_safe
+    end
+
+    def fae_filter_select(attribute, options)
+      # '<div class="table-filter-group">
+      #   <label for="filter_select">Select Box</label>
+      #   <select>
+      #     <option value="">Select an Option</option>
+      #     <option value="1">option 1</option>
+      #     <option value="2">optoin 2</option>
+      #     <option value="3">option 3</option>
+      #   </select>
+      # </div>
+
+      # <div class="table-filter-group">
+      #   <label for="filter_input">Input</label>
+      #   <input type="text" />
+      # </div>'.html_safe
+      (fae_pulldown :f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name)).html_safe
+    end
+
   end
 end

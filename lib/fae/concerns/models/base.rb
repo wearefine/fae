@@ -1,6 +1,8 @@
 module Fae::Concerns::Models::Base
   extend ActiveSupport::Concern
 
+  attr_accessor :filter
+
   module ClassMethods
     def for_fae_index
       order(order_method)
