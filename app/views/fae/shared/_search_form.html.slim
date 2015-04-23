@@ -8,9 +8,9 @@ form.js-filter-form.table-filter-area class="#{ class_name if class_name.present
     input.js-filter-btn type="submit" value="Apply Filters"
     input.js-reset-btn.table-filter-reset type="submit" value="Reset Search"
 
-= simple_form_for ['admin', @items], html: { class: "js-filter-form table-filter-area"} do |f|
-  h2 = title.present? ? "#{title}" : "Search #{ @klass_humanized.pluralize }"
-  = fae_input f, :filter, input_class: 'table-filter-keyword-input'
-  .table-filter-controls
-    = f.button :submit, input_html { class: "js-filter-btn" } "Apply Filters"
-    = f.button :submit, input_html { class: "js-reset-btn table-filter-reset" } "Reset Search"
+/ = simple_form_for ['admin', @items], html: { class: "js-filter-form table-filter-area"} do |f|
+/   h2 = title.present? ? "#{title}" : "Search #{ @klass_humanized.pluralize }"
+/   = fae_input f, :filter, input_class: 'table-filter-keyword-input'
+/   .table-filter-controls
+/     = f.button :submit, input_html { class: "js-filter-btn" } "Apply Filters"
+/     = f.button :submit, input_html { class: "js-reset-btn table-filter-reset" } "Reset Search"
