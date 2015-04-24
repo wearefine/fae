@@ -79,6 +79,10 @@ module Fae
       end
     end
 
+    def body_class
+      @body_class.present? ? @body_class : "#{controller_name} #{action_name}"
+    end
+
     private
 
     def nav_path_current?(path)

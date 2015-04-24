@@ -4,7 +4,7 @@
   <section class="main_content-section">
     <div class="main_content-section-area">
 
-      <%= fae_filter_form title: 'Search Releases', search: true, class_name: 'generic-name' do %>
+      <%= fae_filter_form title: 'This is Title Text', search: true, class_name: 'generic-name' do %>
       <% end %>
 
 
@@ -12,6 +12,7 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Wine</th>
             <th>Modified</th>
             <th>Slug</th>
             <th>Price</th>
@@ -26,6 +27,7 @@
           <% @items.each do |item| %>
             <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
               <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
+              <td><%= item.wine.name %></td>
               <td><%= fae_date_format item.updated_at %></td>
               <td><%= item.slug %></td>
               <td><%= item.price %></td>

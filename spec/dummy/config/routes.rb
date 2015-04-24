@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root 'pages#home'
 
+  post ':admin/:controller/filter', action: 'filter'
+
   namespace :admin do
     resources :locations
-    resources :releases do
-      post ':releases/filter', action: 'filter'
-    end
+    resources :releases
     resources :wines
     resources :varietals
     resources :acclaims

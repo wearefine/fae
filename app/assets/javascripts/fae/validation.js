@@ -3,9 +3,11 @@ var Validator = {
   init: function () {
     this.password_confirmation_validation.init();
     this.password_presence_conditional();
-    this.validate();
-    this.form_validate();
-    this.length_counter.init();
+    if(!$('body').hasClass('index')){
+      this.validate();
+      this.form_validate();
+      this.length_counter.init();
+    }
   },
 
   vars: {

@@ -13,9 +13,6 @@ var AjaxForms = {
   set_elements: function() {
     this.$addedit_form = $('.js-addedit-form');
     this.$filter_form = $('.js-filter-form');
-    // console.log(this.$addedit_form.html());
-    // console.log("TOOT");
-    // console.log(this.$filter_form.html());
   },
 
   addedit_links: function() {
@@ -115,23 +112,26 @@ var AjaxForms = {
   filter_submission: function() {
     var $this = $(this.$filter_form);
 
-    $this.on( "submit", function(ev) {
+    $this.on("click", ".js-filter-btn", function(ev) {
       ev.preventDefault();
-      var serial = $this.serialize();
-      var object = serial.substr(0, serial.indexOf('['));
 
-      console.log($this);
-      console.log(serial);
-      console.log(object);
-      // $.ajax({
-      //   url: Admin.path +'/filter/'+ object,
-      //   type: 'post',
-      //   data: serial,
-      //   dataType: 'script',
-      //   complete: function(data){
-      //     $(this).next('table').replaceWith($(data).find('table'));
-      //   }
-      // });
+      var serial = $this.serialize();
+      var object = $('body').attr('class').split(' ')[0];
+      var path = Admin.path + "/" +  object +'/filter/';
+      console.log(path);
+
+
+      $.ajax({
+        url: Admin.path + "/" + object +'/filter/',
+        type: 'post',
+        data: serial,
+        dataType: 'script',
+        complete: function(data){
+          console.log(data);
+          console.log("success");
+          // $(this).next('table').replaceWith($(data).find('table'));
+        }
+      });
     });
     $this.on('click', '.js-reset-btn', function(ev) {
       var form = $(this).closest('form')[0];
