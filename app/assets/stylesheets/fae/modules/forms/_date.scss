@@ -204,7 +204,7 @@
   background: $c-border;
   font-family: inherit;
   padding: 0;
-  width: 382px;
+  width: 380px;
   border: 0;
   margin-top: 5px;
   &.no-shortcuts {
@@ -215,6 +215,7 @@
     border: 0;
     padding: 0;
     table {
+      table-layout: fixed;
       font-weight: bold;
       .caption {
         background: $c-black;
