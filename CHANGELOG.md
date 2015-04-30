@@ -16,6 +16,7 @@
 - bugs
   + [#46027](https://issues.afinedevelopment.com/issues/46027]): fixed validation date picker bug
   + [#46247](https://issues.afinedevelopment.com/issues/46247): remove periods from slugs
+  + [#46180](https://issues.afinedevelopment.com/issues/46180): fix date range break on windows
 
 
 ## 1.0.3
