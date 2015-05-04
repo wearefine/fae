@@ -119,6 +119,7 @@ var AjaxForms = {
       var object = $('body').attr('class').split(' ')[0];
       var path = Admin.path + "/" +  object +'/filter/';
       console.log(path);
+      console.log(serial);
 
 
       $.ajax({
