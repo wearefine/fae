@@ -37,7 +37,7 @@ describe 'options#edit' do
       get fae.option_path
 
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(fae.new_user_session_path)
+      expect(response).to redirect_to('/admin/login')
     end
   end
 

@@ -8,7 +8,7 @@ describe 'pages#home' do
       get fae_path
 
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(fae.new_user_session_path)
+      expect(response).to redirect_to('/admin/login')
     end
   end
 
@@ -62,7 +62,7 @@ describe 'pages#help' do
       get fae.help_path
 
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(fae.new_user_session_path)
+      expect(response).to redirect_to('/admin/login')
     end
   end
 
@@ -81,11 +81,13 @@ describe 'pages#error404' do
 
   context 'when user is logged out' do
     it 'should redirect to the login page' do
+      require 'pry'
       create_super_user
       get '/admin/nothinghere'
 
+      # binding.pry
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(fae.new_user_session_path)
+      expect(response).to redirect_to('/admin/login')
     end
   end
 
