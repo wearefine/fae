@@ -21,7 +21,7 @@ Restart your server
 
 ### Rails
 
-Fae currently supports Rails 4.1.x. 4.2 support is in the works.
+Fae supports Rails >= 4.1.
 
 ### Sass and sass-rails
 
@@ -32,7 +32,7 @@ gem 'sass-rails', '~> 5.0.0'
 gem 'sass', '~> 3.4.0'
 ```
 
-These aren't within the default range of rails 4.1, so you'll need to update the versions in the `Gemfile` and run:
+If you're using Rails 4.1 you'll need to update the versions in the `Gemfile` and run:
 
 ```bash
 $ bundle update sass-rails
