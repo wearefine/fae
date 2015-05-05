@@ -41,3 +41,6 @@ gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
 gem 'mysql2'
+
+# Rails 4 support relies on an unrelease bugfix in devise
+# gem 'devise', git: 'https://github.com/plataformatec/devise'
