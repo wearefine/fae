@@ -42,6 +42,10 @@ module Fae
       role.name == 'user'
     end
 
+    def is_admin?
+      super_admin? || admin?
+    end
+
     def full_name
       "#{first_name} #{last_name}"
     end
