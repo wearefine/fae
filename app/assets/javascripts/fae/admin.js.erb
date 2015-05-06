@@ -322,7 +322,7 @@ var Admin = {
     if ($slug.val() !== '') {
       $('.slugger').removeClass('slugger');
     }
-    $('.slugger').keyup(function(){
+    $('.slugger').change(function(){
       slug_text = Admin.digest_slug();
       $slug.val(slug_text);
     });
