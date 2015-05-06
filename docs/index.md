@@ -691,7 +691,7 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 
 ```css
 // Do Not Delete this page! FAE depends on it in order to set its highlight color.
-// $c-custom-highlight: '#000';
+// $c-custom-highlight: #000;
 ```
 
 
