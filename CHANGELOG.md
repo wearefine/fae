@@ -3,15 +3,13 @@
 ## Unreleased
 
 - enhancements
+  + added ability use a select field with slugger for Eldorado
 - bugs
 
 ## 1.0.3
 
 - bugs
     + [#45917](https://issues.afinedevelopment.com/issues/45917): image upload file path now wraps if too long
-
-- unreleased
-    + [#noticket]: added ability use a select field with slugger for Eldorado
 
 ## 1.0.2
 
