@@ -3,7 +3,12 @@
 ## Unreleased
 
 - enhancements
-  + added ability use a select field with slugger for Eldorado
+- bugs
+
+## 1.0.4
+
+- enhancements
+    + added ability to use a select field with slugger
 - bugs
     + [#46325](https://issues.afinedevelopment.com/issues/46325): fixed ajax toggle vulnerability
 
@@ -26,6 +31,6 @@
     + [#44810](https://issues.afinedevelopment.com/issues/44810): fixes overlapping labels on image uploaders
     + [#40207](https://issues.afinedevelopment.com/issues/40207): fixes table alignment
 
-## 1.0.0
+## 1.0
 
 - EVERYTHING :tada:
