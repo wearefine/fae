@@ -30,7 +30,7 @@ module Fae
     def can_toggle(klass)
       # restrict models that non-admins aren't allowed to update
       restricted_classes = %w(Fae::User Fae::Role Fae::Option)
-      return false if restricted_classes.include?(klass.name.to_s) && !current_user.is_admin?
+      return false if restricted_classes.include?(klass.name.to_s) && !current_user.super_admin_or_admin?
       true
     end
 

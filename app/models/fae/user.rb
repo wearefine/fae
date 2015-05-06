@@ -42,7 +42,7 @@ module Fae
       role.name == 'user'
     end
 
-    def is_admin?
+    def super_admin_or_admin?
       super_admin? || admin?
     end
 
