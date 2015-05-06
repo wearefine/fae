@@ -5,6 +5,7 @@
 - enhancements
   + added ability use a select field with slugger for Eldorado
 - bugs
+    + [#46325](https://issues.afinedevelopment.com/issues/46325): fixed ajax toggle vulnerability
 
 ## 1.0.3
 
