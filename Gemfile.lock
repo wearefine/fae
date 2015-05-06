@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/wearefine/rails
-  revision: 7ef3aa72dc9e3dfb84997ef18a18ca3b5e04b88c
+  revision: 8250e29e4622ff60f8093dba92d52dbae9d26460
   specs:
-    capistrano-rails (1.1.2)
+    capistrano-rails (1.1.3)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
 
