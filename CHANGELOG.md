@@ -8,6 +8,7 @@
 ## 1.1
 
 - enhancements
+  + [#44624](https://issues.afinedevelopment.com/issues/45625): Rails 4.2 support
   + [#45625](https://issues.afinedevelopment.com/issues/45625): add export to csv for index pages
   + [#44718](https://issues.afinedevelopment.com/issues/44718): added counter for fields with a max length.
   + [#246508](https://issues.afinedevelopment.com/issues/246508): markdown helper text content updates
