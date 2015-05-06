@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+  + added ability use a select field with slugger for Eldorado
 - bugs
 
 ## 1.0.3

@@ -93,7 +93,7 @@
       <div class="main_content-section-area">
 
         <!-- Association/Large Pulldown -->
-        <%= fae_association f, :varietal, helper_text: 'pulldown' %>
+        <%= fae_association f, :varietal, helper_text: 'pulldown', input_class: 'slugger' %>
 
         <!-- Small Pulldown -->
         <%= fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name)  %>
