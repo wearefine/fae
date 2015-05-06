@@ -317,12 +317,17 @@ var Admin = {
   },
 
   slugger: function() {
+    console.log("toot");
     var slug_text = null;
     var $slug = $('.slug');
     if ($slug.val() !== '') {
       $('.slugger').removeClass('slugger');
     }
     $('.slugger').keyup(function(){
+      slug_text = Admin.digest_slug();
+      $slug.val(slug_text);
+    });
+    $('.slugger').select(function(){
       slug_text = Admin.digest_slug();
       $slug.val(slug_text);
     });
