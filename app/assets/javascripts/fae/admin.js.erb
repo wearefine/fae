@@ -336,11 +336,12 @@ var Admin = {
     var $slug = $('.slugger');
     var slug_text = []
     $slug.each(function() {
-      if ($(this).val().length > 0) {
-        if ($(this).is("input")) {
-          slug_text.push($(this).val());
+      $this = $(this)
+      if ($this.val().length > 0) {
+        if ($this.is("input")) {
+          slug_text.push($this.val());
         } else {
-          slug_text.push($(this).find("option:selected").text());
+          slug_text.push($this.find("option:selected").text());
         }
       }
     })
