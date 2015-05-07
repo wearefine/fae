@@ -4,6 +4,7 @@ rvm:
 branches:
   only:
     - dev
+    - stage
     - master
 cache: true
 notifications:
