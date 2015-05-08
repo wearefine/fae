@@ -5,4 +5,11 @@ Fae.setup do |config|
   # models to exclude from dashboard list
   config.dashboard_exclusions = %w( Varietal )
 
+  # language support
+  config.languages = {
+    en: 'English',
+    zh: 'Chinese',
+    ja: 'Japanese'
+  }
+
 end

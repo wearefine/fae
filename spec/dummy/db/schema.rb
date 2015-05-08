@@ -11,48 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305215901) do
+ActiveRecord::Schema.define(version: 20150508224216) do
 
-  create_table "acclaims", force: true do |t|
-    t.string   "score"
-    t.string   "publication"
-    t.text     "description"
-    t.boolean  "on_stage",         default: true
-    t.boolean  "on_prod",          default: false
-    t.integer  "position"
-    t.integer  "release_id"
+  create_table "acclaims", force: :cascade do |t|
+    t.string   "score",            limit: 255
+    t.string   "publication",      limit: 255
+    t.text     "description",      limit: 65535
+    t.boolean  "on_stage",         limit: 1,     default: true
+    t.boolean  "on_prod",          limit: 1,     default: false
+    t.integer  "position",         limit: 4
+    t.integer  "release_id",       limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "publication_date"
   end
 
-  create_table "aromas", force: true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "position"
-    t.boolean  "live"
+  create_table "aromas", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.text     "description", limit: 65535
+    t.integer  "position",    limit: 4
+    t.boolean  "live",        limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "release_id"
+    t.integer  "release_id",  limit: 4
   end
 
   add_index "aromas", ["release_id"], name: "index_aromas_on_release_id", using: :btree
 
-  create_table "coaches", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "role"
-    t.text     "bio"
-    t.integer  "team_id"
+  create_table "coaches", force: :cascade do |t|
+    t.string   "first_name", limit: 255
+    t.string   "last_name",  limit: 255
+    t.string   "role",       limit: 255
+    t.text     "bio",        limit: 65535
+    t.integer  "team_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "coaches", ["team_id"], name: "index_coaches_on_team_id", using: :btree
 
-  create_table "event_releases", force: true do |t|
-    t.integer  "release_id"
-    t.integer  "event_id"
+  create_table "event_releases", force: :cascade do |t|
+    t.integer  "release_id", limit: 4
+    t.integer  "event_id",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -60,96 +60,96 @@ ActiveRecord::Schema.define(version: 20150305215901) do
   add_index "event_releases", ["event_id"], name: "index_event_releases_on_event_id", using: :btree
   add_index "event_releases", ["release_id"], name: "index_event_releases_on_release_id", using: :btree
 
-  create_table "events", force: true do |t|
-    t.string   "name"
+  create_table "events", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.date     "start_date"
     t.date     "end_date"
-    t.string   "event_type"
-    t.string   "city"
-    t.integer  "person_id"
+    t.string   "event_type", limit: 255
+    t.string   "city",       limit: 255
+    t.integer  "person_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fae_files", force: true do |t|
-    t.string   "name"
-    t.string   "asset"
-    t.integer  "fileable_id"
-    t.string   "fileable_type"
-    t.integer  "file_size"
-    t.integer  "position",      default: 0
-    t.string   "attached_as"
-    t.boolean  "on_stage",      default: true
-    t.boolean  "on_prod",       default: false
+  create_table "fae_files", force: :cascade do |t|
+    t.string   "name",          limit: 255
+    t.string   "asset",         limit: 255
+    t.integer  "fileable_id",   limit: 4
+    t.string   "fileable_type", limit: 255
+    t.integer  "file_size",     limit: 4
+    t.integer  "position",      limit: 4,   default: 0
+    t.string   "attached_as",   limit: 255
+    t.boolean  "on_stage",      limit: 1,   default: true
+    t.boolean  "on_prod",       limit: 1,   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "required",      default: false
+    t.boolean  "required",      limit: 1,   default: false
   end
 
   add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
 
-  create_table "fae_images", force: true do |t|
-    t.string   "name"
-    t.string   "asset"
-    t.integer  "imageable_id"
-    t.string   "imageable_type"
-    t.string   "alt"
-    t.string   "caption"
-    t.integer  "position",       default: 0
-    t.string   "attached_as"
-    t.boolean  "on_stage",       default: true
-    t.boolean  "on_prod",        default: false
+  create_table "fae_images", force: :cascade do |t|
+    t.string   "name",           limit: 255
+    t.string   "asset",          limit: 255
+    t.integer  "imageable_id",   limit: 4
+    t.string   "imageable_type", limit: 255
+    t.string   "alt",            limit: 255
+    t.string   "caption",        limit: 255
+    t.integer  "position",       limit: 4,   default: 0
+    t.string   "attached_as",    limit: 255
+    t.boolean  "on_stage",       limit: 1,   default: true
+    t.boolean  "on_prod",        limit: 1,   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "file_size"
-    t.boolean  "required",       default: false
+    t.integer  "file_size",      limit: 4
+    t.boolean  "required",       limit: 1,   default: false
   end
 
   add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
 
-  create_table "fae_options", force: true do |t|
-    t.string   "title"
-    t.string   "time_zone"
-    t.string   "colorway"
-    t.string   "stage_url"
-    t.string   "live_url"
-    t.integer  "singleton_guard"
+  create_table "fae_options", force: :cascade do |t|
+    t.string   "title",           limit: 255
+    t.string   "time_zone",       limit: 255
+    t.string   "colorway",        limit: 255
+    t.string   "stage_url",       limit: 255
+    t.string   "live_url",        limit: 255
+    t.integer  "singleton_guard", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
 
-  create_table "fae_roles", force: true do |t|
-    t.string   "name"
-    t.integer  "position"
+  create_table "fae_roles", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "position",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "fae_static_pages", force: true do |t|
-    t.string   "title"
-    t.integer  "position",   default: 0
-    t.boolean  "on_stage",   default: true
-    t.boolean  "on_prod",    default: false
+  create_table "fae_static_pages", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.integer  "position",   limit: 4,   default: 0
+    t.boolean  "on_stage",   limit: 1,   default: true
+    t.boolean  "on_prod",    limit: 1,   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "slug"
+    t.string   "slug",       limit: 255
   end
 
   add_index "fae_static_pages", ["slug"], name: "index_fae_static_pages_on_slug", using: :btree
 
-  create_table "fae_text_areas", force: true do |t|
-    t.string   "label"
-    t.text     "content"
-    t.integer  "position",         default: 0
-    t.boolean  "on_stage",         default: true
-    t.boolean  "on_prod",          default: false
+  create_table "fae_text_areas", force: :cascade do |t|
+    t.string   "label",            limit: 255
+    t.text     "content",          limit: 65535
+    t.integer  "position",         limit: 4,     default: 0
+    t.boolean  "on_stage",         limit: 1,     default: true
+    t.boolean  "on_prod",          limit: 1,     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "contentable_id"
-    t.string   "contentable_type"
-    t.string   "attached_as"
+    t.integer  "contentable_id",   limit: 4
+    t.string   "contentable_type", limit: 255
+    t.string   "attached_as",      limit: 255
   end
 
   add_index "fae_text_areas", ["attached_as"], name: "index_fae_text_areas_on_attached_as", using: :btree
@@ -159,15 +159,15 @@ ActiveRecord::Schema.define(version: 20150305215901) do
   add_index "fae_text_areas", ["on_stage"], name: "index_fae_text_areas_on_on_stage", using: :btree
   add_index "fae_text_areas", ["position"], name: "index_fae_text_areas_on_position", using: :btree
 
-  create_table "fae_text_fields", force: true do |t|
-    t.integer  "contentable_id"
-    t.string   "contentable_type"
-    t.string   "attached_as"
-    t.string   "label"
-    t.string   "content"
-    t.integer  "position",         default: 0
-    t.boolean  "on_stage",         default: true
-    t.boolean  "on_prod",          default: false
+  create_table "fae_text_fields", force: :cascade do |t|
+    t.integer  "contentable_id",   limit: 4
+    t.string   "contentable_type", limit: 255
+    t.string   "attached_as",      limit: 255
+    t.string   "label",            limit: 255
+    t.string   "content",          limit: 255
+    t.integer  "position",         limit: 4,   default: 0
+    t.boolean  "on_stage",         limit: 1,   default: true
+    t.boolean  "on_prod",          limit: 1,   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -178,28 +178,28 @@ ActiveRecord::Schema.define(version: 20150305215901) do
   add_index "fae_text_fields", ["on_stage"], name: "index_fae_text_fields_on_on_stage", using: :btree
   add_index "fae_text_fields", ["position"], name: "index_fae_text_fields_on_position", using: :btree
 
-  create_table "fae_users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "fae_users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.string   "confirmation_token"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "confirmation_token",     limit: 255
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        default: 0,  null: false
-    t.string   "unlock_token"
+    t.string   "unconfirmed_email",      limit: 255
+    t.integer  "failed_attempts",        limit: 4,   default: 0,  null: false
+    t.string   "unlock_token",           limit: 255
     t.datetime "locked_at"
-    t.string   "first_name"
-    t.string   "last_name"
-    t.integer  "role_id"
-    t.boolean  "active"
+    t.string   "first_name",             limit: 255
+    t.string   "last_name",              limit: 255
+    t.integer  "role_id",                limit: 4
+    t.boolean  "active",                 limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -210,101 +210,120 @@ ActiveRecord::Schema.define(version: 20150305215901) do
   add_index "fae_users", ["role_id"], name: "index_fae_users_on_role_id", using: :btree
   add_index "fae_users", ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true, using: :btree
 
-  create_table "locations", force: true do |t|
-    t.string   "name"
-    t.integer  "contact_id"
+  create_table "locations", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "contact_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "locations", ["contact_id"], name: "index_locations_on_contact_id", using: :btree
 
-  create_table "people", force: true do |t|
-    t.string   "name"
+  create_table "people", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "event_id"
-    t.boolean  "on_stage",   default: true
-    t.boolean  "on_prod",    default: false
-    t.integer  "position"
+    t.integer  "event_id",   limit: 4
+    t.boolean  "on_stage",   limit: 1,   default: true
+    t.boolean  "on_prod",    limit: 1,   default: false
+    t.integer  "position",   limit: 4
   end
 
-  create_table "players", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "number"
-    t.text     "bio"
-    t.integer  "team_id"
+  create_table "players", force: :cascade do |t|
+    t.string   "first_name", limit: 255
+    t.string   "last_name",  limit: 255
+    t.string   "number",     limit: 255
+    t.text     "bio",        limit: 65535
+    t.integer  "team_id",    limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
 
-  create_table "release_selling_points", force: true do |t|
-    t.integer  "release_id"
-    t.integer  "selling_point_id"
-    t.integer  "position"
+  create_table "release_selling_points", force: :cascade do |t|
+    t.integer  "release_id",       limit: 4
+    t.integer  "selling_point_id", limit: 4
+    t.integer  "position",         limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "releases", force: true do |t|
-    t.string   "name"
-    t.string   "slug"
-    t.text     "intro"
-    t.text     "body"
-    t.string   "vintage"
-    t.string   "price"
-    t.string   "tasting_notes_pdf"
-    t.integer  "wine_id"
-    t.integer  "varietal_id"
-    t.boolean  "on_stage",          default: true
-    t.boolean  "on_prod",           default: false
-    t.integer  "position"
+  create_table "releases", force: :cascade do |t|
+    t.string   "name",              limit: 255
+    t.string   "slug",              limit: 255
+    t.text     "intro",             limit: 65535
+    t.text     "body",              limit: 65535
+    t.string   "vintage",           limit: 255
+    t.string   "price",             limit: 255
+    t.string   "tasting_notes_pdf", limit: 255
+    t.integer  "wine_id",           limit: 4
+    t.integer  "varietal_id",       limit: 4
+    t.boolean  "on_stage",          limit: 1,     default: true
+    t.boolean  "on_prod",           limit: 1,     default: false
+    t.integer  "position",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "video_url"
-    t.boolean  "featured"
-    t.string   "weight"
+    t.string   "video_url",         limit: 255
+    t.boolean  "featured",          limit: 1
+    t.string   "weight",            limit: 255
     t.date     "release_date"
     t.date     "show"
     t.date     "hide"
   end
 
-  create_table "selling_points", force: true do |t|
-    t.string   "name"
-    t.boolean  "on_stage",   default: true
-    t.boolean  "on_prod",    default: false
-    t.integer  "position"
+  create_table "selling_points", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "on_stage",   limit: 1,   default: true
+    t.boolean  "on_prod",    limit: 1,   default: false
+    t.integer  "position",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "teams", force: true do |t|
-    t.string   "name"
-    t.string   "city"
-    t.text     "history"
+  create_table "tasting_notes", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "active",     limit: 1
+    t.integer  "position",   limit: 4
+    t.integer  "release_id", limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "varietals", force: true do |t|
-    t.string   "name"
-    t.boolean  "on_stage",   default: true
-    t.boolean  "on_prod",    default: false
-    t.integer  "position"
+  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
+
+  create_table "teams", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "city",       limit: 255
+    t.text     "history",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "wines", force: true do |t|
-    t.string   "name"
-    t.boolean  "on_stage",   default: true
-    t.boolean  "on_prod",    default: false
-    t.integer  "position"
+  create_table "varietals", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "on_stage",   limit: 1,   default: true
+    t.boolean  "on_prod",    limit: 1,   default: false
+    t.integer  "position",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "wines", force: :cascade do |t|
+    t.string   "name_en",         limit: 255
+    t.boolean  "on_stage",        limit: 1,     default: true
+    t.boolean  "on_prod",         limit: 1,     default: false
+    t.integer  "position",        limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name_zh",         limit: 255
+    t.string   "name_ja",         limit: 255
+    t.text     "description_en",  limit: 65535
+    t.text     "description_zh",  limit: 65535
+    t.text     "description_ja",  limit: 65535
+    t.text     "food_pairing_en", limit: 65535
+    t.text     "food_pairing_zh", limit: 65535
+    t.text     "food_pairing_ja", limit: 65535
   end
 
 end

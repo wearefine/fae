@@ -1,0 +1,4 @@
+ul.main_content-section-toggles
+  li: a href="#" All Languages
+  - Fae.languages.each do |abbr, lang|
+    li: a href="#" data-language="#{abbr}" = lang
