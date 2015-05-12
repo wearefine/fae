@@ -4,10 +4,7 @@ class Wine < ActiveRecord::Base
   has_many :release
 
   def fae_display_field
-    name
-  end
-
-  def name
     name_en
   end
+
 end

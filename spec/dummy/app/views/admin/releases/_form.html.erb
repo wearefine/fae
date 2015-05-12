@@ -96,7 +96,7 @@
         <%= fae_association f, :varietal, helper_text: 'pulldown', input_class: 'slugger' %>
 
         <!-- Small Pulldown -->
-        <%= fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name)  %>
+        <%= fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name_en), label_method: :name_en  %>
 
         <!-- Multiselect -->
         <%= fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'mutliselect' %>
