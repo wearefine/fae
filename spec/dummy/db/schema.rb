@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508224216) do
+ActiveRecord::Schema.define(version: 20150513172042) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -202,6 +202,7 @@ ActiveRecord::Schema.define(version: 20150508224216) do
     t.boolean  "active",                 limit: 1
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "language",               limit: 255
   end
 
   add_index "fae_users", ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true, using: :btree

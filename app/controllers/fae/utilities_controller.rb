@@ -25,6 +25,13 @@ module Fae
       render nothing: true
     end
 
+    def language_preference
+      if params[:language].present? && (params[:language] == 'all' || Fae.languages.has_key?(params[:language].to_sym))
+        current_user.update_column(:language, params[:language])
+      end
+      render nothing: true
+    end
+
     private
 
     def can_toggle(klass)

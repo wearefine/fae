@@ -196,7 +196,11 @@ module Fae
       label = attribute_array.push("(#{language_suffix})").join(' ').titleize
       options[:label] = label unless options[:label].present?
 
-      # options[:wrapper_html] = { data: { language: language_suffix } }
+      if options[:wrapper_html].present?
+        options[:wrapper_html].deep_merge!({ data: { language: language_suffix } })
+      else
+        options[:wrapper_html] = { data: { language: language_suffix } }
+      end
     end
 
   end
