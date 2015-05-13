@@ -326,14 +326,23 @@ var Admin = {
       slug_text = Admin.digest_slug();
       $slug.val(slug_text);
     });
+    $('.select.slugger').change(function(){
+      slug_text = Admin.digest_slug();
+      $slug.val(slug_text);
+    });
   },
 
   digest_slug: function() {
     var $slug = $('.slugger');
     var slug_text = []
     $slug.each(function() {
-      if ($(this).val().length > 0) {
-        slug_text.push($(this).val());
+      $this = $(this);
+      if ($this.val().length > 0) {
+        if ($this.is("input")) {
+          slug_text.push($this.val());
+        } else {
+          slug_text.push($this.find("option:selected").text());
+        }
       }
     })
     slug_text = slug_text
@@ -436,4 +445,5 @@ $(function() {
   AjaxForms.init();
   SubnavHighlighter.init();
   Validator.init();
+  LanguageNav.init();
 });

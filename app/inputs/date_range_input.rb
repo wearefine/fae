@@ -1,5 +1,5 @@
 class DateRangeInput < SimpleForm::Inputs::Base
-  def input
+  def input(wrapper_options)
     start_date = options[:start_date] || :start_date
     end_date = options[:end_date] || :end_date
     template.content_tag(:div, class: 'input-group date form_datetime') do

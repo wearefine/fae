@@ -29,13 +29,14 @@ module Fae
 
   # configurable defaults
   class << self
-    mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size
+    mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages
 
-    self.devise_secret_key    = ''
-    self.devise_mailer_sender = 'change-me@example.com'
-    self.dashboard_exclusions = []
-    self.max_image_upload_size = 2
-    self.max_file_upload_size = 5
+    self.devise_secret_key      = ''
+    self.devise_mailer_sender   = 'change-me@example.com'
+    self.dashboard_exclusions   = []
+    self.max_image_upload_size  = 2
+    self.max_file_upload_size   = 5
+    self.languages              = {}
   end
 
   # this function maps the vars from your app into your engine

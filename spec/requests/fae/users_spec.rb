@@ -45,7 +45,7 @@ describe 'users#index' do
       get fae.users_path
 
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(fae.new_user_session_path)
+      expect(response).to redirect_to('/admin/login')
     end
   end
 
@@ -132,7 +132,7 @@ describe 'users#settings' do
       get fae.settings_path
 
       expect(response.status).to eq(302)
-      expect(response).to redirect_to(fae.new_user_session_path)
+      expect(response).to redirect_to('/admin/login')
     end
   end
 

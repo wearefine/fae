@@ -25,6 +25,7 @@ var Validator = {
         }
       });
       if (self.vars.IS_VALID === false) {
+        LanguageNav.check_for_hidden_errors();
         Admin.scroll_to($('span.error').first());
         e.preventDefault();
       }

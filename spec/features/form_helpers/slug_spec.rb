@@ -12,7 +12,7 @@ feature 'slug' do
     end
   end
 
-    context "when there's multiple sluggers" do
+  context "when there's multiple sluggers" do
     scenario 'should slug all sluggers', js: true do
       admin_login
       visit new_admin_release_path
@@ -22,5 +22,20 @@ feature 'slug' do
       expect(find_field('Slug').value).to eq('so-whatcho-wha-whatcho-want')
     end
   end
+
+
+  context "when there's a selector slugger" do
+    scenario 'should slug all sluggers', js: true do
+      varietal = FactoryGirl.create(:varietal, name: "Monkey")
+      admin_login
+      visit new_admin_release_path
+
+      fill_in 'Name', with: "George"
+      page.find('#release_varietal_id_chosen').click
+      page.find('#release_varietal_id_chosen .active-result', text: varietal.name).click
+      expect(find_field('Slug').value).to eq('george-monkey')
+    end
+  end
+
 
 end

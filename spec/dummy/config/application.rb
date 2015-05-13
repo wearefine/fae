@@ -18,6 +18,7 @@ module Dummy
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+    config.active_record.raise_in_transactional_callbacks = true if Rails::VERSION::MAJOR >= 4 && Rails::VERSION::MINOR >= 2
   end
 end
 

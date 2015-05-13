@@ -215,6 +215,7 @@
     border: 0;
     padding: 0;
     table {
+      table-layout: fixed;
       font-weight: bold;
       .caption {
         background: $c-black;

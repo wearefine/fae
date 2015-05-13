@@ -1,4 +1,5 @@
 module Fae::Concerns::Models::Base
+  require 'csv'
   extend ActiveSupport::Concern
 
   attr_accessor :filter
@@ -36,6 +37,15 @@ module Fae::Concerns::Models::Base
       unscoped
       .includes(:wine)
       .where(search)
+    end
+
+    def to_csv
+      CSV.generate do |csv|
+        csv << column_names
+        all.each do |item|
+          csv << item.attributes.values_at(*column_names)
+        end
+      end
     end
 
   end

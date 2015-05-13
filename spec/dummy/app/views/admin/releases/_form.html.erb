@@ -1,12 +1,5 @@
 <%= simple_form_for(['admin', @item]) do |f| %>
   <section class="main_content-header">
-    <ul class="main_content-section-toggles">
-      <li><a href="#" class="active">All languages</a></li>
-      <li><a href="#">English</a></li>
-      <li><a href="#">Pig Latin</a></li>
-      <li><a href="#">Regular Latin</a></li>
-      <li><a href="#">Old Latin</a></li>
-    </ul>
     <div class="main_content-header-wrapper">
       <%= render 'fae/shared/form_header', header: @klass_name  %>
       <nav class="main_content-header-section">
@@ -100,10 +93,10 @@
       <div class="main_content-section-area">
 
         <!-- Association/Large Pulldown -->
-        <%= fae_association f, :varietal, helper_text: 'pulldown' %>
+        <%= fae_association f, :varietal, helper_text: 'pulldown', input_class: 'slugger' %>
 
         <!-- Small Pulldown -->
-        <%= fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name)  %>
+        <%= fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name_en), label_method: :name_en  %>
 
         <!-- Multiselect -->
         <%= fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'mutliselect' %>
@@ -112,7 +105,7 @@
         <%= fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect' %>
 
         <!-- Checkboxes: Vertical Stack -->
-        <%= fae_checkbox f, :events, helper_text: 'checkboxes verital' %>
+        <%= fae_checkbox f, :events, helper_text: 'checkboxes vertical' %>
 
       </div>
     </section>
