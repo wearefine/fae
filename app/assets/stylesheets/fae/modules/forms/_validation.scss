@@ -27,6 +27,14 @@
       @include right-triangle(10px, $c-error-bg);
     }
   }
+
+  &.hidden_errors {
+    margin-bottom: 20px;
+
+    .error:after {
+      display: none;
+    }
+  }
 }
 
 .input {

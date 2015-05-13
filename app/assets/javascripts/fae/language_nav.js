@@ -43,6 +43,7 @@ var LanguageNav = {
 				$this.addClass('active');
 
 				_this.save_language_preference(lang);
+				_this.remove_hidden_errors_message();
 			}
 		});
 	},
@@ -67,6 +68,20 @@ var LanguageNav = {
 		lang = lang || 'all'
 		var post_url = Admin.path + '/language_preference/' + lang;
 		$.post(post_url);
+	},
+
+	// called from form_validate.form_validate
+	// checks for hidden fields with errors and displays a message
+	check_for_hidden_errors: function() {
+		if (this.el.$toggles.length && $('div.field_with_errors:hidden').length && !$('.hidden_errors').length) {
+			$('.main_content-section-area').prepend('<div class="hidden_errors field_with_errors"><span class="error">There are hidden errors. Click "All Languages" in the language nav to view all errors.</span></div>');
+		}
+	},
+
+	remove_hidden_errors_message: function() {
+		$('.hidden_errors').fadeOut(200, function() {
+			$(this).remove();
+		});
 	},
 
 	el: {}
