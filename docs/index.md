@@ -762,7 +762,7 @@ Then finally, you'll need to add the `fae/shared/language_nav` partial to the fo
 = simple_form_for(['admin', @item]) do |f|
   section.main_content-header
 
-    = render 'fae/shared/language_nav'
+    == render 'fae/shared/language_nav'
 
     .main_content-header-wrapper
     // ...

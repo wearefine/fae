@@ -1,6 +1,6 @@
 ul.main_content-section-toggles
   - all_class = current_user.language.blank? || current_user.language == 'all' ? 'active' : ''
-  li: a class="#{all_class}" href="#" All Languages
+  li: a class=all_class href="#" All Languages
   - Fae.languages.each do |abbr, lang|
     - lang_class = current_user.language == abbr.to_s ? 'active' : ''
-    li: a class="#{lang_class}" href="#" data-language="#{abbr}" = lang
+    li: a class=lang_class href="#" data-language=abbr.to_s = lang
