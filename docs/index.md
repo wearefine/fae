@@ -19,6 +19,30 @@ $ rails g fae:install
 
 After the installer completes, visit `/admin` and setup your first user account. That should automatically log you in to your blank Fae instance.
 
+## Dependencies
+
+### Rails
+
+Fae supports Rails >= 4.1.
+
+### Sass and sass-rails
+
+Fae requires `sass >= 3.4` and `sass-rails >= 5`.
+
+If you're using Rails 4.1 you'll need to update the versions in the `Gemfile`:
+
+```ruby
+gem 'sass-rails', '~> 5.0.0'
+gem 'sass', '~> 3.4.0'
+```
+
+and run:
+
+```bash
+$ bundle update sass-rails
+$ bundle update sass
+```
+
 ## fae:install
 
 Fae's installer will do the following:
@@ -676,7 +700,7 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 
 #### Example: fae.js as a Manifest File
 
-```js
+```JavaScript
 // This file is compiled into fae/application.js
 // use this as another manifest file if you have a lot of javascript to add
 // or just add your javascript directly to this file
@@ -689,10 +713,59 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 
 `app/assets/stylesheets/fae.scss` compiles into `fae/application.css`. Styles added to this files will be declared before other Fae styles. This file also provide a SCSS variable for Fae's highlight color: `$c-custom-highlight` (which defaults to #31a7e6).
 
-```css
+```CSS
 // Do Not Delete this page! FAE depends on it in order to set its highlight color.
 // $c-custom-highlight: #000;
 ```
 
+# Multiple Language Support
+
+Fae support a language nav that makes managing content in multiple languages easy. The language nav will display all available languages. Clicking a specific language will only display fields specific to that language.
+
+## Configure
+
+To setup the language nav first define all languages Fae will be managing content in.
+
+`config/initializers/fae.rb`
+```ruby
+config.languages = {
+  en: 'English',
+  zh: 'Chinese',
+  ja: 'Japanese'
+}
+```
+
+The convention of this hash is important as the keys with have to match the database column suffixes of the specific language fields. The values will be used as the link text in the language nav.
+
+## Database Column Naming
+
+As mentioned above, the column names of fields supporting multiple languages will have to follow this convention:
+
+```
+"#{attribute_name}_#{language_abbreviation}`
+```
+
+E.g. the english version of the title attribute would be `title_en`.
+
+Using Fae's generators let's quickly scaffold a model that supports multiple languages (columns without suffixes will be treated normally:
+
+```bash
+$ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
+```
+
+## Language Nav Partial
+
+Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.main_content-header`:
+
+`app/views/admin/people/_form.html.slim`
+```slim
+= simple_form_for(['admin', @item]) do |f|
+  section.main_content-header
+
+    == render 'fae/shared/language_nav'
+
+    .main_content-header-wrapper
+    // ...
+```
 
 

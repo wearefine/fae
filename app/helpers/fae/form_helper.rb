@@ -3,6 +3,7 @@ module Fae
 
     def fae_input(f, attribute, options={})
       custom_options attribute, options
+      language_support f, attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
       set_prompt f, attribute, options
@@ -182,6 +183,24 @@ module Fae
     # sets default prompt for pulldowns
     def set_prompt(f, attribute, options)
       options[:prompt] = 'Select One' if is_association?(f, attribute) && !options[:prompt] && !options[:two_pane]
+    end
+
+    # removes language suffix from label and adds data attr for languange nav
+    def language_support(f, attribute, options)
+      return if Fae.languages.blank?
+
+      attribute_array = attribute.to_s.split('_')
+      language_suffix = attribute_array.pop
+      return unless Fae.languages.has_key?(language_suffix.to_sym) || Fae.languages.has_key?(language_suffix)
+
+      label = attribute_array.push("(#{language_suffix})").join(' ').titleize
+      options[:label] = label unless options[:label].present?
+
+      if options[:wrapper_html].present?
+        options[:wrapper_html].deep_merge!({ data: { language: language_suffix } })
+      else
+        options[:wrapper_html] = { data: { language: language_suffix } }
+      end
     end
 
   end
