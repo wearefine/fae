@@ -16,6 +16,7 @@
   + [#41106](https://issues.afinedevelopment.com/issues/41106): set max image and file upload
 
 - bugs
+  + [#46839](https://issues.afinedevelopment.com/issues/46839]): fixed admin users not being able to add other users
   + [#46027](https://issues.afinedevelopment.com/issues/46027]): fixed validation date picker bug
   + [#46247](https://issues.afinedevelopment.com/issues/46247): remove periods from slugs
   + [#46180](https://issues.afinedevelopment.com/issues/46180): fix date range break on windows
