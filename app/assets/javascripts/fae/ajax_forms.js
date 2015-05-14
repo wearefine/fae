@@ -102,7 +102,6 @@ var AjaxForms = {
   },
 
   addedit_replace_and_reinit: function($this, html, $target) {
-
     $this.html(html)
       .find(".select select").fae_chosen();
 
@@ -110,35 +109,15 @@ var AjaxForms = {
   },
 
   filter_submission: function() {
-    var $this = $(this.$filter_form);
-
-    $this.on("click", ".js-filter-btn", function(ev) {
-      ev.preventDefault();
-
-      var serial = $this.serialize();
-      var object = $('body').attr('class').split(' ')[0];
-      var path = Admin.path + "/" +  object +'/filter/';
-      console.log(path);
-      console.log(serial);
-
-
-      $.ajax({
-        url: Admin.path + "/" + object +'/filter/',
-        type: 'post',
-        data: serial,
-        dataType: 'script',
-        complete: function(data){
-          console.log(data);
-          console.log("success");
-          // $(this).next('table').replaceWith($(data).find('table'));
-        }
+    this.$filter_form
+      .on('ajax:success', function(evt, data, status, xhr){
+        $(this).next('table').replaceWith($(data).find('table'));
+      })
+      .on('click', '.js-reset-btn', function(ev) {
+        var form = $(this).closest('form')[0];
+        form.reset();
+        $(form).find('select').val('').trigger('chosen:updated');
       });
-    });
-    $this.on('click', '.js-reset-btn', function(ev) {
-      var form = $(this).closest('form')[0];
-      form.reset();
-      $(form).find('select').val('').trigger('chosen:updated');
-    });
   },
 
   delete_no_form: function() {

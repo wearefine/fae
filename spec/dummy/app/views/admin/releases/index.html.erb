@@ -4,9 +4,9 @@
   <section class="main_content-section">
     <div class="main_content-section-area">
 
-      <%= fae_filter_form title: 'This is Title Text', search: true, class_name: 'generic-name' do %>
+      <%= fae_filter_form do %>
+        <%= fae_filter_select :wine %>
       <% end %>
-
 
       <table class="index_table main_table-sort_columns">
         <thead>
@@ -24,25 +24,31 @@
         </thead>
 
         <tbody>
-          <% @items.each do |item| %>
-            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-              <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
-              <td><%= item.wine.name %></td>
-              <td><%= fae_date_format item.updated_at %></td>
-              <td><%= item.slug %></td>
-              <td><%= item.price %></td>
-              <td><%= fae_toggle item, :on_stage %></td>
-              <td><%= fae_toggle item, :on_prod %></td>
-              <td class="main_table-edit">
-                <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
-                  <span class="icon-edit"></span>
-                <% end %>
-              </td>
-              <td class="main_table-delete">
-                <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
-                  <span class="icon-delete_x"></span>
-                <% end %>
-              </td>
+          <% if @items.present? %>
+            <% @items.each do |item| %>
+              <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
+                <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
+                <td><%= item.wine.name_en %></td>
+                <td><%= fae_date_format item.updated_at %></td>
+                <td><%= item.slug %></td>
+                <td><%= item.price %></td>
+                <td><%= fae_toggle item, :on_stage %></td>
+                <td><%= fae_toggle item, :on_prod %></td>
+                <td class="main_table-edit">
+                  <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
+                    <span class="icon-edit"></span>
+                  <% end %>
+                </td>
+                <td class="main_table-delete">
+                  <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
+                    <span class="icon-delete_x"></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="9">No items found</td>
             </tr>
           <% end %>
         </tbody>

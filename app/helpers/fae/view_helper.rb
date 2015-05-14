@@ -38,29 +38,45 @@ module Fae
     # for backwards compatibility
     alias_method :fae_toggle, :attr_toggle
 
-    def fae_filter_form(options)
-      options[:class_name] ||= ""
-      options[:search] ||= false
-      options[:title] ||= ""
-      (render 'fae/shared/search_form', options).html_safe
+    def fae_filter_form(options = {}, &block)
+      options[:title]   ||= "Search #{@klass_humanized.pluralize}"
+      options[:search]  ||= true
+
+      form_tag(@index_path + '/filter', remote: true, class: 'js-filter-form table-filter-area') do
+        concat content_tag :h2, options[:title]
+        concat text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword', class: 'table-filter-keyword-input' if options[:search]
+        concat capture(&block)
+        concat filter_submit_btns
+      end
     end
 
-    def fae_filter_select(attribute, options)
-      # '<div class="table-filter-group">
-      #   <label for="filter_select">Select Box</label>
-      #   <select>
-      #     <option value="">Select an Option</option>
-      #     <option value="1">option 1</option>
-      #     <option value="2">optoin 2</option>
-      #     <option value="3">option 3</option>
-      #   </select>
-      # </div>
+    def fae_filter_select(attribute, options = {})
+      options[:label]         ||= attribute.to_s.titleize
+      options[:collection]    ||= attribute.to_s.classify.constantize.all
+      options[:label_method]  ||= :fae_display_field
+      options[:placeholder]   ||= "Select a #{options[:label]}"
 
-      # <div class="table-filter-group">
-      #   <label for="filter_input">Input</label>
-      #   <input type="text" />
-      # </div>'.html_safe
-      (fae_pulldown :f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name)).html_safe
+      content_tag :div, class: 'table-filter-group' do
+        concat label_tag "filter[#{attribute}]", options[:label]
+        concat select_tag "filter[#{attribute}]", options_from_collection_for_select(options[:collection], 'id', options[:label_method]), prompt: options[:placeholder]
+      end
+    end
+
+    # this isn't implemented yet, but saving the markup here
+    def fae_filter_input(attribute, options = {})
+      '<div class="table-filter-group">
+        <label for="filter_city">Input</label>
+        <input type="text" />
+      </div>'.html_safe
+    end
+
+    private
+
+    def filter_submit_btns
+      content_tag :div, class: 'table-filter-controls' do
+        concat submit_tag 'Apply Filters'
+        concat submit_tag 'Reset Search', class: 'js-reset-btn table-filter-reset'
+      end
     end
 
   end

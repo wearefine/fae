@@ -23,20 +23,13 @@ module Fae::Concerns::Models::Base
     end
 
     def filter_all
-      binding.pry
+      # override this method in your model
       for_fae_index
     end
 
     def filter(params)
-      binding.pry
-      search = {}
-      # detect all keys in the params object and append them to the search object.
-      # get all params to use in the includes call
-      # search['wines.slug'] = params[:wine] if params.present?
-
-      unscoped
-      .includes(:wine)
-      .where(search)
+      # override this method in your model
+      for_fae_index
     end
 
     def to_csv

@@ -1,8 +1,0 @@
-= simple_form_for ['admin', @items.first], html: { class: "js-filter-form table-filter-area"} do |f|
-  h2 = title.present? ? "#{title}" : "Search #{ @klass_humanized.pluralize }"
-  = fae_input f, :filter, label: false, input_class: 'table-filter-keyword-input', placeholder: 'Search by Keyword'
-  .table-filter-group
-    = fae_pulldown f, :wine, size: 'long', validate: false, required: false, collection: Wine.order(:name)
-  .table-filter-controls
-    = f.button :button, "Apply Filters", class: "js-filter-btn", type: 'button'
-    = f.button :button, "Reset Search", class: "js-reset-btn table-filter-reset", type: 'button'

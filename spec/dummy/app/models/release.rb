@@ -31,4 +31,16 @@ class Release < ActiveRecord::Base
   has_one :label_pdf, as: :fileable, class_name: '::Fae::File', dependent: :destroy
   accepts_nested_attributes_for :label_pdf, allow_destroy: true
 
+  def self.filter(params)
+    conditions = {}
+    conditions[:wine_id] = params['wine'] if params['wine'].present?
+
+    search = {}
+    if params['search'].present?
+      search = ["releases.name LIKE ? OR wines.name_en like ?", "%#{params['search']}%", "%#{params['search']}%"]
+    end
+
+    for_fae_index.includes(:wine).where(conditions).where(search).references(:wine)
+  end
+
 end

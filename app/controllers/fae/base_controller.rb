@@ -52,12 +52,10 @@ module Fae
     end
 
     def filter
-      binding.pry
-      # protect xhr
-      if params[:commit] === "Reset Search"
+      if params[:commit] == "Reset Search"
         @items = @klass.filter_all
       else
-        @items = @klass.filter(params[:model])
+        @items = @klass.filter(params[:filter])
       end
 
       render :index, layout: false
