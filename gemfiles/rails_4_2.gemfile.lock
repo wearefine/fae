@@ -17,7 +17,7 @@ PATH
       jquery-rails (>= 3.1.1)
       jquery-ui-rails (~> 4.2.1)
       judge (~> 2.0.6)
-      judge-simple_form (~> 0.4.0)
+      judge-simple_form (~> 1.0.0)
       rails (~> 4.1)
       remotipart
       rmagick (~> 2.13.3)
@@ -187,7 +187,7 @@ GEM
     json (1.8.2)
     judge (2.0.6)
       rails (>= 3.1)
-    judge-simple_form (0.4.0)
+    judge-simple_form (1.0.0)
       judge (~> 2.0)
       simple_form (>= 2.0)
     launchy (2.4.3)
