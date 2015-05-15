@@ -102,7 +102,6 @@ var AjaxForms = {
   },
 
   addedit_replace_and_reinit: function($this, html, $target) {
-
     $this.html(html)
       .find(".select select").fae_chosen();
 
@@ -110,7 +109,8 @@ var AjaxForms = {
   },
 
   filter_submission: function() {
-    this.$filter_form
+    var _this = this;
+    _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith($(data).find('table'));
       })
@@ -118,6 +118,9 @@ var AjaxForms = {
         var form = $(this).closest('form')[0];
         form.reset();
         $(form).find('select').val('').trigger('chosen:updated');
+      })
+      .on('change', 'select', function() {
+        _this.$filter_form.submit();
       });
   },
 

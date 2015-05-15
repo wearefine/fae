@@ -718,6 +718,8 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 // $c-custom-highlight: #000;
 ```
 
+---
+
 # Multiple Language Support
 
 Fae support a language nav that makes managing content in multiple languages easy. The language nav will display all available languages. Clicking a specific language will only display fields specific to that language.
@@ -768,4 +770,95 @@ Then finally, you'll need to add the `fae/shared/language_nav` partial to the fo
     // ...
 ```
 
+---
 
+# Filtering
+
+If you need to filter your content on your table views, Fae provides a system and helpers to do so.
+
+Using the helpers provided, the filter form will POST to a filter action inherited from `Fae::BaseController`. You can override this action, but by default it will pass the params to a class method in your model called `filter`. It's then up you to scope the data that gets returned and rendered in the table.
+
+Let's walk through an example. Using the `Person` model from above, let's say a person `belongs_to :company` and `has_many :groups`. We'll want to use select filters for companies and groups, and a keyword search to filter by people and company name.
+
+## Route
+
+First, we'll need to add `post 'filter', on: :collection` to our `people` resources:
+
+`config/routes.rb`
+```ruby
+resources :people do
+  post 'filter', on: :collection
+end
+```
+
+## View Helpers
+
+Next we'll add the form to our view as the first child of `.main_content-section-area`:
+
+`app/views/admin/people/index.html.slim`
+```slim
+// ...
+.main_content-section-area
+
+  == fae_filter_form do
+    == fae_filter_select :company
+    == fae_filter_select :groups
+
+  table.index_table.main_table-sort_columns
+  // ...
+```
+
+The search field is built into `fae_filter_form`, but we'll need to provide a `fae_filter_select` for each select element in our filter bar.
+
+Full documentation on both helpers can be found in the [helpers.md](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md).
+
+## Class Methods
+
+Finally we need to define our class methods to scope the `Person` class. This data will be assigned to `@items` and injected into the table via AJAX.
+
+### filter(params)
+
+`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the seach field.
+
+From the form above we can assume our params look like this:
+
+```ruby
+{
+  'search'  => 'text from search field',
+  'company' => 12, # value from company select
+  'groups'  => 3 # value from groups select
+}
+```
+
+So let's use that data to craft our class method.
+
+`app/models/person.rb`
+```ruby
+def self.filter(params)
+  # build conditions if specific params are present
+  conditions = {}
+  conditions[:company_id] = params['company'] if params['company'].present?
+  conditions['groups.id'] = params['groups'] if params['groups'].present?
+
+  # use good 'ol MySQL to seach if search param is present
+  search = []
+  if params['search'].present?
+    search = ["people.name LIKE ? OR companies.name LIKE ?", "%#{params['search']}%", "%#{params['search']}%"]
+  end
+
+  # apply conditions and search from above to our scope
+  order(:name)
+    .includes(:company, :groups).references(:company, :groups)
+    .where(conditions).where(search)
+end
+```
+
+### filter_all
+
+There's also a `ModelName#filter_all` which is called when you reset the filter form. This defaults to the `for_fae_index` scope, but you can override it if you need to.
+
+```ruby
+def self.filter_all
+  where.not(name: 'John').order(:position)
+end
+```

@@ -9,4 +9,8 @@ class Wine < ActiveRecord::Base
     name_en
   end
 
+  def self.for_fae_index
+    order(:name_en)
+  end
+
 end

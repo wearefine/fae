@@ -1,16 +1,21 @@
 var Validator = {
 
   init: function () {
-    this.password_confirmation_validation.init();
-    this.password_presence_conditional();
-    this.validate();
-    this.form_validate();
-    this.length_counter.init();
+    this.el.$form = $('form');
+    if (this.el.$form.length) {
+      this.password_confirmation_validation.init();
+      this.password_presence_conditional();
+      this.validate();
+      this.form_validate();
+      this.length_counter.init();
+    }
   },
 
   vars: {
     IS_VALID: ''
   },
+
+  el: {},
 
   // validate the entire form on submit and stop it if the form is invalid
   form_validate: function () {

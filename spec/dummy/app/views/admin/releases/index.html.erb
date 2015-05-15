@@ -4,38 +4,21 @@
   <section class="main_content-section">
     <div class="main_content-section-area">
 
-    <!-- Table Filter Area -->
-    <form class="js-filter-form table-filter-area">
-      <h2>Search <%= @klass_humanized.pluralize %></h2>
-
-      <input type="text" placeholder="Search by Keyword" class="table-filter-keyword-input">
-
-      <div class="table-filter-group">
-        <label for="filter_city">Select Box</label>
-        <select>
-          <option value="">Select an Option</option>
-          <option value="1">option 1</option>
-          <option value="2">optoin 2</option>
-          <option value="3">option 3</option>
-        </select>
-      </div>
-
-      <div class="table-filter-group">
-        <label for="filter_city">Input</label>
-        <input type="text" />
-      </div>
-
-      <div class="table-filter-controls">
-        <input type="submit" value="Apply Filters">
-        <input type="submit" value="Reset Search" class="js-reset-btn table-filter-reset">
-      </div>
-    </form>
-    <!--  -->
+      <%= fae_filter_form do %>
+        <%= fae_filter_select :wine %>
+        <%= fae_filter_select :acclaims,
+              label: 'Acclaim',
+              collection: Acclaim.for_release_filter,
+              label_method: :score,
+              placeholder: 'Select some stuff' %>
+        <%= fae_filter_select :test, options: [['one', 1], ['two', 2]] %>
+      <% end %>
 
       <table class="index_table main_table-sort_columns">
         <thead>
           <tr>
             <th>Name</th>
+            <th>Wine</th>
             <th>Modified</th>
             <th>Slug</th>
             <th>Price</th>
@@ -47,24 +30,31 @@
         </thead>
 
         <tbody>
-          <% @items.each do |item| %>
-            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-              <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
-              <td><%= fae_date_format item.updated_at %></td>
-              <td><%= item.slug %></td>
-              <td><%= item.price %></td>
-              <td><%= fae_toggle item, :on_stage %></td>
-              <td><%= fae_toggle item, :on_prod %></td>
-              <td class="main_table-edit">
-                <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
-                  <span class="icon-edit"></span>
-                <% end %>
-              </td>
-              <td class="main_table-delete">
-                <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
-                  <span class="icon-delete_x"></span>
-                <% end %>
-              </td>
+          <% if @items.present? %>
+            <% @items.each do |item| %>
+              <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
+                <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
+                <td><%= item.wine.name_en %></td>
+                <td><%= fae_date_format item.updated_at %></td>
+                <td><%= item.slug %></td>
+                <td><%= item.price %></td>
+                <td><%= fae_toggle item, :on_stage %></td>
+                <td><%= fae_toggle item, :on_prod %></td>
+                <td class="main_table-edit">
+                  <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
+                    <span class="icon-edit"></span>
+                  <% end %>
+                </td>
+                <td class="main_table-delete">
+                  <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
+                    <span class="icon-delete_x"></span>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="9">No items found</td>
             </tr>
           <% end %>
         </tbody>

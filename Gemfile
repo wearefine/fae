@@ -21,7 +21,10 @@ gem 'carrierwave', '~> 0.10.0'
 gem 'rmagick', '~> 2.13.3', require: false
 gem 'slim'
 
-gem 'rspec-rails', '~> 3.0.2', group: [:test, :development]
+group :test, :development do
+  gem 'rspec-rails', '~> 3.0.2'
+  gem 'pry'
+end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
@@ -33,7 +36,6 @@ group :test do
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
-  gem 'pry'
 end
 
 gem 'capistrano',  '~> 3.1'
