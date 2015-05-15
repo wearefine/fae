@@ -266,7 +266,7 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 *Fae::TextField and Fae::TextArea association only*
 
 | option | type | default | description |
-|-|-|-|-|-|
+|-|-|-|-|
 | label         | string | attribute.to_s.titleize | the fields's label |
 | helper_text   | string | | the field's helper text |
 | hint          | string | | the field's hint text (supports HTML) |
@@ -279,6 +279,43 @@ image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil
 
 ```ruby
 fae_content_form f, :body, markdown: true
+```
+
+## fae_filter_form
+
+Displays the filter form, including the search field, submit and reset buttons. Accepts options and a block.
+
+| option | type    | default                                | description |
+|--------|---------|----------------------------------------|-|
+| title  | string  | "Search #{@klass_humanized.pluralize}" | the h2 text in the filter form |
+| search | boolean | true                                   | displays the search field |
+
+
+**Examples**
+
+```slim
+== fae_filter_form title: 'Search some stuff', search: false do
+  // form elements
+```
+
+
+## fae_filter_select(attribute, options)
+
+Dislays a select tag to be used within a `fae_filter_form`.
+
+| option       | type                    | default                        | description |
+|--------------|-------------------------|--------------------------------|-|
+| label        | string                  | attribute.to_s.titleize        | label on select |
+| collection   | ActiveRecord collection | AttributeAsClass.for_fae_index | the collection of AR objects to populate the select options |
+| label_method | symbol                  | :fae_display_field             | the attribute to use as the label in the select options |
+| placeholder  | string                  | "Select a #{options[:label]}"  | the blank value in the select |
+| options      | array                   | []                             | an an alternative array of options if the options aren't an ActiveRecord collection |
+
+**Examples**
+
+```slim
+== fae_filter_form do
+  == fae_filter_select :group, label: 'Groupings', collection: Groups.for_filters
 ```
 
 ---

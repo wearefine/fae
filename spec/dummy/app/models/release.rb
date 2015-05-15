@@ -34,13 +34,16 @@ class Release < ActiveRecord::Base
   def self.filter(params)
     conditions = {}
     conditions[:wine_id] = params['wine'] if params['wine'].present?
+    conditions['acclaims.id'] = params['acclaims'] if params['acclaims'].present?
 
     search = {}
     if params['search'].present?
       search = ["releases.name LIKE ? OR wines.name_en like ?", "%#{params['search']}%", "%#{params['search']}%"]
     end
 
-    for_fae_index.includes(:wine).where(conditions).where(search).references(:wine)
+    for_fae_index
+      .includes(:wine, :acclaims).references(:wine, :acclaims)
+      .where(conditions).where(search)
   end
 
 end

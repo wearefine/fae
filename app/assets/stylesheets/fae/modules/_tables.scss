@@ -326,7 +326,7 @@
 		}
 	}
 
-	&:after {
+	.table-filter-keyword-wrapper:after {
 		@include icon-stuff();
 		@extend .icon-search:before;
 		position: absolute;

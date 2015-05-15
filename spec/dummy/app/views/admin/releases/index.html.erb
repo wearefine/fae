@@ -6,6 +6,12 @@
 
       <%= fae_filter_form do %>
         <%= fae_filter_select :wine %>
+        <%= fae_filter_select :acclaims,
+              label: 'Acclaim',
+              collection: Acclaim.for_release_filter,
+              label_method: :score,
+              placeholder: 'Select some stuff' %>
+        <%= fae_filter_select :test, options: [['one', 1], ['two', 2]] %>
       <% end %>
 
       <table class="index_table main_table-sort_columns">

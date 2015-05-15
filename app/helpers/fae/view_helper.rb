@@ -40,11 +40,11 @@ module Fae
 
     def fae_filter_form(options = {}, &block)
       options[:title]   ||= "Search #{@klass_humanized.pluralize}"
-      options[:search]  ||= true
+      options[:search]   = true if options[:search].nil?
 
       form_tag(@index_path + '/filter', remote: true, class: 'js-filter-form table-filter-area') do
         concat content_tag :h2, options[:title]
-        concat text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword', class: 'table-filter-keyword-input' if options[:search]
+        concat filter_search_field if options[:search]
         concat capture(&block)
         concat filter_submit_btns
       end
@@ -52,13 +52,17 @@ module Fae
 
     def fae_filter_select(attribute, options = {})
       options[:label]         ||= attribute.to_s.titleize
-      options[:collection]    ||= attribute.to_s.classify.constantize.all
+      options[:collection]    ||= default_collection_from_attribute(attribute)
       options[:label_method]  ||= :fae_display_field
       options[:placeholder]   ||= "Select a #{options[:label]}"
+      options[:options]       ||= []
+
+      select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
+      select_options = options_for_select(options[:options]) if options[:options].present?
 
       content_tag :div, class: 'table-filter-group' do
         concat label_tag "filter[#{attribute}]", options[:label]
-        concat select_tag "filter[#{attribute}]", options_from_collection_for_select(options[:collection], 'id', options[:label_method]), prompt: options[:placeholder]
+        concat select_tag "filter[#{attribute}]", select_options, prompt: options[:placeholder]
       end
     end
 
@@ -72,11 +76,23 @@ module Fae
 
     private
 
+    def filter_search_field
+      content_tag :div, class: 'table-filter-keyword-wrapper' do
+        text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword', class: 'table-filter-keyword-input'
+      end
+    end
+
     def filter_submit_btns
       content_tag :div, class: 'table-filter-controls' do
         concat submit_tag 'Apply Filters'
         concat submit_tag 'Reset Search', class: 'js-reset-btn table-filter-reset'
       end
+    end
+
+    def default_collection_from_attribute(attribute)
+      attribute.to_s.classify.constantize.for_fae_index
+    rescue NameError
+      []
     end
 
   end
