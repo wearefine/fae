@@ -61,7 +61,7 @@ module Fae
       end
 
       def user_params
-        if current_user.super_admin?
+        if current_user.super_admin_or_admin?
           params.require(:user).permit!
         elsif @user === current_user
           params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
