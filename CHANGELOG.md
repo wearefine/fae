@@ -8,6 +8,7 @@
 ## 1.1
 
 - enhancements
+  + [#45627](https://issues.afinedevelopment.com/issues/45627): adds table filtering helpers
   + [#46094](https://issues.afinedevelopment.com/issues/46094): adds language nav to support content in multiple languages
   + [#44624](https://issues.afinedevelopment.com/issues/45625): Rails 4.2 support
   + [#45625](https://issues.afinedevelopment.com/issues/45625): add export to csv for index pages
