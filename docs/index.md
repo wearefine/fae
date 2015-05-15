@@ -718,6 +718,8 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 // $c-custom-highlight: #000;
 ```
 
+---
+
 # Multiple Language Support
 
 Fae support a language nav that makes managing content in multiple languages easy. The language nav will display all available languages. Clicking a specific language will only display fields specific to that language.
@@ -767,6 +769,8 @@ Then finally, you'll need to add the `fae/shared/language_nav` partial to the fo
     .main_content-header-wrapper
     // ...
 ```
+
+---
 
 # Filtering
 
