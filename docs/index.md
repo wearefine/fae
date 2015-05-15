@@ -778,11 +778,11 @@ If you need to filter your content on your table views, Fae provides a system an
 
 Using the helpers provided, the filter form will POST to a filter action inherited from `Fae::BaseController`. You can override this action, but by default it will pass the params to a class method in your model called `filter`. It's then up you to scope the data that gets returned and rendered in the table.
 
-Let's walk through an example. Using the `Person` model from above, let's say a person `belongs_to :company` and `has_many :groups`. We want to be able to filter our index table by company, group and search by `Person.name` and `Company.name`.
+Let's walk through an example. Using the `Person` model from above, let's say a person `belongs_to :company` and `has_many :groups`. We'll want to use select filters for companies and groups, and a keyword search to filter by people and company name.
 
 ## Route
 
-First will need to add `post 'filter', on: :collection` to our `people` resources:
+First, we'll need to add `post 'filter', on: :collection` to our `people` resources:
 
 `config/routes.rb`
 ```ruby
@@ -818,7 +818,7 @@ Finally we need to define our class methods to scope the `Person` class. This da
 
 ### filter(params)
 
-`ModelName#filter(params)` will be the scope when data is filtered. The `parmas` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the seach field.
+`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the seach field.
 
 From the form above we can assume our params look like this:
 
