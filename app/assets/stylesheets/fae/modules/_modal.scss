@@ -33,8 +33,18 @@
 		font-weight: normal;
 	}
 
+	h4 {
+		color: $c-text;
+		margin-bottom: 12px;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
 	p {
 		margin-bottom: 25px;
+		span {
+			text-decoration: underline;
+		}
 	}
 
 	table {

@@ -19,6 +19,30 @@ $ rails g fae:install
 
 After the installer completes, visit `/admin` and setup your first user account. That should automatically log you in to your blank Fae instance.
 
+## Dependencies
+
+### Rails
+
+Fae supports Rails >= 4.1.
+
+### Sass and sass-rails
+
+Fae requires `sass >= 3.4` and `sass-rails >= 5`.
+
+If you're using Rails 4.1 you'll need to update the versions in the `Gemfile`:
+
+```ruby
+gem 'sass-rails', '~> 5.0.0'
+gem 'sass', '~> 3.4.0'
+```
+
+and run:
+
+```bash
+$ bundle update sass-rails
+$ bundle update sass
+```
+
 ## fae:install
 
 Fae's installer will do the following:
@@ -52,6 +76,33 @@ Until Fae is publically released we'll maintain branches for each major release 
 ```ruby
 gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git', branch: 'v1'
 gem 'fae-rails', git: 'git@bitbucket.org:wearefine/fae.git', tag: 'v1.0.3'
+```
+
+---
+
+# Fae Initializer
+
+Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
+
+| key | type | default | description
+|-|-|-|-|
+| devise_secret_key | string | | unique Devise hash
+| devise_mailer_sender | string | change-me@example.com | address used to send Devise notifications (i.e. forgot password emails)
+| dashboard_exclusions  | array | [] | array of models to hide in the dashboard
+| max_image_upload_size | integer | 2 | ceiling for image uploads in MB
+| max_file_upload_size | integer | 5 | ceiling for file uploads in MB
+
+### Example
+
+```ruby
+Fae.setup do |config|
+
+  config.devise_secret_key = '79a3e96fecbdd893853495ff502cd387e22c9049fd30ff691115b8a0b074505be4edef6139e4be1a0a9ff407442224dbe99d94986e2abd64fd0aa01153f5be0d'
+
+  # models to exclude from dashboard list
+  config.dashboard_exclusions = %w( Varietal )
+
+end
 ```
 
 ---
@@ -193,6 +244,10 @@ def self.for_fae_index
   order(:first_name)
 end
 ```
+
+## to_csv
+
+Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::Concerns::Models::Base`. It is meant to be called from the index action.
 
 
 ## Nested Resources
@@ -435,7 +490,7 @@ Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simpl
 
 Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
 
-[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)    
+[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
 [Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
 
 ---
@@ -645,7 +700,7 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 
 #### Example: fae.js as a Manifest File
 
-```js
+```JavaScript
 // This file is compiled into fae/application.js
 // use this as another manifest file if you have a lot of javascript to add
 // or just add your javascript directly to this file
@@ -658,10 +713,152 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 
 `app/assets/stylesheets/fae.scss` compiles into `fae/application.css`. Styles added to this files will be declared before other Fae styles. This file also provide a SCSS variable for Fae's highlight color: `$c-custom-highlight` (which defaults to #31a7e6).
 
-```css
+```CSS
 // Do Not Delete this page! FAE depends on it in order to set its highlight color.
 // $c-custom-highlight: #000;
 ```
 
+---
 
+# Multiple Language Support
 
+Fae support a language nav that makes managing content in multiple languages easy. The language nav will display all available languages. Clicking a specific language will only display fields specific to that language.
+
+## Configure
+
+To setup the language nav first define all languages Fae will be managing content in.
+
+`config/initializers/fae.rb`
+```ruby
+config.languages = {
+  en: 'English',
+  zh: 'Chinese',
+  ja: 'Japanese'
+}
+```
+
+The convention of this hash is important as the keys with have to match the database column suffixes of the specific language fields. The values will be used as the link text in the language nav.
+
+## Database Column Naming
+
+As mentioned above, the column names of fields supporting multiple languages will have to follow this convention:
+
+```
+"#{attribute_name}_#{language_abbreviation}`
+```
+
+E.g. the english version of the title attribute would be `title_en`.
+
+Using Fae's generators let's quickly scaffold a model that supports multiple languages (columns without suffixes will be treated normally:
+
+```bash
+$ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
+```
+
+## Language Nav Partial
+
+Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.main_content-header`:
+
+`app/views/admin/people/_form.html.slim`
+```slim
+= simple_form_for(['admin', @item]) do |f|
+  section.main_content-header
+
+    == render 'fae/shared/language_nav'
+
+    .main_content-header-wrapper
+    // ...
+```
+
+---
+
+# Filtering
+
+If you need to filter your content on your table views, Fae provides a system and helpers to do so.
+
+Using the helpers provided, the filter form will POST to a filter action inherited from `Fae::BaseController`. You can override this action, but by default it will pass the params to a class method in your model called `filter`. It's then up you to scope the data that gets returned and rendered in the table.
+
+Let's walk through an example. Using the `Person` model from above, let's say a person `belongs_to :company` and `has_many :groups`. We'll want to use select filters for companies and groups, and a keyword search to filter by people and company name.
+
+## Route
+
+First, we'll need to add `post 'filter', on: :collection` to our `people` resources:
+
+`config/routes.rb`
+```ruby
+resources :people do
+  post 'filter', on: :collection
+end
+```
+
+## View Helpers
+
+Next we'll add the form to our view as the first child of `.main_content-section-area`:
+
+`app/views/admin/people/index.html.slim`
+```slim
+// ...
+.main_content-section-area
+
+  == fae_filter_form do
+    == fae_filter_select :company
+    == fae_filter_select :groups
+
+  table.index_table.main_table-sort_columns
+  // ...
+```
+
+The search field is built into `fae_filter_form`, but we'll need to provide a `fae_filter_select` for each select element in our filter bar.
+
+Full documentation on both helpers can be found in the [helpers.md](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md).
+
+## Class Methods
+
+Finally we need to define our class methods to scope the `Person` class. This data will be assigned to `@items` and injected into the table via AJAX.
+
+### filter(params)
+
+`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the seach field.
+
+From the form above we can assume our params look like this:
+
+```ruby
+{
+  'search'  => 'text from search field',
+  'company' => 12, # value from company select
+  'groups'  => 3 # value from groups select
+}
+```
+
+So let's use that data to craft our class method.
+
+`app/models/person.rb`
+```ruby
+def self.filter(params)
+  # build conditions if specific params are present
+  conditions = {}
+  conditions[:company_id] = params['company'] if params['company'].present?
+  conditions['groups.id'] = params['groups'] if params['groups'].present?
+
+  # use good 'ol MySQL to seach if search param is present
+  search = []
+  if params['search'].present?
+    search = ["people.name LIKE ? OR companies.name LIKE ?", "%#{params['search']}%", "%#{params['search']}%"]
+  end
+
+  # apply conditions and search from above to our scope
+  order(:name)
+    .includes(:company, :groups).references(:company, :groups)
+    .where(conditions).where(search)
+end
+```
+
+### filter_all
+
+There's also a `ModelName#filter_all` which is called when you reset the filter form. This defaults to the `for_fae_index` scope, but you can override it if you need to.
+
+```ruby
+def self.filter_all
+  where.not(name: 'John').order(:position)
+end
+```

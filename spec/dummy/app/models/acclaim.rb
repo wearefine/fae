@@ -11,5 +11,7 @@ class Acclaim < ActiveRecord::Base
     publication
   end
 
-  belongs_to :release
+  def self.for_release_filter
+    where('acclaims.score IS NOT NULL')
+  end
 end

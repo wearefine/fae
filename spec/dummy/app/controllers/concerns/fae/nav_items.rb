@@ -23,7 +23,7 @@ module Fae
     def wine_sublinks
       wines_arr = [{ text: 'New Wine', path: main_app.new_admin_wine_path }]
       Wine.all.each do |wine|
-        wines_arr << { text: wine.name, path: main_app.edit_admin_wine_path(wine) }
+        wines_arr << { text: wine.name_en, path: main_app.edit_admin_wine_path(wine) }
       end
       wines_arr
     end

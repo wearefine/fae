@@ -42,5 +42,6 @@
 //= require fae/mobilemenu
 //= require fae/ajax_forms
 //= require fae/validation
+//= require fae/language_nav
 //= require fae/admin
 //= require fae

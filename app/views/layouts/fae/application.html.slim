@@ -8,7 +8,7 @@ html
     == javascript_include_tag "fae/application"
     == csrf_meta_tags
 
-  body
+  body class=body_class
     == render "header"
     section#main_content
       == render "nav" if user_signed_in?

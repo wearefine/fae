@@ -1,6 +1,6 @@
 class RadioCollectionInput < SimpleForm::Inputs::CollectionRadioButtonsInput
 
-  def input
+  def input(wrapper_options)
     label_method, value_method = detect_collection_methods
 
     @builder.send("collection_radio_buttons",

@@ -22,6 +22,14 @@
 	transition: $type $time $easing;
 }
 
+@mixin transition-multiple($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
 @mixin border-radius($radius: 0) {
 	-webkit-border-radius: $radius;
 	border-radius: $radius;
@@ -36,10 +44,10 @@
 }
 
 @mixin clearfix() {
-	content: "."; 
-	visibility: hidden; 
-	display: block; 
-	height: 0; 
+	content: ".";
+	visibility: hidden;
+	display: block;
+	height: 0;
 	clear: both;
 }
 

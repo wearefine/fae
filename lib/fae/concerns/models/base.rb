@@ -1,5 +1,8 @@
 module Fae::Concerns::Models::Base
+  require 'csv'
   extend ActiveSupport::Concern
+
+  attr_accessor :filter
 
   module ClassMethods
     def for_fae_index
@@ -16,6 +19,25 @@ module Fae::Concerns::Models::Base
         return :title
       else
         raise "No order_method found, please define for_fae_index as a #{name} class method to set a custom scope."
+      end
+    end
+
+    def filter_all
+      # override this method in your model
+      for_fae_index
+    end
+
+    def filter(params)
+      # override this method in your model
+      for_fae_index
+    end
+
+    def to_csv
+      CSV.generate do |csv|
+        csv << column_names
+        all.each do |item|
+          csv << item.attributes.values_at(*column_names)
+        end
       end
     end
 

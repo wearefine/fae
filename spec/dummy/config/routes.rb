@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :locations
-    resources :releases
+    resources :releases do
+      post 'filter', on: :collection
+    end
     resources :wines
     resources :varietals
     resources :acclaims

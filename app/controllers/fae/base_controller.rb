@@ -8,6 +8,10 @@ module Fae
 
     def index
       @items = @klass.for_fae_index
+      respond_to do |format|
+        format.html
+        format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_s(:filename) + '.csv'  }
+      end
     end
 
     def new
@@ -45,6 +49,16 @@ module Fae
       else
         redirect_to @index_path, flash: { error: t('fae.delete_error') }
       end
+    end
+
+    def filter
+      if params[:commit] == "Reset Search"
+        @items = @klass.filter_all
+      else
+        @items = @klass.filter(params[:filter])
+      end
+
+      render :index, layout: false
     end
 
   private

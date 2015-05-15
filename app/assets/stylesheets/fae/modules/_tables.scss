@@ -38,7 +38,7 @@
 		text-align: left;
 	}
 
-	.main_table-edit, .main_table-delete, 
+	.main_table-edit, .main_table-delete,
 	.main_table-header-delete, .main_table-header-edit {
 		text-align: center;
 	}
@@ -326,7 +326,7 @@
 		}
 	}
 
-	&:after {
+	.table-filter-keyword-wrapper:after {
 		@include icon-stuff();
 		@extend .icon-search:before;
 		position: absolute;
@@ -349,6 +349,8 @@
 		padding: 5px;
 		font-size: 12px;
 		background: $c-table-filter-submit-bg;
+		border: none;
+		margin: 3px;
 
 		&:hover {
 			background: $c-table-filter-submit-bg-hover;

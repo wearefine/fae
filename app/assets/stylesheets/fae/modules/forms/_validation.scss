@@ -27,6 +27,14 @@
       @include right-triangle(10px, $c-error-bg);
     }
   }
+
+  &.hidden_errors {
+    margin-bottom: 20px;
+
+    .error:after {
+      display: none;
+    }
+  }
 }
 
 .input {
@@ -35,5 +43,18 @@
   }
   .invalid {
     border: 1px solid $c-error-content !important;
+  }
+}
+
+.counter {
+  p {
+    padding-top: 10px;
+    font-size: 13px;
+    span {
+      color: $c-notice-content;
+      &.overCount {
+        color: $c-error-content;
+      }
+    }
   }
 }
