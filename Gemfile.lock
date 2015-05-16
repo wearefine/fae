@@ -26,12 +26,6 @@ PATH
       simple_form (~> 3.1.0)
       uglifier
 
-PATH
-  remote: ~/work/open_source/judge
-  specs:
-    judge (2.0.6)
-      rails (>= 3.1)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -187,6 +181,8 @@ GEM
     jquery-ui-rails (4.2.1)
       railties (>= 3.2.16)
     json (1.8.2)
+    judge (2.0.6)
+      rails (>= 3.1)
     judge-simple_form (1.0.0)
       judge (~> 2.0)
       simple_form (>= 2.0)
@@ -403,7 +399,6 @@ DEPENDENCIES
   guard-rspec (~> 4.3.1)
   jquery-rails
   jquery-ui-rails (~> 4.2.1)
-  judge!
   maximus
   mysql2
   pry
