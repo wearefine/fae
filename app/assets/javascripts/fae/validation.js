@@ -5,7 +5,7 @@ var Validator = {
     if (this.el.$form.length) {
       this.password_confirmation_validation.init();
       this.password_presence_conditional();
-      this.validate();
+      this.bind_validation_events();
       this.form_validate();
       this.length_counter.init();
     }
@@ -35,23 +35,28 @@ var Validator = {
     });
   },
 
-  // validate individual judge elements on the blur event
-  validate: function () {
-    var self = this;
+  // bind validation events based on input type
+  bind_validation_events: function () {
+    var _this = this;
     $('[data-validate]').each(function () {
-      var $validation_element = $(this);
-      var $event_trigger = $validation_element;
-      if ($validation_element.data('validate').length) {
-        if (self.is_chosen($validation_element)) {
-          $event_trigger = self.chosen_input($validation_element);
+      var $this = $(this);
+      if ($this.data('validate').length) {
+        if ($this.is('input:not(.hasDatepicker)')) {
+          // normal inputs validate on blur
+          $this.blur(function () {
+            _this.judge_it($this);
+          });
+        } else if ($this.is('.hasDatepicker')) {
+          // date pickers need a little delay
+          $this.blur(function () {
+            setTimeout(function(){ _this.judge_it($this); }, 500);
+          });
+        } else if ($this.is('select')) {
+          // selects validate on change
+          $this.change(function () {
+            _this.judge_it($this);
+          });
         }
-        $event_trigger.blur(function () {
-          if (!$(this).hasClass("hasDatepicker")) {
-            self.judge_it($validation_element);
-          } else {
-            setTimeout(function(){ self.judge_it($validation_element); }, 500);
-          }
-        });
       }
     });
   },
