@@ -91,22 +91,22 @@ var Validator = {
 
 
 
-  label_named_message: function (elm, messages) {
+  label_named_message: function ($el, messages) {
+    var $label;
     var index = 0;
-    var label;
 
-    if (elm.is(':radio')) {
-      label = elm.parent().closest('span').siblings('label');
+    if ($el.is(':radio')) {
+      $label = $el.parent().closest('span').siblings('label');
     } else {
-      label = elm.siblings('label');
+      $label = $el.siblings('label');
     }
 
-    if (label.get(0).childNodes[0].nodeName === "ABBR") {
+    if ($label.get(0).childNodes[0].nodeName === "ABBR") {
       index = 1;
     }
 
     for (var i = messages.length - 1; i >= 0; i--) {
-      messages[i] = label.get(0).childNodes[index].nodeValue + " " + messages[i];
+      messages[i] = $label.get(0).childNodes[index].nodeValue + " " + messages[i];
     }
   },
 
