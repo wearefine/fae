@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + [#46521](https://issues.afinedevelopment.com/issues/46521): fixes checkbox bug
 
 ## 1.1
 
