@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + [#46725](https://issues.afinedevelopment.com/issues/46725): fixes image deletion bug
 
 ## 1.1
 
