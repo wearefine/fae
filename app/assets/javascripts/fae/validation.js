@@ -87,12 +87,21 @@ var Validator = {
 
 
   label_named_message: function (elm, messages) {
-    var i, siblings, index;
-    for (i = messages.length - 1; i >= 0; i--) {
-      siblings = elm.siblings('label');
-      if (siblings.get(0).childNodes[0].nodeName === "ABBR") { index = 1; }
-      index = index || 0;
-      messages[i] = siblings.get(0).childNodes[index].nodeValue + " " + messages[i];
+    var index = 0;
+    var label;
+
+    if (elm.is(':radio')) {
+      label = elm.parent().closest('span').siblings('label');
+    } else {
+      label = elm.siblings('label');
+    }
+
+    if (label.get(0).childNodes[0].nodeName === "ABBR") {
+      index = 1;
+    }
+
+    for (var i = messages.length - 1; i >= 0; i--) {
+      messages[i] = label.get(0).childNodes[index].nodeValue + " " + messages[i];
     }
   },
 
@@ -111,10 +120,11 @@ var Validator = {
     var $styled_input = this.set_chosen_input($input);
     $styled_input.addClass('invalid').removeClass('valid');
 
-    if ($input.parent('.input').children('.error').length) {
-      $input.parent('.input').children('.error').text(messages.join(','));
+    var $wrapper = $input.closest('.input');
+    if ($wrapper.children('.error').length) {
+      $wrapper.children('.error').text(messages.join(','));
     } else {
-      $input.parent('.input').addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
+      $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
     }
   },
 
