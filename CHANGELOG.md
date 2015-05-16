@@ -5,6 +5,7 @@
 - enhancements
 - bugs
     + [#46571](https://issues.afinedevelopment.com/issues/46571): fixes select validations with Judge
+    + [#46521](https://issues.afinedevelopment.com/issues/46521): fixes checkbox bug
 
 ## 1.1
 
