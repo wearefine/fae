@@ -4,6 +4,10 @@
 
 - enhancements
 - bugs
+
+## 1.1.1
+
+- bugs
     + [#46571](https://issues.afinedevelopment.com/issues/46571): fixed select validations with Judge
     + [#46521](https://issues.afinedevelopment.com/issues/46521): fixed checkbox bug
     + [#46725](https://issues.afinedevelopment.com/issues/46725): fixed image deletion bug
