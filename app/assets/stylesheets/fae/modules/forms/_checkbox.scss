@@ -11,12 +11,12 @@
 
   .checkbox {
     position: relative;
-    padding-left: 35px;
+    padding: 0 20px 0 35px;
     margin: 0;
     cursor: pointer;
     display: inline-block;
 
-    &:before {
+    label:before {
       content: "";
       position: absolute;
       top: -6px;
