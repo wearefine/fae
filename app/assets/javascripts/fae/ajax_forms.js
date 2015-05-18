@@ -112,7 +112,7 @@ var AjaxForms = {
     var _this = this;
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
-        $(this).next('table').replaceWith($(data).find('table'));
+        $(this).next('table').replaceWith($(data).find('table').first());
       })
       .on('click', '.js-reset-btn', function(ev) {
         var form = $(this).closest('form')[0];

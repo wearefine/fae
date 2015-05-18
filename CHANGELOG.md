@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + fixed issue with ajax filtering
 
 ## 1.1.1
 
