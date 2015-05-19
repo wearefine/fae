@@ -170,7 +170,7 @@ The daterangepicker is a little different: instead of a single attribute, it acc
 **Examples**
 
 ```ruby
-fae_daterangepicker f, [:start_date, :end_date], label: 'Start/End dates'
+fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 ```
 
 ## fae_prefix
