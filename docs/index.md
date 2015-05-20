@@ -718,6 +718,18 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 // $c-custom-highlight: #000;
 ```
 
+## Overriding The Landing Page
+
+If you want to ignore the default dashboard and make one of your view the landing page you can add a redirect route in your Fae namespace.
+
+`config/routes.rb`
+```ruby
+# ...
+namespace :admin do
+  get '/', to: redirect('/admin/people')
+  # ...
+```
+
 ---
 
 # Multiple Language Support
