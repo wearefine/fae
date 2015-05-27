@@ -435,15 +435,13 @@ The nested_table should go after the main form ends and should only placed on th
 |-|-|-|-|
 | assoc   | symbol | | **(required)** the association's name  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
-| cols | array of symbols | [] | an array of attributes to display on the list view |
+| cols | array of symbols | [] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
 | header | string | title | the section's header |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
 | ordered | boolean | false | allows list view to be sortable, which is saved to a `position` atttribute |
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
-
-The nested_table also supports thumbnails when Fae::Image column is passed into generator.
 
 
 **Examples**

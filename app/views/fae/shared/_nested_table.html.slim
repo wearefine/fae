@@ -51,7 +51,7 @@ h2.main_content-section-title = header
               - if has_thumb
                 td = image_tag(item.asset.thumb.url)
               - cols.each do |col|
-                - if col === cols.first
+                - if col == cols.first
                   td.main_table-description-item
                     a.js-edit-link href=self.send(edit_path, item) = col_name(item, col)
                 - elsif item.class.reflections.include?(col) && item.send(col).class.name == 'Fae::Image'
