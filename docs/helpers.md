@@ -443,6 +443,8 @@ The nested_table should go after the main form ends and should only placed on th
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
 
+The nested_table also supports thumbnails when Fae::Image column is passed into generator.
+
 
 **Examples**
 
