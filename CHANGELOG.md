@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + allow thumbnails to show on nested tables
 - bugs
     + fixed issue with ajax filtering
 

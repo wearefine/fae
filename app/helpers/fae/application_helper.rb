@@ -56,11 +56,16 @@ module Fae
       end
     end
 
-    def col_name(item, attribute)
+    def col_name_or_image(item, attribute)
       # if item's attribute is an association
       if item.class.reflections.include?(attribute)
-        # display associaiton's fae_display_field
-        item.send(attribute).fae_display_field
+        if item.send(attribute).class.name == 'Fae::Image'
+          # display image thumbnail
+          image_tag(item.send(attribute).asset.thumb.url)
+        else
+          # display associaiton's fae_display_field
+          item.send(attribute).fae_display_field
+        end
       else
         # otherwise it's an attribute so display it's value
         item.send(attribute)

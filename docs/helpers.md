@@ -435,7 +435,7 @@ The nested_table should go after the main form ends and should only placed on th
 |-|-|-|-|
 | assoc   | symbol | | **(required)** the association's name  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
-| cols | array of symbols | [] | an array of attributes to display on the list view |
+| cols | array of symbols | [] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
 | header | string | title | the section's header |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
