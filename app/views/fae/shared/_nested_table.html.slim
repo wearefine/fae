@@ -53,13 +53,11 @@ h2.main_content-section-title = header
               - cols.each do |col|
                 - if col == cols.first
                   td.main_table-description-item
-                    a.js-edit-link href=self.send(edit_path, item) = col_name(item, col)
-                - elsif item.class.reflections.include?(col) && item.send(col).class.name == 'Fae::Image'
-                  td = image_tag(item.send(col).asset.thumb.url)
-                - elsif item.class.columns_hash[col.to_s].type == :boolean
+                    a.js-edit-link href=self.send(edit_path, item) = col_name_or_image(item, col)
+                - elsif item.class.columns_hash[col.to_s].present? && item.class.columns_hash[col.to_s].type == :boolean
                   td = attr_toggle item, col
                 - else
-                  td = col_name(item, col)
+                  td = col_name_or_image(item, col)
               td.main_table-delete
                 = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
         - else
