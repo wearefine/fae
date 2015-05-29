@@ -7,6 +7,7 @@
 - bugs
     + fixed issue with ajax filtering
     + [#47229](https://issues.afinedevelopment.com/issues/47229): default prompt now displays for belongs_to associations only
+    + contain images to viewport
 
 ## 1.1.1
 
