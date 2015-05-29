@@ -1,4 +1,4 @@
-require 'file_size_validator' 
+require 'file_size_validator'
 
 module Fae
   class Image < ActiveRecord::Base
