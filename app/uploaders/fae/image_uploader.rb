@@ -2,15 +2,13 @@
 module Fae
   class ImageUploader < CarrierWave::Uploader::Base
     include CarrierWave::MimeTypes
+    include CarrierWave::RMagick
 
+    # saves file size to DB
     process :save_file_size_in_model
-
     def save_file_size_in_model
       model.file_size = file.size
     end
-
-    # Include RMagick or MiniMagick support:
-    include CarrierWave::RMagick
 
     def extension_white_list
       %w(jpg jpeg gif png ico)
@@ -22,29 +20,9 @@ module Fae
       "system/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
 
-    #create crop regardless, the following conditional versions rely on the cropped version.
-    #yes this means the original will be duplicated but we can save space with the conditional
-    #breakpoint versions below.
-    # version :cropped do
-    #   process :crop
-    # end
-
     version :thumb do
       process :resize_to_fill => [150,100]
     end
-
-    # #execute the crop!
-    # def crop
-    #   if model.crop_x_changed? or model.crop_y_changed? or model.crop_w_changed? or model.crop_y_changed?
-    #     manipulate! do |img|
-    #       x = model.crop_x.to_i
-    #       y = model.crop_y.to_i
-    #       w = model.crop_w.to_i
-    #       h = model.crop_h.to_i
-    #       img.crop!(x,y,w,h)
-    #     end
-    #   end
-    # end
 
   end
 end
