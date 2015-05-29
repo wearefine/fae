@@ -182,7 +182,7 @@ module Fae
 
     # sets default prompt for pulldowns
     def set_prompt(f, attribute, options)
-      options[:prompt] = 'Select One' if is_association?(f, attribute) && !options[:prompt] && !options[:two_pane]
+      options[:prompt] = 'Select One' if is_association?(f, attribute) && f.object.class.reflect_on_association(attribute).macro == :belongs_to && options[:prompt].nil? && !options[:two_pane]
     end
 
     # removes language suffix from label and adds data attr for languange nav
