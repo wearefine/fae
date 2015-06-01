@@ -2,6 +2,7 @@
 	width: 100%;
 	border: 1px solid $c-border;
 	border-collapse: separate;
+	table-layout: fixed;
 
 	& tbody tr:nth-of-type(even) {
 		td {
