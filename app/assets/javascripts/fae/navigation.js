@@ -57,13 +57,15 @@ var FaeNavigation = {
   // If you want to try this in CSS be my guest but it's done near impossible to make a sticky <thead>
   sticky_table_header: function() {
     var headerHeight = $('.main_content-header').outerHeight();
+    var sticky_table_selector = '.sticky-table-header';
+    var sticky_table_header_selector = '.sticky-table-header--hidden';
 
     // Cache offset and height values to spare expensive calculations on scroll
     var sizeFixedHeader = function($el, headerHeight) {
       var $this = $el;
       var tableOffset = $this.offset().top - headerHeight;
       var bottomOffset = $this.height() + tableOffset - $this.find('thead').height();
-      var $fixedHeader = $this.next('.sticky-table-header--hidden');
+      var $fixedHeader = $this.next(sticky_table_header_selector);
 
       $fixedHeader.data({
         'table-offset' : tableOffset,
@@ -82,10 +84,10 @@ var FaeNavigation = {
     };
 
     // Add sticky psuedo tables after our main table to hold the fixed header
-    $('.sticky-table-header').each(function() {
+    $(sticky_table_selector).each(function() {
       var $this = $(this);
       var $header = $this.find('thead').clone();
-      var new_classes = $this.attr('class').replace('sticky-table-header', 'sticky-table-header--hidden');
+      var new_classes = $this.attr('class').replace(sticky_table_selector.substr(1), sticky_table_header_selector.substr(1));
 
       var $fixedHeader = $('<table />', {
         class: new_classes
@@ -101,7 +103,7 @@ var FaeNavigation = {
     $(window).on('scroll', function() {
       var offset = $(this).scrollTop();
 
-      $('.sticky-table-header--hidden').each(function() {
+      $(sticky_table_header_selector).each(function() {
         var $this = $(this);
         var tableOffset = $this.data('table-offset');
         var tableBottom = $this.data('table-bottom');
@@ -118,7 +120,7 @@ var FaeNavigation = {
     $(window).on('resize', function() {
 
       var headerHeight = $('.main_content-header').outerHeight();
-      $('.sticky-table-header').each(function() {
+      $(sticky_table_selector).each(function() {
         sizeFixedHeader($(this), headerHeight);
       });
 
