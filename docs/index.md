@@ -880,3 +880,11 @@ def self.filter_all
   where.not(name: 'John').order(:position)
 end
 ```
+
+---
+
+# CSS Classes
+
+## Fixed position table headers
+
+For extra long tables, add the class `sticky-table-header` to a `table` and scroll away. Multiple sticky tables can appear on one page.
