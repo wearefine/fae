@@ -372,3 +372,11 @@
 .main_content-thumb-col {
 	width: 1px;
 }
+
+// sticky table header
+.sticky-table-header--hidden {
+  position: fixed;
+  top: 70px;
+  z-index: 1;
+  display: none;
+}

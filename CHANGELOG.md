@@ -4,6 +4,7 @@
 
 - enhancements
     + allow thumbnails to show on nested tables
+    + [#47202](https://issues.afinedevelopment.com/issues/47202): sticky table headers on scroll
 - bugs
     + fixed issue with ajax filtering
     + [#47229](https://issues.afinedevelopment.com/issues/47229): default prompt now displays for belongs_to associations only
