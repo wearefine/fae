@@ -54,7 +54,7 @@ module Fae
       options[:label]         ||= attribute.to_s.titleize
       options[:collection]    ||= default_collection_from_attribute(attribute)
       options[:label_method]  ||= :fae_display_field
-      options[:placeholder]   ||= "Select a #{options[:label]}"
+      options[:placeholder]     = "Select a #{options[:label]}" if options[:placeholder].nil?
       options[:options]       ||= []
 
       select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
