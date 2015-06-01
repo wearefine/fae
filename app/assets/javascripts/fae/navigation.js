@@ -54,7 +54,7 @@ var FaeNavigation = {
       .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
   },
 
-  // If you want to try this in CSS be my guest but it's done near impossible to make a sticky <thead>
+  // Fix a table header to the top of the view on scroll
   sticky_table_header: function() {
     var headerHeight = $('.main_content-header').outerHeight();
     var sticky_table_selector = '.sticky-table-header';
