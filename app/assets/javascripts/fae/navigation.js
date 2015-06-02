@@ -57,12 +57,15 @@ var FaeNavigation = {
   // Fix a table header to the top of the view on scroll
   sticky_table_header: function() {
     var headerHeight = $('.main_content-header').outerHeight();
-    var sticky_table_selector = '.sticky-table-header';
+    var $sticky_tables = $('.sticky-table-header');
     var sticky_table_header_selector = '.sticky-table-header--hidden';
+    var headerHeight = $('.main_content-header').outerHeight();
+    var $window = $(window);
 
     // Cache offset and height values to spare expensive calculations on scroll
-    var sizeFixedHeader = function($el, headerHeight) {
+    var sizeFixedHeader = function($el) {
       var $this = $el;
+      var headerHeight = $('.main_content-header').outerHeight();
       var tableOffset = $this.offset().top - headerHeight;
       var bottomOffset = $this.height() + tableOffset - $this.find('thead').height();
       var $fixedHeader = $this.next(sticky_table_header_selector);
@@ -73,21 +76,23 @@ var FaeNavigation = {
       });
 
       $fixedHeader.css({
-        width: $this.width(),
-        top: headerHeight
+        width: $this.outerWidth(),
+        height: $this.outerHeight(),
+        top: ($window.width() < 767 ? 0 : headerHeight),
       });
 
-      $.each($this.find('thead tr th'), function(ind,val){
-        var original_width = $(val).width();
-        $($fixedHeader.find('tr > th')[ind]).width(original_width);
+      $this.find('thead tr th').each(function(index){
+        var original_width = $(this).outerWidth()
+        // Using .width() as a setter is bunk
+        $($fixedHeader.find('tr > th')[index]).css('width', original_width);
       });
     };
 
     // Add sticky psuedo tables after our main table to hold the fixed header
-    $(sticky_table_selector).each(function() {
+    $sticky_tables.each(function() {
       var $this = $(this);
       var $header = $this.find('thead').clone();
-      var new_classes = $this.attr('class').replace(sticky_table_selector.substr(1), sticky_table_header_selector.substr(1));
+      var new_classes = $this.attr('class').replace('sticky-table-header', sticky_table_header_selector.substr(1));
 
       var $fixedHeader = $('<table />', {
         class: new_classes
@@ -96,11 +101,11 @@ var FaeNavigation = {
       $fixedHeader.append( $header );
       $this.after($fixedHeader);
 
-      sizeFixedHeader($this, headerHeight);
+      sizeFixedHeader($this);
     });
 
     // If the table header is in range, show it, otherwise hide it
-    $(window).on('scroll', function() {
+    $window.on('scroll', function() {
       var offset = $(this).scrollTop();
 
       $(sticky_table_header_selector).each(function() {
@@ -117,13 +122,19 @@ var FaeNavigation = {
     });
 
     // Get all values squared away again if the viewport gets smaller
-    $(window).on('resize', function() {
+    $window.on('resize', function() {
 
-      var headerHeight = $('.main_content-header').outerHeight();
-      $(sticky_table_selector).each(function() {
-        sizeFixedHeader($(this), headerHeight);
+      $sticky_tables.each(function() {
+        sizeFixedHeader($(this));
       });
 
+    });
+
+    // Because images mess this up too
+    $window.on('load', function() {
+      $sticky_tables.each(function() {
+        sizeFixedHeader($(this));
+      });
     });
 
   }
