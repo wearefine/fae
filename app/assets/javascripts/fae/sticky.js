@@ -22,7 +22,7 @@ var Sticky = {
 
 		// set the height
 		this.height = $(this.elm).outerHeight();
-
+		$(this.elm).addClass('js-will-be-sticky');
 		// if it has a hero area, we need to wait before grabbing its top/left...because images.
 		if (this.options.hero_selector) {
 			$(this.options.hero_selector).imagesLoaded( function() {
