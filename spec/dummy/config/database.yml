@@ -20,6 +20,12 @@ remote_development:
   username: fae
   password: sh45&rEDnap
 
+stage:
+  <<: *base
+  database: fae_stage
+  username: fae
+  password: sh45&rEDnap
+
 production:
   <<: *base
   database: fae
