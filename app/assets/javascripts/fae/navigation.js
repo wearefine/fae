@@ -56,29 +56,40 @@ var FaeNavigation = {
 
   // Fix a table header to the top of the view on scroll
   sticky_table_header: function() {
-    var headerHeight = $('.main_content-header').outerHeight();
     var $sticky_tables = $('.sticky-table-header');
     var sticky_table_header_selector = '.sticky-table-header--hidden';
-    var headerHeight = $('.main_content-header').outerHeight();
     var $window = $(window);
 
     // Cache offset and height values to spare expensive calculations on scroll
     var sizeFixedHeader = function($el) {
       var $this = $el;
       var headerHeight = $('.main_content-header').outerHeight();
+      var ww = $window.width();
+      if(ww < 1025) {
+        headerHeight = $('#main_header').outerHeight();
+      }
+
       var tableOffset = $this.offset().top - headerHeight;
-      var bottomOffset = $this.height() + tableOffset - $this.find('thead').height();
+      var theadHeight = $this.find('thead').outerHeight();
+      var bottomOffset = $this.height() + tableOffset - theadHeight;
       var $fixedHeader = $this.next(sticky_table_header_selector);
+
+      // For whatever reason IE9 does not pickup the .sticky plugin
+      if(!$('.js-will-be-sticky').length) {
+        tableOffset += headerHeight;
+        headerHeight = 0;
+      }
 
       $fixedHeader.data({
         'table-offset' : tableOffset,
         'table-bottom' : bottomOffset
       });
 
+
       $fixedHeader.css({
         width: $this.outerWidth(),
-        height: $this.outerHeight(),
-        top: ($window.width() < 767 ? 0 : headerHeight),
+        height: theadHeight,
+        top: headerHeight,
       });
 
       $this.find('thead tr th').each(function(index){
@@ -100,8 +111,6 @@ var FaeNavigation = {
 
       $fixedHeader.append( $header );
       $this.after($fixedHeader);
-
-      sizeFixedHeader($this);
     });
 
     // If the table header is in range, show it, otherwise hide it
