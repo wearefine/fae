@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.1.2
+
+- enhancements
     + allow thumbnails to show on nested tables
 - bugs
     + fixed issue with ajax filtering
