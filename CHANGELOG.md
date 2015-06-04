@@ -5,6 +5,7 @@
 - enhancements
     + [#47202](https://issues.afinedevelopment.com/issues/47202): sticky table headers on scroll
 - bugs
+    + fixed checkbox style
 
 ## 1.1.2
 
