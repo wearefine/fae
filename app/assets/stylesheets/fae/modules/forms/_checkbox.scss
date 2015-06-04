@@ -16,24 +16,24 @@
     cursor: pointer;
     display: inline-block;
 
-    label:before {
-      content: "";
-      position: absolute;
-      top: -6px;
-      left: 0;
-      height: 25px;
-      width: 25px;
-      border: 1px solid $c-border;
-      background: $c-form-checkbox-bg;
-      cursor: pointer;
-
-      @include border-radius(2px);
-    }
-
     h6 {
       display: inline-block;
       padding-top: 0;
     }
+  }
+
+  label.checkbox:before, .checkbox label:before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    border: 1px solid $c-border;
+    background: $c-form-checkbox-bg;
+    cursor: pointer;
+
+    @include border-radius(2px);
   }
 
   .js-active {
