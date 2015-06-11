@@ -6,6 +6,7 @@
     + [#47202](https://issues.afinedevelopment.com/issues/47202): sticky table headers on scroll
 - bugs
     + fixed checkbox style
+    + allow date picker and date range picker to be utilized on nested forms
 
 ## 1.1.2
 
