@@ -26,7 +26,7 @@ var Accordion = {
 				trigger: $this.find(self.trigger_selector).first(),
 				subnav: $this.find(self.sibling_selector).first(),
 				opened: false,
-				class_name: $this[0].classList[0]
+				class_name: $this[0].className.split(' ')[0]
 			});
 		});
 

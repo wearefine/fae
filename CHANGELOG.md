@@ -7,6 +7,7 @@
 - bugs
     + fixed checkbox style
     + allow date picker and date range picker to be utilized on nested forms
+    + fix ie9 JavaScript bug that was breaking all the things
 
 ## 1.1.2
 
