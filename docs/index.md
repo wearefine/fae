@@ -285,9 +285,10 @@ Fae doesn't deal with any validation definitions in your application models, you
 Fae uses [Judge](https://github.com/joecorcoran/judge) to automatically add client side validation from the declarations in the models. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
 
 ```ruby
-Judge.config.exposed[Person]  = [:slug]
-Judge.config.exposed[Wine]    = [:name]
-Judge.config.exposed[Wine]    = [:slug]
+Judge.configure do
+  expose Person, :slug
+  expose Wine, :name, :slug
+end
 ```
 
 NOTE: This is different than the official documentation where you call `expose` in a block. However, the above method fixes an annoying development mode bug. See: https://github.com/joecorcoran/judge/issues/24#issuecomment-64962861.
