@@ -621,6 +621,18 @@ Then to get content from a `Fae::TextField` and `Fae::TextArea`:
 @about_us_page.hero_image.asset.caption
 ```
 
+## Invalid Content Block Names
+
+Content blocks are just associations on the page model, which inherits from `Fae::Page`. Because of this, attributes on `Fae::Page` are invalid names for content blocks. These attributes are:
+
+- title
+- slug
+- position
+- on_prod
+- on_stage
+- created_at
+- updated_at
+
 ---
 
 # Customization
