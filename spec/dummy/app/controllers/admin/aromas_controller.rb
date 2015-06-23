@@ -8,9 +8,11 @@ module Admin
     def new
       @item = Aroma.new
       @item.release_id = params[:item_id]
+      build_assets
     end
 
     def edit
+      build_assets
     end
 
     def create
@@ -21,6 +23,7 @@ module Admin
         flash[:notice] = 'Item successfully created.'
         render template: 'admin/aromas/table'
       else
+        build_assets
         render action: 'new'
       end
     end
@@ -31,6 +34,7 @@ module Admin
         flash[:notice] = 'Item successfully updated.'
         render template: 'admin/aromas/table'
       else
+        build_assets
         render action: 'edit'
       end
     end
@@ -54,6 +58,10 @@ module Admin
 
     def permitted_params
       params.require(:aroma).permit!
+    end
+
+    def build_assets
+      @item.build_image if @item.image.blank?
     end
 
   end

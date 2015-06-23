@@ -12,6 +12,7 @@ ruby:
   show_alt              = true if show_alt.nil?
   show_caption        ||= false
   required            ||= false
+  attached_as         ||= image_name.to_s
 
 = f.simple_fields_for image_name do |i|
   .field.input
@@ -36,7 +37,8 @@ ruby:
     .asset-inputs style="#{'display:none;' if the_image.asset.present?}"
       = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_file_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
       = i.input :asset_cache, as: :hidden
-      = i.input :attached_as, as: :hidden, input_html: { value: image_name.to_s }
+      = i.input :imageable_type, as: :hidden, input_html: { value: f.object.class.name }
+      = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
 
   - if show_caption
     ruby:
