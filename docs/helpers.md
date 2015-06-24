@@ -235,6 +235,7 @@ fae_video_url f, :video_url
 | show_alt            | boolean | true | displays the alt field, label and helper text |
 | show_caption        | boolean | false | displays the caption field, label and helper text |
 | required            | boolean | false | adds required validation to the uploader |
+| attached_as         | symbol | image_name.to_s | Sets the `attached_as` atrribute on upload. You'll need to customize this if your `attached_as` condition doesn't match the images associaiton name. |
 
 **Examples**
 
@@ -324,10 +325,19 @@ Dislays a select tag to be used within a `fae_filter_form`.
 
 ## fae_date_format
 
-The fae_date_format helper formats a DateTime object in Fae's preferred method.
+The fae_date_format and fae_datetime_format helpers format a DateTime object in Fae's preferred method.
+The default, fae_date_format, formats to 06/23/15.
 
 ```ruby
 fae_date_format item.updated_at
+```
+
+## fae_datetime_format
+
+You may also use fae_datetime_format for the long date format with time (Jun 23, 2015  4:56pm PDT).
+
+```ruby
+fae_datetime_format item.updated_at
 ```
 
 ## fae_toggle

@@ -6,7 +6,10 @@
     + [#47025](https://issues.afinedevelopment.com/issues/47025): make string inputs the same length as all other fields
     + fix datepicker for nested forms again, so it rebinds after the first add/update
     + wrap link text in span and add padding to prevent overflow when title is longer
+    + [#47025](https://issues.afinedevelopment.com/issues/47025): default fae_date_format is now (00/00/00), added fae_datetime_format to preserve long date with time
+    + allows attached_as to be set in `fae_image_form`
 - bugs
+    + added padding to the bottom of the main content section in case the last field of the form is a dropdown
 
 ## 1.1.3
 
