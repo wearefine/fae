@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + allows attached_as to be set in `fae_image_form`
 - bugs
     + added padding to the bottom of the main content section in case the last field of the form is a dropdown
 

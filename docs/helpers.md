@@ -235,6 +235,7 @@ fae_video_url f, :video_url
 | show_alt            | boolean | true | displays the alt field, label and helper text |
 | show_caption        | boolean | false | displays the caption field, label and helper text |
 | required            | boolean | false | adds required validation to the uploader |
+| attached_as         | symbol | image_name.to_s | Sets the `attached_as` atrribute on upload. You'll need to customize this if your `attached_as` condition doesn't match the images associaiton name. |
 
 **Examples**
 
