@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + allows attached_as to be set in `fae_image_form`
 - bugs
 
 ## 1.1.3
