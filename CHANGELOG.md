@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#47025 - item 2 in List Views](https://issues.afinedevelopment.com/issues/47025): default date_format is now (00/00/00), added fae_long_date_format to preserve long date with time
 - bugs
     + added padding to the bottom of the main content section in case the last field of the form is a dropdown
 
