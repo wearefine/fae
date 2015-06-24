@@ -46,7 +46,7 @@
 }
 
 .main_content-section-area {
-	padding: 30px 40px 150px 40px;
+	padding: 30px 40px 60px 40px;
 
 	h3 {
 		display: block;
@@ -58,6 +58,9 @@
 	}
 }
 
+form .main_content-section-area {
+	padding: 30px 40px 150px 40px;
+}
 
 .main_content-section-sub {
 	margin-top: 50px;
