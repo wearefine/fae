@@ -324,10 +324,19 @@ Dislays a select tag to be used within a `fae_filter_form`.
 
 ## fae_date_format
 
-The fae_date_format helper formats a DateTime object in Fae's preferred method.
+The fae_date_format and fae_datetime_format helpers format a DateTime object in Fae's preferred method.
+The default, fae_date_format, formats to 06/23/15.
 
 ```ruby
 fae_date_format item.updated_at
+```
+
+## fae_datetime_format
+
+You may also use fae_datetime_format for the long date format with time (Jun 23, 2015  4:56pm PDT).
+
+```ruby
+fae_datetime_format item.updated_at
 ```
 
 ## fae_toggle
