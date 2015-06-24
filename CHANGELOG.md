@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + added padding to the bottom of the main content section in case the last field of the form is a dropdown
 
 ## 1.1.3
 
