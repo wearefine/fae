@@ -11,7 +11,8 @@ nav#main_nav
       li class=main_class
         span.main_nav-header data-link=item[:path]
           span.header_drawer-content-post
-            a.main_nav-link href=item[:path] = item[:text]
+            a.main_nav-link href=item[:path]
+              span = item[:text]
 
           span class=header_drawer_class = item[:text]
 

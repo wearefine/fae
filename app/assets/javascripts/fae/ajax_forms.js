@@ -31,8 +31,6 @@ var AjaxForms = {
           // replace the content of the form area and initiate the chosen and fileinputer
           $wrapper.html(data).find(".select select").fae_chosen({ width: '300px' });
           $wrapper.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
-          Admin.init_date_picker();
-          Admin.init_daterange_picker();
           $wrapper.slideDown();
         } else {
           // if it is visible, replace its content by retaining height
@@ -42,6 +40,9 @@ var AjaxForms = {
           $wrapper.html(data).css("height", "").find(".select select").fae_chosen();
           $wrapper.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
         }
+
+        Admin.init_date_picker();
+        Admin.init_daterange_picker();
 
         $wrapper.find(".hint").hinter();
       });

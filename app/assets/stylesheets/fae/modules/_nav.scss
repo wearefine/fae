@@ -59,6 +59,10 @@
 	@extend %main_nav-all_links;
 	padding: 10px;
 
+	span {
+		padding-right: 10px;
+	}
+
 	.main_nav-accordion & {
 		position: relative;
 
