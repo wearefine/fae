@@ -5,7 +5,7 @@ module Fae
       datetime.in_time_zone(timezone).strftime('%m/%d/%y')
     end
 
-    def fae_long_date_format(datetime, timezone="US/Pacific")
+    def fae_datetime_format(datetime, timezone="US/Pacific")
       datetime.in_time_zone(timezone).strftime("%b %-d, %Y %l:%M%P %Z")
     end
 
