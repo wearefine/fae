@@ -57,11 +57,7 @@
 
 .main_nav-link {
 	@extend %main_nav-all_links;
-	padding: 10px;
-
-	span {
-		padding-right: 10px;
-	}
+	padding: 10px 20px 10px 10px;
 
 	.main_nav-accordion & {
 		position: relative;
@@ -206,7 +202,7 @@
 	font-size: 14px;
 
 	@include bp(show_nav) {
-		padding: 10px 10px 10px 20px;
+		padding: 10px 20px;
 	}
 }
 

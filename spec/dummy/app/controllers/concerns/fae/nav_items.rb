@@ -13,6 +13,15 @@ module Fae
         { text: 'Event Hosts',    path: main_app.admin_people_path },
         { text: 'Locations',      path: main_app.admin_locations_path },
         { text: 'Teams',          sublinks: team_sublinks },
+        {
+          text: 'Look This Drawer Does Nothing',
+          sublinks: [
+            {
+              text: 'Except Open To Another Drawer',
+              sublinks: [{ text: 'To A Link That Goes Nowhere' }]
+            }
+          ]
+        },
         { text: 'Pages',          path: fae.pages_path },
         # scaffold inject marker
       ]
