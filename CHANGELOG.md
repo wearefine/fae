@@ -10,6 +10,7 @@
     + allows attached_as to be set in `fae_image_form`
 - bugs
     + added padding to the bottom of the main content section in case the last field of the form is a dropdown
+    + fix for showing validation error on textarea blur, like inputs
 
 ## 1.1.3
 

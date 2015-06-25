@@ -41,7 +41,7 @@ var Validator = {
     $('[data-validate]').each(function () {
       var $this = $(this);
       if ($this.data('validate').length) {
-        if ($this.is('input:not(.hasDatepicker)')) {
+        if ($this.is('input:not(.hasDatepicker)') || $this.is('textarea')) {
           // normal inputs validate on blur
           $this.blur(function () {
             _this.judge_it($this);
