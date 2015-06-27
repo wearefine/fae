@@ -1,12 +1,12 @@
 module Fae
   module  ViewHelper
 
-    def fae_date_format(datetime, timezone="US/Pacific")
-      datetime.in_time_zone(timezone).strftime('%m/%d/%y')
+    def fae_date_format(datetime, timezone = @option.time_zone)
+      datetime.in_time_zone(timezone).strftime('%m/%d/%y') if is_date_or_time?(datetime)
     end
 
-    def fae_datetime_format(datetime, timezone="US/Pacific")
-      datetime.in_time_zone(timezone).strftime("%b %-d, %Y %l:%M%P %Z")
+    def fae_datetime_format(datetime, timezone = @option.time_zone)
+      datetime.in_time_zone(timezone).strftime("%b %-d, %Y %l:%M%P %Z") if is_date_or_time?(datetime)
     end
 
     def fae_path
@@ -97,6 +97,10 @@ module Fae
       attribute.to_s.classify.constantize.for_fae_index
     rescue NameError
       []
+    end
+
+    def is_date_or_time?(datetime)
+      datetime.present? && ( datetime.kind_of?(Date) || datetime.kind_of?(Time) )
     end
 
   end
