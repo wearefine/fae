@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- enhancements
+- bugs
+    + protect nil values on `fae_date_format` and `fae_datetime_format`
+
 ## 1.1.4
 
 - enhancements
