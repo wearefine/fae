@@ -63,7 +63,6 @@ describe Fae::ViewHelper do
 
     context 'when passed a datetime' do
       it 'should return the date formatted' do
-        puts @option.time_zone
         datetime = DateTime.parse('13th Mar 2015 04:05:06 PM PDT')
         expect(fae_datetime_format(datetime)).to eq('Mar 13, 2015  4:05pm PDT')
       end
