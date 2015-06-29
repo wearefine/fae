@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   # Rails dependencies
   s.add_dependency "rails", "~> 4.1"
-  s.add_dependency "sass-rails", '>= 5.0.0'
+  s.add_dependency "sass-rails", '>= 5.0.3'
   s.add_dependency "sass", '>= 3.4.0'
   s.add_dependency "jquery-rails", '>= 3.1.1'
   s.add_dependency "uglifier"
