@@ -22,7 +22,7 @@ PATH
       remotipart
       rmagick (~> 2.13.3)
       sass (>= 3.4.0)
-      sass-rails (>= 5.0.0)
+      sass-rails (>= 5.0.3)
       simple_form (~> 3.1.0)
       uglifier
 
