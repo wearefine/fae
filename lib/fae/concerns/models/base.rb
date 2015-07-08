@@ -4,6 +4,10 @@ module Fae::Concerns::Models::Base
 
   attr_accessor :filter
 
+  def position_name
+    Self.class.name.underscore.pluralize
+  end
+
   module ClassMethods
     def for_fae_index
       order(order_method)
@@ -39,10 +43,6 @@ module Fae::Concerns::Models::Base
           csv << item.attributes.values_at(*column_names)
         end
       end
-    end
-
-    def position_name
-      class.name.underscore.pluralize
     end
 
   end
