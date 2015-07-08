@@ -41,5 +41,9 @@ module Fae::Concerns::Models::Base
       end
     end
 
+    def position_name
+      class.name.underscore.pluralize
+    end
+
   end
 end
