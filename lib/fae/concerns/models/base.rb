@@ -4,10 +4,6 @@ module Fae::Concerns::Models::Base
 
   attr_accessor :filter
 
-  def position_name
-    Self.class.name.underscore.pluralize
-  end
-
   module ClassMethods
     def for_fae_index
       order(order_method)

@@ -114,5 +114,9 @@ module Fae
       params[:controller].gsub(/fae\/|#{fae_scope}\//, '').humanize.titleize
     end
 
+    def tr_id(item)
+      "#{item.class.name.underscore.gsub('/', '_').pluralize}_#{item.id}"
+    end
+
   end
 end

@@ -16,10 +16,6 @@ module Fae
 
     belongs_to :imageable, polymorphic: true, touch: true
 
-    def position_name
-      "fae_image"
-    end
-
   private
 
     # def crop_image
