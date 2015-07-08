@@ -55,7 +55,7 @@ h2.main_content-section-title = header
                   td.main_table-description-item
                     a.js-edit-link href=self.send(edit_path, item) = col_name_or_image(item, col)
                 - elsif col == :last_modified
-                  td = item.send(:last_modified).in_time_zone(@option.time_zone)
+                  td = item.last_modified.in_time_zone(@option.time_zone)
                 - elsif item.class.columns_hash[col.to_s].present? && item.class.columns_hash[col.to_s].type == :boolean
                   td = attr_toggle item, col
                 - else
