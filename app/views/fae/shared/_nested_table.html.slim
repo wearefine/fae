@@ -44,7 +44,7 @@ h2.main_content-section-title = header
       tbody
         - if parent_item.send(assoc).present?
           - parent_item.send(assoc).each do |item|
-            tr id="#{ item.class.name == "Fae::Image" ? "fae_image" : item.class.name.underscore.pluralize}_#{item.id}"
+            tr id="#{ item.position_name }"
               - if ordered
                 td.main_content-sortable-handle
                   span.icon-sort
