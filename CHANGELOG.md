@@ -4,6 +4,8 @@
 
 - enhancements
 - bugs
+    + Update password confirmation message.
+    + Update required asteriks/label spacing for images to match other control fields.
     + Updated nested table time format for last modified fields.
     + Updated postion feature so that Fae::Images model works with it.
     + Added width to column containing thumbnail, used when there isn't any text in the first column header after the position handle.
