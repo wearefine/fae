@@ -66,6 +66,9 @@ module Fae
           # display associaiton's fae_display_field
           item.send(attribute).fae_display_field
         end
+      # if item is a date or a time adjust to timezone
+      elsif item.send(attribute).kind_of?(Date) || item.send(attribute).kind_of?(Time)
+          item.last_modified.in_time_zone(@option.time_zone)
       else
         # otherwise it's an attribute so display it's value
         item.send(attribute)
