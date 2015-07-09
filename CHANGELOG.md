@@ -4,7 +4,7 @@
 
 - enhancements
 - bugs
-    + Updated nested table time format for last modified fields.
+    + [#48415](https://issues.afinedevelopment.com/issues/48415) Updated nested table time format for date or time fields.
     + Updated postion feature so that Fae::Images model works with it.
     + Added width to column containing thumbnail, used when there isn't any text in the first column header after the position handle.
     + protect nil values on `fae_date_format` and `fae_datetime_format`
