@@ -21,7 +21,7 @@ module Fae
       }
     validates :password,
       presence: { on: :create },
-      confirmation: true,
+      confirmation: { message: "does not match Password"},
       length: { minimum: 8, allow_blank: true }
     validates :role_id, presence: true
 
