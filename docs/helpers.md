@@ -451,6 +451,7 @@ The nested_table should go after the main form ends and should only placed on th
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
 | ordered | boolean | false | allows list view to be sortable, which is saved to a `position` atttribute |
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
+| edit_column | boolean | false | displays edit link
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
 
 

@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Add edit_column option to nested tables, defaulted to false, when true adds Edit link before Delete
 - bugs
     + [#48479](https://issues.afinedevelopment.com/issues/48479) Update password confirmation message.
     + [#48479](https://issues.afinedevelopment.com/issues/48479) Update required asteriks/label spacing for images to match other control fields.
