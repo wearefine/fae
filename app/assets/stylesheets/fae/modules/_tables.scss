@@ -383,3 +383,51 @@
   border-top: 0;
   border-bottom: 0;
 }
+
+.collapsible {
+	h3 {
+		background: $c-white;
+		padding: 20px 0 20px 37px;
+		position: relative;
+		border: 1px solid $c-border;
+		cursor: pointer;
+		&:after {
+			@extend .icon-arrow_up:before;
+			@include icon_stuff();
+			position: absolute;
+			right: 25px;
+			top: 22px;
+			font-size: 10px;
+		}
+		&.active {
+			border-bottom: none;
+			margin-bottom: 0;
+			&:after {
+				@extend .icon-arrow_down:before;
+			}
+		}
+		& + table {
+			display: none;
+		}
+	}
+}
+
+.collapsible-toggle {
+	text-align: right;
+	margin: 12px 0 24px;
+	cursor: pointer;
+	padding-right: 25px;
+	&:after {
+		@extend .icon-arrow_down:before;
+		@include icon_stuff();
+		font-size: 7px;
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 6px;
+	}
+	&.close-all {
+		&:after {
+			@extend .icon-arrow_up:before;
+		}
+	}
+}
