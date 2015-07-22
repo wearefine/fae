@@ -12,6 +12,7 @@
     + Updated postion feature so that Fae::Images model works with it.
     + Added width to column containing thumbnail, used when there isn't any text in the first column header after the position handle.
     + protect nil values on `fae_date_format` and `fae_datetime_format`
+    + protect file size validation from exceptions in carrierwave/fog
 
 ## 1.1.4
 
