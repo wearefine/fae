@@ -406,12 +406,13 @@ Displays breadcrumb links and form title.
 | option | type | description |
 |-|-|-|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
+| breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
 
 **Examples**
 
 Standard implementation
 ```ruby
-render 'fae/shared/form_header', header: @item
+render 'fae/shared/form_header', header: @item, breadcrumb_text: "Areas of Focus"
 ```
 
 ## form_buttons
