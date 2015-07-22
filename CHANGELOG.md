@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.1.5
+
+- enhancements
     + Add edit_column option to nested tables, defaulted to false, when true adds Edit link before Delete
     + Add breadcrumb_test option to header_form, defaulted to klass_name.titleize.pluralize
 - bugs
