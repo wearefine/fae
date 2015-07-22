@@ -35,7 +35,7 @@ class FileSizeValidator < ActiveModel::EachValidator
 
   def validate_each(record, attribute, value)
     raise(ArgumentError, "A CarrierWave::Uploader::Base object was expected") unless value.kind_of? CarrierWave::Uploader::Base
-    
+
     value = (options[:tokenizer] || DEFAULT_TOKENIZER).call(value) if value.kind_of?(String)
 
     CHECKS.each do |key, validity_check|
@@ -43,8 +43,12 @@ class FileSizeValidator < ActiveModel::EachValidator
 
       value ||= [] if key == :maximum
 
-      value_size = value.size
-      next if value_size.send(validity_check, check_value)
+      begin
+        value_size = value.size
+        next if value_size.send(validity_check, check_value)
+      rescue
+        next
+      end
 
       errors_options = options.except(*RESERVED_OPTIONS)
       errors_options[:file_size] = help.number_to_human_size check_value
