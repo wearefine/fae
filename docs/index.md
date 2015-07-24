@@ -118,11 +118,13 @@ Rails.application.configure do
   <!-- development.rb -->
   config.action_mailer.default_url_options = {:host => 'localhost:3000'}
   <!-- remote_development.rb -->
-  config.action_mailer.default_url_options = {:host => 'stage.yoursite.afinedevelopment.com'}
+  config.action_mailer.default_url_options = {:host => 'dev.yoursite.afinesite.com'}
   <!-- stage.rb -->
-  config.action_mailer.default_url_options = {:host => 'dev.yoursite.afinedevelopment.com'}
+  config.action_mailer.default_url_options = {:host => 'stage.yoursite.afinesite.com'}
   <!-- production.rb -->
   config.action_mailer.default_url_options = {:host => 'yoursite.afinesite.com'}
+  <!-- production.rb -->
+  config.action_mailer.default_url_options = {:host => 'yoursite.com'}
 end
 ```
 You can't make this dynamic using the `request` object becuase its not available during deploy.
