@@ -116,15 +116,15 @@ In order for Fae's password reset email function to work you need to make sure y
 ```ruby
 Rails.application.configure do
   # development.rb
-  config.action_mailer.default_url_options = { host: 'localhost:3000'}
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
   # remote_development.rb
-  config.action_mailer.default_url_options = { host: 'dev.yoursite.afinesite.com'}
+  config.action_mailer.default_url_options = { host: 'dev.yoursite.afinesite.com' }
   # stage.rb
-  config.action_mailer.default_url_options = { host: 'stage.yoursite.afinesite.com'}
+  config.action_mailer.default_url_options = { host: 'stage.yoursite.afinesite.com' }
   # production.rb
-  config.action_mailer.default_url_options = { host: 'yoursite.afinesite.com'}
+  config.action_mailer.default_url_options = { host: 'yoursite.afinesite.com' }
   # production.rb
-  config.action_mailer.default_url_options = { host: 'yoursite.com'}
+  config.action_mailer.default_url_options = { host: 'yoursite.com' }
 end
 ```
 
