@@ -107,6 +107,32 @@ end
 
 ---
 
+# Devise Action Mailer Configureation
+
+In order for FAE's password reset email function to work for your application you need to manually set a default url option for Action Mailer in each `config/environments/*env.rb` file.
+
+### Example
+
+```ruby
+Rails.application.configure do
+  <!-- development.rb -->
+  config.action_mailer.default_url_options = {:host => 'localhost:3000'}
+  <!-- remote_development.rb -->
+  config.action_mailer.default_url_options = {:host => 'dev.yoursite.afinesite.com'}
+  <!-- stage.rb -->
+  config.action_mailer.default_url_options = {:host => 'stage.yoursite.afinesite.com'}
+  <!-- production.rb -->
+  config.action_mailer.default_url_options = {:host => 'yoursite.afinesite.com'}
+  <!-- production.rb -->
+  config.action_mailer.default_url_options = {:host => 'yoursite.com'}
+end
+```
+You can't make this dynamic using the `request` object becuase its not available during deploy.
+
+Be sure to update this each time your domain or subdomain changes (i.e. when you launch the website and the project drops .afinesite and .afinedevelopment)
+
+---
+
 # Generators
 
 Once you have Fae installed, you're ready to start generating your data model. Fae comes with a few generators that work similarly to the ones in Rails. The idea is scaffolding a model with these generators will give you a section to create, edit and delete objects.
