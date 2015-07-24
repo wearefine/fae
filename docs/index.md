@@ -109,25 +109,24 @@ end
 
 # Devise Action Mailer Configureation
 
-In order for FAE's password reset email function to work for your application you need to manually set a default url option for Action Mailer in each `config/environments/*env.rb` file.
+In order for Fae's password reset email function to work you need to make sure you application can send mail and set a default url option for ActionMailer in each `config/environments/*env.rb` file.
 
-### Example
+## Example
 
 ```ruby
 Rails.application.configure do
-  <!-- development.rb -->
-  config.action_mailer.default_url_options = {:host => 'localhost:3000'}
-  <!-- remote_development.rb -->
-  config.action_mailer.default_url_options = {:host => 'dev.yoursite.afinesite.com'}
-  <!-- stage.rb -->
-  config.action_mailer.default_url_options = {:host => 'stage.yoursite.afinesite.com'}
-  <!-- production.rb -->
-  config.action_mailer.default_url_options = {:host => 'yoursite.afinesite.com'}
-  <!-- production.rb -->
-  config.action_mailer.default_url_options = {:host => 'yoursite.com'}
+  # development.rb
+  config.action_mailer.default_url_options = { host: 'localhost:3000'}
+  # remote_development.rb
+  config.action_mailer.default_url_options = { host: 'dev.yoursite.afinesite.com'}
+  # stage.rb
+  config.action_mailer.default_url_options = { host: 'stage.yoursite.afinesite.com'}
+  # production.rb
+  config.action_mailer.default_url_options = { host: 'yoursite.afinesite.com'}
+  # production.rb
+  config.action_mailer.default_url_options = { host: 'yoursite.com'}
 end
 ```
-You can't make this dynamic using the `request` object becuase its not available during deploy.
 
 Be sure to update this each time your domain or subdomain changes (i.e. when you launch the website and the project drops .afinesite and .afinedevelopment)
 
