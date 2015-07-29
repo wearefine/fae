@@ -107,7 +107,7 @@ end
 
 ---
 
-# Devise Action Mailer Configureation
+# Devise Action Mailer Configuration
 
 In order for Fae's password reset email function to work you need to make sure you application can send mail and set a default url option for ActionMailer in each `config/environments/*env.rb` file.
 
