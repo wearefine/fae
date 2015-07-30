@@ -392,7 +392,7 @@
 		border: 1px solid $c-border;
 		cursor: pointer;
 		&:after {
-			@extend .icon-arrow_up:before;
+			@extend .icon-arrow_down:before;
 			@include icon_stuff();
 			position: absolute;
 			right: 25px;
@@ -402,8 +402,9 @@
 		&.active {
 			border-bottom: none;
 			margin-bottom: 0;
+			margin-top: 20px;
 			&:after {
-				@extend .icon-arrow_down:before;
+				@extend .icon-arrow_up:before;
 			}
 		}
 		& + table {
@@ -420,10 +421,11 @@
 	&:after {
 		@extend .icon-arrow_down:before;
 		@include icon_stuff();
-		font-size: 7px;
+		font-size: 10px;
 		display: inline-block;
 		vertical-align: middle;
 		margin-left: 6px;
+		margin-top: -3px;
 	}
 	&.close-all {
 		&:after {
