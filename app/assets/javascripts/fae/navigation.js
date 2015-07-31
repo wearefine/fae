@@ -63,11 +63,11 @@ var FaeNavigation = {
 
       if($this.hasClass('close-all')) {
         $this.text('Open All');
-        $('.collapsible h3').removeClass('active');
+        $('.collapsible').removeClass('active');
         $('.collapsible table').hide();
       } else {
         $this.text('Close All');
-        $('.collapsible h3').addClass('active');
+        $('.collapsible').addClass('active');
         $('.collapsible table').show();
       }
 
@@ -79,12 +79,11 @@ var FaeNavigation = {
       var $toggle = $('.collapsible-toggle');
       var toggleHasCloseAll = $toggle.hasClass('close-all');
 
-      $this.toggleClass('active');
-      $this.next().toggle();
+      $this.parent().toggleClass('active');
 
       // Change toggle messaging as appropriate
       // First check if there are open drawers
-      if($('.collapsible h3.active').length) {
+      if($('.collapsible.active').length > 1) {
 
         // Change toggle text if it isn't already close all
         if(!toggleHasCloseAll) {
