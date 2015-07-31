@@ -385,31 +385,38 @@
 }
 
 .collapsible {
+	margin-bottom: 10px;
 	h3 {
 		background: $c-white;
 		padding: 20px 0 20px 37px;
 		position: relative;
 		border: 1px solid $c-border;
 		cursor: pointer;
+		margin-bottom: 0;
 		&:after {
 			@extend .icon-arrow_down:before;
 			@include icon_stuff();
 			position: absolute;
 			right: 25px;
 			top: 22px;
-			font-size: 10px;
+			font-size: 5px;
 		}
-		&.active {
+	}
+
+	&.active {
+		h3 {
 			border-bottom: none;
-			margin-bottom: 0;
-			margin-top: 20px;
 			&:after {
 				@extend .icon-arrow_up:before;
 			}
 		}
-		& + table {
-			display: none;
+		table {
+			display: block;
 		}
+	}
+
+	table {
+		display: none;
 	}
 }
 
@@ -421,7 +428,7 @@
 	&:after {
 		@extend .icon-arrow_down:before;
 		@include icon_stuff();
-		font-size: 10px;
+		font-size: 5px;
 		display: inline-block;
 		vertical-align: middle;
 		margin-left: 6px;
