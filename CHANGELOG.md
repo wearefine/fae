@@ -5,6 +5,12 @@
 - enhancements
 - bugs
 
+## 1.1.6
+
+- enhancements
+    + Add `config.recreate_versions` to initializer, to ensure conditional Carrierwave versions are created after attributes are save to the model
+- bugs
+
 ## 1.1.5
 
 - enhancements

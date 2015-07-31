@@ -91,6 +91,7 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 | dashboard_exclusions  | array | [] | array of models to hide in the dashboard
 | max_image_upload_size | integer | 2 | ceiling for image uploads in MB
 | max_file_upload_size | integer | 5 | ceiling for file uploads in MB
+| recreate_versions | boolean | false | Triggers `Fae::Image` to recreate Carrierwave versions after save. This is helpful when you have conditional versions that rely on attributes of `Fae::Image` by making sure they're saved before versions are created.
 
 ### Example
 
