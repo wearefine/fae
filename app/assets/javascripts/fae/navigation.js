@@ -7,6 +7,9 @@ var FaeNavigation = {
     if($('.sticky-table-header').length) {
       this.sticky_table_header();
     }
+    if($('.collapsible').length) {
+      this.collapsible_table();
+    }
   },
 
   select_current_nav_item: function() {
@@ -52,6 +55,50 @@ var FaeNavigation = {
       .closest('li').addClass('main_nav-third-active')
       .closest('.sub_nav-accordion').removeClass('sub_nav-accordion').addClass('main_nav-sub-active--no_highlight')
       .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
+  },
+
+  collapsible_table: function() {
+    $('.collapsible-toggle').click(function() {
+      var $this = $(this);
+
+      if($this.hasClass('close-all')) {
+        $this.text('Open All');
+        $('.collapsible').removeClass('active');
+        $('.collapsible table').hide();
+      } else {
+        $this.text('Close All');
+        $('.collapsible').addClass('active');
+        $('.collapsible table').show();
+      }
+
+      $this.toggleClass('close-all');
+    });
+
+    $('.collapsible h3').click(function() {
+      var $this = $(this);
+      var $toggle = $('.collapsible-toggle');
+      var toggleHasCloseAll = $toggle.hasClass('close-all');
+
+      $this.parent().toggleClass('active');
+
+      // Change toggle messaging as appropriate
+      // First check if there are open drawers
+      if($('.collapsible.active').length > 1) {
+
+        // Change toggle text if it isn't already close all
+        if(!toggleHasCloseAll) {
+          $toggle.text('Close All');
+          $toggle.addClass('close-all');
+        }
+      } else {
+
+        // Change toggle text if it isn't already open all
+        if(toggleHasCloseAll) {
+          $toggle.text('Open All');
+          $toggle.removeClass('close-all');
+        }
+      }
+    });
   },
 
   // Fix a table header to the top of the view on scroll
