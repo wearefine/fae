@@ -64,11 +64,9 @@ var FaeNavigation = {
       if($this.hasClass('close-all')) {
         $this.text('Open All');
         $('.collapsible').removeClass('active');
-        $('.collapsible table').hide();
       } else {
         $this.text('Close All');
         $('.collapsible').addClass('active');
-        $('.collapsible table').show();
       }
 
       $this.toggleClass('close-all');
