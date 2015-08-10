@@ -3,9 +3,8 @@ textarea {
   border: 1px solid $c-border;
   font-size: 14px;
   min-height: 125px;
-  width: 90%;
+  width: 100%;
   min-width: 223px;
-  max-width: 515px;
   font-family: $f-lato;
   outline: none;
   @include border-radius(2px);
