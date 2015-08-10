@@ -14,10 +14,19 @@
    color: $c-lighter_grey;
 }
 
+.input {
+  &.url,
+  &.text,
+  &.email,
+  &.string,
+  &.text {
+    max-width: 515px;
+  }
+}
+
 input.string {
-  width: 90%;
+  width: 100%;
   min-width: 223px;
-  max-width: 515px;
 }
 
 // Inputs with icon
