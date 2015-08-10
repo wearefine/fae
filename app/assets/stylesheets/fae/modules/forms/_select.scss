@@ -208,7 +208,6 @@
 
   &:after {
     @include icon-stuff();
-    content: "\e60f";
     @extend .icon-delete_x:before;
     color: $c-text-sub;
   }

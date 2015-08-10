@@ -17,14 +17,8 @@
 	@include icon_stuff();
 }
 
-.icon-alert:before {
-	content: "\e617";
-}
-.icon-handle:before {
-	content: "\e616";
-}
-.icon-arrow_up:before {
-	content: "\e615";
+.icon-heavy_plus:before {
+	content: "\e61a";
 }
 .icon-arrow_down:before {
 	content: "\e600";
@@ -52,9 +46,6 @@
 }
 .icon-search:before {
 	content: "\e608";
-}
-.icon-pulldown:before {
-	content: "\e614";
 }
 .icon-plus:before {
 	content: "\e609";
@@ -88,6 +79,18 @@
 }
 .icon-calendar:before {
 	content: "\e613";
+}
+.icon-pulldown:before {
+	content: "\e614";
+}
+.icon-arrow_up:before {
+	content: "\e615";
+}
+.icon-handle:before {
+	content: "\e616";
+}
+.icon-alert:before {
+	content: "\e617";
 }
 .icon-chevron_up:before {
 	content: "\e618";
