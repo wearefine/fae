@@ -9,6 +9,7 @@
 
 - enhancements
     + Add `config.recreate_versions` to initializer, to ensure conditional Carrierwave versions are created after attributes are save to the model
+    + [#49400](https://issues.afinedevelopment.com/issues/49400) Add plus icon to new item button
 - bugs
 
 ## 1.1.5
