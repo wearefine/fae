@@ -10,6 +10,7 @@
 - enhancements
     + Add `config.recreate_versions` to initializer, to ensure conditional Carrierwave versions are created after attributes are save to the model
 - bugs
+    + [#48221](https://issues.afinedevelopment.com/issues/48221) Increase padding on right textarea gutter
 
 ## 1.1.5
 
