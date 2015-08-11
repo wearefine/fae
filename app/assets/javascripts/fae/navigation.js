@@ -10,6 +10,9 @@ var FaeNavigation = {
     if($('.collapsible').length) {
       this.collapsible_table();
     }
+    if($('form .main_content-section-area').length) {
+      this.endingSelectShim();
+    }
   },
 
   select_current_nav_item: function() {
@@ -95,6 +98,16 @@ var FaeNavigation = {
           $toggle.text('Open All');
           $toggle.removeClass('close-all');
         }
+      }
+    });
+  },
+
+  endingSelectShim: function() {
+    $('form .main_content-section-area:last-of-type').each(function() {
+      var $last_item = $(this).find('.input:last-of-type');
+
+      if( $last_item.hasClass('select') ) {
+        $(this).addClass('-bottom-shim');
       }
     });
   },

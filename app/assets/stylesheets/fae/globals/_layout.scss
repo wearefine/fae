@@ -56,11 +56,12 @@
 		color: $c-text-heavy;
 		margin-bottom: 20px;
 	}
+
+	&.-bottom-shim {
+		padding-bottom: 150px;
+	}
 }
 
-form .main_content-section-area {
-	padding: 30px 40px 150px 40px;
-}
 
 .main_content-section-sub {
 	margin-top: 50px;
