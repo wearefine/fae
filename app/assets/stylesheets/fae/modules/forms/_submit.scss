@@ -42,3 +42,12 @@ button[type=button], a.file_input-button {
     background: $c-form-button-gradient-hover;
   }
 }
+
+.add-button {
+  &:before {
+    @include icon-stuff;
+    @extend .icon-heavy_plus:before;
+    font-size: 12px;
+    margin-right: 7px;
+  }
+}

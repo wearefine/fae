@@ -9,6 +9,7 @@
 
 - enhancements
     + Add `config.recreate_versions` to initializer, to ensure conditional Carrierwave versions are created after attributes are save to the model
+    + [#49400](https://issues.afinedevelopment.com/issues/49400) Add plus icon to new item button
 - bugs
     + [#48221](https://issues.afinedevelopment.com/issues/48221) Increase padding on right textarea gutter
     + [#48215](https://issues.afinedevelopment.com/issues/48215) Wrap helper text with input field; radio buttons go on their own line
