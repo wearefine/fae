@@ -18,7 +18,7 @@
 }
 
 .radio_collection--horizontal {
-  label {
+  label:not(.control-label) {
     display: inline-block;
     margin-right: 50px;
     cursor: pointer;
