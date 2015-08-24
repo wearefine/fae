@@ -341,35 +341,6 @@
 	margin-right: 30px;
 }
 
-.table-filter-controls {
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
-
-	input[type=submit] {
-		padding: 5px;
-		font-size: 12px;
-		background: $c-table-filter-submit-bg;
-		border: none;
-		margin: 3px;
-
-		&:hover {
-			background: $c-table-filter-submit-bg-hover;
-		}
-
-		@include transition(background, .2s);
-
-		&.table-filter-reset {
-			background: $c-table-filter-reset-bg;
-			color: $c-table-filter-reset-text;
-
-			&:hover {
-				background: $c-table-filter-reset-bg-hover;
-			}
-		}
-	}
-}
-
 .main_content-thumb-col {
 	width: 150px;
 }

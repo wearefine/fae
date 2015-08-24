@@ -8,12 +8,10 @@
 /* used for universal style sheet */
 $useMediaQueries: true;
 $c-custom-highlight: #31a7e6;
-@import "fae";
+@import 'fae';
 
-@import "globals/all";
-@import "modules/all";
-@import "pages/all";
+@import 'all_imports';
 
 @media print {
-	@import "print";
+	@import 'print';
 }

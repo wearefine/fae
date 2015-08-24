@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#49887](https://issues.afinedevelopment.com/issues/49887) Standardize appearance of all gray buttons
 - bugs
 
 ## 1.1.6

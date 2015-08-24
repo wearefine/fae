@@ -1,0 +1,76 @@
+%gray-button {
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+  @include border-radius(3px);
+
+  color: $c-form-button;
+  border: 1px solid $c-border;
+
+  &:hover {
+    background: $c-form-button-gradient-hover;
+  }
+}
+
+input[type=submit],
+button[type=button],
+.add-button,
+.csv-button {
+  @include border-radius(2px);
+
+  display: inline-block;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+input[type=submit],
+.add-button {
+  @include gradient-vertical($start-color: $c-form-submit-gradient-start, $end-color: $c-form-submit-gradient-end);
+
+  color: $c-form-submit;
+  padding: 12px 15px;
+  border: 0;
+
+  &:hover {
+    color: $c-form-submit;
+    background: $c-form-submit-gradient-hover;
+  }
+}
+
+button[type=button],
+a.file_input-button {
+  @extend %gray-button;
+
+  padding: 11px 14px;
+}
+
+.csv-button {
+  @extend %gray-button;
+
+  padding: 11px 15px;
+}
+
+.table-filter-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+
+  input[type=submit] {
+    @extend %gray-button;
+    padding: 5px;
+    font-size: 12px;
+    margin: 3px;
+
+    &:hover {
+      color: $c-form-button;
+    }
+
+  }
+}
+
+.add-button {
+  &:before {
+    @include icon-stuff;
+    @extend .icon-heavy_plus:before;
+    font-size: 12px;
+    margin-right: 7px;
+  }
+}
