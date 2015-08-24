@@ -62,7 +62,7 @@ Fae's installer will do the following:
 Fae comes with a rake task to seed the DB with defaults:
 
 ```bash
-rake fae:seed_db
+rake fae:seed_db RAILS_ENV=<your_env>
 ```
 
 If you ran the installer, the task will be run automatically. But if you are setting up an established Fae instance locally or deploying to a server, running this will get you setup with some defaults.
