@@ -27,12 +27,6 @@ input[type=text], input[type=number], input[type=textarea], input[type=url], inp
   }
 }
 
-#main_content-header-save-cancel {
-  @extend button[type=button];
-  padding: 13px 16px;
-  font-size: 14px;
-}
-
 .js-addedit-form {
   h3 {
     @extend label;
