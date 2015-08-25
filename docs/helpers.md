@@ -477,7 +477,12 @@ Auto-generate a slug from a field. Only populates if the `slug` input is blank.
 
 **Examples**
 
-```slim
+```Regular slim form
 = fae_input f, :name, input_class: 'slugger'
+= fae_input f, :slug, helper_text: 'Populated from name'
+```
+
+```If you are using a nested form
+= fae_input f, :name, input_class: 'nested_slugger'
 = fae_input f, :slug, helper_text: 'Populated from name'
 ```
