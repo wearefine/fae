@@ -1,5 +1,6 @@
 = simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
-  = fae_input f, :name
+  = fae_input f, :name, input_class: 'nested_slugger'
+  = fae_input f, :slug
   = fae_input f, :description
   = fae_input f, :live
   = fae_image_form f, :image

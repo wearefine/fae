@@ -23,7 +23,6 @@ feature 'slug' do
     end
   end
 
-
   context "when there's a selector slugger" do
     scenario 'should slug all sluggers', js: true do
       varietal = FactoryGirl.create(:varietal, name: "Monkey")
@@ -37,19 +36,22 @@ feature 'slug' do
     end
   end
 
+  context "when there's a nested slugger" do
+    scenario 'should allow adding slugs to nested items', js: true do
+      release = FactoryGirl.create(:release)
 
-  # context "when there's a nested selector slugger" do
-  #   scenario 'should slug all sluggers', js: true do
-  #     varietal = FactoryGirl.create(:varietal, name: "Monkey")
-  #     admin_login
-  #     visit new_admin_release_path
+      admin_login
+      visit edit_admin_release_path(release)
 
-  #     fill_in 'Name', with: "George"
-  #     page.find('#release_varietal_id_chosen').click
-  #     page.find('#release_varietal_id_chosen .active-result', text: varietal.name).click
-  #     expect(find_field('Slug').value).to eq('george-monkey')
-  #   end
-  # end
+      click_link 'Add Aroma'
+      expect(page).to have_css('form#new_aroma')
 
+      within(:css, 'form#new_aroma') do
+        fill_in 'Name', with: 'My Brand New Smell!'
+        expect(find_field('Slug').value).to eq('my-brand-new-smell')
+        click_button('Create Aroma')
+      end
+    end
+  end
 
 end
