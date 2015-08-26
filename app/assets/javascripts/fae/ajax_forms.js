@@ -5,11 +5,11 @@ var AjaxForms = {
     this.addedit_links();
     this.addedit_submission();
     this.delete_no_form();
-    this.filter_select();
     if (this.$filter_form.length) {
+      this.filter_select();
       this.filter_submission();
       var callback = function(params){
-        AjaxForms.filter_submission();
+        AjaxForms.set_filter_cookie(params);
       }
       this.grind = new Grinder(callback);
     }
@@ -122,10 +122,6 @@ var AjaxForms = {
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith($(data).find('table').first());
-        var cookie_name = $(this).data('cookie-key');
-        if (cookie_name != false) {
-          $.cookie(cookie_name, JSON.stringify(data));
-        }
       })
       .on('click', '.js-reset-btn', function(ev) {
         var form = $(this).closest('form')[0];
@@ -137,6 +133,14 @@ var AjaxForms = {
       .on('change', 'select', function() {
         _this.$filter_form.submit();
       });
+  },
+
+  set_filter_cookie: function(params) {
+    var cookie_name = $(this).data('cookie-key');
+    if (cookie_name != false) {
+      console.log(params);
+      $.cookie(cookie_name, JSON.stringify(params));
+    }
   },
 
   // persist filter options
