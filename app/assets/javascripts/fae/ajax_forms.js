@@ -122,6 +122,10 @@ var AjaxForms = {
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith($(data).find('table').first());
+        var cookie_name = $(this).data('cookie-key');
+        if (cookie_name != false) {
+          $.cookie(cookie_name, JSON.stringify(data));
+        }
       })
       .on('click', '.js-reset-btn', function(ev) {
         var form = $(this).closest('form')[0];
@@ -139,10 +143,8 @@ var AjaxForms = {
   filter_select: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
-      console.log('changed');
       if ($(this).data('cookie-key') != false) {
         if ($('.table-filter-group').data('remember-filter') == true) {
-          console.log($(this));
           var key = $(this).find('select').attr('id').split('filter_')[1];
           var value = $(this).find('option:selected').val();
 
