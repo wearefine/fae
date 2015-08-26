@@ -5,8 +5,13 @@ var AjaxForms = {
     this.addedit_links();
     this.addedit_submission();
     this.delete_no_form();
+    this.filter_select();
     if (this.$filter_form.length) {
       this.filter_submission();
+      var callback = function(params){
+        AjaxForms.filter_submission();
+      }
+      this.grind = new Grinder(callback);
     }
   },
 
@@ -122,10 +127,29 @@ var AjaxForms = {
         var form = $(this).closest('form')[0];
         form.reset();
         $(form).find('select').val('').trigger('chosen:updated');
+        // reset hashies
+        window.location.hash = ''
       })
       .on('change', 'select', function() {
         _this.$filter_form.submit();
       });
+  },
+
+  // persist filter options
+  filter_select: function(){
+    var _this = this;
+    $('.js-filter-form .table-filter-group').on('change', function(){
+      console.log('changed');
+      if ($(this).data('cookie-key') != false) {
+        if ($('.table-filter-group').data('remember-filter') == true) {
+          console.log($(this));
+          var key = $(this).find('select').attr('id').split('filter_')[1];
+          var value = $(this).find('option:selected').val();
+
+          _this.grind.update(key, value, false, true);
+        }
+      }
+    });
   },
 
   delete_no_form: function() {

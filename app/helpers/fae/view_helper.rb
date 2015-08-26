@@ -43,10 +43,14 @@ module Fae
     alias_method :fae_toggle, :attr_toggle
 
     def fae_filter_form(options = {}, &block)
-      options[:title]   ||= "Search #{@klass_humanized.pluralize}"
-      options[:search]   = true if options[:search].nil?
+      options[:title]      ||= "Search #{@klass_humanized.pluralize}"
+      options[:search]       = true if options[:search].nil?
+      options[:cookie_key] ||= false
+      # options[:cookie_key] sets data-cookie-key on form - use in js
+      # build in js - session or reset - serialize data form
+      # add jquery cookie - ajax_forms.js
 
-      form_tag(@index_path + '/filter', remote: true, class: 'js-filter-form table-filter-area') do
+      form_tag(@index_path + '/filter', remote: true, class: 'js-filter-form table-filter-area', 'data-cookie-key': options[:cookie_key]) do
         concat content_tag :h2, options[:title]
         concat filter_search_field if options[:search]
         concat capture(&block)
@@ -55,16 +59,17 @@ module Fae
     end
 
     def fae_filter_select(attribute, options = {})
-      options[:label]         ||= attribute.to_s.titleize
-      options[:collection]    ||= default_collection_from_attribute(attribute)
-      options[:label_method]  ||= :fae_display_field
-      options[:placeholder]     = "Select a #{options[:label]}" if options[:placeholder].nil?
-      options[:options]       ||= []
+      options[:label]           ||= attribute.to_s.titleize
+      options[:collection]      ||= default_collection_from_attribute(attribute)
+      options[:label_method]    ||= :fae_display_field
+      options[:placeholder]       = "Select a #{options[:label]}" if options[:placeholder].nil?
+      options[:options]         ||= []
+      options[:remember_filter] ||= true
 
       select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
       select_options = options_for_select(options[:options]) if options[:options].present?
 
-      content_tag :div, class: 'table-filter-group' do
+      content_tag :div, class: 'table-filter-group', 'data-remember-filter': options[:remember_filter] do
         concat label_tag "filter[#{attribute}]", options[:label]
         concat select_tag "filter[#{attribute}]", select_options, prompt: options[:placeholder]
       end
