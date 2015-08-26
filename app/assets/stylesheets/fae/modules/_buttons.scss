@@ -70,8 +70,12 @@ a.file_input-button,
 }
 
 .main_content-header-save {
-  a {
+  a:not(.add-button) {
     @extend %gray-button;
     font-size: 13px;
+  }
+
+  input[type=submit] {
+    padding: 10px 14px 11px;
   }
 }
