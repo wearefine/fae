@@ -38,19 +38,19 @@ feature 'slug' do
 
   context "when there's a nested slugger" do
     scenario 'should allow adding slugs to nested items', js: true do
-      release = FactoryGirl.create(:release)
+      release = FactoryGirl.create(:release, name: 'poop')
 
       admin_login
       visit edit_admin_release_path(release)
 
       click_link 'Add Aroma'
-      expect(page).to have_css('form#new_aroma')
 
       within(:css, 'form#new_aroma') do
         fill_in 'Name', with: 'My Brand New Smell!'
-        expect(find_field('Slug').value).to eq('my-brand-new-smell')
+        expect(page.find('form#new_aroma .slug').value).to eq('my-brand-new-smell')
         click_button('Create Aroma')
       end
+
     end
   end
 
