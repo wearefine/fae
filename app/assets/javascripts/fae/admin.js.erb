@@ -149,8 +149,7 @@ var Admin = {
     this.sortable();
     this.fade_notices();
     this.city_district_selector();
-    this.slugger();
-    this.nested_slugger();
+    this.init_slugger();
     this.ad_form.init();
     this.selects();
     this.detect_cancelled_urls();
@@ -325,42 +324,32 @@ var Admin = {
     }
   },
 
-  slugger: function() {
-    var $slug = $('.slug').not('.js-file-form .slug');
-    var $slugger = $('.slugger');
+  init_slugger: function() {
+    var $slug = $('.slug')
+    var $slugger = $slug.closest('form').find('.slugger');
     var $select_slugger = $('.select.slugger');
-    var nested = false;
-    Admin._prep_slug($slug, $slugger, $select_slugger, nested);
+    Admin._prep_slug($slugger, $select_slugger);
   },
 
-  nested_slugger: function() {
-    var $slug = $('.js-file-form .slug');
-    var $slugger = $('.nested_slugger');
-    var $select_slugger = $('.select.nested_slugger');
-    var nested = true;
-    Admin._prep_slug($slug, $slugger, $select_slugger, nested);
-  },
-
-  _prep_slug: function($slug, $slugger, $select_slugger, nested) {
+  _prep_slug: function($slugger, $select_slugger) {
     var slug_text = null;
-    if ($slug.val() !== '') {
-      if(nested){
-        $slugger.removeClass('slugger');
-      } else {
-        $slugger.removeClass('nested_slugger');
-      }
+    if ($slugger.closest('form').find('.slug').val() !== '') {
+      $slugger.removeClass('slugger');
+    } else {
+      $slugger.keyup(function(){
+        slug_text = Admin._digest_slug($slugger);
+        $(this).closest('form').find('.slug').val(slug_text);
+      });
+      if ($select_slugger.length) {
+        $select_slugger.change(function(){
+          slug_text = Admin._digest_slug($slugger);
+          $(this).closest('form').find('.slug').val(slug_text);
+        });
+      };
     }
-    $slugger.keyup(function(){
-      slug_text = Admin.digest_slug($slugger);
-      $slug.val(slug_text);
-    });
-    $select_slugger.change(function(){
-      slug_text = Admin.digest_slug($slugger);
-      $slug.val(slug_text);
-    });
   },
 
-  digest_slug: function($slugger) {
+  _digest_slug: function($slugger) {
     var slug_text = []
     $slugger.each(function() {
       $this = $(this);
