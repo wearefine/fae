@@ -335,14 +335,15 @@ var Admin = {
     if ($slugger.closest('form').find('.slug').val() !== '') {
       $slugger.removeClass('slugger');
     } else {
+      $slug = $(this).closest('form').find('.slug');
       $slugger.keyup(function(){
         slug_text = Admin._digest_slug($slugger);
-        $(this).closest('form').find('.slug').val(slug_text);
+        $slug.val(slug_text);
       });
       if ($select_slugger.length) {
         $select_slugger.change(function(){
           slug_text = Admin._digest_slug($slugger);
-          $(this).closest('form').find('.slug').val(slug_text);
+          $slug.val(slug_text);
         });
       };
     }
