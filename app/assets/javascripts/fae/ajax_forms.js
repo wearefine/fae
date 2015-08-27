@@ -138,7 +138,6 @@ var AjaxForms = {
   set_filter_cookie: function(params) {
     var set_cookie = $('.js-filter-form').data('cookie-key');
     if (set_cookie == true) {
-      console.log('here');
       $.cookie('fae-save-filter', JSON.stringify(params));
     }
   },

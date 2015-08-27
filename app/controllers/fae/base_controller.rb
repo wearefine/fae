@@ -7,7 +7,9 @@ module Fae
     helper FormHelper
 
     def index
-      @items = @klass.for_fae_index
+      saved_filters = JSON.parse(cookies['fae-save-filter']) if cookies['fae-save-filter'].present?
+
+      @items = saved_filters.present? ? @klass.filter(saved_filters) : @klass.for_fae_index
       respond_to do |format|
         format.html
         format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_s(:filename) + '.csv'  }
@@ -52,10 +54,12 @@ module Fae
     end
 
     def filter
+      filter_params = set_filter_params(params)
+
       if params[:commit] == "Reset Search"
         @items = @klass.filter_all
       else
-        @items = @klass.filter(params[:filter])
+        @items = @klass.filter(filter_params)
       end
 
       render :index, layout: false
@@ -81,6 +85,16 @@ module Fae
     # Only allow a trusted parameter "white list" through.
     def item_params
       params.require(@klass_singular).permit!
+    end
+
+    # looks for filter cookie and merges with params[:filter] if exists
+    def set_filter_params(params)
+      saved_filters = JSON.parse(cookies['fae-save-filter']) if cookies['fae-save-filter'].present?
+      if saved_filters.present?
+        return params[:filter].merge!(saved_filters)
+      else
+        return params[:filter]
+      end
     end
 
     # if model has images or files, build them here for nesting
