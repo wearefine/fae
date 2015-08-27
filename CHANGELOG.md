@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#49436](https://issues.afinedevelopment.com/issues/49436) Added slugger functionality to nested tables
 - bugs
 
 ## 1.1.6

@@ -43,6 +43,7 @@ var AjaxForms = {
 
         Admin.init_date_picker();
         Admin.init_daterange_picker();
+        Admin.init_slugger();
 
         $wrapper.find(".hint").hinter();
       });
