@@ -38,7 +38,7 @@ feature 'slug' do
 
   context "when there's a nested slugger" do
     scenario 'should allow adding slugs to nested items', js: true do
-      release = FactoryGirl.create(:release, name: 'poop')
+      release = FactoryGirl.create(:release, name: 'poop', slug: 'release-name-slug')
 
       admin_login
       visit edit_admin_release_path(release)
