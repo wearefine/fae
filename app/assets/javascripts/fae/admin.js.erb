@@ -326,13 +326,14 @@ var Admin = {
 
   init_slugger: function() {
     var $slugger = $('.slug').closest('form').find('.slugger');
+    var $slug = $slugger.closest('form').find('.slug');
     var $select_slugger = $('.select.slugger');
-    this._prep_slug($slugger, $select_slugger);
+    this._prep_slug($slug, $slugger, $select_slugger);
   },
 
-  _prep_slug: function($slugger, $select_slugger) {
+  _prep_slug: function($slug, $slugger, $select_slugger) {
     var slug_text = null;
-    $slug = $slugger.closest('form').find('.slug');
+
     if ($slug.val() !== '') {
       $slugger.removeClass('slugger');
     } else {
