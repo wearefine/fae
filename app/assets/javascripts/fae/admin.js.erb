@@ -332,10 +332,10 @@ var Admin = {
 
   _prep_slug: function($slugger, $select_slugger) {
     var slug_text = null;
-    if ($slugger.closest('form').find('.slug').val() !== '') {
+    $slug = $slugger.closest('form').find('.slug');
+    if ($slug.val() !== '') {
       $slugger.removeClass('slugger');
     } else {
-      $slug = $slugger.closest('form').find('.slug');
       $slugger.keyup(function(){
         slug_text = Admin._digest_slug($slugger);
         $slug.val(slug_text);
