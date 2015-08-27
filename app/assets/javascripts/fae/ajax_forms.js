@@ -136,9 +136,8 @@ var AjaxForms = {
   },
 
   set_filter_cookie: function(params) {
-    var cookie_name = $(this).data('cookie-key');
+    var cookie_name = $('.js-filter-form').data('cookie-key');
     if (cookie_name != false) {
-      console.log(params);
       $.cookie(cookie_name, JSON.stringify(params));
     }
   },
