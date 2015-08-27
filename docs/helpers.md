@@ -290,6 +290,7 @@ Displays the filter form, including the search field, submit and reset buttons. 
 |--------|---------|----------------------------------------|-|
 | title  | string  | "Search #{@klass_humanized.pluralize}" | the h2 text in the filter form |
 | search | boolean | true                                   | displays the search field |
+| cookie_key | boolean | false | set to true on fae_filter_form if you want to persist selected filtered state |
 
 
 **Examples**
@@ -311,6 +312,7 @@ Dislays a select tag to be used within a `fae_filter_form`.
 | label_method | symbol                  | :fae_display_field             | the attribute to use as the label in the select options |
 | placeholder  | string or boolean       | "Select a #{options[:label]}"  | the blank value in the select, can be set to false to disable |
 | options      | array                   | []                             | an alternative array of options if the options aren't an ActiveRecord collection |
+| remember_filter | boolean | true | set to false if you want the filter option to not be remembered |
 
 **Examples**
 
