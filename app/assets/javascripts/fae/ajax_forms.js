@@ -136,9 +136,10 @@ var AjaxForms = {
   },
 
   set_filter_cookie: function(params) {
-    var cookie_name = $('.js-filter-form').data('cookie-key');
-    if (cookie_name != false) {
-      $.cookie(cookie_name, JSON.stringify(params));
+    var set_cookie = $('.js-filter-form').data('cookie-key');
+    if (set_cookie == true) {
+      console.log('here');
+      $.cookie('fae-save-filter', JSON.stringify(params));
     }
   },
 
@@ -146,7 +147,7 @@ var AjaxForms = {
   filter_select: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
-      if ($(this).data('cookie-key') != false) {
+      if ($('.js-filter-form').data('cookie-key') == true) {
         if ($('.table-filter-group').data('remember-filter') == true) {
           var key = $(this).find('select').attr('id').split('filter_')[1];
           var value = $(this).find('option:selected').val();

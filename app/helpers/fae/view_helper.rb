@@ -46,9 +46,6 @@ module Fae
       options[:title]      ||= "Search #{@klass_humanized.pluralize}"
       options[:search]       = true if options[:search].nil?
       options[:cookie_key] ||= false
-      # options[:cookie_key] sets data-cookie-key on form - use in js
-      # build in js - session or reset - serialize data form
-      # add jquery cookie - ajax_forms.js
 
       form_tag(@index_path + '/filter', remote: true, class: 'js-filter-form table-filter-area', 'data-cookie-key': options[:cookie_key]) do
         concat content_tag :h2, options[:title]
