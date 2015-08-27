@@ -325,10 +325,9 @@ var Admin = {
   },
 
   init_slugger: function() {
-    var $slug = $('.slug')
-    var $slugger = $slug.closest('form').find('.slugger');
+    var $slugger = $('.slug').closest('form').find('.slugger');
     var $select_slugger = $('.select.slugger');
-    Admin._prep_slug($slugger, $select_slugger);
+    this._prep_slug($slugger, $select_slugger);
   },
 
   _prep_slug: function($slugger, $select_slugger) {
