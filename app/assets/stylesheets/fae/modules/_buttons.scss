@@ -73,6 +73,7 @@ a.file_input-button,
   a:not(.add-button) {
     @extend %gray-button;
     font-size: 13px;
+    margin-right: 5px;
   }
 
   input[type=submit] {
