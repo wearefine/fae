@@ -136,7 +136,7 @@ var Admin = {
     });
 
     // initialize modal for markdown-hint
-    $('.markdown-support').click(function(){
+    $(document).on('click', '.markdown-support', function(){
       var markdown_hint_width  = $('.markdown-hint').width() + 40;
       $('.markdown-hint-wrapper').modal({
         minHeight: 430,

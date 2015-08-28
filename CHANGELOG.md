@@ -5,6 +5,7 @@
 - enhancements
     + [#49436](https://issues.afinedevelopment.com/issues/49436) Added slugger functionality to nested tables
 - bugs
+    + [#50021](https://issues.afinedevelopment.com/issues/50021) Fix Markdown supported" link-to-modal in nested forms
 
 ## 1.1.6
 
