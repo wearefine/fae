@@ -117,7 +117,7 @@ var AjaxForms = {
     Admin.sortable();
   },
 
-  filter_submission: function() {
+  filter_submission: function(params) {
     var _this = this;
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
@@ -137,6 +137,7 @@ var AjaxForms = {
 
   set_filter_cookie: function(params) {
     var set_cookie = $('.js-filter-form').data('cookie-key');
+    console.log(params);
     if (set_cookie == true) {
       $.cookie('fae-save-filter', JSON.stringify(params));
     }
