@@ -136,11 +136,13 @@ var AjaxForms = {
   },
 
   set_filter_cookie: function(params) {
-    var set_cookie = $('.js-filter-form').data('cookie-key');
     console.log(params);
+    var set_cookie = $('.js-filter-form').data('cookie-key');
+    // this.$filter_form.on('change', 'select', function() {
     if (set_cookie == true) {
       $.cookie('fae-save-filter', JSON.stringify(params));
     }
+    // });
   },
 
   // persist filter options
@@ -148,12 +150,16 @@ var AjaxForms = {
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
       if ($('.js-filter-form').data('cookie-key') == true) {
-        if ($('.table-filter-group').data('remember-filter') == true) {
+        // if ($('.table-filter-group').data('remember-filter') == true) {
           var key = $(this).find('select').attr('id').split('filter_')[1];
           var value = $(this).find('option:selected').val();
+          if (!value) {
+            value = '';
+          };
 
           _this.grind.update(key, value, false, true);
-        }
+          console.log(key, value, false, true);
+        // }
       }
     });
   },

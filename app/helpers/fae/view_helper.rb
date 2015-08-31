@@ -61,12 +61,11 @@ module Fae
       options[:label_method]    ||= :fae_display_field
       options[:placeholder]       = "Select a #{options[:label]}" if options[:placeholder].nil?
       options[:options]         ||= []
-      options[:remember_filter] ||= true
 
       select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
       select_options = options_for_select(options[:options]) if options[:options].present?
 
-      content_tag :div, class: 'table-filter-group', 'data-remember-filter': options[:remember_filter] do
+      content_tag :div, class: 'table-filter-group' do
         concat label_tag "filter[#{attribute}]", options[:label]
         concat select_tag "filter[#{attribute}]", select_options, prompt: options[:placeholder]
       end
