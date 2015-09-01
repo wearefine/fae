@@ -10,10 +10,6 @@ var AjaxForms = {
     if (this.$filter_form.length) {
       this.filter_select();
       this.filter_submission();
-      var callback = function(params){
-        AjaxForms.filter_cookie_events(params);
-      }
-      this.grind = new Grinder(callback);
     }
   },
 
@@ -138,27 +134,46 @@ var AjaxForms = {
   },
 
   apply_cookies_onload: function() {
+    var _this = this;
     $(document).ready(function() {
-      var cookie = JSON.parse( $.cookie($('.js-filter-form').data('cookie-key')) );
-      console.log(cookie);
+      var set_cookie = $.cookie($('.js-filter-form').data('cookie-key'))
+      if ((set_cookie != false) && (set_cookie.length > 2)) {
+        console.log('applied cookies onload');
+        var cookie = JSON.parse(set_cookie);
+        var keys = Object.keys(cookie)
+        var hash = '?';
 
-      for(var i = 0; i < Object.keys(cookie).length; i++) {
-        _this.grind.update(Object.keys(cookie)[i], cookie[i], false, true);
+        for(var i = 0; i < keys.length; i++) {
+          if(hash !== '?') {
+            hash += '&';
+          }
+          hash += keys[i] + '=' + cookie[keys[i]];
+        }
+
+        if( hash !== '?') {
+          window.location.hash = hash;
+        }
       }
+      var callback = function(params){
+        var set_cookie = $('.js-filter-form').data('cookie-key');
+        if (set_cookie != true) {
+          $.cookie(set_cookie, JSON.stringify(params));
+          console.log('setting cookie');
+        }
+        var hash = window.location.hash;
+        AjaxForms.set_filter_dropdowns(hash);
+        // AjaxForms.filter_cookie_events(params);
+      }
+      _this.grind = new Grinder(callback);
 
     });
   },
 
-  filter_cookie_events: function(params) {
-    $(window).on('hashchange', function(){
-      var set_cookie = $('.js-filter-form').data('cookie-key');
-      if (set_cookie != true) {
-        $.cookie(set_cookie, JSON.stringify(params));
-      }
-      var hash = window.location.hash;
-      AjaxForms.set_filter_dropdowns(hash);
-    });
-  },
+  // filter_cookie_events: function(params) {
+  //   $(window).on('hashchange', function(){
+      
+  //   });
+  // },
 
   // update hash when selects changed
   filter_select: function(){
