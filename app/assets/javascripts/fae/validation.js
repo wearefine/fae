@@ -20,7 +20,7 @@ var Validator = {
   // validate the entire form on submit and stop it if the form is invalid
   form_validate: function () {
     var self = this;
-    $('form').on('submit', function (e) {
+    $(document).on('form', 'submit', function (e) {
       self.vars.IS_VALID = true;
       $('[data-validate]').each(function () {
         if ($(this).data('validate').length) {
