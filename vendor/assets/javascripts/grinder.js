@@ -14,9 +14,13 @@ function Grinder(callback) {
   */
   var removeValue = function(key, value) {
     var hash = window.location.hash;
-    // check for value and optionally the trailing comma
-    var regex_for_value = new RegExp(value + '(\,?)', 'g');
-    hash = hash.replace(regex_for_value, '');
+    // check for key, anything between key and value, the value itself, and optionally the trailing comma
+    var regex_for_value = new RegExp('(' + key + '=.*)(' + value + '\,?)');
+    // results come back [<search through value>, <search before value>, <value>]
+    var regex_match = hash.match(regex_for_value);
+    // replace <search through value> with everything before <value>
+    // Key is included in search in case multiple keys have the same value
+    hash = hash.replace(regex_match[0], regex_match[1]);
 
     // Remove trailing commas
     hash = hash.replace(/\,\&/g, '&');
@@ -31,11 +35,10 @@ function Grinder(callback) {
   * @function addValue - add value based on key
   * @param {string} key - param to target
   * @param {mixed} value - value to add to param
-  * @param {optional boolean} should_replace_value {false} - if false, value will be appended to the param
+  * @param {optional boolean} should_replace_value - if false, value will be appended to the param
   */
   var addValue = function(key, value, should_replace_value) {
     var hash = window.location.hash;
-    should_replace_value = setDefault(should_replace_value, false);
 
     var old_value = param(key);
     var new_value;
@@ -134,6 +137,7 @@ function Grinder(callback) {
     update: function(key, value, key_is_required, should_replace_value) {
       var hash = window.location.hash;
       key_is_required = setDefault(key_is_required, false);
+      should_replace_value = setDefault(should_replace_value, false);
 
       // Ensure key exists in the hash
       if(hash.indexOf(key) !== -1) {
@@ -144,12 +148,21 @@ function Grinder(callback) {
         // If key_value contains the new value
         if(regex_for_value.test(key_value)) {
 
-          // If key is required, just swap it out
+          // If key is required, swap it out
           if(key_is_required) {
-            addValue(key, value, true);
+            addValue(key, value, should_replace_value);
 
           } else {
-            removeValue(key, value);
+
+            // If the value is blank, remove the original value from the key
+            if(value === '') {
+              removeValue(key, key_value);
+
+            // Otherwise remove the vanilla value
+            } else {
+              removeValue(key, value);
+
+            }
 
             // If key's value is blank, remove it from hash
             if(param(key) === '') {

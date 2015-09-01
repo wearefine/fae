@@ -6,6 +6,7 @@ var AjaxForms = {
     this.addedit_submission();
     this.delete_no_form();
     this.set_filter_dropdowns();
+    this.apply_cookies_onload();
     if (this.$filter_form.length) {
       this.filter_select();
       this.filter_submission();
@@ -136,6 +137,18 @@ var AjaxForms = {
       });
   },
 
+  apply_cookies_onload: function() {
+    $(document).ready(function() {
+      var cookie = JSON.parse( $.cookie($('.js-filter-form').data('cookie-key')) );
+      console.log(cookie);
+
+      for(var i = 0; i < Object.keys(cookie).length; i++) {
+        _this.grind.update(Object.keys(cookie)[i], cookie[i], false, true);
+      }
+
+    });
+  },
+
   filter_cookie_events: function(params) {
     $(window).on('hashchange', function(){
       var set_cookie = $('.js-filter-form').data('cookie-key');
@@ -147,22 +160,20 @@ var AjaxForms = {
     });
   },
 
-  // persist filter options
+  // update hash when selects changed
   filter_select: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
       if ($('.js-filter-form').data('cookie-key') != false) {
         var key = $(this).find('select').attr('id').split('filter_')[1];
         var value = $(this).find('option:selected').val();
-        if (!value) {
-          value = '';
-        };
 
         _this.grind.update(key, value, false, true);
       }
     });
   },
 
+  // check for cookie or hash and set dropdowns/ url accordingly
   set_filter_dropdowns: function(hash) {
     var cookie_name = $('.js-filter-form').data('cookie-key')
     if (cookie_name != false) {
