@@ -13,6 +13,10 @@ var AjaxForms = {
       }
       this.grind = new Grinder(callback);
     }
+    var hash = window.location.hash;
+    if (hash.length > 0) {
+      this.set_filter_dropdowns(hash);
+    }
   },
 
   set_elements: function() {
@@ -136,31 +140,44 @@ var AjaxForms = {
   },
 
   set_filter_cookie: function(params) {
-    console.log(params);
+    // console.log(params);
     var set_cookie = $('.js-filter-form').data('cookie-key');
-    // this.$filter_form.on('change', 'select', function() {
-    if (set_cookie == true) {
-      $.cookie('fae-save-filter', JSON.stringify(params));
+    if (set_cookie != true) {
+      $.cookie(set_cookie, JSON.stringify(params));
     }
-    // });
   },
 
   // persist filter options
   filter_select: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
-      if ($('.js-filter-form').data('cookie-key') == true) {
-        // if ($('.table-filter-group').data('remember-filter') == true) {
-          var key = $(this).find('select').attr('id').split('filter_')[1];
-          var value = $(this).find('option:selected').val();
-          if (!value) {
-            value = '';
-          };
+      if ($('.js-filter-form').data('cookie-key') != false) {
+        var key = $(this).find('select').attr('id').split('filter_')[1];
+        var value = $(this).find('option:selected').val();
+        if (!value) {
+          value = '';
+        };
 
-          _this.grind.update(key, value, false, true);
-          console.log(key, value, false, true);
-        // }
+        _this.grind.update(key, value, false, true);
       }
+    });
+  },
+
+  set_filter_dropdowns: function(hash) {
+    parsed = this.grind.parse(hash);
+    $.each(parsed, function(k, v){
+      $('.js-filter-form .table-filter-group').each(function(){
+        key = $(this).find('select').attr('id').split('filter_')[1];
+        if (k == key) {
+          $(this).find('option').each(function(){
+            if ($(this).val() == v) {
+              $(this).prop('selected', 'selected');
+              $('#filter_' + key).trigger('chosen:updated');
+              $('.js-filter-form').submit();
+            };
+          });
+        }
+      });
     });
   },
 
