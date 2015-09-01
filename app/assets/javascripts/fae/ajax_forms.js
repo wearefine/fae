@@ -5,17 +5,14 @@ var AjaxForms = {
     this.addedit_links();
     this.addedit_submission();
     this.delete_no_form();
+    this.set_filter_dropdowns();
     if (this.$filter_form.length) {
       this.filter_select();
       this.filter_submission();
       var callback = function(params){
-        AjaxForms.set_filter_cookie(params);
+        AjaxForms.filter_cookie_events(params);
       }
       this.grind = new Grinder(callback);
-    }
-    var hash = window.location.hash;
-    if (hash.length > 0) {
-      this.set_filter_dropdowns(hash);
     }
   },
 
@@ -139,13 +136,14 @@ var AjaxForms = {
       });
   },
 
-  set_filter_cookie: function(params) {
+  filter_cookie_events: function(params) {
     $(window).on('hashchange', function(){
-      console.log(params);
       var set_cookie = $('.js-filter-form').data('cookie-key');
       if (set_cookie != true) {
         $.cookie(set_cookie, JSON.stringify(params));
       }
+      var hash = window.location.hash;
+      AjaxForms.set_filter_dropdowns(hash);
     });
   },
 
@@ -166,10 +164,16 @@ var AjaxForms = {
   },
 
   set_filter_dropdowns: function(hash) {
-    parsed = this.grind.parse(hash);
+    var cookie_name = $('.js-filter-form').data('cookie-key')
+    if (cookie_name != false) {
+      var parsed = JSON.parse($.cookie(cookie_name));
+    } else {
+      var parsed = this.grind.parse(hash);
+    }
     $.each(parsed, function(k, v){
       $('.js-filter-form .table-filter-group').each(function(){
-        key = $(this).find('select').attr('id').split('filter_')[1];
+        var key = $(this).find('select').attr('id').split('filter_')[1];
+        var value = $(this).find('option:selected').val();
         if (k == key) {
           $(this).find('option').each(function(){
             if ($(this).val() == v) {
