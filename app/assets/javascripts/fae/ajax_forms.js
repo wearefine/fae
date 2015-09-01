@@ -138,7 +138,6 @@ var AjaxForms = {
     $(document).ready(function() {
       var set_cookie = $.cookie($('.js-filter-form').data('cookie-key'))
       if ((set_cookie != false) && (set_cookie.length > 2)) {
-        console.log('applied cookies onload');
         var cookie = JSON.parse(set_cookie);
         var keys = Object.keys(cookie)
         var hash = '?';
@@ -158,24 +157,16 @@ var AjaxForms = {
         var set_cookie = $('.js-filter-form').data('cookie-key');
         if (set_cookie != true) {
           $.cookie(set_cookie, JSON.stringify(params));
-          console.log('setting cookie');
         }
         var hash = window.location.hash;
         AjaxForms.set_filter_dropdowns(hash);
-        // AjaxForms.filter_cookie_events(params);
       }
       _this.grind = new Grinder(callback);
 
     });
   },
 
-  // filter_cookie_events: function(params) {
-  //   $(window).on('hashchange', function(){
-      
-  //   });
-  // },
-
-  // update hash when selects changed
+  // update hash when filter dropdowns changed
   filter_select: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
@@ -196,6 +187,7 @@ var AjaxForms = {
     } else {
       var parsed = this.grind.parse(hash);
     }
+
     $.each(parsed, function(k, v){
       $('.js-filter-form .table-filter-group').each(function(){
         var key = $(this).find('select').attr('id').split('filter_')[1];
