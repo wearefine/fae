@@ -113,7 +113,6 @@ function Grinder(callback) {
 
       var privateHashChange = function() {
         var params = _this.parse();
-        console.log('privateHashChange:', params);
         hashChangeCallback.call(this, params);
       };
 
@@ -134,7 +133,6 @@ function Grinder(callback) {
     */
     update: function(key, value, key_is_required, should_replace_value) {
       var hash = window.location.hash;
-      console.log('hash: ', hash);
       key_is_required = setDefault(key_is_required, false);
 
       // Ensure key exists in the hash

@@ -140,11 +140,13 @@ var AjaxForms = {
   },
 
   set_filter_cookie: function(params) {
-    // console.log(params);
-    var set_cookie = $('.js-filter-form').data('cookie-key');
-    if (set_cookie != true) {
-      $.cookie(set_cookie, JSON.stringify(params));
-    }
+    $(window).on('hashchange', function(){
+      console.log(params);
+      var set_cookie = $('.js-filter-form').data('cookie-key');
+      if (set_cookie != true) {
+        $.cookie(set_cookie, JSON.stringify(params));
+      }
+    });
   },
 
   // persist filter options
