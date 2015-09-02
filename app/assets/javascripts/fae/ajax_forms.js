@@ -153,7 +153,7 @@ var AjaxForms = {
     }
     var callback = function(params){
       var set_cookie = $('.js-filter-form').data('cookie-key');
-      if (set_cookie != true) {
+      if (set_cookie != false) {
         $.cookie(set_cookie, JSON.stringify(params));
       }
       var hash = window.location.hash;

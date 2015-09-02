@@ -47,7 +47,10 @@ module Fae
       options[:search]       = true if options[:search].nil?
       options[:cookie_key] ||= false
 
-      form_tag(@index_path + '/filter', remote: true, class: 'js-filter-form table-filter-area', 'data-cookie-key': options[:cookie_key]) do
+      form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
+      form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
+
+      form_tag(@index_path + '/filter', form_hash) do
         concat content_tag :h2, options[:title]
         concat filter_search_field if options[:search]
         concat capture(&block)
