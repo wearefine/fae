@@ -134,39 +134,43 @@ var AjaxForms = {
 
   apply_cookies: function() {
     var _this = this;
-    var set_cookie = $.cookie($('.js-filter-form').data('cookie-key'))
-    if ((set_cookie != false) && (set_cookie.length > 2)) {
-      var cookie = JSON.parse(set_cookie);
-      var keys = Object.keys(cookie)
-      var hash = '?';
+    var cookie_key = $('.js-filter-form').data('cookie-key');
 
-      for(var i = 0; i < keys.length; i++) {
-        if(hash !== '?') {
-          hash += '&';
+    if (cookie_key) {
+      var set_cookie = $.cookie(cookie_key);
+      if (set_cookie.length > 2) {
+        var cookie = JSON.parse(set_cookie);
+        var keys = Object.keys(cookie)
+        var hash = '?';
+
+        for(var i = 0; i < keys.length; i++) {
+          if(hash !== '?') {
+            hash += '&';
+          }
+          hash += keys[i] + '=' + cookie[keys[i]];
         }
-        hash += keys[i] + '=' + cookie[keys[i]];
+
+        if( hash !== '?') {
+          window.location.hash = hash;
+        }
       }
 
-      if( hash !== '?') {
-        window.location.hash = hash;
+      var callback = function(params){
+        $.cookie(cookie_key, JSON.stringify(params));
+
+        var hash = window.location.hash;
+        AjaxForms.set_filter_dropdowns(hash);
       }
+
+      _this.grind = new Grinder(callback);
     }
-    var callback = function(params){
-      var set_cookie = $('.js-filter-form').data('cookie-key');
-      if (set_cookie != false) {
-        $.cookie(set_cookie, JSON.stringify(params));
-      }
-      var hash = window.location.hash;
-      AjaxForms.set_filter_dropdowns(hash);
-    }
-    _this.grind = new Grinder(callback);
   },
 
   // update hash when filter dropdowns changed
   filter_select: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
-      if ($('.js-filter-form').data('cookie-key') != false) {
+      if ($('.js-filter-form').data('cookie-key')) {
         var key = $(this).find('select').attr('id').split('filter_')[1];
         var value = $(this).find('option:selected').val();
 
@@ -178,7 +182,7 @@ var AjaxForms = {
   // check for cookie or hash and set dropdowns/ url accordingly
   set_filter_dropdowns: function(hash) {
     var cookie_name = $('.js-filter-form').data('cookie-key')
-    if (cookie_name != false) {
+    if (cookie_name) {
       var parsed = JSON.parse($.cookie(cookie_name));
     } else {
       var parsed = this.grind.parse(hash);
