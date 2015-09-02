@@ -197,12 +197,12 @@ var AjaxForms = {
             if ($(this).val() == v) {
               $(this).prop('selected', 'selected');
               $('#filter_' + key).trigger('chosen:updated');
-              $('.js-filter-form').submit();
             };
           });
         }
       });
     });
+    $('.js-filter-form').submit();
   },
 
   delete_no_form: function() {
