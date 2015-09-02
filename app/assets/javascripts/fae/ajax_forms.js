@@ -5,7 +5,6 @@ var AjaxForms = {
     this.addedit_links();
     this.addedit_submission();
     this.delete_no_form();
-    this.set_filter_dropdowns();
     this.apply_cookies_onload();
     if (this.$filter_form.length) {
       this.filter_select();
@@ -188,21 +187,23 @@ var AjaxForms = {
       var parsed = this.grind.parse(hash);
     }
 
-    $.each(parsed, function(k, v){
-      $('.js-filter-form .table-filter-group').each(function(){
-        var key = $(this).find('select').attr('id').split('filter_')[1];
-        var value = $(this).find('option:selected').val();
-        if (k == key) {
-          $(this).find('option').each(function(){
-            if ($(this).val() == v) {
-              $(this).prop('selected', 'selected');
-              $('#filter_' + key).trigger('chosen:updated');
-            };
-          });
-        }
+    if (!$.isEmptyObject(parsed)) {
+      $.each(parsed, function(k, v){
+        $('.js-filter-form .table-filter-group').each(function(){
+          var key = $(this).find('select').attr('id').split('filter_')[1];
+          var value = $(this).find('option:selected').val();
+          if (k == key) {
+            $(this).find('option').each(function(){
+              if ($(this).val() == v) {
+                $(this).prop('selected', 'selected');
+                $('#filter_' + key).trigger('chosen:updated');
+              };
+            });
+          }
+        });
       });
-    });
-    $('.js-filter-form').submit();
+      $('.js-filter-form').submit();
+    }
   },
 
   delete_no_form: function() {
