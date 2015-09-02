@@ -138,7 +138,7 @@ var AjaxForms = {
 
     if (cookie_key) {
       var set_cookie = $.cookie(cookie_key);
-      if (set_cookie.length > 2) {
+      if (set_cookie && (set_cookie.length > 2)) {
         var cookie = JSON.parse(set_cookie);
         var keys = Object.keys(cookie)
         var hash = '?';
