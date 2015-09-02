@@ -5,7 +5,7 @@ var AjaxForms = {
     this.addedit_links();
     this.addedit_submission();
     this.delete_no_form();
-    this.apply_cookies_onload();
+    this.apply_cookies();
     if (this.$filter_form.length) {
       this.filter_select();
       this.filter_submission();
@@ -132,37 +132,34 @@ var AjaxForms = {
       });
   },
 
-  apply_cookies_onload: function() {
+  apply_cookies: function() {
     var _this = this;
-    $(document).ready(function() {
-      var set_cookie = $.cookie($('.js-filter-form').data('cookie-key'))
-      if ((set_cookie != false) && (set_cookie.length > 2)) {
-        var cookie = JSON.parse(set_cookie);
-        var keys = Object.keys(cookie)
-        var hash = '?';
+    var set_cookie = $.cookie($('.js-filter-form').data('cookie-key'))
+    if ((set_cookie != false) && (set_cookie.length > 2)) {
+      var cookie = JSON.parse(set_cookie);
+      var keys = Object.keys(cookie)
+      var hash = '?';
 
-        for(var i = 0; i < keys.length; i++) {
-          if(hash !== '?') {
-            hash += '&';
-          }
-          hash += keys[i] + '=' + cookie[keys[i]];
+      for(var i = 0; i < keys.length; i++) {
+        if(hash !== '?') {
+          hash += '&';
         }
-
-        if( hash !== '?') {
-          window.location.hash = hash;
-        }
+        hash += keys[i] + '=' + cookie[keys[i]];
       }
-      var callback = function(params){
-        var set_cookie = $('.js-filter-form').data('cookie-key');
-        if (set_cookie != true) {
-          $.cookie(set_cookie, JSON.stringify(params));
-        }
-        var hash = window.location.hash;
-        AjaxForms.set_filter_dropdowns(hash);
-      }
-      _this.grind = new Grinder(callback);
 
-    });
+      if( hash !== '?') {
+        window.location.hash = hash;
+      }
+    }
+    var callback = function(params){
+      var set_cookie = $('.js-filter-form').data('cookie-key');
+      if (set_cookie != true) {
+        $.cookie(set_cookie, JSON.stringify(params));
+      }
+      var hash = window.location.hash;
+      AjaxForms.set_filter_dropdowns(hash);
+    }
+    _this.grind = new Grinder(callback);
   },
 
   // update hash when filter dropdowns changed
