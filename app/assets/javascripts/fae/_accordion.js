@@ -43,9 +43,9 @@ Fae.accordion = {
 		var self = this;
 		if (this.initialized === false) {
 			$(window).on("resize", function(){
-				if ($(window).width() < Admin.breakpoints.desktop) {
+				if ($(window).width() < Fae.breakpoints.desktop) {
 					self.destroy();
-				} else if ($(window).width() >= Admin.breakpoints.desktop) {
+				} else if ($(window).width() >= Fae.breakpoints.desktop) {
 					self.init();
 				}
 			});
