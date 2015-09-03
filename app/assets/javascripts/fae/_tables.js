@@ -55,7 +55,7 @@ Fae.tables = {
         var object = serial.substr(0, serial.indexOf('['));
 
         $.ajax({
-          url: Admin.path+'/sort/'+object,
+          url: Fae.path+'/sort/'+object,
           type: 'post',
           data: serial,
           dataType: 'script',
