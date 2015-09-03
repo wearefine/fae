@@ -8,6 +8,7 @@
 - bugs
     + [#50021](https://issues.afinedevelopment.com/issues/50021) Fix Markdown supported" link-to-modal in nested forms
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add validation to nested forms
+    + [#50248](https://issues.afinedevelopment.com/issues/50248) Allow text selection in tables
 
 ## 1.1.6
 
