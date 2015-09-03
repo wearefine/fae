@@ -1,4 +1,8 @@
-var Accordion = {
+/* global Fae */
+
+'use strict';
+
+Fae.accordion = {
 	initialized: false, // used as a indicator that the Accordion was initially ran
 	status: true, // used as an "off" and "on" flag for the general Accordion
 	containter_selector: ".main_nav-accordion, .sub_nav-accordion",

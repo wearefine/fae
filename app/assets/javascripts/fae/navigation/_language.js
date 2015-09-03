@@ -1,6 +1,8 @@
+/* global Fae */
+
 'use strict';
 
-var LanguageNav = {
+Fae.navigation.language = {
 
 	init: function(options, elm){
 		this.set_elements();

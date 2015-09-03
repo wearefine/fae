@@ -1,4 +1,5 @@
-var Admin = {
+// This file is named Admin because child-project asset folders should have a fae.js file to override or add functionality to the admin
+var Fae = {
     path: '<%= Rails.application.routes.url_helpers.fae_path %>',
 
     breakpoints: {
@@ -8,10 +9,10 @@ var Admin = {
   init: function(){
     var that = this;
 
-    this.init_date_picker();
-    this.init_daterange_picker();
-
-    Admin.image_delete_links();
+    this.form.init();
+    this.modals.init();
+    this.navigation.init();
+    this.accordion.init();
 
     // input type=file customization
     $(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
@@ -19,18 +20,11 @@ var Admin = {
     // make all the hint areas
     $(".hint").hinter();
 
-    // checkboxes customizaitons
-    $("th.main_table-checkbox").checkboxer();
 
     // sticket header for the content area
     $(".main_content-header").sticky({ offset: 0, min_desktop: true });
     $("#main_nav").sticky({ offset: 0, make_placeholder: false, min_desktop: true});
 
-    // sort columns in tables if applicable
-    $(".main_table-sort_columns").tablesorter();
-    $(".main_table-sort_columns-cities").tablesorter({
-      sortList: [[1,0]]
-    });
 
     // button dropdown class toggle
     $(".button-dropdown").click(function(){
@@ -48,24 +42,6 @@ var Admin = {
     $(".table-add-link-visible").click("on", function(){
       var $parent = $(this).closest('section');
       that.scroll_to($parent.find("tbody tr:last-child"), 90);
-    });
-
-    //image modals
-    $(".js-image-modal").click(function(e){
-      e.preventDefault();
-      var $this = $(this);
-
-      // create invisi-image to get natural width/height
-      var image = new Image();
-      image.src = $this.attr('src');
-      var image_width = image.width;
-      var image_height = image.height;
-
-      $this.modal({
-        minHeight: image_height,
-        minWidth: image_width,
-        overlayClose: true
-      });
     });
 
     // Login page checkbox
@@ -135,333 +111,11 @@ var Admin = {
       });
     });
 
-    // initialize modal for markdown-hint
-    $(document).on('click', '.markdown-support', function(){
-      var markdown_hint_width  = $('.markdown-hint').width() + 40;
-      $('.markdown-hint-wrapper').modal({
-        minHeight: 430,
-        minWidth: markdown_hint_width,
-        overlayClose: true,
-        zIndex: 1100
-      });
-    });
-
-    this.sortable();
     this.fade_notices();
-    this.city_district_selector();
-    this.init_slugger();
-    this.ad_form.init();
-    this.selects();
-    this.detect_cancelled_urls();
-    this.add_cancel_param();
-  },
-
-  init_date_picker: function() {
-    $(".datepicker input").datepicker({
-      dateFormat: "M dd, yy",
-      inline: true,
-      showOtherMonths: true,
-      dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    });
-  },
-
-  init_daterange_picker: function() {
-    $.dateRangePickerLanguages['custom'] = {
-      'selected': 'Choosed:',
-      'days': 'Days',
-      'apply': 'Close',
-      'week-1' : 'Mon',
-      'week-2' : 'Tue',
-      'week-3' : 'Wed',
-      'week-4' : 'Thu',
-      'week-5' : 'Fri',
-      'week-6' : 'Sat',
-      'week-7' : 'Sun',
-      'month-name': ['January','February','March','April','May','June','July','August','September','October','November','December'],
-      'previous' : 'Previous',
-      'prev-week' : 'Week',
-      'prev-month' : 'Month',
-      'prev-quarter' : 'Quarter',
-      'prev-year' : 'Year',
-      'less-than' : 'Date range should longer than %d days',
-      'more-than' : 'Date range should less than %d days',
-      'default-more' : 'Please select a date range longer than %d days',
-      'default-less' : 'Please select a date range less than %d days',
-      'default-range' : 'Please select a date range between %d and %d days',
-      'default-default': 'Please select a date'
-    };
-
-    // daterangepicker instantiation
-    if ($(".daterangepicker").length > 0) {
-      $(".daterangepicker").dateRangePicker({
-        format: "MMM DD, YYYY",
-        separator : ' to ',
-        showShortcuts: false,
-        language: 'custom',
-        getValue: function()
-        {
-          if ($('.js-start_date').val() && $('.js-end_date').val() )
-            return $('.js-start_date').val() + ' to ' + $('.js-end_date').val();
-          else
-            return '';
-        },
-        setValue: function(s,s1,s2)
-        {
-          $('.js-start_date').val(s1);
-          $('.js-end_date').val(s2);
-        }
-      });
-    };
-  },
-
-  sortable: function() {
-    //Make table Sortable by user
-    $(".main_content-sortable").sortable({
-      items: "tbody tr",
-      opacity: 0.8,
-      handle: (".main_content-sortable-handle"),
-
-      //helper funciton to preserve the width of the table row
-      helper: function(e, tr) {
-        var $originals = tr.children();
-        var $helper = tr.clone();
-        var $ths = $(tr).closest("table").find("th");
-
-        $helper.children().each(function(index) {
-          // Set helper cell sizes to match the original sizes
-          $(this).width($originals.eq(index).width());
-          //set the THs width so they don't go collapsey
-          $ths.eq(index).width($ths.eq(index).width());
-        });
-        return $helper;
-      },
-
-      // on stop, set the THs back to no inline width for repsonsivity
-      stop: function(e, ui) {
-        $(ui.item).closest("table").find("th").css("width", "");
-      },
-
-      update: function() {
-        var $this = $(this);
-        var serial = $this.sortable('serialize');
-        var object = serial.substr(0, serial.indexOf('['));
-
-        $.ajax({
-          url: Admin.path+'/sort/'+object,
-          type: 'post',
-          data: serial,
-          dataType: 'script',
-          complete: function(request){
-            // sort complete messaging can go here
-          }
-        });
-      }
-    });
-  },
-
-  //ajax image delete links
-  image_delete_links: function() {
-    $('.imageDeleteLink').click(function(e) {
-      e.preventDefault();
-      if (confirm('Are you sure you want to delete this image?')) {
-        $.post($(this).attr('href'),'html');
-        $(this).parent().next().show();
-        $(this).parent().hide();
-      }
-    });
-  },
-
-  scroller: function(elm) {
-    if (location.pathname.replace(/^\//,'') == elm.pathname.replace(/^\//,'') && location.hostname == elm.hostname) {
-      var target = $(elm.hash);
-      target = target.length ? target : $("[name=" + elm.hash.slice(1) + "]");
-
-      if (target.length) {
-        var newScrollTop = target.offset().top - 116;
-        $("html, body").animate({ scrollTop: newScrollTop }, 500);
-        return false;
-      }
-    }
-  },
-
-  scroll_to: function(to_elm, adjustment) {
-    if (typeof adjustment == 'undefined') {
-      // set the default adjustment
-      adjustment = 130;
-    }
-    $('html, body').animate({
-      scrollTop: $(to_elm).offset().top - adjustment
-    }, 500);
   },
 
   fade_notices: function() {
     $('.notice, .alert, .error').not('.input .error').delay(3000).slideUp('fast');
   },
 
-  city_district_selector: function() {
-    var $city_select = $('.js-city-selector');
-    var $district_select_wrap = $('.js-district-selector');
-
-
-    $district_select_wrap.hide();
-    Admin.update_district_select($district_select_wrap, $city_select.val());
-
-    $city_select.on('change', function() {
-      Admin.update_district_select($district_select_wrap, $city_select.val());
-    });
-  },
-
-  update_district_select: function($district_select_wrap, city_id) {
-    var $city_options = $district_select_wrap.find('option[data-city='+city_id+']');
-    if (city_id && $city_options.length) {
-      $district_select_wrap.find('option:not(:first)').addClass('chosen-hide');
-      $city_options.removeClass('chosen-hide');
-      $district_select_wrap.find('select').trigger("chosen:updated");
-      // $district_select_wrap.find('span.error').remove();
-      $district_select_wrap.fadeIn('fast');
-    } else {
-      $district_select_wrap.fadeOut('fast');
-    }
-  },
-
-  init_slugger: function() {
-    var $slugger = $('.slug').closest('form').find('.slugger');
-    var $slug = $slugger.closest('form').find('.slug');
-    var $select_slugger = $('.select.slugger');
-    this._prep_slug($slug, $slugger, $select_slugger);
-  },
-
-  _prep_slug: function($slug, $slugger, $select_slugger) {
-    var slug_text = null;
-
-    if ($slug.val() !== '') {
-      $slugger.removeClass('slugger');
-    } else {
-      $slugger.keyup(function(){
-        slug_text = Admin._digest_slug($slugger);
-        $slug.val(slug_text);
-      });
-      if ($select_slugger.length) {
-        $select_slugger.change(function(){
-          slug_text = Admin._digest_slug($slugger);
-          $slug.val(slug_text);
-        });
-      };
-    }
-  },
-
-  _digest_slug: function($slugger) {
-    var slug_text = []
-    $slugger.each(function() {
-      $this = $(this);
-      if ($this.val().length > 0) {
-        if ($this.is("input")) {
-          slug_text.push($this.val());
-        } else {
-          slug_text.push($this.find("option:selected").text());
-        }
-      }
-    })
-    slug_text = slug_text
-      .join(' ')
-      .toLowerCase()
-      .replace(/(\\)|(\')|(\.)/g, '')
-      .replace(/[^a-zA-Z0-9]+/g, '-')
-      .replace(/(-$)|(^-)/g, '');
-    return slug_text;
-  },
-
-
-  ad_form: {
-    init: function() {
-      if ($('#new_ad, .edit_ad').length) {
-        Admin.ad_form.$type_select = $('#ad_ad_type_id');
-        Admin.ad_form.$ad_fields = $('div.ad-fields-wrapper');
-
-        Admin.ad_form.toggle_fields(0);
-
-        Admin.ad_form.$type_select.change(function() {
-          Admin.ad_form.toggle_fields(200);
-        });
-      }
-    },
-
-    toggle_fields: function(fade_speed) {
-      if (Admin.ad_form.$type_select.val() == '') {
-        Admin.ad_form.$ad_fields.hide();
-      } else {
-        Admin.ad_form.$ad_fields.fadeOut(fade_speed, function() {
-          $('div[data-types]').hide();
-          $('div[data-types~='+Admin.ad_form.$type_select.val()+'], div[data-types=all]').show();
-          Admin.ad_form.$ad_fields.fadeIn(fade_speed);
-        });
-      }
-    },
-
-    $type_select: '',
-    $ad_fields: ''
-  },
-
-  selects: function() {
-    var availableItemsStr = " Available Items";
-    var addedItemsStr = " Added Items";
-
-    $("select").each(function(index, elm){
-      var $select = $(this);
-      if($select.hasClass("multiselect")) {
-        $select.multiSelect({
-          selectableHeader: "<div class='custom-header'></div>",
-          selectionHeader: "<div class='custom-header'></div>"
-        });
-        var selectableCount = $select.next('.ms-container').find('.ms-selectable li').not('.ms-selected').length
-        var selectedCount = $select.next('.ms-container').find('.ms-selection .ms-selected').length;
-        $('.ms-selectable .custom-header').text(selectableCount + availableItemsStr);
-        $('.ms-selection .custom-header').text(selectedCount + addedItemsStr);
-      } else {
-        $select.fae_chosen();
-      }
-    });
-
-    var $selectable = $('.ms-selectable .custom-header');
-    var $selection = $('.ms-selection .custom-header');
-
-    $('.ms-selectable li').on('click', function(){
-      $selectable.text(parseInt($selectable.text()) -1 + availableItemsStr);
-      $selection.text(parseInt($selection.text()) +1 + addedItemsStr);
-    });
-
-    $('.ms-selection li').on('click', function(){
-      $selectable.text(parseInt($selectable.text()) + 1 + availableItemsStr);
-      $selection.text(parseInt($selection.text()) -1 + addedItemsStr);
-    })
-  },
-
-  detect_cancelled_urls: function() {
-    var params = window.location.search;
-    if (params.length > 0 && params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
-      window.history.replaceState(null, null, window.location.pathname);
-    };
-  },
-
-  add_cancel_param: function() {
-    var update_cancel = function () {
-      var $cancel_btn = $('#main_content-header-save-cancel');
-      var new_href = $cancel_btn.attr('href') + '?cancelled=true';
-      $cancel_btn.attr('href', new_href);
-      $('form').off('change', 'input, textarea, select', update_cancel);
-    }
-
-    $('form').on('change', 'input, textarea, select', update_cancel);
-  }
 };
-
-
-$(function() {
-  FaeNavigation.init();
-  Accordion.init();
-  Admin.init();
-  AjaxForms.init();
-  SubnavHighlighter.init();
-  Validator.init();
-  LanguageNav.init();
-});

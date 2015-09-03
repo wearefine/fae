@@ -14,7 +14,7 @@ var FileInputer = {
 		var that = this;
 
 		// unite the default options with the passed-in ones
-		this.options = $.extend({}, this.options, options);
+		this.options = $.extend({delete_class: "icon-delete_x file_input-delete"}, this.options, options);
 
 		// saving element reference
 		this.elm = elm;
@@ -73,7 +73,7 @@ var FileInputer = {
 		this.$input.on("change", function(e){
 			if(that.check_size()) {
 				that.$text.text($(this).val().replace("C:\\fakepath\\", ""));
-	
+
 				if ($(this).val() !== "") {
 					that.$inputer.addClass(that.options.active_class);
 				}

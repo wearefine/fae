@@ -1,9 +1,8 @@
-var FaeNavigation = {
-  current_items: [],
+Fae.tables = {
 
   init: function() {
-    this.select_current_nav_item();
-    this.update_nav_classes();
+    this.columnSorting();
+    this.rowSorting();
     if($('.sticky-table-header').length) {
       this.sticky_table_header();
     }
@@ -15,49 +14,57 @@ var FaeNavigation = {
     }
   },
 
-  select_current_nav_item: function() {
-    var self = this;
-    var current_base_url = window.location.pathname;
-    var url_without_edit_new = current_base_url.replace(/\/new|\/edit/, '');
-    $('#main_nav a').each(function(){
-      var $this = $(this);
-      var link = $this.attr('href');
-      if (link === url_without_edit_new || link === current_base_url) {
-        $this.addClass('current');
-        self.current_items.push($this);
-        return false;
-      }
+  columnSorting: function() {
+    // sort columns in tables if applicable
+    $(".main_table-sort_columns").tablesorter();
+    $(".main_table-sort_columns-cities").tablesorter({
+      sortList: [[1,0]]
     });
   },
 
-  update_nav_classes: function() {
-    var self = this;
-    $.each(self.current_items, function(index, $el){
-      if ($el.hasClass('main_nav-link')) {
-        self.update_first_level($el);
-      } else if ($el.hasClass('main_nav-sub-link')) {
-        self.update_second_level($el);
-      } else if ($el.hasClass('main_nav-third-link')) {
-        self.update_third_level($el);
+  rowSorting: function() {
+    //Make table Sortable by user
+    $(".main_content-sortable").sortable({
+      items: "tbody tr",
+      opacity: 0.8,
+      handle: (".main_content-sortable-handle"),
+
+      //helper funciton to preserve the width of the table row
+      helper: function(e, tr) {
+        var $originals = tr.children();
+        var $helper = tr.clone();
+        var $ths = $(tr).closest("table").find("th");
+
+        $helper.children().each(function(index) {
+          // Set helper cell sizes to match the original sizes
+          $(this).width($originals.eq(index).width());
+          //set the THs width so they don't go collapsey
+          $ths.eq(index).width($ths.eq(index).width());
+        });
+        return $helper;
+      },
+
+      // on stop, set the THs back to no inline width for repsonsivity
+      stop: function(e, ui) {
+        $(ui.item).closest("table").find("th").css("width", "");
+      },
+
+      update: function() {
+        var $this = $(this);
+        var serial = $this.sortable('serialize');
+        var object = serial.substr(0, serial.indexOf('['));
+
+        $.ajax({
+          url: Admin.path+'/sort/'+object,
+          type: 'post',
+          data: serial,
+          dataType: 'script',
+          complete: function(request){
+            // sort complete messaging can go here
+          }
+        });
       }
     });
-  },
-
-  update_first_level: function($el) {
-    $el.closest('li').addClass('main_nav-active-single');
-  },
-
-  update_second_level: function($el) {
-    $el
-      .closest('li').addClass('main_nav-sub-active')
-      .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
-  },
-
-  update_third_level: function($el) {
-    $el
-      .closest('li').addClass('main_nav-third-active')
-      .closest('.sub_nav-accordion').removeClass('sub_nav-accordion').addClass('main_nav-sub-active--no_highlight')
-      .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
   },
 
   collapsible_table: function() {
@@ -205,4 +212,4 @@ var FaeNavigation = {
     });
 
   }
-}
+};

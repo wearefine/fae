@@ -1,8 +1,9 @@
-var Validator = {
+/* global Fae */
+
+Fae.form.validator = {
 
   init: function () {
-    this.el.$form = $('form');
-    if (this.el.$form.length) {
+    if ($('form').length) {
       this.password_confirmation_validation.init();
       this.password_presence_conditional();
       this.bind_validation_events();
@@ -28,8 +29,8 @@ var Validator = {
         }
       });
       if (self.vars.IS_VALID === false) {
-        LanguageNav.check_for_hidden_errors();
-        Admin.scroll_to($('span.error').first());
+        Fae.navigation.language.check_for_hidden_errors();
+        Fae.helpers.scroll_to($('span.error').first());
         e.preventDefault();
       }
     });
@@ -194,22 +195,23 @@ var Validator = {
         self.validate_confirmation(self);
       });
       $('form').on('submit', function(ev) {
-        Validator.vars.IS_VALID = true;
+        Fae.validator.vars.IS_VALID = true;
         self.validate_confirmation(self);
-        if (!Validator.vars.IS_VALID) {
+        if (!Fae.validator.vars.IS_VALID) {
           ev.preventDefault();
         }
       });
     },
 
     validate_confirmation: function(self) {
+      var validator = Fae.validator;
       if (self.$password_field.val() == self.$password_confirmation_field.val()) {
         Validator.create_success_class(self.$password_confirmation_field);
       } else {
         var message = ['must match Password'];
-        Validator.vars.IS_VALID = false;
-        Validator.label_named_message(self.$password_confirmation_field, message);
-        Validator.create_or_replace_error(self.$password_confirmation_field, message);
+        validator.vars.IS_VALID = false;
+        validator.label_named_message(self.$password_confirmation_field, message);
+        validator.create_or_replace_error(self.$password_confirmation_field, message);
       }
     }
   },
