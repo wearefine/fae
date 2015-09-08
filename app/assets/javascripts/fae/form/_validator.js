@@ -184,7 +184,7 @@ Fae.form.validator = {
       self.$password_confirmation_field = $('#user_password_confirmation');
 
       if (self.$password_confirmation_field.length) {
-        Validator.strip_validation(self.$password_field, 'confirmation');
+        Fae.form.validator.strip_validation(self.$password_field, 'confirmation');
         self.add_custom_validation();
       }
     },
@@ -206,7 +206,7 @@ Fae.form.validator = {
     validate_confirmation: function(self) {
       var validator = Fae.validator;
       if (self.$password_field.val() == self.$password_confirmation_field.val()) {
-        Validator.create_success_class(self.$password_confirmation_field);
+        Fae.form.validator.create_success_class(self.$password_confirmation_field);
       } else {
         var message = ['must match Password'];
         validator.vars.IS_VALID = false;
