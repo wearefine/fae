@@ -33,7 +33,7 @@ Fae.form.ajax = {
       // scroll to the last column of the tbody, where the form will start
       Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
 
-      AjaxForms.addedit_actions($this, $parent);
+      Fae.form.ajax.addedit_actions($this, $parent);
     });
   },
 
@@ -46,7 +46,7 @@ Fae.form.ajax = {
       // scroll to the last column of the tbody, where the form will start
       Admin.scroll_to($parent.find("tbody tr:last-child"), 90);
 
-      AjaxForms.addedit_actions($this, $parent);
+      Fae.form.ajax.addedit_actions($this, $parent);
     });
   },
 
