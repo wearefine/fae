@@ -1,0 +1,69 @@
+ruby:
+  require_locals(['item'], local_assigns)
+
+  # optional locals
+  assoc_name          ||= item.to_s                       # 'restaurant_bars'
+  title               ||= assoc_name.humanize.titleize    # 'Restaurant Bars'
+  header              ||= title
+  ordered             ||= false
+  has_thumb           ||= false
+  edit_column         ||= false
+  cols                ||= []
+  add_button_text     ||= "Add #{title.singularize}"
+
+  # variables derived from options
+  colspan = cols.length + 1
+  colspan += 1 if ordered
+  colspan += 1 if has_thumb
+  table_class = ordered ? 'main_content-sortable index_table' : 'index_table'
+
+  # lesser known optional locals, dervived from options by default
+  assoc_name_singular ||= assoc_name.singularize          # 'restaurant_bar'
+  new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
+  edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
+
+.main_content-section-area
+  section.js-addedit-form
+    table class=table_class
+      thead
+        tr
+          - if ordered
+            th.main_content-sortable-handle-col
+          - if has_thumb
+            th.main_content-thumb-col
+          - cols.each do |col|
+            - th_class = [:on_prod, :on_stage].include?(col) ? 'main_table-header-live' : ''
+            th class=th_class = col.to_s.humanize
+          - if edit_column
+            th.main_table-header-edit data-sorter="false" Edit
+          th.main_table-header-delete Delete
+      tbody
+        - if @items.present?
+          - @items.each do |item|
+            tr id="#{ tr_id(item) }"
+              - if ordered
+                td.main_content-sortable-handle
+                  span.icon-sort
+              - if has_thumb
+                td = image_tag(item.asset.thumb.url)
+              - cols.each do |col|
+                - if col == cols.first && !edit_column
+                  td.main_table-description-item
+                    a.js-edit-link href=self.send(edit_path, item) = col_name_or_image(item, col)
+                - elsif item.class.columns_hash[col.to_s].present? && item.class.columns_hash[col.to_s].type == :boolean
+                  td = attr_toggle item, col
+                - else
+                  td = col_name_or_image(item, col)
+              - if edit_column
+                td.main_table-edit
+                  a.js-edit-link href=self.send(edit_path, item)
+                    span.icon-edit
+              td.main_table-delete
+                = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
+        - else
+          tr
+            - td_link = link_to "add some", self.send(new_path, item_id: item.id, item_class: item.class.to_s), class: 'js-add-link'
+
+            td colspan=colspan.to_s == "No #{title} yet, #{td_link}."
+
+    .js-addedit-form-wrapper
