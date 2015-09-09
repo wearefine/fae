@@ -1,4 +1,8 @@
-var Accordion = {
+/* global Fae */
+
+'use strict';
+
+Fae.accordion = {
 	initialized: false, // used as a indicator that the Accordion was initially ran
 	status: true, // used as an "off" and "on" flag for the general Accordion
 	containter_selector: ".main_nav-accordion, .sub_nav-accordion",
@@ -39,9 +43,9 @@ var Accordion = {
 		var self = this;
 		if (this.initialized === false) {
 			$(window).on("resize", function(){
-				if ($(window).width() < Admin.breakpoints.desktop) {
+				if ($(window).width() < Fae.breakpoints.desktop) {
 					self.destroy();
-				} else if ($(window).width() >= Admin.breakpoints.desktop) {
+				} else if ($(window).width() >= Fae.breakpoints.desktop) {
 					self.init();
 				}
 			});

@@ -29,21 +29,35 @@
 //= require underscore
 //= require json2
 //= require judge
-//= require fae/judge_path
-//
-//= require fae/helpers
-//= require fae/accordion
-//= require fae/navigation
-//= require fae/subnavhighlighter
-//= require fae/sticky
-//= require fae/checkboxer
-//= require fae/fae_chosen
-//= require fae/fileinputer
-//= require fae/hinter
-//= require fae/mobilemenu
-//= require fae/ajax_forms
-//= require fae/validation
 //= require grinder
-//= require fae/language_nav
+
+//= require fae/judge_path
+//= require fae/extensions
+
 //= require fae/admin
+//= require fae/_helpers
+
+//= require fae/form/_form
+//= require fae/form/inputs/_dates
+//= require fae/form/inputs/_select
+//= require fae/form/inputs/_text
+//= require fae/form/inputs/checkboxer
+//= require fae/form/_validator
+//= require fae/form/_cancel
+//= require fae/form/_ajax
+//= require fae/form/fae_chosen
+//= require fae/form/fileinputer
+
+//= require fae/navigation/_navigation
+//= require fae/navigation/_subnavHighlighter
+//= require fae/navigation/_mobileMenu
+//= require fae/navigation/_language
+
+//= require fae/_accordion
+//= require fae/hinter
+//= require fae/_modals
+//= require fae/_tables
+//= require fae/sticky
+//= require fae/fae_init
+
 //= require fae

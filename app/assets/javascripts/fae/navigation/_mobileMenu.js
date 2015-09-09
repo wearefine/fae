@@ -1,4 +1,4 @@
-var MobileMenu = {
+Fae.navigation.mobileMenu = {
   mobile_container: "#main_nav",
   trigger_selector: "#main_nav-menu_button",
   header_selector: ".main_nav-header",
@@ -106,7 +106,3 @@ var MobileMenu = {
     });
   },
 };
-
-$(function() {
-  MobileMenu.init();
-});

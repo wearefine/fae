@@ -1,4 +1,8 @@
-var AjaxForms = {
+/* global Fae */
+
+'use strict';
+
+Fae.form.ajax = {
 
   init: function() {
     this.set_elements();
@@ -11,6 +15,7 @@ var AjaxForms = {
       this.filter_select();
       this.filter_submission();
     }
+    this.image_delete_links();
   },
 
   set_elements: function() {
@@ -26,7 +31,7 @@ var AjaxForms = {
       var $parent = $this.closest('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      Admin.scroll_to($parent.find("tbody tr:last-child"), 90);
+      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
 
       AjaxForms.addedit_actions($this, $parent);
     });
@@ -54,7 +59,7 @@ var AjaxForms = {
       if ($wrapper.is(":hidden")) {
         // replace the content of the form area and initiate the chosen and fileinputer
         $wrapper.html(data).find(".select select").fae_chosen({ width: '300px' });
-        $wrapper.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
+        $wrapper.find(".input.file").fileinputer();
         $wrapper.slideDown();
       } else {
         // if it is visible, replace its content by retaining height
@@ -62,21 +67,23 @@ var AjaxForms = {
 
         // replace the content of the form area and then remove that height and then chosen and then fileinputer
         $wrapper.html(data).css("height", "").find(".select select").fae_chosen();
-        $wrapper.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
+        $wrapper.find(".input.file").fileinputer();
       }
 
-      Admin.init_date_picker();
-      Admin.init_daterange_picker();
-      Admin.init_slugger();
+      Fae.form.dates.date_picker();
+      Fae.form.dates.daterange_picker();
+      Fae.form.text.slugger();
 
       $wrapper.find(".hint").hinter();
     });
   },
 
   addedit_submission: function() {
+    var _this = this;
+
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 
-      $target = $(evt.target);
+      var $target = $(evt.target);
 
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
@@ -98,26 +105,26 @@ var AjaxForms = {
           // if there's a form wrap, slide it up before replacing content
           if ($form_wrapper.length) {
             $form_wrapper.slideUp(function(){
-              AjaxForms.addedit_replace_and_reinit($this, $(html)[1].innerHTML, $target);
+              _this.addedit_replace_and_reinit($this, $(html)[1].innerHTML, $target);
             });
           } else {
-            AjaxForms.addedit_replace_and_reinit($this, $(html)[1].innerHTML, $target);
+            _this.addedit_replace_and_reinit($this, $(html)[1].innerHTML, $target);
           }
 
           if (!$target.hasClass("js-delete-link")) {
-            Admin.scroll_to($parent);
+            Fae.helpers.scroll_to($parent);
           }
         } else if ($(html)[0].className === 'form_content-wrapper') {
           // we're returning the form due to an error, just replace the form
           $this.find('.form_content-wrapper').replaceWith(html);
           $this.find('.select select').fae_chosen();
-          $this.find(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
+          $this.find(".input.file").fileinputer();
 
-          Admin.scroll_to($this.find('.js-addedit-form-wrapper'));
+          Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
         }
 
-        AjaxForms.init();
-        Admin.fade_notices();
+        _this.init();
+        Fae.fade_notices();
 
       } else if ($target.hasClass("js-asset-delete-link")) {
         // handle remove asset links
@@ -132,7 +139,7 @@ var AjaxForms = {
     $this.html(html)
       .find(".select select").fae_chosen();
 
-    Admin.sortable();
+    Fae.tables.rowSorting();
   },
 
   filter_submission: function(params) {
@@ -180,7 +187,7 @@ var AjaxForms = {
         $.cookie(cookie_key, JSON.stringify(params));
 
         var hash = window.location.hash;
-        AjaxForms.set_filter_dropdowns(hash);
+        Fae.form.ajax.set_filter_dropdowns(hash);
       }
 
       _this.grind = new Grinder(callback);
@@ -240,5 +247,17 @@ var AjaxForms = {
         });
       }
     });
-  }
+  },
+
+  //ajax image delete links
+  image_delete_links: function() {
+    $('.imageDeleteLink').click(function(e) {
+      e.preventDefault();
+      if (confirm('Are you sure you want to delete this image?')) {
+        $.post($(this).attr('href'),'html');
+        $(this).parent().next().show();
+        $(this).parent().hide();
+      }
+    });
+  },
 };
