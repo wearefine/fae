@@ -1,6 +1,6 @@
 require_relative 'base_generator'
 module Fae
-  class NestedScaffoldGenerator < Fae::BaseGenerator
+  class NestedIndexScaffoldGenerator < Fae::BaseGenerator
     source_root File.expand_path('../templates', __FILE__)
 
     def go

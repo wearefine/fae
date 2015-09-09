@@ -23,6 +23,7 @@ module Fae
           ]
         },
         { text: 'Pages',          path: fae.pages_path },
+        { text: 'Cats', path: main_app.admin_cats_path },
         # scaffold inject marker
       ]
     end
