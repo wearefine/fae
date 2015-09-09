@@ -18,7 +18,6 @@ $.plugin = function(name, object) {
   };
 };
 
-
 //Smart resizer a la paul irish
 (function($,sr){
 
@@ -43,7 +42,7 @@ $.plugin = function(name, object) {
           timeout = setTimeout(delayed, threshold || 100);
       };
   };
-  // smartresize 
+  // smartresize
   jQuery.fn[sr] = function(fn){  return fn ? this.bind('resize', debounce(fn)) : this.trigger(sr); };
 
   /* usage:

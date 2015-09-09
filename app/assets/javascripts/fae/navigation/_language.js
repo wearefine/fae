@@ -1,6 +1,8 @@
+/* global Fae */
+
 'use strict';
 
-var LanguageNav = {
+Fae.navigation.language = {
 
 	init: function(options, elm){
 		this.set_elements();
@@ -66,7 +68,7 @@ var LanguageNav = {
 	// posts to Utilities#language_preference to save user's language preference
 	save_language_preference: function(lang) {
 		lang = lang || 'all'
-		var post_url = Admin.path + '/language_preference/' + lang;
+		var post_url = Fae.path + '/language_preference/' + lang;
 		$.post(post_url);
 	},
 

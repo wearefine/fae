@@ -225,6 +225,86 @@ function Grinder(callback) {
     },
 
     /**
+    * @function convert - change a JSON object into a string for the hash
+    * @param {object | string} obj - object to convert
+    * @return {string | boolean} to use in window.location.hash. Returns false if param is not object or string
+    */
+    convert: function(obj) {
+      if( obj.constructor === String ) {
+        obj = JSON.parse(obj);
+      }
+
+      // Escape if we're not dealing with an object
+      if( obj.constructor !== Object ) {
+        return false;
+      }
+
+      var keys = Object.keys(obj);
+      // Set start with a ?
+      var new_hash = '?';
+
+      // Loop through all keys in the obj
+      for(var i = 0; i < keys.length; i++) {
+        var key = keys[i];
+        var value = obj[keys[i]];
+
+        if( value.constructor === Array ) {
+          value = value.join(',');
+        }
+
+        // On next key, if it isn't the first, precede with an ampersand
+        if(new_hash !== '?') {
+          new_hash += '&';
+        }
+
+        // Append key/value to new_hash
+        new_hash += key + '=' + value;
+      }
+
+      return new_hash;
+    },
+
+    /**
+    * @function merge - wipe out or selectively replace keys in params
+    * @param {object | string} obj - query to replace
+    * @param {boolean} replace_all {false} - whether or not to blast existing params away or replace only changed keys
+    * @return {string} but also updates hash
+    */
+    merge: function(obj, replace_all) {
+      replace_all = setDefault(replace_all, false);
+      var new_hash;
+
+      // If it's a string, convert to an object
+      if( obj.constructor === String ) {
+        obj = JSON.parse(obj);
+      }
+
+      if( replace_all ) {
+        // Unilaterally make a string based on the params to use
+        new_hash = this.convert(obj);
+
+      } else {
+        var new_params = this.parse();
+        var keys = Object.keys(new_params);
+
+        for(var i = 0; i < keys.length; i++) {
+          var key = keys[i];
+          var value = new_params[key[i]];
+
+          if(obj.hasOwnProperty(key)) {
+            new_params[key] = obj[key];
+          }
+        }
+
+        new_hash = this.convert(new_params);
+      }
+
+      window.location.hash = '#' + new_hash;
+
+      return new_hash;
+    },
+
+    /**
     * @function param - retrieve a key's value
     * @param {string} key - param to target
     * @example
