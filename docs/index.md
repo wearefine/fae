@@ -185,6 +185,15 @@ rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-mode
 
 The nested scaffold creates a model that will be nested in another object's form via the `nested_table_advanced` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
 
+
+## fae:nested_index_scaffold
+
+```bash
+rails g fae:nested_index_scaffold [ModelName] [field:type] [field:type]
+```
+
+The nested index scaffold creates a normal model and a controller that supports the nested_index_form partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
+
 ## fae:page
 
 ```bash
