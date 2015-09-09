@@ -2,5 +2,5 @@ section.js-index-addedit-form
   == render 'fae/shared/nested_index_header'
 
   = render 'fae/shared/nested_index_table',
-    item: :cats,
-    cols: [:whiskers, :tail, :body]
+    item: :<%= file_name.pluralize %>,
+    cols: [<%= @form_attrs.map {|attr| ":#{attr}"}.join(', ') %>]

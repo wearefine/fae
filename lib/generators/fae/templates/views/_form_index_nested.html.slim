@@ -1,0 +1,6 @@
+= simple_form_for(['<%= options.namespace %>', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
+<% @form_attrs.each do |attr| -%>
+  = fae_input f, :<%= attr %>
+<% end -%>
+
+  = f.submit

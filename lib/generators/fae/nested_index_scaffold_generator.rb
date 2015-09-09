@@ -19,5 +19,17 @@ module Fae
         template "controllers/nested_index_scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
       end
 
+      def generate_view_files
+        @toggle_attrs = set_toggle_attrs
+        @form_attrs = set_form_attrs
+        @association_names = @@association_names
+        @has_position = @@has_position
+        @display_field = @@display_field
+        template "views/index_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"
+        template "views/_form_index_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
+        copy_file "views/new_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
+        copy_file "views/edit_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/edit.html.#{options.template}"
+      end
+
   end
 end

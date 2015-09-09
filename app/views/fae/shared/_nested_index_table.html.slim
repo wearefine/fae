@@ -62,7 +62,7 @@ ruby:
                 = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
         - else
           tr
-            - td_link = link_to "add some", self.send(new_path, item_id: item.id, item_class: item.class.to_s), class: 'js-add-link'
+            - td_link = link_to "add some", self.send(new_path, item_class: item.class.to_s), class: 'js-add-link'
 
             td colspan=colspan.to_s == "No #{title} yet, #{td_link}."
 
