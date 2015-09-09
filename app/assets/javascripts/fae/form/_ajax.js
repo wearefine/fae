@@ -44,7 +44,7 @@ Fae.form.ajax = {
       var $parent = $('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      Admin.scroll_to($parent.find("tbody tr:last-child"), 90);
+      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
 
       Fae.form.ajax.addedit_actions($this, $parent);
     });
