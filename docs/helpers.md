@@ -439,9 +439,9 @@ render 'fae/shared/form_buttons', save_button_text: 'Yes!', cancel_button_text: 
 
 ## nested_table
 
-The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display an nested ajax form for creating associated items in the edit form.
+The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display a nested ajax form for creating associated items in the edit form.
 
-The nested_table should go after the main form ends and should only placed on the edit page (it required the parent_item to be present to associate new items to).
+The nested_table should go after the main form ends and should only placed on the edit page (it requires the parent_item to be present to associate new items to).
 
 | option | type | default | description |
 |-|-|-|-|
@@ -468,6 +468,37 @@ Full SLIM implementation with section wrapper and edit page conditional
       parent_item: @item,
       cols: [:name, :author, :live],
       ordered: true
+```
+
+## nested_index_table
+
+The nested index table, typically created by the nested index scaffold generator, displays an nested ajax form for quickly creating and editing items from the index.
+
+The nested_index_table needs the needs the nested_index_header and requires item to be present. Must be wrapped in `section.js-index-addedit-form` for the forms to display correctly.
+
+| option | type | default | description |
+|-|-|-|-|
+| item   | symbol | | **(required)** the association's name  |
+| cols | array of symbols | [] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
+| title | string | assoc.to_s.humanize | the H3 directly above the form |
+| header | string | title | the section's header |
+| add_button_text | string | "Add #{title.singularize}" | the add button's text |
+| ordered | boolean | false | allows list view to be sortable, which is saved to a `position` atttribute |
+| has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
+| edit_column | boolean | false | displays edit link
+
+
+**Examples**
+
+Full SLIM implementation with section wrapper and edit page conditional
+```slim
+section.js-index-addedit-form
+  == render 'fae/shared/nested_index_header'
+
+  = render 'fae/shared/nested_index_table',
+    item: :people_roles,
+    ordered: true,
+    cols: [:name]
 ```
 
 ## Add-ons

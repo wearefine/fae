@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#50224](https://issues.afinedevelopment.com/issues/50224) Nested form functionality for indexes
     + [#49436](https://issues.afinedevelopment.com/issues/49436) Added slugger functionality to nested tables
     + [#49408](https://issues.afinedevelopment.com/issues/49408) Save filtered state in cookie
 - bugs
