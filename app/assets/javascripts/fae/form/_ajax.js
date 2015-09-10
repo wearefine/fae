@@ -55,9 +55,9 @@ Fae.form.ajax = {
     });
   },
 
-  addedit_actions: function(field, parent) {
+  addedit_actions: function(field, $parent) {
     var $this = $(field);
-    var $wrapper = $(parent).find('.js-addedit-form-wrapper');
+    var $wrapper = $parent.find('.js-addedit-form-wrapper');
 
     $.get($this.attr('href'), function(data){
       // check to see if the content is hidden and slide it down if it is.
