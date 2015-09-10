@@ -1,5 +1,8 @@
+- nested      ||= false
 - title       ||= @klass_humanized.pluralize
 - new_button    = !local_assigns[:new_button].eql?(false)
+- assoc_name_singular ||= @klass_singular
+- new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
 - button_text ||= "Add #{title.singularize}"
 - csv         ||= false
 section.main_content-header
@@ -7,7 +10,10 @@ section.main_content-header
     h1 = title
     - if new_button
       .main_content-header-save
-        a.add-button href=@new_path = button_text
+        - if nested
+          a.add-button.js-add-link remote='true' href=self.send(new_path) = button_text
+        - else
+          a.add-button href=@new_path = button_text
     - if csv && @items.present?
       .main_content-header-csv
         a.csv-button href="#{@index_path}.csv" Export to CSV

@@ -1,5 +1,5 @@
 section.js-index-addedit-form
-  == render 'fae/shared/nested_index_header'
+  == render 'fae/shared/index_header', nested: true
 
   = render 'fae/shared/nested_index_table',
     item: :<%= file_name.pluralize %>,

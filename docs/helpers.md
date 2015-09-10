@@ -459,7 +459,7 @@ The nested_table should go after the main form ends and should only placed on th
 
 **Examples**
 
-Full SLIM implementation with section wrapper and edit page conditional
+Full Slim implementation with section wrapper and edit page conditional
 ```slim
 - if params[:action] == 'edit'
   section.main_content-section
@@ -474,7 +474,7 @@ Full SLIM implementation with section wrapper and edit page conditional
 
 The nested index table, typically created by the nested index scaffold generator, displays an nested ajax form for quickly creating and editing items from the index.
 
-The nested_index_table needs the needs the nested_index_header and requires item to be present. Must be wrapped in `section.js-index-addedit-form` for the forms to display correctly.
+The nested_index_table needs the needs the index_header with `, nested: true` at the end, and requires item to be present. Must be wrapped in `section.js-index-addedit-form` for the forms to display correctly.
 
 | option | type | default | description |
 |-|-|-|-|
@@ -490,7 +490,7 @@ The nested_index_table needs the needs the nested_index_header and requires item
 
 **Examples**
 
-Full SLIM implementation with section wrapper and edit page conditional
+Full Slim implementation with section wrapper and edit page conditional
 ```slim
 section.js-index-addedit-form
   == render 'fae/shared/nested_index_header'
