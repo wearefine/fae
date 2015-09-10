@@ -105,7 +105,7 @@ Fae.form.ajax = {
         if ($(html)[1] && $(html)[1].className === 'main_content-section-area') {
           // we're returning the table, replace everything
 
-          var $form_wrapper = $(this).find('.js-addedit-form-wrapper');
+          var $form_wrapper = $this.find('.js-addedit-form-wrapper');
 
           // if there's a form wrap, slide it up before replacing content
           if ($form_wrapper.length) {
@@ -159,7 +159,7 @@ Fae.form.ajax = {
         if ($(html)[0] && $(html)[0].className === 'js-index-addedit-form') {
           // we're returning the table, replace everything
 
-          var $form_wrapper = $(this).find('.js-addedit-form-wrapper');
+          var $form_wrapper = $this.find('.js-addedit-form-wrapper');
 
           // if there's a form wrap, slide it up before replacing content
           if ($form_wrapper.length) {
