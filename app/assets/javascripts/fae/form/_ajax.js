@@ -6,10 +6,12 @@ Fae.form.ajax = {
 
   init: function() {
     this.set_elements();
-    this.nested_addedit_links();
-    this.index_addedit_links();
-    this.index_addedit_submission();
-    this.nested_addedit_submission();
+    if(!this.has_reinit) {
+      this.nested_addedit_links();
+      this.nested_addedit_submission();
+      this.index_addedit_links();
+      this.index_addedit_submission();
+    }
     this.delete_no_form();
     this.apply_cookies();
     if (this.$filter_form.length) {
@@ -18,6 +20,8 @@ Fae.form.ajax = {
     }
     this.image_delete_links();
   },
+
+  has_reinit: false,
 
   set_elements: function() {
     this.$addedit_form = $('.js-addedit-form');
@@ -124,6 +128,7 @@ Fae.form.ajax = {
           Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
         }
 
+        _this.has_reinit = true;
         _this.init();
         Fae.fade_notices();
 
@@ -169,15 +174,8 @@ Fae.form.ajax = {
             Fae.helpers.scroll_to($parent);
           }
         }
-        // else if ($(html)[0].className === 'form_content-wrapper') {
-        //   // we're returning the form due to an error, just replace the form
-        //   $this.find('.form_content-wrapper').replaceWith(html);
-        //   $this.find('.select select').fae_chosen();
-        //   $this.find(".input.file").fileinputer();
 
-        //   Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
-        // }
-
+        _this.has_reinit = true;
         _this.init();
         Fae.fade_notices();
 
