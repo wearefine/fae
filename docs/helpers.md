@@ -493,9 +493,9 @@ The nested_index_table needs the needs the index_header with `, nested: true` at
 Full Slim implementation with section wrapper and edit page conditional
 ```slim
 section.js-index-addedit-form
-  == render 'fae/shared/nested_index_header'
+  == render 'fae/shared/nested_index_header', nested: true
 
-  = render 'fae/shared/nested_index_table',
+  = render 'fae/shared/index_table',
     item: :people_roles,
     ordered: true,
     cols: [:name]
