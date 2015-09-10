@@ -8,7 +8,8 @@ Fae.form.ajax = {
     this.set_elements();
     this.nested_addedit_links();
     this.index_addedit_links();
-    this.addedit_submission();
+    this.index_addedit_submission();
+    this.nested_addedit_submission();
     this.delete_no_form();
     this.apply_cookies();
     if (this.$filter_form.length) {
@@ -78,7 +79,7 @@ Fae.form.ajax = {
     });
   },
 
-  addedit_submission: function() {
+  nested_addedit_submission: function() {
     var _this = this;
 
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
@@ -122,6 +123,60 @@ Fae.form.ajax = {
 
           Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
         }
+
+        _this.init();
+        Fae.fade_notices();
+
+      } else if ($target.hasClass("js-asset-delete-link")) {
+        // handle remove asset links
+        $target.parent().fadeOut('fast', function() {
+          $(this).next('.asset-inputs').fadeIn('fast');
+        });
+      }
+    });
+  },
+
+  index_addedit_submission: function() {
+    var _this = this;
+
+    this.$index_addedit_form.on('ajax:success', function(evt, data, status, xhr){
+
+      var $target = $(evt.target);
+
+      // ignore calls not returning html
+      if (data !== ' ' && $(data)[0]) {
+        var $this = $(this);
+        var $parent = $this.parent();
+
+        // we're manipulating the return so let's store in a var and keep 'data' intact
+        var html = data;
+
+        if ($(html)[0] && $(html)[0].className === 'js-index-addedit-form') {
+          // we're returning the table, replace everything
+
+          var $form_wrapper = $(this).find('.js-addedit-form-wrapper');
+
+          // if there's a form wrap, slide it up before replacing content
+          if ($form_wrapper.length) {
+            $form_wrapper.slideUp(function(){
+              _this.addedit_replace_and_reinit($this, $(html)[0].innerHTML, $target);
+            });
+          } else {
+            _this.addedit_replace_and_reinit($this, $(html)[0].innerHTML, $target);
+          }
+
+          if (!$target.hasClass("js-delete-link")) {
+            Fae.helpers.scroll_to($parent);
+          }
+        }
+        // else if ($(html)[0].className === 'form_content-wrapper') {
+        //   // we're returning the form due to an error, just replace the form
+        //   $this.find('.form_content-wrapper').replaceWith(html);
+        //   $this.find('.select select').fae_chosen();
+        //   $this.find(".input.file").fileinputer();
+
+        //   Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
+        // }
 
         _this.init();
         Fae.fade_notices();
