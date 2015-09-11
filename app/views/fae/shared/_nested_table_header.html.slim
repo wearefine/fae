@@ -1,0 +1,10 @@
+- if index
+  .main_content-section-area
+    section.js-addedit-form
+- else
+  h2.main_content-section-title = header
+  .main_content-section-area
+    section.js-addedit-form
+      a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
+      h3 = title
+      == render 'fae/application/flash_messages'
