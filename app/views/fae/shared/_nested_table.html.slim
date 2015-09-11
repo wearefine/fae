@@ -1,9 +1,8 @@
 ruby:
-  # return if params[:action] === 'new'
-
   require_locals(['assoc', 'parent_item'], local_assigns)
 
   # optional locals
+  index               ||= false
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
   title               ||= assoc_name.humanize             # 'Restaurant Bars'
   header              ||= title
@@ -24,13 +23,19 @@ ruby:
   new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
   edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
 
-h2.main_content-section-title = header
-.main_content-section-area
-  section.js-addedit-form
-    a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
-    h3 = title
+- if index
+  .main_content-section-area
+    section.js-addedit-form
 
-    == render 'fae/application/flash_messages'
+- else
+  h2.main_content-section-title = header
+  .main_content-section-area
+    section.js-addedit-form
+      a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
+      h3 = title
+
+      == render 'fae/application/flash_messages'
+
     table class=table_class
       thead
         tr
@@ -45,8 +50,9 @@ h2.main_content-section-title = header
             th.main_table-header-edit data-sorter="false" Edit
           th.main_table-header-delete Delete
       tbody
-        - if parent_item.send(assoc).present?
-          - parent_item.send(assoc).each do |item|
+        - records = parent_item.present? ? parent_item.send(assoc) : @items
+        - if records.present?
+          - records.each do |item|
             tr id="#{ tr_id(item) }"
               - if ordered
                 td.main_content-sortable-handle
@@ -69,7 +75,10 @@ h2.main_content-section-title = header
                 = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
         - else
           tr
-            - td_link = link_to "add some", self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link'
+            - if index
+              - td_link = link_to "add some", self.send(new_path), class: 'js-add-link'
+            - else
+              - td_link = link_to "add some", self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link'
 
             td colspan=colspan.to_s == "No #{title} yet, #{td_link}."
 
