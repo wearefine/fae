@@ -383,6 +383,7 @@ Displays page title, add button and flash messages.
 
 | option | type | default | description |
 |-|-|-|-|
+| nested | boolean | false | converts normal add button to nested add button
 | title | string | @klass_humanized.pluralize | the page's H1 |
 | new_button | boolean | true | displays the add button |
 | button_text | string | "Add #{title.singularize}" | add button text |
