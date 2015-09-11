@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825231046) do
+ActiveRecord::Schema.define(version: 20150909230658) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -38,6 +38,14 @@ ActiveRecord::Schema.define(version: 20150825231046) do
   end
 
   add_index "aromas", ["release_id"], name: "index_aromas_on_release_id", using: :btree
+
+  create_table "cats", force: :cascade do |t|
+    t.string   "name",        limit: 255
+    t.boolean  "friendly",    limit: 1
+    t.text     "description", limit: 65535
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+  end
 
   create_table "coaches", force: :cascade do |t|
     t.string   "first_name", limit: 255

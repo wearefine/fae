@@ -1,0 +1,7 @@
+section.js-index-addedit-form
+  == render 'fae/shared/index_header', nested: true
+
+  = render 'fae/shared/nested_table',
+    assoc: :cats,
+    index: true,
+    cols: [:name, :friendly, :description]

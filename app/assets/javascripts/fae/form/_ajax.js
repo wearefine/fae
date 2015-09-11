@@ -6,8 +6,12 @@ Fae.form.ajax = {
 
   init: function() {
     this.set_elements();
-    this.addedit_links();
-    this.addedit_submission();
+    if(!this.has_reinit) {
+      this.nested_addedit_links();
+      this.nested_addedit_submission();
+      this.index_addedit_links();
+      this.index_addedit_submission();
+    }
     this.delete_no_form();
     this.apply_cookies();
     if (this.$filter_form.length) {
@@ -17,47 +21,69 @@ Fae.form.ajax = {
     this.image_delete_links();
   },
 
+  has_reinit: false,
+
   set_elements: function() {
     this.$addedit_form = $('.js-addedit-form');
+    this.$index_addedit_form = $('.js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
   },
 
-  addedit_links: function() {
+  nested_addedit_links: function() {
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
       var $parent = $this.closest('.js-addedit-form');
-      var $wrapper = $parent.find('.js-addedit-form-wrapper');
 
       // scroll to the last column of the tbody, where the form will start
       Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
 
-      $.get($this.attr('href'), function(data){
-        // check to see if the content is hidden and slide it down if it is.
-        if ($wrapper.is(":hidden")) {
-          // replace the content of the form area and initiate the chosen and fileinputer
-          $wrapper.html(data).find(".select select").fae_chosen({ width: '300px' });
-          $wrapper.find(".input.file").fileinputer();
-          $wrapper.slideDown();
-        } else {
-          // if it is visible, replace its content by retaining height
-          $wrapper.height($wrapper.height());
-
-          // replace the content of the form area and then remove that height and then chosen and then fileinputer
-          $wrapper.html(data).css("height", "").find(".select select").fae_chosen();
-          $wrapper.find(".input.file").fileinputer();
-        }
-
-        Fae.form.dates.date_picker();
-        Fae.form.dates.daterange_picker();
-        Fae.form.text.slugger();
-
-        $wrapper.find(".hint").hinter();
-      });
+      Fae.form.ajax.addedit_actions($this, $parent);
     });
   },
 
-  addedit_submission: function() {
+  index_addedit_links: function() {
+    this.$index_addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
+      ev.preventDefault();
+      var $this = $(this);
+      var $parent = $('.js-addedit-form');
+
+      // scroll to the last column of the tbody, where the form will start
+      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
+
+      Fae.form.ajax.addedit_actions($this, $parent);
+    });
+  },
+
+  addedit_actions: function(field, $parent) {
+    var $this = $(field);
+    var $wrapper = $parent.find('.js-addedit-form-wrapper');
+
+    $.get($this.attr('href'), function(data){
+      // check to see if the content is hidden and slide it down if it is.
+      if ($wrapper.is(":hidden")) {
+        // replace the content of the form area and initiate the chosen and fileinputer
+        $wrapper.html(data).find(".select select").fae_chosen({ width: '300px' });
+        $wrapper.find(".input.file").fileinputer();
+        $wrapper.slideDown();
+      } else {
+        // if it is visible, replace its content by retaining height
+        $wrapper.height($wrapper.height());
+
+        // replace the content of the form area and then remove that height and then chosen and then fileinputer
+        $wrapper.html(data).css("height", "").find(".select select").fae_chosen();
+        $wrapper.find(".input.file").fileinputer();
+      }
+
+      Fae.form.dates.date_picker();
+      Fae.form.dates.daterange_picker();
+      Fae.form.text.slugger();
+
+      $wrapper.find(".hint").hinter();
+    });
+  },
+
+  nested_addedit_submission: function() {
     var _this = this;
 
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
@@ -79,7 +105,7 @@ Fae.form.ajax = {
         if ($(html)[1] && $(html)[1].className === 'main_content-section-area') {
           // we're returning the table, replace everything
 
-          var $form_wrapper = $(this).find('.js-addedit-form-wrapper');
+          var $form_wrapper = $this.find('.js-addedit-form-wrapper');
 
           // if there's a form wrap, slide it up before replacing content
           if ($form_wrapper.length) {
@@ -102,6 +128,54 @@ Fae.form.ajax = {
           Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
         }
 
+        _this.has_reinit = true;
+        _this.init();
+        Fae.fade_notices();
+
+      } else if ($target.hasClass("js-asset-delete-link")) {
+        // handle remove asset links
+        $target.parent().fadeOut('fast', function() {
+          $(this).next('.asset-inputs').fadeIn('fast');
+        });
+      }
+    });
+  },
+
+  index_addedit_submission: function() {
+    var _this = this;
+
+    this.$index_addedit_form.on('ajax:success', function(evt, data, status, xhr){
+
+      var $target = $(evt.target);
+
+      // ignore calls not returning html
+      if (data !== ' ' && $(data)[0]) {
+        var $this = $(this);
+        var $parent = $this.parent();
+
+        // we're manipulating the return so let's store in a var and keep 'data' intact
+        var html = data;
+
+        if ($(html)[0] && $(html)[0].className === 'js-index-addedit-form') {
+          // we're returning the table, replace everything
+
+          var $form_wrapper = $this.find('.js-addedit-form-wrapper');
+
+          // if there's a form wrap, slide it up before replacing content
+          if ($form_wrapper.length) {
+            $form_wrapper.slideUp(function(){
+              _this.addedit_replace_and_reinit($this, $(html)[0].innerHTML, $target);
+            });
+          } else {
+            _this.addedit_replace_and_reinit($this, $(html)[0].innerHTML, $target);
+          }
+
+          if (!$target.hasClass("js-delete-link")) {
+            Fae.helpers.scroll_to($parent);
+          }
+        }
+
+        _this.has_reinit = true;
         _this.init();
         Fae.fade_notices();
 

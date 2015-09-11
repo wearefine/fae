@@ -383,6 +383,7 @@ Displays page title, add button and flash messages.
 
 | option | type | default | description |
 |-|-|-|-|
+| nested | boolean | false | converts normal add button to nested add button
 | title | string | @klass_humanized.pluralize | the page's H1 |
 | new_button | boolean | true | displays the add button |
 | button_text | string | "Add #{title.singularize}" | add button text |
@@ -439,13 +440,14 @@ render 'fae/shared/form_buttons', save_button_text: 'Yes!', cancel_button_text: 
 
 ## nested_table
 
-The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display an nested ajax form for creating associated items in the edit form.
+The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display a nested ajax form for creating associated items in the edit form.
 
-The nested_table should go after the main form ends and should only placed on the edit page (it required the parent_item to be present to associate new items to).
+The nested_table should go after the main form ends and should only placed on the edit page (it requires the parent_item to be present to associate new items to).
 
 | option | type | default | description |
 |-|-|-|-|
-| assoc   | symbol | | **(required)** the association's name  |
+| index | false | boolean | used for nested index forms |
+| assoc   | symbol | | **(required)** the association's name, or the item's name if it's for the index  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
 | cols | array of symbols | [] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
@@ -459,7 +461,7 @@ The nested_table should go after the main form ends and should only placed on th
 
 **Examples**
 
-Full SLIM implementation with section wrapper and edit page conditional
+Full Slim implementation with section wrapper and edit page conditional
 ```slim
 - if params[:action] == 'edit'
   section.main_content-section
