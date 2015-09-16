@@ -3,24 +3,24 @@
 ## Unreleased
 
 - enhancements
-    + [#50224](https://issues.afinedevelopment.com/issues/50224) Nested form functionality for indexes
-    + [#49436](https://issues.afinedevelopment.com/issues/49436) Added slugger functionality to nested tables
-    + [#49408](https://issues.afinedevelopment.com/issues/49408) Save filtered state in cookie
 - bugs
-    + [#50347](https://issues.afinedevelopment.com/issues/50347) Fix extra long width for phone number fields
-    + [#50383](https://issues.afinedevelopment.com/issues/50383) Fix flickering when editing and adding multiple nested objects
-    + [#50021](https://issues.afinedevelopment.com/issues/50021) Fix Markdown supported" link-to-modal in nested forms
-    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add validation to nested forms
-    + [#50248](https://issues.afinedevelopment.com/issues/50248) Allow text selection in tables
 
 ## 1.1.6
 
 - enhancements
     + Add `config.recreate_versions` to initializer, to ensure conditional Carrierwave versions are created after attributes are save to the model
     + [#49400](https://issues.afinedevelopment.com/issues/49400) Add plus icon to new item button
+    + [#50224](https://issues.afinedevelopment.com/issues/50224) Nested form functionality for indexes
+    + [#49436](https://issues.afinedevelopment.com/issues/49436) Added slugger functionality to nested tables
+    + [#49408](https://issues.afinedevelopment.com/issues/49408) Save filtered state in cookie
 - bugs
     + [#48221](https://issues.afinedevelopment.com/issues/48221) Increase padding on right textarea gutter
     + [#48215](https://issues.afinedevelopment.com/issues/48215) Wrap helper text with input field; radio buttons go on their own line
+    + [#50347](https://issues.afinedevelopment.com/issues/50347) Fix extra long width for phone number fields
+    + [#50383](https://issues.afinedevelopment.com/issues/50383) Fix flickering when editing and adding multiple nested objects
+    + [#50021](https://issues.afinedevelopment.com/issues/50021) Fix Markdown supported" link-to-modal in nested forms
+    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add validation to nested forms
+    + [#50248](https://issues.afinedevelopment.com/issues/50248) Allow text selection in tables
 
 ## 1.1.5
 
