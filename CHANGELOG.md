@@ -7,6 +7,7 @@
     + [#49436](https://issues.afinedevelopment.com/issues/49436) Added slugger functionality to nested tables
     + [#49408](https://issues.afinedevelopment.com/issues/49408) Save filtered state in cookie
 - bugs
+    + [#50347](https://issues.afinedevelopment.com/issues/50347) Fix extra long width for phone number fields
     + [#50383](https://issues.afinedevelopment.com/issues/50383) Fix flickering when editing and adding multiple nested objects
     + [#50021](https://issues.afinedevelopment.com/issues/50021) Fix Markdown supported" link-to-modal in nested forms
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add validation to nested forms
