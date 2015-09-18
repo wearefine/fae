@@ -10,6 +10,7 @@ ruby:
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
   title               ||= assoc_name.humanize             # 'Restaurant Bars'
+  header              ||= title
   add_button_text     ||= "Add #{title.singularize}"
 
   # lesser known optional locals, dervived from options by default
