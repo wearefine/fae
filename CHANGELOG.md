@@ -5,6 +5,7 @@
 - enhancements
     + [#49887](https://issues.afinedevelopment.com/issues/49887) Standardize appearance of all gray buttons
 - bugs
+    + fix for nested tables, move header option to parent, not needed on child
 
 ## 1.1.6
 
