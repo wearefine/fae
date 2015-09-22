@@ -7,6 +7,11 @@
 - bugs
     + fix for nested tables, move header option to parent, not needed on child
 
+## 1.2
+
+- enhancements
+- bugs
+
 ## 1.1.6
 
 - enhancements
