@@ -20,9 +20,21 @@ module Fae
     def self.set_assocs
       # create has_one associations
       fae_fields.each do |key, value|
-        send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(value), class_name: value.to_s, dependent: :destroy
+        type = value.is_a?(Hash) ? value[:type] : value
+
+        send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(type), class_name: type.to_s, dependent: :destroy
         send :accepts_nested_attributes_for, key, allow_destroy: true
         send :define_method, :"#{key}_content", -> { send(key.to_sym).try(:content) }
+
+        if value.is_a?(Hash) && value[:validates].present?
+          unique_method_name = "is_#{self.name.underscore}_#{key.to_s}?".to_sym
+          slug = @slug
+          value[:validates][:if] = unique_method_name
+          type.validates(:content, value[:validates])
+          type.send(:define_method, unique_method_name) do
+            contentable.slug == slug && attached_as == key.to_s
+          end
+        end
       end
     end
 
