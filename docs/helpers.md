@@ -310,7 +310,7 @@ Dislays a select tag to be used within a `fae_filter_form`.
 | label        | string                  | attribute.to_s.titleize        | label on select |
 | collection   | ActiveRecord collection | AttributeAsClass.for_fae_index | the collection of AR objects to populate the select options |
 | label_method | symbol                  | :fae_display_field             | the attribute to use as the label in the select options |
-| placeholder  | string or boolean       | "Select a #{options[:label]}"  | the blank value in the select, can be set to false to disable |
+| placeholder  | string or boolean       | "All #{options[:label]}"       | the blank value in the select, can be set to false to disable |
 | options      | array                   | []                             | an alternative array of options if the options aren't an ActiveRecord collection |
 
 **Examples**
