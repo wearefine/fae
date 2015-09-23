@@ -38,11 +38,11 @@ describe 'fae_filter_select' do
   end
 
   describe 'placeholder option' do
-    it 'should default to "Select a Class Name" and be overridable' do
+    it 'should default to "All Class Names" and be overridable' do
       admin_login
       get admin_releases_path
 
-      expect(response.body).to include('Select a Wine')
+      expect(response.body).to include('All Wines')
       expect(response.body).to include('Select some stuff')
     end
   end
