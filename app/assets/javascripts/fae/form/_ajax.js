@@ -19,6 +19,7 @@ Fae.form.ajax = {
       this.filter_submission();
     }
     this.image_delete_links();
+    this.htmlListeners();
   },
 
   has_reinit: false,
@@ -36,7 +37,7 @@ Fae.form.ajax = {
       var $parent = $this.closest('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
+      FCH.smoothScroll($parent.find("tbody tr:last-child"), 500, 100, 90);
 
       Fae.form.ajax.addedit_actions($this, $parent);
     });
@@ -49,7 +50,7 @@ Fae.form.ajax = {
       var $parent = $('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
+      FCH.smoothScroll($parent.find("tbody tr:last-child"), 500, 100, 90);
 
       Fae.form.ajax.addedit_actions($this, $parent);
     });
@@ -117,7 +118,7 @@ Fae.form.ajax = {
           }
 
           if (!$target.hasClass("js-delete-link")) {
-            Fae.helpers.scroll_to($parent);
+            FCH.smoothScroll($parent, 500, 100, 120);
           }
         } else if ($(html)[0].className === 'form_content-wrapper') {
           // we're returning the form due to an error, just replace the form
@@ -125,7 +126,7 @@ Fae.form.ajax = {
           $this.find('.select select').fae_chosen();
           $this.find(".input.file").fileinputer();
 
-          Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
+          FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
         }
 
         _this.has_reinit = true;
@@ -171,7 +172,7 @@ Fae.form.ajax = {
           }
 
           if (!$target.hasClass("js-delete-link")) {
-            Fae.helpers.scroll_to($parent);
+            FCH.smoothScroll($parent, 500, 100, 120);
           }
         }
 
@@ -313,4 +314,30 @@ Fae.form.ajax = {
       }
     });
   },
+
+  // attaching click handlers to #main_content to allow ajax replacement
+  htmlListeners: function() {
+    $('#main_content')
+
+      // for the yes/no slider
+      .on('click', '.slider-wrapper', function(e){
+        e.preventDefault();
+        $(this).toggleClass("slider-yes-selected");
+      })
+
+      // The settings menu for tables
+      .on('click', '.main_table-action_menu-trigger', function(e){
+        $(this).toggleClass("js-active");
+      })
+
+      // for checkboxes
+      .on('click', '.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
+        $(this).toggleClass("js-active");
+      })
+
+      // stop the event bubbling and running the above toggleClass twice
+      .on('click', '.boolean :checkbox, .checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
+        e.stopPropagation();
+      });
+  }
 };

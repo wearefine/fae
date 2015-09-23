@@ -30,7 +30,7 @@ Fae.form.validator = {
       });
       if (self.vars.IS_VALID === false) {
         Fae.navigation.language.check_for_hidden_errors();
-        Fae.helpers.scroll_to($('span.error').first());
+        FCH.smoothScroll($('span.error').first(), 500, 100, 120);
         e.preventDefault();
       }
     });

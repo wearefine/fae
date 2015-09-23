@@ -1,4 +1,4 @@
-/* global Fae */
+/* global Fae, FCH */
 
 'use strict';
 
@@ -43,9 +43,9 @@ Fae.accordion = {
 		var self = this;
 		if (this.initialized === false) {
 			$(window).on("resize", function(){
-				if ($(window).width() < Fae.breakpoints.desktop) {
+				if (FCH.bp.small) {
 					self.destroy();
-				} else if ($(window).width() >= Fae.breakpoints.desktop) {
+				} else if (FCH.bp.small_up) {
 					self.init();
 				}
 			});

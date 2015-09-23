@@ -1,14 +1,8 @@
 // This file is named Admin because child-project asset folders should have a fae.js file to override or add functionality to the admin
 var Fae = {
-    path: '<%= Rails.application.routes.url_helpers.fae_path %>',
-
-    breakpoints: {
-      desktop: 800
-    },
+  path: '<%= Rails.application.routes.url_helpers.fae_path %>',
 
   init: function(){
-    var that = this;
-
     this.form.init();
     this.modals.init();
     this.navigation.init();
@@ -21,102 +15,9 @@ var Fae = {
     // make all the hint areas
     $(".hint").hinter();
 
-
     // sticket header for the content area
     $(".main_content-header").sticky({ offset: 0, min_desktop: true });
     $("#main_nav").sticky({ offset: 0, make_placeholder: false, min_desktop: true});
-
-
-    // button dropdown class toggle
-    $(".button-dropdown").click(function(){
-      $(this).toggleClass("button-dropdown--opened");
-    });
-
-    // button dropdown click anywhere but the dropdown close
-    $("body").click(function(e){
-      if ($(e.target).closest(".button-dropdown").length === 0) {
-        $(".button-dropdown").removeClass("button-dropdown--opened");
-      }
-    });
-
-    // scroll_to event for non-ajax'd table forms
-    $(".table-add-link-visible").click("on", function(){
-      var $parent = $(this).closest('section');
-      that.scroll_to($parent.find("tbody tr:last-child"), 90);
-    });
-
-    // Login page checkbox
-    $(".login-body").on('click', 'label.boolean', function(e){
-      $(this).toggleClass("js-active");
-    }).on('click', '.input.boolean :checkbox', function(e){
-      e.stopPropagation();
-    });
-
-    // attaching click handlers to #main_content to allow ajax replacement
-    $('#main_content')
-      // for the yes/no slider
-      .on('click', '.slider-wrapper', function(e){
-        e.preventDefault();
-        $(this).toggleClass("slider-yes-selected");
-      })
-      // The settings menu for tables
-      .on('click', '.main_table-action_menu-trigger', function(e){
-        $(this).toggleClass("js-active");
-      })
-      // for checkboxes
-      .on('click', '.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
-        $(this).toggleClass("js-active");
-      })
-      // stop the event bubbling and running the above toggleClass twice
-      .on('click', '.boolean :checkbox, .checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
-        e.stopPropagation();
-      })
-      // for ajax forms. gotta hijack before it's submitted for some slide up action.
-      .on('click', '.js-addedit-form-wrapper input[type=submit]', function(e){
-        // e.preventDefault();
-        // var $form = $(this).closest('form');
-        // that.scroll_to($(this).closest('.js-addedit-form'));
-        // $(this).closest('.js-addedit-form-wrapper').slideUp(function(){
-        //   $form.submit();
-        //   that.sortable();
-        // });
-      });
-
-    // Run through the checkboxes and see if they are checked. apply js class for styling.
-    $('.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
-      if ($(this).find(":checkbox:checked").length > 0) {
-        $(this).addClass("js-active");
-      }
-    });
-
-    // utility nav drop down
-    $('.utility_nav-user > a, .utility_nav-view > a').on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var $sub_nav = $(this);
-
-      // there could be more than one. so remove all of the clicked statuses and add to the specific one
-      $('.utility_nav-clicked').removeClass('utility_nav-clicked');
-      $sub_nav.addClass('utility_nav-clicked');
-
-      // assign a once function to close the menus
-      $(document).on('click.utility_nav', function(e){
-        // as long as the click is not in the menu
-        if ($(e.target).closest('.utility_sub_nav').length === 0) {
-          // remove the class from the utility nav
-          $sub_nav.removeClass('utility_nav-clicked');
-
-          // unbind the click from the document, no need to keep it around.
-          $(document).off('click.utility_nav');
-        }
-      });
-    });
-
-    this.fade_notices();
-  },
-
-  fade_notices: function() {
-    $('.notice, .alert, .error').not('.input .error').delay(3000).slideUp('fast');
   },
 
 };

@@ -3,20 +3,20 @@
 Fae.form.dates = {
 
   init: function() {
-    this.date_picker();
-    this.daterange_picker();
+    this.initDatepicker();
+    this.initDateRangePicker();
   },
 
-  date_picker: function() {
-    $(".datepicker input").datepicker({
-      dateFormat: "M dd, yy",
+  initDatepicker: function() {
+    $('.datepicker input').datepicker({
+      dateFormat: 'M dd, yy',
       inline: true,
       showOtherMonths: true,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     });
   },
 
-  daterange_picker: function() {
+  initDateRangePicker: function() {
     $.dateRangePickerLanguages['custom'] = {
       'selected': 'Choosed:',
       'days': 'Days',
@@ -43,9 +43,9 @@ Fae.form.dates = {
     };
 
     // daterangepicker instantiation
-    if ($(".daterangepicker").length > 0) {
-      $(".daterangepicker").dateRangePicker({
-        format: "MMM DD, YYYY",
+    if ($('.daterangepicker').length > 0) {
+      $('.daterangepicker').dateRangePicker({
+        format: 'MMM DD, YYYY',
         separator : ' to ',
         showShortcuts: false,
         language: 'custom',

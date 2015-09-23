@@ -4,16 +4,6 @@
 
 Fae.helpers = {
 
-  scroll_to: function(to_elm, adjustment) {
-    if (typeof adjustment == 'undefined') {
-      // set the default adjustment
-      adjustment = 130;
-    }
-    $('html, body').animate({
-      scrollTop: $(to_elm).offset().top - adjustment
-    }, 500);
-  },
-
   scroller: function(elm) {
     if (location.pathname.replace(/^\//,'') == elm.pathname.replace(/^\//,'') && location.hostname == elm.hostname) {
       var target = $(elm.hash);

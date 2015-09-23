@@ -34,6 +34,7 @@
 //= require fae/judge_path
 //= require fae/extensions
 
+//= require fae/frob_core_helpers
 //= require fae/admin
 //= require fae/_helpers
 
@@ -41,6 +42,7 @@
 //= require fae/form/inputs/_dates
 //= require fae/form/inputs/_select
 //= require fae/form/inputs/_text
+//= require fae/form/inputs/_checkbox
 //= require fae/form/inputs/checkboxer
 //= require fae/form/_validator
 //= require fae/form/_cancel
