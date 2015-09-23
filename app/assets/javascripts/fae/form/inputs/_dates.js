@@ -43,14 +43,14 @@ Fae.form.dates = {
     };
 
     // daterangepicker instantiation
-    if ($('.daterangepicker').length > 0) {
+    if( FCH.exists('.daterangepicker') ) {
       $('.daterangepicker').dateRangePicker({
         format: 'MMM DD, YYYY',
         separator : ' to ',
         showShortcuts: false,
         language: 'custom',
         getValue: function() {
-          if ($('.js-start_date').val() && $('.js-end_date').val() )
+          if ( $('.js-start_date').val() && $('.js-end_date').val() )
             return $('.js-start_date').val() + ' to ' + $('.js-end_date').val();
           else
             return '';
