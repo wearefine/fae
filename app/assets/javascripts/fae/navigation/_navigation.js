@@ -16,11 +16,11 @@ Fae.navigation = {
   select_current_nav_item: function() {
     var self = this;
     var current_base_url = window.location.pathname;
-    var url_without_edit_new = current_base_url.replace(/\/new|\/edit/, '');
+    var url_without_edit_new = current_base_url.replace(/\/new|\/edit/, '').split('/')[2];
     $('#main_nav a').each(function(){
       var $this = $(this);
       var link = $this.attr('href');
-      if (link === url_without_edit_new || link === current_base_url) {
+      if ((link.indexOf(url_without_edit_new) > -1) || link === current_base_url) {
         $this.addClass('current');
         self.current_items.push($this);
         return false;

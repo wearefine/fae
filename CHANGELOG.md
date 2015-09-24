@@ -7,6 +7,7 @@
     + [#50795](https://issues.afinedevelopment.com/issues/50795) Change dropdown default from 'Select a <singular>' to 'All <plural>'
     + [#49887](https://issues.afinedevelopment.com/issues/49887) Standardize appearance of all gray buttons
 - bugs
+    + [#50863](https://issues.afinedevelopment.com/issues/50863) Persist side navigation highlight when not on index
     + fix for nested tables, move header option to parent, not needed on child
 
 ## 1.1.6
