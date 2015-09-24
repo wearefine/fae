@@ -4,6 +4,7 @@
 
 - enhancements
     + [#50855](https://issues.afinedevelopment.com/issues/50855) Change default highlight color from blue to FINE green
+    + [#50617](https://issues.afinedevelopment.com/issues/50617) Enable validations for page content blocks
     + [#50795](https://issues.afinedevelopment.com/issues/50795) Change dropdown default from 'Select a <singular>' to 'All <plural>'
     + [#49887](https://issues.afinedevelopment.com/issues/49887) Standardize appearance of all gray buttons
 - bugs
