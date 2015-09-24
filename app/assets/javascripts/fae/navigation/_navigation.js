@@ -19,7 +19,8 @@ Fae.navigation = {
   select_current_nav_item: function() {
     var self = this;
     var current_base_url = window.location.pathname;
-    var regex_match = current_base_url.match(/^\/admin\/#?(\w*)?\//);
+    var regex = new RegExp("^" + Fae.path + "\/#?(\\w*)?\/");
+    var regex_match = current_base_url.match(regex);
     $('#main_nav a').each(function(){
       var $this = $(this);
       var link = $this.attr('href');
