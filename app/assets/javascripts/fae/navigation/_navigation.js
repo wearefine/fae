@@ -20,7 +20,7 @@ Fae.navigation = {
     $('#main_nav a').each(function(){
       var $this = $(this);
       var link = $this.attr('href');
-      if ((regex_match != null && link.indexOf(regex_match[1]) > -1) || link === current_base_url) {
+      if ((regex_match !== null && regex_match.length && link.indexOf(regex_match[1]) > -1) || link === current_base_url) {
         $this.addClass('current');
         self.current_items.push($this);
         return false;
