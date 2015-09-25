@@ -21,7 +21,7 @@ Fae.form.validator = {
   // validate the entire form on submit and stop it if the form is invalid
   form_validate: function () {
     var self = this;
-    $(document).on('form', 'submit', function (e) {
+    $(document).on('submit', 'form', function (e) {
       self.vars.IS_VALID = true;
       $('[data-validate]').each(function () {
         if ($(this).data('validate').length) {

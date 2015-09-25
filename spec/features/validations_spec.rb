@@ -13,6 +13,16 @@ feature 'validations' do
     expect(page).to have_selector('div.release_name span.error')
   end
 
+  scenario 'inputs should validate on form submission', js: true do
+    admin_login
+    visit new_admin_release_path
+    click_button('Save Settings')
+
+    expect(page).to have_selector('#release_name.invalid')
+    expect(page).to have_selector('div.release_name.field_with_errors')
+    expect(page).to have_selector('div.release_name span.error')
+  end
+
   scenario 'datapickers should validate on blur', js: true do
     admin_login
     visit new_admin_release_path
