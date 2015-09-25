@@ -15,8 +15,6 @@ module Fae
     self.recreate_versions      = false
 
     def validation_helpers
-      self.slug = { uniqueness: true, presence: true, format: { with: self.slug_regex, message: "no spaces or special characters", multiline: true } }
-
       self.slug_regex              = /^[-a-zA-Z0-9]+$/
       self.email_regex             = /\A[-a-z0-9_+\.]+\@([-a-z0-9]+\.)+[a-z0-9]{2,4}\z/i
       self.url_regex               = URI::regexp(%w(http https))
@@ -26,6 +24,18 @@ module Fae
       self.canada_and_us_zip_regex = /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXYabceghjklmnpstvxy]{1}\d{1}[A-Za-z]{1} ?\d{1}[A-Za-z]{1}\d{1})$/
       # http://geekswithblogs.net/MainaD/archive/2007/12/03/117321.aspx
       self.youtube_regex           = /[a-zA-Z0-9_-]{11}/
+
+      require 'pry'
+      binding.pry
+      self.slug = {
+        uniqueness: true,
+        presence: true,
+        format: {
+          with: Options.self.slug_regex,
+          message: "no spaces or special characters",
+          multiline: true
+        }
+      }
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909230658) do
+ActiveRecord::Schema.define(version: 20150925190110) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -128,6 +128,18 @@ ActiveRecord::Schema.define(version: 20150909230658) do
   end
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
+
+  create_table "fae_pages", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.integer  "position",   limit: 4,   default: 0
+    t.boolean  "on_stage",   limit: 1,   default: true
+    t.boolean  "on_prod",    limit: 1,   default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug",       limit: 255
+  end
+
+  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
 
   create_table "fae_roles", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -308,6 +320,20 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.text     "history",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "validation_testers", force: :cascade do |t|
+    t.string   "name",         limit: 255
+    t.string   "slug",         limit: 255
+    t.string   "second_slug",  limit: 255
+    t.string   "email",        limit: 255
+    t.string   "url",          limit: 255
+    t.string   "phone",        limit: 255
+    t.string   "zip",          limit: 255
+    t.string   "canadian_zip", limit: 255
+    t.string   "youtube_url",  limit: 255
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "varietals", force: :cascade do |t|

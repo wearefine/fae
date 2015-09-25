@@ -3,6 +3,7 @@ class CreateValidationTesters < ActiveRecord::Migration
     create_table :validation_testers do |t|
       t.string :name
       t.string :slug
+      t.string :second_slug
       t.string :email
       t.string :url
       t.string :phone
