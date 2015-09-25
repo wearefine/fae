@@ -11,14 +11,16 @@ Fae.form.ajax = {
     this.addEditLinks();
     this.addEditSubmission();
 
-    this.deleteNoForm();
+    this.imageDeleteLinks();
+    this.htmlListeners();
     this.applyCookies();
+
+    // Re-applied once AJAX form is loaded in
+    this.deleteNoForm();
     if( this.$filter_form.length ) {
       this.filterSelect();
       this.filterSubmission();
     }
-    this.imageDeleteLinks();
-    this.htmlListeners();
   },
 
   // Click event listener for add and edit links
@@ -88,7 +90,16 @@ Fae.form.ajax = {
 
         if( $html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form')) ) {
           // we're returning the table, replace everything
-          _this._addEditReplaceAndReinit($this, $html, $target);
+          var replacementHTML;
+
+          // Response is different between the js-index-addedit-form and the nested association form
+          if( $html.hasClass('main_content-section-area') ) {
+            replacementHTML = $html[1].innerHTML;
+          } else {
+            replacementHTML = $html[0].innerHTML;
+          }
+
+          _this._addEditReplaceAndReinit($this, replacementHTML, $target);
 
         } else if( $html.hasClass('form_content-wrapper') ) {
           // we're returning the form due to an error, just replace the form
@@ -116,26 +127,27 @@ Fae.form.ajax = {
     });
   },
 
-  _addEditReplaceAndReinit: function($el, $html, $target) {
+  // Replace AJAX'd form and add calls to all new HTML elements
+  // @param $el {jQuery Object} - object to be replaced
+  // @param html {String} - new HTML
+  // @param $target {jQuery Object} - original form wrapper
+  _addEditReplaceAndReinit: function($el, html, $target) {
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
+
+    // Private function replaces parent element with HTML and reinits select and sorting
+    var regenerateHTML = function() {
+      // .html() is not replacing it properly
+      $el.get(0).innerHTML = html;
+      $el.find('.select select').fae_chosen();
+      Fae.tables.rowSorting();
+    };
 
     // if there's a form wrap, slide it up before replacing content
     if ($form_wrapper.length) {
-      $form_wrapper.slideUp(function(){
-        console.log($html);
-        console.log($el);
-        // .html() is not replacing it properly
-        $el.get(0).innerHTML = $html.html();
-        $el.find('.select select').fae_chosen();
-        Fae.tables.rowSorting();
-      });
+      $form_wrapper.slideUp(regenerateHTML);
 
     } else {
-      // .html() is not replacing it properly
-      $el.get(0).innerHTML = $html.html();
-      $el.find('.select select').fae_chosen();
-      Fae.tables.rowSorting();
-
+      regenerateHTML();
     }
 
     if( !$target.hasClass('js-delete-link') ) {
@@ -143,18 +155,19 @@ Fae.form.ajax = {
     }
   },
 
-  filterSubmission: function(params) {
+  filterSubmission: function() {
     var _this = this;
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
       })
       .on('click', '.js-reset-btn', function(ev) {
-        var form = $(this).closest('form')[0];
-        form.reset();
-        $(form).find('select').val('').trigger('chosen:updated');
+        var $form = $(this).closest('form');
+
+        $form.get(0).reset();
+        $form.find('select').val('').trigger('chosen:updated');
         // reset hashies
-        window.location.hash = ''
+        window.location.hash = '';
       })
       .on('change', 'select', function() {
         _this.$filter_form.submit();
