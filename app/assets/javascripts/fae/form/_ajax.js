@@ -4,18 +4,16 @@
 
 Fae.form.ajax = {
 
-  $addedit_form: $('.js-addedit-form, .js-index-addedit-form'),
-  $filter_form: $('.js-filter-form'),
-  has_reinit: false,
-
   init: function() {
-    if(!this.has_reinit) {
-      this.addEditLinks();
-      this.addEditSubmission();
-    }
+    this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
+    this.$filter_form = $('.js-filter-form');
+
+    this.addEditLinks();
+    this.addEditSubmission();
+
     this.deleteNoForm();
     this.applyCookies();
-    if (this.$filter_form.length) {
+    if( this.$filter_form.length ) {
       this.filterSelect();
       this.filterSubmission();
     }
@@ -62,8 +60,8 @@ Fae.form.ajax = {
       }
 
       // Reinitialize form elements
-      Fae.form.dates.date_picker();
-      Fae.form.dates.daterange_picker();
+      Fae.form.dates.initDatepicker();
+      Fae.form.dates.initDateRangePicker();
       Fae.form.text.slugger();
 
       $wrapper.find('.hint').hinter();
@@ -81,32 +79,32 @@ Fae.form.ajax = {
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
         var $this = $(this);
-        var $parent = $this.parent();
-        // we're manipulating the return so let's store in a var and keep 'data' intact
-        var html = data;
-        var $html = $(html);
+        var $html = $(data);
 
         // remotipart returns data inside textarea, let's grab it from there
         if ( $html.is('textarea') ) {
-          html = $data.val();
-          $html = $(html);
+          $html = $( $html.val() );
         }
 
         if( $html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form')) ) {
           // we're returning the table, replace everything
-          _this._addEditReplaceAndReinit($this, $html.innerHTML, $target);
+          _this._addEditReplaceAndReinit($this, $html, $target);
 
         } else if( $html.hasClass('form_content-wrapper') ) {
           // we're returning the form due to an error, just replace the form
-          $this.find('.form_content-wrapper').replaceWith(html);
+          $this.find('.form_content-wrapper').replaceWith(data);
           $this.find('.select select').fae_chosen();
           $this.find('.input.file').fileinputer();
 
           FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
         }
 
-        _this.has_reinit = true;
-        _this.init();
+        _this.deleteNoForm();
+        if( _this.$filter_form.length ) {
+          _this.filterSelect();
+          _this.filterSubmission();
+        }
+
         Fae.navigation.fade_notices();
 
       } else if ($target.hasClass('js-asset-delete-link')) {
@@ -118,18 +116,24 @@ Fae.form.ajax = {
     });
   },
 
-  _addEditReplaceAndReinit: function($el, html, $target) {
+  _addEditReplaceAndReinit: function($el, $html, $target) {
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
     // if there's a form wrap, slide it up before replacing content
     if ($form_wrapper.length) {
       $form_wrapper.slideUp(function(){
-        $el.html(html).find('.select select').fae_chosen();
+        console.log($html);
+        console.log($el);
+        // .html() is not replacing it properly
+        $el.get(0).innerHTML = $html.html();
+        $el.find('.select select').fae_chosen();
         Fae.tables.rowSorting();
       });
 
     } else {
-      $el.html(html).find('.select select').fae_chosen();
+      // .html() is not replacing it properly
+      $el.get(0).innerHTML = $html.html();
+      $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
 
     }
