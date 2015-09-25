@@ -27,7 +27,7 @@ Fae.form.validator = {
    */
   formValidate: function () {
     var _this = this;
-    FCH.$document.on('form', 'submit', function (e) {
+    FCH.$document.on('submit', 'form', function (e) {
       _this.is_valid = true;
 
       $('[data-validate]').each(function () {
