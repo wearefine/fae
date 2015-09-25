@@ -13,4 +13,4 @@ ruby:
   hint ||= nil
 
 = f.simple_fields_for attribute.to_sym do |i|
-  = i.input :content, label: label, hint: hint
+  = i.input :content, label: label, hint: hint, input_html: { data: { validate: i.object.validation_json(f.object.class) }}
