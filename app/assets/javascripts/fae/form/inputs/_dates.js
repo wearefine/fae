@@ -1,5 +1,11 @@
 /* global Fae, datepicker */
 
+'use strict';
+
+/**
+ * Fae form dates
+ * @namespace
+ */
 Fae.form.dates = {
 
   init: function() {
@@ -7,6 +13,10 @@ Fae.form.dates = {
     this.initDateRangePicker();
   },
 
+  /**
+   * @public
+   * @description Initialize date picker
+   */
   initDatepicker: function() {
     $('.datepicker input').datepicker({
       dateFormat: 'M dd, yy',
@@ -16,6 +26,10 @@ Fae.form.dates = {
     });
   },
 
+  /**
+   * @public
+   * @description Initialize date range picker
+   */
   initDateRangePicker: function() {
     $.dateRangePickerLanguages['custom'] = {
       'selected': 'Choosed:',

@@ -1,7 +1,11 @@
-/* global Fae */
+/* global Fae, fae_chosen, fileinputer  */
 
 'use strict';
 
+/**
+ * Fae AJAX
+ * @namespace
+ */
 Fae.form.ajax = {
 
   init: function() {
@@ -23,8 +27,10 @@ Fae.form.ajax = {
     }
   },
 
-  // Click event listener for add and edit links
-  // Applies to both index and nested form
+  /**
+   * @public
+   * @description Click event listener for add and edit links applied to both index and nested forms
+   */
   addEditLinks: function() {
     var _this = this;
 
@@ -36,15 +42,20 @@ Fae.form.ajax = {
       // scroll to the last column of the tbody, where the form will start
       FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
 
-      _this._addEditActions($this, $parent);
+      _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
     });
   },
 
-  _addEditActions: function(field, $parent) {
-    var $this = $(field);
-    var $wrapper = $parent.find('.js-addedit-form-wrapper');
+  /**
+   * @internal
+   * @description Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
+   * @param {String} remote_url - Remote page to load form from
+   * @param {jQuery} $wrapper - Whole form container
+   * @see addEditLinks
+   */
+  _addEditActions: function(remote_url, $wrapper) {
 
-    $.get($this.attr('href'), function(data){
+    $.get(remote_url, function(data){
       // check to see if the content is hidden and slide it down if it is.
       if ($wrapper.is(':hidden')) {
         // replace the content of the form area and initiate the chosen and fileinputer
@@ -70,7 +81,10 @@ Fae.form.ajax = {
     });
   },
 
-  // Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
+  /**
+   * @public
+   * @description Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
+   */
   addEditSubmission: function() {
     var _this = this;
 
@@ -127,10 +141,14 @@ Fae.form.ajax = {
     });
   },
 
-  // Replace AJAX'd form and add calls to all new HTML elements
-  // @param $el {jQuery Object} - object to be replaced
-  // @param html {String} - new HTML
-  // @param $target {jQuery Object} - original form wrapper
+  /**
+   * @internal
+   * @description Replace AJAX'd form and add calls to all new HTML elements
+   * @param $el {jQuery} - Object to be replaced
+   * @param html {String} - New HTML
+   * @param $target {jQuery} - Original form wrapper
+   * @see addEditSubmission
+   */
   _addEditReplaceAndReinit: function($el, html, $target) {
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
@@ -155,8 +173,13 @@ Fae.form.ajax = {
     }
   },
 
+  /**
+   * @public
+   * @description On filter change, update table data
+   */
   filterSubmission: function() {
     var _this = this;
+
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
@@ -174,8 +197,14 @@ Fae.form.ajax = {
       });
   },
 
+  /**
+   * @public
+   * @description If cookies are available, load them into the hash
+   */
   applyCookies: function() {
     var cookie_key = $('.js-filter-form').data('cookie-key');
+
+    this.grind = new Grinder(this._setFilterDropdowns);
 
     if (cookie_key) {
       var set_cookie = $.cookie(cookie_key);
@@ -195,12 +224,13 @@ Fae.form.ajax = {
           window.location.hash = hash;
         }
       }
-
-      this.grind = new Grinder(this._setFilterDropdowns);
     }
   },
 
-  // update hash when filter dropdowns changed
+  /**
+   * @public
+   * @description Update hash when filter dropdowns changed
+   */
   filterSelect: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
@@ -213,8 +243,11 @@ Fae.form.ajax = {
     });
   },
 
-  // check for cookie or hash and set dropdowns/ url accordingly
-  // callback for Grinder
+  /**
+   * @public
+   * @description Check for cookie or hash and set dropdowns/ url accordingly (callback for Grinder)
+   * @param {Object} params - hash params broken out from Grinder
+   */
   _setFilterDropdowns: function(params) {
     var cookie_name = $('.js-filter-form').data('cookie-key');
     $.cookie(cookie_name, JSON.stringify(params));
@@ -241,8 +274,11 @@ Fae.form.ajax = {
     }
   },
 
+  /**
+   * @public
+   * @description On deletes that don't exist in a form like file upload area
+   */
   deleteNoForm: function() {
-    // on deletes that don't exist in a form like file upload area
     $('.js-asset-delete-link').on('ajax:success', function(){
       var $this = $(this);
       if (!$this.closest('.js-addedit-form-wrapper').length) {
@@ -255,7 +291,10 @@ Fae.form.ajax = {
     });
   },
 
-  //ajax image delete links
+  /**
+   * @public
+   * @description Attach delete listener to images uploaded
+   */
   imageDeleteLinks: function() {
     $('.imageDeleteLink').click(function(e) {
       e.preventDefault();
@@ -269,7 +308,10 @@ Fae.form.ajax = {
     });
   },
 
-  // attaching click handlers to #main_content to allow ajax replacement
+  /**
+   * @public
+   * @description Attaching click handlers to #main_content to allow ajax replacement
+   */
   htmlListeners: function() {
     $('#main_content')
 
@@ -289,4 +331,5 @@ Fae.form.ajax = {
         e.stopPropagation();
       });
   }
+
 };

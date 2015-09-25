@@ -2,8 +2,11 @@
 
 'use strict';
 
+/**
+ * Fae form
+ * @namespace
+ */
 Fae.form = {
-
   init: function() {
     this.dates.init();
     this.text.init();

@@ -2,6 +2,10 @@
 
 'use strict';
 
+/**
+ * Fae form select
+ * @namespace
+ */
 Fae.form.select = {
 
   availableItemsStr: ' Available Items',
@@ -12,6 +16,10 @@ Fae.form.select = {
     this.multiselectOrChosen();
   },
 
+  /**
+   * @public
+   * @description Initialize multi select fields or regular select fields and add appropriate available/added item helper text
+   */
   multiselectOrChosen: function() {
     var _this = this;
 
@@ -37,6 +45,10 @@ Fae.form.select = {
     });
   },
 
+  /**
+   * @public
+   * @description On selection change, update items left and currently added
+   */
   selectableText: function() {
     var _this = this;
     var $selectable = $('.ms-selectable .custom-header');

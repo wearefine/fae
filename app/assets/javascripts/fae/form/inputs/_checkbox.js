@@ -2,6 +2,10 @@
 
 'use strict';
 
+/**
+ * Fae form checkbox
+ * @namespace
+ */
 Fae.form.checkbox = {
 
   init: function() {
@@ -9,7 +13,10 @@ Fae.form.checkbox = {
     this.setCheckboxAsActive();
   },
 
-  // Login page checkbox listeners to add active class on click
+  /**
+   * @public
+   * @description Login page checkbox listeners to add active class on click
+   */
   loginCheckbox: function() {
     $('.login-body')
       .on('click', 'label.boolean', function(e){
@@ -20,7 +27,10 @@ Fae.form.checkbox = {
       });
   },
 
-  // Run through the checkboxes and see if they are checked. apply js class for styling.
+  /**
+   * @public
+   * @description Run through the checkboxes and see if they are checked. apply js class for styling.
+   */
   setCheckboxAsActive: function() {
     $('.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
       var $this = $(this);

@@ -2,13 +2,20 @@
 
 'use strict';
 
+/**
+ * Fae form text
+ * @namespace
+ */
 Fae.form.text = {
 
   init: function() {
     this.slugger();
   },
 
-
+  /**
+   * @public
+   * @description Attach listeners to inputs and update slug fields with original safe values from the original inputs
+   */
   slugger: function() {
     var $form = $('.slug').closest('form');
     var $sluggers = $form.find('.slugger');
@@ -37,8 +44,12 @@ Fae.form.text = {
     }
   },
 
-  // Convert a group of selects or text fields into one slug string
-  // returns {String}
+  /**
+   * @protected
+   * @description Convert a group of selects or text fields into one slug string
+   * @param {jQuery} $sluggers - Input or inputs that should be converted into a URL-safe string
+   * @return {String}
+   */
   _digestSlug: function($sluggers) {
     var slug_text = []
 
