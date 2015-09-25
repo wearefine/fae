@@ -45,9 +45,9 @@ Fae.form.text = {
     $sluggers.each(function() {
       var $this = $(this);
 
-      if( $this.val().length ) {
+      if ($this.val().length) {
 
-        if( $this.is('input') ) {
+        if ($this.is('input')) {
           slug_text.push( $this.val() );
 
         } else {

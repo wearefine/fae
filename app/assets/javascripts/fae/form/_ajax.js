@@ -17,7 +17,7 @@ Fae.form.ajax = {
 
     // Re-applied once AJAX form is loaded in
     this.deleteNoForm();
-    if( this.$filter_form.length ) {
+    if (this.$filter_form.length) {
       this.filterSelect();
       this.filterSubmission();
     }
@@ -46,7 +46,7 @@ Fae.form.ajax = {
 
     $.get($this.attr('href'), function(data){
       // check to see if the content is hidden and slide it down if it is.
-      if( $wrapper.is(':hidden') ) {
+      if ($wrapper.is(':hidden')) {
         // replace the content of the form area and initiate the chosen and fileinputer
         $wrapper.html(data).find('.select select').fae_chosen({ width: '300px' });
         $wrapper.find('.input.file').fileinputer();
@@ -84,16 +84,16 @@ Fae.form.ajax = {
         var $html = $(data);
 
         // remotipart returns data inside textarea, let's grab it from there
-        if ( $html.is('textarea') ) {
+        if ($html.is('textarea')) {
           $html = $( $html.val() );
         }
 
-        if( $html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form')) ) {
+        if ($html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form'))) {
           // we're returning the table, replace everything
           var replacementHTML;
 
           // Response is different between the js-index-addedit-form and the nested association form
-          if( $html.hasClass('main_content-section-area') ) {
+          if ($html.hasClass('main_content-section-area')) {
             replacementHTML = $html[1].innerHTML;
           } else {
             replacementHTML = $html[0].innerHTML;
@@ -101,7 +101,7 @@ Fae.form.ajax = {
 
           _this._addEditReplaceAndReinit($this, replacementHTML, $target);
 
-        } else if( $html.hasClass('form_content-wrapper') ) {
+        } else if ($html.hasClass('form_content-wrapper')) {
           // we're returning the form due to an error, just replace the form
           $this.find('.form_content-wrapper').replaceWith(data);
           $this.find('.select select').fae_chosen();
@@ -111,7 +111,7 @@ Fae.form.ajax = {
         }
 
         _this.deleteNoForm();
-        if( _this.$filter_form.length ) {
+        if (_this.$filter_form.length) {
           _this.filterSelect();
           _this.filterSubmission();
         }
@@ -150,7 +150,7 @@ Fae.form.ajax = {
       regenerateHTML();
     }
 
-    if( !$target.hasClass('js-delete-link') ) {
+    if (!$target.hasClass('js-delete-link')) {
       FCH.smoothScroll($el.parent(), 500, 100, 120);
     }
   },
@@ -185,13 +185,13 @@ Fae.form.ajax = {
         var hash = '?';
 
         for(var i = 0; i < keys.length; i++) {
-          if(hash !== '?') {
+          if (hash !== '?') {
             hash += '&';
           }
           hash += keys[i] + '=' + cookie[keys[i]];
         }
 
-        if( hash !== '?') {
+        if (hash !== '?') {
           window.location.hash = hash;
         }
       }
@@ -204,7 +204,7 @@ Fae.form.ajax = {
   filterSelect: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
-      if( $('.js-filter-form').data('cookie-key') ) {
+      if ($('.js-filter-form').data('cookie-key')) {
         var key = $(this).find('select').attr('id').split('filter_')[1];
         var value = $(this).find('option:selected').val();
 
@@ -219,16 +219,16 @@ Fae.form.ajax = {
     var cookie_name = $('.js-filter-form').data('cookie-key');
     $.cookie(cookie_name, JSON.stringify(params));
 
-    if( !$.isEmptyObject(params) ) {
+    if (!$.isEmptyObject(params)) {
       $.each(params, function(k, v) {
         $('.js-filter-form .table-filter-group').each(function(){
           var $this = $(this);
           var key = $this.find('select').attr('id').split('filter_')[1];
           var value = $this.find('option:selected').val();
 
-          if( k === key ) {
+          if (k === key) {
             $this.find('option').each(function(){
-              if( $this.val() === v ) {
+              if ($this.val() === v) {
                 $this.prop('selected', 'selected');
                 $('#filter_' + key).trigger('chosen:updated');
               };
@@ -245,7 +245,7 @@ Fae.form.ajax = {
     // on deletes that don't exist in a form like file upload area
     $('.js-asset-delete-link').on('ajax:success', function(){
       var $this = $(this);
-      if( !$this.closest('.js-addedit-form-wrapper').length ) {
+      if (!$this.closest('.js-addedit-form-wrapper').length) {
         var $parent = $this.closest('.asset-actions');
 
         $parent.fadeOut(function(){
@@ -261,7 +261,7 @@ Fae.form.ajax = {
       e.preventDefault();
       var $this = $(this);
 
-      if( confirm('Are you sure you want to delete this image?') ) {
+      if (confirm('Are you sure you want to delete this image?')) {
         $.post($this.attr('href'), 'html');
         $this.parent().next().show();
         $this.parent().hide();

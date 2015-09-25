@@ -11,7 +11,7 @@ Fae.form.cancel = {
 
   detectCancelledUrls: function() {
     var params = window.location.search;
-    if (params.length > 0 && params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
+    if (params.length && params.toLowerCase().indexOf("cancelled") >= 0 && params.indexOf("&") !== 0) {
       window.history.replaceState(null, null, window.location.pathname);
     };
   },

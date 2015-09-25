@@ -18,7 +18,7 @@ Fae.form.select = {
     $('select').each(function(index, elm){
       var $this = $(this);
 
-      if( $this.hasClass('multiselect') ) {
+      if ($this.hasClass('multiselect')) {
         $this.multiSelect({
           selectableHeader: '<div class="custom-header"></div>',
           selectionHeader: '<div class="custom-header"></div>'

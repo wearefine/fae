@@ -25,7 +25,7 @@ Fae.form.checkbox = {
     $('.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
       var $this = $(this);
 
-      if ( $this.find(':checkbox:checked').length ) {
+      if ($this.find(':checkbox:checked').length) {
         $this.addClass('js-active');
       }
     });
