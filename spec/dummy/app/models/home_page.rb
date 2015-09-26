@@ -9,11 +9,14 @@ class HomePage < Fae::StaticPage
         type: Fae::TextField,
         validates: { presence: true }
         },
-      hero: {
-        type: Fae::TextField,
-        validates: { length: { maximum: 3 }}
+      hero: Fae::TextField,
+      introduction: {
+        type: Fae::TextArea,
+        validates: {
+          presence: true,
+          length: { maximum: 100 }
+          }
         },
-      introduction: Fae::TextArea,
       body: Fae::TextArea,
       hero_image: Fae::Image,
       welcome_pdf: Fae::File

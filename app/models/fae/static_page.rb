@@ -4,6 +4,10 @@ module Fae
     include Fae::StaticPageConcern
     include Fae::Concerns::Models::Base
 
+    validates :title, presence: true
+
+    @@has_assocs = false
+
     def self.instance
       set_assocs
       row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
@@ -18,7 +22,8 @@ module Fae
   private
 
     def self.set_assocs
-      # create has_one associations
+      return if @@has_assocs
+      # create has_one associations from defined fae_fields
       fae_fields.each do |key, value|
         type = value.is_a?(Hash) ? value[:type] : value
 
@@ -36,6 +41,7 @@ module Fae
           end
         end
       end
+      @@has_assocs = true
     end
 
     def self.poly_sym(assoc)
