@@ -57,4 +57,17 @@ feature 'validations' do
     expect(page).to have_selector('div.release_wine span.error')
   end
 
+  scenario 'inputs should validate length on inline', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within(:css, 'div.release_name') do
+      expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 15')
+      fill_in 'release_name', with: 'Test'
+      expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 11')
+      fill_in 'release_name', with: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar euismod nisl, in pellentesque sapien ornare ac.'
+      expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 0')
+    end
+  end
+
 end

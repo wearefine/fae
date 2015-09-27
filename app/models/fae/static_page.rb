@@ -6,12 +6,12 @@ module Fae
 
     validates :title, presence: true
 
-    @@has_assocs = false
+    @@singleton_is_setup = false
 
     def self.instance
-      set_assocs
+      setup_dynamic_singleton
       row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
-      row = StaticPage.create(title: @slug.titleize, slug: @slug) if row.blank?
+      row = create(title: @slug.titleize, slug: @slug) if row.blank?
       row
     end
 
@@ -21,27 +21,33 @@ module Fae
 
   private
 
-    def self.set_assocs
-      return if @@has_assocs
-      # create has_one associations from defined fae_fields
-      fae_fields.each do |key, value|
+    def self.setup_dynamic_singleton
+      return if @@singleton_is_setup
+
+      fae_fields.each do |name, value|
         type = value.is_a?(Hash) ? value[:type] : value
 
-        send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(type), class_name: type.to_s, dependent: :destroy
-        send :accepts_nested_attributes_for, key, allow_destroy: true
-        send :define_method, :"#{key}_content", -> { send(key.to_sym).try(:content) }
-
-        if value.is_a?(Hash) && value[:validates].present?
-          unique_method_name = "is_#{self.name.underscore}_#{key.to_s}?".to_sym
-          slug = @slug
-          value[:validates][:if] = unique_method_name
-          type.validates(:content, value[:validates])
-          type.send(:define_method, unique_method_name) do
-            contentable.slug == slug && attached_as == key.to_s
-          end
-        end
+        define_association(name, type)
+        define_validations(name, type, value[:validates]) if value.is_a?(Hash) && value[:validates].present?
       end
-      @@has_assocs = true
+
+      @@singleton_is_setup = true
+    end
+
+    def self.define_association(name, type)
+      send :has_one, name.to_sym, -> { where(attached_as: name.to_s)}, as: poly_sym(type), class_name: type.to_s, dependent: :destroy
+      send :accepts_nested_attributes_for, name, allow_destroy: true
+      send :define_method, :"#{name}_content", -> { send(name.to_sym).try(:content) }
+    end
+
+    def self.define_validations(name, type, validations)
+      unique_method_name = "is_#{self.name.underscore}_#{name.to_s}?".to_sym
+      slug = @slug
+      validations[:if] = unique_method_name
+      type.validates(:content, validations)
+      type.send(:define_method, unique_method_name) do
+        contentable.slug == slug && attached_as == name.to_s if contentable.present?
+      end
     end
 
     def self.poly_sym(assoc)

@@ -10,6 +10,16 @@ class HomePage < Fae::StaticPage
         validates: { presence: true }
         },
       hero: Fae::TextField,
+      email: {
+        type: Fae::TextField,
+        validates: {
+          format: {
+            with: /\A[^@]+@[^@]+\z/,
+            message: 'should look like an email address, right?'
+            },
+          allow_blank: true
+          }
+        },
       introduction: {
         type: Fae::TextArea,
         validates: {
