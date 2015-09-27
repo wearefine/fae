@@ -1,4 +1,4 @@
-require 'devise'
+# require 'devise'
 require 'judge'
 
 module Fae
