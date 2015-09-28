@@ -40,10 +40,8 @@
   &:hover {
     background: $c-form-submit-gradient-hover;
   }
+
   + span {
-    display: block;
-    float: right;
-    width: 77%;
     padding: 10px 30px 0 0;
   }
 }
