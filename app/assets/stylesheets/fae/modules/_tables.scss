@@ -4,6 +4,10 @@
 	border-collapse: separate;
 	table-layout: fixed;
 
+	@include bp(tablet) {
+		table-layout: initial;
+	}
+
 	& tbody tr:nth-of-type(even) {
 		td {
 			background-color: $c-table-tr-even;

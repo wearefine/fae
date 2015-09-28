@@ -10,6 +10,7 @@
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Persist side navigation highlight when not on index
     + fix for nested tables, move header option to parent, not needed on child
     + fix JS validation not triggering on form submission
+    + [#50777](https://issues.afinedevelopment.com/issues/50777) Tables should overflow on smaller screens
 
 ## 1.1.6
 
