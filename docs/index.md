@@ -574,11 +574,11 @@ class AboutUsPage < Fae::StaticPage
   # required to set the has_one associations, Fae::StaticPage will build these associations dynamically
   def self.fae_fields
     {
-      hero_image: Fae::Image,
-      hero_text: Fae::TextField
-      introduction: Fae::TextArea,
-      body: Fae::TextArea,
-      annual_report: Fae::File
+      hero_image: { type: Fae::Image },
+      hero_text: { type: Fae::TextField },
+      introduction: { type: Fae::TextArea },
+      body: { type: Fae::TextArea },
+      annual_report: { type: Fae::File }
     }
   end
 
@@ -667,6 +667,40 @@ Content blocks are just associations on the page model, which inherits from `Fae
 - on_stage
 - created_at
 - updated_at
+
+## Validations on Content Blocks
+
+Since content blocks are setup as associations, adding validations to them can be tricky. To make it easier we setup a method directly in `fae_fields` hash that will dynamically add the validations to the appropriate model and apply the `data-validate` attribute in the form so Judge can  do it's best to validate the content on the frontend.
+
+To add validations to a content block, add a validates option with your rules on a specific content block in `fae_fields`. Format the rules just as you would normal model validations.
+
+`app/models/about_us_page.rb`
+```ruby
+def self.fae_fields
+  {
+    hero_image: { type: Fae::Image },
+    hero_text: {
+      type: Fae::TextField,
+      validates: { presence: true }
+      },
+    introduction: {
+      type: Fae::TextArea,
+      validates: {
+          presence: true,
+          length: {
+            maximum: 100,
+            message: 'should be brief (100 characters or less)'
+            }
+          }
+        },
+      },
+    body: { type: Fae::TextArea },
+    annual_report: { type: Fae::File }
+  }
+end
+```
+
+Validations can only be applied to types `Fae::TextField` and `Fae::TextArea`.
 
 ---
 
