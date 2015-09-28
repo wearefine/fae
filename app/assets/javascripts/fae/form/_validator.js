@@ -22,8 +22,7 @@ Fae.form.validator = {
   },
 
   /**
-   * @public
-   * @description Validate the entire form on submit and stop it if the form is invalid
+   * Validate the entire form on submit and stop it if the form is invalid
    */
   formValidate: function () {
     var _this = this;
@@ -45,8 +44,7 @@ Fae.form.validator = {
   },
 
   /**
-   * @public
-   * @description Bind validation events based on input type
+   * Bind validation events based on input type
    */
   bindValidationEvents: function () {
     var _this = this;
@@ -95,8 +93,8 @@ Fae.form.validator = {
   },
 
   /**
-   * @protected
-   * @description Determines if field is a chosen input
+   * Determines if field is a chosen input
+   * @access protected
    * @param {jQuery} $input - Input field (can be a chosen object)
    * @return {Boolean}
    */
@@ -127,8 +125,8 @@ Fae.form.validator = {
 
 
   /**
-   * @protected
-   * @description Adds and removes the appropriate classes to display the success styles
+   * Adds and removes the appropriate classes to display the success styles
+   * @access protected
    * @param {jQuery} $input - Input field (can be a chosen object)
    */
   _createSuccessClass: function ($input) {
@@ -139,8 +137,8 @@ Fae.form.validator = {
   },
 
   /**
-   * @protected
-   * @description Adds and removes the appropriate classes to display the error styles
+   * @access protected
+   * Adds and removes the appropriate classes to display the error styles
    * @param {jQuery} $input - Input field
    * @param {Array} messages - Error messages to display
    */
@@ -157,8 +155,8 @@ Fae.form.validator = {
   },
 
   /**
-   * @protected
-   * @description A DRY method for setting the element that should take the .valid or .invalid style
+   * A DRY method for setting the element that should take the .valid or .invalid style
+   * @access protected
    * @param {jQuery} $input - Input field for a chosen object
    * @return {jQuery} The chosen container
    */
@@ -177,8 +175,7 @@ Fae.form.validator = {
   },
 
   /**
-   * @public
-   * @description Removes a field's Judge validation
+   * Removes a field's Judge validation
    * @param {jQuery} $field - Input fields
    * @param {String} kind - Type of validation (e.g. 'presence' or 'confirmation')
    */
@@ -223,8 +220,7 @@ Fae.form.validator = {
     },
 
     /**
-     * @public
-     * @description Validate password on blur and form submit; halt form execution if invalid
+     * Validate password on blur and form submit; halt form execution if invalid
      */
     addCustomValidation: function() {
       var _this = this;
@@ -244,8 +240,8 @@ Fae.form.validator = {
     },
 
     /**
-     * @protected
-     * @description Displays success or error depending on password validation
+     * Displays success or error depending on password validation
+     * @access protected
      * @param {Object} self - The password_confirmation_validation object
      * @see {@link validator.password_confirmation_validation.addCustomValidation addCustomValidation}
      */
@@ -264,8 +260,7 @@ Fae.form.validator = {
   },
 
   /**
-   * @public
-   * @description Judge always read the `on: :create` validations, so we need to strip the password presence validation on the user edit form
+   * Judge always read the `on: :create` validations, so we need to strip the password presence validation on the user edit form
    */
   passwordPresenceConditional: function() {
     var $edit_user_password = $('.edit_user #user_password');
@@ -286,8 +281,7 @@ Fae.form.validator = {
     },
 
     /**
-     * @public
-     * @description add counter text to fields that validate based on character counts
+     * Add counter text to fields that validate based on character counts
      */
     findLengthValidations: function() {
       var _this = this;
@@ -309,8 +303,8 @@ Fae.form.validator = {
     },
 
     /**
-     * @protected
-     * @description Display characters left/available in a text field
+     * Display characters left/available in a text field
+     * @access protected
      * @param {jQuery} $elem - Input field to evaluate
      * @param {Number} max - Maximum length of characters in field
      * @param {Number} current[current=max minus current field length] - Countdown from full length, usually max - present length
@@ -330,8 +324,8 @@ Fae.form.validator = {
     },
 
     /**
-     * @protected
-     * @description Textual representation of characters left in field
+     * Textual representation of characters left in field
+     * @access protected
      * @param {jQuery} $elem - Input field to evaluate
      * @param {Number} max - Maximum length of characters in field
      * @param {Number} [current=max minus current field length] - Countdown from full length, usually max - present length
@@ -347,8 +341,8 @@ Fae.form.validator = {
     },
 
     /**
-     * @protected
-     * @description Add counter display to DOM
+     * Add counter display to DOM
+     * @access protected
      * @param {jQuery} $elem - Input field being counted
      * @param {Number} max - Maximum length of characters in field
      * @param {Number} [current=max minus current field length] - Countdown from full length, usually max - present length
@@ -362,8 +356,8 @@ Fae.form.validator = {
     },
 
     /**
-     * @protected
-     * @description Set counter on input change
+     * Set counter on input change
+     * @access protected
      * @param {jQuery} $elem - Input field being counted
      * @param {Number} max - Maximum length of characters in field
      * @see {@link validator.length_counter._setCounter _setCounter}

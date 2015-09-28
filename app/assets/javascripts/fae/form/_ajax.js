@@ -28,8 +28,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description Click event listener for add and edit links applied to both index and nested forms
+   * Click event listener for add and edit links applied to both index and nested forms
    */
   addEditLinks: function() {
     var _this = this;
@@ -47,8 +46,8 @@ Fae.form.ajax = {
   },
 
   /**
-   * @internal
-   * @description Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
+   * Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
+   * @access protected
    * @param {String} remote_url - Remote page to load form from
    * @param {jQuery} $wrapper - Whole form container
    * @see addEditLinks
@@ -82,8 +81,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
+   * Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
    */
   addEditSubmission: function() {
     var _this = this;
@@ -142,8 +140,8 @@ Fae.form.ajax = {
   },
 
   /**
-   * @internal
-   * @description Replace AJAX'd form and add calls to all new HTML elements
+   * Replace AJAX'd form and add calls to all new HTML elements
+   * @access protected
    * @param $el {jQuery} - Object to be replaced
    * @param html {String} - New HTML
    * @param $target {jQuery} - Original form wrapper
@@ -174,8 +172,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description On filter change, update table data
+   * On filter change, update table data
    */
   filterSubmission: function() {
     var _this = this;
@@ -198,8 +195,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description If cookies are available, load them into the hash
+   * If cookies are available, load them into the hash
    */
   applyCookies: function() {
     var cookie_key = $('.js-filter-form').data('cookie-key');
@@ -228,8 +224,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description Update hash when filter dropdowns changed
+   * Update hash when filter dropdowns changed
    */
   filterSelect: function(){
     var _this = this;
@@ -244,8 +239,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description Check for cookie or hash and set dropdowns/ url accordingly (callback for Grinder)
+   * Check for cookie or hash and set dropdowns/ url accordingly (callback for Grinder)
    * @param {Object} params - hash params broken out from Grinder
    */
   _setFilterDropdowns: function(params) {
@@ -275,8 +269,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description On deletes that don't exist in a form like file upload area
+   * On deletes that don't exist in a form like file upload area
    */
   deleteNoForm: function() {
     $('.js-asset-delete-link').on('ajax:success', function(){
@@ -292,8 +285,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description Attach delete listener to images uploaded
+   * Attach delete listener to images uploaded
    */
   imageDeleteLinks: function() {
     $('.imageDeleteLink').click(function(e) {
@@ -309,8 +301,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * @public
-   * @description Attaching click handlers to #main_content to allow ajax replacement
+   * Attaching click handlers to #main_content to allow ajax replacement
    */
   htmlListeners: function() {
     $('#main_content')

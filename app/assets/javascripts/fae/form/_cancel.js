@@ -14,8 +14,7 @@ Fae.form.cancel = {
   },
 
   /**
-   * @public
-   * @description If URL has cancelled param, update the history
+   * If URL has cancelled param, update the history
    */
   detectCancelledUrls: function() {
     var params = window.location.search;
@@ -25,8 +24,7 @@ Fae.form.cancel = {
   },
 
   /**
-   * @public
-   * @description Once any field changes, add cancelled param to button to ensure user knows data will be lost
+   * Once any field changes, add cancelled param to button to ensure user knows data will be lost
    */
   addCancelParam: function() {
     var updateCancel = function () {

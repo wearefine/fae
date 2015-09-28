@@ -13,8 +13,7 @@ Fae.form.text = {
   },
 
   /**
-   * @public
-   * @description Attach listeners to inputs and update slug fields with original safe values from the original inputs
+   * Attach listeners to inputs and update slug fields with original safe values from the original inputs
    */
   slugger: function() {
     var $form = $('.slug').closest('form');
@@ -45,8 +44,8 @@ Fae.form.text = {
   },
 
   /**
-   * @protected
-   * @description Convert a group of selects or text fields into one slug string
+   * Convert a group of selects or text fields into one slug string
+   * @access protected
    * @param {jQuery} $sluggers - Input or inputs that should be converted into a URL-safe string
    * @return {String}
    */

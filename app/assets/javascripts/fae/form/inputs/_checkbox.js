@@ -14,8 +14,7 @@ Fae.form.checkbox = {
   },
 
   /**
-   * @public
-   * @description Login page checkbox listeners to add active class on click
+   * Login page checkbox listeners to add active class on click
    */
   loginCheckbox: function() {
     $('.login-body')
@@ -28,8 +27,7 @@ Fae.form.checkbox = {
   },
 
   /**
-   * @public
-   * @description Run through the checkboxes and see if they are checked. apply js class for styling.
+   * Run through the checkboxes and see if they are checked. apply js class for styling.
    */
   setCheckboxAsActive: function() {
     $('.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){

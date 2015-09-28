@@ -17,8 +17,7 @@ Fae.form.select = {
   },
 
   /**
-   * @public
-   * @description Initialize multi select fields or regular select fields and add appropriate available/added item helper text
+   * Initialize multi select fields or regular select fields and add appropriate available/added item helper text
    */
   multiselectOrChosen: function() {
     var _this = this;
@@ -46,8 +45,7 @@ Fae.form.select = {
   },
 
   /**
-   * @public
-   * @description On selection change, update items left and currently added
+   * On selection change, update items left and currently added
    */
   selectableText: function() {
     var _this = this;

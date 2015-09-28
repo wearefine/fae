@@ -14,8 +14,7 @@ Fae.form.dates = {
   },
 
   /**
-   * @public
-   * @description Initialize date picker
+   * Initialize date picker
    */
   initDatepicker: function() {
     $('.datepicker input').datepicker({
@@ -27,8 +26,7 @@ Fae.form.dates = {
   },
 
   /**
-   * @public
-   * @description Initialize date range picker
+   * Initialize date range picker
    */
   initDateRangePicker: function() {
     $.dateRangePickerLanguages['custom'] = {
