@@ -2,57 +2,83 @@
 
 'use strict';
 
+/**
+ * Fae form text
+ * @namespace
+ */
 Fae.form.text = {
 
   init: function() {
     this.slugger();
   },
 
+  /**
+   * Attach listeners to inputs and update slug fields with original safe values from the original inputs
+   */
   slugger: function() {
-    var $slugger = $('.slug').closest('form').find('.slugger');
-    var $slug = $slugger.closest('form').find('.slug');
+    var $form = $('.slug').closest('form');
+    var $sluggers = $form.find('.slugger');
+    var $slug = $form.find('.slug');
     var $select_slugger = $('.select.slugger');
-    this._prep_slug($slug, $slugger, $select_slugger);
-  },
-
-  _prep_slug: function($slug, $slugger, $select_slugger) {
-    var slug_text = null;
     var _this = this;
 
     if ($slug.val() !== '') {
-      $slugger.removeClass('slugger');
+      $sluggers.removeClass('slugger');
+
     } else {
-      $slugger.keyup(function(){
-        slug_text = _this._digest_slug($slugger);
-        $slug.val(slug_text);
+      // If it's a text field, listen for type input
+      $sluggers.keyup(function(){
+        var text = _this._digestSlug( $sluggers );
+        $slug.val( text );
       });
+
+      // If it's a select field, listen for the change
       if ($select_slugger.length) {
         $select_slugger.change(function(){
-          slug_text = _this._digest_slug($slugger);
-          $slug.val(slug_text);
+          var text = _this._digestSlug( $sluggers );
+          $slug.val( text );
         });
+
       };
     }
   },
 
-  _digest_slug: function($slugger) {
+  /**
+   * Convert a group of selects or text fields into one slug string
+   * @access protected
+   * @param {jQuery} $sluggers - Input or inputs that should be converted into a URL-safe string
+   * @return {String}
+   */
+  _digestSlug: function($sluggers) {
     var slug_text = []
-    $slugger.each(function() {
+
+    $sluggers.each(function() {
       var $this = $(this);
-      if ($this.val().length > 0) {
-        if ($this.is("input")) {
-          slug_text.push($this.val());
+
+      if ($this.val().length) {
+
+        if ($this.is('input')) {
+          slug_text.push( $this.val() );
+
         } else {
-          slug_text.push($this.find("option:selected").text());
+          slug_text.push( $this.find('option:selected').text() );
+
         }
       }
-    })
+    });
+
+    // Combine all active slug fields for the query
+    // Make them lowercase
+    // Remove slashes, quotes or periods
+    // Replace white spaces with a dash
+    // Remove leading and trailing dashes
     slug_text = slug_text
       .join(' ')
       .toLowerCase()
       .replace(/(\\)|(\')|(\.)/g, '')
       .replace(/[^a-zA-Z0-9]+/g, '-')
       .replace(/(-$)|(^-)/g, '');
+
     return slug_text;
   },
 

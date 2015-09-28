@@ -1,89 +1,89 @@
-/* global Fae */
+/* global Fae, fae_chosen, fileinputer  */
 
 'use strict';
 
+/**
+ * Fae AJAX
+ * @namespace
+ */
 Fae.form.ajax = {
 
   init: function() {
-    this.set_elements();
-    if(!this.has_reinit) {
-      this.nested_addedit_links();
-      this.nested_addedit_submission();
-      this.index_addedit_links();
-      this.index_addedit_submission();
-    }
-    this.delete_no_form();
-    this.apply_cookies();
-    if (this.$filter_form.length) {
-      this.filter_select();
-      this.filter_submission();
-    }
-    this.image_delete_links();
-  },
-
-  has_reinit: false,
-
-  set_elements: function() {
-    this.$addedit_form = $('.js-addedit-form');
-    this.$index_addedit_form = $('.js-index-addedit-form');
+    this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
+
+    this.addEditLinks();
+    this.addEditSubmission();
+
+    this.imageDeleteLinks();
+    this.htmlListeners();
+    this.applyCookies();
+
+    // Re-applied once AJAX form is loaded in
+    this.deleteNoForm();
+    if (this.$filter_form.length) {
+      this.filterSelect();
+      this.filterSubmission();
+    }
   },
 
-  nested_addedit_links: function() {
+  /**
+   * Click event listener for add and edit links applied to both index and nested forms
+   */
+  addEditLinks: function() {
+    var _this = this;
+
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
-      var $parent = $this.closest('.js-addedit-form');
+      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
 
-      Fae.form.ajax.addedit_actions($this, $parent);
+      _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
     });
   },
 
-  index_addedit_links: function() {
-    this.$index_addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
-      ev.preventDefault();
-      var $this = $(this);
-      var $parent = $('.js-addedit-form');
+  /**
+   * Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
+   * @access protected
+   * @param {String} remote_url - Remote page to load form from
+   * @param {jQuery} $wrapper - Whole form container
+   * @see addEditLinks
+   */
+  _addEditActions: function(remote_url, $wrapper) {
 
-      // scroll to the last column of the tbody, where the form will start
-      Fae.helpers.scroll_to($parent.find("tbody tr:last-child"), 90);
-
-      Fae.form.ajax.addedit_actions($this, $parent);
-    });
-  },
-
-  addedit_actions: function(field, $parent) {
-    var $this = $(field);
-    var $wrapper = $parent.find('.js-addedit-form-wrapper');
-
-    $.get($this.attr('href'), function(data){
+    $.get(remote_url, function(data){
       // check to see if the content is hidden and slide it down if it is.
-      if ($wrapper.is(":hidden")) {
+      if ($wrapper.is(':hidden')) {
         // replace the content of the form area and initiate the chosen and fileinputer
-        $wrapper.html(data).find(".select select").fae_chosen({ width: '300px' });
-        $wrapper.find(".input.file").fileinputer();
+        $wrapper.html(data).find('.select select').fae_chosen({ width: '300px' });
+        $wrapper.find('.input.file').fileinputer();
         $wrapper.slideDown();
+
       } else {
         // if it is visible, replace its content by retaining height
         $wrapper.height($wrapper.height());
 
         // replace the content of the form area and then remove that height and then chosen and then fileinputer
-        $wrapper.html(data).css("height", "").find(".select select").fae_chosen();
-        $wrapper.find(".input.file").fileinputer();
+        $wrapper.html(data).css('height', '').find('.select select').fae_chosen();
+        $wrapper.find('.input.file').fileinputer();
       }
 
-      Fae.form.dates.date_picker();
-      Fae.form.dates.daterange_picker();
+      // Reinitialize form elements
+      Fae.form.dates.initDatepicker();
+      Fae.form.dates.initDateRangePicker();
       Fae.form.text.slugger();
 
-      $wrapper.find(".hint").hinter();
+      $wrapper.find('.hint').hinter();
     });
   },
 
-  nested_addedit_submission: function() {
+  /**
+   * Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
+   */
+  addEditSubmission: function() {
     var _this = this;
 
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
@@ -93,46 +93,44 @@ Fae.form.ajax = {
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
         var $this = $(this);
-        var $parent = $this.parent();
-        // we're manipulating the return so let's store in a var and keep 'data' intact
-        var html = data;
+        var $html = $(data);
 
         // remotipart returns data inside textarea, let's grab it from there
-        if ($(html)[0].localName === 'textarea') {
-          html = $(data)[0].value;
+        if ($html.is('textarea')) {
+          $html = $( $html.val() );
         }
 
-        if ($(html)[1] && $(html)[1].className === 'main_content-section-area') {
+        if ($html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form'))) {
           // we're returning the table, replace everything
+          var replacementHTML;
 
-          var $form_wrapper = $this.find('.js-addedit-form-wrapper');
-
-          // if there's a form wrap, slide it up before replacing content
-          if ($form_wrapper.length) {
-            $form_wrapper.slideUp(function(){
-              _this.addedit_replace_and_reinit($this, $(html)[1].innerHTML, $target);
-            });
+          // Response is different between the js-index-addedit-form and the nested association form
+          if ($html.hasClass('main_content-section-area')) {
+            replacementHTML = $html[1].innerHTML;
           } else {
-            _this.addedit_replace_and_reinit($this, $(html)[1].innerHTML, $target);
+            replacementHTML = $html[0].innerHTML;
           }
 
-          if (!$target.hasClass("js-delete-link")) {
-            Fae.helpers.scroll_to($parent);
-          }
-        } else if ($(html)[0].className === 'form_content-wrapper') {
+          _this._addEditReplaceAndReinit($this, replacementHTML, $target);
+
+        } else if ($html.hasClass('form_content-wrapper')) {
           // we're returning the form due to an error, just replace the form
-          $this.find('.form_content-wrapper').replaceWith(html);
+          $this.find('.form_content-wrapper').replaceWith(data);
           $this.find('.select select').fae_chosen();
-          $this.find(".input.file").fileinputer();
+          $this.find('.input.file').fileinputer();
 
-          Fae.helpers.scroll_to($this.find('.js-addedit-form-wrapper'));
+          FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
         }
 
-        _this.has_reinit = true;
-        _this.init();
-        Fae.fade_notices();
+        _this.deleteNoForm();
+        if (_this.$filter_form.length) {
+          _this.filterSelect();
+          _this.filterSubmission();
+        }
 
-      } else if ($target.hasClass("js-asset-delete-link")) {
+        Fae.navigation.fade_notices();
+
+      } else if ($target.hasClass('js-asset-delete-link')) {
         // handle remove asset links
         $target.parent().fadeOut('fast', function() {
           $(this).next('.asset-inputs').fadeIn('fast');
@@ -141,81 +139,68 @@ Fae.form.ajax = {
     });
   },
 
-  index_addedit_submission: function() {
-    var _this = this;
+  /**
+   * Replace AJAX'd form and add calls to all new HTML elements
+   * @access protected
+   * @param $el {jQuery} - Object to be replaced
+   * @param html {String} - New HTML
+   * @param $target {jQuery} - Original form wrapper
+   * @see addEditSubmission
+   */
+  _addEditReplaceAndReinit: function($el, html, $target) {
+    var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
-    this.$index_addedit_form.on('ajax:success', function(evt, data, status, xhr){
+    // Private function replaces parent element with HTML and reinits select and sorting
+    var regenerateHTML = function() {
+      // .html() is not replacing it properly
+      $el.get(0).innerHTML = html;
+      $el.find('.select select').fae_chosen();
+      Fae.tables.rowSorting();
+    };
 
-      var $target = $(evt.target);
+    // if there's a form wrap, slide it up before replacing content
+    if ($form_wrapper.length) {
+      $form_wrapper.slideUp(regenerateHTML);
 
-      // ignore calls not returning html
-      if (data !== ' ' && $(data)[0]) {
-        var $this = $(this);
-        var $parent = $this.parent();
+    } else {
+      regenerateHTML();
+    }
 
-        // we're manipulating the return so let's store in a var and keep 'data' intact
-        var html = data;
-
-        if ($(html)[0] && $(html)[0].className === 'js-index-addedit-form') {
-          // we're returning the table, replace everything
-
-          var $form_wrapper = $this.find('.js-addedit-form-wrapper');
-
-          // if there's a form wrap, slide it up before replacing content
-          if ($form_wrapper.length) {
-            $form_wrapper.slideUp(function(){
-              _this.addedit_replace_and_reinit($this, $(html)[0].innerHTML, $target);
-            });
-          } else {
-            _this.addedit_replace_and_reinit($this, $(html)[0].innerHTML, $target);
-          }
-
-          if (!$target.hasClass("js-delete-link")) {
-            Fae.helpers.scroll_to($parent);
-          }
-        }
-
-        _this.has_reinit = true;
-        _this.init();
-        Fae.fade_notices();
-
-      } else if ($target.hasClass("js-asset-delete-link")) {
-        // handle remove asset links
-        $target.parent().fadeOut('fast', function() {
-          $(this).next('.asset-inputs').fadeIn('fast');
-        });
-      }
-    });
+    if (!$target.hasClass('js-delete-link')) {
+      FCH.smoothScroll($el.parent(), 500, 100, 120);
+    }
   },
 
-  addedit_replace_and_reinit: function($this, html, $target) {
-    $this.html(html)
-      .find(".select select").fae_chosen();
-
-    Fae.tables.rowSorting();
-  },
-
-  filter_submission: function(params) {
+  /**
+   * On filter change, update table data
+   */
+  filterSubmission: function() {
     var _this = this;
+
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
-        $(this).next('table').replaceWith($(data).find('table').first());
+        $(this).next('table').replaceWith( $(data).find('table').first() );
       })
       .on('click', '.js-reset-btn', function(ev) {
-        var form = $(this).closest('form')[0];
-        form.reset();
-        $(form).find('select').val('').trigger('chosen:updated');
+        var $form = $(this).closest('form');
+
+        $form.get(0).reset();
+        $form.find('select').val('').trigger('chosen:updated');
         // reset hashies
-        window.location.hash = ''
+        window.location.hash = '';
       })
       .on('change', 'select', function() {
         _this.$filter_form.submit();
       });
   },
 
-  apply_cookies: function() {
-    var _this = this;
+  /**
+   * If cookies are available, load them into the hash
+   */
+  applyCookies: function() {
     var cookie_key = $('.js-filter-form').data('cookie-key');
+
+    this.grind = new Grinder(this._setFilterDropdowns);
 
     if (cookie_key) {
       var set_cookie = $.cookie(cookie_key);
@@ -225,30 +210,23 @@ Fae.form.ajax = {
         var hash = '?';
 
         for(var i = 0; i < keys.length; i++) {
-          if(hash !== '?') {
+          if (hash !== '?') {
             hash += '&';
           }
           hash += keys[i] + '=' + cookie[keys[i]];
         }
 
-        if( hash !== '?') {
+        if (hash !== '?') {
           window.location.hash = hash;
         }
       }
-
-      var callback = function(params){
-        $.cookie(cookie_key, JSON.stringify(params));
-
-        var hash = window.location.hash;
-        Fae.form.ajax.set_filter_dropdowns(hash);
-      }
-
-      _this.grind = new Grinder(callback);
     }
   },
 
-  // update hash when filter dropdowns changed
-  filter_select: function(){
+  /**
+   * Update hash when filter dropdowns changed
+   */
+  filterSelect: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
       if ($('.js-filter-form').data('cookie-key')) {
@@ -260,57 +238,89 @@ Fae.form.ajax = {
     });
   },
 
-  // check for cookie or hash and set dropdowns/ url accordingly
-  set_filter_dropdowns: function(hash) {
-    var cookie_name = $('.js-filter-form').data('cookie-key')
-    if (cookie_name) {
-      var parsed = JSON.parse($.cookie(cookie_name));
-    } else {
-      var parsed = this.grind.parse(hash);
-    }
+  /**
+   * Check for cookie or hash and set dropdowns/ url accordingly (callback for Grinder)
+   * @param {Object} params - hash params broken out from Grinder
+   */
+  _setFilterDropdowns: function(params) {
+    var cookie_name = $('.js-filter-form').data('cookie-key');
+    $.cookie(cookie_name, JSON.stringify(params));
 
-    if (!$.isEmptyObject(parsed)) {
-      $.each(parsed, function(k, v){
+    if (!$.isEmptyObject(params)) {
+      $.each(params, function(k, v) {
         $('.js-filter-form .table-filter-group').each(function(){
-          var key = $(this).find('select').attr('id').split('filter_')[1];
-          var value = $(this).find('option:selected').val();
-          if (k == key) {
-            $(this).find('option').each(function(){
-              if ($(this).val() == v) {
-                $(this).prop('selected', 'selected');
+          var $this = $(this);
+          var key = $this.find('select').attr('id').split('filter_')[1];
+          var value = $this.find('option:selected').val();
+
+          if (k === key) {
+            $this.find('option').each(function(){
+              if ($this.val() === v) {
+                $this.prop('selected', 'selected');
                 $('#filter_' + key).trigger('chosen:updated');
               };
             });
           }
         });
       });
+
       $('.js-filter-form').submit();
     }
   },
 
-  delete_no_form: function() {
-    // on deletes that don't exist in a form like file upload area
+  /**
+   * On deletes that don't exist in a form like file upload area
+   */
+  deleteNoForm: function() {
     $('.js-asset-delete-link').on('ajax:success', function(){
       var $this = $(this);
       if (!$this.closest('.js-addedit-form-wrapper').length) {
         var $parent = $this.closest('.asset-actions');
-        var $inputs = $parent.next('.asset-inputs');
+
         $parent.fadeOut(function(){
-          $inputs.fadeIn();
+          $parent.next('.asset-inputs').fadeIn();
         });
       }
     });
   },
 
-  //ajax image delete links
-  image_delete_links: function() {
+  /**
+   * Attach delete listener to images uploaded
+   */
+  imageDeleteLinks: function() {
     $('.imageDeleteLink').click(function(e) {
       e.preventDefault();
+      var $this = $(this);
+
       if (confirm('Are you sure you want to delete this image?')) {
-        $.post($(this).attr('href'),'html');
-        $(this).parent().next().show();
-        $(this).parent().hide();
+        $.post($this.attr('href'), 'html');
+        $this.parent().next().show();
+        $this.parent().hide();
       }
     });
   },
+
+  /**
+   * Attaching click handlers to #main_content to allow ajax replacement
+   */
+  htmlListeners: function() {
+    $('#main_content')
+
+      // for the yes/no slider
+      .on('click', '.slider-wrapper', function(e){
+        e.preventDefault();
+        $(this).toggleClass('slider-yes-selected');
+      })
+
+      // The settings menu for tables and checkboxe
+      .on('click', '.main_table-action_menu-trigger, .boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
+        $(this).toggleClass('js-active');
+      })
+
+      // stop the event bubbling and running the above toggleClass twice
+      .on('click', '.boolean :checkbox, .checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
+        e.stopPropagation();
+      });
+  }
+
 };

@@ -84,17 +84,6 @@
 	}
 }
 
-
- .main_table-checkbox + .main_table-header-description {
-	padding-left: 5px;
-}
-
-.main_table-description-item {
-	.main_table-checkbox + & {
-		padding-left: 5px;
-	}
-}
-
 .main_table-description-item-sub {
 	margin-top: 7px;
 	font-size: 12px;
@@ -156,17 +145,6 @@
 		&:hover {
 			color: $c-text;
 		}
-	}
-}
-
-.main_table-checkbox {
-	width: 40px;
-	padding-right: 5px;
-	vertical-align: top;
-
-	thead & {
-		padding-left: 15px;
-		vertical-align: middle;
 	}
 }
 

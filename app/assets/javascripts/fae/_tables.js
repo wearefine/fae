@@ -1,3 +1,7 @@
+/* global Fae */
+
+'use strict';
+
 Fae.tables = {
 
   init: function() {
@@ -12,6 +16,7 @@ Fae.tables = {
     if($('form .main_content-section-area').length) {
       this.endingSelectShim();
     }
+    this.addToTable();
   },
 
   columnSorting: function() {
@@ -211,5 +216,13 @@ Fae.tables = {
       });
     });
 
+  },
+
+  // scroll_to event for non-ajax'd table forms
+  addToTable: function() {
+    $(".table-add-link-visible").click("on", function(){
+      var $parent = $(this).closest('section');
+      FCH.smoothScroll($parent.find("tbody tr:last-child"), 500, 100, 90);
+    });
   }
 };

@@ -2,14 +2,16 @@
 
 'use strict';
 
+/**
+ * Fae form
+ * @namespace
+ */
 Fae.form = {
-
   init: function() {
     this.dates.init();
     this.text.init();
     this.select.init();
-    $("th.main_table-checkbox").checkboxer();
-
+    this.checkbox.init();
     this.validator.init();
     this.cancel.init();
     this.ajax.init();
