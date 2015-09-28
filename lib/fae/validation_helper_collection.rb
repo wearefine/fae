@@ -21,14 +21,11 @@ class ValidationHelperCollection
     /^(\d{5})?$/i
   end
 
-  # def canada_and_us_zip_regex
-  #   /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXYabceghjklmnpstvxy]{1}\d{1}[A-Za-z]{1} ?\d{1}[A-Za-z]{1}\d{1})$/
-  #   # http://geekswithblogs.net/MainaD/archive/2007/12/03/117321.aspx
-  # end
-
   def youtube_regex
     /[a-zA-Z0-9_-]{11}/
   end
+
+  ### Complete Hash Validations
 
   def slug
     {
