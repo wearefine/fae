@@ -337,7 +337,7 @@ validates :slug,
   uniqueness: true,
   presence: true,
   format: {
-    with: Fae::ValidationHelpers.slug_regex,
+    with: Fae.validation_helpers.slug_regex,
     multiline: true,
     message: 'no spaces or special characters'
   }
@@ -358,7 +358,7 @@ Complete:
 example:
 
 ```ruby
-validates :slug, Fae::ValidationHelpers.slug
+validates :slug, Fae.validation_helpers.slug
 ```
 
 ### Judge and Uniqueness
