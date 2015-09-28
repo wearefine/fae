@@ -8,6 +8,7 @@
     + [#49887](https://issues.afinedevelopment.com/issues/49887) Standardize appearance of all gray buttons
 - bugs
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Persist side navigation highlight when not on index
+    + [#50779](https://issues.afinedevelopment.com/issues/50779) File input label spacing shouldn't break to two lines without good cause
     + fix for nested tables, move header option to parent, not needed on child
     + fix JS validation not triggering on form submission
 
