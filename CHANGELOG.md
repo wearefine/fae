@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#50905](https://issues.afinedevelopment.com/issues/50905) Added super cool validation helpers
 - bugs
     + fix @new_path implementation in header
 

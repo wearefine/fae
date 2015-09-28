@@ -313,7 +313,53 @@ end
 
 ## Validation
 
-Fae doesn't deal with any validation definitions in your application models, you'll have to add those.
+Fae doesn't deal with any validation definitions in your application models, you'll have to add those. However, there are some pre-defined regex validation helpers to use in your models. See examples below.
+
+### Validation Helpers
+
+Fae validation helpers come in two flavors; regex only, and complete hash.
+
+Regex:
+
+| option        | description                                             | notes               |
+|---------------|---------------------------------------------------------|---------------------|
+| slug_regex    | no spaces or special characters                         | add multiline: true |
+| email_regex   | valid email with @ and .                                |                     |
+| url_regex     | http and https urls                                     |                     |
+| phone_regex   | standard 10 digit phone number with various formats     | add multiline: true |
+| zip_regex     | 5 digit zip code                                        | add multiline: true |
+| youtube_regex | matches youtube id, i.e. the 11 digits after "watch?v=" |                     |
+
+example:
+
+```ruby
+validates :slug,
+  uniqueness: true,
+  presence: true,
+  format: {
+    with: Fae::ValidationHelpers.slug_regex,
+    multiline: true,
+    message: 'no spaces or special characters'
+  }
+```
+
+Complete:
+
+| option       | description                                     |
+|--------------|-------------------------------------------------|
+| slug         | uniqueness, presence, regex format with message |
+| email        | regex format with message                       |
+| unique_email | uniqueness, regex format with message           |
+| url          | regex form with message                         |
+| phone        | regex format with message                       |
+| zip          | regex format with message                       |
+| youtube_url  | regex format with message                       |
+
+example:
+
+```ruby
+validates :slug, Fae::ValidationHelpers.slug
+```
 
 ### Judge and Uniqueness
 
