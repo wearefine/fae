@@ -1,107 +1,131 @@
+/* globals Fae, FCH */
+
+'use strict';
+
+/**
+ * Fae navigation mobile menu
+ * @namespace
+ */
 Fae.navigation.mobileMenu = {
-  mobile_container: "#main_nav",
-  trigger_selector: "#main_nav-menu_button",
-  header_selector: ".main_nav-header",
-  sub_header_selector: ".main_nav-sub-header-mobile, .main_nav-third-header-mobile",
-  sub_header_section_selector: ".main_nav-sub-nav",
-  toggle_class: "js-menu-active",
-  toggle_level_class: "js-menu-level-active",
-  sub_toggle_level_class: "js-sub-menu-level-active",
-  drawer_closed: true,
-  default_screen_width: 1024,
+  toggle_class: 'js-menu-active',
+  toggle_level_class: 'js-menu-level-active',
+  sub_toggle_level_class: 'js-sub-menu-level-active',
 
   init: function(){
-    this.open_drawer();
-    this.header_clicks();
+    this.openDrawer();
+    this.mainHeaderClickListener();
     this.resizer();
-    this.sub_header_clicks();
-    this.third_nav_clicks();
-    this.link_clicks();
-
-    //get a reference to the trigger
-    this.$trigger = $(this.trigger_selector);
+    this.subMainHeaderClickListener();
+    this.thirdNavClickListener();
+    this.mainNavLinkClickListener();
   },
 
-  open_drawer: function() {
-    var self = this;
 
-    $(this.trigger_selector).click(function(e){
+  /**
+   * Check to see if the html has the toggle class...which means it's opened
+   */
+  openDrawer: function() {
+    var _this = this;
+
+    $('#main_nav-menu_button').click(function(e){
       e.preventDefault();
-      var $html = $("html");
-      // check to see if the html has the toggle class...which means it's opened
-      if ($html.hasClass(self.toggle_class)) {
-        self.close_all();
+      var $html = $('html');
+
+      if ($html.hasClass(_this.toggle_class)) {
+        _this.closeAll();
       } else {
-        $("html").addClass(self.toggle_class);
+        $html.addClass(_this.toggle_class);
       }
     });
   },
 
-  close_all: function() {
+  /**
+   * Close all open drawers
+   */
+  closeAll: function() {
     // remove the HTML class which closes the first level
-    $("html").removeClass(this.toggle_class);
+    $('html').removeClass(this.toggle_class);
 
     // remove toggle_level_class and sub_toggle_level_class classes
     $('.' + this.toggle_level_class).removeClass(this.toggle_level_class);
     $('.' + this.sub_toggle_level_class).removeClass(this.sub_toggle_level_class);
   },
 
-  link_clicks: function() {
-    var self = this;
+  /**
+   * On click in nav, close all open drawers
+   */
+  mainNavLinkClickListener: function() {
+    var _this = this;
 
-    $(this.mobile_container).find("a").click(function(){
-      self.close_all();
+    $('#main_nav a').click(function(){
+      _this.closeAll();
     });
   },
 
-  header_clicks: function() {
-    var self = this;
-    // close the menus if clicked on an actual link
-    $(this.header_selector).click(function(e){
-      if (!$(this).hasClass("js-menu-header-active") && $(window).width() < self.default_screen_width) {
+  /**
+   * Close menus if clicked on actual link. If element does not have sublinks, go to desired page.
+   */
+  mainHeaderClickListener: function() {
+    var _this = this;
+
+    $('.main_nav-header').click(function(e){
+      var $this = $(this);
+
+      if (!$this.hasClass('js-menu-header-active') && FCH.bp.large_down) {
         e.preventDefault();
-        var $parent = $(this).closest("li");
-        var link_url = $(this).data("link");
+        var $parent = $this.closest('li');
+        var link_url = $this.data('link');
 
         // Add JS toggle class
-        $parent.addClass(self.toggle_level_class);
+        $parent.addClass(_this.toggle_level_class);
 
         // If the element does not have sublinks, then go to the desired page
-        if ($parent.find(self.sub_header_section_selector).length === 0 && typeof link_url !== "undefined") {
+        if ($parent.find('.main_nav-sub-nav').length === 0 && typeof link_url !== 'undefined') {
           location.href = link_url;
         }
       }
     });
   },
 
-  third_nav_clicks: function() {
-    var self = this;
+  /**
+   * For ultra deep navs, collapse parent
+   */
+  thirdNavClickListener: function() {
+    var _this = this;
+
     $('.main_nav-sub-link.with-third_nav').click(function(e){
-      if ($(window).width() < self.default_screen_width) {
+      if (FCH.bp.large_down) {
         e.preventDefault();
         e.stopImmediatePropagation();
-        $(this).parent().addClass(self.sub_toggle_level_class);
+        $(this).parent().addClass(_this.sub_toggle_level_class);
       }
     });
   },
 
-  sub_header_clicks: function() {
-    var self = this;
-    $(this.sub_header_selector).click(function(e){
+  /**
+   * Collapse sub headers on sub nav click
+   */
+  subMainHeaderClickListener: function() {
+    var _this = this;
+
+    $('.main_nav-sub-header-mobile, .main_nav-third-header-mobile').click(function(e){
       e.preventDefault();
       $(this)
-        .closest("." + self.toggle_level_class + ", ." + self.sub_toggle_level_class)
-        .removeClass(self.toggle_level_class)
-        .removeClass(self.sub_toggle_level_class);
+        .closest('.' + _this.toggle_level_class + ', .' + _this.sub_toggle_level_class)
+        .removeClass(_this.toggle_level_class)
+        .removeClass(_this.sub_toggle_level_class);
     });
   },
 
+  /**
+   * Close all open drawers on resize
+   */
   resizer: function() {
-    var self = this;
+    var _this = this;
     // use smart resizer so it doesn't happen at every pixel
     $(window).smartresize(function(){
-      if ($(window).width() >= self.default_screen_width){
-        self.close_all();
+      if (FCH.bp.large){
+        _this.closeAll();
       }
     });
   },
