@@ -324,7 +324,7 @@ Regex:
 | option        | description                                             | notes               |
 |---------------|---------------------------------------------------------|---------------------|
 | slug_regex    | no spaces or special characters                         | add multiline: true |
-| email_regex   | valid email with @ and .                                |                     |
+| email_regex   | valid email with @ and .                                | add multiline: true |
 | url_regex     | http and https urls                                     |                     |
 | phone_regex   | standard 10 digit phone number with various formats     | add multiline: true |
 | zip_regex     | 5 digit zip code                                        | add multiline: true |

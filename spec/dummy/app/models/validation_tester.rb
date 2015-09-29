@@ -13,6 +13,7 @@ class ValidationTester < ActiveRecord::Base
   validates :email,
     format: {
       with: Fae.validation_helpers.email_regex,
+      multiline: true,
       message: 'must be valid email'
     }
   validates :url,
