@@ -1,25 +1,28 @@
-// this plugin sets chosen defaults and massages options based on class names
+'use strict';
 
-var FaeChosen = {
-	options: {
-		disable_search_threshold: 10
-	},
+(function ( $ ) {
+  /**
+   * This plugin sets chosen defaults and massages options based on class names.
+   * @function external:"jQuery.fn".fae_chosen
+   */
+  $.fn.fae_chosen = function( options ) {
+    var defaults = {
+      disable_search_threshold: 10
+    };
 
-	init: function(options, elm){
-		// unite the default options with the passed-in ones
-		this.options = $.extend({}, this.options, options);
+    var settings = $.extend( {}, defaults, options );
 
-		var $elm = $(elm);
+    return this.each(function() {
+      var $this = $(this);
 
-		// remove threshold if show_search class is added from `search: true`
-		if ($elm.hasClass('select-search')) {
-			this.options.disable_search_threshold = 0;
-		}
+      // remove threshold if show_search class is added from `search: true`
+      if ($this.hasClass('select-search')) {
+        settings.disable_search_threshold = 0;
+      }
 
-		$(elm).chosen(this.options);
-	}
+      $this.chosen(settings);
+    });
 
-};
+  };
 
-// make it a plugin
-$.plugin("fae_chosen", FaeChosen);
+}( jQuery ));
