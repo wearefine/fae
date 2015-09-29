@@ -32,12 +32,6 @@ class ValidationTester < ActiveRecord::Base
       multiline: true,
       message: 'must be valid zip'
     }
-  validates :canadian_zip,
-    format: {
-      with: Fae.validation_helpers.canada_and_us_zip_regex,
-      multiline: true,
-      message: 'must be valid zip'
-    }
   validates :youtube_url,
     format: {
       with: Fae.validation_helpers.youtube_regex,
