@@ -129,18 +129,6 @@ ActiveRecord::Schema.define(version: 20150929195433) do
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
 
-  create_table "fae_pages", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.integer  "position",   limit: 4,   default: 0
-    t.boolean  "on_stage",               default: true
-    t.boolean  "on_prod",                default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "slug",       limit: 255
-  end
-
-  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
-
   create_table "fae_roles", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.integer  "position",   limit: 4
