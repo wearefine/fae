@@ -1,0 +1,19 @@
+ruby:
+  require_locals ['attribute', 'f'], local_assigns
+  label       ||= attribute.to_s.titleize
+  required    ||= f.object.send(attribute).is_required?(f.object.class)
+  helper_text ||= ''
+  markdown    ||= false
+  hint        ||= nil
+
+  label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
+  label_adjusted += label
+  if markdown.present? || helper_text.present?
+    label_adjusted += content_tag :h6, class: 'helper_text' do
+      concat(helper_text) if helper_text.present?
+      concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown.present?
+    end
+  end
+
+= f.simple_fields_for attribute.to_sym do |i|
+  = i.input :content, label: label_adjusted.html_safe, hint: hint, input_html: { data: { validate: i.object.validation_json(f.object.class) }}

@@ -1,9 +1,15 @@
 # Fae Changelog
 
-## Unreleased
+## 1.2
+
+- enhancements
+- bugs
+
+## 1.1.7
 
 - enhancements
     + [#50855](https://issues.afinedevelopment.com/issues/50855) Change default highlight color from blue to FINE green
+    + [#50617](https://issues.afinedevelopment.com/issues/50617) Enable validations for page content blocks
     + [#50795](https://issues.afinedevelopment.com/issues/50795) Change dropdown default from 'Select a <singular>' to 'All <plural>'
     + [#49887](https://issues.afinedevelopment.com/issues/49887) Standardize appearance of all gray buttons
 - bugs
@@ -11,14 +17,9 @@
     + [#50779](https://issues.afinedevelopment.com/issues/50779) File input label spacing shouldn't break to two lines without good cause
     + fix for nested tables, move header option to parent, not needed on child
     + fix JS validation not triggering on form submission
+    + [#50786](https://issues.afinedevelopment.com/issues/50786) Header new button should use local variable, not instance variable
     + [#50777](https://issues.afinedevelopment.com/issues/50777) Tables should overflow on smaller screens
-    + [#50786](https://issues.afinedevelopment.com/issues/50786) Header new button should use local, not instance, variable
-    + [#50777](https://issues.afinedevelopment.com/issues/50777) Tables should overflow on smaller screens
-
-## 1.2
-
-- enhancements
-- bugs
+    + [#49823](https://issues.afinedevelopment.com/issues/49823) Fixes first instances of Fae::StaticPage inhereited models always returning an instance of Fae::StaticPage
 
 ## 1.1.6
 

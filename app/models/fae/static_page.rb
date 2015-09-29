@@ -4,10 +4,14 @@ module Fae
     include Fae::StaticPageConcern
     include Fae::Concerns::Models::Base
 
+    validates :title, presence: true
+
+    @@singleton_is_setup = false
+
     def self.instance
-      set_assocs
+      setup_dynamic_singleton
       row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
-      row = StaticPage.create(title: @slug.titleize, slug: @slug) if row.blank?
+      row = create(title: @slug.titleize, slug: @slug) if row.blank?
       row
     end
 
@@ -17,12 +21,32 @@ module Fae
 
   private
 
-    def self.set_assocs
-      # create has_one associations
-      fae_fields.each do |key, value|
-        send :has_one, key.to_sym, -> { where(attached_as: key.to_s)}, as: poly_sym(value), class_name: value.to_s, dependent: :destroy
-        send :accepts_nested_attributes_for, key, allow_destroy: true
-        send :define_method, :"#{key}_content", -> { send(key.to_sym).try(:content) }
+    def self.setup_dynamic_singleton
+      return if @@singleton_is_setup
+
+      fae_fields.each do |name, value|
+        type = value.is_a?(Hash) ? value[:type] : value
+
+        define_association(name, type)
+        define_validations(name, type, value[:validates]) if value.is_a?(Hash) && value[:validates].present?
+      end
+
+      @@singleton_is_setup = true
+    end
+
+    def self.define_association(name, type)
+      send :has_one, name.to_sym, -> { where(attached_as: name.to_s)}, as: poly_sym(type), class_name: type.to_s, dependent: :destroy
+      send :accepts_nested_attributes_for, name, allow_destroy: true
+      send :define_method, :"#{name}_content", -> { send(name.to_sym).try(:content) }
+    end
+
+    def self.define_validations(name, type, validations)
+      unique_method_name = "is_#{self.name.underscore}_#{name.to_s}?".to_sym
+      slug = @slug
+      validations[:if] = unique_method_name
+      type.validates(:content, validations)
+      type.send(:define_method, unique_method_name) do
+        contentable.slug == slug && attached_as == name.to_s if contentable.present?
       end
     end
 
