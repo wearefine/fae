@@ -8,129 +8,142 @@
    * @class
    */
   function Sticky($el, options) {
-    return this.init($el, options);
-  }
-
-  Sticky.prototype = {
-    /** Inherited settings from jQuery initialization */
-    options: {},
-    dimensions: {},
     /** @type {jQuery} */
-    $el: '',
+    this.$el = $el;
 
-    init: function($el, options) {
-      this.options = options;
-      this.$el = $el;
+    /** Inherited settings from jQuery initialization */
+    this.options = options;
 
-      var height = $el.outerHeight();
-      $el.addClass('js-will-be-sticky');
+    // capture dimensions
+    // If a placeholder exists, use it
+    this.dimensions = {
+      top: $el.offset().top - this.options.offset,
+      left: $el.offset().left
+    };
 
-			// capture dimensions
-			// If a placeholder exists, use it
-			this.dimensions.top = $el.offset().top - this.options.offset;
-			this.dimensions.left = $el.offset().left;
+    var height = $el.outerHeight();
+    $el.addClass('js-will-be-sticky');
 
-			// create a placeholder
-			this.createPlaceholder(height);
+    // create a placeholder
+    if (this.options.make_placeholder) {
+      this.createPlaceholder(height);
+    }
 
-			// run the initial stickit
-			this.stickit();
+    // run the initial stickIt
+    this.stickIt();
 
-			// bind events
-			this.resizer();
-			this.scroller();
-			FCH.resize.push(this.stickit);
-    },
+    // bind events
+    this.windowListeners();
 
-
-		createPlaceholder: function(height) {
-			if (this.options.make_placeholder) {
-				// create a placeholder element to use to keep the top spacing
-				var $placeholder = $('<div />', {
-					 class: this.options.placeholder_name,
-					 css: {
-						height: height,
-						display: 'none'
-					}
-				});
-
-				$placeholder.insertAfter(this.$el);
-
-				// save for reference later
-				this.placeholder = $placeholder;
-			}
-		},
-
-		stickit: function() {
-			// a wrapper to check for min_desktop.
-			// we need to check for that tablet flag first. hotel detail page for tablet view doesn't show launch
-
-			// if the min_desktop is false i.e. no min_desktop
-			if (!this.options.min_desktop) {
-				this.stickit_logic();
-			} else if( (this.options.min_desktop && FCH.bp.large) || (FCH.dimensions.ww >= 915) ) {
-				this.stickit_logic();
-			} else {
-				this._unStick();
-			}
-		},
-
-		stickit_logic: function() {
-			if (FCH.$window.scrollTop() >= this.dimensions.top) {
-				// if the scroll posiiton is greater than the offset top of the sticky element
-				// add class name which controls styles
-				this.$placeholder.show();
-
-				this.$el
-					.addClass(this.options.class_name)
-					.css({
-						top: 0,
-						left: this.dimensions.left,
-						width: this.$placeholder.width(),
-						position: 'fixed'
-					});
-			} else {
-				this._unStick();
-			}
-		},
-
-		_unStick: function() {
-				this.$el
-					.removeClass(this.options.class_name)
-					.removeAttr('style');
-				this.$placeholder.hide();
-		},
-
-		resizer: function() {
-			var _this = this;
-
-			FCH.$window.smartresize(function(){
-				if ( _this.$placeholder.is(':visible')) {
-					_this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
-					_this.dimensions.left = _this.$placeholder.offset().left;
-				} else {
-					_this.dimensions.top = _this.$el.offset().top - _this.options.offset;
-					_this.dimensions.left = _this.$el.offset().left;
-				}
-				_this.stickit();
-			});
-		},
-
+    return this;
   };
 
   /**
-   * Display helper text in a very small inline modal
+   * Create a placeholder element to use to keep the top spacing
+   * @param {Number} height - Size of stuck element
+   */
+  Sticky.prototype.createPlaceholder = function(height) {
+    var $placeholder = $('<div />', {
+       class: this.options.placeholder_name,
+       css: {
+        height: height,
+        display: 'none'
+      }
+    });
+
+    $placeholder.insertAfter(this.$el);
+    // save for reference later
+    this.$placeholder = $placeholder;
+  };
+
+  /**
+   * On window scroll, check to make sure the screen is larger than table and if it isn't, unstick it
+   * @fires stickItLogic (Conditionally)
+   * @fires _unStick (Conditionally)
+   */
+  Sticky.prototype.stickIt = function() {
+    if (FCH.bp.large) {
+      this._stickItLogic();
+    } else {
+      this._unStick();
+    }
+  };
+
+  /**
+   * Fix sticky element to top of page if it's past originally-set boundary.
+   * @access protected
+   * @fires _unStick (Conditionally)
+   * @see stickIt
+   */
+  Sticky.prototype._stickItLogic = function() {
+    if (FCH.$window.scrollTop() >= this.dimensions.top) {
+      if (this.options.make_placeholder) {
+        this.$placeholder.show();
+        this.$el.css({ width: this.$placeholder.width() });
+      }
+
+      this.$el
+        .addClass(this.options.class_name)
+        .css({
+          top: 0,
+          left: this.dimensions.left,
+          position: 'fixed'
+        });
+    } else {
+      this._unStick();
+    }
+  };
+
+  /**
+   * Remove active class and fixed styles from targeted element; hide placeholder
+   */
+  Sticky.prototype._unStick = function() {
+    this.$el
+      .removeClass(this.options.class_name)
+      .removeAttr('style');
+
+    if (this.options.make_placeholder) {
+      this.$placeholder.hide();
+    }
+  };
+
+  /**
+   * Listen for scroll and smartresize to stick or unstick element
+   */
+  Sticky.prototype.windowListeners = function() {
+    var _this = this;
+    FCH.$window
+      .scroll(function() {
+        _this.stickIt();
+      })
+      .smartresize(function(){
+
+        if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
+          _this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
+          _this.dimensions.left = _this.$placeholder.offset().left;
+        } else {
+          _this.dimensions.top = _this.$el.offset().top - _this.options.offset;
+          _this.dimensions.left = _this.$el.offset().left;
+        }
+
+        console.log(_this.dimensions)
+
+        _this.stickIt();
+      });
+  };
+
+  /**
+   * Stick elements within the viewport
    * @function external:'jQuery.fn'.sticky
    */
   $.fn.sticky = function( options ) {
 
     var defaults = {
-			class_name: 'js-sticky',
-			placeholder_name: 'js-sticky-placeholder',
-			make_placeholder: true,
-			offset: 0,
-			min_desktop: true,
-			header_selector: '#main_header'
+      class_name: 'js-sticky',
+      placeholder_name: 'js-sticky-placeholder',
+      make_placeholder: true,
+      offset: 0,
+      header_selector: '#main_header'
     };
 
     // unite the default options with the passed-in ones
