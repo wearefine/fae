@@ -163,6 +163,7 @@ var FCH = {
      * @property {Boolean} small_up - Window width is greater than 767
      * @property {Boolean} medium_portrait - Window width is between 767 and 960
      * @property {Boolean} medium - Window width is between 767 and 1025
+     * @property {Boolean} large_down - Window width is less than 1024
      * @property {Boolean} large - Window width is greater than 1024
      */
     FCH.bp = {
