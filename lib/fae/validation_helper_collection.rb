@@ -31,6 +31,7 @@ class ValidationHelperCollection
     {
       uniqueness: true,
       presence: true,
+      allow_blank: true,
       format: {
         with: self.slug_regex,
         message: 'no spaces or special characters',
@@ -41,6 +42,7 @@ class ValidationHelperCollection
 
   def email
     {
+      allow_blank: true,
       format: {
         with: self.email_regex,
         message: 'is invalid',
@@ -54,6 +56,7 @@ class ValidationHelperCollection
       uniqueness: {
         message: 'That email address is already in use.'
       },
+      allow_blank: true,
       format: {
         with: self.email_regex,
         multiline: true,
@@ -64,6 +67,7 @@ class ValidationHelperCollection
 
   def url
     {
+      allow_blank: true,
       format: {
         with: self.url_regex,
         message: 'is invalid'
@@ -73,6 +77,7 @@ class ValidationHelperCollection
 
   def phone
     {
+      allow_blank: true,
       format: {
         with: self.phone_regex,
         multiline: true,
@@ -83,6 +88,7 @@ class ValidationHelperCollection
 
   def zip
     {
+      allow_blank: true,
       format: {
         with: self.zip_regex,
         multiline: true,
@@ -93,6 +99,7 @@ class ValidationHelperCollection
 
   def youtube_url
     {
+      allow_blank: true,
       format: {
         with: self.youtube_regex,
         message: 'is invalid'

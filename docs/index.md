@@ -345,15 +345,15 @@ validates :slug,
 
 Complete:
 
-| option       | description                                     |
-|--------------|-------------------------------------------------|
-| slug         | uniqueness, presence, regex format with message |
-| email        | regex format with message                       |
-| unique_email | uniqueness, regex format with message           |
-| url          | regex form with message                         |
-| phone        | regex format with message                       |
-| zip          | regex format with message                       |
-| youtube_url  | regex format with message                       |
+| option       | description                                                  |
+|--------------|--------------------------------------------------------------|
+| slug         | uniqueness, presence, regex format with message, allow blank |
+| email        | regex format with message, allow blank                       |
+| unique_email | uniqueness, regex format with message, allow blank           |
+| url          | regex form with message, allow blank                         |
+| phone        | regex format with message, allow blank                       |
+| zip          | regex format with message, allow blank                       |
+| youtube_url  | regex format with message, allow blank                       |
 
 example:
 
