@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + fix @new_path implementation in header
 
 ## 1.1.7
 
