@@ -36,7 +36,6 @@
 
 //= require fae/frob_core_helpers
 //= require fae/admin
-//= require fae/_helpers
 
 //= require fae/form/_form
 //= require fae/form/inputs/_dates

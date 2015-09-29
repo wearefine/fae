@@ -11,7 +11,7 @@ Fae.navigation.subnavHighlighter = {
       var that = this;
 
       //highlight the first one on page load
-      this.scroller();
+      this.highlightScroller();
 
       //makes the subnav clicks
       this.clicker();
@@ -21,7 +21,7 @@ Fae.navigation.subnavHighlighter = {
       $(this.settings.sections).last().css("min-height", $(window).height());
 
       $(window).on("scroll.highlighter", function(){
-        that.scroller();
+        that.highlightScroller();
       });
     }
   },
@@ -33,7 +33,7 @@ Fae.navigation.subnavHighlighter = {
     });
   },
 
-  scroller: function(){
+  highlightScroller: function(){
     var that = this;
     var count = $(this.settings.sections).length;
 
@@ -53,10 +53,24 @@ Fae.navigation.subnavHighlighter = {
   },
 
   clicker: function() {
+    var _this = this;
     // smooth scrolling on anchor links in the tab area.
       $(this.settings.subnavarea).find("a").on("click", function(e) {
         e.preventDefault();
-        Fae.helpers.scroller(this);
+        _this._scroller(this);
       });
-  }
+  },
+
+  _scroller: function(elm) {
+    if (location.pathname.replace(/^\//,'') == elm.pathname.replace(/^\//,'') && location.hostname == elm.hostname) {
+      var target = $(elm.hash);
+      target = target.length ? target : $("[name=" + elm.hash.slice(1) + "]");
+
+      if (target.length) {
+        var newScrollTop = target.offset().top - 116;
+        $("html, body").animate({ scrollTop: newScrollTop }, 500);
+        return false;
+      }
+    }
+  },
 };
