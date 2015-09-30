@@ -1,4 +1,4 @@
-/* global Fae, modal */
+/* global Fae, modal, FCH */
 
 'use strict';
 

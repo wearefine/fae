@@ -1,10 +1,11 @@
-/* global Fae */
+/* global Fae, FCH */
 
 'use strict';
 
 /**
  * Fae tables
- * @namespace
+ * @namespace tables
+ * @memberof Fae
  */
 Fae.tables = {
 

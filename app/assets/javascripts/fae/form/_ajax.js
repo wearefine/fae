@@ -1,10 +1,11 @@
-/* global Fae, fae_chosen, fileinputer  */
+/* global Fae, fae_chosen, fileinputer, FCH */
 
 'use strict';
 
 /**
  * Fae AJAX
- * @namespace
+ * @namespace form.ajax
+ * @memberof form
  */
 Fae.form.ajax = {
 
@@ -82,6 +83,7 @@ Fae.form.ajax = {
 
   /**
    * Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
+   * @fires {@link navigation.fadeNotices}
    */
   addEditSubmission: function() {
     var _this = this;
@@ -128,7 +130,7 @@ Fae.form.ajax = {
           _this.filterSubmission();
         }
 
-        Fae.navigation.fade_notices();
+        Fae.navigation.fadeNotices();
 
       } else if ($target.hasClass('js-asset-delete-link')) {
         // handle remove asset links
