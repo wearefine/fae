@@ -12,7 +12,7 @@ section.main_content-header
         - if nested
           a.add-button.js-add-link.js-index-add-link remote='true' href=self.send(new_path) = button_text
         - else
-          a.add-button href=new_path = button_text
+          a.add-button href=@new_path = button_text
     - if csv && @items.present?
       .main_content-header-csv
         a.csv-button href="#{@index_path}.csv" Export to CSV
