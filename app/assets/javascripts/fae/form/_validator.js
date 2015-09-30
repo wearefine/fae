@@ -19,6 +19,9 @@ Fae.form.validator = {
       this.formValidate();
       this.length_counter.init();
     }
+    if ($(".field_with_errors").length){
+      $('.alert').removeClass('hide');
+    }
   },
 
   /**
@@ -153,6 +156,7 @@ Fae.form.validator = {
     } else {
       $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
     }
+    $('.alert').removeClass('hide');
   },
 
   /**
