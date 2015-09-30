@@ -1,24 +1,19 @@
 class ValidationHelperCollection
 
   def slug_regex
-    /^[-a-zA-Z0-9]+$/
+    /\A[-_a-zA-Z0-9]+\z/
   end
 
   def email_regex
-    /^\s*(([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[\s\/,;]*)+$/i
+    /\A\s*(([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[\s\/,;]*)+\z/
   end
 
   def url_regex
     URI::regexp(%w(http https))
   end
 
-  def phone_regex
-    /\A(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/
-    # http://stackoverflow.com/questions/16699007/regular-expression-to-match-standard-10-digit-phone-number
-  end
-
   def zip_regex
-    /^(\d{5})?$/i
+    /\A(\d{5})?\z/
   end
 
   def youtube_regex
@@ -31,11 +26,9 @@ class ValidationHelperCollection
     {
       uniqueness: true,
       presence: true,
-      allow_blank: true,
       format: {
         with: self.slug_regex,
-        message: 'no spaces or special characters',
-        multiline: true
+        message: 'cannot have spaces or special characters'
       }
     }
   end
@@ -45,21 +38,6 @@ class ValidationHelperCollection
       allow_blank: true,
       format: {
         with: self.email_regex,
-        message: 'is invalid',
-        multiline: true
-      }
-    }
-  end
-
-  def unique_email
-    {
-      uniqueness: {
-        message: 'That email address is already in use.'
-      },
-      allow_blank: true,
-      format: {
-        with: self.email_regex,
-        multiline: true,
         message: 'is invalid'
       }
     }
@@ -75,23 +53,11 @@ class ValidationHelperCollection
     }
   end
 
-  def phone
-    {
-      allow_blank: true,
-      format: {
-        with: self.phone_regex,
-        multiline: true,
-        message: 'is invalid'
-      }
-    }
-  end
-
   def zip
     {
       allow_blank: true,
       format: {
         with: self.zip_regex,
-        multiline: true,
         message: 'is invalid'
       }
     }

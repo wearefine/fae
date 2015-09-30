@@ -321,14 +321,13 @@ Fae validation helpers come in two flavors; regex only, and complete hash.
 
 Regex:
 
-| option        | description                                             | notes               |
-|---------------|---------------------------------------------------------|---------------------|
-| slug_regex    | no spaces or special characters                         | add multiline: true |
-| email_regex   | valid email with @ and .                                | add multiline: true |
-| url_regex     | http and https urls                                     |                     |
-| phone_regex   | standard 10 digit phone number with various formats     | add multiline: true |
-| zip_regex     | 5 digit zip code                                        | add multiline: true |
-| youtube_regex | matches youtube id, i.e. the 11 digits after "watch?v=" |                     |
+| option        | description                                             |
+|---------------|---------------------------------------------------------|
+| slug_regex    | no spaces or special characters                         |
+| email_regex   | valid email with @ and .                                |
+| url_regex     | http and https urls                                     |
+| zip_regex     | 5 digit zip code                                        |
+| youtube_regex | matches youtube id, i.e. the 11 digits after "watch?v=" |
 
 example:
 
@@ -349,9 +348,7 @@ Complete:
 |--------------|--------------------------------------------------------------|
 | slug         | uniqueness, presence, regex format with message, allow blank |
 | email        | regex format with message, allow blank                       |
-| unique_email | uniqueness, regex format with message, allow blank           |
 | url          | regex form with message, allow blank                         |
-| phone        | regex format with message, allow blank                       |
 | zip          | regex format with message, allow blank                       |
 | youtube_url  | regex format with message, allow blank                       |
 

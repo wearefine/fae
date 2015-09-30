@@ -23,13 +23,6 @@ class ValidationTester < ActiveRecord::Base
       message: 'must be valid url'
     },
     allow_blank: true
-  validates :phone,
-    format: {
-      with: Fae.validation_helpers.phone_regex,
-      multiline: true,
-      message: 'must be valid phone number'
-    },
-    allow_blank: true
   validates :zip,
     format: {
       with: Fae.validation_helpers.zip_regex,
@@ -46,9 +39,7 @@ class ValidationTester < ActiveRecord::Base
 
   validates :second_slug, Fae.validation_helpers.slug
   validates :second_email, Fae.validation_helpers.email
-  validates :unique_email, Fae.validation_helpers.unique_email
   validates :second_url, Fae.validation_helpers.url
-  validates :second_phone, Fae.validation_helpers.phone
   validates :second_zip, Fae.validation_helpers.zip
   validates :second_youtube_url, Fae.validation_helpers.youtube_url
 
