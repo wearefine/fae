@@ -337,7 +337,6 @@ validates :slug,
   presence: true,
   format: {
     with: Fae.validation_helpers.slug_regex,
-    multiline: true,
     message: 'no spaces or special characters'
   }
 ```
