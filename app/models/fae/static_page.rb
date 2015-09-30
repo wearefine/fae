@@ -6,7 +6,7 @@ module Fae
 
     validates :title, presence: true
 
-    @@singleton_is_setup = false
+    @singleton_is_setup = false
 
     def self.instance
       setup_dynamic_singleton
@@ -22,7 +22,7 @@ module Fae
   private
 
     def self.setup_dynamic_singleton
-      return if @@singleton_is_setup
+      return if @singleton_is_setup
 
       fae_fields.each do |name, value|
         type = value.is_a?(Hash) ? value[:type] : value
@@ -31,7 +31,7 @@ module Fae
         define_validations(name, type, value[:validates]) if value.is_a?(Hash) && value[:validates].present?
       end
 
-      @@singleton_is_setup = true
+      @singleton_is_setup = true
     end
 
     def self.define_association(name, type)
