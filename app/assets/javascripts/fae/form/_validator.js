@@ -19,6 +19,9 @@ Fae.form.validator = {
       this.formValidate();
       this.length_counter.init();
     }
+    if ($(".field_with_errors")[0]){
+      $('.js-alert').removeClass('hide');
+    }
   },
 
   /**

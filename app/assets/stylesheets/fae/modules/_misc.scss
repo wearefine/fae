@@ -89,7 +89,7 @@
 
 }
 
-.alert {
+.alert, .js-alert {
   @extend %alerts;
   border-color: $c-error-content;
   background: $c-error-bg;
@@ -98,4 +98,8 @@
   &:before {
     @extend .icon-alert:before;
   }
+}
+
+.js-alert {
+  margin-top: 20px;
 }
