@@ -28,7 +28,7 @@ module Fae
 
     # Use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = "#{params[:slug].classify}Page".constantize.instance
+      @item = "#{params[:slug]}_page".classify.constantize.instance
     end
 
     # set up variables so that fae partial forms work
