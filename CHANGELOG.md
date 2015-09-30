@@ -1,11 +1,16 @@
 # Fae Changelog
 
+## Unreleased
+
+- enhancements
+- bugs
+    + fix @new_path implementation in header
+
 ## 1.2
 
 - enhancements
     + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
 - bugs
-    + fix @new_path implementation in header
 
 ## 1.1.7
 
