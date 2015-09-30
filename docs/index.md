@@ -313,7 +313,49 @@ end
 
 ## Validation
 
-Fae doesn't deal with any validation definitions in your application models, you'll have to add those.
+Fae doesn't deal with any validation definitions in your application models, you'll have to add those. However, there are some pre-defined regex validation helpers to use in your models. See examples below.
+
+### Validation Helpers
+
+Fae validation helpers come in two flavors; regex only, and complete hash.
+
+Regex:
+
+| option        | description                                             |
+|---------------|---------------------------------------------------------|
+| slug_regex    | no spaces or special characters                         |
+| email_regex   | valid email with @ and .                                |
+| url_regex     | http and https urls                                     |
+| zip_regex     | 5 digit zip code                                        |
+| youtube_regex | matches youtube id, i.e. the 11 digits after "watch?v=" |
+
+example:
+
+```ruby
+validates :slug,
+  uniqueness: true,
+  presence: true,
+  format: {
+    with: Fae.validation_helpers.slug_regex,
+    message: 'no spaces or special characters'
+  }
+```
+
+Complete:
+
+| option       | description                                      |
+|--------------|--------------------------------------------------|
+| slug         | uniqueness, presence, regex format with message  |
+| email        | regex format with message, allow blank           |
+| url          | regex form with message, allow blank             |
+| zip          | regex format with message, allow blank           |
+| youtube_url  | regex format with message, allow blank           |
+
+example:
+
+```ruby
+validates :slug, Fae.validation_helpers.slug
+```
 
 ### Judge and Uniqueness
 

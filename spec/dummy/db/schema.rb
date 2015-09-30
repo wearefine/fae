@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909230658) do
+ActiveRecord::Schema.define(version: 20150929195433) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
     t.string   "publication",      limit: 255
     t.text     "description",      limit: 65535
-    t.boolean  "on_stage",         limit: 1,     default: true
-    t.boolean  "on_prod",          limit: 1,     default: false
+    t.boolean  "on_stage",                       default: true
+    t.boolean  "on_prod",                        default: false
     t.integer  "position",         limit: 4
     t.integer  "release_id",       limit: 4
     t.datetime "created_at"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.string   "name",        limit: 255
     t.text     "description", limit: 65535
     t.integer  "position",    limit: 4
-    t.boolean  "live",        limit: 1
+    t.boolean  "live"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "release_id",  limit: 4
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20150909230658) do
 
   create_table "cats", force: :cascade do |t|
     t.string   "name",        limit: 255
-    t.boolean  "friendly",    limit: 1
+    t.boolean  "friendly"
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -88,11 +88,11 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.integer  "file_size",     limit: 4
     t.integer  "position",      limit: 4,   default: 0
     t.string   "attached_as",   limit: 255
-    t.boolean  "on_stage",      limit: 1,   default: true
-    t.boolean  "on_prod",       limit: 1,   default: false
+    t.boolean  "on_stage",                  default: true
+    t.boolean  "on_prod",                   default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "required",      limit: 1,   default: false
+    t.boolean  "required",                  default: false
   end
 
   add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
@@ -106,12 +106,12 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.string   "caption",        limit: 255
     t.integer  "position",       limit: 4,   default: 0
     t.string   "attached_as",    limit: 255
-    t.boolean  "on_stage",       limit: 1,   default: true
-    t.boolean  "on_prod",        limit: 1,   default: false
+    t.boolean  "on_stage",                   default: true
+    t.boolean  "on_prod",                    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "file_size",      limit: 4
-    t.boolean  "required",       limit: 1,   default: false
+    t.boolean  "required",                   default: false
   end
 
   add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
@@ -139,8 +139,8 @@ ActiveRecord::Schema.define(version: 20150909230658) do
   create_table "fae_static_pages", force: :cascade do |t|
     t.string   "title",      limit: 255
     t.integer  "position",   limit: 4,   default: 0
-    t.boolean  "on_stage",   limit: 1,   default: true
-    t.boolean  "on_prod",    limit: 1,   default: false
+    t.boolean  "on_stage",               default: true
+    t.boolean  "on_prod",                default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug",       limit: 255
@@ -152,8 +152,8 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.string   "label",            limit: 255
     t.text     "content",          limit: 65535
     t.integer  "position",         limit: 4,     default: 0
-    t.boolean  "on_stage",         limit: 1,     default: true
-    t.boolean  "on_prod",          limit: 1,     default: false
+    t.boolean  "on_stage",                       default: true
+    t.boolean  "on_prod",                        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "contentable_id",   limit: 4
@@ -175,8 +175,8 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.string   "label",            limit: 255
     t.string   "content",          limit: 255
     t.integer  "position",         limit: 4,   default: 0
-    t.boolean  "on_stage",         limit: 1,   default: true
-    t.boolean  "on_prod",          limit: 1,   default: false
+    t.boolean  "on_stage",                     default: true
+    t.boolean  "on_prod",                      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -208,7 +208,7 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.string   "first_name",             limit: 255
     t.string   "last_name",              limit: 255
     t.integer  "role_id",                limit: 4
-    t.boolean  "active",                 limit: 1
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "language",               limit: 255
@@ -234,8 +234,8 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "event_id",   limit: 4
-    t.boolean  "on_stage",   limit: 1,   default: true
-    t.boolean  "on_prod",    limit: 1,   default: false
+    t.boolean  "on_stage",               default: true
+    t.boolean  "on_prod",                default: false
     t.integer  "position",   limit: 4
   end
 
@@ -269,13 +269,13 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.string   "tasting_notes_pdf", limit: 255
     t.integer  "wine_id",           limit: 4
     t.integer  "varietal_id",       limit: 4
-    t.boolean  "on_stage",          limit: 1,     default: true
-    t.boolean  "on_prod",           limit: 1,     default: false
+    t.boolean  "on_stage",                        default: true
+    t.boolean  "on_prod",                         default: false
     t.integer  "position",          limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "video_url",         limit: 255
-    t.boolean  "featured",          limit: 1
+    t.boolean  "featured"
     t.string   "weight",            limit: 255
     t.date     "release_date"
     t.date     "show"
@@ -284,8 +284,8 @@ ActiveRecord::Schema.define(version: 20150909230658) do
 
   create_table "selling_points", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.boolean  "on_stage",   limit: 1,   default: true
-    t.boolean  "on_prod",    limit: 1,   default: false
+    t.boolean  "on_stage",               default: true
+    t.boolean  "on_prod",                default: false
     t.integer  "position",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -293,7 +293,7 @@ ActiveRecord::Schema.define(version: 20150909230658) do
 
   create_table "tasting_notes", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.boolean  "active",     limit: 1
+    t.boolean  "active"
     t.integer  "position",   limit: 4
     t.integer  "release_id", limit: 4
     t.datetime "created_at"
@@ -310,10 +310,30 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.datetime "updated_at"
   end
 
+  create_table "validation_testers", force: :cascade do |t|
+    t.string   "name",               limit: 255
+    t.string   "slug",               limit: 255
+    t.string   "second_slug",        limit: 255
+    t.string   "email",              limit: 255
+    t.string   "url",                limit: 255
+    t.string   "phone",              limit: 255
+    t.string   "zip",                limit: 255
+    t.string   "canadian_zip",       limit: 255
+    t.string   "youtube_url",        limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "second_email",       limit: 255
+    t.string   "unique_email",       limit: 255
+    t.string   "second_url",         limit: 255
+    t.string   "second_phone",       limit: 255
+    t.string   "second_zip",         limit: 255
+    t.string   "second_youtube_url", limit: 255
+  end
+
   create_table "varietals", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.boolean  "on_stage",   limit: 1,   default: true
-    t.boolean  "on_prod",    limit: 1,   default: false
+    t.boolean  "on_stage",               default: true
+    t.boolean  "on_prod",                default: false
     t.integer  "position",   limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -321,8 +341,8 @@ ActiveRecord::Schema.define(version: 20150909230658) do
 
   create_table "wines", force: :cascade do |t|
     t.string   "name_en",         limit: 255
-    t.boolean  "on_stage",        limit: 1,     default: true
-    t.boolean  "on_prod",         limit: 1,     default: false
+    t.boolean  "on_stage",                      default: true
+    t.boolean  "on_prod",                       default: false
     t.integer  "position",        limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
