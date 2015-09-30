@@ -72,11 +72,11 @@ Fae.navigation.subnavHighlighter = {
    */
   anchorClickListener: function() {
     var _this = this;
-    //
-      $('.main_content-header-section-links a').on('click', function(e) {
-        e.preventDefault();
-        _this._scroller(this);
-      });
+
+    $('.main_content-header-section-links a').on('click', function(e) {
+      e.preventDefault();
+      _this._scroller(this);
+    });
   },
 
   /**
