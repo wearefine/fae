@@ -13,8 +13,6 @@ Fae.navigation.subnavHighlighter = {
   init: function() {
     //only run everything if there is a subnav area
     if (FCH.exists('.main_content-header-section-links')) {
-      var that = this;
-
       this.FCHListeners();
 
       //makes the subnav clicks
