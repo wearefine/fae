@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 class ValidationHelperCollection
 
   def slug_regex
