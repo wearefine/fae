@@ -6,14 +6,12 @@ class ValidationTester < ActiveRecord::Base
     presence: true,
     format: {
       with: Fae.validation_helpers.slug_regex,
-      multiline: true,
       message: 'no spaces or special characters'
     },
     allow_blank: true
   validates :email,
     format: {
       with: Fae.validation_helpers.email_regex,
-      multiline: true,
       message: 'must be valid email'
     },
     allow_blank: true
@@ -26,7 +24,6 @@ class ValidationTester < ActiveRecord::Base
   validates :zip,
     format: {
       with: Fae.validation_helpers.zip_regex,
-      multiline: true,
       message: 'must be valid zip'
     },
     allow_blank: true

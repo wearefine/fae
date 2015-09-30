@@ -8,7 +8,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, slug: 'validation-tester-1', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, slug: 'validation-tester-1')
 
       expect(response.status).to eq(200)
     end
@@ -16,7 +16,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, slug: 'validation-tester 2', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, slug: 'validation-tester 2')
 
       test.should_not be_valid
     end
@@ -28,7 +28,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, email: 'test@testsite.com', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, email: 'test@testsite.com')
 
       expect(response.status).to eq(200)
     end
@@ -36,7 +36,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, email: 'testemail @gmail.com', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, email: 'testemail @gmail.com')
 
       test.should_not be_valid
     end
@@ -48,7 +48,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, url: 'http://poop.bike/', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, url: 'http://poop.bike/')
 
       expect(response.status).to eq(200)
     end
@@ -56,7 +56,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, url: 'poop.bike', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, url: 'poop.bike')
 
       test.should_not be_valid
     end
@@ -68,7 +68,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, zip: '97214', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, zip: '97214')
 
       expect(response.status).to eq(200)
     end
@@ -76,7 +76,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, zip: 'apple pie', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, zip: 'apple pie')
 
       test.should_not be_valid
     end
@@ -88,7 +88,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, youtube_url: 'ZwBRX_h3U1U', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, youtube_url: 'ZwBRX_h3U1U')
 
       expect(response.status).to eq(200)
     end
@@ -96,7 +96,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, youtube_url: '1cat', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, youtube_url: '1cat')
 
       test.should_not be_valid
     end
@@ -108,7 +108,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester)
 
       expect(response.status).to eq(200)
     end
@@ -116,7 +116,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, second_slug: 'second slug')
+      test = FactoryGirl.build(:validation_tester, second_slug: 'some slug')
 
       test.should_not be_valid
     end
@@ -128,7 +128,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, second_email: 'email@test.com', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, second_email: 'email@test.com')
 
       expect(response.status).to eq(200)
     end
@@ -136,7 +136,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, second_email: 'email/email.com', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, second_email: 'email/email.com')
 
       test.should_not be_valid
     end
@@ -148,7 +148,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, second_url: 'http://poop.bike/', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, second_url: 'http://poop.bike/')
 
       expect(response.status).to eq(200)
     end
@@ -156,7 +156,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, second_url: 'poop.bike', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, second_url: 'poop.bike')
 
       test.should_not be_valid
     end
@@ -168,7 +168,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, second_zip: '97214', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, second_zip: '97214')
 
       expect(response.status).to eq(200)
     end
@@ -176,7 +176,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, second_zip: '124!0', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, second_zip: '124!0')
 
       test.should_not be_valid
     end
@@ -188,7 +188,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       admin_login
       get new_admin_validation_tester_path
-      FactoryGirl.create(:validation_tester, second_youtube_url: 'ZwBRX_h3U1U', second_slug: 'second-slug')
+      FactoryGirl.create(:validation_tester, second_youtube_url: 'ZwBRX_h3U1U')
 
       expect(response.status).to eq(200)
     end
@@ -196,7 +196,7 @@ describe 'validation_testers#new' do
     it 'should throw error' do
       admin_login
       get new_admin_validation_tester_path
-      test = FactoryGirl.build(:validation_tester, second_youtube_url: '1cat', second_slug: 'second-slug')
+      test = FactoryGirl.build(:validation_tester, second_youtube_url: '1cat')
 
       test.should_not be_valid
     end
