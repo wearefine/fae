@@ -5,7 +5,7 @@
   width: 100%;
   padding: 10px 0 12px 0;
   background: $c-header-bg;
-  border-bottom: 5px solid $c-custom-highlight;
+  border-bottom: 4px solid $c-custom-highlight;
   text-align: center;
   z-index: 1;
 
@@ -14,7 +14,6 @@
   @include bp(big_header) {
     position: relative;
     padding: 25px 20px;
-    border-bottom-width: 10px;
     text-align: left;
   }
 }

@@ -3,6 +3,7 @@
 ## 1.2
 
 - enhancements
+    + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
 - bugs
 
 ## 1.1.7
