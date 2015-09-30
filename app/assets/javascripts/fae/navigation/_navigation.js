@@ -19,6 +19,7 @@ Fae.navigation = {
     this.subnavHighlighter.init();
     this.mobileMenu.init();
     this.language.init();
+    this.accordion.init();
   },
 
   /**
