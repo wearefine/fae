@@ -156,6 +156,7 @@ Fae.form.validator = {
     } else {
       $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
     }
+    $('.js-alert').removeClass('hide');
   },
 
   /**
