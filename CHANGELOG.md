@@ -5,6 +5,7 @@
 - enhancements
 - bugs
     + fix @new_path implementation in header
+    + fix Fae::StaticPage singleton setup check
 
 ## 1.1.7
 
