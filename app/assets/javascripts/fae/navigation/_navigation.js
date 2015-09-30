@@ -8,7 +8,6 @@
  * @memberof Fae
  */
 Fae.navigation = {
-  current_items: [],
 
   init: function() {
     this.selectCurrentNavItem();
@@ -36,7 +35,6 @@ Fae.navigation = {
       var link = $this.attr('href');
       if ((regex_match !== null && regex_match.length && link.indexOf(regex_match[1]) > -1) || link === current_base_url) {
         $this.addClass('current');
-        _this.current_items.push($this);
       }
     });
 
@@ -48,17 +46,19 @@ Fae.navigation = {
    * @access protected
    */
   _updateNavClasses: function() {
-    $.each(this.current_items, function(index, $el){
-      if ($el.hasClass('main_nav-link')) {
-        $el.closest('li').addClass('main_nav-active-single');
+    $('#main_nav a.current').each(function() {
+      var $this = $(this);
 
-      } else if ($el.hasClass('main_nav-sub-link')) {
-        $el
+      if ($this.hasClass('main_nav-link')) {
+        $this.closest('li').addClass('main_nav-active-single');
+
+      } else if ($this.hasClass('main_nav-sub-link')) {
+        $this
           .closest('li').addClass('main_nav-sub-active')
           .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
 
-      } else if ($el.hasClass('main_nav-third-link')) {
-        $el
+      } else if ($this.hasClass('main_nav-third-link')) {
+        $this
           .closest('li').addClass('main_nav-third-active')
           .closest('.sub_nav-accordion').removeClass('sub_nav-accordion').addClass('main_nav-sub-active--no_highlight')
           .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
