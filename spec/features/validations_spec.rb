@@ -69,19 +69,15 @@ feature 'validations' do
       expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 0')
     end
 
-    scenario 'should have error banner when errors are on the page', js: true do
-      admin_login
+  end
 
-      visit new_admin_release_path
+  scenario 'should have error banner when errors are on the page', js: true do
+    admin_login
+    visit new_admin_release_path
+    page.find('#release_name').trigger('focus')
+    page.find('#release_name').trigger('blur')
 
-      within('.release_wine') do
-        page.find('.chosen-single').click
-        page.find('li', text: 'Select One').click
-      end
-
-      expect(page).to have_selector('div.alert.no_slide')
-    end
-
+    expect(page).to have_selector('div.alert.no_slide')
   end
 
 end
