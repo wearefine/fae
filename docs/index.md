@@ -343,13 +343,13 @@ validates :slug,
 
 Complete:
 
-| option       | description                                                  |
-|--------------|--------------------------------------------------------------|
-| slug         | uniqueness, presence, regex format with message, allow blank |
-| email        | regex format with message, allow blank                       |
-| url          | regex form with message, allow blank                         |
-| zip          | regex format with message, allow blank                       |
-| youtube_url  | regex format with message, allow blank                       |
+| option       | description                                      |
+|--------------|--------------------------------------------------|
+| slug         | uniqueness, presence, regex format with message  |
+| email        | regex format with message, allow blank           |
+| url          | regex form with message, allow blank             |
+| zip          | regex format with message, allow blank           |
+| youtube_url  | regex format with message, allow blank           |
 
 example:
 
