@@ -1,23 +1,32 @@
-/* global Fae */
+/* global Fae, FCH */
 
 'use strict';
 
+/**
+ * Fae navigation
+ * @namespace navigation
+ * @memberof Fae
+ */
 Fae.navigation = {
-  current_items: [],
 
   init: function() {
-    this.select_current_nav_item();
-    this.update_nav_classes();
-    this.subnavHighlighter.init();
-    this.mobileMenu.init();
+    this.selectCurrentNavItem();
     this.utilityNav();
     this.buttonDropdown();
-    this.fade_notices();
+    this.fadeNotices();
+    this.stickyHeaders();
+    this.subnavHighlighter.init();
+    this.mobileMenu.init();
     this.language.init();
+    this.accordion.init();
   },
 
-  select_current_nav_item: function() {
-    var self = this;
+  /**
+   * Set nested links to be current in the nav
+   * @fires {@link navigation._updateNavClasses}
+   */
+  selectCurrentNavItem: function() {
+    var _this = this;
     var current_base_url = window.location.pathname;
     var regex = new RegExp("^" + Fae.path + "\/#?(\\w*)?\/");
     var regex_match = current_base_url.match(regex);
@@ -26,43 +35,41 @@ Fae.navigation = {
       var link = $this.attr('href');
       if ((regex_match !== null && regex_match.length && link.indexOf(regex_match[1]) > -1) || link === current_base_url) {
         $this.addClass('current');
-        self.current_items.push($this);
-        return false;
+      }
+    });
+
+    _this._updateNavClasses();
+  },
+
+  /**
+   * Set nested links to be current in the nav
+   * @access protected
+   */
+  _updateNavClasses: function() {
+    $('#main_nav a.current').each(function() {
+      var $this = $(this);
+
+      if ($this.hasClass('main_nav-link')) {
+        $this.closest('li').addClass('main_nav-active-single');
+
+      } else if ($this.hasClass('main_nav-sub-link')) {
+        $this
+          .closest('li').addClass('main_nav-sub-active')
+          .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
+
+      } else if ($this.hasClass('main_nav-third-link')) {
+        $this
+          .closest('li').addClass('main_nav-third-active')
+          .closest('.sub_nav-accordion').removeClass('sub_nav-accordion').addClass('main_nav-sub-active--no_highlight')
+          .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
+
       }
     });
   },
 
-  update_nav_classes: function() {
-    var self = this;
-    $.each(self.current_items, function(index, $el){
-      if ($el.hasClass('main_nav-link')) {
-        self.update_first_level($el);
-      } else if ($el.hasClass('main_nav-sub-link')) {
-        self.update_second_level($el);
-      } else if ($el.hasClass('main_nav-third-link')) {
-        self.update_third_level($el);
-      }
-    });
-  },
-
-  update_first_level: function($el) {
-    $el.closest('li').addClass('main_nav-active-single');
-  },
-
-  update_second_level: function($el) {
-    $el
-      .closest('li').addClass('main_nav-sub-active')
-      .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
-  },
-
-  update_third_level: function($el) {
-    $el
-      .closest('li').addClass('main_nav-third-active')
-      .closest('.sub_nav-accordion').removeClass('sub_nav-accordion').addClass('main_nav-sub-active--no_highlight')
-      .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
-  },
-
-  // utility nav drop down
+  /**
+   * Utility nav drop down
+   */
   utilityNav: function() {
     $('.utility_nav-user > a, .utility_nav-view > a').on('click', function(e) {
       e.preventDefault();
@@ -74,35 +81,51 @@ Fae.navigation = {
       $sub_nav.addClass('utility_nav-clicked');
 
       // assign a once function to close the menus
-      $(document).on('click.utility_nav', function(e){
+      FCH.$document.on('click.utility_nav', function(e){
         // as long as the click is not in the menu
-        if ($(e.target).closest('.utility_sub_nav').length === 0) {
+        if (!$(e.target).closest('.utility_sub_nav').length) {
           // remove the class from the utility nav
           $sub_nav.removeClass('utility_nav-clicked');
 
           // unbind the click from the document, no need to keep it around.
-          $(document).off('click.utility_nav');
+          FCH.$document.off('click.utility_nav');
         }
       });
     });
   },
 
+  /**
+   * Toggle class on button dropdown; close dropdown on click anywhere
+   */
   buttonDropdown: function() {
-
     // button dropdown class toggle
-    $(".button-dropdown").click(function(){
-      $(this).toggleClass("button-dropdown--opened");
+    $('.button-dropdown').click(function(){
+      $(this).toggleClass('button-dropdown--opened');
     });
 
     // button dropdown click anywhere but the dropdown close
-    $("body").click(function(e){
-      if ($(e.target).closest(".button-dropdown").length === 0) {
-        $(".button-dropdown").removeClass("button-dropdown--opened");
+    FCH.$document.click(function(e){
+      if (!$(e.target).closest('.button-dropdown').length) {
+        $('.button-dropdown').removeClass('button-dropdown--opened');
       }
     });
   },
 
-  fade_notices: function() {
+  /**
+   * Hide main-page alerts after 3 seconds
+   */
+  fadeNotices: function() {
     $('.notice, .alert, .error').not('.input .error').delay(3000).slideUp('fast');
   },
-}
+
+  /**
+   * Stick the header in the content area
+   */
+  stickyHeaders: function() {
+    $(".main_content-header").sticky();
+    $("#main_nav").sticky({
+      make_placeholder: false
+    });
+  },
+
+};

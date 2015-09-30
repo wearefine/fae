@@ -1,14 +1,20 @@
-/* global Fae, modal */
+/* global Fae, modal, FCH */
 
 'use strict';
 
+/**
+ * Fae modals
+ * @namespace
+ */
 Fae.modals = {
   init: function() {
     this.imageModals();
     this.markdownModal();
   },
 
-  // Click event to open modal with only an image
+  /**
+   * Click event to open modal with only an image
+   */
   imageModals: function() {
     $('.js-image-modal').click(function(e){
       e.preventDefault();
@@ -28,9 +34,9 @@ Fae.modals = {
     });
   },
 
-
-  // initialize modal for markdown-hint
-  // Triggered on document click of "markdown-support" so as to support AJAX'd markdown-support fields.
+  /**
+   * Initialize modal for markdown-hint. Triggered on document click of "markdown-support" so as to support AJAX'd markdown-support fields.
+   */
   markdownModal: function() {
     FCH.$document.on('click', '.markdown-support', function(){
       var markdown_hint_width = $('.markdown-hint').width() + 40;

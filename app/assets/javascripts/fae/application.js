@@ -36,7 +36,6 @@
 
 //= require fae/frob_core_helpers
 //= require fae/admin
-//= require fae/_helpers
 
 //= require fae/form/_form
 //= require fae/form/inputs/_dates
@@ -53,8 +52,8 @@
 //= require fae/navigation/_subnavHighlighter
 //= require fae/navigation/_mobileMenu
 //= require fae/navigation/_language
+//= require fae/navigation/_accordion
 
-//= require fae/_accordion
 //= require fae/hinter
 //= require fae/_modals
 //= require fae/_tables

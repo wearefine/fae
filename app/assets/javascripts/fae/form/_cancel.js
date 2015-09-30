@@ -4,7 +4,8 @@
 
 /**
  * Fae form cancel
- * @namespace
+ * @namespace form.cancel
+ * @memberof form
  */
 Fae.form.cancel = {
 

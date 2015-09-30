@@ -1,11 +1,11 @@
-/* global Fae, judge */
+/* global Fae, judge, FCH */
 
 'use strict';
 
 /**
  * Fae form validator
- * @namespace
- * @memberof Fae
+ * @namespace form.validator
+ * @memberof form
  */
 Fae.form.validator = {
 
@@ -23,6 +23,7 @@ Fae.form.validator = {
 
   /**
    * Validate the entire form on submit and stop it if the form is invalid
+   * @fires {@link navigation.language.checkForHiddenErrors}
    */
   formValidate: function () {
     var _this = this;
@@ -36,7 +37,7 @@ Fae.form.validator = {
       });
 
       if (_this.is_valid === false) {
-        Fae.navigation.language.check_for_hidden_errors();
+        Fae.navigation.language.checkForHiddenErrors();
         FCH.smoothScroll($('span.error').first(), 500, 100, 120);
         e.preventDefault();
       }

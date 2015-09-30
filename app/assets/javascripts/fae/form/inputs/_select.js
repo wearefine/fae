@@ -4,7 +4,8 @@
 
 /**
  * Fae form select
- * @namespace
+ * @namespace form.select
+ * @memberof form
  */
 Fae.form.select = {
 

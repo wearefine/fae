@@ -4,7 +4,8 @@
 
 /**
  * Fae form text
- * @namespace
+ * @namespace form.text
+ * @memberof form
  */
 Fae.form.text = {
 

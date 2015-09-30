@@ -4,7 +4,8 @@
 
 /**
  * Fae form
- * @namespace
+ * @namespace form
+ * @memberof Fae
  */
 Fae.form = {
   init: function() {
@@ -15,6 +16,12 @@ Fae.form = {
     this.validator.init();
     this.cancel.init();
     this.ajax.init();
+
+    // input type=file customization
+    $('.input.file').fileinputer({delete_class: 'icon-delete_x file_input-delete'});
+
+    // make all the hint areas
+    $('.hint').hinter();
   },
 
 };
