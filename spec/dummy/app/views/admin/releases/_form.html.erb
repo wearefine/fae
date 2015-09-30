@@ -14,8 +14,8 @@
       </nav>
       <%= render 'fae/shared/form_buttons', f: f, item: @item %>
     </div>
-    <%= render 'fae/application/js_errors' %>
   </section>
+  <%= render 'fae/shared/errors' %>
 
   <div class="main_content-sections">
     <section class="main_content-section" id="general_info">
@@ -81,7 +81,7 @@
       <div class="main_content-section-area">
 
         <!-- Image Form -->
-        <%= fae_image_form f, :bottle_shot, helper_text: 'image form (w/ alt)' %>
+        <%= fae_image_form f, :bottle_shot, helper_text: 'image form (w/ alt)', required: true %>
 
         <%= fae_image_form f, :hero_image, helper_text: 'image form (w/ alt and caption)', show_caption: true %>
 
