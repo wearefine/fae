@@ -19,7 +19,7 @@ Fae.navigation.accordion = {
   accordionClickEventListener: function() {
     var _this = this;
 
-    $('.main_nav-accordion .main_nav-link, .main_nav-accordion .main_nav-sub-link').click(function(e) {
+    $('.main_nav-accordion .main_nav-link, .main_nav-accordion .main_nav-sub-link.with-third_nav').click(function(e) {
       e.preventDefault();
 
       var $this = $(this);
