@@ -11,6 +11,8 @@
 
 - enhancements
     + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
+    + [#50794](https://issues.afinedevelopment.com/issues/50794) Industrial JavaScript refactor
+    + [#50863](https://issues.afinedevelopment.com/issues/50863) Nested subnav links are highlighted when the page is active
 - bugs
 
 ## 1.1.7
