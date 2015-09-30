@@ -68,6 +68,20 @@ feature 'validations' do
       fill_in 'release_name', with: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar euismod nisl, in pellentesque sapien ornare ac.'
       expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 0')
     end
+
+    scenario 'should have error banner when errors are on the page', js: true do
+      admin_login
+
+      visit new_admin_release_path
+
+      within('.release_wine') do
+        page.find('.chosen-single').click
+        page.find('li', text: 'Select One').click
+      end
+
+      expect(page).to have_selector('div.alert.no_slide')
+    end
+
   end
 
 end
