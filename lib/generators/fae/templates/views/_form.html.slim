@@ -7,6 +7,7 @@
   .main_content-sections
     section.main_content-section
       .main_content-section-area
+        == render 'flash_messages'
 <% @form_attrs.each do |attr| -%>
         = fae_input f, :<%= attr %>
 <% end -%>
