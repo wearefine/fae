@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150929195433) do
+ActiveRecord::Schema.define(version: 20150930230729) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -79,6 +79,20 @@ ActiveRecord::Schema.define(version: 20150929195433) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "fae_changes", force: :cascade do |t|
+    t.integer  "changeable_id",      limit: 4
+    t.string   "changeable_type",    limit: 255
+    t.integer  "user_id",            limit: 4
+    t.string   "type",               limit: 255
+    t.text     "updated_attributes", limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "fae_changes", ["changeable_id"], name: "index_fae_changes_on_changeable_id", using: :btree
+  add_index "fae_changes", ["changeable_type"], name: "index_fae_changes_on_changeable_type", using: :btree
+  add_index "fae_changes", ["user_id"], name: "index_fae_changes_on_user_id", using: :btree
 
   create_table "fae_files", force: :cascade do |t|
     t.string   "name",          limit: 255
