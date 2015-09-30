@@ -53,7 +53,7 @@ Fae.navigation = {
     var url_array = mutated_url.split('/');
     url_array.pop();
     mutated_url = url_array.join('/');
-    console.log(mutated_url);
+
     var $currentLink = $('#main_nav a[href="' + mutated_url + '"]');
     if ($currentLink.length) {
       $currentLink.addClass('current');
