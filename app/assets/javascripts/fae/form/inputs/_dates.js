@@ -1,10 +1,11 @@
-/* global Fae, datepicker */
+/* global Fae, datepicker, FCH */
 
 'use strict';
 
 /**
  * Fae form dates
- * @namespace
+ * @namespace form.dates
+ * @memberof form
  */
 Fae.form.dates = {
 

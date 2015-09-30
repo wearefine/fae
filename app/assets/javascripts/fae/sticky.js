@@ -1,3 +1,5 @@
+/* global FCH */
+
 'use strict';
 
 (function ( $ ) {
@@ -112,24 +114,25 @@
    */
   Sticky.prototype.windowListeners = function() {
     var _this = this;
-    FCH.$window
-      .scroll(function() {
-        _this.stickIt();
-      })
-      .smartresize(function(){
 
-        if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
-          _this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
-          _this.dimensions.left = _this.$placeholder.offset().left;
-        } else {
-          _this.dimensions.top = _this.$el.offset().top - _this.options.offset;
-          _this.dimensions.left = _this.$el.offset().left;
-        }
+    var scrollCallback = function() {
+      _this.stickIt();
+    };
+    FCH.scroll.push(scrollCallback);
 
-        console.log(_this.dimensions)
+    FCH.$window.smartresize(function(){
+      if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
+        _this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
+        _this.dimensions.left = _this.$placeholder.offset().left;
 
-        _this.stickIt();
-      });
+      } else {
+        _this.dimensions.top = _this.$el.offset().top - _this.options.offset;
+        _this.dimensions.left = _this.$el.offset().left;
+
+      }
+
+      _this.stickIt();
+    });
   };
 
   /**

@@ -4,7 +4,8 @@
 
 /**
  * Fae form checkbox
- * @namespace
+ * @namespace form.checkbox
+ * @memberof form
  */
 Fae.form.checkbox = {
 

@@ -1,3 +1,5 @@
+/* global FCH */
+
 'use strict';
 
 (function ( $ ) {

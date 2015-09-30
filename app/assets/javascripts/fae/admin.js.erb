@@ -1,5 +1,9 @@
 // This file is named Admin because child-project asset folders should have a fae.js file to override or add functionality to the admin
-/** @module Fae */
+/**
+ * Fae
+ * @module Fae
+ * @namespace Fae
+*/
 var Fae = {
   path: '<%= Rails.application.routes.url_helpers.fae_path %>',
 
@@ -9,16 +13,6 @@ var Fae = {
     Fae.navigation.init();
     Fae.accordion.init();
     Fae.tables.init();
-
-    // input type=file customization
-    $(".input.file").fileinputer({delete_class: "icon-delete_x file_input-delete"});
-
-    // make all the hint areas
-    $(".hint").hinter();
-
-    // sticket header for the content area
-    $(".main_content-header").sticky();
-    $("#main_nav").sticky({ make_placeholder: false });
   },
 
 };

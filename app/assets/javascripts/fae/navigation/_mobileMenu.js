@@ -4,7 +4,8 @@
 
 /**
  * Fae navigation mobile menu
- * @namespace
+ * @namespace navigation.mobileMenu
+ * @memberof navigation
  */
 Fae.navigation.mobileMenu = {
   toggle_class: 'js-menu-active',
@@ -19,7 +20,6 @@ Fae.navigation.mobileMenu = {
     this.thirdNavClickListener();
     this.mainNavLinkClickListener();
   },
-
 
   /**
    * Check to see if the html has the toggle class...which means it's opened
@@ -123,7 +123,7 @@ Fae.navigation.mobileMenu = {
   resizer: function() {
     var _this = this;
     // use smart resizer so it doesn't happen at every pixel
-    $(window).smartresize(function(){
+    FCH.$window.smartresize(function(){
       if (FCH.bp.large){
         _this.closeAll();
       }
