@@ -28,17 +28,41 @@ Fae.navigation = {
   selectCurrentNavItem: function() {
     var _this = this;
     var current_base_url = window.location.pathname;
-    var regex = new RegExp("^" + Fae.path + "\/#?(\\w*)?\/");
-    var regex_match = current_base_url.match(regex);
-    $('#main_nav a').each(function(){
-      var $this = $(this);
-      var link = $this.attr('href');
-      if ((regex_match !== null && regex_match.length && link.indexOf(regex_match[1]) > -1) || link === current_base_url) {
-        $this.addClass('current');
-      }
-    });
+    var $currentLink = $('#main_nav a[href="' + current_base_url + '"]');
+    if ($currentLink.length) {
+      // Try to find link that matches the URL exactly
+      $currentLink.addClass('current');
+
+    } else {
+      // If link can't be found, recursively search for it
+      this._findCurrentNavRecursively(current_base_url);
+
+    }
 
     _this._updateNavClasses();
+  },
+
+  /**
+   * Apply current nav class or keep looking deeper from path for the answer
+   * @access protected
+   * @param {String} mutated_url - The remaining URL to be checked
+   * @return {Function} or add class
+   */
+  _findCurrentNavRecursively: function(mutated_url) {
+    // Remove last element of URL
+    var url_array = mutated_url.split('/');
+    url_array.pop();
+    mutated_url = url_array.join('/');
+
+    var $currentLink = $('#main_nav a[href="' + mutated_url + '"]');
+    if ($currentLink.length) {
+      $currentLink.addClass('current');
+
+    } else {
+      // If it can't be found, start over and try again
+      this._findCurrentNavRecursively(mutated_url);
+
+    }
   },
 
   /**
