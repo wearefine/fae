@@ -19,7 +19,7 @@ Fae.navigation.accordion = {
   accordionClickEventListener: function() {
     var _this = this;
 
-    $('.main_nav-accordion .main_nav-link, .main_nav-accordion .main_nav-sub-link.with-third_nav').click(function(e) {
+    $('.main_nav-accordion .main_nav-link, .sub_nav-accordion .main_nav-sub-link.with-third_nav').click(function(e) {
       e.preventDefault();
 
       var $this = $(this);
@@ -35,7 +35,7 @@ Fae.navigation.accordion = {
       if (!was_opened) {
         // open the clicked item if it was not just opened
         _this.open($parent);
-      } else if ($this.hasClass('main_nav-link')) {
+      } else if ($this.hasClass('main_nav-link') || $this.hasClass('main_nav-sub-link')) {
         _this.close($parent);
       }
     });
