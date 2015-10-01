@@ -74,10 +74,9 @@ feature 'validations' do
   scenario 'should have error banner when errors are on the page', js: true do
     admin_login
     visit new_admin_release_path
-    page.find('#release_name').trigger('focus')
-    page.find('#release_name').trigger('blur')
+    click_button('Save Settings')
 
-    expect(page).to have_selector('div.alert.no_slide')
+    expect(page).to have_selector('div.alert.form_alert')
   end
 
 end
