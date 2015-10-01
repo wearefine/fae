@@ -27,7 +27,7 @@ Fae.navigation = {
    */
   selectCurrentNavItem: function() {
     var _this = this;
-    var current_base_url = window.location.pathname;
+    var current_base_url = window.location.pathname.replace('#', '');
     var $currentLink = $('#main_nav a[href="' + current_base_url + '"]');
     if ($currentLink.length) {
       // Try to find link that matches the URL exactly
@@ -59,8 +59,12 @@ Fae.navigation = {
       $currentLink.addClass('current');
 
     } else {
-      // If it can't be found, start over and try again
-      this._findCurrentNavRecursively(mutated_url);
+      // Defend from exceeding call stack (SUPER RECURSION)
+      if (url_array.length) {
+        // If it can't be found, start over and try again
+        this._findCurrentNavRecursively(mutated_url);
+
+      }
 
     }
   },
