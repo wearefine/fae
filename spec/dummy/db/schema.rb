@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930230729) do
+ActiveRecord::Schema.define(version: 20151001210315) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20150930230729) do
     t.integer  "changeable_id",      limit: 4
     t.string   "changeable_type",    limit: 255
     t.integer  "user_id",            limit: 4
-    t.string   "type",               limit: 255
+    t.string   "change_type",        limit: 255
     t.text     "updated_attributes", limit: 65535
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false

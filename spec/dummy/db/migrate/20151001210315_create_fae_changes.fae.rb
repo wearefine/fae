@@ -5,7 +5,7 @@ class CreateFaeChanges < ActiveRecord::Migration
       t.integer :changeable_id
       t.string :changeable_type
       t.integer :user_id
-      t.string :type
+      t.string :change_type
       t.text :updated_attributes
 
       t.timestamps null: false

@@ -237,7 +237,7 @@ To allow Fae to push out any model specific updates to your application models, 
 
 ```ruby
 class Release < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
   # ...
 end
 ```
@@ -264,7 +264,7 @@ end
 
 ## for_fae_index
 
-Fae uses a class method called `for_fae_index` as a scope for index views and associated content in form elements. This method is inherited from `Fae::Concerns::Models::Base`.
+Fae uses a class method called `for_fae_index` as a scope for index views and associated content in form elements. This method is inherited from `Fae::BaseModelConcern`.
 
 By default, this method uses position, name, or title attributes. If it can't find any of those it will raise the following exception:
 
@@ -282,7 +282,7 @@ end
 
 ## to_csv
 
-Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::Concerns::Models::Base`. It is meant to be called from the index action.
+Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::BaseModelConcern`. It is meant to be called from the index action.
 
 
 ## Nested Resources

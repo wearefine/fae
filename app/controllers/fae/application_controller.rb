@@ -10,6 +10,7 @@ module Fae
     before_filter :build_nav
     before_filter :set_option
     before_filter :detect_cancellation
+    before_filter :set_change_user
 
     private
 
@@ -64,6 +65,10 @@ module Fae
 
     def first_user_redirect
       redirect_to fae.first_user_path if Fae::User.live_super_admins.blank?
+    end
+
+    def set_change_user
+      Fae::Change.current_user = current_user.id if current_user.present?
     end
 
   end
