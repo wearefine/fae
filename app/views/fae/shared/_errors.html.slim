@@ -1,4 +1,4 @@
 - unless flash.present?
-  .alert.no_slide.hide= t('fae.save_error')
+  .alert.form_alert.hide= t('fae.save_error')
 - flash.each do |name, msg|
   div class=name = msg

@@ -19,8 +19,9 @@ Fae.form.validator = {
       this.formValidate();
       this.length_counter.init();
     }
-    if ($(".field_with_errors").length){
-      $('.alert').removeClass('hide');
+    if ($(".create .field_with_errors").length){
+      console.log('create');
+      $('.alert').removeClass('hide').delay(3000).slideUp('fast');
     }
   },
 
@@ -41,8 +42,12 @@ Fae.form.validator = {
 
       if (_this.is_valid === false) {
         Fae.navigation.language.checkForHiddenErrors();
-        FCH.smoothScroll($('span.error').first(), 500, 100, 120);
+        FCH.smoothScroll($('body'), 500, 100, 0);
         e.preventDefault();
+      }
+
+      if ($(".field_with_errors").length){
+        $('.alert').slideDown('fast').removeClass('hide').delay(3000).slideUp('fast');
       }
     });
   },
@@ -156,7 +161,6 @@ Fae.form.validator = {
     } else {
       $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
     }
-    $('.alert').removeClass('hide');
   },
 
   /**
