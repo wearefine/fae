@@ -19,10 +19,6 @@ Fae.form.validator = {
       this.formValidate();
       this.length_counter.init();
     }
-    if ($(".create .field_with_errors").length){
-      console.log('create');
-      $('.alert').removeClass('hide').delay(3000).slideUp('fast');
-    }
   },
 
   /**
@@ -42,7 +38,7 @@ Fae.form.validator = {
 
       if (_this.is_valid === false) {
         Fae.navigation.language.checkForHiddenErrors();
-        FCH.smoothScroll($('body'), 500, 100, 0);
+        FCH.smoothScroll($('#main_header'), 500, 100, 0);
         e.preventDefault();
       }
 

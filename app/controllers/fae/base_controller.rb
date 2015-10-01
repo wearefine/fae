@@ -30,7 +30,8 @@ module Fae
         redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        render action: 'new', error: t('fae.save_error')
+        flash[:alert] = t('fae.save_error')
+        render action: 'new'
       end
     end
 
