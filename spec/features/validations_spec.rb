@@ -77,7 +77,7 @@ feature 'validations' do
     page.find('#release_name').trigger('focus')
     page.find('#release_name').trigger('blur')
 
-    expect(page).to have_selector('div.alert.no_slide')
+    expect(page).to have_selector('div.alert.form_alert')
   end
 
 end
