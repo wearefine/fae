@@ -17,31 +17,34 @@ Fae.form.text = {
    * Attach listeners to inputs and update slug fields with original safe values from the original inputs
    */
   slugger: function() {
-    var $form = $('.slug').closest('form');
-    var $sluggers = $form.find('.slugger');
-    var $slug = $form.find('.slug');
-    var $select_slugger = $('.select.slugger');
     var _this = this;
 
-    if ($slug.val() !== '') {
-      $sluggers.removeClass('slugger');
+    $('.slug').each(function() {
+      var $form = $(this).closest('form');
+      var $sluggers = $form.find('.slugger');
+      var $slug = $form.find('.slug');
+      var $select_slugger = $('.select.slugger');
 
-    } else {
-      // If it's a text field, listen for type input
-      $sluggers.keyup(function(){
-        var text = _this._digestSlug( $sluggers );
-        $slug.val( text );
-      });
+      if ($slug.val() !== '') {
+        $sluggers.removeClass('slugger');
 
-      // If it's a select field, listen for the change
-      if ($select_slugger.length) {
-        $select_slugger.change(function(){
+      } else {
+        // If it's a text field, listen for type input
+        $sluggers.keyup(function(){
           var text = _this._digestSlug( $sluggers );
           $slug.val( text );
         });
 
-      };
-    }
+        // If it's a select field, listen for the change
+        if ($select_slugger.length) {
+          $select_slugger.change(function(){
+            var text = _this._digestSlug( $sluggers );
+            $slug.val( text );
+          });
+
+        };
+      }
+    });
   },
 
   /**
