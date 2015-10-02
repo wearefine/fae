@@ -9,8 +9,17 @@
  */
 Fae.tables = {
 
+  /**
+   * Base cookie string for sorting per site per page
+   * @type {String}
+   * @see {@link tables.columnSorting}
+   * @see {@link tables.sortColumnsFromCookies}
+   */
+  sort_cookie_name: 'Fae_' + window.location.hostname + '_table_sort_preferences_' + window.location.pathname,
+
   init: function() {
     this.columnSorting();
+    this.sortColumnsFromCookies();
     this.rowSorting();
     if(FCH.exists('.sticky-table-header')) {
       this.stickyTableHeader();
@@ -28,9 +37,35 @@ Fae.tables = {
    * Sort columns in tables if applicable
    */
   columnSorting: function() {
-    $('.main_table-sort_columns').tablesorter();
-    $('.main_table-sort_columns-cities').tablesorter({
-      sortList: [[1,0]]
+    var _this = this;
+
+    $('.main_table-sort_columns')
+      .tablesorter()
+      .on('sortEnd', function(e) {
+        var $this = $(this);
+        var table_data = $this.data('tablesorter');
+        var name = _this.sort_cookie_name;
+        name += ($this.index() - 1);
+
+        // Save it to the cookie as a string
+        $.cookie(name, table_data.sortList[0].join(','));
+      });
+  },
+
+  /**
+   * Sort column by stored cookie
+   */
+  sortColumnsFromCookies: function() {
+    var _this = this;
+
+    $('.main_table-sort_columns').each(function(idx) {
+      var name = _this.sort_cookie_name + idx;
+      var cookie_value = $.cookie(name);
+
+      if (cookie_value) {
+        // Convert back to an array within an array within another array because of how tablesorter accepts this argument
+        $(this).trigger('sorton', [[cookie_value.split(',')]]);
+      }
     });
   },
 
@@ -44,10 +79,10 @@ Fae.tables = {
       handle: ('.main_content-sortable-handle'),
 
       //helper funciton to preserve the width of the table row
-      helper: function(e, tr) {
-        var $originals = tr.children();
-        var $helper = tr.clone();
-        var $ths = $(tr).closest('table').find('th');
+      helper: function(e, $tr) {
+        var $originals = $tr.children();
+        var $helper = $tr.clone();
+        var $ths = $tr.closest('table').find('th');
 
         $helper.children().each(function(index) {
           // Set helper cell sizes to match the original sizes
