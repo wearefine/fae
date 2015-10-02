@@ -7,6 +7,8 @@
 - bugs
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
+    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
+
 
 ## 1.1.7
 
