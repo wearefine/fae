@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items
 - bugs
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check

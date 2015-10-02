@@ -14,24 +14,49 @@ Fae.navigation = {
   },
 
   select_current_nav_item: function() {
-    var self = this;
-    var current_base_url = window.location.pathname;
-    var regex = new RegExp("^" + Fae.path + "\/#?(\\w*)?\/");
-    var regex_match = current_base_url.match(regex);
-    $('#main_nav a').each(function(){
-      var $this = $(this);
-      var link = $this.attr('href');
-      if ((regex_match !== null && regex_match.length && link.indexOf(regex_match[1]) > -1) || link === current_base_url) {
-        $this.addClass('current');
-        self.current_items.push($this);
-        return false;
+    var _this = this;
+    var current_base_url = window.location.pathname.replace('#', '');
+    var $currentLink = $('#main_nav a[href="' + current_base_url + '"]');
+    if ($currentLink.length) {
+      // Try to find link that matches the URL exactly
+      $currentLink.addClass('current');
+
+    } else {
+      // If link can't be found, recursively search for it
+      this._find_current_nav_recursively(current_base_url);
+
+    }
+
+    _this.update_nav_classes();
+  },
+
+  _find_current_nav_recursively: function(mutated_url) {
+    // Remove last element of URL
+    var url_array = mutated_url.split('/');
+    url_array.pop();
+    mutated_url = url_array.join('/');
+
+    var $currentLink = $('#main_nav a[href="' + mutated_url + '"]');
+    if ($currentLink.length) {
+      $currentLink.addClass('current');
+
+    } else {
+      // Defend from exceeding call stack (SUPER RECURSION)
+      if (url_array.length) {
+        // If it can't be found, start over and try again
+        this._find_current_nav_recursively(mutated_url);
+
       }
-    });
+
+    }
   },
 
   update_nav_classes: function() {
     var self = this;
-    $.each(self.current_items, function(index, $el){
+
+    $('#main_nav a.current').each(function() {
+      var $el = $(this);
+
       if ($el.hasClass('main_nav-link')) {
         self.update_first_level($el);
       } else if ($el.hasClass('main_nav-sub-link')) {
