@@ -78,6 +78,7 @@ Fae.form.ajax = {
       Fae.form.dates.date_picker();
       Fae.form.dates.daterange_picker();
       Fae.form.text.slugger();
+      Fae.form.validator.length_counter.init();
 
       $wrapper.find(".hint").hinter();
     });
