@@ -18,6 +18,7 @@
 //  require jquery.ui.effect-highlight
 //= require chosen.jquery.min
 //= require jquery.tablesorter.min
+//= require jquery.parser-date-two-digit-year
 //  require jquery.Jcrop.min
 //= require jquery.simplemodal.1.4.4
 //= require jquery.multi-select
