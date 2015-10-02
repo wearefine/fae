@@ -3,6 +3,7 @@ require 'file_size_validator'
 module Fae
   class Image < ActiveRecord::Base
 
+    include Fae::BaseModelConcern
     include Fae::ImageConcern
     include Fae::AssetsValidatable
 

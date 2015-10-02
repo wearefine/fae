@@ -1,8 +1,9 @@
-require 'file_size_validator' 
+require 'file_size_validator'
 
 module Fae
   class File < ActiveRecord::Base
 
+    include Fae::BaseModelConcern
     include Fae::FileConcern
     include Fae::AssetsValidatable
 

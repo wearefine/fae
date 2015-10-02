@@ -2,13 +2,21 @@ module Fae::Trackable
   extend ActiveSupport::Concern
 
   included do
-    after_create :add_create_change
-    before_update :add_update_change
-    before_destroy :add_delete_change
+    after_create :add_create_change, if: :track_changes?
+    before_update :add_update_change, if: :track_changes?
+    before_destroy :add_delete_change, if: :track_changes?
 
     has_many :tracked_changes, -> { order(id: :desc) },
       as: :changeable,
       class_name: Fae::Change
+  end
+
+  def fae_tracker_blacklist
+    []
+  end
+
+  def track_changes?
+    Fae.track_changes && fae_tracker_blacklist != 'all'
   end
 
   private
@@ -45,7 +53,15 @@ module Fae::Trackable
   end
 
   def legit_updated_attributes
-    changed - ['id', 'updated_at', 'created_at']
+    legit_attributes = changed - ignored_attributes
+    if fae_tracker_blacklist.kind_of?(Array) && fae_tracker_blacklist.present?
+      legit_attributes -= fae_tracker_blacklist.map(&:to_s)
+    end
+    legit_attributes
+  end
+
+  def ignored_attributes
+    ['id', 'updated_at', 'created_at']
   end
 
   def clean_history

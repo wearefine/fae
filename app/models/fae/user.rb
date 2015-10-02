@@ -1,6 +1,7 @@
 module Fae
   class User < ActiveRecord::Base
 
+    include Fae::BaseModelConcern
     include Fae::UserConcern
 
     # Include default devise modules. Others available are:

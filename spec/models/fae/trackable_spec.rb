@@ -11,6 +11,13 @@ describe Fae::Trackable do
       expect(change.changeable_type).to eq('Wine')
       expect(change.change_type).to eq('created')
     end
+
+    context 'when fae_tracker_blacklist == all' do
+      it 'should not create change item' do
+        aroma = FactoryGirl.create(:aroma)
+        expect(aroma.tracked_changes).to eq([])
+      end
+    end
   end
 
   describe 'before_update' do
@@ -34,6 +41,30 @@ describe Fae::Trackable do
       expect(change.changeable_type).to eq('Wine')
       expect(change.change_type).to eq('created')
     end
+
+    context 'when fae_tracker_blacklist == all' do
+      it 'should not create change item' do
+        aroma = FactoryGirl.create(:aroma)
+        aroma.update({name: 'something else'})
+        expect(aroma.tracked_changes).to eq([])
+      end
+    end
+
+    context 'when fae_tracker_blacklist contains attributes' do
+      it 'should not create a change item if only blacklisted attribues change' do
+        release = FactoryGirl.create(:release)
+        release.update({position: 5})
+        expect(release.tracked_changes.length).to eq(1)
+        expect(release.tracked_changes.first.change_type).to eq('created')
+      end
+
+      it 'should not include blacklisted attributes in updated_attributes' do
+        release = FactoryGirl.create(:release)
+        release.update({name: 'new name', slug: 'new_slug', price: 15})
+        expect(release.tracked_changes.length).to eq(2)
+        expect(release.tracked_changes.first.updated_attributes).to_not include('price')
+      end
+    end
   end
 
   describe 'before_destroy' do
@@ -45,6 +76,14 @@ describe Fae::Trackable do
       expect(change.changeable_id).to eq(wine.id)
       expect(change.changeable_type).to eq('Wine')
       expect(change.change_type).to eq('deleted')
+    end
+
+    context 'when fae_tracker_blacklist == all' do
+      it 'should not create change item' do
+        aroma = FactoryGirl.create(:aroma)
+        aroma.destroy
+        expect(Fae::Change.where(changeable_type: 'Aroma')).to eq([])
+      end
     end
   end
 

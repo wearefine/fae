@@ -51,4 +51,8 @@ class Release < ActiveRecord::Base
       .where(conditions).where(search)
   end
 
+  def fae_tracker_blacklist
+    [:position, 'price']
+  end
+
 end

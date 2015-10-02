@@ -1,8 +1,8 @@
 module Fae
   class StaticPage < ActiveRecord::Base
 
-    include Fae::StaticPageConcern
     include Fae::BaseModelConcern
+    include Fae::StaticPageConcern
 
     validates :title, presence: true
 
