@@ -13,7 +13,7 @@
 <% num_columns += 1 -%>
 <% end -%>
             th <%= @display_field.present? ? @display_field.capitalize : 'Name' %>
-            th.sorter-mmddyy Modified
+            th Modified
 <% @toggle_attrs.each do |attr| -%>
             th.main_table-header-live data-sorter="false" <%= attr.humanize %>
 <% num_columns += 1 -%>

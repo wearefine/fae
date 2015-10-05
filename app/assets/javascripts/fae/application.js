@@ -40,6 +40,7 @@
 
 //= require fae/form/_form
 //= require fae/form/inputs/_dates
+//= require fae/form/inputs/_set_date_class
 //= require fae/form/inputs/_select
 //= require fae/form/inputs/_text
 //= require fae/form/inputs/checkboxer

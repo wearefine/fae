@@ -13,6 +13,9 @@ Fae.form = {
     this.validator.init();
     this.cancel.init();
     this.ajax.init();
+    if ($('table.main_table-sort_columns').length) {
+      Fae.form.set_date_class.init();
+    }
   },
 
 };
