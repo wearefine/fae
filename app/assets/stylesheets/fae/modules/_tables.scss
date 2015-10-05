@@ -3,6 +3,7 @@
 	border: 1px solid $c-border;
 	border-collapse: separate;
 	table-layout: fixed;
+	margin-bottom: 30px;
 
 	@include bp(tablet) {
 		table-layout: initial;
