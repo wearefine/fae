@@ -15,6 +15,7 @@
     + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
     + [#50794](https://issues.afinedevelopment.com/issues/50794) Industrial JavaScript refactor
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Nested subnav links are highlighted when the page is active
+    + [#45145](https://issues.afinedevelopment.com/issues/45145) Save table sorting preferences during a single session
 - bugs
 
 ## 1.1.7
