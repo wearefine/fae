@@ -21,7 +21,7 @@
 //  require jquery.Jcrop.min
 //= require jquery.simplemodal.1.4.4
 //= require jquery.multi-select
-//= require jquery.cookie
+//= require js.cookie
 //= require moment.min
 //= require jquery.daterangepicker
 //= require imagesloaded.pkgd.min

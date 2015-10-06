@@ -1,4 +1,4 @@
-/* global Fae, fae_chosen, fileinputer, FCH */
+/* global Fae, fae_chosen, fileinputer, FCH, Cookies */
 
 'use strict';
 
@@ -200,14 +200,13 @@ Fae.form.ajax = {
    * If cookies are available, load them into the hash
    */
   applyCookies: function() {
-    var cookie_key = $('.js-filter-form').data('cookie-key');
+    var cookie_key = $('.js-filter-form').attr('data-cookie-key');
 
     this.grind = new Grinder(this._setFilterDropdowns);
 
     if (cookie_key) {
-      var set_cookie = $.cookie(cookie_key);
-      if (set_cookie && (set_cookie.length > 2)) {
-        var cookie = JSON.parse(set_cookie);
+      var cookie = Cookies.getJSON(cookie_key);
+      if (cookie) {
         var keys = Object.keys(cookie)
         var hash = '?';
 
@@ -231,7 +230,7 @@ Fae.form.ajax = {
   filterSelect: function(){
     var _this = this;
     $('.js-filter-form .table-filter-group').on('change', function(){
-      if ($('.js-filter-form').data('cookie-key')) {
+      if ($('.js-filter-form').attr('data-cookie-key')) {
         var key = $(this).find('select').attr('id').split('filter_')[1];
         var value = $(this).find('option:selected').val();
 
@@ -245,8 +244,8 @@ Fae.form.ajax = {
    * @param {Object} params - hash params broken out from Grinder
    */
   _setFilterDropdowns: function(params) {
-    var cookie_name = $('.js-filter-form').data('cookie-key');
-    $.cookie(cookie_name, JSON.stringify(params));
+    var cookie_name = $('.js-filter-form').attr('data-cookie-key');
+    Cookies.set(cookie_name, params);
 
     if (!$.isEmptyObject(params)) {
       $.each(params, function(k, v) {
