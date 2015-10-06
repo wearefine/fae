@@ -17,8 +17,7 @@
 //= require jquery.ui.datepicker
 //  require jquery.ui.effect-highlight
 //= require chosen.jquery.min
-//= require jquery.tablesorter.min
-//= require jquery.parser-date-two-digit-year
+//= require jquery.tablesorter
 //  require jquery.Jcrop.min
 //= require jquery.simplemodal.1.4.4
 //= require jquery.multi-select
@@ -40,7 +39,6 @@
 
 //= require fae/form/_form
 //= require fae/form/inputs/_dates
-//= require fae/form/inputs/_set_date_class
 //= require fae/form/inputs/_select
 //= require fae/form/inputs/_text
 //= require fae/form/inputs/checkboxer
