@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Fae::Concerns::Models::Base do
+describe Fae::BaseModelConcern do
 
   describe '#to_csv' do
     context 'when to_csv is run' do

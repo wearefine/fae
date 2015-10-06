@@ -1,5 +1,7 @@
 module Fae
   class TextField < ActiveRecord::Base
+
+    include Fae::BaseModelConcern
     include Fae::TextFieldConcern
     include Fae::PageValidatable
 

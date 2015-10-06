@@ -80,7 +80,7 @@ RUBY
 
     def inject_concern
       inject_into_file "app/models/#{file_name}.rb", after: "ActiveRecord::Base\n" do <<-RUBY
-  include Fae::Concerns::Models::Base\n
+  include Fae::BaseModelConcern\n
 RUBY
       end
     end
@@ -92,7 +92,7 @@ RUBY
         @@display_field = 'title'
       end
 
-      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
+      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do <<-RUBY
 \n  def fae_display_field
     #{@@display_field}
   end
@@ -103,7 +103,7 @@ RUBY
 
     def inject_position_scope
       if @@has_position
-        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::Concerns::Models::Base\n" do <<-RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do <<-RUBY
 \n  acts_as_list add_new_at: :top
   default_scope { order(:position) }
 RUBY
