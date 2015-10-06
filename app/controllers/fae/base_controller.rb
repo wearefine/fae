@@ -2,7 +2,7 @@ module Fae
   class BaseController < ApplicationController
 
     before_action :set_class_variables
-    before_action :set_item, only: [:edit, :update, :destroy]
+    before_action :set_item, only: [:edit, :update, :destroy, :clone]
 
     helper FormHelper
 
@@ -53,6 +53,18 @@ module Fae
       end
     end
 
+    def clone
+      require 'pry'
+      binding.pry
+      # if @item.save
+      #   redirect_to @index_path, notice: t('fae.save_notice')
+      # else
+      #   build_assets
+      #   flash[:alert] = t('fae.save_error')
+      #   render action: 'new'
+      # end
+    end
+
     def filter
       if params[:commit] == "Reset Search"
         @items = @klass.filter_all
@@ -67,12 +79,15 @@ module Fae
 
     def set_class_variables(class_name = nil)
       klass_base = params[:controller].split('/').last
-      @klass_name = class_name || klass_base              # used in form views
-      @klass = klass_base.classify.constantize            # used as class reference in this controller
-      @klass_singular = klass_base.singularize            # used in index views
-      @klass_humanized = @klass_name.singularize.humanize # used in index views
-      @index_path = '/' + params[:controller]             # used in form_header and form_buttons partials
-      @new_path = @index_path + '/new'                    # used in index_header partial
+      @klass_name = class_name || klass_base                     # used in form views
+      @klass = klass_base.classify.constantize                   # used as class reference in this controller
+      @klass_singular = klass_base.singularize                   # used in index views
+      @klass_humanized = @klass_name.singularize.humanize        # used in index views
+      @index_path = '/' + params[:controller]                    # used in form_header and form_buttons partials
+      if params[:id].present?
+        @clone_path = @index_path + '/' + params[:id] + '/clone' # used in form_buttons partial
+      end
+      @new_path = @index_path + '/new'                           # used in index_header partial
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -88,6 +103,10 @@ module Fae
     # if model has images or files, build them here for nesting
     def build_assets
     end
+
+    # # for clonable
+    # def clone_exceptions
+    # end
 
   end
 end

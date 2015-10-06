@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :locations
     resources :releases do
       post 'filter', on: :collection
+      get 'clone', on: :member
     end
     resources :wines
     resources :varietals
