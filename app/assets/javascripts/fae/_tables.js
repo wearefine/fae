@@ -15,7 +15,7 @@ Fae.tables = {
    * @see {@link tables.columnSorting}
    * @see {@link tables.sortColumnsFromCookies}
    */
-  sort_cookie_name: 'Fae_' + window.location.hostname + '_table_sort_preferences_' + window.location.pathname,
+  sort_cookie_name: 'Fae_table_sort_preferences_' + window.location.pathname,
 
   init: function() {
     this.columnSorting();
