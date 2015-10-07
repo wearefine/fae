@@ -115,7 +115,7 @@ module Fae
     def build_assets
     end
 
-    def set_cloneable_attributes
+    def cloneable_attributes
       # overridable method on BaseController to set cloned attributes and associations (similar to build_assets)
     end
 
@@ -131,15 +131,13 @@ module Fae
     def create_unique_attribute(attribute)
       index = 2
       symbol = attribute.first.to_sym
-      value = attribute.second + '_' + index.to_s
+      value = attribute.second + '-' + index.to_s
 
       begin
         record = @klass.where(symbol => value)
-        # require 'pry'
-        # binding.pry
         value = value.chomp(index.to_s) + index.to_s
         index = index + 1
-      end while record.empty?
+      end while record.present?
 
       @cloned_item[symbol] = value
     end
