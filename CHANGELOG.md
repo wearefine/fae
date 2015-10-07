@@ -5,6 +5,7 @@
 - enhancements
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items
 - bugs
+    + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
