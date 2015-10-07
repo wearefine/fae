@@ -38,12 +38,13 @@ module Fae
     def create_from_existing
       # we should be able to configure which attributes and associations are cloned per object
       @cloned_item = @item.dup
+      # the dup method will automatically copy over any foreign_key data, setting up the belongs to relationship
       check_for_unique_validations(@cloned_item.attributes)
 
-      require 'pry'
-      binding.pry
+      # require 'pry'
+      # binding.pry
       # if @cloned_item.save
-      #   sets up associations
+      #   build_cloneable_attributes
       #   # redirects to edit page
       #   render action: 'edit'
       #   # may need to pass in id for new @cloned_item
@@ -111,8 +112,15 @@ module Fae
     def build_assets
     end
 
-    def cloneable_attributes
-      # overridable method on BaseController to set cloned attributes and associations (similar to build_assets)
+    ###########################################
+    ###### special methods for cloneable ######
+    ###########################################
+
+    # set cloneable attributes and associations
+    def build_cloneable_attributes(associations = [])
+      associations.each do |association|
+        @cloned_item.send(association) = @item.send(association).dup if @item.send(association).present?
+      end
     end
 
     def check_for_unique_validations(attributes)
