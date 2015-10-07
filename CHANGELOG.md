@@ -5,7 +5,9 @@
 - enhancements
     + [#49896](https://issues.afinedevelopment.com/issues/49896) Show error banner above the fold consistently
     + [#50905](https://issues.afinedevelopment.com/issues/50905) Added super cool validation helpers
+    + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items
 - bugs
+    + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
 
@@ -14,12 +16,12 @@
 - enhancements
     + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
     + [#50794](https://issues.afinedevelopment.com/issues/50794) Industrial JavaScript refactor
-    + [#50863](https://issues.afinedevelopment.com/issues/50863) Nested subnav links are highlighted when the page is active
     + [#40989](https://issues.afinedevelopment.com/issues/50863) Add a configurable change tracker
     + Change jQuery cookie to vanilla JS cookie
     + [#45145](https://issues.afinedevelopment.com/issues/45145) Save table sorting preferences during a single session
 - bugs
     + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
+    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
 
 ## 1.1.7
 
