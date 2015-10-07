@@ -16,6 +16,7 @@
     + [#50794](https://issues.afinedevelopment.com/issues/50794) Industrial JavaScript refactor
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Nested subnav links are highlighted when the page is active
     + [#40989](https://issues.afinedevelopment.com/issues/50863) Add a configurable change tracker
+    + Change jQuery cookie to vanilla JS cookie
 - bugs
     + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
 
