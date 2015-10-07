@@ -206,7 +206,7 @@ Fae.form.ajax = {
 
     if (cookie_key) {
       var cookie = Cookies.getJSON(cookie_key);
-      if (cookie) {
+      if (!$.isEmptyObject(cookie)) {
         var keys = Object.keys(cookie)
         var hash = '?';
 
