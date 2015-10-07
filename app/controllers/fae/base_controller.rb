@@ -36,21 +36,17 @@ module Fae
     end
 
     def create_from_existing
-      # require 'pry'
-      # binding.pry
-      # we need a way to make sure unique attributes are renamed accordingly
       # we should be able to configure which attributes and associations are cloned per object
       @cloned_item = @item.dup
-      check_for_unique_attributes(@cloned_item.attributes)
+      check_for_unique_validations(@cloned_item.attributes)
 
       require 'pry'
       binding.pry
-      # creates the new object
-      # sets up associations
       # if @cloned_item.save
+      #   sets up associations
       #   # redirects to edit page
       #   render action: 'edit'
-      #   # may need to pass in id for @item
+      #   # may need to pass in id for new @cloned_item
       # else
       #   build_assets
       #   flash[:alert] = t('fae.save_error')
@@ -119,7 +115,7 @@ module Fae
       # overridable method on BaseController to set cloned attributes and associations (similar to build_assets)
     end
 
-    def check_for_unique_attributes(attributes)
+    def check_for_unique_validations(attributes)
       check_for_unique = @klass.validators.collect{|validation| validation if validation.class==ActiveRecord::Validations::UniquenessValidator}.compact.collect(&:attributes).flatten
       attributes.each do |attribute|
         if check_for_unique.include? attribute.first.to_sym
