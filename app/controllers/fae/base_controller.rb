@@ -43,8 +43,8 @@ module Fae
       @cloned_item = @item.dup
       check_for_unique_attributes(@cloned_item.attributes)
 
-      # require 'pry'
-      # binding.pry
+      require 'pry'
+      binding.pry
       # creates the new object
       # sets up associations
       # if @cloned_item.save
@@ -90,15 +90,15 @@ module Fae
 
     def set_class_variables(class_name = nil)
       klass_base = params[:controller].split('/').last
-      @klass_name = class_name || klass_base                     # used in form views
-      @klass = klass_base.classify.constantize                   # used as class reference in this controller
-      @klass_singular = klass_base.singularize                   # used in index views
-      @klass_humanized = @klass_name.singularize.humanize        # used in index views
-      @index_path = '/' + params[:controller]                    # used in form_header and form_buttons partials
+      @klass_name = class_name || klass_base               # used in form views
+      @klass = klass_base.classify.constantize             # used as class reference in this controller
+      @klass_singular = klass_base.singularize             # used in index views
+      @klass_humanized = @klass_name.singularize.humanize  # used in index views
+      @index_path = '/' + params[:controller]              # used in form_header and form_buttons partials
       if params[:id].present?
         @clone_path = @index_path + '/' + params[:id] + '/create_from_existing' # used in form_buttons partial
       end
-      @new_path = @index_path + '/new'                           # used in index_header partial
+      @new_path = @index_path + '/new'                     # used in index_header partial
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -126,17 +126,18 @@ module Fae
           create_unique_attribute(attribute)
         end
       end
-      # The trick is you can't statically add something because it could potentially already exist. I think we can iterate through numbers (starting with _2). You can look up the object by the new attribute and if it doesn't exist you got your unique attr.
     end
 
     def create_unique_attribute(attribute)
-      symbol = attribute.first.to_sym
-      value = attribute.second
       index = 2
+      symbol = attribute.first.to_sym
+      value = attribute.second + '_' + index.to_s
 
       begin
         record = @klass.where(symbol => value)
-        value = value + '_' + index.to_s
+        # require 'pry'
+        # binding.pry
+        value = value.chomp(index.to_s) + index.to_s
         index = index + 1
       end while record.empty?
 
