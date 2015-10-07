@@ -2,7 +2,7 @@ module Fae
   class BaseController < ApplicationController
 
     before_action :set_class_variables
-    before_action :set_item, only: [:edit, :update, :destroy, :clone]
+    before_action :set_item, only: [:edit, :update, :destroy, :create_from_existing]
 
     helper FormHelper
 
@@ -35,6 +35,29 @@ module Fae
       end
     end
 
+    def create_from_existing
+      # require 'pry'
+      # binding.pry
+      # we need a way to make sure unique attributes are renamed accordingly
+      # we should be able to configure which attributes and associations are cloned per object
+      @cloned_item = @item.dup
+      check_for_unique_attributes(@cloned_item.attributes)
+
+      # require 'pry'
+      # binding.pry
+      # creates the new object
+      # sets up associations
+      # if @cloned_item.save
+      #   # redirects to edit page
+      #   render action: 'edit'
+      #   # may need to pass in id for @item
+      # else
+      #   build_assets
+      #   flash[:alert] = t('fae.save_error')
+      #   render action: 'edit'
+      # end
+    end
+
     def update
       if @item.update(item_params)
         redirect_to @index_path, notice: t('fae.save_notice')
@@ -51,18 +74,6 @@ module Fae
       else
         redirect_to @index_path, flash: { error: t('fae.delete_error') }
       end
-    end
-
-    def clone
-      require 'pry'
-      binding.pry
-      # if @item.save
-      #   redirect_to @index_path, notice: t('fae.save_notice')
-      # else
-      #   build_assets
-      #   flash[:alert] = t('fae.save_error')
-      #   render action: 'new'
-      # end
     end
 
     def filter
@@ -85,7 +96,7 @@ module Fae
       @klass_humanized = @klass_name.singularize.humanize        # used in index views
       @index_path = '/' + params[:controller]                    # used in form_header and form_buttons partials
       if params[:id].present?
-        @clone_path = @index_path + '/' + params[:id] + '/clone' # used in form_buttons partial
+        @clone_path = @index_path + '/' + params[:id] + '/create_from_existing' # used in form_buttons partial
       end
       @new_path = @index_path + '/new'                           # used in index_header partial
     end
@@ -104,9 +115,33 @@ module Fae
     def build_assets
     end
 
-    # # for clonable
-    # def clone_exceptions
-    # end
+    def set_cloneable_attributes
+      # overridable method on BaseController to set cloned attributes and associations (similar to build_assets)
+    end
+
+    def check_for_unique_attributes(attributes)
+      check_for_unique = @klass.validators.collect{|validation| validation if validation.class==ActiveRecord::Validations::UniquenessValidator}.compact.collect(&:attributes).flatten
+      attributes.each do |attribute|
+        if check_for_unique.include? attribute.first.to_sym
+          create_unique_attribute(attribute)
+        end
+      end
+      # The trick is you can't statically add something because it could potentially already exist. I think we can iterate through numbers (starting with _2). You can look up the object by the new attribute and if it doesn't exist you got your unique attr.
+    end
+
+    def create_unique_attribute(attribute)
+      symbol = attribute.first.to_sym
+      value = attribute.second
+      index = 2
+
+      begin
+        record = @klass.where(symbol => value)
+        value = value + '_' + index.to_s
+        index = index + 1
+      end while record.empty?
+
+      @cloned_item[symbol] = value
+    end
 
   end
 end
