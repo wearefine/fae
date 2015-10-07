@@ -16,7 +16,7 @@ Fae.tables = {
 
   columnSorting: function() {
     $.tablesorter.addParser({
-      id: "mmddyy",
+      id: 'mmddyy',
       is: function(s) {
         // testing for ##-##-#### or ####-##-##, so it's not perfect; time can be included
         return (/(^\d{1,2}[\/\s]\d{1,2}[\/\s]\d{2})/).test((s || '').replace(/\s+/g," ").replace(/[\-.,]/g, "/"));
@@ -27,17 +27,17 @@ Fae.tables = {
             ci = c.$headers.filter('[data-column=' + cellIndex + ']:last'),
             format = ci.length && ci[0].dateFormat || $.tablesorter.getData( ci, $.tablesorter.getColumnData( table, c.headers, cellIndex ), 'dateFormat') || c.dateFormat;
           s = s.replace(/\s+/g," ").replace(/[\-.,]/g, "/"); // escaped - because JSHint in Firefox was showing it as an error
-          if (format === "mmddyy") {
+          if (format === 'mmddyy') {
             s = s.replace(/(\d{1,2})[\/\s](\d{1,2})[\/\s](\d{2})/, "$3/$1/$2");
           }
         }
         return s ? $.tablesorter.formatFloat( (new Date(s).getTime() || s), table) : s;
       },
-      type: "numeric"
+      type: 'numeric'
     });
     // sort columns in tables if applicable
-    $(".main_table-sort_columns").tablesorter();
-    $(".main_table-sort_columns-cities").tablesorter({
+    $('.main_table-sort_columns').tablesorter();
+    $('.main_table-sort_columns-cities').tablesorter({
       sortList: [[1,0]]
     });
   },
