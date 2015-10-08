@@ -90,6 +90,19 @@ module Fae
       @body_class.present? ? @body_class : "#{controller_name} #{action_name}"
     end
 
+    def change_item_link(change)
+      text = "#{change.changeable_type}: "
+      text += change.try(:changeable).try(:fae_display_field) || "##{change.changeable_id}"
+
+      begin
+        parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
+        edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
+        return link_to text, edit_path
+      rescue
+        return text
+      end
+    end
+
     private
 
     def nav_path_current?(path)
