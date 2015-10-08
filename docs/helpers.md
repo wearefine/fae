@@ -472,9 +472,32 @@ Full Slim implementation with section wrapper and edit page conditional
       ordered: true
 ```
 
-## Add-ons
+## recent_changes
 
-### Slug generation
+Displays recent changes to an object as logged by [Fae's change tracker](https://bitbucket.org/wearefine/fae/src/master/docs/index.md#markdown-header-change-tracker) in a table. Columns include the change's user, type, updated attributes and datetime.
+
+This partial is best placed at the bottom of the form and will automatically hide itself in create forms, where there wouldn't be changes to display.
+
+**Examples**
+
+Standard implementation
+```ruby
+render 'fae/shared/recent_changes'
+```
+
+Optionally, you can add a link to it in the form nav:
+```slim
+nav.main_content-header-section
+  ul.main_content-header-section-links
+    - if params[:action] == 'edit'
+      li: a href="#recent_changes" Recent Changes
+```
+
+---
+
+# Add-ons
+
+## Slug generation
 
 Auto-generate a slug from a field. Only populates if the `slug` input is blank.
 

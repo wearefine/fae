@@ -1091,6 +1091,12 @@ Each tracked change is a record of `Fae::Change` and has the following attrubtes
 end
 ```
 
+## Display Tracked Changes Table
+
+Fae provides a partial to display tracked changes in an object's form. Read more about `render 'fae/shared/recent_changes'` here:
+
+https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-recent_changes
+
 ---
 
 # CSS Classes
