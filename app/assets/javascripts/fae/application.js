@@ -30,6 +30,7 @@
 //= require json2
 //= require judge
 //= require grinder
+//= require simplemde.min
 
 //= require fae/judge_path
 //= require fae/extensions

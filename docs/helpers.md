@@ -30,7 +30,8 @@ fae_method_name(f, attribute, options)
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal (cannot be combined with `dark_hint`) |
 | dark_hint | string | | text that appears in a dark color scheme (cannot be combined with `hint`) |
-| markdown | boolean | false | displays support text and hint for markdown |
+| markdown | boolean | false | adds markdown GUI toolbar |
+| markdown_supported | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
 | wrapper_class | string | | a class to add to the wrapper element |
 | validate | boolean | true | triggers `judge` to validate element |
@@ -52,7 +53,7 @@ fae_input f, :first_name, wrapper_class: 'special_wrapper', helper_text: 'No mor
 
 A textarea with Fae's built-in markdown hint:
 ```ruby
-fae_input f, :description, markdown: true
+fae_input f, :description, markdown_supported: true
 ```
 
 ## fae_association
@@ -271,7 +272,8 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 | label         | string | attribute.to_s.titleize | the fields's label |
 | helper_text   | string | | the field's helper text |
 | hint          | string | | the field's hint text (supports HTML) |
-| markdown      | boolean | false | displays support text and hint for markdown |
+| markdown      | boolean | false | adds markdown GUI toolbar |
+| markdown_supported | boolean | false | displays support text and hint for markdown |
 
 image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
 
