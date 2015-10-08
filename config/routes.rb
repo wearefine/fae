@@ -14,6 +14,8 @@ Fae::Engine.routes.draw do
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'help' => 'pages#help', as: 'help'
+  get 'tracked_changes' => 'pages#tracked_changes', as: 'tracked_changes'
+  post 'tracked_changes/filter' => 'pages#tracked_changes_filter', as: 'tracked_changes_filter'
 
   get 'first_user' => 'setup#first_user'
   post 'first_user' => 'setup#create_first_user'

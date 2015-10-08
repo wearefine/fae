@@ -288,6 +288,7 @@ Displays the filter form, including the search field, submit and reset buttons. 
 
 | option | type    | default                                | description |
 |--------|---------|----------------------------------------|-|
+| action | string  | "#{@index_path}/filter" | the path the form submits to |
 | title  | string  | "Search #{@klass_humanized.pluralize}" | the h2 text in the filter form |
 | search | boolean | true                                   | displays the search field |
 | cookie_key | string | false | set your cookie name on the fae_filter_form if you want to persist selected filtered state |

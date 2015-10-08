@@ -43,6 +43,7 @@ module Fae
     alias_method :fae_toggle, :attr_toggle
 
     def fae_filter_form(options = {}, &block)
+      options[:action]     ||= "#{@index_path}/filter"
       options[:title]      ||= "Search #{@klass_humanized.pluralize}"
       options[:search]       = true if options[:search].nil?
       options[:cookie_key] ||= false
@@ -50,7 +51,7 @@ module Fae
       form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
-      form_tag(@index_path + '/filter', form_hash) do
+      form_tag(options[:action], form_hash) do
         concat content_tag :h2, options[:title]
         concat filter_search_field if options[:search]
         concat capture(&block)
