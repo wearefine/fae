@@ -10,7 +10,7 @@ describe 'Global nav' do
       nav_items = assigns[:fae_nav_items]
       expect(nav_items.last[:text]).to eq('Admin')
       nav_items.last[:sublinks].each do |sublink|
-        expect(sublink[:text]).to match /Users|Root Settings/
+        expect(sublink[:text]).to match /Users|Changes|Root Settings/
       end
     end
 
