@@ -12,24 +12,36 @@ Fae.tables = {
   /**
    * Base cookie string for sorting per site per page
    * @type {String}
+   * @see {@link tables.defaultSortCookie}
    * @see {@link tables.columnSorting}
    * @see {@link tables.sortColumnsFromCookies}
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
   init: function() {
-    this.columnSorting();
-    this.sortColumnsFromCookies();
-    this.rowSorting();
-    if(FCH.exists('.sticky-table-header')) {
+    if (FCH.exists('.main_table-sort_columns')) {
+      this.dateColumnSorting();
+      this.columnSorting();
+      this.defaultSortCookie();
+      this.sortColumnsFromCookies();
+    }
+
+    if (FCH.exists('.main_content-sortable')) {
+      this.rowSorting();
+    }
+
+    if (FCH.exists('.sticky-table-header')) {
       this.stickyTableHeader();
     }
-    if(FCH.exists('.collapsible')) {
+
+    if (FCH.exists('.collapsible')) {
       this.collapsibleTable();
     }
-    if(FCH.exists('form .main_content-section-area')) {
+
+    if (FCH.exists('form .main_content-section-area')) {
       this.endingSelectShim();
     }
+
     this.addToTable();
   },
 
@@ -40,40 +52,6 @@ Fae.tables = {
     var _this = this;
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
-
-    // If cookie hasn't been created for this session
-    if (!cookie_value || $.isEmptyObject(cookie_value)) {
-      cookie_value = {};
-    }
-
-    // Create hash object for this path if it hasn't been done yet
-    if (!cookie_value.hasOwnProperty(path)) {
-      cookie_value[path] = {};
-    }
-
-    Cookies.set(_this.sort_cookie_name, cookie_value);
-
-
-    $.tablesorter.addParser({
-      id: 'mmddyy',
-      is: function(s) {
-        // testing for ##-##-#### or ####-##-##, so it's not perfect; time can be included
-        return (/(^\d{1,2}[\/\s]\d{1,2}[\/\s]\d{2})/).test((s || '').replace(/\s+/g," ").replace(/[\-.,]/g, "/"));
-      },
-      format: function(s, table, cell, cellIndex) {
-        if (s) {
-          var c = table.config,
-            ci = c.$headers.filter('[data-column=' + cellIndex + ']:last'),
-            format = ci.length && ci[0].dateFormat || $.tablesorter.getData( ci, $.tablesorter.getColumnData( table, c.headers, cellIndex ), 'dateFormat') || c.dateFormat;
-          s = s.replace(/\s+/g," ").replace(/[\-.,]/g, "/"); // escaped - because JSHint in Firefox was showing it as an error
-          if (format === 'mmddyy') {
-            s = s.replace(/(\d{1,2})[\/\s](\d{1,2})[\/\s](\d{2})/, "$3/$1/$2");
-          }
-        }
-        return s ? $.tablesorter.formatFloat( (new Date(s).getTime() || s), table) : s;
-      },
-      type: 'numeric'
-    });
 
     $('.main_table-sort_columns')
       .tablesorter()
@@ -88,11 +66,57 @@ Fae.tables = {
         }
 
         // Insert the sort data at the index of the table in the array
-        cookie_value[path][idx] = $this.data('tablesorter').sortList[0];
+        cookie_value[path][idx] = $this.data('tablesorter').sortList;
 
         // Save it to the cookie as a string
         Cookies.set(_this.sort_cookie_name, cookie_value);
       });
+  },
+
+  /**
+   * Add smart sorting for dates
+   */
+  dateColumnSorting: function() {
+    $.tablesorter.addParser({
+      id: 'mmddyy',
+      is: function(s) {
+        // testing for ##-##-#### or ####-##-##, so it's not perfect; time can be included
+        return (/(^\d{1,2}[\/\s]\d{1,2}[\/\s]\d{2})/).test((s || '').replace(/\s+/g, ' ').replace(/[\-.,]/g, '/'));
+      },
+      format: function(s, table, cell, cellIndex) {
+        if (s) {
+          var c = table.config,
+            ci = c.$headers.filter('[data-column=' + cellIndex + ']:last'),
+            format = ci.length && ci[0].dateFormat || $.tablesorter.getData( ci, $.tablesorter.getColumnData( table, c.headers, cellIndex ), 'dateFormat') || c.dateFormat;
+          s = s.replace(/\s+/g, ' ').replace(/[\-.,]/g, '/'); // escaped - because JSHint in Firefox was showing it as an error
+          if (format === 'mmddyy') {
+            s = s.replace(/(\d{1,2})[\/\s](\d{1,2})[\/\s](\d{2})/, '$3/$1/$2');
+          }
+        }
+        return s ? $.tablesorter.formatFloat( (new Date(s).getTime() || s), table) : s;
+      },
+      type: 'numeric'
+    });
+  },
+
+  /**
+   * Ensure this page has a key in the table sort hash cookie
+   */
+  defaultSortCookie: function() {
+    var path = window.location.pathname;
+    var cookie_value = Cookies.getJSON(this.sort_cookie_name);
+
+    // If cookie hasn't been created for this session
+    if (!cookie_value || $.isEmptyObject(cookie_value)) {
+      cookie_value = {};
+    }
+
+    // Create hash object for this path if it hasn't been done yet
+    if (!cookie_value.hasOwnProperty(path)) {
+      cookie_value[path] = {};
+    }
+
+    Cookies.set(this.sort_cookie_name, cookie_value);
   },
 
   /**
@@ -111,8 +135,8 @@ Fae.tables = {
     $('.main_table-sort_columns').each(function(idx) {
       // If this table exists in the cookie hash
       if (cookie_value[path].hasOwnProperty(idx)) {
-        // Use array value in an array within another array because of how tablesorter accepts this argument
-        $(this).trigger('sorton', [[ cookie_value[path][idx] ]]);
+        // Use array value within another array because of how tablesorter accepts this argument
+        $(this).trigger('sorton', [ cookie_value[path][idx] ]);
       }
     });
   },
