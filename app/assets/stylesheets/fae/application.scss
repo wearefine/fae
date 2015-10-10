@@ -1,8 +1,7 @@
 /**
- *= require fae/lib/reset
+ *= require reset
  *= require fae/chosen
- *= require fae/jquery.Jcrop.min
- *= require fae/daterangepicker
+ *= require daterangepicker
  */
 
 /* used for universal style sheet */
@@ -11,7 +10,3 @@ $c-custom-highlight: #9aa142;
 @import 'fae';
 
 @import 'all_imports';
-
-@media print {
-	@import 'print';
-}

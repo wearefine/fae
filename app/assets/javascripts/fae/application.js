@@ -18,7 +18,7 @@
 //  require jquery.ui.effect-highlight
 //= require chosen.jquery.min
 //= require jquery.tablesorter
-//  require jquery.Jcrop.min
+
 //= require jquery.simplemodal.1.4.4
 //= require jquery.multi-select
 //= require js.cookie
