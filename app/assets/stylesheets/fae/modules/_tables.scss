@@ -2,10 +2,9 @@
 	width: 100%;
 	border: 1px solid $c-border;
 	border-collapse: separate;
-	table-layout: fixed;
 
 	@include bp(tablet) {
-		table-layout: initial;
+		table-layout: fixed;
 	}
 
 	& tbody tr:nth-of-type(even) {
