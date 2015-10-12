@@ -114,6 +114,7 @@ Fae.form.text = {
 
   /**
    * Find all markdown fields and initialize them with a markdown GUI
+   * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   initMarkdown: function() {
     var fields = document.getElementsByClassName('js-markdown-editor');

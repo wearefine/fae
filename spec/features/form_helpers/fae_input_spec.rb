@@ -51,8 +51,8 @@ feature 'fae_input' do
     admin_login
     visit new_admin_release_path
 
-    within('.release_intro') do
-      expect(page).to have_content('Maximum Characters: 100')
+    within('.release_name') do
+      expect(page).to have_content('Maximum Characters: 15')
     end
   end
 
@@ -60,10 +60,39 @@ feature 'fae_input' do
     admin_login
     visit new_admin_release_path
 
-    within('.release_intro') do
-      fill_in "text", with: "My release information"
-      expect(page).to have_content('Characters Left: 78')
+    within('.release_name') do
+      fill_in "release_name", with: "My Release"
+      expect(page).to have_content('Characters Left: 5')
     end
+  end
+
+  scenario 'should display markdown helper when markdown_supported: true', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_body-text_area--wrapper') do
+      expect(page).to have_selector('label .helper_text .markdown-support')
+    end
+  end
+
+  scenario 'should display markdown WYSIWYG when markdown: true', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_intro') do
+      expect(page).to have_selector('.CodeMirror')
+    end
+  end
+
+  scenario 'should display markdown guide when support is clicked', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    expect(page).to_not have_selector('.markdown-hint-wrapper')
+
+    page.find('.markdown-support').click
+
+    expect(page).to have_selector('.markdown-hint-wrapper')
   end
 
 end
