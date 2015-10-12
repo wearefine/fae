@@ -338,9 +338,9 @@ Fae.form.validator = {
      * @see {@link validator.length_counter._setCounter _setCounter}
      */
     __createCounterText: function($elem, max, current) {
-      var prep = "Maximum Characters: " + max;
+      var prep = 'Maximum Characters: ' + max;
       if (current > 0 || $elem.val().length) {
-        prep += " / <span class='characters-left'>Characters Left: " + current + "</span>";
+        prep += ' / <span class="characters-left">Characters Left: ' + current + '</span>';
       }
       return prep;
     },
@@ -354,7 +354,17 @@ Fae.form.validator = {
      * @see {@link validator.length_counter._setCounter _setCounter}
      */
     __createCounterElem: function($elem, max, current, text){
-      $( "<div class='counter' data-max="+max+" data-current="+ current +"><p>" + text + "</p></div>" ).insertAfter( $elem );
+      var $counter_div = $('<div />', {
+        class: 'counter',
+        data: {
+          max: max,
+          current: current
+        },
+        html: '<p>' + text + '</p>'
+      });
+
+      $elem.after( $counter_div );
+
       if (current <= 0 || $elem.val().length >= 100){
         $elem.siblings('.counter').children('p').children('.characters-left').addClass('overCount');
       }
