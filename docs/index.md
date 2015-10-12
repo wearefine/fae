@@ -555,8 +555,7 @@ end
 ---
 
 # Form Helpers
-
-[Click here for full documentation on Fae's form helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-form-helpers)
+[Click here for full documentation on Fae's form helpers](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-form-helpers)
 
 Generated forms start you off on a good place to manage the object's content, but chances are you'll want to customize them and add more fields as you data model evolves. Fae provides a number of form helpers to help you leverage Fae's built in features will allowing customization when needed.
 
@@ -566,10 +565,10 @@ Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simpl
 
 # View Helpers and Partials
 
-Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
+Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md).
 
-[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
-[Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
+[Click here for view helpers](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
+[Click here for Fae partials](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
 
 ---
 
@@ -584,6 +583,14 @@ module Fae
   end
 end
 ```
+
+---
+
+# Cloning
+
+[Click here for full documentation on Fae's cloning](https://bitbucket.org/wearefine/fae/src/master/docs/cloning.md)
+
+Many users find it easier to clone records that have similar content, rather than spending the time manually setting them up. Fae has the ability to allow one-click clones from the index or the edit form, as well as flexibility to whitelist attributes and clone assocations.
 
 ---
 

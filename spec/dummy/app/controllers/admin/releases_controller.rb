@@ -12,8 +12,4 @@ class Admin::ReleasesController < Fae::BaseController
     [:aromas, :events]
   end
 
-  def attributes_for_cloning
-    # []
-  end
-
 end
