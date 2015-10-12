@@ -36,24 +36,21 @@ module Fae
     end
 
     def create_from_existing
-      # we should be able to configure which attributes and associations are cloned per object
       @cloned_item = @item.dup
       # the dup method will automatically copy over any foreign_key data, setting up the belongs to relationship
-      # check_for_unique_validations(@cloned_item.attributes)
-      unique_attributes
+      find_unique_attributes
 
       # require 'pry'
       # binding.pry
-      # if @cloned_item.save
-      #   build_cloneable_attributes
-      #   # redirects to edit page
-      #   render action: 'edit'
-      #   # may need to pass in id for new @cloned_item
-      # else
-      #   build_assets
-      #   flash[:alert] = t('fae.save_error')
-      #   render action: 'edit'
-      # end
+      if @cloned_item.save
+        find_cloneable_attributes
+        render action: 'edit'
+        #   # may need to pass in id for new @cloned_item
+        # else
+        #   build_assets
+        #   flash[:alert] = t('fae.save_error')
+        #   render action: 'edit'
+      end
     end
 
     def update
@@ -128,15 +125,48 @@ module Fae
     #############################################
 
     # set cloneable attributes and associations
-    # def build_cloneable_attributes
-    #   associations_for_cloning.each do |association|
-    #     # dont clone here, just check association and make method for each type
-    #     @cloned_item.send(association) = @item.send(association).dup if @item.send(association).present?
-    #   end
-    # end
+    def find_cloneable_attributes
+      associations_for_cloning.each do |association|
+        type = @klass.reflect_on_association(association)
+        through_record = type.through_reflection
+
+        if through_record.present?
+          clone_joins(through_record.plural_name)
+        else
+          clone_has_many(association) if type.macro == :has_many
+          clone_has_one(association)  if type.macro == :has_one
+        end
+      end
+    end
+
+    def clone_has_many(association)
+      if @item.send(association).present?
+        @item.send(association).each do |record|
+          # TODO - what if associations have unique attributes?
+          @cloned_item.send(association) << @item.send(association).where(id: record.id).dup
+        end
+      end
+    end
+
+    def clone_has_one(association)
+      @cloned_item.send("build_#{association}") if @cloned_item.send(association).blank?
+      @cloned_item.send(association) << @item.send(association).dup if @item.send(association).present?
+      # TODO - if Fae::Image or Fae::File, need to duplicate assets as well
+    end
+
+    def clone_joins(object)
+      if @item.send(object.to_sym).present?
+        @item.send(object.to_sym).each do |record|
+          # TODO - what if associations have unique attributes?
+          copied_join = @item.send(object.to_sym).where(id: record.id).dup.first
+          copied_join.send("#{@klass_singular}_id" + '=', @cloned_item.id)
+          @cloned_item.send(object.to_sym) << copied_join
+        end
+      end
+    end
 
     # method to find attrs with unique validators
-    def unique_attributes
+    def find_unique_attributes
       attributes = attributes_for_cloning.present? ? attributes_for_cloning : @cloned_item.attributes
       attributes.each do |attribute|
         rename_unique_attribute(attribute) if @klass.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
@@ -150,8 +180,11 @@ module Fae
 
       begin
         record = @klass.where(symbol => value)
-        value = value.chomp(index.to_s) + index.to_s
-        index += 1
+        unless record.empty?
+          new_index = index + 1
+          value = value.chomp(index.to_s) + new_index.to_s
+          index = new_index
+        end
       end while record.present?
 
       @cloned_item[symbol] = value
