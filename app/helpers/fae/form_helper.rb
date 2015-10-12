@@ -8,6 +8,8 @@ module Fae
       list_order f, attribute, options
       set_prompt f, attribute, options
 
+      add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
+
       f.input attribute, options
     end
 
@@ -112,10 +114,10 @@ module Fae
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || attribute_name
-      if options[:markdown].present? || options[:helper_text].present?
+      if options[:markdown_supported].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
           concat(options[:helper_text]) if options[:helper_text].present?
-          concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown].present?
+          concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown_supported].present?
         end
       end
       options[:label] = label.html_safe if label.present?

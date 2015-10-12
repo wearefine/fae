@@ -1,4 +1,4 @@
-/* global Fae */
+/* global Fae, SimpleMDE, toolbarBuiltInButtons */
 
 'use strict';
 
@@ -11,6 +11,8 @@ Fae.form.text = {
 
   init: function() {
     this.slugger();
+    this.overrideMarkdownDefaults();
+    this.initMarkdown();
   },
 
   /**
@@ -85,5 +87,47 @@ Fae.form.text = {
 
     return slug_text;
   },
+
+  /**
+   * Override SimpleMDE's preference for font-awesome icons and use a modal for the guide
+   * @see {@link modals.markdownModal}
+   */
+  overrideMarkdownDefaults: function() {
+    toolbarBuiltInButtons['bold'].className = 'icon-bold';
+    toolbarBuiltInButtons['italic'].className = 'icon-italic';
+    toolbarBuiltInButtons['heading'].className = 'icon-font';
+    toolbarBuiltInButtons['code'].className = 'icon-code';
+    toolbarBuiltInButtons['unordered-list'].className = 'icon-list-ul';
+    toolbarBuiltInButtons['ordered-list'].className = 'icon-list-ol';
+    toolbarBuiltInButtons['link'].className = 'icon-link';
+    toolbarBuiltInButtons['image'].className = 'icon-image';
+    toolbarBuiltInButtons['quote'].className = 'icon-quote';
+    toolbarBuiltInButtons['fullscreen'].className = 'icon-fullscreen no-disable no-mobile';
+    toolbarBuiltInButtons['horizontal-rule'].className = 'icon-minus';
+    toolbarBuiltInButtons['preview'].className = 'icon-eye no-disable';
+    toolbarBuiltInButtons['side-by-side'].className = 'icon-columns no-disable no-mobile';
+    toolbarBuiltInButtons['guide'].className = 'icon-question';
+
+    // Override SimpleMDE's default guide and use a homegrown modal
+    toolbarBuiltInButtons['guide'].action = Fae.modals.markdownModal;
+  },
+
+  /**
+   * Find all markdown fields and initialize them with a markdown GUI
+   * @has_test {features/form_helpers/fae_input_spec.rb}
+   */
+  initMarkdown: function() {
+    var fields = document.getElementsByClassName('js-markdown-editor');
+
+    for(var i = 0; i < fields.length; i++) {
+      var editor = new SimpleMDE({
+        element: fields[i],
+        autoDownloadFontAwesome: false,
+        status: false,
+        spellChecker: false,
+        hideIcons: ['image', 'side-by-side', 'fullscreen']
+      });
+    }
+  }
 
 };

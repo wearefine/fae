@@ -9,7 +9,7 @@
 Fae.modals = {
   init: function() {
     this.imageModals();
-    this.markdownModal();
+    this.markdownModalListener();
   },
 
   /**
@@ -35,18 +35,28 @@ Fae.modals = {
   },
 
   /**
-   * Initialize modal for markdown-hint. Triggered on document click of "markdown-support" so as to support AJAX'd markdown-support fields.
+   * Display markdown guide in a modal
+   * @see {@link form.text.overrideMarkdownDefaults}
+   * @see {@link modals.markdownModalListener}
+   * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   markdownModal: function() {
-    FCH.$document.on('click', '.markdown-support', function(){
-      var markdown_hint_width = $('.markdown-hint').width() + 40;
+    var markdown_hint_width = $('.markdown-hint').width() + 40;
 
-      $('.markdown-hint-wrapper').modal({
-        minHeight: 430,
-        minWidth: markdown_hint_width,
-        overlayClose: true,
-        zIndex: 1100
-      });
+    $('.markdown-hint-wrapper').modal({
+      minHeight: 430,
+      minWidth: markdown_hint_width,
+      overlayClose: true,
+      zIndex: 1100
     });
+  },
+
+  /**
+   * Markdown guide shown on document click of "markdown-support" so as to support AJAX'd markdown-support fields.
+   * @fires {@link modals.markdownModal}
+   * @has_test {features/form_helpers/fae_input_spec.rb}
+   */
+  markdownModalListener: function() {
+    FCH.$document.on('click', '.markdown-support', this.markdownModal);
   }
 };
