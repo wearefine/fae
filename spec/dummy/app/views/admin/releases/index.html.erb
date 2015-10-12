@@ -26,6 +26,7 @@
             <th class="main_table-header-live" data-sorter="false">On Prod</th>
             <th class="main_table-header-edit" data-sorter="false">Edit</th>
             <th class="main_table-header-delete" data-sorter="false">Delete</th>
+            <th class="main_table-header-clone" data-sorter="false">Clone</th>
           </tr>
         </thead>
 
@@ -48,6 +49,11 @@
                 <td class="main_table-delete">
                   <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
                     <span class="icon-delete_x"></span>
+                  <% end %>
+                </td>
+                <td class="main_table-delete">
+                  <%= link_to create_from_existing_admin_release_path(item), class: 'main_table-action' do %>
+                    <span class="icon-users"></span>
                   <% end %>
                 </td>
               </tr>
