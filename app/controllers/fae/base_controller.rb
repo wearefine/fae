@@ -44,11 +44,10 @@ module Fae
       if @cloned_item.save
         find_cloneable_attributes
         redirect_to @index_path + '/' + @cloned_item.id.to_s + '/edit'
-        #   # may need to pass in id for new @cloned_item
-        # else
-        #   build_assets
-        #   flash[:alert] = t('fae.save_error')
-        #   render action: 'edit'
+      else
+        build_assets
+        flash[:alert] = t('fae.save_error')
+        render action: 'edit'
       end
     end
 
@@ -141,7 +140,8 @@ module Fae
     def clone_has_many_relationships(association)
       if @item.send(association).present?
         @item.send(association).each do |record|
-          new_record = @item.send(association).where(id: record.id).dup
+          new_record = association.to_s.classify.constantize.find_by_id(record.id).dup
+          new_record.send("#{@klass_singular}_id" + '=', @cloned_item.id) if new_record.send("#{@klass_singular}_id").present?
           # check if associations have unique attributes
           find_unique_attributes(new_record.attributes, new_record)
 
@@ -159,7 +159,7 @@ module Fae
     def clone_join_relationships(object)
       if @item.send(object.to_sym).present?
         @item.send(object.to_sym).each do |record|
-          copied_join = object.classify.constantize.find(record.id).dup
+          copied_join = object.classify.constantize.find_by_id(record.id).dup
           copied_join.send("#{@klass_singular}_id" + '=', @cloned_item.id)
           @cloned_item.send(object.to_sym) << copied_join
         end
