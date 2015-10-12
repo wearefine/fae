@@ -48,10 +48,10 @@ td class="main_table-clone"
 
 #### For Form
 
-Simply pass `cloneable: true` into your form_buttons partial.
+Simply pass `cloneable: true` into your form_buttons partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
 
 ```ruby
-  render 'fae/shared/form_buttons', cloneable: true
+  render 'fae/shared/form_buttons', cloneable: true, clone_button_text: 'Duplicate Me!'
 ```
 
 That's all for basic set-up.

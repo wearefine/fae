@@ -166,7 +166,7 @@ module Fae
       end
     end
 
-    # method to find attrs with unique validators
+    # find attrs with unique validators
     def find_unique_attributes(attributes, item)
       attributes.each do |attribute|
         rename_unique_attribute(attribute, item) if @klass.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
