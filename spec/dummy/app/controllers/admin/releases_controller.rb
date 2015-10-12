@@ -8,4 +8,12 @@ class Admin::ReleasesController < Fae::BaseController
     @item.build_label_pdf if @item.label_pdf.blank?
   end
 
+  def associations_for_cloning
+    # [:selling_points, :bottle_shot]
+  end
+
+  def attributes_for_cloning
+    # []
+  end
+
 end

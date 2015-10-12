@@ -39,7 +39,8 @@ module Fae
       # we should be able to configure which attributes and associations are cloned per object
       @cloned_item = @item.dup
       # the dup method will automatically copy over any foreign_key data, setting up the belongs to relationship
-      check_for_unique_validations(@cloned_item.attributes)
+      # check_for_unique_validations(@cloned_item.attributes)
+      unique_attributes
 
       # require 'pry'
       # binding.pry
@@ -112,27 +113,37 @@ module Fae
     def build_assets
     end
 
-    ###########################################
-    ###### special methods for cloneable ######
-    ###########################################
+    # array of symbols used for setting up associations on cloned object
+    def associations_for_cloning
+      []
+    end
+
+    # array of symbols used for cloning only specific attributes
+    def attributes_for_cloning
+      []
+    end
+
+    #############################################
+    ######## special methods for cloning ########
+    #############################################
 
     # set cloneable attributes and associations
-    def build_cloneable_attributes(associations = [])
-      associations.each do |association|
-        @cloned_item.send(association) = @item.send(association).dup if @item.send(association).present?
-      end
-    end
+    # def build_cloneable_attributes
+    #   associations_for_cloning.each do |association|
+    #     # dont clone here, just check association and make method for each type
+    #     @cloned_item.send(association) = @item.send(association).dup if @item.send(association).present?
+    #   end
+    # end
 
-    def check_for_unique_validations(attributes)
-      check_for_unique = @klass.validators.collect{|validation| validation if validation.class==ActiveRecord::Validations::UniquenessValidator}.compact.collect(&:attributes).flatten
+    # method to find attrs with unique validators
+    def unique_attributes
+      attributes = attributes_for_cloning.present? ? attributes_for_cloning : @cloned_item.attributes
       attributes.each do |attribute|
-        if check_for_unique.include? attribute.first.to_sym
-          create_unique_attribute(attribute)
-        end
+        rename_unique_attribute(attribute) if @klass.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
       end
     end
 
-    def create_unique_attribute(attribute)
+    def rename_unique_attribute(attribute)
       index = 2
       symbol = attribute.first.to_sym
       value = attribute.second + '-' + index.to_s
@@ -140,7 +151,7 @@ module Fae
       begin
         record = @klass.where(symbol => value)
         value = value.chomp(index.to_s) + index.to_s
-        index = index + 1
+        index += 1
       end while record.present?
 
       @cloned_item[symbol] = value
