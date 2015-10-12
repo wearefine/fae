@@ -40,11 +40,9 @@ module Fae
       # the dup method will automatically copy over any foreign_key data, setting up the belongs to relationship
       find_unique_attributes
 
-      # require 'pry'
-      # binding.pry
       if @cloned_item.save
         find_cloneable_attributes
-        # redirect_to "edit_admin_#{@klass_singular}_path(#{@cloned_item})"
+        redirect_to @index_path + '/' + @cloned_item.id.to_s + '/edit'
         #   # may need to pass in id for new @cloned_item
         # else
         #   build_assets
@@ -131,15 +129,15 @@ module Fae
         through_record = type.through_reflection
 
         if through_record.present?
-          clone_joins(through_record.plural_name)
+          clone_join_relationships(through_record.plural_name)
         else
-          clone_has_many(association) if type.macro == :has_many
-          clone_has_one(association)  if type.macro == :has_one
+          clone_has_many_relationships(association) if type.macro == :has_many
+          clone_has_one_relationship(association)  if type.macro == :has_one
         end
       end
     end
 
-    def clone_has_many(association)
+    def clone_has_many_relationships(association)
       if @item.send(association).present?
         @item.send(association).each do |record|
           # TODO - what if associations have unique attributes?
@@ -148,16 +146,15 @@ module Fae
       end
     end
 
-    def clone_has_one(association)
+    def clone_has_one_relationship(association)
       @cloned_item.send("build_#{association}") if @cloned_item.send(association).blank?
       @cloned_item.send(association) << @item.send(association).dup if @item.send(association).present?
       # TODO - if Fae::Image or Fae::File, need to duplicate assets as well
     end
 
-    def clone_joins(object)
+    def clone_join_relationships(object)
       if @item.send(object.to_sym).present?
         @item.send(object.to_sym).each do |record|
-          # TODO - what if associations have unique attributes?
           copied_join = object.classify.constantize.find(record.id).dup
           copied_join.send("#{@klass_singular}_id" + '=', @cloned_item.id)
           @cloned_item.send(object.to_sym) << copied_join
