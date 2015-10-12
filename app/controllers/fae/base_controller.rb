@@ -38,7 +38,8 @@ module Fae
     def create_from_existing
       @cloned_item = @item.dup
       # the dup method will automatically copy over any foreign_key data, setting up the belongs to relationship
-      find_unique_attributes
+      attributes = attributes_for_cloning.present? ? attributes_for_cloning : @cloned_item.attributes
+      find_unique_attributes(attributes, @cloned_item)
 
       if @cloned_item.save
         find_cloneable_attributes
@@ -140,8 +141,11 @@ module Fae
     def clone_has_many_relationships(association)
       if @item.send(association).present?
         @item.send(association).each do |record|
-          # TODO - what if associations have unique attributes?
-          @cloned_item.send(association) << @item.send(association).where(id: record.id).dup
+          new_record = @item.send(association).where(id: record.id).dup
+          # check if associations have unique attributes
+          find_unique_attributes(new_record.attributes, new_record)
+
+          @cloned_item.send(association) << new_record
         end
       end
     end
@@ -163,14 +167,13 @@ module Fae
     end
 
     # method to find attrs with unique validators
-    def find_unique_attributes
-      attributes = attributes_for_cloning.present? ? attributes_for_cloning : @cloned_item.attributes
+    def find_unique_attributes(attributes, item)
       attributes.each do |attribute|
-        rename_unique_attribute(attribute) if @klass.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
+        rename_unique_attribute(attribute, item) if @klass.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
       end
     end
 
-    def rename_unique_attribute(attribute)
+    def rename_unique_attribute(attribute, item)
       index = 2
       symbol = attribute.first.to_sym
       value = attribute.second + '-' + index.to_s
@@ -184,7 +187,7 @@ module Fae
         end
       end while record.present?
 
-      @cloned_item[symbol] = value
+      item[symbol] = value
     end
 
   end
