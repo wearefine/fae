@@ -8,10 +8,7 @@ module Fae
       list_order f, attribute, options
       set_prompt f, attribute, options
 
-      if options[:markdown].present?
-        options[:input_html] ||= {}
-        options[:input_html][:class] = 'js-markdown-editor'
-      end
+      add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
 
       f.input attribute, options
     end
