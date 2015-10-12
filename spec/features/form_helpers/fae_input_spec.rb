@@ -95,4 +95,16 @@ feature 'fae_input' do
     expect(page).to have_selector('.markdown-hint-wrapper')
   end
 
+
+  scenario 'should not allow character counts greater than 255 on string column text fields', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_slug') do
+      fill_in 'release_slug', with: 'The letter J wanted to be like all the other letters of the alphabet, but the other letters were very cruel. They said "The letter J, you look like a disheveled I. The letter I is cool." J countered, "There is no I in team." It was not a very good comeback, and everyone laughed, cruelly, at the letter J again, including the headmaster. The letter J was left out of the alphabet that day as well as this validation.'
+
+      expect(find_field('Slug').value).to eq('The letter J wanted to be like all the other letters of the alphabet, but the other letters were very cruel. They said "The letter J, you look like a disheveled I. The letter I is cool." J countered, "There is no I in team." It was not a very good comebac')
+    end
+  end
+
 end
