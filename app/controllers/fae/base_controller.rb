@@ -44,7 +44,7 @@ module Fae
       # binding.pry
       if @cloned_item.save
         find_cloneable_attributes
-        render action: 'edit'
+        # redirect_to "edit_admin_#{@klass_singular}_path(#{@cloned_item})"
         #   # may need to pass in id for new @cloned_item
         # else
         #   build_assets
@@ -158,7 +158,7 @@ module Fae
       if @item.send(object.to_sym).present?
         @item.send(object.to_sym).each do |record|
           # TODO - what if associations have unique attributes?
-          copied_join = @item.send(object.to_sym).where(id: record.id).dup.first
+          copied_join = object.classify.constantize.find(record.id).dup
           copied_join.send("#{@klass_singular}_id" + '=', @cloned_item.id)
           @cloned_item.send(object.to_sym) << copied_join
         end
