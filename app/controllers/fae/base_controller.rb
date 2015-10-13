@@ -144,15 +144,15 @@ module Fae
 
     def clone_has_one_with_assets_relationship(association)
       @cloned_item.send("build_#{association}") if @cloned_item.send(association).blank?
-      create_duplicate_asset(association)
+      # create_duplicate_asset(association)
     end
 
-    def create_duplicate_asset(attached_as)
-      new_record = @item.send(attached_as).dup if @item.send(attached_as).present?
-      new_record.imageable_id = @cloned_item.id
-      new_record.remote_asset_url = "#{request.protocol}#{request.domain}#{request.port}#{@item.send(attached_as).asset_url}"
-      new_record.save
-    end
+    # def create_duplicate_asset(attached_as)
+    #   new_record = @item.send(attached_as).dup if @item.send(attached_as).present?
+    #   new_record.imageable_id = @cloned_item.id
+    #   new_record.remote_asset_url = "#{request.protocol}#{request.domain}:#{request.port}#{@item.send(attached_as).asset_url}"
+    #   new_record.save
+    # end
 
     def clone_has_one_relationship(association)
       @cloned_item.send(association) << @item.send(association).dup if @item.send(association).present?
