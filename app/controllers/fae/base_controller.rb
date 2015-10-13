@@ -130,11 +130,35 @@ module Fae
 
         if through_record.present?
           clone_join_relationships(through_record.plural_name)
-        else
-          clone_has_many_relationships(association) if type.macro == :has_many
-          clone_has_one_relationship(association)  if type.macro == :has_one
+        elsif type.macro == :has_one
+          if type.options[:class_name].present?
+            clone_has_one_with_assets_relationship(association)
+          else
+            clone_has_one_relationship(association)
+          end
+        elsif type.macro == :has_many
+          clone_has_many_relationships(association)
         end
       end
+    end
+
+    def clone_has_one_with_assets_relationship(association)
+      @cloned_item.send("build_#{association}") if @cloned_item.send(association).blank?
+      create_duplicate_asset(association)
+    end
+
+    def create_duplicate_asset(attached_as)
+      new_record = @item.send(attached_as).dup if @item.send(attached_as).present?
+      @cloned_item.send(attached_as).asset_url = @item.send(attached_as).asset_url
+      # @cloned_item.send("remote_#{attached_as}_url") = @item.send("#{attached_as}_url")
+      # @cloned_item.send(attached_as).remote_asset_url = @item.send(attached_as).asset_url
+      # TODO - need a way to clone over asset_url - this isn't working, no matter what I try
+      new_record.imageable_id = @cloned_item.id
+      # new_record.save
+    end
+
+    def clone_has_one_relationship(association)
+      @cloned_item.send(association) << @item.send(association).dup if @item.send(association).present?
     end
 
     def clone_has_many_relationships(association)
@@ -148,12 +172,6 @@ module Fae
           @cloned_item.send(association) << new_record
         end
       end
-    end
-
-    def clone_has_one_relationship(association)
-      @cloned_item.send("build_#{association}") if @cloned_item.send(association).blank?
-      @cloned_item.send(association) << @item.send(association).dup if @item.send(association).present?
-      # TODO - if Fae::Image or Fae::File, need to duplicate assets as well
     end
 
     def clone_join_relationships(object)
