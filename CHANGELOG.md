@@ -10,6 +10,7 @@
     + fix Fae::StaticPage singleton setup check
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
     + fix responsive tables less than 768px
+    + add base model concern to generated nested models
 
 
 ## 1.1.7

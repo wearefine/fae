@@ -15,6 +15,7 @@ module Fae
 
       def generate_nested_model_file
         generate "model #{file_name} #{@@attributes_flat}"
+        inject_concern
         inject_touch_option_into_model
       end
 
