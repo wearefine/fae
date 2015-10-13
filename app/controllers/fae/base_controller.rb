@@ -149,12 +149,9 @@ module Fae
 
     def create_duplicate_asset(attached_as)
       new_record = @item.send(attached_as).dup if @item.send(attached_as).present?
-      @cloned_item.send(attached_as).asset_url = @item.send(attached_as).asset_url
-      # @cloned_item.send("remote_#{attached_as}_url") = @item.send("#{attached_as}_url")
-      # @cloned_item.send(attached_as).remote_asset_url = @item.send(attached_as).asset_url
-      # TODO - need a way to clone over asset_url - this isn't working, no matter what I try
       new_record.imageable_id = @cloned_item.id
-      # new_record.save
+      new_record.remote_asset_url = "#{request.protocol}#{request.domain}#{request.port}#{@item.send(attached_as).asset_url}"
+      new_record.save
     end
 
     def clone_has_one_relationship(association)
