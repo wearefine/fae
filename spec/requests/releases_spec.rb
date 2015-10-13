@@ -33,3 +33,15 @@ describe 'releases#edit' do
   end
 
 end
+
+describe 'releases#create_from_existing' do
+
+  it 'should return cloned record on edit page' do
+    release = FactoryGirl.create(:release)
+    admin_login
+    get create_from_existing_admin_release_path(release)
+
+    expect(response.status).to eq(200)
+  end
+
+end
