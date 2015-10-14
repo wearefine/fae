@@ -128,6 +128,6 @@ Fae.form.text = {
         hideIcons: ['image', 'side-by-side', 'fullscreen']
       });
     }
-  },
+  }
 
 };
