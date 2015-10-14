@@ -9,7 +9,7 @@ class Admin::ReleasesController < Fae::BaseController
   end
 
   def associations_for_cloning
-    [:bottle_shot, :aromas, :events]
+    [:aromas, :events]
   end
 
 end
