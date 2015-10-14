@@ -13,7 +13,6 @@ Fae.form.text = {
     this.slugger();
     this.overrideMarkdownDefaults();
     this.initMarkdown();
-    this.maxLengthStringField();
   },
 
   /**
@@ -130,21 +129,5 @@ Fae.form.text = {
       });
     }
   },
-
-  /**
-   * Ensure string field input cannot exceed 255 characters in text field
-   * @has_test {features/form_helpers/fae_input_spec.rb}
-   */
-  maxLengthStringField: function() {
-    var fields = document.querySelectorAll('input.string');
-
-    for(var i = 0; i < fields.length; i++) {
-      var field = fields[i];
-
-      if (!field.hasAttribute('maxlength')) {
-        field.setAttribute('maxlength', 255);
-      }
-    }
-  }
 
 };

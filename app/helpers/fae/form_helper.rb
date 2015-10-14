@@ -10,6 +10,8 @@ module Fae
 
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
 
+      set_maxlength(f, attribute, options)
+
       f.input attribute, options
     end
 
@@ -202,6 +204,14 @@ module Fae
         options[:wrapper_html].deep_merge!({ data: { language: language_suffix } })
       else
         options[:wrapper_html] = { data: { language: language_suffix } }
+      end
+    end
+
+    def set_maxlength(f, attribute, options)
+      column = f.object.class.columns_hash[attribute.to_s]
+      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text')
+        options[:input_html] ||= {}
+        options[:input_html][:maxlength] ||= column.cast_type.limit
       end
     end
 
