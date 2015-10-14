@@ -1,12 +1,4 @@
 ruby:
-  assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
-  title               ||= assoc_name.humanize             # 'Restaurant Bars'
-  ordered             ||= false
-  has_thumb           ||= false
-  edit_column         ||= false
-  cols                ||= []
-
-  # variables derived from options
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb

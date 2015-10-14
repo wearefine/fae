@@ -1,5 +1,5 @@
 ruby:
-  index               ||= false
+  index ||= false
 
   if index
     require_locals(['assoc'], local_assigns)
@@ -12,16 +12,23 @@ ruby:
   title               ||= assoc_name.humanize             # 'Restaurant Bars'
   header              ||= title
   add_button_text     ||= "Add #{title.singularize}"
+  ordered             ||= false
+  has_thumb           ||= false
+  edit_column         ||= false
+  cols                ||= []
 
   # lesser known optional locals, dervived from options by default
   assoc_name_singular ||= assoc_name.singularize          # 'restaurant_bar'
   new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
   edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
 
+  options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, header: header, add_button_text: add_button_text, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
+  options_for_table[:parent_item] = parent_item unless index
+
 - if index
   .main_content-section-area
     section.js-addedit-form
-      == render 'fae/shared/shared_nested_table', index: index, cols: cols, assoc: assoc, new_path: new_path, edit_path: edit_path
+      == render 'fae/shared/shared_nested_table', options_for_table
 
 - else
   h2.main_content-section-title = header
@@ -30,4 +37,4 @@ ruby:
       a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
       h3 = title
       == render 'fae/application/flash_messages'
-      == render 'fae/shared/shared_nested_table', index: index, parent_item: parent_item, cols: cols, assoc: assoc, new_path: new_path, edit_path: edit_path
+      == render 'fae/shared/shared_nested_table', options_for_table

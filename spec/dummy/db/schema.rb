@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150909230658) do
+ActiveRecord::Schema.define(version: 20151013225140) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -79,6 +79,20 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "fae_changes", force: :cascade do |t|
+    t.integer  "changeable_id",      limit: 4
+    t.string   "changeable_type",    limit: 255
+    t.integer  "user_id",            limit: 4
+    t.string   "change_type",        limit: 255
+    t.text     "updated_attributes", limit: 65535
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "fae_changes", ["changeable_id"], name: "index_fae_changes_on_changeable_id", using: :btree
+  add_index "fae_changes", ["changeable_type"], name: "index_fae_changes_on_changeable_type", using: :btree
+  add_index "fae_changes", ["user_id"], name: "index_fae_changes_on_user_id", using: :btree
 
   create_table "fae_files", force: :cascade do |t|
     t.string   "name",          limit: 255
@@ -310,6 +324,26 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.datetime "updated_at"
   end
 
+  create_table "validation_testers", force: :cascade do |t|
+    t.string   "name",               limit: 255
+    t.string   "slug",               limit: 255
+    t.string   "second_slug",        limit: 255
+    t.string   "email",              limit: 255
+    t.string   "url",                limit: 255
+    t.string   "phone",              limit: 255
+    t.string   "zip",                limit: 255
+    t.string   "canadian_zip",       limit: 255
+    t.string   "youtube_url",        limit: 255
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "second_email",       limit: 255
+    t.string   "unique_email",       limit: 255
+    t.string   "second_url",         limit: 255
+    t.string   "second_phone",       limit: 255
+    t.string   "second_zip",         limit: 255
+    t.string   "second_youtube_url", limit: 255
+  end
+
   create_table "varietals", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.boolean  "on_stage",   limit: 1,   default: true
@@ -318,6 +352,16 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "winemakers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "position",   limit: 4
+    t.integer  "wine_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "winemakers", ["wine_id"], name: "index_winemakers_on_wine_id", using: :btree
 
   create_table "wines", force: :cascade do |t|
     t.string   "name_en",         limit: 255
@@ -336,4 +380,5 @@ ActiveRecord::Schema.define(version: 20150909230658) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
+  add_foreign_key "winemakers", "wines"
 end

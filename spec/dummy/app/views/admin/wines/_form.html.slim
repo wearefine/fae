@@ -19,3 +19,12 @@
         = fae_input f, :food_pairing_en
         = fae_input f, :food_pairing_zh
         = fae_input f, :food_pairing_ja
+
+- if params[:action] == 'edit'
+  section.main_content-section id='winemakers_section'
+    = render 'fae/shared/nested_table',
+      assoc: :winemakers,
+      parent_item: @item,
+      cols: [:name],
+      ordered: true,
+      edit_column: true
