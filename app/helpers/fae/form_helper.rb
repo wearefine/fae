@@ -209,7 +209,7 @@ module Fae
 
     def set_maxlength(f, attribute, options)
       column = f.object.class.columns_hash[attribute.to_s]
-      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text')
+      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text') && column.try(:cast_type).try(:limit).present?
         options[:input_html] ||= {}
         options[:input_html][:maxlength] ||= column.cast_type.limit
       end
