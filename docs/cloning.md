@@ -60,6 +60,8 @@ That's all for basic set-up.
 
 If you want complete control over which attributes and associations are cloned, we wouldn't call you a control freak. We've baked in some nice simple methods to make this possible.
 
+**Note:** Asset cloning is not currently supported, so if you try to pass in those associations, cloning will fail.
+
 ## Whitelisting Attributes
 
 If you want to whitelist attributes to be cloned, you may add the `attributes_for_cloning` method into your controller's private method. Just pass in an array of symbols and we will take care to only copy those attributes over.
