@@ -11,6 +11,7 @@
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
     + fix responsive tables less than 768px
     + update nested scaffold generator to include routes and model concern
+    + fix ordering on nested tables
 
 
 ## 1.1.7
