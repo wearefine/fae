@@ -22,7 +22,7 @@
 - bugs
     + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
-    + [#51357](https://issues.afinedevelopment.com/issues/51357) Add default max length of 255 to text inputs
+    + [#51357](https://issues.afinedevelopment.com/issues/51357) Add column's max length to string and text inputs
 
 ## 1.1.7
 
