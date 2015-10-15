@@ -1,71 +1,108 @@
-module Fae::Trackable
-  extend ActiveSupport::Concern
+module Fae
+  module Trackable
+    extend ActiveSupport::Concern
 
-  included do
-    after_create :add_create_change, if: :track_changes?
-    before_update :add_update_change, if: :track_changes?
-    before_destroy :add_delete_change, if: :track_changes?
+    included do
+      after_create :add_create_change, if: :track_changes?
+      before_update :add_update_change, if: :track_changes?
+      before_destroy :add_delete_change, if: :track_changes?
 
-    has_many :tracked_changes, -> { order(id: :desc) },
-      as: :changeable,
-      class_name: Fae::Change
-  end
-
-  def fae_tracker_blacklist
-    []
-  end
-
-  def track_changes?
-    Fae.track_changes && fae_tracker_blacklist != 'all'
-  end
-
-  private
-
-  def add_create_change
-    Fae::Change.create({
-      changeable_id: id,
-      changeable_type: self.class.name,
-      user_id: Fae::Change.current_user,
-      change_type: 'created'
-    })
-  end
-
-  def add_update_change
-    return if legit_updated_attributes.blank?
-    Fae::Change.create({
-      changeable_id: id,
-      changeable_type: self.class.name,
-      user_id: Fae::Change.current_user,
-      change_type: 'updated',
-      updated_attributes: legit_updated_attributes
-    })
-    clean_history
-  end
-
-  def add_delete_change
-    Fae::Change.create({
-      changeable_id: id,
-      changeable_type: self.class.name,
-      user_id: Fae::Change.current_user,
-      change_type: 'deleted'
-    })
-    clean_history
-  end
-
-  def legit_updated_attributes
-    legit_attributes = changed - ignored_attributes
-    if fae_tracker_blacklist.kind_of?(Array) && fae_tracker_blacklist.present?
-      legit_attributes -= fae_tracker_blacklist.map(&:to_s)
+      has_many :tracked_changes, -> { order(id: :desc) },
+        as: :changeable,
+        class_name: Fae::Change
     end
-    legit_attributes
-  end
 
-  def ignored_attributes
-    ['id', 'updated_at', 'created_at']
-  end
+    def fae_tracker_blacklist
+      []
+    end
 
-  def clean_history
-    tracked_changes.offset(Fae.tracker_history_length).destroy_all
-  end
+    def track_changes?
+      Fae.track_changes && fae_tracker_blacklist != 'all'
+    end
 
+    private
+
+    def add_create_change
+      # binding.pry if is_asset?
+      return if is_asset?
+      Fae::Change.create({
+        changeable_id: id,
+        changeable_type: self.class.name,
+        user_id: Fae::Change.current_user,
+        change_type: 'created'
+      })
+    end
+
+    def add_update_change
+      if is_asset?
+        process_asset
+        # binding.pry
+      else
+        return if legit_updated_attributes.blank?
+        Fae::Change.create({
+          changeable_id: id,
+          changeable_type: self.class.name,
+          user_id: Fae::Change.current_user,
+          change_type: 'updated',
+          updated_attributes: legit_updated_attributes
+        })
+        clean_history
+      end
+    end
+
+    def add_delete_change
+      return if is_asset?
+      Fae::Change.create({
+        changeable_id: id,
+        changeable_type: self.class.name,
+        user_id: Fae::Change.current_user,
+        change_type: 'deleted'
+      })
+      clean_history
+    end
+
+    def legit_updated_attributes
+      legit_attributes = changed - ignored_attributes
+      if fae_tracker_blacklist.kind_of?(Array) && fae_tracker_blacklist.present?
+        legit_attributes -= fae_tracker_blacklist.map(&:to_s)
+      end
+      legit_attributes
+    end
+
+    def ignored_attributes
+      ['id', 'updated_at', 'created_at']
+    end
+
+    def clean_history
+      tracked_changes.offset(Fae.tracker_history_length).destroy_all
+    end
+
+    def is_asset?
+      self.class.name == 'Fae::Image' || self.class.name == 'Fae::File'
+    end
+
+    def asset_name
+      attached_as || self.class.name.gsub('Fae::','').underscore
+    end
+
+    def process_asset
+      # binding.pry
+      parent = self.try(:imageable) || self.try(:fileable)
+      if parent.present?
+        if parent.tracked_changes.present? && parent.tracked_changes.first.change_type == 'updated' && parent.tracked_changes.first.updated_at > 2.seconds.ago
+          updated_updated_attributes = parent.tracked_changes.first.updated_attributes << asset_name
+          parent.tracked_changes.first.update_attribute(:updated_attributes, updated_updated_attributes)
+        else
+          Fae::Change.create({
+            changeable_id: parent.id,
+            changeable_type: parent.class.name,
+            user_id: Fae::Change.current_user,
+            change_type: 'updated',
+            updated_attributes: [asset_name]
+          })
+        end
+      end
+    end
+
+  end
 end
