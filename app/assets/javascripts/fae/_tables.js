@@ -75,6 +75,7 @@ Fae.tables = {
 
   /**
    * Add smart sorting for dates
+   * @has_test {features/date_sort_spec.rb}
    */
   dateColumnSorting: function() {
     $.tablesorter.addParser({
@@ -121,6 +122,7 @@ Fae.tables = {
 
   /**
    * Sort column by stored cookie
+   * @has_test {requests/fae_table_sort_spec.rb}
    */
   sortColumnsFromCookies: function() {
     var _this = this;
@@ -193,15 +195,30 @@ Fae.tables = {
    * Enable collapsible tables by clicking the h3 preceding a table. Also enables open/close all
    */
   collapsibleTable: function() {
-    $('.collapsible-toggle').click(function() {
+    var $collapsible = $('.collapsible');
+    var $toggle = $('.collapsible-toggle');
+
+    // If there's only one table, don't bother with collapsing everything
+    // Also, remove the open/close all toggle and the table subheaders
+    if ($collapsible.length === 1) {
+      $collapsible.removeClass('collapsible');
+      $collapsible.find('h3').remove();
+      $toggle.remove();
+
+      return;
+    }
+
+    $toggle.click(function() {
       var $this = $(this);
 
-      if($this.hasClass('close-all')) {
+      if ($this.hasClass('close-all')) {
         $this.text('Open All');
-        $('.collapsible').removeClass('active');
+        $collapsible.removeClass('active');
+
       } else {
         $this.text('Close All');
-        $('.collapsible').addClass('active');
+        $collapsible.addClass('active');
+
       }
 
       $this.toggleClass('close-all');
@@ -209,7 +226,6 @@ Fae.tables = {
 
     $('.collapsible h3').click(function() {
       var $this = $(this);
-      var $toggle = $('.collapsible-toggle');
       /** @type {Boolean} */
       var toggleHasCloseAll = $toggle.hasClass('close-all');
 
@@ -217,7 +233,7 @@ Fae.tables = {
 
       // Change toggle messaging as appropriate
       // First check if there are open drawers
-      if($('.collapsible.active').length > 1) {
+      if ($('.collapsible.active').length > 1) {
 
         // Change toggle text if it isn't already close all
         if(!toggleHasCloseAll) {

@@ -19,6 +19,7 @@
     + [#40989](https://issues.afinedevelopment.com/issues/50863) Add a configurable change tracker
     + Change jQuery cookie to vanilla JS cookie
     + [#45145](https://issues.afinedevelopment.com/issues/45145) Save table sorting preferences during a single session
+    + [#50785](https://issues.afinedevelopment.com/issues/50785) When there's only one drawer on the page, do not allow drawers to toggle
 - bugs
     + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
