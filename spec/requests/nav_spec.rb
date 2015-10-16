@@ -10,7 +10,7 @@ describe 'Global nav' do
       nav_items = assigns[:fae_nav_items]
       expect(nav_items.last[:text]).to eq('Admin')
       nav_items.last[:sublinks].each do |sublink|
-        expect(sublink[:text]).to match /Users|Changes|Root Settings/
+        expect(sublink[:text]).to match /Users|Root Settings|Activity Log/
       end
     end
 
@@ -29,8 +29,7 @@ describe 'Global nav' do
       get fae_path
 
       nav_items = assigns[:fae_nav_items]
-      expect(nav_items.last[:text]).to eq('Users')
-      expect(nav_items.last[:sublinks]).to be_nil
+      expect(nav_items.map{ |n| n[:text] }).to include('Users')
     end
   end
 

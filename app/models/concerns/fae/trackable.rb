@@ -23,8 +23,7 @@ module Fae
     private
 
     def add_create_change
-      # binding.pry if is_asset?
-      return if is_asset?
+      return if has_parent?
       Fae::Change.create({
         changeable_id: id,
         changeable_type: self.class.name,
@@ -34,9 +33,8 @@ module Fae
     end
 
     def add_update_change
-      if is_asset?
+      if has_parent?
         process_asset
-        # binding.pry
       else
         return if legit_updated_attributes.blank?
         Fae::Change.create({
@@ -51,7 +49,7 @@ module Fae
     end
 
     def add_delete_change
-      return if is_asset?
+      return if has_parent?
       Fae::Change.create({
         changeable_id: id,
         changeable_type: self.class.name,
@@ -77,8 +75,8 @@ module Fae
       tracked_changes.offset(Fae.tracker_history_length).destroy_all
     end
 
-    def is_asset?
-      self.class.name == 'Fae::Image' || self.class.name == 'Fae::File'
+    def has_parent?
+      %w(Fae::Image Fae::File Fae::TextField Fae::TextArea).include? self.class.name
     end
 
     def asset_name
@@ -86,8 +84,7 @@ module Fae
     end
 
     def process_asset
-      # binding.pry
-      parent = self.try(:imageable) || self.try(:fileable)
+      parent = self.try(:imageable) || self.try(:fileable) || self.try(:contentable)
       if parent.present?
         if parent.tracked_changes.present? && parent.tracked_changes.first.change_type == 'updated' && parent.tracked_changes.first.updated_at > 2.seconds.ago
           updated_updated_attributes = parent.tracked_changes.first.updated_attributes << asset_name
