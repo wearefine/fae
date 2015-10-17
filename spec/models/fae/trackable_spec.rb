@@ -185,6 +185,17 @@ describe Fae::Trackable do
         expect(release.tracked_changes.first.updated_attributes).to include('label_pdf')
       end
     end
+
+    context 'on a Fae::StaticPage' do
+      it 'should should associate change using Fae::StaticPage' do
+        home_page = HomePage.instance
+        home_page.update_attribute(:title, 'soemthing new')
+
+        expect(home_page.tracked_changes.first.change_type).to eq('updated')
+        expect(home_page.tracked_changes.first.changeable_type).to eq('Fae::StaticPage')
+      end
+    end
+
   end
 
   describe 'before_destroy' do

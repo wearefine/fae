@@ -26,7 +26,7 @@ module Fae
       return if has_parent?
       Fae::Change.create({
         changeable_id: id,
-        changeable_type: self.class.name,
+        changeable_type: self_or_super_class_name,
         user_id: Fae::Change.current_user,
         change_type: 'created'
       })
@@ -39,7 +39,7 @@ module Fae
         return if legit_updated_attributes.blank?
         Fae::Change.create({
           changeable_id: id,
-          changeable_type: self.class.name,
+          changeable_type: self_or_super_class_name,
           user_id: Fae::Change.current_user,
           change_type: 'updated',
           updated_attributes: legit_updated_attributes
@@ -52,11 +52,15 @@ module Fae
       return if has_parent?
       Fae::Change.create({
         changeable_id: id,
-        changeable_type: self.class.name,
+        changeable_type: self_or_super_class_name,
         user_id: Fae::Change.current_user,
         change_type: 'deleted'
       })
       clean_history
+    end
+
+    def self_or_super_class_name
+      self.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : self.class.name
     end
 
     def legit_updated_attributes
