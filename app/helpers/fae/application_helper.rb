@@ -95,6 +95,7 @@ module Fae
       text += change.try(:changeable).try(:fae_display_field) || "##{change.changeable_id}"
 
       begin
+        return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
         parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
         edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
         return link_to text, edit_path
