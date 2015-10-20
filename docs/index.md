@@ -326,8 +326,6 @@ Judge.configure do
 end
 ```
 
-NOTE: This is different than the official documentation where you call `expose` in a block. However, the above method fixes an annoying development mode bug. See: https://github.com/joecorcoran/judge/issues/24#issuecomment-64962861.
-
 ## Image and File Associations
 
 Fae provides models for images and files: `Fae::Image` and `Fae::File` respectively. These models come with their own attributes, validations and uploaders and can be polymorphically associated to your application models.
