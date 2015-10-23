@@ -38,11 +38,13 @@ module Fae
     def create_from_existing
       @cloned_item = @item.dup
       # the dup method will automatically copy over any foreign_key data, setting up the belongs to relationship
-      attributes = attributes_for_cloning.present? ? attributes_for_cloning : @cloned_item.attributes
-      find_unique_attributes(attributes, @cloned_item)
+      # attributes = attributes_for_cloning.present? ? attributes_for_cloning : @cloned_item.attributes
+      # find_unique_attributes(attributes, @cloned_item)
+
+      update_cloned_attributes(@cloned_item)
 
       if @cloned_item.save
-        find_cloneable_attributes
+        find_cloneable_associations
         redirect_to @index_path + '/' + @cloned_item.id.to_s + '/edit'
       else
         build_assets
@@ -115,15 +117,26 @@ module Fae
 
     # array of symbols used for cloning only specific attributes
     def attributes_for_cloning
-      []
+      @klass.column_names
     end
 
     #############################################
     ######## special methods for cloning ########
     #############################################
 
+    def update_cloned_attributes(item)
+      attribute_names = attributes_for_cloning.map(&:to_s) - ['id']
+      item.attributes.each do |attribute|
+        if attribute_names.include? attribute[0]
+          rename_unique_attribute(attribute, item) if item.class.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
+        else
+          item.send("#{attribute[0]}=", nil)
+        end
+      end
+    end
+
     # set cloneable attributes and associations
-    def find_cloneable_attributes
+    def find_cloneable_associations
       associations_for_cloning.each do |association|
         type = @klass.reflect_on_association(association)
         through_record = type.through_reflection
@@ -167,7 +180,7 @@ module Fae
     # find attrs with unique validators
     def find_unique_attributes(attributes, item)
       attributes.each do |attribute|
-        rename_unique_attribute(attribute, item) if @klass.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
+        rename_unique_attribute(attribute, item) if item.class.validators_on(attribute[0].to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
       end
     end
 
