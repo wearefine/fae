@@ -11,7 +11,7 @@ feature 'Clone record' do
       click_link 'Clone'
 
       # we unfortunetaly have to wait for the clone to be created
-      sleep 0.2
+      sleep 0.3
 
       cloned_release = Release.find_by_name('Ima Release-2')
       expect(cloned_release).to_not be_nil
@@ -44,7 +44,7 @@ feature 'Clone record' do
       click_link 'Clone'
 
       # we unfortunetaly have to wait for the clone to be created
-      sleep 0.2
+      sleep 0.3
 
       cloned_release = Release.find_by_name('Ima Release-2')
 
@@ -72,7 +72,7 @@ feature 'Clone record' do
       page.find('.main_table-clone').click
 
       # we unfortunetaly have to wait for the clone to be created
-      sleep 0.2
+      sleep 0.3
 
       cloned_release = Release.find_by_name('Ima Release-2')
       expect(cloned_release).to_not be_nil
