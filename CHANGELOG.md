@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#49890](https://issues.afinedevelopment.com/issues/49890) Haven't you always wanted to clone a record? Behold: object cloning
     + [#49896](https://issues.afinedevelopment.com/issues/49896) Show error banner above the fold consistently
     + [#50905](https://issues.afinedevelopment.com/issues/50905) Added super cool validation helpers
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items

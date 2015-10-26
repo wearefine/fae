@@ -209,9 +209,13 @@ module Fae
 
     def set_maxlength(f, attribute, options)
       column = f.object.class.columns_hash[attribute.to_s]
-      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text') && column.try(:cast_type).try(:limit).present?
-        options[:input_html] ||= {}
-        options[:input_html][:maxlength] ||= column.cast_type.limit
+      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text')
+        # Rails 4.1 supports column.limit, 4.2 supports column.cast_type.limit
+        limit = column.try(:limit) || column.try(:cast_type).try(:limit)
+        if limit.present?
+          options[:input_html] ||= {}
+          options[:input_html][:maxlength] ||= limit
+        end
       end
     end
 

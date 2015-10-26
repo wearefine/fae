@@ -44,8 +44,8 @@
 		text-align: left;
 	}
 
-	.main_table-edit, .main_table-delete,
-	.main_table-header-delete, .main_table-header-edit {
+	.main_table-edit, .main_table-delete, .main_table-clone,
+	.main_table-header-delete, .main_table-header-edit, .main_table-header-clone {
 		text-align: center;
 	}
 
@@ -108,6 +108,12 @@
 
 	.icon-edit {
 		font-size: 15px;
+	}
+
+	&.main_table-clone {
+	  display: block;
+	  width: 34px;
+	  margin: 0 auto;
 	}
 }
 
