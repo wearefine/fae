@@ -10,20 +10,6 @@ So you want to easily, automagically clone a record and its children? Lucky for 
 
 The most basic implementation of this feature clones the record, all it's attributes (except id, created and updated at) and any belongs_to associations via foreign_keys. We also check for any uniqueness validators on your attributes and rename them to "attribute-#", starting at 2, for your convenience.
 
-## Add a route
-
-Inside your admin namespace, and the resource you wish to be cloneable, add the `create_from_existing` action.
-
-**Example**
-
-```ruby
-namespace :admin do
-  resources :releases do
-    get 'create_from_existing', on: :member
-  end
-end
-```
-
 ## Add Buttons
 
 You may add the clone button to the index, edit form, or both.
@@ -41,9 +27,7 @@ Add the following to your `thead`, usually after 'Delete':
 And to your `tbody`:
 
 ```slim
-td class="main_table-clone"
-  = link_to create_from_existing_admin_release_path(item), class: 'main_table-action' do
-    span class="icon-users"
+td = fae_clone_button item
 ```
 
 #### For Form

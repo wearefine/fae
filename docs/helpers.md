@@ -351,6 +351,16 @@ The fae_toggle helper method takes an AR object and attribute. It then creates t
 fae_toggle item, :on_prod
 ```
 
+## fae_clone_button
+
+You can use fae_clone_button in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
+
+```ruby
+fae_clone_button item
+```
+
+More info about cloning can be found here: https://bitbucket.org/wearefine/fae/src/master/docs/cloning.md
+
 ## form_header
 
 The form_header helper takes an AR object or string to render an `<h1>` based on the action.

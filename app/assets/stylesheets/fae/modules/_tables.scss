@@ -109,6 +109,12 @@
 	.icon-edit {
 		font-size: 15px;
 	}
+
+	&.main_table-clone {
+	  display: block;
+	  width: 34px;
+	  margin: 0 auto;
+	}
 }
 
 .main_table-header-modified {

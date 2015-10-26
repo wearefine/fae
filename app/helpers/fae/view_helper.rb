@@ -42,6 +42,13 @@ module Fae
     # for backwards compatibility
     alias_method :fae_toggle, :attr_toggle
 
+    def fae_clone_button(item)
+      return if item.blank?
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, class: 'main_table-action main_table-clone' do
+        concat content_tag :span, nil, class: 'icon-users'
+      end
+    end
+
     def fae_filter_form(options = {}, &block)
       options[:title]      ||= "Search #{@klass_humanized.pluralize}"
       options[:search]       = true if options[:search].nil?

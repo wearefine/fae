@@ -8,7 +8,6 @@ Rails.application.routes.draw do
     resources :locations
     resources :releases do
       post 'filter', on: :collection
-      get 'create_from_existing', on: :member
     end
     resources :wines
     resources :varietals
