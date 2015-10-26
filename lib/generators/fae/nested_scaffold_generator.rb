@@ -6,15 +6,18 @@ module Fae
 
     def go
       generate_nested_model_file
+      inject_display_field_to_model
       generate_nested_controller_file
       generate_view_files
+      add_route
     end
-
 
     private
 
       def generate_nested_model_file
         generate "model #{file_name} #{@@attributes_flat}"
+        inject_concern
+        inject_position_scope
         inject_touch_option_into_model
       end
 

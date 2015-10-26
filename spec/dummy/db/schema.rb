@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001210315) do
+ActiveRecord::Schema.define(version: 20151013225140) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -353,6 +353,16 @@ ActiveRecord::Schema.define(version: 20151001210315) do
     t.datetime "updated_at"
   end
 
+  create_table "winemakers", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "position",   limit: 4
+    t.integer  "wine_id",    limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "winemakers", ["wine_id"], name: "index_winemakers_on_wine_id", using: :btree
+
   create_table "wines", force: :cascade do |t|
     t.string   "name_en",         limit: 255
     t.boolean  "on_stage",                      default: true
@@ -370,4 +380,5 @@ ActiveRecord::Schema.define(version: 20151001210315) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
+  add_foreign_key "winemakers", "wines"
 end

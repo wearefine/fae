@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :validation_testers
+    resources :winemakers
     resources :cats
     resources :locations
     resources :releases do

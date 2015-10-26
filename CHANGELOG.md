@@ -10,6 +10,9 @@
     + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
+    + fix responsive tables less than 768px
+    + update nested scaffold generator to include routes and model concern
+    + fix ordering on nested tables
 
 ## 1.2
 

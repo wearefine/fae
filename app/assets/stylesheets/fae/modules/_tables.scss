@@ -6,7 +6,7 @@
 	margin-bottom: 30px;
 
 	@include bp(tablet) {
-		table-layout: initial;
+		table-layout: fixed;
 	}
 
 	& tbody tr:nth-of-type(even) {
