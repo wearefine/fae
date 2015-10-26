@@ -32,6 +32,7 @@ feature 'fae_nested_index_table' do
       fill_in 'Name', with: 'Pew Pew'
       click_button('Update Cat')
     end
+    sleep 0.2
     expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
     expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
   end
