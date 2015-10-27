@@ -109,9 +109,9 @@ Fae.form.ajax = {
 
           // Response is different between the js-index-addedit-form and the nested association form
           if ($html.hasClass('main_content-section-area')) {
-            replacementHTML = $html[1].innerHTML;
+            replacementHTML = $html.find('.js-addedit-form').get(0).outerHTML;
           } else {
-            replacementHTML = $html[0].innerHTML;
+            replacementHTML = $html.html();
           }
 
           _this._addEditReplaceAndReinit($this, replacementHTML, $target);
