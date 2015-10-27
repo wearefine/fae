@@ -28,6 +28,8 @@
     + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
     + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
     + [#51357](https://issues.afinedevelopment.com/issues/51357) Add column's max length to string and text inputs
+    + Fix AJAX response to accomodate uncompressed form HTML too
+    + Remove spacing beneath tables (fixes improper nested table aesthetic)
 
 ## 1.1.7
 
