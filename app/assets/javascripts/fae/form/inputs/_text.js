@@ -125,7 +125,7 @@ Fae.form.text = {
         autoDownloadFontAwesome: false,
         status: false,
         spellChecker: false,
-        hideIcons: ['image', 'side-by-side', 'fullscreen']
+        hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
       });
     }
   }
