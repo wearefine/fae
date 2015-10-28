@@ -44,8 +44,8 @@ module Fae
 
     def fae_clone_button(item)
       return if item.blank?
-      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, class: 'main_table-action main_table-clone' do
-        concat content_tag :span, nil, class: 'icon-users'
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'main_table-action main_table-clone' do
+        concat content_tag :span, nil, class: 'icon-copy'
       end
     end
 
