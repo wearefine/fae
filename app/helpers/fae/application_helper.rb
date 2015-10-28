@@ -58,7 +58,7 @@ module Fae
 
     def col_name_or_image(item, attribute)
       # if item's attribute is an association
-      if item.class.reflections.include?(attribute)
+      if item.class.reflections.include?(attribute) || item.class.reflections.include?(attribute.to_s)
         if item.send(attribute).class.name == 'Fae::Image'
           # display image thumbnail
           image_tag(item.send(attribute).asset.thumb.url)
