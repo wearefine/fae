@@ -12,6 +12,7 @@
     + fix responsive tables less than 768px
     + update nested scaffold generator to include routes and model concern
     + fix ordering on nested tables
+    + [#51949](https://issues.afinedevelopment.com/issues/51949) allow content exceeding character limit to be deleted
 
 
 ## 1.1.7

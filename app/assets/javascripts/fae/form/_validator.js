@@ -286,7 +286,7 @@ Fae.form.validator = {
       $elem.keypress(function(e) {
         var current = (max - $elem.val().length);
         if (current <= 0) {
-          if (e.keyCode !== 8 || e.keyCode !== 46) {
+          if (e.keyCode !== 8 && e.keyCode !== 46) {
             e.preventDefault();
           }
         }
