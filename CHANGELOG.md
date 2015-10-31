@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.1.8
+
+- enhancements
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items
 - bugs
     + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
