@@ -8,6 +8,7 @@
     + [#50905](https://issues.afinedevelopment.com/issues/50905) Added super cool validation helpers
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items
 - bugs
+    + fix added markdown init on add edit forms for nested tables
     + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
