@@ -19,6 +19,10 @@ module Fae
       dependent: :destroy
     accepts_nested_attributes_for :favicon, allow_destroy: true
 
+    def fae_tracker_blacklist
+      'all'
+    end
+
     def self.instance
       instance = first
 

@@ -19,6 +19,10 @@ module Fae
       {}
     end
 
+    def fae_display_field
+      title
+    end
+
   private
 
     def self.setup_dynamic_singleton
