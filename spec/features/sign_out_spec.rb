@@ -8,10 +8,13 @@ feature 'Sign Out' do
     visit fae.root_path
 
     find('.utility_nav-user').click
-    click_link 'Log Out'
 
-    expect(page).to have_content('Goodbye for now.')
-    expect(page).to have_content('Forgot your password?')
+    eventually {
+      click_link 'Log Out'
+
+      expect(page).to have_content('Goodbye for now.')
+      expect(page).to have_content('Forgot your password?')
+    }
   end
 
 end
