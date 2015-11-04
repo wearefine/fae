@@ -24,6 +24,7 @@
     + [#51357](https://issues.afinedevelopment.com/issues/51357) Add column's max length to string and text inputs
     + Fix AJAX response to accomodate uncompressed form HTML too
     + Remove spacing beneath tables (fixes improper nested table aesthetic)
+    + fix col or field method in application helper so that it works properly with images in tables
 
 ## 1.1.8
 
