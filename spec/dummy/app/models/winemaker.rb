@@ -9,6 +9,10 @@ class Winemaker < ActiveRecord::Base
   has_one :winemaker_image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
   accepts_nested_attributes_for :winemaker_image, allow_destroy: true
 
+  def table_image
+    winemaker_image
+  end
+
   def fae_display_field
     name
   end
