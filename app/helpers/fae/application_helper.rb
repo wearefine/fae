@@ -57,15 +57,13 @@ module Fae
     end
 
     def col_name_or_image(item, attribute)
+
+      # if item is an image
+      if item.send(attribute).class.name == 'Fae::Image'
+        image_tag(item.send(attribute).asset.thumb.url)
       # if item's attribute is an association
-      if item.class.reflections.include?(attribute) || item.class.reflections.include?(attribute.to_s) || item.send(attribute).class.name == 'Fae::Image'
-        if item.send(attribute).class.name == 'Fae::Image'
-          # display image thumbnail
-          image_tag(item.send(attribute).asset.thumb.url)
-        else
-          # display associaiton's fae_display_field
-          item.send(attribute).fae_display_field
-        end
+      elsif item.class.reflections.include?(attribute)
+        item.send(attribute).fae_display_field
       # if item is a date or a time adjust to timezone
       elsif item.send(attribute).kind_of?(Date)
         fae_date_format(item.send(attribute))
