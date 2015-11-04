@@ -338,9 +338,13 @@ Fae.form.validator = {
      * @see {@link validator.length_counter._setCounter _setCounter}
      */
     __createCounterText: function($elem, max, current) {
-      var prep = 'Maximum Characters: ' + max;
-      if (current > 0 || $elem.val().length) {
-        prep += ' / <span class="characters-left">Characters Left: ' + current + '</span>';
+      var prep = "Maximum Characters: " + max;
+      var text = "Characters Left: ";
+      if (current < 0) {
+        text = "Characters Over: ";
+      }
+      if (current > 0 || $elem.val().length > 0) {
+        prep += " / <span class='characters-left'>" + text + Math.abs(current) + "</span>";
       }
       return prep;
     },
@@ -386,7 +390,7 @@ Fae.form.validator = {
       $elem.keypress(function(e) {
         var current = (max - $elem.val().length);
         if (current <= 0) {
-          if (e.keyCode !== 8 || e.keyCode !== 46) {
+          if (e.keyCode !== 8 && e.keyCode !== 46) {
             e.preventDefault();
           }
         }

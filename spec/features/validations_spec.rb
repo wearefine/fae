@@ -66,7 +66,7 @@ feature 'validations' do
       fill_in 'release_name', with: 'Test'
       expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 11')
       fill_in 'release_name', with: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar euismod nisl, in pellentesque sapien ornare ac.'
-      expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 0')
+      expect(page.find(:css, 'span.characters-left').text).to include('Characters Over')
     end
 
   end
