@@ -21,14 +21,14 @@ describe 'pages#home' do
     end
 
     it 'should list all recently updated objects, ordered by most recent first' do
-      wine = FactoryGirl.create(:wine)
-      sleep 1
-      release = FactoryGirl.create(:release, wine: wine)
+      a_bit_ago = 5.seconds.ago
+      wine = FactoryGirl.create(:wine, updated_at: a_bit_ago, created_at: a_bit_ago)
+      cat = FactoryGirl.create(:cat)
 
       super_admin_login
       get fae_path
 
-      expect(assigns(:list)).to eq([release, wine])
+      expect(assigns(:list)).to eq([cat, wine])
     end
 
     it 'should exlude Fae models from dashboard list' do

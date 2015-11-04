@@ -10,26 +10,26 @@ feature 'Clone record' do
       visit edit_admin_release_path(release)
       click_link 'Clone'
 
-      # we unfortunetaly have to wait for the clone to be created
-      sleep 0.3
+      # support/async_helper.rb
+      eventually {
+        cloned_release = Release.find_by_name('Ima Release-2')
+        expect(cloned_release).to_not be_nil
+        expect(current_path).to eq(edit_admin_release_path(cloned_release))
+        expect(find_field('Name').value).to eq(cloned_release.name)
 
-      cloned_release = Release.find_by_name('Ima Release-2')
-      expect(cloned_release).to_not be_nil
-      expect(current_path).to eq(edit_admin_release_path(cloned_release))
-      expect(find_field('Name').value).to eq(cloned_release.name)
+        # only whiteliested attributes should be cloned
+        expect(cloned_release.slug).to          eq(release.slug)
+        expect(cloned_release.intro).to         eq(release.intro)
+        expect(cloned_release.body).to          eq(release.body)
+        expect(cloned_release.wine_id).to       eq(release.wine_id)
+        expect(cloned_release.release_date).to  eq(release.release_date)
 
-      # only whiteliested attributes should be cloned
-      expect(cloned_release.slug).to          eq(release.slug)
-      expect(cloned_release.intro).to         eq(release.intro)
-      expect(cloned_release.body).to          eq(release.body)
-      expect(cloned_release.wine_id).to       eq(release.wine_id)
-      expect(cloned_release.release_date).to  eq(release.release_date)
-
-      # other's should not
-      expect(cloned_release.vintage).to     eq(nil)
-      expect(cloned_release.price).to       eq(nil)
-      expect(cloned_release.varietal_id).to eq(nil)
-      expect(cloned_release.show).to        eq(nil)
+        # other's should not
+        expect(cloned_release.vintage).to     eq(nil)
+        expect(cloned_release.price).to       eq(nil)
+        expect(cloned_release.varietal_id).to eq(nil)
+        expect(cloned_release.show).to        eq(nil)
+      }
     end
 
     scenario 'should clone associations', js: true do
@@ -43,22 +43,22 @@ feature 'Clone record' do
       visit edit_admin_release_path(release)
       click_link 'Clone'
 
-      # we unfortunetaly have to wait for the clone to be created
-      sleep 0.3
+      # support/async_helper.rb
+      eventually {
+        cloned_release = Release.find_by_name('Ima Release-2')
 
-      cloned_release = Release.find_by_name('Ima Release-2')
+        # belongs_to just copies the foreign key
+        expect(cloned_release.wine).to eq(release.wine)
 
-      # belongs_to just copies the foreign key
-      expect(cloned_release.wine).to eq(release.wine)
+        # has_many and has_one duplicates the associated object
+        expect(cloned_release.aromas.first).to_not eq(release.aromas.first)
+        expect(cloned_release.aromas.first.name).to eq(release.aromas.first.name)
 
-      # has_many and has_one duplicates the associated object
-      expect(cloned_release.aromas.first).to_not eq(release.aromas.first)
-      expect(cloned_release.aromas.first.name).to eq(release.aromas.first.name)
-
-      # habtm duplicates the join records
-      expect(cloned_release.events).to eq(release.events)
-      expect(page.find('.release_events')).to have_content(event_1.name)
-      expect(page.find('.release_events')).to have_content(event_2.name)
+        # habtm duplicates the join records
+        expect(cloned_release.events).to eq(release.events)
+        expect(page.find('.release_events')).to have_content(event_1.name)
+        expect(page.find('.release_events')).to have_content(event_2.name)
+      }
     end
 
   end
@@ -71,13 +71,13 @@ feature 'Clone record' do
       visit admin_releases_path
       page.find('.main_table-clone').click
 
-      # we unfortunetaly have to wait for the clone to be created
-      sleep 0.3
-
-      cloned_release = Release.find_by_name('Ima Release-2')
-      expect(cloned_release).to_not be_nil
-      expect(current_path).to eq(edit_admin_release_path(cloned_release))
-      expect(find_field('Name').value).to eq(cloned_release.name)
+      # support/async_helper.rb
+      eventually {
+        cloned_release = Release.find_by_name('Ima Release-2')
+        expect(cloned_release).to_not be_nil
+        expect(current_path).to eq(edit_admin_release_path(cloned_release))
+        expect(find_field('Name').value).to eq(cloned_release.name)
+      }
     end
 
   end

@@ -112,7 +112,7 @@ feature 'page validations' do
         fill_in 'home_page_introduction_attributes_content', with: 'Add a couple more...'
         expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 80')
         fill_in 'home_page_introduction_attributes_content', with: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar euismod nisl, in pellentesque sapien ornare ac. Ut mattis vel elit id gravida. Nulla interdum rhoncus ante, eget congue nisi congue laoreet. Mauris finibus sagittis lacus, id condimentum metus dictum id. Aenean vel libero vel nibh ultrices pretium in non felis. Nullam eu mattis sem. Phasellus vehicula quam leo, a malesuada ex lobortis nec. Sed ac augue venenatis, vestibulum eros quis, venenatis tellus. Duis semper erat vel tempus accumsan. Nulla convallis justo aliquet aliquet sagittis. Aliquam eleifend arcu magna, ac convallis massa pulvinar nec.'
-        expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 0')
+        expect(page.find(:css, 'span.characters-left').text).to include('Characters Over')
       end
     end
 
