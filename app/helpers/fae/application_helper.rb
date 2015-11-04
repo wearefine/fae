@@ -57,7 +57,6 @@ module Fae
     end
 
     def col_name_or_image(item, attribute)
-
       # if item is an image
       if item.send(attribute).class.name == 'Fae::Image'
         image_tag(item.send(attribute).asset.thumb.url)
