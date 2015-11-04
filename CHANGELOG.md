@@ -11,7 +11,7 @@
 - enhancements
     + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
     + [#50794](https://issues.afinedevelopment.com/issues/50794) Industrial JavaScript refactor
-    + [#40989](https://issues.afinedevelopment.com/issues/50863) Add a configurable change tracker
+    + [#40989](https://issues.afinedevelopment.com/issues/50863) Add a configurable change tracker and activity log
     + Change jQuery cookie to vanilla JS cookie
     + [#45145](https://issues.afinedevelopment.com/issues/45145) Save table sorting preferences during a single session
     + [#50785](https://issues.afinedevelopment.com/issues/50785) When there's only one drawer on the page, do not allow drawers to toggle
