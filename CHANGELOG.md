@@ -20,18 +20,17 @@
     + [#50905](https://issues.afinedevelopment.com/issues/50905) Added super cool validation helpers
 - bugs
     + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
-    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
     + [#51357](https://issues.afinedevelopment.com/issues/51357) Add column's max length to string and text inputs
     + Fix AJAX response to accomodate uncompressed form HTML too
     + Remove spacing beneath tables (fixes improper nested table aesthetic)
     + fix col or field method in application helper so that it works properly with images in tables
+    + fix added markdown init on add edit forms for nested tables
 
 ## 1.1.8
 
 - enhancements
     + [#50863](https://issues.afinedevelopment.com/issues/50863) Highlight nested nav items
 - bugs
-    + fix added markdown init on add edit forms for nested tables
     + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
@@ -39,6 +38,7 @@
     + update nested scaffold generator to include routes and model concern
     + fix ordering on nested tables
     + [#51949](https://issues.afinedevelopment.com/issues/51949) allow content exceeding character limit to be deleted
+    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
 
 ## 1.1.7
 
