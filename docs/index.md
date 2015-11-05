@@ -1016,7 +1016,7 @@ end
 
 # Change Tracker
 
-Fae has a build in system to track the changes of the records in your admin. By default it's on, tracking the last 15 time a record has been changed. Make sure any model you want to track has 'include Fae::BaseModelConcern' at the top.
+Fae has a build in system to track the changes of the records in your admin. By default it's on, tracking the last 15 times a record has been changed. Make sure any model you want to track has 'include Fae::BaseModelConcern' at the top.
 
 For each change the tracker tracks what kind of change it is (create, update or delete), what attributes were changed, who changed it and when it happened.
 
