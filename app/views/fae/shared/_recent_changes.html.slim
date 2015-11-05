@@ -1,9 +1,9 @@
 - unless params[:action] == 'new'
-  section.main_content-section id='recent_changes'
-    h2.main_content-section-title = 'Recent Changes'
+  section.main_content-section#recent_changes
+    h2.main_content-section-title Recent Changes
     .main_content-section-area
       section.js-addedit-form
-        table class='index_table'
+        table.index_table
           thead
             tr
               th User

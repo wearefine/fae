@@ -34,7 +34,7 @@ module Fae
 
     def add_update_change
       if has_parent?
-        process_asset
+        update_parent
       else
         return if legit_updated_attributes.blank?
         Fae::Change.create({
@@ -87,12 +87,13 @@ module Fae
       attached_as || self.class.name.gsub('Fae::','').underscore
     end
 
-    def process_asset
+    def update_parent
       parent = self.try(:imageable) || self.try(:fileable) || self.try(:contentable)
       if parent.present?
-        if parent.tracked_changes.present? && parent.tracked_changes.first.change_type == 'updated' && parent.tracked_changes.first.updated_at > 2.seconds.ago
-          updated_updated_attributes = parent.tracked_changes.first.updated_attributes << asset_name
-          parent.tracked_changes.first.update_attribute(:updated_attributes, updated_updated_attributes)
+        latest_change = parent.try(:tracked_changes).try(:first)
+        if latest_change.present? && latest_change.change_type == 'updated' && latest_change.updated_at > 2.seconds.ago
+          updated_updated_attributes = latest_change.updated_attributes << asset_name
+          latest_change.update_attribute(:updated_attributes, updated_updated_attributes)
         else
           Fae::Change.create({
             changeable_id: parent.id,
