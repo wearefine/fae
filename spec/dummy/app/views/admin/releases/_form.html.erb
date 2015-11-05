@@ -9,6 +9,7 @@
           <li><a href="#associations_section">Associations</a></li>
           <% if params[:action] == 'edit' %>
             <li><a href="#aromas_section">Nested Table</a></li>
+            <li><a href="#recent_changes">Recent Changes</a></li>
           <% end %>
         </ul>
       </nav>
@@ -126,3 +127,5 @@
       header: 'Aromas (nested table)' %>
   </section>
 <% end %>
+
+<%= render 'fae/shared/recent_changes' %>

@@ -18,6 +18,40 @@ describe Fae::Trackable do
         expect(aroma.tracked_changes).to eq([])
       end
     end
+
+    context 'on a Fae::Image' do
+      it 'should not create a change item' do
+        image = FactoryGirl.create(:fae_image)
+        expect(image.tracked_changes).to eq([])
+        expect(Fae::Change.all.length).to eq(0)
+      end
+
+      it 'should not create a change item via nested form' do
+        release = FactoryGirl.build(:release)
+        release.build_bottle_shot
+        release.save
+
+        expect(release.tracked_changes.first.change_type).to eq('created')
+        expect(release.bottle_shot.tracked_changes).to eq([])
+      end
+    end
+
+    context 'on a Fae::File' do
+      it 'should not create a change item' do
+        file = FactoryGirl.create(:fae_file)
+        expect(file.tracked_changes).to eq([])
+        expect(Fae::Change.all.length).to eq(0)
+      end
+
+      it 'should not create a change item via nested form' do
+        release = FactoryGirl.build(:release)
+        release.build_label_pdf
+        release.save
+
+        expect(release.tracked_changes.first.change_type).to eq('created')
+        expect(release.label_pdf.tracked_changes).to eq([])
+      end
+    end
   end
 
   describe 'before_update' do
@@ -65,6 +99,103 @@ describe Fae::Trackable do
         expect(release.tracked_changes.first.updated_attributes).to_not include('price')
       end
     end
+
+    context 'on a Fae::Image' do
+      it 'should not create a change item' do
+        image = FactoryGirl.create(:fae_image)
+        image.update_attribute(:asset, 'peanut_butter.jiff')
+        expect(image.tracked_changes).to eq([])
+        expect(Fae::Change.all.length).to eq(0)
+      end
+
+      it 'should associate change to parent item via nested form' do
+        release = FactoryGirl.create(:release)
+        image = FactoryGirl.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
+
+        release.update({'bottle_shot_attributes' => { alt: 'asdfasdfa', id: image.id }})
+
+        expect(release.tracked_changes.first.updated_attributes).to eq(['bottle_shot'])
+        expect(release.bottle_shot.tracked_changes).to eq([])
+      end
+
+      it 'should combine change last parent item via nested form' do
+        release = FactoryGirl.create(:release)
+        image = FactoryGirl.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
+
+        release.update({name: 'something', 'bottle_shot_attributes' => { alt: 'asdfasdfa', id: image.id }})
+
+        expect(release.tracked_changes.first.updated_attributes).to eq(['name', 'bottle_shot'])
+        expect(release.bottle_shot.tracked_changes).to eq([])
+      end
+    end
+
+    context 'on a Fae::File' do
+      it 'should not create a change item' do
+        file = FactoryGirl.create(:fae_file)
+        file.update_attribute(:asset, 'peanut_butter.jiff')
+        expect(file.tracked_changes).to eq([])
+        expect(Fae::Change.all.length).to eq(0)
+      end
+
+      it 'should associate change to parent item via nested form' do
+        release = FactoryGirl.create(:release)
+        file = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
+
+        release.update({'label_pdf_attributes' => { name: 'asdfasdfa', id: file.id }})
+
+        expect(release.tracked_changes.first.updated_attributes).to eq(['label_pdf'])
+        expect(release.label_pdf.tracked_changes).to eq([])
+      end
+
+      it 'should combine change last parent item via nested form' do
+        release = FactoryGirl.create(:release)
+        file = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
+
+        release.update({name: 'something', 'label_pdf_attributes' => { name: 'asdfasdfa', id: file.id }})
+
+        expect(release.tracked_changes.first.updated_attributes).to eq(['name', 'label_pdf'])
+        expect(release.label_pdf.tracked_changes).to eq([])
+      end
+
+      it 'fallback to object name if attached_as isn\'t present' do
+        release = FactoryGirl.create(:release)
+        file = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release')
+
+        release.update({'label_pdf_attributes' => { name: 'asdfasdfa', id: file.id }})
+
+        expect(release.tracked_changes.first.updated_attributes).to eq(['file'])
+        expect(release.label_pdf.tracked_changes).to eq([])
+      end
+    end
+
+    context 'on an object with multple assets' do
+      it 'should combine updates into one record on the partent item' do
+        release = FactoryGirl.create(:release)
+        bottle_shot = FactoryGirl.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
+        label_pdf = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
+
+        release.update({
+          name: 'something',
+          'bottle_shot_attributes' => { alt: 'asdfasdfa', id: bottle_shot.id },
+          'label_pdf_attributes' => { name: 'asdfasdfa', id: label_pdf.id }
+        })
+
+        expect(release.tracked_changes.first.updated_attributes).to include('name')
+        expect(release.tracked_changes.first.updated_attributes).to include('bottle_shot')
+        expect(release.tracked_changes.first.updated_attributes).to include('label_pdf')
+      end
+    end
+
+    context 'on a Fae::StaticPage' do
+      it 'should should associate change using Fae::StaticPage' do
+        home_page = HomePage.instance
+        home_page.update_attribute(:title, 'soemthing new')
+
+        expect(home_page.tracked_changes.first.change_type).to eq('updated')
+        expect(home_page.tracked_changes.first.changeable_type).to eq('Fae::StaticPage')
+      end
+    end
+
   end
 
   describe 'before_destroy' do
@@ -83,6 +214,22 @@ describe Fae::Trackable do
         aroma = FactoryGirl.create(:aroma)
         aroma.destroy
         expect(Fae::Change.where(changeable_type: 'Aroma')).to eq([])
+      end
+    end
+
+    context 'on a Fae::Image' do
+      it 'should not create a change item' do
+        image = FactoryGirl.create(:fae_image)
+        image.destroy
+        expect(Fae::Change.all.length).to eq(0)
+      end
+    end
+
+    context 'on a Fae::File' do
+      it 'should not create a change item' do
+        file = FactoryGirl.create(:fae_file)
+        file.destroy
+        expect(Fae::Change.all.length).to eq(0)
       end
     end
   end

@@ -46,9 +46,11 @@ module Fae
           sublinks = []
           sublinks << { text: 'Users', path: fae.users_path}
           sublinks << { text: 'Root Settings', path: fae.option_path }
+          sublinks << { text: 'Activity Log', path: fae.activity_log_path}
           @fae_nav_items << { text: 'Admin', path: '#', class_name: 'main_nav-link-admin main_nav-link-users', sublinks: sublinks }
         elsif current_user.admin?
           @fae_nav_items << { text: 'Users', path: fae.users_path, class_name: 'main_nav-link-users' }
+          @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path}
         end
       end
     end

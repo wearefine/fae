@@ -9,5 +9,9 @@ module Fae
     default_scope { order('-position DESC') }
 
     scope :public_roles, -> {where.not(name: 'super admin')}
+
+    def fae_tracker_blacklist
+      'all'
+    end
   end
 end
