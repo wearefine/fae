@@ -18,10 +18,10 @@
 //  require jquery.ui.effect-highlight
 //= require chosen.jquery.min
 //= require jquery.tablesorter
-//  require jquery.Jcrop.min
+
 //= require jquery.simplemodal.1.4.4
 //= require jquery.multi-select
-//= require jquery.cookie
+//= require js.cookie
 //= require moment.min
 //= require jquery.daterangepicker
 //= require imagesloaded.pkgd.min
@@ -30,18 +30,19 @@
 //= require json2
 //= require judge
 //= require grinder
+//= require simplemde.min
 
 //= require fae/judge_path
 //= require fae/extensions
 
+//= require fae/frob_core_helpers
 //= require fae/admin
-//= require fae/_helpers
 
 //= require fae/form/_form
 //= require fae/form/inputs/_dates
 //= require fae/form/inputs/_select
 //= require fae/form/inputs/_text
-//= require fae/form/inputs/checkboxer
+//= require fae/form/inputs/_checkbox
 //= require fae/form/_validator
 //= require fae/form/_cancel
 //= require fae/form/_ajax
@@ -52,8 +53,8 @@
 //= require fae/navigation/_subnavHighlighter
 //= require fae/navigation/_mobileMenu
 //= require fae/navigation/_language
+//= require fae/navigation/_accordion
 
-//= require fae/_accordion
 //= require fae/hinter
 //= require fae/_modals
 //= require fae/_tables

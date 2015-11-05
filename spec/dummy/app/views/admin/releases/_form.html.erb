@@ -9,12 +9,14 @@
           <li><a href="#associations_section">Associations</a></li>
           <% if params[:action] == 'edit' %>
             <li><a href="#aromas_section">Nested Table</a></li>
+            <li><a href="#recent_changes">Recent Changes</a></li>
           <% end %>
         </ul>
       </nav>
-      <%= render 'fae/shared/form_buttons', f: f, item: @item %>
+      <%= render 'fae/shared/form_buttons', f: f, item: @item, cloneable: true %>
     </div>
   </section>
+  <%= render 'fae/shared/errors' %>
 
   <div class="main_content-sections">
     <section class="main_content-section" id="general_info">
@@ -43,7 +45,7 @@
             wrapper_class: 'release_body-text_area--wrapper',
             input_class: 'release_body-text_area',
             helper_text: 'textarea',
-            markdown: true %>
+            markdown_supported: true %>
 
         <!-- Prefix -->
         <%= fae_prefix f, :price, helper_text: 'prefix', prefix: '$', placeholder: '50.00' %>
@@ -80,7 +82,7 @@
       <div class="main_content-section-area">
 
         <!-- Image Form -->
-        <%= fae_image_form f, :bottle_shot, helper_text: 'image form (w/ alt)' %>
+        <%= fae_image_form f, :bottle_shot, helper_text: 'image form (w/ alt)', required: true %>
 
         <%= fae_image_form f, :hero_image, helper_text: 'image form (w/ alt and caption)', show_caption: true %>
 
@@ -125,3 +127,5 @@
       header: 'Aromas (nested table)' %>
   </section>
 <% end %>
+
+<%= render 'fae/shared/recent_changes' %>

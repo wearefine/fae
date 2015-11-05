@@ -1,5 +1,7 @@
 module Fae
   class TextArea < ActiveRecord::Base
+
+    include Fae::BaseModelConcern
     include Fae::TextAreaConcern
     include Fae::PageValidatable
 

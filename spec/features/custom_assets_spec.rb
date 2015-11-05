@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Custom asstes' do
+feature 'Custom assets' do
 
   scenario 'should allow custom JS from main app', js: true do
     visit fae.root_path

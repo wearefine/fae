@@ -1,8 +1,8 @@
 module Fae
   class StaticPage < ActiveRecord::Base
 
+    include Fae::BaseModelConcern
     include Fae::StaticPageConcern
-    include Fae::Concerns::Models::Base
 
     validates :title, presence: true
 
@@ -17,6 +17,10 @@ module Fae
 
     def self.fae_fields
       {}
+    end
+
+    def fae_display_field
+      title
     end
 
   private

@@ -1,22 +1,35 @@
-/* global Fae, datepicker */
+/* global Fae, datepicker, FCH */
 
+'use strict';
+
+/**
+ * Fae form dates
+ * @namespace form.dates
+ * @memberof form
+ */
 Fae.form.dates = {
 
   init: function() {
-    this.date_picker();
-    this.daterange_picker();
+    this.initDatepicker();
+    this.initDateRangePicker();
   },
 
-  date_picker: function() {
-    $(".datepicker input").datepicker({
-      dateFormat: "M dd, yy",
+  /**
+   * Initialize date picker
+   */
+  initDatepicker: function() {
+    $('.datepicker input').datepicker({
+      dateFormat: 'M dd, yy',
       inline: true,
       showOtherMonths: true,
       dayNamesMin: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
     });
   },
 
-  daterange_picker: function() {
+  /**
+   * Initialize date range picker
+   */
+  initDateRangePicker: function() {
     $.dateRangePickerLanguages['custom'] = {
       'selected': 'Choosed:',
       'days': 'Days',
@@ -43,17 +56,18 @@ Fae.form.dates = {
     };
 
     // daterangepicker instantiation
-    if ($(".daterangepicker").length > 0) {
-      $(".daterangepicker").dateRangePicker({
-        format: "MMM DD, YYYY",
+    if (FCH.exists('.daterangepicker')) {
+      $('.daterangepicker').dateRangePicker({
+        format: 'MMM DD, YYYY',
         separator : ' to ',
         showShortcuts: false,
         language: 'custom',
         getValue: function() {
-          if ($('.js-start_date').val() && $('.js-end_date').val() )
+          if ($('.js-start_date').val() && $('.js-end_date').val()) {
             return $('.js-start_date').val() + ' to ' + $('.js-end_date').val();
-          else
+          } else {
             return '';
+          }
         },
         setValue: function(s,s1,s2) {
           $('.js-start_date').val(s1);

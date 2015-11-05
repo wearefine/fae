@@ -8,6 +8,10 @@ module Fae
       list_order f, attribute, options
       set_prompt f, attribute, options
 
+      add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
+
+      set_maxlength(f, attribute, options)
+
       f.input attribute, options
     end
 
@@ -112,10 +116,10 @@ module Fae
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || attribute_name
-      if options[:markdown].present? || options[:helper_text].present?
+      if options[:markdown_supported].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
           concat(options[:helper_text]) if options[:helper_text].present?
-          concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown].present?
+          concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown_supported].present?
         end
       end
       options[:label] = label.html_safe if label.present?
@@ -200,6 +204,18 @@ module Fae
         options[:wrapper_html].deep_merge!({ data: { language: language_suffix } })
       else
         options[:wrapper_html] = { data: { language: language_suffix } }
+      end
+    end
+
+    def set_maxlength(f, attribute, options)
+      column = f.object.class.columns_hash[attribute.to_s]
+      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text')
+        # Rails 4.1 supports column.limit, 4.2 supports column.cast_type.limit
+        limit = column.try(:limit) || column.try(:cast_type).try(:limit)
+        if limit.present?
+          options[:input_html] ||= {}
+          options[:input_html][:maxlength] ||= limit
+        end
       end
     end
 

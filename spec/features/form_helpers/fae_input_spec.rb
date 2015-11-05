@@ -51,8 +51,8 @@ feature 'fae_input' do
     admin_login
     visit new_admin_release_path
 
-    within('.release_intro') do
-      expect(page).to have_content('Maximum Characters: 100')
+    within('.release_name') do
+      expect(page).to have_content('Maximum Characters: 15')
     end
   end
 
@@ -60,9 +60,50 @@ feature 'fae_input' do
     admin_login
     visit new_admin_release_path
 
+    within('.release_name') do
+      fill_in "release_name", with: "My Release"
+      expect(page).to have_content('Characters Left: 5')
+    end
+  end
+
+  scenario 'should display markdown helper when markdown_supported: true', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_body-text_area--wrapper') do
+      expect(page).to have_selector('label .helper_text .markdown-support')
+    end
+  end
+
+  scenario 'should display markdown WYSIWYG when markdown: true', js: true do
+    admin_login
+    visit new_admin_release_path
+
     within('.release_intro') do
-      fill_in "text", with: "My release information"
-      expect(page).to have_content('Characters Left: 78')
+      expect(page).to have_selector('.CodeMirror')
+    end
+  end
+
+  scenario 'should display markdown guide when support is clicked', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    expect(page).to_not have_selector('.markdown-hint-wrapper')
+
+    page.find('.markdown-support').click
+
+    expect(page).to have_selector('.markdown-hint-wrapper')
+  end
+
+
+  scenario 'should not allow character counts greater than 255 on string column text fields', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_slug') do
+      fill_in 'release_slug', with: 'The letter J wanted to be like all the other letters of the alphabet, but the other letters were very cruel. They said "The letter J, you look like a disheveled I. The letter I is cool." J countered, "There is no I in team." It was not a very good comeback, and everyone laughed, cruelly, at the letter J again, including the headmaster. The letter J was left out of the alphabet that day as well as this validation.'
+
+      expect(find_field('Slug').value).to eq('The letter J wanted to be like all the other letters of the alphabet, but the other letters were very cruel. They said "The letter J, you look like a disheveled I. The letter I is cool." J countered, "There is no I in team." It was not a very good comebac')
     end
   end
 

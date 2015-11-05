@@ -1,5 +1,5 @@
 // slider wrapper for the yes/no switcher
-.slider-wrapper, .slider-wrapper-checkbox {
+.slider-wrapper {
   display: block;
   position: relative;
   width: 60px;
@@ -12,21 +12,7 @@
   background: $c-slider-option-selector;
 }
 
-.slider-wrapper-checkbox {
-  margin-top: 10px;
-}
-
-.slider-wrapper-checkbox-area {
-  width: 80px;
-  cursor: pointer;
-
-  & input[type=checkbox] {
-    position: absolute;
-    left: -9999px;
-  }
-}
-
-.slider-yes-selected .slider-options, input:checked ~ .slider-wrapper-checkbox .slider-options {
+.slider-yes-selected .slider-options {
   left: 0;
 }
 

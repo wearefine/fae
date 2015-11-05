@@ -30,7 +30,8 @@ fae_method_name(f, attribute, options)
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal (cannot be combined with `dark_hint`) |
 | dark_hint | string | | text that appears in a dark color scheme (cannot be combined with `hint`) |
-| markdown | boolean | false | displays support text and hint for markdown |
+| markdown | boolean | false | adds markdown GUI toolbar |
+| markdown_supported | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
 | wrapper_class | string | | a class to add to the wrapper element |
 | validate | boolean | true | triggers `judge` to validate element |
@@ -52,7 +53,7 @@ fae_input f, :first_name, wrapper_class: 'special_wrapper', helper_text: 'No mor
 
 A textarea with Fae's built-in markdown hint:
 ```ruby
-fae_input f, :description, markdown: true
+fae_input f, :description, markdown_supported: true
 ```
 
 ## fae_association
@@ -271,7 +272,8 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 | label         | string | attribute.to_s.titleize | the fields's label |
 | helper_text   | string | | the field's helper text |
 | hint          | string | | the field's hint text (supports HTML) |
-| markdown      | boolean | false | displays support text and hint for markdown |
+| markdown      | boolean | false | adds markdown GUI toolbar |
+| markdown_supported | boolean | false | displays support text and hint for markdown |
 
 image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
 
@@ -288,6 +290,7 @@ Displays the filter form, including the search field, submit and reset buttons. 
 
 | option | type    | default                                | description |
 |--------|---------|----------------------------------------|-|
+| action | string  | "#{@index_path}/filter" | the path the form submits to |
 | title  | string  | "Search #{@klass_humanized.pluralize}" | the h2 text in the filter form |
 | search | boolean | true                                   | displays the search field |
 | cookie_key | string | false | set your cookie name on the fae_filter_form if you want to persist selected filtered state |
@@ -348,6 +351,16 @@ The fae_toggle helper method takes an AR object and attribute. It then creates t
 ```ruby
 fae_toggle item, :on_prod
 ```
+
+## fae_clone_button
+
+You can use fae_clone_button in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
+
+```ruby
+fae_clone_button item
+```
+
+More info about cloning can be found here: https://bitbucket.org/wearefine/fae/src/master/docs/cloning.md
 
 ## form_header
 
@@ -472,9 +485,32 @@ Full Slim implementation with section wrapper and edit page conditional
       ordered: true
 ```
 
-## Add-ons
+## recent_changes
 
-### Slug generation
+Displays recent changes to an object as logged by [Fae's change tracker](https://bitbucket.org/wearefine/fae/src/master/docs/index.md#markdown-header-change-tracker) in a table. Columns include the change's user, type, updated attributes and datetime.
+
+This partial is best placed at the bottom of the form and will automatically hide itself in create forms, where there wouldn't be changes to display.
+
+**Examples**
+
+Standard implementation
+```ruby
+render 'fae/shared/recent_changes'
+```
+
+Optionally, you can add a link to it in the form nav:
+```slim
+nav.main_content-header-section
+  ul.main_content-header-section-links
+    - if params[:action] == 'edit'
+      li: a href="#recent_changes" Recent Changes
+```
+
+---
+
+# Add-ons
+
+## Slug generation
 
 Auto-generate a slug from a field. Only populates if the `slug` input is blank.
 

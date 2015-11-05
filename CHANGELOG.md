@@ -5,6 +5,27 @@
 - enhancements
 - bugs
 
+
+## 1.2
+
+- enhancements
+    + [#49965](https://issues.afinedevelopment.com/issues/49965) Narrow width of color bar
+    + [#50794](https://issues.afinedevelopment.com/issues/50794) Industrial JavaScript refactor
+    + [#40989](https://issues.afinedevelopment.com/issues/50863) Add a configurable change tracker and activity log
+    + Change jQuery cookie to vanilla JS cookie
+    + [#45145](https://issues.afinedevelopment.com/issues/45145) Save table sorting preferences during a single session
+    + [#50785](https://issues.afinedevelopment.com/issues/50785) When there's only one drawer on the page, do not allow drawers to toggle
+    + [#49890](https://issues.afinedevelopment.com/issues/49890) Haven't you always wanted to clone a record? Behold: object cloning
+    + [#49896](https://issues.afinedevelopment.com/issues/49896) Show error banner above the fold consistently
+    + [#50905](https://issues.afinedevelopment.com/issues/50905) Added super cool validation helpers
+- bugs
+    + [#48212](https://issues.afinedevelopment.com/issues/48212) Adjust spacing on pages with multiple tables and drawers
+    + [#51357](https://issues.afinedevelopment.com/issues/51357) Add column's max length to string and text inputs
+    + Fix AJAX response to accomodate uncompressed form HTML too
+    + Remove spacing beneath tables (fixes improper nested table aesthetic)
+    + fix col or field method in application helper so that it works properly with images in tables
+    + fix added markdown init on add edit forms for nested tables
+
 ## 1.1.8
 
 - enhancements
@@ -13,12 +34,11 @@
     + [#51042](https://issues.afinedevelopment.com/issues/51042) mm/dd/yy sorting fix
     + fix @new_path implementation in header
     + fix Fae::StaticPage singleton setup check
-    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
     + fix responsive tables less than 768px
     + update nested scaffold generator to include routes and model concern
     + fix ordering on nested tables
     + [#51949](https://issues.afinedevelopment.com/issues/51949) allow content exceeding character limit to be deleted
-
+    + [#50108](https://issues.afinedevelopment.com/issues/50108) Add length counter to AJAX'd fields if applicable
 
 ## 1.1.7
 

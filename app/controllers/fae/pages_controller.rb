@@ -12,6 +12,20 @@ module Fae
       @browser = Browser.new(ua: request.user_agent, accept_language: 'en-us')
     end
 
+    def activity_log
+      @items = Fae::Change.order(id: :desc)
+    end
+
+    def activity_log_filter
+      if params[:commit] == "Reset Search"
+        @items = Fae::Change.order(id: :desc)
+      else
+        @items = Fae::Change.filter(params[:filter])
+      end
+
+      render :activity_log, layout: false
+    end
+
     def error404
       return show_404
     end

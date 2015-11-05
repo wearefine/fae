@@ -1,134 +1,161 @@
-var Sticky = {
-	options: {
-		class_name: "js-sticky",
-		placeholder_name: "js-sticky-placeholder",
-		make_placeholder: true,
-		hero_selector: false,
-		offset: 300,
-		min_desktop: false,
-		min_search_compare: false, // search and compare page not for small widths -- set to 650
-		header_selector: "#main_header"
-	},
+/* global FCH */
 
-	init: function(options, elm){
-		//reference for callback
-		var that = this;
+'use strict';
 
-		// unite the default options with the passed-in ones
-		this.options = $.extend({}, this.options, options);
+(function ( $ ) {
 
-		// saving element reference
-		this.elm = elm;
+  /**
+   * Private initialization of Sticky object.
+   * @access private
+   * @class
+   */
+  function Sticky($el, options) {
+    /** @type {jQuery} */
+    this.$el = $el;
 
-		// set the height
-		this.height = $(this.elm).outerHeight();
-		$(this.elm).addClass('js-will-be-sticky');
-		// if it has a hero area, we need to wait before grabbing its top/left...because images.
-		if (this.options.hero_selector) {
-			$(this.options.hero_selector).imagesLoaded( function() {
-				that.startup_sequence();
-			});
-		} else {
-			this.startup_sequence();
-		}
-	},
+    /** Inherited settings from jQuery initialization */
+    this.options = options;
 
-	startup_sequence: function() {
-		// capture dimensions
-		this.set_position();
+    // capture dimensions
+    // If a placeholder exists, use it
+    this.dimensions = {
+      top: $el.offset().top - this.options.offset,
+      left: $el.offset().left
+    };
 
-		// create a placeholder
-		this.createPlaceholder();
+    var height = $el.outerHeight();
+    $el.addClass('js-will-be-sticky');
 
-		// run the initial stickit
-		this.stickit();
+    // create a placeholder
+    if (this.options.make_placeholder) {
+      this.createPlaceholder(height);
+    }
 
-		// bind events
-		this.resizer();
-		this.scroller();
-	},
+    // run the initial stickIt
+    this.stickIt();
 
-	set_position: function() {
-		// capture position. if placeholder exists, use it
-		this.top = $(this.elm).offset().top - this.options.offset;
-		this.left = $(this.elm).offset().left;
-	},
+    // bind events
+    this.windowListeners();
 
-	createPlaceholder: function() {
-		if (this.options.make_placeholder) {
-			// create a placeholder element to use to keep the top spacing
-			var placeholder = $(document.createElement("div")).addClass(this.options.placeholder_name).css({
-				height: this.height,
-				display: "none"
-			});
-			$(placeholder).insertAfter($(this.elm));
+    return this;
+  };
 
-			// save for reference later
-			this.placeholder = placeholder;
-		}
-	},
+  /**
+   * Create a placeholder element to use to keep the top spacing
+   * @param {Number} height - Size of stuck element
+   */
+  Sticky.prototype.createPlaceholder = function(height) {
+    var $placeholder = $('<div />', {
+       class: this.options.placeholder_name,
+       css: {
+        height: height,
+        display: 'none'
+      }
+    });
 
-	stickit: function() {
-		// a wrapper to check for min_desktop.
-		// we need to check for that tablet flag first. hotel detail page for tablet view doesn't show launch
+    $placeholder.insertAfter(this.$el);
+    // save for reference later
+    this.$placeholder = $placeholder;
+  };
 
-		// if the min_desktop is false i.e. no min_desktop
-		if (!this.options.min_desktop && !this.options.min_search_compare) {
-			this.stickit_logic();
-		} else if(
-			(this.options.min_desktop && $(window).width() >= 1024) ||
-			(this.options.min_search_compare && $(window).width() >= 915)
-		) {
-			this.stickit_logic();
-		} else {
-			$(this.elm).removeClass(this.options.class_name).removeAttr("style");
-			$(this.placeholder).hide();
-		}
-	},
+  /**
+   * On window scroll, check to make sure the screen is larger than table and if it isn't, unstick it
+   * @fires stickItLogic (Conditionally)
+   * @fires _unStick (Conditionally)
+   */
+  Sticky.prototype.stickIt = function() {
+    if (FCH.bp.large) {
+      this._stickItLogic();
+    } else {
+      this._unStick();
+    }
+  };
 
-	stickit_logic: function() {
-		var that = this;
-		var $elm = $(this.elm);
-		var $placeholder = $(this.placeholder);
+  /**
+   * Fix sticky element to top of page if it's past originally-set boundary.
+   * @access protected
+   * @fires _unStick (Conditionally)
+   * @see stickIt
+   */
+  Sticky.prototype._stickItLogic = function() {
+    if (FCH.$window.scrollTop() >= this.dimensions.top) {
+      if (this.options.make_placeholder) {
+        this.$placeholder.show();
+        this.$el.css({ width: this.$placeholder.width() });
+      }
 
-		if ($(window).scrollTop() >= this.top) {
-			// if the scroll posiiton is greater than the offset top of the sticky element
-			// add class name which controls styles
-			$placeholder.show();
+      this.$el
+        .addClass(this.options.class_name)
+        .css({
+          top: 0,
+          left: this.dimensions.left,
+          position: 'fixed'
+        });
+    } else {
+      this._unStick();
+    }
+  };
 
-			$elm.addClass(this.options.class_name).css({
-				top: 0,
-				left: that.left,
-				width: $placeholder.width(),
-				position: "fixed"
-			});
-		} else {
-			$elm.removeClass(this.options.class_name).removeAttr("style");
-			$placeholder.hide();
-		}
-	},
+  /**
+   * Remove active class and fixed styles from targeted element; hide placeholder
+   */
+  Sticky.prototype._unStick = function() {
+    this.$el
+      .removeClass(this.options.class_name)
+      .removeAttr('style');
 
-	resizer: function() {
-		var that = this;
+    if (this.options.make_placeholder) {
+      this.$placeholder.hide();
+    }
+  };
 
-		$(window).smartresize(function(){
-			if ($(that.placeholder).is(":visible")) {
-				that.top = $(that.placeholder).offset().top - that.options.offset;
-				that.left = $(that.placeholder).offset().left;
-			} else {
-				that.top = $(that.elm).offset().top - that.options.offset;
-				that.left = $(that.elm).offset().left;
-			}
-			that.stickit();
-		});
-	},
+  /**
+   * Listen for scroll and smartresize to stick or unstick element
+   */
+  Sticky.prototype.windowListeners = function() {
+    var _this = this;
 
-	scroller: function() {
-		var that = this;
-		$(window).on("scroll", function(){
-			that.stickit();
-		});
-	}
-};
-// make it a plugin
-$.plugin("sticky", Sticky);
+    var scrollCallback = function() {
+      _this.stickIt();
+    };
+    FCH.scroll.push(scrollCallback);
+
+    FCH.$window.smartresize(function(){
+      if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
+        _this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
+        _this.dimensions.left = _this.$placeholder.offset().left;
+
+      } else {
+        _this.dimensions.top = _this.$el.offset().top - _this.options.offset;
+        _this.dimensions.left = _this.$el.offset().left;
+
+      }
+
+      _this.stickIt();
+    });
+  };
+
+  /**
+   * Stick elements within the viewport
+   * @function external:'jQuery.fn'.sticky
+   */
+  $.fn.sticky = function( options ) {
+
+    var defaults = {
+      class_name: 'js-sticky',
+      placeholder_name: 'js-sticky-placeholder',
+      make_placeholder: true,
+      offset: 0,
+      header_selector: '#main_header'
+    };
+
+    // unite the default options with the passed-in ones
+    var settings = $.extend( {}, defaults, options );
+
+    return this.each(function() {
+      var sticker = new Sticky($(this), settings);
+    });
+
+  };
+
+}( jQuery ));

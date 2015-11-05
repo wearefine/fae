@@ -32,8 +32,12 @@ feature 'fae_nested_index_table' do
       fill_in 'Name', with: 'Pew Pew'
       click_button('Update Cat')
     end
-    expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
-    expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
+
+    # support/async_helper.rb
+    eventually {
+      expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
+      expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
+    }
   end
 
   scenario 'should allow deletion of item', js: true do

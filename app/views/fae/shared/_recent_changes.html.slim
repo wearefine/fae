@@ -1,0 +1,23 @@
+- unless params[:action] == 'new'
+  section.main_content-section#recent_changes
+    h2.main_content-section-title Recent Changes
+    .main_content-section-area
+      section.js-addedit-form
+        table.index_table
+          thead
+            tr
+              th User
+              th Type
+              th Attribute(s) Updated
+              th Updated At
+          tbody
+            - if @item.try(:tracked_changes).present?
+              - @item.tracked_changes.each do |change|
+                tr
+                  td = change.user.full_name if change.user.present?
+                  td = change.change_type
+                  td = change.updated_attributes.join(', ') if change.updated_attributes.present?
+                  td = fae_datetime_format(change.updated_at)
+            - else
+              tr
+                td colspan=4 == "No changes recorded"

@@ -57,23 +57,22 @@ module Fae
     end
 
     def col_name_or_image(item, attribute)
+      value = item.send(attribute)
+      return if value.blank?
+      # if item is an image
+      if value.class.name == 'Fae::Image'
+        image_tag(value.asset.thumb.url)
       # if item's attribute is an association
-      if item.class.reflections.include?(attribute)
-        if item.send(attribute).class.name == 'Fae::Image'
-          # display image thumbnail
-          image_tag(item.send(attribute).asset.thumb.url)
-        else
-          # display associaiton's fae_display_field
-          item.send(attribute).fae_display_field
-        end
+      elsif item.class.reflections.include?(attribute)
+        value.try(:fae_display_field)
       # if item is a date or a time adjust to timezone
-      elsif item.send(attribute).kind_of?(Date)
-        fae_date_format(item.send(attribute))
-      elsif item.send(attribute).kind_of?(Time)
-        fae_datetime_format(item.send(attribute))
+      elsif value.is_a?(Date)
+        fae_date_format(value)
+      elsif value.is_a?(Time)
+        fae_datetime_format(value)
       else
         # otherwise it's an attribute so display it's value
-        item.send(attribute)
+        value
       end
     end
 
@@ -91,6 +90,20 @@ module Fae
 
     def body_class
       @body_class.present? ? @body_class : "#{controller_name} #{action_name}"
+    end
+
+    def change_item_link(change)
+      text = "#{change.changeable_type}: "
+      text += change.try(:changeable).try(:fae_display_field) || "##{change.changeable_id}"
+
+      begin
+        return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
+        parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
+        edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
+        return link_to text, edit_path
+      rescue
+        return text
+      end
     end
 
     private

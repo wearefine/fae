@@ -1,6 +1,7 @@
 module Fae
   class Option < ActiveRecord::Base
 
+    include Fae::BaseModelConcern
     include Fae::OptionConcern
 
     validates_inclusion_of :singleton_guard, :in => [0]
@@ -17,6 +18,10 @@ module Fae
       class_name: 'Fae::Image',
       dependent: :destroy
     accepts_nested_attributes_for :favicon, allow_destroy: true
+
+    def fae_tracker_blacklist
+      'all'
+    end
 
     def self.instance
       instance = first

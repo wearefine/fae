@@ -1,5 +1,5 @@
 class Release < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   def fae_display_field
     name
@@ -49,6 +49,10 @@ class Release < ActiveRecord::Base
     for_fae_index
       .includes(:wine, :acclaims).references(:wine, :acclaims)
       .where(conditions).where(search)
+  end
+
+  def fae_tracker_blacklist
+    [:position, 'price']
   end
 
 end

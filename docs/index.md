@@ -92,6 +92,8 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 | max_image_upload_size | integer | 2 | ceiling for image uploads in MB
 | max_file_upload_size | integer | 5 | ceiling for file uploads in MB
 | recreate_versions | boolean | false | Triggers `Fae::Image` to recreate Carrierwave versions after save. This is helpful when you have conditional versions that rely on attributes of `Fae::Image` by making sure they're saved before versions are created.
+| track_changes | boolean | true | Determines whether or not to track changes on your objects
+| tracker_history_length | integer | 15 | Determines the max number of changes logged per object
 
 ### Example
 
@@ -237,7 +239,7 @@ To allow Fae to push out any model specific updates to your application models, 
 
 ```ruby
 class Release < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
   # ...
 end
 ```
@@ -264,7 +266,7 @@ end
 
 ## for_fae_index
 
-Fae uses a class method called `for_fae_index` as a scope for index views and associated content in form elements. This method is inherited from `Fae::Concerns::Models::Base`.
+Fae uses a class method called `for_fae_index` as a scope for index views and associated content in form elements. This method is inherited from `Fae::BaseModelConcern`.
 
 By default, this method uses position, name, or title attributes. If it can't find any of those it will raise the following exception:
 
@@ -282,7 +284,7 @@ end
 
 ## to_csv
 
-Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::Concerns::Models::Base`. It is meant to be called from the index action.
+Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::BaseModelConcern`. It is meant to be called from the index action.
 
 
 ## Nested Resources
@@ -313,7 +315,49 @@ end
 
 ## Validation
 
-Fae doesn't deal with any validation definitions in your application models, you'll have to add those.
+Fae doesn't deal with any validation definitions in your application models, you'll have to add those. However, there are some pre-defined regex validation helpers to use in your models. See examples below.
+
+### Validation Helpers
+
+Fae validation helpers come in two flavors; regex only, and complete hash.
+
+Regex:
+
+| option        | description                                             |
+|---------------|---------------------------------------------------------|
+| slug_regex    | no spaces or special characters                         |
+| email_regex   | valid email with @ and .                                |
+| url_regex     | http and https urls                                     |
+| zip_regex     | 5 digit zip code                                        |
+| youtube_regex | matches youtube id, i.e. the 11 digits after "watch?v=" |
+
+example:
+
+```ruby
+validates :slug,
+  uniqueness: true,
+  presence: true,
+  format: {
+    with: Fae.validation_helpers.slug_regex,
+    message: 'no spaces or special characters'
+  }
+```
+
+Complete:
+
+| option       | description                                      |
+|--------------|--------------------------------------------------|
+| slug         | uniqueness, presence, regex format with message  |
+| email        | regex format with message, allow blank           |
+| url          | regex form with message, allow blank             |
+| zip          | regex format with message, allow blank           |
+| youtube_url  | regex format with message, allow blank           |
+
+example:
+
+```ruby
+validates :slug, Fae.validation_helpers.slug
+```
 
 ### Judge and Uniqueness
 
@@ -511,8 +555,7 @@ end
 ---
 
 # Form Helpers
-
-[Click here for full documentation on Fae's form helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-form-helpers)
+[Click here for full documentation on Fae's form helpers](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-form-helpers)
 
 Generated forms start you off on a good place to manage the object's content, but chances are you'll want to customize them and add more fields as you data model evolves. Fae provides a number of form helpers to help you leverage Fae's built in features will allowing customization when needed.
 
@@ -522,10 +565,10 @@ Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simpl
 
 # View Helpers and Partials
 
-Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](/wearefine/fae/src/master/docs/helpers.md).
+Fae also provides a number of other built in view helpers and partials, that are documented in [helpers.md](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md).
 
-[Click here for view helpers](/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
-[Click here for Fae partials](/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
+[Click here for view helpers](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-view-helpers)
+[Click here for Fae partials](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-fae-partials)
 
 ---
 
@@ -540,6 +583,14 @@ module Fae
   end
 end
 ```
+
+---
+
+# Cloning
+
+[Click here for full documentation on Fae's cloning](https://bitbucket.org/wearefine/fae/src/master/docs/cloning.md)
+
+Many users find it easier to clone records that have similar content, rather than spending the time manually setting them up. Fae has the ability to allow one-click clones from the index or the edit form, as well as flexibility to whitelist attributes and clone assocations.
 
 ---
 
@@ -960,6 +1011,96 @@ def self.filter_all
   where.not(name: 'John').order(:position)
 end
 ```
+
+---
+
+# Change Tracker
+
+Fae has a build in system to track the changes of the records in your admin. By default it's on, tracking the last 15 times a record has been changed. Make sure any model you want to track has 'include Fae::BaseModelConcern' at the top.
+
+For each change the tracker tracks what kind of change it is (create, update or delete), what attributes were changed, who changed it and when it happened.
+
+## Global Options
+
+You can turn off tracking altogether or update how many revisions the tracker keeps with the following options set in `config/initializers/fae.rb`.
+
+| key | type | default | description
+|-|-|-|-|
+| track_changes | boolean | true | Determines whether or not to track changes on your objects
+| tracker_history_length | integer | 15 | Determines the max number of changes logged per object
+
+### Example
+
+`config/initializers/fae.rb`
+```ruby
+Fae.setup do |config|
+
+  config.tracker_history_length = 10
+
+end
+```
+
+## Blacklisting Models and Attributes
+
+If you want to turn off tracking on specific attibutes or a model altogether you can define an optional instance method `fae_tracker_blacklist`.
+
+### Blacklisting a Model
+
+To blacklist an entire model have `fae_tracker_blacklist` return 'all'.
+
+```ruby
+class DontTrackMe < ActiveRecord::Base
+  include Fae::BaseModelConcern
+
+  def fae_tracker_blacklist
+    'all'
+  end
+end
+```
+
+### Blacklisting Attributes
+
+To blacklist specific attributes have 'fae_tracker_blacklist' return an array of attribute names as symbols or strings.
+
+```ruby
+class DontTrackMe < ActiveRecord::Base
+  include Fae::BaseModelConcern
+
+  def fae_tracker_blacklist
+    [:position, :slug]
+  end
+end
+```
+
+## Accessing the Tracked Changes
+
+Each model that includes `Fae::BaseModelConcern` will have the following association:
+
+```
+has_many :tracked_changes
+```
+
+Each tracked change is a record of `Fae::Change` and has the following attrubtes available
+
+| `changeable` | a polymorphic association back to the changed record
+| `user` | an association to the user that updated the record
+| `change_type` | how the record was changed, options are: created, updated or deleted
+| `updated_attributes` | an array of attributes changed (for updated records only)
+| `updated_at` | when the change occured
+
+### Example Usage
+
+```ruby
+@item.tracked_changes.each do |change|
+  "This item was #{change.change_type} by #{change.user.first_name} on {change.updated_at}."
+end
+```
+
+## Display Tracked Changes Table
+
+Fae provides a partial to display tracked changes in an object's form. Read more about `render 'fae/shared/recent_changes'` here:
+
+https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-recent_changes
 
 ---
 
