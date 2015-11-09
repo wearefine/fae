@@ -316,7 +316,7 @@ Dislays a select tag to be used within a `fae_filter_form`.
 | placeholder  | string or boolean       | "All #{options[:label]}"       | the blank value in the select, can be set to false to disable |
 | options      | array                   | []                             | an alternative array of options if the options aren't an ActiveRecord collection |
 | grouped_options | array                | []                             | an alternative array of grouped options if the options aren't an ActiveRecord collection |
-| grouped_by   | symbol                  |                                | a Fae association on the models in `collection`. All models involved must have a `fae_display_name` method |
+| grouped_by   | symbol                  |                                | a Fae association on the models in `collection`. The association must have a `fae_display_name` method |
 
 **Examples**
 

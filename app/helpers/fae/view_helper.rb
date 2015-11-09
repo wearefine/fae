@@ -77,7 +77,7 @@ module Fae
 
       # grouped_by takes priority over grouped_options
       if options[:grouped_by].present?
-        select_options = filter_generate_select_group(options[:collection], options[:grouped_by])
+        select_options = filter_generate_select_group(options[:collection], options[:grouped_by], options[:label_method])
       elsif options[:grouped_options].present?
         select_options = grouped_options_for_select(options[:grouped_options])
       else
@@ -114,13 +114,13 @@ module Fae
       end
     end
 
-    def filter_generate_select_group(collection, grouped_by)
-      labels = collection.map { |c| c.send(grouped_by).fae_display_field }.uniq
+    def filter_generate_select_group(collection, grouped_by, label_method)
+      labels = collection.map { |c| c.send(grouped_by).try(:fae_display_field) }.uniq
       grouped_hash = {}
 
       labels.each do |label|
-        values = collection.select { |c| c.send(grouped_by).fae_display_field == label }
-        grouped_hash[label] = values.map { |v| [v.fae_display_field, v.id] }
+        values = collection.select { |c| c.send(grouped_by).try(:fae_display_field) == label }
+        grouped_hash[label] = values.map { |v| [v.send(label_method), v.id] }
       end
 
       grouped_options_for_select(grouped_hash)
