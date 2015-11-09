@@ -75,14 +75,14 @@ module Fae
       options[:grouped_by]      ||= nil
       options[:grouped_options] ||= []
 
-      select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
-      select_options = options_for_select(options[:options]) if options[:options].present?
-
       # grouped_by takes priority over grouped_options
       if options[:grouped_by].present?
         select_options = filter_generate_select_group(options[:collection], options[:grouped_by])
       elsif options[:grouped_options].present?
         select_options = grouped_options_for_select(options[:grouped_options])
+      else
+        select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
+        select_options = options_for_select(options[:options]) if options[:options].present?
       end
 
       content_tag :div, class: 'table-filter-group' do

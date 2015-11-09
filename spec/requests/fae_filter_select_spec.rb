@@ -59,7 +59,7 @@ describe 'fae_filter_select' do
   end
 
   describe 'grouped_by option' do
-    it 'should generate opt groups based on grouped_options' do
+    it 'should generate opt groups based on grouped_by association' do
       admin_login
       get admin_releases_path
 
