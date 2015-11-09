@@ -47,4 +47,26 @@ describe 'fae_filter_select' do
     end
   end
 
+  describe 'grouped_options option' do
+    it 'should generate opt groups based on grouped_options' do
+      admin_login
+      get admin_releases_path
+
+      within('#filter_grouped_test') do
+        expect(page).to have_css('optgroup[label="Numbers"]')
+      end
+    end
+  end
+
+  describe 'grouped_by option' do
+    it 'should generate opt groups based on grouped_options' do
+      admin_login
+      get admin_releases_path
+
+      within('#filter_grouped_association') do
+        expect(page).to have_css('optgroup')
+      end
+    end
+  end
+
 end

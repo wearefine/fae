@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + [#51603](https://issues.afinedevelopment.com/issues/51603) Add grouped  options to fae_filter_select 
 - bugs
 
 
