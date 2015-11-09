@@ -72,7 +72,8 @@ module Fae
       options[:label_method]    ||= :fae_display_field
       options[:placeholder]       = "All #{options[:label].pluralize}" if options[:placeholder].nil?
       options[:options]         ||= []
-      options[:grouped_by]      ||= []
+      options[:grouped_by]      ||= nil
+      options[:grouped_options] ||= []
 
       select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
       select_options = options_for_select(options[:options]) if options[:options].present?
