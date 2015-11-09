@@ -72,9 +72,18 @@ module Fae
       options[:label_method]    ||= :fae_display_field
       options[:placeholder]       = "All #{options[:label].pluralize}" if options[:placeholder].nil?
       options[:options]         ||= []
+      options[:grouped_by]      ||= nil
+      options[:grouped_options] ||= []
 
-      select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
-      select_options = options_for_select(options[:options]) if options[:options].present?
+      # grouped_by takes priority over grouped_options
+      if options[:grouped_by].present?
+        select_options = filter_generate_select_group(options[:collection], options[:grouped_by], options[:label_method])
+      elsif options[:grouped_options].present?
+        select_options = grouped_options_for_select(options[:grouped_options])
+      else
+        select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
+        select_options = options_for_select(options[:options]) if options[:options].present?
+      end
 
       content_tag :div, class: 'table-filter-group' do
         concat label_tag "filter[#{attribute}]", options[:label]
@@ -103,6 +112,18 @@ module Fae
         concat submit_tag 'Apply Filters'
         concat submit_tag 'Reset Search', class: 'js-reset-btn table-filter-reset'
       end
+    end
+
+    def filter_generate_select_group(collection, grouped_by, label_method)
+      labels = collection.map { |c| c.send(grouped_by).try(:fae_display_field) }.uniq
+      grouped_hash = {}
+
+      labels.each do |label|
+        values = collection.select { |c| c.send(grouped_by).try(:fae_display_field) == label }
+        grouped_hash[label] = values.map { |v| [v.send(label_method), v.id] }
+      end
+
+      grouped_options_for_select(grouped_hash)
     end
 
     def default_collection_from_attribute(attribute)
