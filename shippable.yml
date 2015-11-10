@@ -13,7 +13,6 @@ env:
   global:
     - CI_REPORTS=shippable/testresults
     - DEPLOY_BRANCH=$BRANCH
-    - secure: Sx/anjJAVm3QlTMs03KzvsVKHdTljMEiZZhpgYplxllFKOpgKgDrQP4/OkzowlWqWnHqR+Wkibig+LxkRFeva0dMzJEkkSCYgSP+OxPDGOFLdtRPQnLT6oVRVg+ewGCjR8vSBDz9MHZ7RtUzZWfLNvTdPQru6b6ojJ1zeqR7QJ0tZ/DcQdzs/X3ckCQcooPff57XVKcHb8ZM77rhyQjfZTEv3iPLcaDBg3vVBDKD0TVo3kViXikXmIBMhjUDkmai+ea3+9ugRcbnO4tTV3wn0ILFcOMG4NbA+c6ccXvbr3Vo/g/xzyzpTZVO3036ZF8lbDv+cEwJFXXOkLsrbhX+2Q==
     - secure: FpiO+8qrxOgKfFrg8Y1pwd7w/GjhN+WuYZ60A/LN8ATIF1kFEzXO+VB8HThIZjsKoHzmjbyGi/LXIO7cfLdiyehf4KQ6xUTPHYGlmRaBjmv5iDtCClYjKFac9d/+9TLcygzHlXxhyKKyjVx1DaTB3G6qp14mGE9do36GXeE5PIPDPyQG+9otjcrb38TTuiiIHNwrDgnWZSR9UCurKaycki+TiVpUiheruP7zY1oYBTKotb7VKqF9aXDYHJc9e89oMCqLbFQZd3A0aNgUILV0ORZwOYneXuTNzSPqpDpDHYkzE+gi+mSKEPBx0TADslubnySCK6OgOVTGLtrjzkm0Fw==
 before_script:
   - rm -Rf shippable-setup
@@ -25,7 +24,3 @@ before_script:
 script:
   - xvfb-run rspec -f JUnit -o shippable/testresults/results.xml
   - ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@bitbucket.org; cap $DEPLOY_BRANCH deploy'
-after_failure:
-  - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
-after_success:
-  - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN -s
