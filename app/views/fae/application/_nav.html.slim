@@ -27,6 +27,7 @@ nav#main_nav
                 sub_class = subitem[:sublinks].present? ? 'sub_nav-accordion' : ''
                 sub_class << " #{item[:class_name]}" if item[:class_name].present?
                 link_class = 'main_nav-sub-link'
+                link_class << " #{subitem[:class_name]}" if subitem[:class_name].present?
                 link_class << ' with-third_nav' if subitem[:sublinks].present?
 
               li class=sub_class
