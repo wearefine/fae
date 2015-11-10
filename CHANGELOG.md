@@ -3,7 +3,8 @@
 ## Unreleased
 
 - enhancements
-    + [#51603](https://issues.afinedevelopment.com/issues/51603) Add grouped  options to fae_filter_select 
+    + [#51603](https://issues.afinedevelopment.com/issues/51603) Add grouped  options to fae_filter_select
+    + [#52306](https://issues.afinedevelopment.com/issues/52306) Add activity icon for the activity log link
 - bugs
 
 
