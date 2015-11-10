@@ -44,13 +44,13 @@ module Fae
 
         if current_user.super_admin?
           sublinks = []
-          sublinks << { text: 'Users', path: fae.users_path}
-          sublinks << { text: 'Root Settings', path: fae.option_path }
-          sublinks << { text: 'Activity Log', path: fae.activity_log_path}
-          @fae_nav_items << { text: 'Admin', path: '#', class_name: 'main_nav-link-admin main_nav-link-users', sublinks: sublinks }
+          sublinks << { text: 'Users', path: fae.users_path, class_name: 'main_nav-link-users' }
+          sublinks << { text: 'Root Settings', path: fae.option_path, class_name: 'main_nav-link-settings'}
+          sublinks << { text: 'Activity Log', path: fae.activity_log_path, class_name: 'main_nav-link-activity'}
+          @fae_nav_items << { text: 'Admin', path: '#', class_name: 'main_nav-link-admin', sublinks: sublinks }
         elsif current_user.admin?
           @fae_nav_items << { text: 'Users', path: fae.users_path, class_name: 'main_nav-link-users' }
-          @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path}
+          @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path, class_name: 'main_nav-link-activity'}
         end
       end
     end
