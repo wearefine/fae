@@ -1,18 +1,16 @@
 $:.push File.expand_path("../lib", __FILE__)
 
-# Maintain your gem's version:
 require "fae/version"
 
-# Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "fae-rails"
   s.version     = Fae::VERSION
   s.authors     = ["FINE"]
   s.email       = ["fae@wearefine.com"]
   s.homepage    = "https://bitbucket.org/wearefine/fae"
-  s.summary     = "FINE's Admin Engine"
-  s.description = "A DSL and convention based Admin for Rails."
-  s.license     = ""
+  s.summary     = "A flexible CMS for Rails"
+  s.description = "A flexible CMS for Rails"
+  s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]

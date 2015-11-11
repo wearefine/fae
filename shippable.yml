@@ -11,7 +11,6 @@ notifications:
    email: false
 env:
   global:
-    - SLACK_ORG=wearefine PROJECT=fae.afinedevelopment.com
     - CI_REPORTS=shippable/testresults
     - DEPLOY_BRANCH=$BRANCH
     - secure: FpiO+8qrxOgKfFrg8Y1pwd7w/GjhN+WuYZ60A/LN8ATIF1kFEzXO+VB8HThIZjsKoHzmjbyGi/LXIO7cfLdiyehf4KQ6xUTPHYGlmRaBjmv5iDtCClYjKFac9d/+9TLcygzHlXxhyKKyjVx1DaTB3G6qp14mGE9do36GXeE5PIPDPyQG+9otjcrb38TTuiiIHNwrDgnWZSR9UCurKaycki+TiVpUiheruP7zY1oYBTKotb7VKqF9aXDYHJc9e89oMCqLbFQZd3A0aNgUILV0ORZwOYneXuTNzSPqpDpDHYkzE+gi+mSKEPBx0TADslubnySCK6OgOVTGLtrjzkm0Fw==
@@ -25,7 +24,3 @@ before_script:
 script:
   - xvfb-run rspec -f JUnit -o shippable/testresults/results.xml
   - ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@bitbucket.org; cap $DEPLOY_BRANCH deploy'
-after_failure:
-  - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN
-after_success:
-  - python shippable-setup/slack_notifier.py --project $PROJECT --org $SLACK_ORG --token $SLACK_TOKEN -s
