@@ -1016,7 +1016,7 @@ end
 
 # Change Tracker
 
-Fae has a build in system to track the changes of the records in your admin. By default it's on, tracking the last 15 times a record has been changed. Make sure any model you want to track has 'include Fae::BaseModelConcern' at the top.
+Fae has a build in system to track the changes of the records in your admin. By default it's on, tracking the last 15 times a record has been changed. Make sure any model you want to track has `include Fae::BaseModelConcern` at the top.
 
 For each change the tracker tracks what kind of change it is (create, update or delete), what attributes were changed, who changed it and when it happened.
 
@@ -1082,6 +1082,8 @@ has_many :tracked_changes
 
 Each tracked change is a record of `Fae::Change` and has the following attrubtes available
 
+| attribute | description
+|-|-|
 | `changeable` | a polymorphic association back to the changed record
 | `user` | an association to the user that updated the record
 | `change_type` | how the record was changed, options are: created, updated or deleted
@@ -1100,7 +1102,7 @@ end
 
 Fae provides a partial to display tracked changes in an object's form. Read more about `render 'fae/shared/recent_changes'` here:
 
-https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-recent_changes
+[https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-recent_changes](https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md#markdown-header-recent_changes)
 
 ---
 
