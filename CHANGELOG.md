@@ -168,7 +168,7 @@
     + organized SCSS to be more maintainable
 - bugs
     + #44810: fixes overlapping labels on image uploaders
-    + #40207: fixes table alignment
+    + \#40207: fixes table alignment
 
 ## 1.0
 
