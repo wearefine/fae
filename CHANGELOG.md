@@ -5,7 +5,7 @@
 - enhancements
     + [#51603](https://issues.afinedevelopment.com/issues/51603) Add grouped  options to fae_filter_select 
 - bugs
-
+    + Support markdown WYSIWYG on fae_content_form
 
 ## 1.2
 
