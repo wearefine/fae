@@ -10,8 +10,8 @@
         = fae_input f, :title
 
         = fae_content_form f, :header
-        = fae_content_form f, :introduction
-        = fae_content_form f, :body
+        = fae_content_form f, :introduction, markdown: true
+        = fae_content_form f, :body, markdown_supported: true
         = fae_image_form f, :header_image
 
 == render 'fae/shared/recent_changes'

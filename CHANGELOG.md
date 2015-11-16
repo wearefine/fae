@@ -6,7 +6,7 @@
     + \#51603 Add grouped  options to fae_filter_select
     + \#52306 Add activity icon for the activity log link
 - bugs
-
+    + Support markdown WYSIWYG on fae_content_form
 
 ## 1.2
 
