@@ -67,7 +67,7 @@ feature 'page validations' do
 
   end
 
-  context 'on Fae::TextFields' do
+  context 'on Fae::TextAreas' do
 
     scenario 'should add an asterik to required fields' do
       admin_login
@@ -116,6 +116,24 @@ feature 'page validations' do
       end
     end
 
+
+    scenario 'should display markdown WYSIWYG when markdown: true', js: true do
+      admin_login
+      visit fae.edit_content_block_path('about_us')
+
+      within('.about_us_page_introduction_content') do
+        expect(page).to have_selector('.CodeMirror')
+      end
+    end
+
+    scenario 'should display markdown helper when markdown_supported: true', js: true do
+      admin_login
+      visit fae.edit_content_block_path('about_us')
+
+      within('.about_us_page_body_content') do
+        expect(page).to have_selector('label .helper_text .markdown-support')
+      end
+    end
   end
 
 end
