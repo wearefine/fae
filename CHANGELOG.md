@@ -7,6 +7,7 @@
     + \#52306 Add activity icon for the activity log link
 - bugs
     + Support markdown WYSIWYG on fae_content_form
+    + \#52730 fix bug that rebinds markdown everytime nested add button is clicked
 
 ## 1.2
 

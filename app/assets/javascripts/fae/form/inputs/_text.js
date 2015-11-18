@@ -120,13 +120,16 @@ Fae.form.text = {
     var fields = document.getElementsByClassName('js-markdown-editor');
 
     for(var i = 0; i < fields.length; i++) {
-      var editor = new SimpleMDE({
-        element: fields[i],
-        autoDownloadFontAwesome: false,
-        status: false,
-        spellChecker: false,
-        hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
-      });
+      if (!FCH.hasClass(fields[i], 'mde-enabled')) {
+        var editor = new SimpleMDE({
+          element: fields[i],
+          autoDownloadFontAwesome: false,
+          status: false,
+          spellChecker: false,
+          hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
+        });
+        FCH.addClass(fields[i], 'mde-enabled');
+      }
     }
   }
 
