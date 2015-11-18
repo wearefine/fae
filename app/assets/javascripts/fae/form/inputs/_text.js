@@ -120,7 +120,7 @@ Fae.form.text = {
     var fields = document.getElementsByClassName('js-markdown-editor');
 
     for(var i = 0; i < fields.length; i++) {
-      if (!fields[i].classList.contains('markdown-enabled')) {
+      if (!FCH.hasClass('mde-enabled', fields[i])) {
         var editor = new SimpleMDE({
           element: fields[i],
           autoDownloadFontAwesome: false,
@@ -128,7 +128,7 @@ Fae.form.text = {
           spellChecker: false,
           hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
         });
-        fields[i].className += ' markdown-enabled';
+        FCH.addClass('markdown-enabled', fields[i]);
       }
     }
   }
