@@ -740,7 +740,6 @@ def self.fae_fields
             maximum: 100,
             message: 'should be brief (100 characters or less)'
             }
-          }
         },
       },
     body: { type: Fae::TextArea },
