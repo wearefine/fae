@@ -7,6 +7,7 @@
     + \#52306 Add activity icon for the activity log link
 - bugs
     + Support markdown WYSIWYG on fae_content_form
+    + \#52588 Fallback to regular file input in IE9
 
 ## 1.2
 
