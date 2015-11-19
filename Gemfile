@@ -24,6 +24,7 @@ gem 'slim'
 group :test, :development do
   gem 'rspec-rails', '~> 3.0.2'
   gem 'pry'
+  gem 'quiet_assets'
 end
 
 group :test do

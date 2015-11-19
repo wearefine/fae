@@ -37,7 +37,8 @@ ruby:
     .asset-inputs style="#{'display:none;' if the_image.asset.present?}"
       = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_file_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
       = i.input :asset_cache, as: :hidden
-      = i.input :imageable_type, as: :hidden, input_html: { value: f.object.class.name }
+      - imageable_type = f.object.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : f.object.class.name
+      = i.input :imageable_type, as: :hidden, input_html: { value: imageable_type }
       = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
 
   - if show_caption
