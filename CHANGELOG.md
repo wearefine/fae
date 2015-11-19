@@ -9,6 +9,7 @@
     + Support markdown WYSIWYG on fae_content_form
     + \#52730: fix bug that rebinds markdown everytime nested add button is clicked
     + \#51553: associate page images correctly to `Fae::StaticPage`
+    + \#52588 Fallback to regular file input in IE9
 
 ## 1.2
 
