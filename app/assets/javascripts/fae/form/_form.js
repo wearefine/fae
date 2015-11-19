@@ -18,7 +18,10 @@ Fae.form = {
     this.ajax.init();
 
     // input type=file customization
-    $('.input.file').fileinputer({delete_class: 'icon-delete_x file_input-delete'});
+    // This doesn't work in IE. It's not worth figuring out why by this point. IE9 gets plain file uploader.
+    if (!FCH.IE9) {
+      $('.input.file').fileinputer({delete_class: 'icon-delete_x file_input-delete'});
+    }
 
     // make all the hint areas
     $('.hint').hinter();

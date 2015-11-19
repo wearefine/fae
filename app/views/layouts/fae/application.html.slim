@@ -2,6 +2,7 @@ doctype html
 html
   head
     title = page_title
+    meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
     - if @option.favicon.present? && @option.favicon.asset.present?
       link href=@option.favicon.asset_url rel="shortcut icon"
     == stylesheet_link_tag "fae/application", media: "all"
