@@ -4,7 +4,7 @@
 
   /**
    * Private initialization of FileInputer object.
-   * @access private
+   * @private
    * @class
    */
   function FileInputer($el, options) {
@@ -21,7 +21,7 @@
 
   /**
    * Create jQuery objects of all necessary components and add them to the DOM
-   * @access protected
+   * @protected
    * @fires FileInputer._buttonListener
    * @fires FileInputer._deleterListener
    */
@@ -70,7 +70,7 @@
 
   /**
    * Redirect the click on the created visuals to the file input area
-   * @access protected
+   * @protected
    * @param {jQuery} $button
    */
   FileInputer.prototype._buttonListener = function($button) {
@@ -83,7 +83,7 @@
 
   /**
    * Clear input, set upload text, and remove active text to destroy appearance of a file uploaded
-   * @access protected
+   * @protected
    * @param {jQuery} $deleter
    */
   FileInputer.prototype._deleterListener = function($deleter) {
@@ -120,12 +120,20 @@
 
   /**
    * Determine if file uploaded exceeds provided limit
-   * @access private
+   * @private
    * @return {Boolean}
    */
   FileInputer.prototype._checkSize = function() {
     var limit = parseInt( this.$input.attr('data-limit') );
-    var size = this.$input.get(0).files[0].size / 1024 / 1024;
+    var input_files = this.$input.get(0).files;
+
+    // IE9 doesn't support size lookups; exit early and return true to clear validation
+    if (typeof input_files === 'undefined') {
+      return true;
+    }
+
+    var size = input_files[0].size / 1024 / 1024;
+
     var error_obj = $('<span />', {
       class: 'error',
       text: this.$input.attr('data-exceeded').replace('###', limit)
