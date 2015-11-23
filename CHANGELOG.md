@@ -11,6 +11,7 @@
     + \#51553: associate page images correctly to `Fae::StaticPage`
     + \#52588: Fallback to regular file input in IE9
     + \#52797: Use image size option to trigger image size validation error
+    + \#52300: count newlines as two characters in character counter
 
 ## 1.2
 
