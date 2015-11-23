@@ -346,7 +346,7 @@ Fae.form.validator = {
         html: '<p>' + text + '</p>'
       });
 
-      $elem.after( $counter_div );
+      $elem.parent().append( $counter_div );
     },
 
     /**
