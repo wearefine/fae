@@ -6,6 +6,7 @@ class Release < ActiveRecord::Base
   end
 
   validates :name, presence: true, length: {in: 3..15}, uniqueness: true, exclusion: %w(admin danny)
+  validates :body, length: { maximum: 900 }
   validates :price, numericality: {greater_than: 12}, allow_blank: true
   validates :video_url, format: /[a-zA-Z0-9_-]{11}/, allow_blank: true
   validates :wine_id, presence: true
