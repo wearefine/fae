@@ -335,7 +335,6 @@ Fae.form.validator = {
      * Creates counter HTML
      * @access protected
      * @param {jQuery} $elem - Input field to evaluate
-     * @return {HTML}
      */
     _createCounterDiv: function($elem) {
       var text = "Maximum Characters: " + $elem.data('length-max');
@@ -353,7 +352,6 @@ Fae.form.validator = {
      * Updates the counter count and class
      * @access protected
      * @param {jQuery} $elem - Input field to evaluate
-     * @return {HTML}
      */
     _updateCounter: function($elem) {
       var $count_span = $elem.siblings('.counter').find('.characters-left');
@@ -375,7 +373,7 @@ Fae.form.validator = {
      * Calculate character's left
      * @access protected
      * @param {jQuery} $elem - Input field being counted
-     * @see {@link validator.length_counter._setCounter _setCounter}
+     * @return {integer} The number of characters left
      */
     _charactersLeft: function($elem) {
       var input_value = $elem.val();
