@@ -299,8 +299,8 @@ Fae.form.validator = {
 
           $.grep(validations, function(item){
             if (item.kind === 'length'){
-              var max = item.options.maximum;
-              _this._setCounter($this, max);
+              $this.data('length-max', item.options.maximum);
+              _this._setupCounter($this);
             }
           });
         }
@@ -308,87 +308,22 @@ Fae.form.validator = {
     },
 
     /**
-     * Display characters left/available in a text field
-     * @access protected
-     * @param {jQuery} $elem - Input field to evaluate
-     * @param {Number} max - Maximum length of characters in field
-     */
-    _setCounter: function($elem, max) {
-      var current = this.__charactersLeft($elem, max);
-      var text = this.__createCounterText($elem, max, current);
-
-      if ($elem.siblings('.counter').length) {
-        $elem.siblings('.counter').remove();
-        this.__createCounterElem($elem, max, current, text);
-      } else {
-        this.__createCounterElem($elem, max, current, text);
-        this.__addCounterListener($elem, max);
-      }
-    },
-
-    /**
-     * Textual representation of characters left in field
-     * @access protected
-     * @param {jQuery} $elem - Input field to evaluate
-     * @param {Number} max - Maximum length of characters in field
-     * @param {Number} [current=max minus current field length] - Countdown from full length, usually max - present length
-     * @return {HTML}
-     * @see {@link validator.length_counter._setCounter _setCounter}
-     */
-    __createCounterText: function($elem, max, current) {
-      var prep = "Maximum Characters: " + max;
-      var text = "Characters Left: ";
-      if (current < 0) {
-        text = "Characters Over: ";
-      }
-      if (current > 0 || $elem.val().length > 0) {
-        prep += " / <span class='characters-left'>" + text + Math.abs(current) + "</span>";
-      }
-      return prep;
-    },
-
-    /**
-     * Add counter display to DOM
+     * Sets up the counter
      * @access protected
      * @param {jQuery} $elem - Input field being counted
-     * @param {Number} max - Maximum length of characters in field
-     * @param {Number} [current=max minus current field length] - Countdown from full length, usually max - present length
-     * @see {@link validator.length_counter._setCounter _setCounter}
      */
-    __createCounterElem: function($elem, max, current, text){
-      var $counter_div = $('<div />', {
-        class: 'counter',
-        data: {
-          max: max,
-          current: current
-        },
-        html: '<p>' + text + '</p>'
-      });
-
-      $elem.after( $counter_div );
-
-      if (current <= 0 || $elem.val().length >= max){
-        $elem.siblings('.counter').children('p').children('.characters-left').addClass('overCount');
-      }
-    },
-
-    /**
-     * Set counter on input change
-     * @access protected
-     * @param {jQuery} $elem - Input field being counted
-     * @param {Number} max - Maximum length of characters in field
-     * @see {@link validator.length_counter._setCounter _setCounter}
-     */
-    __addCounterListener: function($elem, max) {
+    _setupCounter: function($elem) {
       var _this = this;
+
+      _this._createCounterDiv($elem);
+      _this._updateCounter($elem);
 
       $elem
         .keyup(function() {
-          _this._setCounter($elem, max);
+          _this._updateCounter($elem);
         })
         .keypress(function(e) {
-          var current = _this.__charactersLeft($elem, max);
-          if (current <= 0) {
+          if (_this._charactersLeft($elem) <= 0) {
             if (e.keyCode !== 8 && e.keyCode !== 46) {
               e.preventDefault();
             }
@@ -397,15 +332,54 @@ Fae.form.validator = {
     },
 
     /**
+     * Creates counter HTML
+     * @access protected
+     * @param {jQuery} $elem - Input field to evaluate
+     * @return {HTML}
+     */
+    _createCounterDiv: function($elem) {
+      var text = "Maximum Characters: " + $elem.data('length-max');
+      text += " / <span class='characters-left'></span>";
+
+      var $counter_div = $('<div />', {
+        class: 'counter',
+        html: '<p>' + text + '</p>'
+      });
+
+      $elem.after( $counter_div );
+    },
+
+    /**
+     * Updates the counter count and class
+     * @access protected
+     * @param {jQuery} $elem - Input field to evaluate
+     * @return {HTML}
+     */
+    _updateCounter: function($elem) {
+      var $count_span = $elem.siblings('.counter').find('.characters-left');
+      var current = this._charactersLeft($elem);
+      var text;
+
+      if (current >= 0) {
+        text = 'Characters Left: ';
+        $count_span.removeClass('overCount');
+      } else {
+        text = 'Characters Over: ';
+        $count_span.addClass('overCount');
+      }
+
+      $count_span.text(text + Math.abs(current));
+    },
+
+    /**
      * Calculate character's left
      * @access protected
      * @param {jQuery} $elem - Input field being counted
-     * @param {Number} max - Maximum length of characters in field
      * @see {@link validator.length_counter._setCounter _setCounter}
      */
-    __charactersLeft: function($elem, max) {
+    _charactersLeft: function($elem) {
       var input_value = $elem.val();
-      var current = max - input_value.length;
+      var current = $elem.data('length-max') - input_value.length;
       // Rails counts a newline as two characters, so let's make up for it here
       current -= (input_value.match(/\n/g) || []).length;
 
