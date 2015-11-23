@@ -312,11 +312,9 @@ Fae.form.validator = {
      * @access protected
      * @param {jQuery} $elem - Input field to evaluate
      * @param {Number} max - Maximum length of characters in field
-     * @param {Number} current[current=max minus current field length] - Countdown from full length, usually max - present length
      */
-    _setCounter: function($elem, max, current) {
-      current = current || 0 + (max - $elem.val().length);
-
+    _setCounter: function($elem, max) {
+      var current = this.__charactersLeft($elem, max);
       var text = this.__createCounterText($elem, max, current);
 
       if ($elem.siblings('.counter').length) {
@@ -369,7 +367,7 @@ Fae.form.validator = {
 
       $elem.after( $counter_div );
 
-      if (current <= 0 || $elem.val().length >= 100){
+      if (current <= 0 || $elem.val().length >= max){
         $elem.siblings('.counter').children('p').children('.characters-left').addClass('overCount');
       }
     },
@@ -383,18 +381,35 @@ Fae.form.validator = {
      */
     __addCounterListener: function($elem, max) {
       var _this = this;
-      $elem.keyup(function() {
-        var current = (max - ($elem.val().length));
-        _this._setCounter($elem, max, current);
-      });
-      $elem.keypress(function(e) {
-        var current = (max - $elem.val().length);
-        if (current <= 0) {
-          if (e.keyCode !== 8 && e.keyCode !== 46) {
-            e.preventDefault();
+
+      $elem
+        .keyup(function() {
+          _this._setCounter($elem, max);
+        })
+        .keypress(function(e) {
+          var current = _this.__charactersLeft($elem, max);
+          if (current <= 0) {
+            if (e.keyCode !== 8 && e.keyCode !== 46) {
+              e.preventDefault();
+            }
           }
-        }
-      });
+        });
+    },
+
+    /**
+     * Calculate character's left
+     * @access protected
+     * @param {jQuery} $elem - Input field being counted
+     * @param {Number} max - Maximum length of characters in field
+     * @see {@link validator.length_counter._setCounter _setCounter}
+     */
+    __charactersLeft: function($elem, max) {
+      var input_value = $elem.val();
+      var current = max - input_value.length;
+      // Rails counts a newline as two characters, so let's make up for it here
+      current -= (input_value.match(/\n/g) || []).length;
+
+      return current;
     }
   },
 
