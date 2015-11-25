@@ -135,7 +135,7 @@ Fae.form.validator = {
    * @param {jQuery} $input - Input field (can be a chosen object)
    */
   _createSuccessClass: function ($input) {
-    var $styled_input = this._setChosenInput($input);
+    var $styled_input = this._setTargetInput($input);
     $styled_input.addClass('valid').removeClass('invalid');
 
     $input.parent().removeClass('field_with_errors').children('.error').remove();
@@ -148,7 +148,7 @@ Fae.form.validator = {
    * @param {Array} messages - Error messages to display
    */
   _createOrReplaceError: function ($input, messages) {
-    var $styled_input = this._setChosenInput($input);
+    var $styled_input = this._setTargetInput($input);
     $styled_input.addClass('invalid').removeClass('valid');
 
     var $wrapper = $input.closest('.input');
@@ -165,7 +165,7 @@ Fae.form.validator = {
    * @param {jQuery} $input - Input field for a chosen object
    * @return {jQuery} The chosen container
    */
-  _setChosenInput: function ($input) {
+  _setTargetInput: function ($input) {
     var $styled_input = $input;
 
     if (this._isChosen($input)) {
@@ -174,6 +174,8 @@ Fae.form.validator = {
       } else if ($input.next('.chosen-container').find('.chosen-choices').length) {
         $styled_input = $input.next('.chosen-container').find('.chosen-choices');
       }
+    } else if ($input.hasClass('mde-enabled')) {
+      $styled_input = $input.siblings('.editor-toolbar, .CodeMirror-wrap');
     }
 
     return $styled_input;
@@ -337,15 +339,17 @@ Fae.form.validator = {
      * @param {jQuery} $elem - Input field to evaluate
      */
     _createCounterDiv: function($elem) {
-      var text = "Maximum Characters: " + $elem.data('length-max');
-      text += " / <span class='characters-left'></span>";
+      if ($elem.siblings('.counter').length === 0) {
+        var text = "Maximum Characters: " + $elem.data('length-max');
+        text += " / <span class='characters-left'></span>";
 
-      var $counter_div = $('<div />', {
-        class: 'counter',
-        html: '<p>' + text + '</p>'
-      });
+        var $counter_div = $('<div />', {
+          class: 'counter',
+          html: '<p>' + text + '</p>'
+        });
 
-      $elem.parent().append( $counter_div );
+        $elem.parent().append( $counter_div );
+      }
     },
 
     /**
@@ -355,18 +359,20 @@ Fae.form.validator = {
      */
     _updateCounter: function($elem) {
       var $count_span = $elem.siblings('.counter').find('.characters-left');
-      var current = this._charactersLeft($elem);
-      var text;
+      if ($count_span.length) {
+        var current = this._charactersLeft($elem);
+        var text;
 
-      if (current >= 0) {
-        text = 'Characters Left: ';
-        $count_span.removeClass('overCount');
-      } else {
-        text = 'Characters Over: ';
-        $count_span.addClass('overCount');
+        if (current >= 0) {
+          text = 'Characters Left: ';
+          $count_span.removeClass('overCount');
+        } else {
+          text = 'Characters Over: ';
+          $count_span.addClass('overCount');
+        }
+
+        $count_span.text(text + Math.abs(current));
       }
-
-      $count_span.text(text + Math.abs(current));
     },
 
     /**

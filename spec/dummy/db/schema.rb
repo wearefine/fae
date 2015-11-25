@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013225140) do
+ActiveRecord::Schema.define(version: 20151125182540) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -294,6 +294,7 @@ ActiveRecord::Schema.define(version: 20151013225140) do
     t.date     "release_date"
     t.date     "show"
     t.date     "hide"
+    t.text     "description",       limit: 65535
   end
 
   create_table "selling_points", force: :cascade do |t|
