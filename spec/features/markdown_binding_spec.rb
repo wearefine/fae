@@ -9,7 +9,7 @@ feature 'Rebinding Markdown' do
     click_link 'Add Aroma'
     click_link 'Add Aroma'
 
-    expect(page).to have_selector('.CodeMirror', count: 1)
+    expect(page).to have_selector('.CodeMirror', count: 2)
   end
 
 end
