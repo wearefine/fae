@@ -283,7 +283,7 @@
 // Filters!
 .table-filter-area {
 	position: relative;
-	padding: 20px;
+	padding: 20px 170px 20px 20px;
 	border: 1px solid $c-border;
 	border-bottom: 0;
 	background: $c-form-table-bg;
@@ -326,7 +326,7 @@
 
 .table-filter-group {
 	display: inline-block;
-	margin-right: 30px;
+	margin: 0 30px 20px 0;
 }
 
 .main_content-thumb-col {
