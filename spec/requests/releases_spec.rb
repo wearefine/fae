@@ -33,3 +33,27 @@ describe 'releases#edit' do
   end
 
 end
+
+describe 'releases#create' do
+
+  context 'when from_existing' do
+
+    it 'should clone original item' do
+      release = FactoryGirl.create(:release, name: 'short')
+      admin_login
+      post admin_releases_path(from_existing: release.id)
+
+      expect(Release.all.collect(&:name)).to eq(['short', 'short-2'])
+    end
+
+    it 'should modify cloned items name if length validation is triggered' do
+      release = FactoryGirl.create(:release, name: 'hey a long name')
+      admin_login
+      post admin_releases_path(from_existing: release.id)
+
+      expect(Release.all.collect(&:name)).to eq(['hey a long name', 'hey a long na-2'])
+    end
+
+  end
+
+end
