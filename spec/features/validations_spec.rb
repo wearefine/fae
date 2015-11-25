@@ -68,6 +68,7 @@ feature 'validations' do
       fill_in 'release_name', with: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar euismod nisl, in pellentesque sapien ornare ac.'
       expect(page.find(:css, 'span.characters-left').text).to include('Characters Over')
     end
+
   end
 
   scenario 'should have error banner when errors are on the page', js: true do
