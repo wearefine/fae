@@ -129,6 +129,23 @@ Fae.form.text = {
           hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
         });
         FCH.addClass(fields[i], 'mde-enabled');
+
+        // code mirror events to hook into current form element functions
+        var $field = $(fields[i]);
+        editor.codemirror.on('change', function(){
+          // updates the original textarea's value for JS validations
+          $field.val(editor.value());
+          // update length counter
+          Fae.form.validator.length_counter._updateCounter($field);
+        });
+        editor.codemirror.on('focus', function(){
+          $field.parent().addClass('mde-focus');
+        });
+        editor.codemirror.on('blur', function(){
+          // trigger blur on the original textarea to trigger JS validations
+          $field.blur();
+          $field.parent().removeClass('mde-focus');
+        });
       }
     }
   }
