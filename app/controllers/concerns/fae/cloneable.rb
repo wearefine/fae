@@ -87,7 +87,7 @@ module Fae
     def rename_unique_attribute(item, attribute, value)
       index = 2
       symbol = attribute.to_sym
-      value = value + '-' + index.to_s
+      value = unique_name(item, attribute, value, index.to_s)
 
       begin
         record = item.class.where(symbol => value)
@@ -105,5 +105,17 @@ module Fae
       item.class.validators_on(attribute.to_sym).map(&:class).include? ActiveRecord::Validations::UniquenessValidator
     end
 
+    def unique_name(item, attribute, value, suffix)
+      new_value = value
+      item.class.validators_on(attribute.to_sym).each do |validator|
+        if validator.class.name == 'ActiveModel::Validations::LengthValidator' && validator.options[:maximum].present?
+          max_length = validator.options[:maximum] - (suffix.length + 1)
+          new_value = new_value[0...max_length]
+          break
+        end
+      end
+
+      "#{new_value}-#{suffix}"
+    end
   end
 end
