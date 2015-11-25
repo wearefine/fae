@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.2.1
+
+- enhancements
     + \#51603: Add grouped  options to fae_filter_select
     + \#52306: Add activity icon for the activity log link
     + \#52801: Add validation styles and length support to simple-mde
