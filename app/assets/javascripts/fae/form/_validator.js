@@ -339,15 +339,17 @@ Fae.form.validator = {
      * @param {jQuery} $elem - Input field to evaluate
      */
     _createCounterDiv: function($elem) {
-      var text = "Maximum Characters: " + $elem.data('length-max');
-      text += " / <span class='characters-left'></span>";
+      if ($elem.siblings('.counter').length === 0) {
+        var text = "Maximum Characters: " + $elem.data('length-max');
+        text += " / <span class='characters-left'></span>";
 
-      var $counter_div = $('<div />', {
-        class: 'counter',
-        html: '<p>' + text + '</p>'
-      });
+        var $counter_div = $('<div />', {
+          class: 'counter',
+          html: '<p>' + text + '</p>'
+        });
 
-      $elem.parent().append( $counter_div );
+        $elem.parent().append( $counter_div );
+      }
     },
 
     /**
