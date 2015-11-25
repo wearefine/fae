@@ -12,6 +12,7 @@
     + \#52588: Fallback to regular file input in IE9
     + \#52797: Use image size option to trigger image size validation error
     + \#52300: count newlines as two characters in character counter
+    + \#52889: Resolve invalid url_regex Regex (reported by Judge's JS)
 
 ## 1.2
 

@@ -9,7 +9,7 @@ class ValidationHelperCollection
   end
 
   def url_regex
-    URI::regexp(%w(http https))
+    /\A(https?:\/\/)/
   end
 
   def zip_regex
