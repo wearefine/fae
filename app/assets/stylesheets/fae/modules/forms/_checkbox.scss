@@ -1,6 +1,7 @@
-
-/* checkboxes */
-.input.boolean, .checkbox_collection--vertical, .checkbox_collection--horizontal {
+// Checkboxes
+.input.boolean,
+.checkbox_collection--vertical,
+.checkbox_collection--horizontal {
   display: block;
 
   input[type=checkbox] {
@@ -19,10 +20,12 @@
     h6 {
       display: inline-block;
       padding-top: 0;
+      padding-left: 6px;
     }
   }
 
-  label.checkbox:before, .checkbox label:before {
+  label.checkbox:before,
+  .checkbox label:before {
     content: "";
     position: absolute;
     top: -6px;
@@ -96,11 +99,13 @@
   }
 }
 
-.checkbox_collection--horizontal.checkbox_collection--horizontal {
-  label {
-    vertical-align: top;
-    width: 190px;
-    margin-bottom: 25px;
-    margin-right: 10px;
+.checkbox_collection--horizontal {
+  &.checkbox_collection--horizontal {
+    label {
+      vertical-align: top;
+      width: 190px;
+      margin-bottom: 25px;
+      margin-right: 10px;
+    }
   }
 }

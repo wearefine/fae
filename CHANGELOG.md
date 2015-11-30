@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + \#52680: Add spacing between label and helper text on checkbox fields
 
 ## 1.2.1
 
