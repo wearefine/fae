@@ -92,10 +92,16 @@
   }
 }
 
-.checkbox_collection--vertical.checkbox_collection--vertical {
-  label {
+.checkbox_collection--vertical {
+  &.checkbox_collection--vertical {
+    label {
+      display: block;
+      margin-bottom: 25px;
+    }
+  }
+
+  .checkbox {
     display: block;
-    margin-bottom: 25px;
   }
 }
 
