@@ -7,6 +7,7 @@
     + \#52680: Add spacing between label and helper text on checkbox fields
     + \#51982: Vertical checkboxes should be vertical
     + \#52696: Remove image/file on replace image for nested forms too
+    + Scope validations to current form to prevent main form from being validated on nested submission
 
 ## 1.2.1
 

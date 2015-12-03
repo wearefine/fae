@@ -30,7 +30,8 @@ Fae.form.validator = {
     FCH.$document.on('submit', 'form', function (e) {
       _this.is_valid = true;
 
-      $('[data-validate]').each(function () {
+      // Scope the data-validation only to the form submitted
+      $('[data-validate]', $(this)).each(function () {
         if ($(this).data('validate').length) {
           _this.judge_it($(this));
         }
