@@ -58,11 +58,20 @@ module Fae
       form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
-      form_tag(options[:action], form_hash) do
+      filter_header = content_tag(:div, class: 'table-filter-header') do
         concat content_tag :h2, options[:title]
         concat filter_search_field if options[:search]
-        concat capture(&block)
-        concat filter_submit_btns
+      end
+
+      form_tag(options[:action], form_hash) do
+        concat filter_header
+
+        filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
+          concat capture(&block)
+          concat filter_submit_btns
+        end
+
+        concat filter_group_wrapper
       end
     end
 
