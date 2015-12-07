@@ -76,13 +76,11 @@
 }
 
 .login-form-actions {
+	@include clearfix;
 	padding-bottom: 20px;
+
 	.boolean {
 		margin: 12px 0 0 0;
-	}
-
-	&:after {
-		@include clearfix();
 	}
 
 	@include bp(login_container) {

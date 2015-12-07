@@ -43,12 +43,17 @@
 	border-color: $color transparent transparent transparent;
 }
 
-@mixin clearfix() {
-	content: ".";
-	visibility: hidden;
-	display: block;
-	height: 0;
-	clear: both;
+// Clearfix
+@mixin clearfix {
+  &:before,
+  &:after {
+    content: ' ';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
 }
 
 @mixin opacity ($opacity) {
