@@ -33,12 +33,11 @@ feature 'Nested Form cancel button' do
     visit edit_admin_release_path(release)
 
     # open nested form, then cancel
-    click_link 'Add Aroma'
-    click_link 'Cancel'
-    page.find('.js-cancel-nested').click
+    click_link('Add Aroma')
+    page.find('.cancel-nested-button').click
 
     # save parent changes
-    click_link 'Save Settings'
+    click_button('Save Settings')
 
     expect(page).to_not have_content('Your changes were not saved.')
   end
