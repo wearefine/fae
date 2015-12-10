@@ -50,6 +50,10 @@ input[type=text], input[type=number], input[type=textarea], input[type=url], inp
     color: $c-text-heavy;
     font-weight: bold;
   }
+
+  .cancel-nested-button {
+    margin-left: 10px;
+  }
 }
 
 .js-add-link {

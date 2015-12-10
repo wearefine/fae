@@ -16,6 +16,8 @@ Fae.form.ajax = {
     this.addEditLinks();
     this.addEditSubmission();
 
+    this.addCancelLinks();
+
     this.imageDeleteLinks();
     this.htmlListeners();
     this.applyCookies();
@@ -81,6 +83,25 @@ Fae.form.ajax = {
       Fae.form.text.initMarkdown();
 
       $wrapper.find('.hint').hinter();
+    });
+  },
+
+  /**
+   * Click event listener for cancel links applied to both index and nested forms; clears form to prevent saving errors
+   */
+  addCancelLinks: function() {
+    var _this = this;
+
+    this.$addedit_form.on('click', '.js-cancel-nested', function(ev) {
+      ev.preventDefault();
+      var $this = $(this);
+      var $form_wrapper = $this.closest('.js-addedit-form-wrapper');
+
+      if ($form_wrapper.length) {
+        $form_wrapper.slideUp('normal', function(){
+          $form_wrapper.empty();
+        });
+      }
     });
   },
 
