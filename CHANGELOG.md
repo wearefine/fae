@@ -3,8 +3,8 @@
 ## Unreleased
 
 - enhancements
-- bugs
     + \#52830: Add cancel button to nested forms
+- bugs
     + \#52680: Add spacing between label and helper text on checkbox fields
     + \#51982: Vertical checkboxes should be vertical
     + \#52696: Remove image/file on replace image for nested forms too
