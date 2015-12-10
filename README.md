@@ -6,29 +6,15 @@ Fae requires Rails >= 4.1.
 
 ## Documentation
 
-### Installation and Usage
+* [Installation and Usage](docs/index.md)
+* [Form and View Helpers](docs/helpers.md)
+* [Upgrading Guide](docs/upgrading.md)
+* [Changelog](CHANGELOG.md)
+* [Contributing and Maintenance](CONTRIBUTING.md)
 
-https://bitbucket.org/wearefine/fae/src/master/docs/index.md
+## License
 
-### Form and View Helpers
-
-https://bitbucket.org/wearefine/fae/src/master/docs/helpers.md
-
-### Upgrading Guide
-
-https://bitbucket.org/wearefine/fae/src/master/docs/upgrading.md
-
-### Changelog
-
-https://bitbucket.org/wearefine/fae/src/master/CHANGELOG.md
-
-### Contibuting and Maintenance
-
-https://bitbucket.org/wearefine/fae/src/master/CONTRIBUTING.md
-
-### License
-
-https://bitbucket.org/wearefine/fae/src/master/LICENSE
+[MIT](LICENSE)
 
 
 
