@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.2.2
+
+- enhancements
     + \#52830: Add cancel button to nested forms
 - bugs
     + \#52680: Add spacing between label and helper text on checkbox fields
