@@ -1,4 +1,4 @@
-set :application, 'fae.afinedevelopment.com'
+set :application, 'Fae Dummy'
 set :repo_url, 'git@github.com:wearefine/fae.git'
 
 set :scm, :git
@@ -17,7 +17,7 @@ set :keep_releases, 5
 # variable for forked version of capistrano-rails
 set :rails_path, 'spec/dummy'
 
-server 'fae.afinedevelopment.com',
+server '54.164.40.189',
   user: 'fae',
   roles: %w{web app db},
   port: 8022,
