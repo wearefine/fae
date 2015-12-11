@@ -120,14 +120,12 @@ Rails.application.configure do
   # development.rb
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   # remote_development.rb
-  config.action_mailer.default_url_options = { host: 'dev.yoursite.afinesite.com' }
+  config.action_mailer.default_url_options = { host: 'dev.yoursite.com' }
   # stage.rb
-  config.action_mailer.default_url_options = { host: 'stage.yoursite.afinesite.com' }
-  # production.rb
-  config.action_mailer.default_url_options = { host: 'yoursite.afinesite.com' }
+  config.action_mailer.default_url_options = { host: 'stage.yoursite.com' }
   # production.rb
   config.action_mailer.default_url_options = { host: 'yoursite.com' }
 end
 ```
 
-Be sure to update this each time your domain or subdomain changes (i.e. when you launch the website and the project drops .afinesite and .afinedevelopment)
+Be sure to update this each time your domain or subdomain changes.
