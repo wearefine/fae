@@ -5,6 +5,11 @@
 - enhancements
 - bugs
 
+## 1.2.3
+
+- enhancements
+    + Update docs for github and prepare gem for release
+
 ## 1.2.2
 
 - enhancements

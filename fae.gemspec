@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = "A flexible CMS for Rails"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,docs,lib,vendor}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   # Rails dependencies
