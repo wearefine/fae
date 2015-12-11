@@ -7,12 +7,12 @@ Gem::Specification.new do |s|
   s.version     = Fae::VERSION
   s.authors     = ["FINE"]
   s.email       = ["fae@wearefine.com"]
-  s.homepage    = "https://bitbucket.org/wearefine/fae"
+  s.homepage    = "https://github.com/wearefine/fae"
   s.summary     = "A flexible CMS for Rails"
   s.description = "A flexible CMS for Rails"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,docs,lib,vendor}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   # Rails dependencies
