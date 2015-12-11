@@ -6,7 +6,8 @@ Fae requires Rails >= 4.1.
 
 ## Documentation
 
-* [Installation and Usage](docs/index.md)
+* [Installation](docs/index.md)
+* [Usage](docs/usage.md)
 * [Form and View Helpers](docs/helpers.md)
 * [Upgrading Guide](docs/upgrading.md)
 * [Changelog](CHANGELOG.md)

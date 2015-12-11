@@ -23,4 +23,4 @@ before_script:
   - git clone git@github.com:wearefine/shippable-setup.git
 script:
   - xvfb-run rspec -f JUnit -o shippable/testresults/results.xml
-  - ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@bitbucket.org; cap $DEPLOY_BRANCH deploy'
+  - ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@github.com; cap $DEPLOY_BRANCH deploy'

@@ -1,5 +1,5 @@
 set :application, 'fae.afinedevelopment.com'
-set :repo_url, 'git@bitbucket.org:wearefine/fae.git'
+set :repo_url, 'git@github.com:wearefine/fae.git'
 
 set :scm, :git
 
