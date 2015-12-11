@@ -127,3 +127,5 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'yoursite.com' }
 end
 ```
+
+Be sure to update this each time your domain or subdomain changes.
