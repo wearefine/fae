@@ -1,6 +1,10 @@
 # Helpers
 
-[TOC]
+* [Form Helpers](#form-helpers)
+* [Nested Form Helpers](#nested-form-helpers)
+* [View Helpers](#view-helpers)
+* [Fae Partials](#fae-partials)
+* [Add-ons](#add-ons)
 
 ---
 
@@ -17,7 +21,7 @@ fae_method_name(f, attribute, options)
 ```
 
 | argument | description |
-|-|-|
+| -------- | ----------- |
 | f | **(required)** The variable simple_form passes through in it's block. The actual variable can vary based on how you setup the view, but `f` is the generated default. |
 | attribute | **(required)** The attribute the form element is displaying. It's recommended you use symbols over strings. |
 | options | An optional hash of options to customize the form element. |
@@ -25,7 +29,7 @@ fae_method_name(f, attribute, options)
 ### Global Options
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | label | string | attribute.humanize | the form label |
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal (cannot be combined with `dark_hint`) |
@@ -63,7 +67,7 @@ fae_input f, :description, markdown_supported: true
 fae_association is directly derived from simple_form's f.association. Again, the element it renders depends on the association type.
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | collection | array or AR:Relation | AssociationClass.all | an array or ActiveRecord object of items to populate the element |
 
 **Examples**
@@ -76,7 +80,7 @@ fae_association f, :people, collection: Person.active
 ## fae_checkbox
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | type | 'stacked' or 'inline' | stacked | determines how multiple checkboxes are displayed |
 
 **Examples**
@@ -94,7 +98,7 @@ fae_checkbox f, :promos, type: 'inline', collection: Promo.live
 ## fae_radio
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | type | 'stacked' or 'inline' | stacked | determines how multiple checkboxes are displayed |
 
 **Examples**
@@ -112,7 +116,7 @@ fae_radio f, :wine
 ## fae_pulldown
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | collection | array or AR:Relation | AssociationClass.all | an array or ActiveRecord object of items to populate the element |
 | size | 'long' or 'short' | long | determines the size of the pulldown |
 | search | boolean | search is displayed with more than 10 items | determines whether or not to show the search bar |
@@ -129,7 +133,7 @@ fae_pulldown f, :wine, size: 'short', collection: Wine.order(:name)
 *associations only*
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | two_pane | boolean | false | By default this will display a chosen style multiselect, setting this to true will display the 'two pane' style. |
 
 **Examples**
@@ -147,7 +151,7 @@ fae_multiselect f, :selling_points, two_pane: true
 ## fae_grouped_select
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | collection | array or AR:Relation | AssociationClass.all | an array or ActiveRecord object of items to populate the element |
 | groups | array of strings | | must be used with labels |
 | labels | array of strings | | must be used with groups |
@@ -179,7 +183,7 @@ fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 *attributes only*
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | prefix | string | | **(required)** string to appear in prefix box |
 | icon | boolean | false | determines whether or not to display prefix icon |
 
@@ -194,7 +198,7 @@ fae_prefix f, :price, prefix: '$', placeholder: '50.00'
 *attributes only*
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | suffix | string | | **(required)** string to appear in suffix box |
 | icon | boolean | false | determines whether or not to display prefix icon |
 
@@ -220,13 +224,12 @@ fae_video_url f, :video_url
 
 # Nested Form Helpers
 
-
 ## fae_image_form
 
 *Fae::Image association only*
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | label         | string | image_name.to_s.humanize | the uploader's label |
 | helper_text         | string | | the uploader's helper text|
 | alt_label           | string | "#{image_label} alt text" | the alt field's label |
@@ -249,7 +252,7 @@ fae_image_form f, :logo, label: 'Corporate Logo', required: true
 *Fae::File association only*
 
 | option | type | default | description |
-|-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | label         | string | file_name.to_s.humanize | the uploader's label |
 | helper_text   | string | | the uploader's helper text|
 | required      | boolean | false | adds required validation to the uploader |
@@ -268,7 +271,7 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 *Fae::TextField and Fae::TextArea association only*
 
 | option | type | default | description |
-|-|-|-|-|
+| ------ | ---- | ------- | ----------- |
 | label         | string | attribute.to_s.titleize | the fields's label |
 | helper_text   | string | | the field's helper text |
 | hint          | string | | the field's hint text (supports HTML) |
@@ -289,7 +292,7 @@ fae_content_form f, :body, markdown: true
 Displays the filter form, including the search field, submit and reset buttons. Accepts options and a block.
 
 | option | type    | default                                | description |
-|--------|---------|----------------------------------------|-|
+|--------|---------|----------------------------------------|-------------|
 | action | string  | "#{@index_path}/filter" | the path the form submits to |
 | title  | string  | "Search #{@klass_humanized.pluralize}" | the h2 text in the filter form |
 | search | boolean | true                                   | displays the search field |
@@ -309,7 +312,7 @@ Displays the filter form, including the search field, submit and reset buttons. 
 Dislays a select tag to be used within a `fae_filter_form`.
 
 | option       | type                    | default                        | description |
-|--------------|-------------------------|--------------------------------|-|
+|--------------|-------------------------|--------------------------------|-------------|
 | label        | string                  | attribute.to_s.titleize        | label on select |
 | collection   | ActiveRecord collection | AttributeAsClass.for_fae_index | the collection of AR objects to populate the select options |
 | label_method | symbol                  | :fae_display_field             | the attribute to use as the label in the select options |
@@ -363,7 +366,7 @@ You can use fae_clone_button in your list view tables to provide easy access to 
 fae_clone_button item
 ```
 
-More info about cloning can be found here: https://bitbucket.org/wearefine/fae/src/master/docs/cloning.md
+More info about cloning can be found here: [cloning.md](cloning.md)
 
 ## form_header
 
@@ -422,7 +425,7 @@ render 'fae/shared/index_header', title: 'Something Entirely Different', new_but
 Displays breadcrumb links and form title.
 
 | option | type | description |
-|-|-|-|
+|--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
 | breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
 
@@ -461,7 +464,7 @@ The nested table works in tandem with a nested model, typically created by the n
 The nested_table should go after the main form ends and should only placed on the edit page (it requires the parent_item to be present to associate new items to).
 
 | option | type | default | description |
-|-|-|-|-|
+|--------|------|---------|-------------|
 | index | false | boolean | used for nested index forms |
 | assoc   | symbol | | **(required)** the association's name, or the item's name if it's for the index  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
@@ -490,7 +493,7 @@ Full Slim implementation with section wrapper and edit page conditional
 
 ## recent_changes
 
-Displays recent changes to an object as logged by [Fae's change tracker](https://bitbucket.org/wearefine/fae/src/master/docs/index.md#markdown-header-change-tracker) in a table. Columns include the change's user, type, updated attributes and datetime.
+Displays recent changes to an object as logged by [Fae's change tracker](usage.md#markdown-header-change-tracker) in a table. Columns include the change's user, type, updated attributes and datetime.
 
 This partial is best placed at the bottom of the form and will automatically hide itself in create forms, where there wouldn't be changes to display.
 

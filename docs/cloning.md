@@ -1,6 +1,7 @@
 # Cloning
 
-[TOC]
+* [Basic](#basic)
+* [Advanced](#advanced)
 
 ---
 
