@@ -1,4 +1,4 @@
-set :application, 'Fae Dummy'
+set :application, 'fae'
 set :repo_url, 'git@github.com:wearefine/fae.git'
 
 set :scm, :git
