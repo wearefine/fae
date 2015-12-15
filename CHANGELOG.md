@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + \#50230: Check if Fae Roles have been created before recreating
 - bugs
 
 ## 1.2.3
