@@ -1,10 +1,11 @@
 namespace :fae do
   desc "Seeds the parent app with Fae's defaults"
   task :seed_db => :environment do
-    Fae::Role.delete_all
-    Fae::Role.create(name: 'super admin', position: 0)
-    Fae::Role.create(name: 'admin', position: 1)
-    Fae::Role.create(name: 'user', position: 2)
+    if Fae::Role.first.blank?
+      Fae::Role.create(name: 'super admin', position: 0)
+      Fae::Role.create(name: 'admin', position: 1)
+      Fae::Role.create(name: 'user', position: 2)
+    end
 
     if Fae::Option.first.blank?
       option = Fae::Option.new({
