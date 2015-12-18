@@ -1,9 +1,12 @@
 // Globals
 @import
-  'globals/breakpoints',
-  'globals/variables',
+  'globals/imports/finescss/fine',
+  'globals/imports/variables',
+  'globals/imports/mixins'
+;
+
+@import
   'globals/fonts',
-  'globals/mixins',
   'globals/icons',
   'globals/plugins',
   'globals/base',
