@@ -7,7 +7,7 @@
 	min-height: 100%;
 	min-height: calc(100% - 90px); /* roughly the size of the header */
 
-	@include bp(show_nav) {
+	@include bp(large) {
 		padding-left: $main_nav_width;
 	}
 
@@ -141,7 +141,7 @@
 	margin-top: 5px;
 	margin-bottom: -15px;
 
-	@include bp(tablet) {
+	@include bp(medium) {
 		padding-right: 240px;
 	}
 
@@ -180,7 +180,7 @@
 .main_content-header-save {
 	margin-top: 30px;
 
-	@include bp(tablet) {
+	@include bp(medium) {
 		position: absolute;
 		right: 30px;
 		bottom: 0;
@@ -201,7 +201,7 @@
 .main_content-header-csv {
 	margin-top: 30px;
 
-	@include bp(tablet) {
+	@include bp(medium) {
 		position: absolute;
 		right: 155px;
 		bottom: 0;
