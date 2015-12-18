@@ -29,13 +29,41 @@ Fae.navigation = {
     var _this = this;
     var current_base_url = window.location.pathname.replace('#', '');
     var $currentLink = $('#main_nav a[href="' + current_base_url + '"]');
+
+    /**
+     * Apply current nav class or keep looking deeper from path for the answer
+     * @private
+     * @param {String} mutated_url - The remaining URL to be checked
+     * @return {Function} or add class
+     */
+    function findCurrentNavRecursively(mutated_url) {
+      // Remove last element of URL
+      var url_array = mutated_url.split('/');
+      url_array.pop();
+      mutated_url = url_array.join('/');
+
+      var $currentLink = $('#main_nav a[href="' + mutated_url + '"]');
+      if ($currentLink.length) {
+        $currentLink.addClass('current');
+
+      } else {
+        // Defend from exceeding call stack (SUPER RECURSION)
+        if (url_array.length) {
+          // If it can't be found, start over and try again
+          findCurrentNavRecursively(mutated_url);
+
+        }
+
+      }
+    }
+
     if ($currentLink.length) {
       // Try to find link that matches the URL exactly
       $currentLink.addClass('current');
 
     } else {
       // If link can't be found, recursively search for it
-      this._findCurrentNavRecursively(current_base_url);
+      findCurrentNavRecursively(current_base_url);
 
     }
 
@@ -43,35 +71,8 @@ Fae.navigation = {
   },
 
   /**
-   * Apply current nav class or keep looking deeper from path for the answer
-   * @access protected
-   * @param {String} mutated_url - The remaining URL to be checked
-   * @return {Function} or add class
-   */
-  _findCurrentNavRecursively: function(mutated_url) {
-    // Remove last element of URL
-    var url_array = mutated_url.split('/');
-    url_array.pop();
-    mutated_url = url_array.join('/');
-
-    var $currentLink = $('#main_nav a[href="' + mutated_url + '"]');
-    if ($currentLink.length) {
-      $currentLink.addClass('current');
-
-    } else {
-      // Defend from exceeding call stack (SUPER RECURSION)
-      if (url_array.length) {
-        // If it can't be found, start over and try again
-        this._findCurrentNavRecursively(mutated_url);
-
-      }
-
-    }
-  },
-
-  /**
    * Set nested links to be current in the nav
-   * @access protected
+   * @protected
    */
   _updateNavClasses: function() {
     $('#main_nav a.current').each(function() {
