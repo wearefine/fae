@@ -38,7 +38,7 @@
   overflow: auto;
   @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
 
-  @include bp(show_nav) {
+  @include bp(large) {
     display: none;
     position: relative;
     height: auto;
@@ -53,7 +53,7 @@
   background-color: $c-light_grey;
   color: $c-white;
 
-  @include bp(show_nav) {
+  @include bp(large) {
     display: none;
   }
 
