@@ -1,60 +1,51 @@
-nav#main_nav
-  ul.main_nav-nav
+nav#js-main_nav.main_nav
+  ul
     - @fae_nav_items.each do |item|
       ruby:
         item[:path] ||= '#'
-        main_class = item[:sublinks].present? ? 'main_nav-accordion' : ''
+        main_class = item[:sublinks].present? ? 'main_nav-accordion js-accordion' : ''
         main_class << " #{item[:class_name]}" if item[:class_name].present?
-        header_drawer_class = 'header_drawer-content'
-        header_drawer_class << ' header_drawer-content-only' unless item[:sublinks].present?
 
       li class=main_class
-        span.main_nav-header data-link=item[:path]
-          span.header_drawer-content-post
-            a.main_nav-link href=item[:path]
-              span = item[:text]
-
-          span class=header_drawer_class = item[:text]
+        a href=item[:path] = item[:text]
 
         - if item[:sublinks].present?
           ul.main_nav-sub-nav
-            li.main_nav-sub-header-mobile
+            li
+              / <span>s are for the mobile titles
               span = item[:text]
 
             - item[:sublinks].each do |subitem|
               ruby:
                 subitem[:path] ||= '#'
-                sub_class = subitem[:sublinks].present? ? 'sub_nav-accordion' : ''
+                sub_class = subitem[:sublinks].present? ? 'main_nav-accordion -sub js-accordion' : ''
                 sub_class << " #{item[:class_name]}" if item[:class_name].present?
-                link_class = 'main_nav-sub-link'
+                link_class = ''
                 link_class << " #{subitem[:class_name]}" if subitem[:class_name].present?
-                link_class << ' with-third_nav' if subitem[:sublinks].present?
 
               li class=sub_class
                 a class=link_class href=subitem[:path] = subitem[:text]
 
                 - if subitem[:sublinks].present?
-                  ul.main_nav-third-nav
-                    li.main_nav-third-header-mobile
-                      span = subitem[:text]
+                  ul.main_nav-sub-nav
+                    li: span = subitem[:text]
                     - subitem[:sublinks].each do |thirditem|
                       - thirditem[:path] ||= '#'
-                      li
-                        a.main_nav-third-link href=thirditem[:path] = thirditem[:text]
+                      li: a href=thirditem[:path] = thirditem[:text]
 
     - if user_signed_in?
       li.main_nav-header-mobile
         span.header_drawer-content-username = current_user.full_name
       li.main_nav-header-mobile
-        a.header_drawer-content.header_drawer-content-logout href=fae.destroy_user_session_path Log Out
+        a.main_nav-icon-link.-logout href=fae.destroy_user_session_path Log Out
       li.main_nav-header-mobile
-        a.header_drawer-content.header_drawer-content-settings href=fae.settings_path Your Settings
+        a.main_nav-icon-link.-settings href=fae.settings_path Your Settings
       li.main_nav-header-mobile
-        a.header_drawer-content.header_drawer-content-support href=fae.help_path Support
+        a.main_nav-icon-link.-support href=fae.help_path Support
       li.main_nav-header-mobile
         - if @option.stage_url.present? || @option.live_url.present?
           span.main_nav-header
-            span.header_drawer-content.header_drawer-content-viewsite View Site
+            span.header_drawer-content.-viewsite View Site
           ul.main_nav-sub-nav
             li.main_nav-sub-header-mobile
               span View Site
@@ -63,4 +54,4 @@ nav#main_nav
             li
               a.main_nav-sub-link href=@option.live_url target="_blank" Live Site
         - else
-          a.header_drawer-content.header_drawer-content-viewsite href=@option.stage_url target="_blank" Preview Site
+          a.main_nav-icon-link.-viewsite href=@option.stage_url target="_blank" Preview Site
