@@ -3,7 +3,7 @@
     margin-left: $main_nav_width;
   }
 
-  #main_nav {
+  .main_nav {
     margin-left: 0;
   }
 
@@ -26,25 +26,6 @@
 .js-sub-menu-level-active .main_nav-third-nav {
   margin-left: 0;
   z-index: 1;
-}
-
-.main_nav-sub-nav, .main_nav-third-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: $main_nav_width;
-  margin-left: -$main_nav_width;
-  overflow: auto;
-  @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
-
-  @include bp(large) {
-    display: none;
-    position: relative;
-    height: auto;
-    width: auto;
-    margin-left: 0;
-  }
 }
 
 .main_nav-sub-header-mobile, .main_nav-third-header-mobile {

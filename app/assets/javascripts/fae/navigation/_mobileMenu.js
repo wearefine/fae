@@ -18,7 +18,6 @@ Fae.navigation.mobileMenu = {
     this.resizer();
     this.subMainHeaderClickListener();
     this.thirdNavClickListener();
-    this.mainNavLinkClickListener();
   },
 
   /**
@@ -29,12 +28,11 @@ Fae.navigation.mobileMenu = {
 
     $('#main_nav-menu_button').click(function(e){
       e.preventDefault();
-      var $html = $('html');
 
-      if ($html.hasClass(_this.toggle_class)) {
+      if (FCH.$html.hasClass(_this.toggle_class)) {
         _this.closeAll();
       } else {
-        $html.addClass(_this.toggle_class);
+        FCH.$html.addClass(_this.toggle_class);
       }
     });
   },
@@ -44,22 +42,11 @@ Fae.navigation.mobileMenu = {
    */
   closeAll: function() {
     // remove the HTML class which closes the first level
-    $('html').removeClass(this.toggle_class);
+    FCH.$html.removeClass(this.toggle_class);
 
     // remove toggle_level_class and sub_toggle_level_class classes
     $('.' + this.toggle_level_class).removeClass(this.toggle_level_class);
     $('.' + this.sub_toggle_level_class).removeClass(this.sub_toggle_level_class);
-  },
-
-  /**
-   * On click in nav, close all open drawers
-   */
-  mainNavLinkClickListener: function() {
-    var _this = this;
-
-    $('#main_nav a').click(function(){
-      _this.closeAll();
-    });
   },
 
   /**
@@ -68,12 +55,22 @@ Fae.navigation.mobileMenu = {
   mainHeaderClickListener: function() {
     var _this = this;
 
-    $('.main_nav-header').click(function(e){
+    $('#js-main_nav a').click(function(e){
       var $this = $(this);
+      var $parent = $this.closest('li');
+
+      // // If element has sublinks
+      // if( $this.next() ) {
+      //   e.preventDefault()
+
+      //   _this.closeAll();
+
+      //   $parent.addClass(_this.toggle_level_class);
+      // }
 
       if (!$this.hasClass('js-menu-header-active') && FCH.bp.large_down) {
         e.preventDefault();
-        var $parent = $this.closest('li');
+
         var link_url = $this.data('link');
 
         // Add JS toggle class
