@@ -44,3 +44,6 @@ gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
 gem 'mysql2'
+
+# For managing the outpuf of the JSON API
+gem 'active_model_serializers', '~> 0.10.0.rc1'

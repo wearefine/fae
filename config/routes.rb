@@ -37,6 +37,17 @@ Fae::Engine.routes.draw do
   get 'content_blocks/:slug' => '/admin/content_blocks#edit', as: 'edit_content_block'
   match 'content_blocks/:slug/update' => '/admin/content_blocks#update', via: [:put, :patch], as: 'update_content_block'
 
+  get '/generate-api-key', to: 'options#generate_api_key', as: 'api_create'
+
+  namespace :api, defaults: { format: 'json' } do
+    scope :v1 do
+      # get 'retailers' => 'retailers#domestic', as: :api_retailers
+      # get 'distributors' => 'retailers#international', as: :api_distibutors
+      # get 'products' => 'retailers#products', as: :api_products
+      # get 'countries' => 'retailers#countries', as: :api_countries
+    end
+  end
+
   # catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
 

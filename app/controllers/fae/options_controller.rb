@@ -19,6 +19,10 @@ module Fae
       end
     end
 
+    def generate_api_key
+      ApiKey.generate_access_token
+    end
+
     private
 
       # Only allow a trusted parameter "white list" through.
