@@ -17,6 +17,7 @@ module Fae
       respond_to do |format|
         format.html
         format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_s(:filename) + '.csv'  }
+        format.json { render json: @items }
       end
     end
 
