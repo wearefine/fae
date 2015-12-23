@@ -5,6 +5,7 @@
 - enhancements
     + \#50230: Check if Fae Roles have been created before recreating
 - bugs
+    + \#50440: Persist checked state on nested forms
 
 ## 1.2.3
 
