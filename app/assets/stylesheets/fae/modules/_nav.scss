@@ -21,7 +21,7 @@
 	left: 0;
 	width: $main_nav_width;
 	height: 100%;
-	margin-left: -$main_nav_width;
+	margin-left: negate($main_nav_width);
 	overflow: auto;
 	padding: 10px 5px 10px 0;
 	background: image-url('fae/bg_tile.gif');
@@ -32,20 +32,16 @@
 		margin-left: 0;
 	}
 
-	span {
-		@extend %inset-nav-shadow;
-		margin-bottom: 0;
-		margin-right: -5px;
-
-		@include bp(large) {
-			display: none;
-		}
-	}
-
 	a {
 		@extend %main_nav-all_links;
 		position: relative;
 		padding: 15px 10px 15px 20px;
+
+		&.current {
+			padding-left: 5px;
+			border-left: 5px solid $c-custom-highlight;
+			color: $c-custom-highlight;
+		}
 
 		@include bp(large) {
 			padding: 10px 20px 10px 10px;
@@ -122,42 +118,6 @@
 	ul {
 		display: none;
 	}
-
-}
-
-.main_nav-icon-link {
-	@extend %inset-nav-shadow;
-	color: $c-dark_grey;
-	background: $c-lightest_grey;
-
-	&:after {
-		top: 15px;
-		font-size: 16px;
-	}
-
-	&.-logout {
-		&:after {
-			@extend .icon-logout:before;
-		}
-	}
-
-	&.-settings {
-		&:after {
-			@extend .icon-settings:before;
-		}
-	}
-
-	&.-support {
-		&:after {
-			@extend .icon-support:before;
-		}
-	}
-
-	&.-viewsite {
-		&:after {
-			@extend .icon-offlink:before;
-		}
-	}
 }
 
 .main_nav-sub-nav {
@@ -165,6 +125,92 @@
 
 	@include bp(large) {
 		background: $c-nav-sub-bg-active;
+	}
+}
+
+.main_nav-sub-nav-admin {
+	a {
+		&.-users,
+		&.-settings,
+		&.-activity {
+			position: relative;
+
+			&:after {
+				@include icon_stuff();
+				position: absolute;
+				right: 10px;
+				top: 11px;
+				font-size: 15px;
+				color: $c-nav-icons;
+			}
+
+			&:hover:after {
+				color: $c-nav-icons-hover;
+			}
+		}
+
+		&.-users {
+			&:after {
+				@extend .icon-users:before;
+			}
+		}
+
+		&.-settings {
+			&:after {
+				@extend .icon-settings:before;
+			}
+		}
+
+		&.-activity {
+			&:after {
+				@extend .icon-bars:before;
+			}
+		}
+	}
+}
+
+.main_nav-header-mobile {
+	@include bp(large) {
+		display: none;
+	}
+
+	a {
+		@extend %inset-nav-shadow;
+		color: $c-dark_grey;
+		background: $c-lightest_grey;
+
+		&:after {
+			@include icon_stuff();
+			top: 15px;
+			right: 13px;
+			position: absolute;
+			font-size: 16px;
+			color: $c-nav-icons;
+		}
+
+		&.-logout {
+			&:after {
+				@extend .icon-logout:before;
+			}
+		}
+
+		&.-settings {
+			&:after {
+				@extend .icon-settings:before;
+			}
+		}
+
+		&.-support {
+			&:after {
+				@extend .icon-support:before;
+			}
+		}
+
+		&.-viewsite {
+			&:after {
+				@extend .icon-offlink:before;
+			}
+		}
 	}
 }
 
@@ -182,15 +228,21 @@
   }
 }
 
-.main_nav-sub-link {
+.main_nav-third-link {
+	@include bp(large) {
+		padding: 10px 10px 10px 30px;
+	}
+}
 
-	&.-users,
-	&.-settings,
-	&.-activity {
+.main_nav-link-dashboard {
+	a,
+	.header_drawer-content {
 		position: relative;
 
 		&:after {
+			@extend .icon-home:before;
 			@include icon_stuff();
+			@include transition(color, .2s);
 			position: absolute;
 			right: 10px;
 			top: 11px;
@@ -202,65 +254,15 @@
 			color: $c-nav-icons-hover;
 		}
 	}
-
-	&.-users {
-		&:after {
-			@extend .icon-users:before;
-		}
-	}
-
-	&.-settings {
-		&:after {
-			@extend .icon-settings:before;
-		}
-	}
-
-	&.-activity {
-		&:after {
-			@extend .icon-bars:before;
-		}
-	}
 }
 
-.main_nav-third-link {
-	@include bp(large) {
-		padding: 10px 10px 10px 30px;
-	}
-}
-
-.main_nav-link-dashboard a, .main_nav-link-dashboard .header_drawer-content {
-	position: relative;
-
-	&:after {
-		@extend .icon-home:before;
-		@include icon_stuff();
-		@include transition(color, .2s);
-		position: absolute;
-		right: 10px;
-		top: 11px;
-		font-size: 15px;
-		color: $c-nav-icons;
-	}
-
-	&:hover:after {
-		color: $c-nav-icons-hover;
-	}
-}
-
-
-/* when the main nav is active */
+// when the main nav is current
 @include bp(large) {
 	.main_nav-accordion.current {
 		background: $c-nav-sub-bg-active;
 
-		a {
-			color: $c-nav-link;
-
-			&.current {
-				padding-left: 5px;
-				border-left: 5px solid $c-custom-highlight;
-				color: $c-custom-highlight;
-			}
+		a.current {
+			padding-left: 15px;
 		}
 
 		.main_nav-accordion {
@@ -281,119 +283,7 @@
 	}
 }
 
-/* Utility nav. View Site, Support, Username, etc */
-#main_header .utility_nav {
-	display: none;
-	position: absolute;
-	right: 20px;
-	top: -webkit-calc(50% - .5em);
-	top: calc(50% - .5em);
-
-	@include bp(large) {
-		display: block;
-	}
-
-	.utility_nav-clicked {
-		color: white;
-
-		&:hover {
-			color: white;
-		}
-
-		& ~ .utility_sub_nav {
-			max-height: 100px;
-		}
-	}
-
-	li {
-		display: inline-block;
-		margin-left: 20px;
-		position: relative;
-
-		ul {
-			width: 124px;
-			max-height: 0;
-			overflow: hidden;
-			background-color: $c-utility-sub-nav-bg;
-			@include border-radius(2px);
-			@include box-shadow(0,0,8px,-2px,$c-box_shadow);
-			position: absolute;
-			top: 30px;
-			right: 0;
-			z-index: 2;
-			@include transition(max-height, .2s, ease-in-out);
-
-			li {
-				display: block;
-				width: 100%;
-				margin-left: 0;
-
-				&:first-of-type {
-					margin-top: 8px;
-				}
-
-				&:last-of-type {
-					margin-bottom: 8px;
-				}
-
-				a {
-					display: block;
-					background-color: $c-utility-sub-nav-link-bg;
-					font-size: 12px;
-					color: $c-utility-sub-nav-link-color;
-					padding: 10px 15px;
-					@include transition(background-color, .2s, ease-in-out);
-
-					&:hover {
-						background-color: $c-utility-sub-nav-link-bg-hover;
-						color: $c-utility-sub-nav-link-color;
-					}
-				}
-			}
-		}
-
-		&:first-child {
-			margin-left: 0;
-		}
-	}
-
-	a {
-		font-size: 13px;
-		color: $c-text-sub;
-
-		&:hover {
-			color: $c-text-sub-hover;
-		}
-
-		span {
-			display: inline-block;
-			vertical-align: bottom;
-			font-size: 13px;
-			margin-left: 5px;
-
-			&.icon-support {
-				position: relative;
-				top: 1px;
-				font-size: 15px;
-			}
-
-			&.icon-arrow_down {
-				font-size: 3px;
-				margin-left: 0;
-				vertical-align: middle;
-			}
-		}
-	}
-
-	@include bp(page_header_save_block) {
-		position: relative;
-		top: 0;
-		right: 0;
-		margin-top: 20px;
-	}
-}
-
-#main_nav-menu_button {
+.main_nav-menu_button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -401,6 +291,12 @@
 	cursor: pointer;
 	color: $c-white;
 
+	@include bp(large) {
+		display: none;
+	}
+}
+
+.show--mobile {
 	@include bp(large) {
 		display: none;
 	}
