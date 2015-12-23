@@ -24,11 +24,7 @@ feature 'fae_checkbox' do
 
     click_link(aroma.name)
     within('.js-addedit-form-wrapper') do
-      page.first('span.checkbox').find('label').click
       expect(page).to have_selector('label.js-active')
-
-      page.first('span.checkbox').find('label').click
-      expect(page).to_not have_selector('label.js-active')
     end
   end
 
