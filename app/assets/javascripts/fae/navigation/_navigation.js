@@ -16,9 +16,14 @@ Fae.navigation = {
     this.fadeNotices();
     this.stickyHeaders();
     this.subnavHighlighter.init();
-    this.mobileMenu.init();
+    this.openDrawer();
+    this.clickBack();
     this.language.init();
     this.accordionClickEventListener();
+  },
+
+  resize: function(){
+    this.closeAll();
   },
 
   /**
@@ -51,7 +56,6 @@ Fae.navigation = {
         if (url_array.length) {
           // If it can't be found, start over and try again
           findCurrentNavRecursively(mutated_url);
-
         }
 
       }
@@ -67,9 +71,16 @@ Fae.navigation = {
 
     }
 
-    $('#js-main_nav .main_nav-accordion').each(function() {
-      if($(this).find('.current').length) {
-        $(this).addClass('current');
+    $('.js-accordion').each(function() {
+      var $this = $(this);
+
+      if($this.find('.current').length) {
+        $this.addClass('current');
+
+        if(FCH.bp.large) {
+
+          $this.addClass('-open');
+        }
       }
     });
   },
@@ -83,8 +94,7 @@ Fae.navigation = {
     $('.js-accordion > a').click(function(e) {
       e.preventDefault();
 
-      var $this = $(this);
-      var $parent = $this.closest('.js-accordion');
+      var $parent = $(this).closest('.js-accordion');
       var was_open = $parent.hasClass('-open');
 
       // close all first
@@ -110,6 +120,7 @@ Fae.navigation = {
         // open the clicked item if it was not just opened
         _this.open($parent);
       }
+
     });
   },
 
@@ -129,8 +140,64 @@ Fae.navigation = {
    * @param {jQuery} $el - Accordion wrapper
    */
   close: function($el) {
-    $el.removeClass('-open');
-    $el.find('.main_nav-sub-nav').first().stop().slideUp();
+    $el.find('.main_nav-sub-nav')
+      .first()
+      .stop()
+      .slideUp()
+      .queue(function() {
+        $el.removeClass('-open');
+        $.dequeue( this );
+      });
+  },
+
+  /**
+   * Close main level navs
+   * @see  {@link resize}
+   * @see  {@link openDrawer}
+   */
+  closeAll: function() {
+    var _this = this;
+    $('html').removeClass( 'menu-active' );
+
+    $('.js-accordion').each(function(){
+      var $this = $(this);
+
+      $this.removeClass('-open');
+      _this.close( $this );
+    });
+  },
+
+  /**
+   * Mobile - Push body over and display nav
+   */
+  openDrawer: function() {
+    var _this = this;
+    var $html = $('html');
+
+    $('#js-main_nav-menu_button').click(function(e){
+      e.preventDefault();
+
+      if ($html.hasClass( 'menu-active' )) {
+        Fae.navigation.closeAll();
+      } else {
+        $html.addClass( 'menu-active' );
+      }
+    });
+  },
+
+  /**
+   * Mobile - Collapse sub headers on sub nav click
+   */
+  clickBack: function() {
+    var _this = this;
+
+    $('.js-mobile-back').click(function(e){
+      e.preventDefault();
+
+      $(this)
+        .closest('.js-accordion')
+        .removeClass('-open');
+    });
   },
 
   /**
