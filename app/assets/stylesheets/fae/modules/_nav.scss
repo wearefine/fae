@@ -104,9 +104,10 @@
 			color: $c-nav-icons;
 			top: 14px;
 
-			@include bp(mobile) {
+			@include bp(large-down) {
 				top: 18px;
-				content: '\e610'
+				// overrides the up arrow on open at desktop
+				content: '\e610' !important;
 			}
 		}
 
@@ -116,7 +117,9 @@
 	}
 
 	ul {
-		display: none;
+		@include bp(large) {
+			display: none;
+		}
 	}
 }
 

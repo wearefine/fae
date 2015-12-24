@@ -22,8 +22,8 @@ Fae.navigation = {
     this.accordionClickEventListener();
   },
 
-  resize: function(){
-    this.closeAll();
+  resize: function() {
+    this.closeAll(false);
   },
 
   /**
@@ -57,7 +57,6 @@ Fae.navigation = {
           // If it can't be found, start over and try again
           findCurrentNavRecursively(mutated_url);
         }
-
       }
     }
 
@@ -78,7 +77,6 @@ Fae.navigation = {
         $this.addClass('current');
 
         if(FCH.bp.large) {
-
           $this.addClass('-open');
         }
       }
@@ -131,7 +129,10 @@ Fae.navigation = {
    */
   open: function($el) {
     $el.addClass('-open');
-    $el.find('.main_nav-sub-nav').first().stop().slideDown();
+
+    if(FCH.bp.large) {
+      $el.find('.main_nav-sub-nav').first().stop().slideDown();
+    }
   },
 
   /**
@@ -140,22 +141,28 @@ Fae.navigation = {
    * @param {jQuery} $el - Accordion wrapper
    */
   close: function($el) {
-    $el.find('.main_nav-sub-nav')
-      .first()
-      .stop()
-      .slideUp()
-      .queue(function() {
-        $el.removeClass('-open');
-        $.dequeue( this );
-      });
+    if(FCH.bp.large) {
+      $el.find('.main_nav-sub-nav')
+        .first()
+        .stop()
+        .slideUp()
+        .queue(function() {
+          // Remove class after animation
+          $el.removeClass('-open');
+          $.dequeue( this );
+        });
+    } else {
+      $el.removeClass('-open');
+    }
   },
 
   /**
    * Close main level navs
+   * @param {Boolean} nuclear - Slide up drawers too
    * @see  {@link resize}
    * @see  {@link openDrawer}
    */
-  closeAll: function() {
+  closeAll: function(nuclear) {
     var _this = this;
     $('html').removeClass( 'menu-active' );
 
@@ -163,7 +170,10 @@ Fae.navigation = {
       var $this = $(this);
 
       $this.removeClass('-open');
-      _this.close( $this );
+
+      if(nuclear) {
+        _this.close( $this );
+      }
     });
   },
 
@@ -178,7 +188,7 @@ Fae.navigation = {
       e.preventDefault();
 
       if ($html.hasClass( 'menu-active' )) {
-        Fae.navigation.closeAll();
+        Fae.navigation.closeAll(true);
       } else {
         $html.addClass( 'menu-active' );
       }
