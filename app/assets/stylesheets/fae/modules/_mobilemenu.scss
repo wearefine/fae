@@ -1,9 +1,9 @@
-.js-menu-active {
+.menu-active {
   body {
     margin-left: $main_nav_width;
   }
 
-  #main_nav {
+  .main_nav {
     margin-left: 0;
   }
 
@@ -11,7 +11,7 @@
     margin-left: $main_nav_width;
   }
 
-  #main_nav-menu_button:after {
+  .main_nav-menu_button:after {
     content: "";
     position: absolute;
     top: 0;
@@ -22,48 +22,53 @@
   }
 }
 
-.js-menu-level-active .main_nav-sub-nav,
-.js-sub-menu-level-active .main_nav-third-nav {
-  margin-left: 0;
-  z-index: 1;
-}
-
-.main_nav-sub-nav, .main_nav-third-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: $main_nav_width;
-  margin-left: -$main_nav_width;
-  overflow: auto;
-  @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
-
-  @include bp(show_nav) {
-    display: none;
-    position: relative;
-    height: auto;
-    width: auto;
-    margin-left: 0;
-  }
-}
-
-.main_nav-sub-header-mobile, .main_nav-third-header-mobile {
-  padding: 20px;
-  cursor: pointer;
-  background-color: $c-light_grey;
-  color: $c-white;
-
-  @include bp(show_nav) {
-    display: none;
-  }
-
-    &:before {
-      @include icon_stuff();
-      @extend .icon-chevron_left:before;
-      padding: 5px 9px 5px 7px;
-      border: 2px solid $c-white;
-      margin-right: 10px;
-      color: $c-white;
-      @include border-radius(50%);
+.main_nav-accordion {
+  &.-open {
+    > ul {
+      margin-left: 0;
+      z-index: 1;
     }
+  }
+}
+
+.main_nav-sub-nav {
+  @include bp(large-down) {
+    @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $main_nav_width;
+    height: 100%;
+    margin-left: negate($main_nav_width);
+    overflow: auto;
+    padding: 0 5px 10px 0;
+    background: image-url('fae/bg_tile.gif');
+  }
+
+  > li {
+    span {
+      @extend %inset-nav-shadow;
+      margin-bottom: 0;
+      margin-right: -5px;
+      display: block;
+      padding: 20px;
+      cursor: pointer;
+      background-color: $c-light_grey;
+      color: $c-white;
+
+      &:before {
+        @extend .icon-chevron_left:before;
+        @include icon_stuff();
+        @include border-radius(50%);
+        padding: 5px 9px 5px 7px;
+        border: 2px solid $c-white;
+        margin-right: 10px;
+        color: $c-white;
+      }
+
+      @include bp(large) {
+        display: none;
+      }
+    }
+  }
 }
