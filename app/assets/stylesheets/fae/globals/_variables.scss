@@ -1,22 +1,3 @@
-//////////////////////////////
-// Project Specific Variables
-//////////////////////////////
-
-// Project Specific breakpoints
-$breakpoints: (
-  'desktop':                ( min-width:  1100px ),
-  'mobile':                 ( max-width:  520px ),
-  'page_header_save_block': ( max-width:  615px ),
-  'login_container':        ( min-width: 700px ),
-  'login_submit':           ( min-width: 475px ),
-);
-
-// Merge $fine_breakpoints and $breakpoints to use with bp() mixin
-$breakpoints: map-merge($fine-breakpoints, $breakpoints);
-
-$f-headline: $f-sans;
-$f-content: $f-serif;
-
 /* widths, padding, margins, and the like */
 $main_nav_width: 210px;
 
@@ -31,6 +12,7 @@ $c-light_grey: #999;
 $c-lighter_grey: #ccc;
 $c-lightest_grey: #eee;
 $c-almost_white: #f7f7f7;
+$c-white: #fff;
 
 
 /*
