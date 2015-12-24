@@ -1,12 +1,9 @@
 // Globals
 @import
-  'globals/imports/finescss/fine',
-  'globals/imports/variables',
-  'globals/imports/mixins'
-;
-
-@import
+  'globals/breakpoints',
+  'globals/variables',
   'globals/fonts',
+  'globals/mixins',
   'globals/icons',
   'globals/plugins',
   'globals/base',
@@ -18,7 +15,6 @@
   'modules/header',
   'modules/buttons',
   'modules/nav',
-  'modules/utility-nav',
   'modules/tables',
   'modules/modal',
   'modules/misc',

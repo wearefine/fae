@@ -51,7 +51,9 @@
 
 //= require fae/navigation/_navigation
 //= require fae/navigation/_subnavHighlighter
+//= require fae/navigation/_mobileMenu
 //= require fae/navigation/_language
+//= require fae/navigation/_accordion
 
 //= require fae/hinter
 //= require fae/_modals

@@ -16,14 +16,9 @@ Fae.navigation = {
     this.fadeNotices();
     this.stickyHeaders();
     this.subnavHighlighter.init();
-    this.openDrawer();
-    this.clickBack();
+    this.mobileMenu.init();
     this.language.init();
-    this.accordionClickEventListener();
-  },
-
-  resize: function() {
-    this.closeAll(false);
+    this.accordion.init();
   },
 
   /**
@@ -33,180 +28,70 @@ Fae.navigation = {
   selectCurrentNavItem: function() {
     var _this = this;
     var current_base_url = window.location.pathname.replace('#', '');
-    var $currentLink = $('#js-main_nav a[href="' + current_base_url + '"]');
-
-    /**
-     * Apply current nav class or keep looking deeper from path for the answer
-     * @private
-     * @param {String} mutated_url - The remaining URL to be checked
-     * @return {Function} or add class
-     */
-    function findCurrentNavRecursively(mutated_url) {
-      // Remove last element of URL
-      var url_array = mutated_url.split('/');
-      url_array.pop();
-      mutated_url = url_array.join('/');
-
-      var $currentLink = $('#js-main_nav a[href="' + mutated_url + '"]');
-      if ($currentLink.length) {
-        $currentLink.addClass('current');
-
-      } else {
-        // Defend from exceeding call stack (SUPER RECURSION)
-        if (url_array.length) {
-          // If it can't be found, start over and try again
-          findCurrentNavRecursively(mutated_url);
-        }
-      }
-    }
-
+    var $currentLink = $('#main_nav a[href="' + current_base_url + '"]');
     if ($currentLink.length) {
       // Try to find link that matches the URL exactly
       $currentLink.addClass('current');
 
     } else {
       // If link can't be found, recursively search for it
-      findCurrentNavRecursively(current_base_url);
+      this._findCurrentNavRecursively(current_base_url);
 
     }
 
-    $('.js-accordion').each(function() {
-      var $this = $(this);
-
-      if($this.find('.current').length) {
-        $this.addClass('current');
-
-        if(FCH.bp.large) {
-          $this.addClass('-open');
-        }
-      }
-    });
+    _this._updateNavClasses();
   },
 
   /**
-   * Attach click listener to main and sub links
+   * Apply current nav class or keep looking deeper from path for the answer
+   * @access protected
+   * @param {String} mutated_url - The remaining URL to be checked
+   * @return {Function} or add class
    */
-  accordionClickEventListener: function() {
-    var _this = this;
+  _findCurrentNavRecursively: function(mutated_url) {
+    // Remove last element of URL
+    var url_array = mutated_url.split('/');
+    url_array.pop();
+    mutated_url = url_array.join('/');
 
-    $('.js-accordion > a').click(function(e) {
-      e.preventDefault();
+    var $currentLink = $('#main_nav a[href="' + mutated_url + '"]');
+    if ($currentLink.length) {
+      $currentLink.addClass('current');
 
-      var $parent = $(this).closest('.js-accordion');
-      var was_open = $parent.hasClass('-open');
-
-      // close all first
-      // only get the first class name and add a leading period
-      $parent.siblings().each(function() {
-        _this.close($(this));
-      });
-
-      if (was_open) {
-        var $sub_accordions = $parent.find('.js-accordion');
-
-        // Close all nested accordions
-        if($sub_accordions.length) {
-          $sub_accordions.each(function() {
-            _this.close($(this));
-          });
-        }
-
-        // Close original accordion
-        _this.close($parent);
-
-      } else {
-        // open the clicked item if it was not just opened
-        _this.open($parent);
-      }
-
-    });
-  },
-
-  /**
-   * Open accordion panel
-   * @protected
-   * @param {jQuery} $el - Accordion wrapper
-   */
-  open: function($el) {
-    $el.addClass('-open');
-
-    if(FCH.bp.large) {
-      $el.find('.main_nav-sub-nav').first().stop().slideDown();
-    }
-  },
-
-  /**
-   * Close accordion panel
-   * @protected
-   * @param {jQuery} $el - Accordion wrapper
-   */
-  close: function($el) {
-    if(FCH.bp.large) {
-      $el.find('.main_nav-sub-nav')
-        .first()
-        .stop()
-        .slideUp()
-        .queue(function() {
-          // Remove class after animation
-          $el.removeClass('-open');
-          $.dequeue( this );
-        });
     } else {
-      $el.removeClass('-open');
+      // Defend from exceeding call stack (SUPER RECURSION)
+      if (url_array.length) {
+        // If it can't be found, start over and try again
+        this._findCurrentNavRecursively(mutated_url);
+
+      }
+
     }
   },
 
   /**
-   * Close main level navs
-   * @param {Boolean} nuclear - Slide up drawers too
-   * @see  {@link resize}
-   * @see  {@link openDrawer}
+   * Set nested links to be current in the nav
+   * @access protected
    */
-  closeAll: function(nuclear) {
-    var _this = this;
-    $('html').removeClass( 'menu-active' );
-
-    $('.js-accordion').each(function(){
+  _updateNavClasses: function() {
+    $('#main_nav a.current').each(function() {
       var $this = $(this);
 
-      $this.removeClass('-open');
+      if ($this.hasClass('main_nav-link')) {
+        $this.closest('li').addClass('main_nav-active-single');
 
-      if(nuclear) {
-        _this.close( $this );
+      } else if ($this.hasClass('main_nav-sub-link')) {
+        $this
+          .closest('li').addClass('main_nav-sub-active')
+          .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
+
+      } else if ($this.hasClass('main_nav-third-link')) {
+        $this
+          .closest('li').addClass('main_nav-third-active')
+          .closest('.sub_nav-accordion').removeClass('sub_nav-accordion').addClass('main_nav-sub-active--no_highlight')
+          .closest('.main_nav-accordion').removeClass('main_nav-accordion').addClass('main_nav-active');
+
       }
-    });
-  },
-
-  /**
-   * Mobile - Push body over and display nav
-   */
-  openDrawer: function() {
-    var _this = this;
-    var $html = $('html');
-
-    $('#js-main_nav-menu_button').click(function(e){
-      e.preventDefault();
-
-      if ($html.hasClass( 'menu-active' )) {
-        Fae.navigation.closeAll(true);
-      } else {
-        $html.addClass( 'menu-active' );
-      }
-    });
-  },
-
-  /**
-   * Mobile - Collapse sub headers on sub nav click
-   */
-  clickBack: function() {
-    var _this = this;
-
-    $('.js-mobile-back').click(function(e){
-      e.preventDefault();
-
-      $(this)
-        .closest('.js-accordion')
-        .removeClass('-open');
     });
   },
 
@@ -266,7 +151,7 @@ Fae.navigation = {
    */
   stickyHeaders: function() {
     $(".main_content-header").sticky();
-    $("#js-main_nav").sticky({
+    $("#main_nav").sticky({
       make_placeholder: false
     });
   },

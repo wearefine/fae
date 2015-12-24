@@ -6,14 +6,14 @@ feature 'Main Navigation' do
     admin_login
     visit admin_releases_path
 
-    expect(page.find('a.current').text).to eq('Releases')
+    expect(page.find('.current').text).to eq('Releases')
   end
 
   scenario 'should highlight first level new page', js: true do
     admin_login
     visit new_admin_release_path
 
-    expect(page.find('a.current').text).to eq('Releases')
+    expect(page.find('.current').text).to eq('Releases')
   end
 
   scenario 'should highlight first level edit page', js: true do
@@ -21,21 +21,21 @@ feature 'Main Navigation' do
     release = FactoryGirl.create(:release)
     visit edit_admin_release_path(release)
 
-    expect(page.find('a.current').text).to eq('Releases')
+    expect(page.find('.current').text).to eq('Releases')
   end
 
   scenario 'should highlight second level index', js: true do
     super_admin_login
     visit fae.users_path
 
-    expect(page.find('a.current').text).to eq('Users')
+    expect(page.find('.current').text).to eq('Users')
   end
 
   scenario 'should highlight second level new page', js: true do
     super_admin_login
     visit fae.new_user_path
 
-    expect(page.find('a.current').text).to eq('Users')
+    expect(page.find('.current').text).to eq('Users')
   end
 
   scenario 'should highlight second level edit page', js: true do
@@ -43,7 +43,7 @@ feature 'Main Navigation' do
     user = FactoryGirl.create(:fae_user)
     visit fae.edit_user_path(user)
 
-    expect(page.find('a.current').text).to eq('Users')
+    expect(page.find('.current').text).to eq('Users')
   end
 
   scenario 'should highlight third level index', js: true do
@@ -51,7 +51,7 @@ feature 'Main Navigation' do
     team = FactoryGirl.create(:team)
     visit admin_team_coaches_path(team)
 
-    expect(page.find('a.current').text).to eq('Coaches')
+    expect(page.find('.current').text).to eq('Coaches')
   end
 
   scenario 'should highlight third level new page', js: true do
@@ -59,7 +59,7 @@ feature 'Main Navigation' do
     team = FactoryGirl.create(:team)
     visit new_admin_team_coach_path(team)
 
-    expect(page.find('a.current').text).to eq('Coaches')
+    expect(page.find('.current').text).to eq('Coaches')
   end
 
   scenario 'should highlight third level edit page', js: true do
@@ -67,29 +67,30 @@ feature 'Main Navigation' do
     coach = FactoryGirl.create(:coach)
     visit edit_admin_team_coach_path(coach.team, coach)
 
-    expect(page.find('a.current').text).to eq('Coaches')
+    expect(page.find('.current').text).to eq('Coaches')
   end
 
   scenario 'should expand first level accordion', js: true do
     admin_login
     visit admin_releases_path
 
-    expect(page).to_not have_selector('.main_nav a', text: 'Except Open To Another Drawer')
+    expect(page).to_not have_selector('.main_nav-sub-link.with-third_nav', text: 'Except Open To Another Drawer')
 
-    page.find('.main_nav-accordion a', text: 'Look This Drawer Does Nothing').click
+    page.find('.main_nav-link span', text: 'Look This Drawer Does Nothing').click
 
-    # Link is now visible
-    expect(page).to have_selector('.main_nav a', text: 'Except Open To Another Drawer')
+    expect(page).to have_selector('.main_nav-sub-link.with-third_nav', text: 'Except Open To Another Drawer')
   end
 
   scenario 'should expand second level accordion', js: true do
     admin_login
     visit admin_releases_path
 
-    page.find('.main_nav a', text: 'Look This Drawer Does Nothing').click
-    page.find('.main_nav a', text: 'Except Open To Another Drawer').click
+    expect(page).to_not have_selector('.main_nav-third-link', text: 'To A Link That Goes Nowhere')
 
-    expect(page).to have_selector('.main_nav a', text: 'To A Link That Goes Nowhere')
+    page.find('.main_nav-link span', text: 'Look This Drawer Does Nothing').click
+    page.find('.main_nav-sub-link.with-third_nav', text: 'Except Open To Another Drawer').click
+
+    expect(page).to have_selector('.main_nav-third-link', text: 'To A Link That Goes Nowhere')
   end
 
 end

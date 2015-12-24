@@ -1,11 +1,53 @@
-%inset-nav-shadow {
-	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow);
+#main_nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: $main_nav_width;
+	height: 100%;
+	margin-left: -$main_nav_width;
+	overflow: auto;
+	padding: 10px 5px 10px 0;
+	background: image-url('fae/bg_tile.gif');
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+	@include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
+
+	@include bp(show_nav) {
+		position: absolute;
+		padding: 10px;
+		margin-left: 0;
+	}
+}
+
+.main_nav-nav > li {
+	margin-bottom: 3px;
+
+	&.main_nav-header-mobile {
+		margin-bottom: 0;
+		margin-right: -5px;
+		@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+	}
+}
+
+.main_nav-sub-nav {
+	background: image-url('fae/bg_tile.gif');
+
+	@include bp(show_nav) {
+		background: $c-nav-sub-bg-active;
+	}
+}
+
+.main_nav-third-nav {
+	background: $c-nav-sub-bg-active-highlight;
+
+	.main_nav-sub-active, .main_nav-sub-active--no_highlight & {
+		display: block;
+	}
 }
 
 %main_nav-all_links {
-	@include transition(background, .2s);
 	display: block;
 	color: $c-text;
+	@include transition(background, .2s);
 
 	&:hover {
 		color: $c-nav-link;
@@ -13,102 +55,22 @@
 	}
 }
 
-.main_nav {
-	@extend %inset-nav-shadow;
-	@include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: $main_nav_width;
-	height: 100%;
-	margin-left: negate($main_nav_width);
-	overflow: auto;
-	padding: 10px 5px 10px 0;
-	background: image-url('fae/bg_tile.gif');
+.main_nav-link {
+	@extend %main_nav-all_links;
+	padding: 10px 20px 10px 10px;
 
-	@include bp(large) {
-		position: absolute;
-		padding: 10px;
-		margin-left: 0;
-	}
-
-	a {
-		@extend %main_nav-all_links;
+	.main_nav-accordion & {
 		position: relative;
-		padding: 15px 10px 15px 20px;
 
-		&.current {
-			padding-left: 5px;
-			border-left: 5px solid $c-custom-highlight;
-			color: $c-custom-highlight;
-		}
-
-		@include bp(large) {
-			padding: 10px 20px 10px 10px;
-		}
-	}
-
-	li {
-		li {
-			a {
-				font-size: 14px;
-
-				@include bp(large) {
-					padding: 10px 20px;
-				}
-			}
-
-			li {
-				a {
-					@include bp(large) {
-						padding-left: 30px;
-					}
-				}
-			}
-		}
-	}
-}
-
-// The accordion. An <li> element.
-.main_nav-accordion {
-	&.-open {
-		@include bp(large) {
-			background: $c-nav-sub-bg-active;
-		}
-
-		> a {
-			&:after {
-				@extend .icon-chevron_up:before;
-			}
-		}
-
-		&.-sub {
-			background: #d8d8d8;
-		}
-	}
-
-	&.current {
-		> ul {
-			display: block;
-		}
-	}
-
-	> a {
 		&:after {
-			@extend .icon-chevron_down:before;
-			@include icon_stuff();
-			@include transition(color, .2s);
 			position: absolute;
 			right: 13px;
+			top: 14px;
 			font-size: 8px;
 			color: $c-nav-icons;
-			top: 14px;
-
-			@include bp(large-down) {
-				top: 18px;
-				// overrides the up arrow on open at desktop
-				content: '\e610' !important;
-			}
+			@include icon_stuff();
+			@extend .icon-chevron_down:before;
+			@include transition(color, .2s);
 		}
 
 		&:hover:after {
@@ -116,177 +78,391 @@
 		}
 	}
 
-	ul {
-		@include bp(large) {
+	.main_nav-accordion.accordion-open & {
+		&:after {
 			display: none;
-		}
-	}
-}
+			@extend .icon-chevron_up:before;
 
-.main_nav-sub-nav {
-	background: image-url('fae/bg_tile.gif');
-
-	@include bp(large) {
-		background: $c-nav-sub-bg-active;
-	}
-}
-
-.main_nav-sub-nav-admin {
-	a {
-		&.-users,
-		&.-settings,
-		&.-activity {
-			position: relative;
-
-			&:after {
-				@include icon_stuff();
-				position: absolute;
-				right: 10px;
-				top: 11px;
-				font-size: 15px;
-				color: $c-nav-icons;
-			}
-
-			&:hover:after {
-				color: $c-nav-icons-hover;
-			}
-		}
-
-		&.-users {
-			&:after {
-				@extend .icon-users:before;
-			}
-		}
-
-		&.-settings {
-			&:after {
-				@extend .icon-settings:before;
-			}
-		}
-
-		&.-activity {
-			&:after {
-				@extend .icon-bars:before;
+			@include bp(show_nav) {
+				display: inline-block;
 			}
 		}
 	}
 }
 
-.main_nav-header-mobile {
-	@include bp(large) {
+.sub_nav-accordion.accordion-open {
+
+	background: #d8d8d8;
+}
+
+.header_drawer-content {
+	@extend %main_nav-all_links;
+	position: relative;
+	padding: 15px 10px 15px 20px;
+	cursor: pointer;
+
+  @include bp(show_nav) {
+    display: none;
+    padding: 10px;
+  }
+
+	&:after {
+		position: absolute;
+		right: 13px;
+		top: 18px;
+		font-size: 8px;
+		color: $c-nav-icons;
+		@include icon_stuff();
+		@extend .icon-chevron_right:before;
+		@include transition(color, .2s);
+	}
+
+	&.header_drawer-content-only:after {
 		display: none;
 	}
 
-	a {
-		@extend %inset-nav-shadow;
-		color: $c-dark_grey;
-		background: $c-lightest_grey;
-
-		&:after {
-			@include icon_stuff();
-			top: 15px;
-			right: 13px;
-			position: absolute;
-			font-size: 16px;
-			color: $c-nav-icons;
-		}
-
-		&.-logout {
-			&:after {
-				@extend .icon-logout:before;
-			}
-		}
-
-		&.-settings {
-			&:after {
-				@extend .icon-settings:before;
-			}
-		}
-
-		&.-support {
-			&:after {
-				@extend .icon-support:before;
-			}
-		}
-
-		&.-viewsite {
-			&:after {
-				@extend .icon-offlink:before;
-			}
-		}
+	&:hover:after {
+		color: $c-nav-icons-hover;
 	}
 }
 
+.header_drawer-content-post {
+  display: none;
+
+  @include bp(show_nav) {
+    display: inline;
+  }
+}
+
 .header_drawer-content-username {
-	@extend %inset-nav-shadow;
 	display: block;
 	position: relative;
 	padding: 15px 10px 15px 20px;
 	cursor: pointer;
 	color: $c-black;
 	background: $c-lighter_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
 
-  @include bp(large) {
+  @include bp(show_nav) {
     display: none;
   }
 }
 
+.header_drawer-content.header_drawer-content-logout {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-logout:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.header_drawer-content.header_drawer-content-settings {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-settings:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.header_drawer-content.header_drawer-content-support {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-support:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.header_drawer-content.header_drawer-content-viewsite {
+	color: $c-dark_grey;
+	background: $c-lightest_grey;
+	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow); /* inset box shadow right only */
+
+	&:after {
+		@extend .icon-offlink:before;
+		top: 15px;
+		font-size: 16px;
+	}
+}
+
+.main_nav-sub-link, .main_nav-third-link {
+	@extend %main_nav-all_links;
+	padding: 15px 10px 15px 20px;
+	font-size: 14px;
+
+	@include bp(show_nav) {
+		padding: 10px 20px;
+	}
+}
+
+.main_nav-sub-link {
+	&.with-third_nav {
+		position: relative;
+
+		&:after {
+			position: absolute;
+			right: 13px;
+			top: 18px;
+			font-size: 8px;
+			color: $c-nav-icons;
+			@include icon_stuff();
+			@extend .icon-chevron_right:before;
+			@include transition(color, .2s);
+
+			@include bp(show_nav) {
+				content: "\e619";
+
+				.sub_nav-accordion.accordion-open & {
+					content: "\e618";
+				}
+
+				.main_nav-sub-active--no_highlight & {
+					content: "";
+				}
+			}
+		}
+	}
+}
+
 .main_nav-third-link {
-	@include bp(large) {
+	@include bp(show_nav) {
 		padding: 10px 10px 10px 30px;
 	}
 }
 
-.main_nav-link-dashboard {
-	a,
-	.header_drawer-content {
-		position: relative;
+.main_nav-link-dashboard a, .main_nav-link-dashboard .header_drawer-content {
+	position: relative;
 
-		&:after {
-			@extend .icon-home:before;
-			@include icon_stuff();
-			@include transition(color, .2s);
-			position: absolute;
-			right: 10px;
-			top: 11px;
-			font-size: 15px;
-			color: $c-nav-icons;
-		}
+	&:after {
+		position: absolute;
+		right: 10px;
+		top: 11px;
+		font-size: 15px;
+		color: $c-nav-icons;
+		@include icon_stuff();
+		@extend .icon-home:before;
+		@include transition(color, .2s);
+	}
 
-		&:hover:after {
-			color: $c-nav-icons-hover;
-		}
+	&:hover:after {
+		color: $c-nav-icons-hover;
 	}
 }
 
-// when the main nav is current
-@include bp(large) {
-	.main_nav-accordion.current {
+.main_nav-link-users,
+.main_nav-link-settings,
+.main_nav-link-activity {
+	position: relative;
+
+	&:after {
+		@include icon_stuff();
+		position: absolute;
+		right: 10px;
+		top: 11px;
+		font-size: 15px;
+		color: $c-nav-icons;
+	}
+
+	&:hover:after {
+		color: $c-nav-icons-hover;
+	}
+}
+
+.main_nav-link-users {
+	&:after {
+		@extend .icon-users:before;
+	}
+}
+
+.main_nav-link-settings {
+	&:after {
+		@extend .icon-settings:before;
+	}
+}
+
+.main_nav-link-activity {
+	&:after {
+		@extend .icon-bars:before;
+	}
+}
+
+/* when the main nav is active */
+@include bp(show_nav) {
+	.main_nav-active {
+		background: $c-nav-sub-bg-active;
+		.main_nav-link {
+			color: $c-nav-link;
+		}
+
+		& .main_nav-sub-nav {
+			display: block;
+		}
+
+		.main_nav-sub-active--no_highlight {
+			background: $c-nav-sub-bg-active-highlight;
+		}
+
+		.main_nav-sub-active {
+			display: block;
+			background: $c-nav-sub-bg-active-highlight;
+
+			.main_nav-sub-link {
+				padding-left: 15px;
+				border-left: 5px solid $c-custom-highlight;
+				color: $c-custom-highlight;
+			}
+		}
+
+		.main_nav-third-active {
+			.main_nav-third-link {
+				padding-left: 25px;
+				border-left: 5px solid $c-custom-highlight;
+				color: $c-custom-highlight;
+			}
+		}
+	}
+
+	.main_nav-active-single {
 		background: $c-nav-sub-bg-active;
 
-		a.current {
-			padding-left: 15px;
-		}
-
-		.main_nav-accordion {
-			&.current {
-				display: block;
-				background: $c-nav-sub-bg-active-highlight;
-			}
-
-			a.current {
-				padding-left: 25px;
-				background: transparent;
-			}
-		}
-
-		.main_nav-sub-nav {
-			background: transparent;
+		.main_nav-link {
+			padding-left: 5px;
+			border-left: 5px solid $c-custom-highlight;
+			color: $c-custom-highlight;
 		}
 	}
 }
 
-.main_nav-menu_button {
+/* Utility nav. View Site, Support, Username, etc */
+#main_header .utility_nav {
+	display: none;
+	position: absolute;
+	right: 20px;
+	top: -webkit-calc(50% - .5em);
+	top: calc(50% - .5em);
+
+	@include bp(show_nav) {
+		display: block;
+	}
+
+	.utility_nav-clicked {
+		color: white;
+
+		&:hover {
+			color: white;
+		}
+
+		& ~ .utility_sub_nav {
+			max-height: 100px;
+		}
+	}
+
+	li {
+		display: inline-block;
+		margin-left: 20px;
+		position: relative;
+
+		ul {
+			width: 124px;
+			max-height: 0;
+			overflow: hidden;
+			background-color: $c-utility-sub-nav-bg;
+			@include border-radius(2px);
+			@include box-shadow(0,0,8px,-2px,$c-box_shadow);
+			position: absolute;
+			top: 30px;
+			right: 0;
+			z-index: 2;
+			@include transition(max-height, .2s, ease-in-out);
+
+			li {
+				display: block;
+				width: 100%;
+				margin-left: 0;
+
+				&:first-of-type {
+					margin-top: 8px;
+				}
+
+				&:last-of-type {
+					margin-bottom: 8px;
+				}
+
+				a {
+					display: block;
+					background-color: $c-utility-sub-nav-link-bg;
+					font-size: 12px;
+					color: $c-utility-sub-nav-link-color;
+					padding: 10px 15px;
+					@include transition(background-color, .2s, ease-in-out);
+
+					&:hover {
+						background-color: $c-utility-sub-nav-link-bg-hover;
+						color: $c-utility-sub-nav-link-color;
+					}
+				}
+			}
+		}
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
+
+	a {
+		font-size: 13px;
+		color: $c-text-sub;
+
+		&:hover {
+			color: $c-text-sub-hover;
+		}
+
+		span {
+			display: inline-block;
+			vertical-align: bottom;
+			font-size: 13px;
+			margin-left: 5px;
+
+			&.icon-support {
+				position: relative;
+				top: 1px;
+				font-size: 15px;
+			}
+
+			&.icon-arrow_down {
+				font-size: 3px;
+				margin-left: 0;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	@include bp(page_header_save_block) {
+		position: relative;
+		top: 0;
+		right: 0;
+		margin-top: 20px;
+	}
+}
+
+@include bp(show_nav) {
+	.accordion-open {
+		background: $c-nav-sub-bg-active;
+	}
+}
+
+#main_nav-menu_button {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -294,13 +470,7 @@
 	cursor: pointer;
 	color: $c-white;
 
-	@include bp(large) {
-		display: none;
-	}
-}
-
-.show--mobile {
-	@include bp(large) {
+	@include bp(show_nav) {
 		display: none;
 	}
 }

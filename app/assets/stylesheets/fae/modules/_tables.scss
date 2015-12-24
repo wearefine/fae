@@ -4,7 +4,7 @@
 	border-collapse: separate;
 	table-layout: fixed;
 
-	@include bp(medium) {
+	@include bp(tablet) {
 		table-layout: fixed;
 	}
 
