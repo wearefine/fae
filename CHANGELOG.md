@@ -5,6 +5,7 @@
 - enhancements
     + \#50230: Check if Fae Roles have been created before recreating
 - bugs
+    + \#53410: Nav should open/close on current items too
 
 ## 1.2.3
 
