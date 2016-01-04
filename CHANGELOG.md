@@ -4,6 +4,7 @@
 
 - enhancements
     + \#50230: Check if Fae Roles have been created before recreating
+    + Added in pattern in the documentation on configuring a Dynamic Relationship with a Page Model.
 - bugs
     + \#50440: Persist checked state on nested forms
     + \#53410: Nav should open/close on current items too
