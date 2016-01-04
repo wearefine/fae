@@ -558,7 +558,7 @@ A few things are needed for this to work correctly:
 add_column :comments, :post_id, :integer
 ```
 
-* in the objects model you need to set the relationship to :static_page, with the class_name for the Page object.
+* in the objects model you need to set the relationship to `:static_page`, with the `class_name` for the Page object.
 
 
 ```ruby
@@ -570,7 +570,7 @@ end
 
 ```
 
-* in the parent Page object model you need to set the relationship to promos w a foreign key.
+* in the parent Page object model you need to set the relationship to promos with a foreign key.
 
 
 ```ruby
@@ -598,7 +598,7 @@ module Fae
 end
 ```
 
-* in the Promo controller you need to set the parent id to static_page_id.
+* in the Promo controller you need to set the parent id to `static_page_id`.
 
 ```ruby
 module Admin
@@ -614,7 +614,7 @@ end
 
 ```
 
-* in the nested table arguments, instead of making the parent_item argument item virtual (which is just the instance of the AboutUsPage, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
+* in the nested table arguments, instead of making the `parent_item` argument item virtual (which is just the instance of the `AboutUsPage`, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
 
 ```ruby
  section.main_content-section
@@ -625,7 +625,7 @@ end
     ordered: true
 ```
 
-Lastly, in the object form be sure to add the static_page_id as a hidden field in the promo objects form.
+Lastly, in the object form be sure to add the `static_page_id` as a hidden field in the promo objects form.
 
 ```ruby
 
