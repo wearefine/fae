@@ -548,7 +548,7 @@ end
 
 ### Configuring a Dynamic Relationship with a Page Model
 
-Here is an example of a pattern you can use to associate objects to your Page models, i.e. for use in a form for an item like promos which will exsist across many Page objects.
+Here is an example of a pattern you can use to associate objects to your Page models, i.e. for use in a nested form for an item like promos which will exist across many Page objects.
 
 A few things are needed for this to work correctly:
 
@@ -570,7 +570,7 @@ end
 
 ```
 
-* in the parent Page object's model you need to set the relationship to promos w a foreign key.
+* in the parent Page object model you need to set the relationship to promos w a foreign key.
 
 
 ```ruby
