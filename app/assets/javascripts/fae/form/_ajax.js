@@ -81,6 +81,7 @@ Fae.form.ajax = {
       Fae.form.text.slugger();
       Fae.form.validator.length_counter.init();
       Fae.form.text.initMarkdown();
+      Fae.form.checkbox.setCheckboxAsActive();
 
       $wrapper.find('.hint').hinter();
     });
