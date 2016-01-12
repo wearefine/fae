@@ -43,9 +43,11 @@ a.file_input-button,
 }
 
 .table-filter-controls {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+  margin: 12px 0 0;
+
+  @include bp(tablet) {
+    float: right;
+  }
 
   input[type=submit] {
     @extend %gray-button;
