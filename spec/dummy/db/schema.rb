@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151125182540) do
+ActiveRecord::Schema.define(version: 20160116014913) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -142,6 +142,18 @@ ActiveRecord::Schema.define(version: 20151125182540) do
   end
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
+
+  create_table "fae_pages", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.integer  "position",   limit: 4,   default: 0
+    t.boolean  "on_stage",               default: true
+    t.boolean  "on_prod",                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug",       limit: 255
+  end
+
+  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
 
   create_table "fae_roles", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -323,6 +335,12 @@ ActiveRecord::Schema.define(version: 20151125182540) do
     t.text     "history",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "to_be_destroyeds", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "validation_testers", force: :cascade do |t|
