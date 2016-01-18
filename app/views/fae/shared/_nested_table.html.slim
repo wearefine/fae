@@ -37,6 +37,7 @@ ruby:
     section.js-addedit-form
       a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
       h3 = title
-      h6.table-helper-text = helper_text
+      - if helper_text.present?
+        h6.table-helper-text = helper_text
       == render 'fae/application/flash_messages'
       == render 'fae/shared/shared_nested_table', options_for_table
