@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116014913) do
+ActiveRecord::Schema.define(version: 20160116015621) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -335,12 +335,6 @@ ActiveRecord::Schema.define(version: 20160116014913) do
     t.text     "history",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "to_be_destroyeds", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
   end
 
   create_table "validation_testers", force: :cascade do |t|
