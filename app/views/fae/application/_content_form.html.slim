@@ -6,6 +6,9 @@ ruby:
   markdown           ||= false
   markdown_supported ||= false
   hint               ||= nil
+  wrapper_html       ||= {}
+  input_options      ||= {}
+  input_html         ||= {}
 
   label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
   label_adjusted += label
@@ -15,8 +18,12 @@ ruby:
       concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown_supported.present?
     end
   end
+  options = { label: label_adjusted.html_safe, hint: hint, input_html: input_html }
 
-= f.simple_fields_for attribute.to_sym do |i|
-  - input_options = { data: { validate: i.object.validation_json(f.object.class) }}
-  - input_options[:class] = 'js-markdown-editor' if markdown.present?
-  = i.input :content, label: label_adjusted.html_safe, hint: hint, input_html: input_options
+  options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
+
+  options.merge! input_options if input_options.present?
+
+= f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: wrapper_html } do |i|
+  - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
+  = fae_input(i, :content, options)
