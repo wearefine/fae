@@ -7,7 +7,6 @@ ruby:
   markdown_supported ||= false
   hint               ||= nil
   options            ||= {}
-  wrapper_html       ||= {}
   input_options      ||= {}
 
   label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
@@ -21,6 +20,7 @@ ruby:
 
   options.merge! label: label_adjusted.html_safe, hint: hint
   options.merge! input_options if (input_options.keys).any?
+  options.merge! wrapper_html: {} if input_options[:wrapper_html].blank?
 
   if options[:input_html].present? && options[:input_html][:class].present? && markdown.present?
     options[:input_html][:class] = options[:input_html][:class] + ' js-markdown-editor'
@@ -29,6 +29,7 @@ ruby:
     options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
   end
 
-= f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: wrapper_html } do |i|
+= f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
   - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
   = fae_input(i, :content, options)
+
