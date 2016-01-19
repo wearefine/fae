@@ -16,6 +16,7 @@ ruby:
   has_thumb           ||= false
   edit_column         ||= false
   cols                ||= []
+  helper_text         ||= ''
 
   # lesser known optional locals, dervived from options by default
   assoc_name_singular ||= assoc_name.singularize          # 'restaurant_bar'
@@ -36,5 +37,7 @@ ruby:
     section.js-addedit-form
       a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
       h3 = title
+      - if helper_text.present?
+        h6.table-helper-text = helper_text
       == render 'fae/application/flash_messages'
       == render 'fae/shared/shared_nested_table', options_for_table

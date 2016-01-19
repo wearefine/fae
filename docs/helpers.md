@@ -476,6 +476,7 @@ The nested_table should go after the main form ends and should only placed on th
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | edit_column | boolean | false | displays edit link
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
+| helper_text | string | '' | the h6 directly above the nested table, and below the tite,used to provide the user with some helper_text to describe the context |
 
 
 **Examples**
