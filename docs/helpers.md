@@ -277,14 +277,18 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 | hint          | string | | the field's hint text (supports HTML) |
 | markdown      | boolean | false | adds markdown GUI toolbar |
 | markdown_supported | boolean | false | displays support text and hint for markdown |
+| input_options | hash with simple form options | false | adds simple form options to input field |
 
-image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
-
+image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil, wrapper_html: nil, input_options: nil
 
 **Examples**
 
 ```ruby
 fae_content_form f, :body, markdown: true
+```
+
+```ruby
+fae_content_form f, :ad, input_options: { collection: ['Header', 'Footer'], input_html: { class: 'js-ad-field' }, wrapper_html { class: 'hidden' } }
 ```
 
 ## fae_filter_form
