@@ -21,7 +21,7 @@ module Fae
       render 'fae/application/file_uploader', f: f, file_name: file_name, label: label, required: required, helper_text: helper_text
     end
 
-    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, wrapper_html: nil, input_options: nil, input_html: nil)
+    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, input_options: nil)
       render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options
     end
 
