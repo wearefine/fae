@@ -8,6 +8,7 @@
     + Added in documentation on configuring a conditionally required field.
     + Added in helper_text option for nested_table
 - bugs
+    + \#53380: Don't link destroyed models in change tracker
     + \#50440: Persist checked state on nested forms
     + \#53410: Nav should open/close on current items too
     + \#48759: Index-page filters collapse beneath each other on overflow
