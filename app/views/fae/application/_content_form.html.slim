@@ -6,9 +6,9 @@ ruby:
   markdown           ||= false
   markdown_supported ||= false
   hint               ||= nil
+  options            ||= {}
   wrapper_html       ||= {}
   input_options      ||= {}
-  input_html         ||= {}
 
   label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
   label_adjusted += label
@@ -18,11 +18,16 @@ ruby:
       concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown_supported.present?
     end
   end
-  options = { label: label_adjusted.html_safe, hint: hint, input_html: input_html }
 
-  options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
+  options.merge! label: label_adjusted.html_safe, hint: hint
+  options.merge! input_options if (input_options.keys).any?
 
-  options.merge! input_options if input_options.present?
+  if options[:input_html].present? && options[:input_html][:class].present? && markdown.present?
+    options[:input_html][:class] = options[:input_html][:class] + ' js-markdown-editor'
+  else
+    options.merge! input_html: {}
+    options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
+  end
 
 = f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: wrapper_html } do |i|
   - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }

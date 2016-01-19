@@ -285,7 +285,11 @@ image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil
 **Examples**
 
 ```ruby
-fae_content_form f, :body, markdown: true, wrapper_html { class: 'hidden' }, input_options: { collection: ['Header', 'Stat'] }
+fae_content_form f, :body, markdown: true
+```
+
+```ruby
+fae_content_form f, :ad, wrapper_html { class: 'hidden' }, input_options: { collection: ['Header', 'Footer'], input_html: { class: 'js-ad-field' } }
 ```
 
 ## fae_filter_form
