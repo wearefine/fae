@@ -94,15 +94,20 @@ module Fae
 
     def change_item_link(change)
       text = "#{change.changeable_type}: "
-      text += change.try(:changeable).try(:fae_display_field) || "##{change.changeable_id}"
 
-      begin
-        return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
-        parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
-        edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
-        return link_to text, edit_path
-      rescue
-        return text
+      if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && (!ActiveRecord::Base.connection.table_exists? change.changeable_type.tableize)
+        return "#{change.changeable_type}: model destroyed"
+      else
+        text += change.try(:changeable).try(:fae_display_field) || "##{change.changeable_id}"
+
+        begin
+          return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
+          parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
+          edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
+          return link_to text, edit_path
+        rescue
+          return text
+        end
       end
     end
 
