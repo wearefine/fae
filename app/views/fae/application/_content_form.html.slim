@@ -31,5 +31,5 @@ ruby:
 
 = f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
   - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
-  = fae_input(i, :content, options)
+  = i.input :content, options
 
