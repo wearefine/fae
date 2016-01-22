@@ -16,6 +16,10 @@ class Wine < ActiveRecord::Base
 
   translate :name
 
+  # def active_model_serializer
+  #   WineSerializer
+  # end
+
   def fae_display_field
     name_en
   end
