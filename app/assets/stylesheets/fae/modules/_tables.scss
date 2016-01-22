@@ -4,7 +4,7 @@
 	border-collapse: separate;
 	table-layout: fixed;
 
-	@include bp(tablet) {
+	@include bp(medium) {
 		table-layout: fixed;
 	}
 
@@ -283,7 +283,7 @@
 // Filters!
 .table-filter-area {
 	position: relative;
-	padding: 20px 170px 20px 20px;
+	padding: 20px;
 	border: 1px solid $c-border;
 	border-bottom: 0;
 	background: $c-form-table-bg;
@@ -301,27 +301,40 @@
 	}
 
 	input[type=text] {
-		padding: 5px;
+		padding: 5px 30px 5px 10px;
 		font-size: 12px;
 		color: $c-table-filter-input;
+		border-radius: 20px;
+	}
+}
 
-		&.table-filter-keyword-input {
-			position: absolute;
-			top: 18px;
-			right: 20px;
-			padding-left: 10px;
-			padding-right: 30px;
-			@include border-radius(20px);
-		}
+.table-filter-header {
+	@include clearfix;
+
+	h2 {
+		display: inline-block;
 	}
 
-	.table-filter-keyword-wrapper:after {
-		@include icon-stuff();
+	input[type="text"] {
+		float: right;
+	}
+}
+
+.table-filter-keyword-wrapper {
+	position: relative;
+	float: right;
+
+	&:after {
 		@extend .icon-search:before;
+		@include icon-stuff;
 		position: absolute;
-		top: 25px;
-		right: 30px;
+		top: 5px;
+		right: 12px;
 	}
+}
+
+.table-filter-group-wrapper {
+	@include clearfix;
 }
 
 .table-filter-group {

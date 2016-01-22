@@ -21,8 +21,8 @@ module Fae
       render 'fae/application/file_uploader', f: f, file_name: file_name, label: label, required: required, helper_text: helper_text
     end
 
-    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil)
-      render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported
+    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, input_options: nil)
+      render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options
     end
 
     def attr_toggle(item, column)
@@ -58,11 +58,20 @@ module Fae
       form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
-      form_tag(options[:action], form_hash) do
+      filter_header = content_tag(:div, class: 'table-filter-header') do
         concat content_tag :h2, options[:title]
         concat filter_search_field if options[:search]
-        concat capture(&block)
-        concat filter_submit_btns
+      end
+
+      form_tag(options[:action], form_hash) do
+        concat filter_header
+
+        filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
+          concat capture(&block)
+          concat filter_submit_btns
+        end
+
+        concat filter_group_wrapper
       end
     end
 

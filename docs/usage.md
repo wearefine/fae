@@ -546,6 +546,95 @@ module Admin
 end
 ```
 
+### Configuring a Dynamic Relationship with a Page Model
+
+Here is an example of a pattern you can use to associate objects to your Page models, i.e. for use in a nested form for an item like promos which will exist across many Page objects.
+
+A few things are needed for this to work correctly:
+
+* in the migration you need to add static_page_id as an int column for the new object.
+
+```ruby
+add_column :comments, :post_id, :integer
+```
+
+* in the objects model you need to set the relationship to `:static_page`, with the `class_name` for the Page object.
+
+
+```ruby
+class Promo < ActiveRecord::Base
+
+  belongs_to :static_page, class_name: 'Fae::StaticPage'
+
+end
+
+```
+
+* in the parent Page object model you need to set the relationship to promos with a foreign key.
+
+
+```ruby
+
+class AboutPage < Fae::StaticPage
+
+  has_many :promos, foreign_key: 'static_page_id'
+
+end
+
+```
+
+* in the Static Page Concern, you will have to surface it by adding `static_page_concern.rb` to the `model/concerns/fae` folder, add a relationship for promos:
+
+```ruby
+module Fae
+  module StaticPageConcern
+    extend ActiveSupport::Concern
+
+    included do
+      has_many :promos
+    end
+
+  end
+end
+```
+
+* in the Promo controller you need to set the parent id to `static_page_id`.
+
+```ruby
+module Admin
+  class PromosController < Fae::ApplicationController
+    def new
+      @item = Promo.new
+      @item.static_page_id = params[:item_id]
+      build_assets
+    end
+
+ end
+end
+
+```
+
+* in the nested table arguments, instead of making the `parent_item` argument item virtual (which is just the instance of the `AboutUsPage`, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
+
+```ruby
+ section.main_content-section
+  = render 'fae/shared/nested_table',
+    assoc: :promos,
+    parent_item: Fae::StaticPage.find_by_id(@item.id),
+    cols: [:headline, :body, :link],
+    ordered: true
+```
+
+Lastly, in the object form be sure to add the `static_page_id` as a hidden field in the promo objects form.
+
+```ruby
+
+= simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
+  = f.hidden_field :static_page_id
+
+  = f.submit
+```
+
 ## Adding Content Blocks
 
 Chances are you'll need to add content blocks to a page after it's been generated. To do so simply:
