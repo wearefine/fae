@@ -42,9 +42,6 @@ Fae::Engine.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     scope :v1 do
       # get 'retailers' => 'retailers#domestic', as: :api_retailers
-      # get 'distributors' => 'retailers#international', as: :api_distibutors
-      # get 'products' => 'retailers#products', as: :api_products
-      # get 'countries' => 'retailers#countries', as: :api_countries
     end
   end
 
