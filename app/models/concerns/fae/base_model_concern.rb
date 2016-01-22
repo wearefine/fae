@@ -1,9 +1,11 @@
 module Fae
   module BaseModelConcern
     extend ActiveSupport::Concern
+    # extend FAE::BaseSerializer
     require 'csv'
 
     attr_accessor :filter
+
 
     included do
       include Fae::Trackable if Fae.track_changes
