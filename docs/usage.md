@@ -555,7 +555,7 @@ A few things are needed for this to work correctly:
 * in the migration you need to add static_page_id as an int column for the new object.
 
 ```ruby
-add_column :comments, :post_id, :integer
+add_column :promos, :static_page_id, :integer
 ```
 
 * in the objects model you need to set the relationship to `:static_page`, with the `class_name` for the Page object.
