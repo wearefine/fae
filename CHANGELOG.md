@@ -15,6 +15,7 @@
     + \#50440: Persist checked state on nested forms
     + \#53410: Nav should open/close on current items too
     + \#48759: Index-page filters collapse beneath each other on overflow
+    + Update docs with missing 'not' so it's clear assets aren't cloneable
 
 ## 1.2.3
 

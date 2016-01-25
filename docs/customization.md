@@ -458,7 +458,7 @@ end
 
 Belongs_to associations are automatically copied over, unless you are whitelisting attributes and forget to/ purposely don't add it there. For the rest of the associations you may have (i.e. has_one, has_many, has_and_belongs_to_many, has_many_through), you may use the `associations_for_cloning` method by passing in array of symbols.
 
-**Note:** Any images or files you have will be copied along, if you have included those relationships.
+**Note:** Any images or files you have will **not** be copied along, if you have included those relationships.
 
 **Example**
 
