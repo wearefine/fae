@@ -20,7 +20,7 @@ module Fae
   private
 
     def add_route
-      inject_into_file "config/routes.rb", after: "Application.routes.draw do\n" do <<-RUBY
+      inject_into_file "config/routes.rb", after: "routes.draw do\n" do <<-RUBY
 \n  namespace :#{options.namespace} do
   end
   # mount Fae below your admin namespec
