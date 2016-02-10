@@ -54,4 +54,16 @@ feature 'slug' do
     end
   end
 
+
+  context "when the slug has accented characters" do
+    scenario 'should slug the slugger', js: true do
+      admin_login
+      visit new_admin_release_path
+
+      fill_in 'Name', with: "Á förêígn dîÂlëçt ìs gôòd fór thè söül"
+      # Character count limits, sadly
+      expect(find_field('Slug').value).to eq('a-foreign-diale')
+    end
+  end
+
 end

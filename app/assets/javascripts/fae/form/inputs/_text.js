@@ -74,16 +74,28 @@ Fae.form.text = {
     });
 
     // Combine all active slug fields for the query
+    slug_text = slug_text.join(' ');
+
+    // Strip accented characters
+    var from = 'àáâãäæåçèéêëęēėìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ';
+    var to = 'aaaaaaaceeeeeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+
+    // Loop through all accented characters and replace with non-accents
+    for (var i = 0; i < from.length; i++) {
+      slug_text = slug_text.replace( new RegExp(from.charAt(i), 'g'), to.charAt(i) );
+    }
+
+    // Remove leading and trailing spaces
     // Make them lowercase
     // Remove slashes, quotes or periods
     // Replace white spaces with a dash
     // Remove leading and trailing dashes
     slug_text = slug_text
-      .join(' ')
+      .trim()
       .toLowerCase()
-      .replace(/(\\)|(\')|(\.)/g, '')
-      .replace(/[^a-zA-Z0-9]+/g, '-')
-      .replace(/(-$)|(^-)/g, '');
+      .replace(/[^-\w\s]/g, '')
+      .replace(/[-\s]+/g, '-')
+      .replace(/(^-)|(-$)/g, '');
 
     return slug_text;
   },
