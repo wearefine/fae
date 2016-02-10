@@ -17,6 +17,8 @@
     + \#48759: Index-page filters collapse beneath each other on overflow
     + Update docs with missing 'not' so it's clear assets aren't cloneable
     + \#54606: Update initial inject_into_file for routes to handle more variations of file's opening line.
+    + \#54058: Replace accented characters with non-accented counterparts in slug generation
+
 ## 1.2.3
 
 - enhancements
