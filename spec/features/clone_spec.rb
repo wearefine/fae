@@ -80,6 +80,18 @@ feature 'Clone record' do
       }
     end
 
+    scenario 'should set on_prod when true to false' do
+      release = FactoryGirl.create(:release, name: 'Ima Release', vintage: '2012', on_prod: true, price: 13, varietal_id: 2, show: Date.today)
+      admin_login
+      visit admin_releases_path
+      page.find('.main_table-clone').click
+
+      eventually {
+        expect(find_field('release_on_prod_false').value).to eq('false')
+      }
+
+    end
+
   end
 
 end
