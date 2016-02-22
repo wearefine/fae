@@ -7,6 +7,7 @@ module Fae
 
     # include libraries
     require 'simple_form'
+    require 'jquery-rails'
     require 'jquery-ui-rails'
     require 'remotipart'
     require 'judge'
