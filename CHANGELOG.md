@@ -22,6 +22,7 @@
     + \#54619: Add slim as a gem dependency to support non FINE template apps
     + \#54169: Require jQuery in the engine
     + \#54608: Highlight next section on detail page's sub nav click
+    + \#54608: Include `on_production` in live toggle attribute check
 
 ## 1.2.3
 
