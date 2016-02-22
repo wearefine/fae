@@ -3,7 +3,9 @@ require 'rails_helper'
 describe 'fae_filter_form' do
 
   describe 'title option' do
+
     it 'should default to "Search Class Names"' do
+      FactoryGirl.create(:release)
       admin_login
       get admin_releases_path
 
@@ -11,6 +13,7 @@ describe 'fae_filter_form' do
     end
 
     it 'should be overridable' do
+      FactoryGirl.create(:location)
       admin_login
       get admin_locations_path
 
@@ -20,6 +23,7 @@ describe 'fae_filter_form' do
 
   describe 'search option' do
     it 'should default to showing the search field' do
+      FactoryGirl.create(:release)
       admin_login
       get admin_releases_path
 
@@ -27,10 +31,26 @@ describe 'fae_filter_form' do
     end
 
     it 'should not show search if search: false' do
+      FactoryGirl.create(:location)
       admin_login
       get admin_locations_path
 
       expect(response.body).to_not include('Search by Keyword')
+    end
+  end
+
+  describe 'no records for the model' do
+    it 'should not show filters' do
+      admin_login
+
+      # No records
+      get admin_releases_path
+      expect(response.body).to_not include('js-filter-form')
+
+      # Ensure results display when there are records
+      FactoryGirl.create(:release)
+      get admin_releases_path
+      expect(response.body).to include('js-filter-form')
     end
   end
 

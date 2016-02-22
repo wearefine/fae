@@ -50,10 +50,13 @@ module Fae
     end
 
     def fae_filter_form(options = {}, &block)
+      options[:collection] ||= @items
       options[:action]     ||= "#{@index_path}/filter"
       options[:title]      ||= "Search #{@klass_humanized.pluralize}"
       options[:search]       = true if options[:search].nil?
       options[:cookie_key] ||= false
+
+      return if options[:collection].blank?
 
       form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?

@@ -24,6 +24,7 @@ PATH
       sass (>= 3.4.0)
       sass-rails (>= 5.0.3)
       simple_form (~> 3.1.0)
+      slim
       uglifier
 
 GEM
