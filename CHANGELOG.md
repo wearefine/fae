@@ -21,6 +21,7 @@
     + \#54058: Replace accented characters with non-accented counterparts in slug generation
     + \#54619: Add slim as a gem dependency to support non FINE template apps
     + \#54169: Require jQuery in the engine
+    + \#54608: Highlight next section on detail page's sub nav click
 
 ## 1.2.3
 
