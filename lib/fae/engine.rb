@@ -12,6 +12,7 @@ module Fae
     require 'judge'
     require 'judge/simple_form'
     require 'acts_as_list'
+    require 'slim'
 
     config.autoload_paths += %W(#{config.root}/lib)
 
