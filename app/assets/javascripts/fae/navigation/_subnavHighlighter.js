@@ -89,7 +89,7 @@ Fae.navigation.subnavHighlighter = {
       $target = $target.length ? $target : $('[name=' + el.hash.slice(1) + ']');
 
       if ($target.length) {
-        FCH.smoothScroll($target, 500, 0, -116)
+        FCH.smoothScroll($target, 500, 0, -112)
       }
     }
   },

@@ -12,7 +12,7 @@ table class=table_class
       - if has_thumb
         th.main_content-thumb-col
       - cols.each do |col|
-        - th_class = [:on_prod, :on_stage].include?(col) ? 'main_table-header-live' : ''
+        - th_class = [:on_production, :on_prod, :on_stage].include?(col) ? 'main_table-header-live' : ''
         th class=th_class = col.to_s.humanize
       - if edit_column
         th.main_table-header-edit data-sorter="false" Edit
