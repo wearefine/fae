@@ -94,8 +94,8 @@
 			padding: 11px 13px 10px;
 			color: $c-text-sub;
 			font-size: 13px;
-			@include border-radius(0 0 3px 3px);
-			@include transition-multiple(color 0s, background 0.4s);
+			border-radius: 0 0 3px 3px;
+			@include transition(color 0s, background 0.4s);
 			&.active,
 			&:hover {
 				background: $c-custom-highlight;
@@ -121,7 +121,7 @@
 		color: $c-text-sub;
 
 		&:first-child:before {
-			@include icon-stuff();
+			@include icon_stuff;
 			@extend .icon-chevron_left:before;
 			font-size: 10px;
 		}
@@ -154,7 +154,7 @@
 		font-size: 13px;
 		color: $c-text-sub;
 
-		@include transition(all, .2s);
+		@include transition(all .2s);
 
 		&:hover {
 			color: $c-text-heavy;
@@ -247,7 +247,7 @@
 	}
 
 	&:after {
-		@include icon-stuff();
+		@include icon_stuff;
 		@extend .icon-arrow_down:before;
 		vertical-align: middle;
 		font-size: 5px;
@@ -276,7 +276,7 @@
 	z-index: 1;
 	text-align: left;
 
-	@include box-shadow(0, 0, 5px, 1px, $c-box_shadow);
+	box-shadow: 0 0 5px 1px $c-box_shadow;
 
 	a {
 		display: block;

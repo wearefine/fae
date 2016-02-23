@@ -13,6 +13,7 @@
   }
 
   a {
+    @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
     display: block;
     padding: 10px;
     min-height: 30px;
@@ -20,7 +21,6 @@
     border: 1px solid $c-border;
     text-align: center;
     color: $c-grey;
-    @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
 
     &:hover {
       color: $c-white;

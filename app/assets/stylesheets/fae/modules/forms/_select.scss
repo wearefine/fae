@@ -1,6 +1,19 @@
 
 // Select box and Chosen
-.select, .time, .city_time_zone, .table-filter-area, .date {
+.select,
+.time,
+.city_time_zone,
+.table-filter-area,
+.date {
+
+  select {
+    min-width: 300px;
+
+    &.small_pulldown {
+      min-width: 150px;
+    }
+  }
+
 
   .chosen-container {
     font-size: 14px;
@@ -9,35 +22,27 @@
       max-height: 140px;
     }
   }
-
-  select {
-    min-width: 300px;
-  }
-
-  select.small_pulldown {
-    min-width: 150px;
-  }
-
   .chosen-container-active .chosen-single {
     border-color: $c-border;
     background: $c-chosen-gradient-hover;
   }
 
-  .chosen-container-single .chosen-single {
-    height: auto;
-    padding: 7px 15px;
+  .chosen-container-single {
+    .chosen-single {
+      @include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
+      height: auto;
+      padding: 7px 15px;
+      border-radius: 2px;
+      box-shadow: none;
 
-    @include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
-    @include border-radius(2px);
-    @include box-shadow(0);
-  }
+      div b {
+        margin-top: 7px;
+      }
+    }
 
-  .chosen-container-single .chosen-default {
-    color: $c-text-heavy;
-  }
-
-  .chosen-container-single .chosen-single div b {
-    margin-top: 7px;
+    .chosen-default {
+      color: $c-text-heavy;
+    }
   }
 
   .chosen-container-multi {
@@ -45,6 +50,10 @@
     min-width: 223px;
     // overriding the inline js chosen makes
     width: 90% !important;
+
+    &.chosen-container-active .chosen-choices {
+      box-shadow: none;
+    }
 
     .chosen-choices {
       padding: 5px;
@@ -59,7 +68,6 @@
         padding: 5px 22px 5px 10px;
         border: 0;
         font-size: 12px;
-
         background: $c-chosen-multi-bg;
         color: $c-chosen-multi-text;
 
@@ -71,15 +79,11 @@
           color: $c-chosen-multi-delete;
 
           &:after {
-            @include icon-stuff();
             @extend .icon-delete_x:before;
+            @include icon_stuff;
           }
         }
       }
-    }
-
-    &.chosen-container-active .chosen-choices {
-      box-shadow: none;
     }
 
     li.search-field input[type="text"] {
@@ -136,103 +140,105 @@
 // MultiSelect plugin for multiselect pagination-ellipsis
 .ms-container {
   width: 700px;
-}
-
-.ms-container:after {
-  content: ".";
-  display: block;
-  height: 0;
-  line-height: 0;
-  font-size: 0;
-  clear: both;
-  min-height: 0;
-  visibility: hidden;
-}
-
-.ms-container .ms-selectable, .ms-container .ms-selection {
-  float: left;
-  width: 50%;
-  height: 250px;
-  padding-right: 15px;
-  background: $c-lightest_grey;
-  color: $c-text-heavy;
-}
-
-.ms-container .ms-selection {
-  float: right;
-}
-
-.ms-container .ms-list {
-  position: relative;
-  height: 100%;
-  height: calc(100% - 25px);
-  background: $c-white;
-  overflow-y: auto;
-}
-
-.ms-container .ms-list.ms-focus {
-  outline: 0;
-}
-
-.ms-container .ms-optgroup-container {
-  width: 100%;
-}
-
-.ms-container .ms-optgroup-label {
-}
-
-.ms-container .ms-selectable li.ms-elem-selectable, .ms-container .ms-selection li.ms-elem-selection {
-  position: relative;
-  padding: 10px 15px;
-  border-bottom: 1px $c-almost_white solid;
-  border-right: 1px $c-almost_white solid;
-  color: $c-text;
-  font-size: 13px;
 
   &:after {
-    content: "Add";
-    position: absolute;
-    right: 15px;
-    top: 9px;
-    color: $c-custom-highlight;
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    clear: both;
+    min-height: 0;
+    visibility: hidden;
+  }
+
+  .ms-selectable,
+  .ms-selection {
+    float: left;
+    width: 50%;
+    height: 250px;
+    padding-right: 15px;
+    background: $c-lightest_grey;
+    color: $c-text-heavy;
+  }
+
+  .ms-selection {
+    float: right;
+  }
+
+  .ms-list {
+    position: relative;
+    height: 100%;
+    height: calc(100% - 25px);
+    background: $c-white;
+    overflow-y: auto;
+  }
+
+  .ms-list.ms-focus {
+    outline: 0;
+  }
+
+  .ms-optgroup-container {
+    width: 100%;
+  }
+
+  .ms-selectable li.ms-elem-selectable,
+  .ms-selection li.ms-elem-selection {
+    position: relative;
+    padding: 10px 15px;
+    border-bottom: 1px $c-almost_white solid;
+    border-right: 1px $c-almost_white solid;
+    color: $c-text;
+    font-size: 13px;
+
+    &:after {
+      content: "Add";
+      position: absolute;
+      right: 15px;
+      top: 9px;
+      color: $c-custom-highlight;
+    }
+  }
+
+  .ms-selectable li.ms-elem-selectable {
+    padding-right: 45px
+  }
+
+  .ms-selection li.ms-elem-selection {
+    padding-right: 30px;
+    padding-left: 35px;
+
+    &:after {
+      @extend .icon-delete_x:before;
+      @include icon_stuff;
+      color: $c-text-sub;
+    }
+
+    &:before {
+      @extend .icon-check:before;
+      @include icon_stuff;
+      padding-right: 5px;
+      margin-left: -19px;
+      color: $c-custom-highlight;
+    }
+  }
+
+  .ms-selectable li.ms-hover,
+  .ms-selection li.ms-hover {
+    cursor: pointer;
+    text-decoration: none;
+    background-color: $c-almost_white;
+  }
+
+  .ms-selectable li.disabled,
+  .ms-selection li.disabled {
+    color: $c-almost_white;
+    cursor: text;
   }
 }
 
-.ms-container .ms-selectable li.ms-elem-selectable {
-  padding-right: 45px
-}
-
-.ms-container .ms-selection li.ms-elem-selection {
-  padding-right: 30px;
-  padding-left: 35px;
-
-  &:after {
-    @include icon-stuff();
-    @extend .icon-delete_x:before;
-    color: $c-text-sub;
-  }
-
-  &:before {
-    @include icon-stuff();
-    @extend .icon-check:before;
-    padding-right: 5px;
-    margin-left: -19px;
-    color: $c-custom-highlight;
-  }
-}
-
-.ms-container .ms-selectable li.ms-hover, .ms-container .ms-selection li.ms-hover {
-  cursor: pointer;
-  text-decoration: none;
-  background-color: $c-almost_white;
-}
-
-.ms-container .ms-selectable li.disabled, .ms-container .ms-selection li.disabled {
-  color: $c-almost_white;
-  cursor: text;
-}
-
-.ms-selectable .custom-header, .ms-selection .custom-header {
+.ms-selectable .custom-header,
+.ms-selection .custom-header {
   padding: 10px 15px;
   margin-right: -15px;
   color: $c-text-heavy;

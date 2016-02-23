@@ -7,9 +7,9 @@
   cursor: pointer;
 
   &:after {
-    position: absolute;
-    @include icon_stuff();
     @extend .icon-support:before;
+    @include icon_stuff;
+    position: absolute;
     padding-left: 7px;
     text-decoration: none;
     top: 1px;
@@ -17,19 +17,20 @@
   }
 }
 
-.hint, .markdown-hint {
+.hint,
+.markdown-hint {
   // hide it so the javascript can do its thing and retain it's size
   display: inline-block;
   position: absolute;
   left: -9999px;
   visibility: hidden;
 
-  img {
-    max-width: 100%;
-  }
-
   &.simplemodal-data {
     position: static;
     visibility: visible;
+  }
+
+  img {
+    max-width: 100%;
   }
 }

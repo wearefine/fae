@@ -30,17 +30,6 @@ input.string {
   min-width: 223px;
 }
 
-// Inputs with icon
-%input-symbol {
-  position: absolute;
-  bottom: 0;
-  border: 0 solid $c-lightest_grey;
-  padding: 14px 16px 13px;
-  margin-bottom: 1px;
-  font-size: 14px;
-  color: $c-light_grey;
-}
-
 .symbol {
   position: relative;
   width: 240px;

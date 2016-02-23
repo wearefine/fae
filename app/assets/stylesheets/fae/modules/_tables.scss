@@ -4,10 +4,6 @@
 	border-collapse: separate;
 	table-layout: fixed;
 
-	@include bp(medium) {
-		table-layout: fixed;
-	}
-
 	& tbody tr:nth-of-type(even) {
 		td {
 			background-color: $c-table-tr-even;
@@ -95,11 +91,10 @@
 }
 
 .main_table-action {
+	@include transition(border-color .2s);
 	display: inline-block;
 	padding: 5px;
 	border: 2px solid $c-table-td;
-
-	@include transition(border-color, .2s);
 
 	&:hover {
 		border-color: $c-border;
@@ -170,7 +165,7 @@
 	border: 1px solid $c-border;
 	margin-bottom: 10px;
 
-	@include border-radius(2px);
+	border-radius: 2px;
 
 	.icon-arrow_down {
 		font-size: 4px;
@@ -189,7 +184,7 @@
 	color: $c-text-sub;
 	cursor: pointer;
 
-	@include transition(color, .2s);
+	@include transition(color .2s);
 
 	&.js-active {
 		color: $c-text;
@@ -197,6 +192,7 @@
 }
 
 .main_table-action_menu-content {
+	@include transition(opacity .2s);
 	position: absolute;
 	top: 42px;
 	left: -9999px;
@@ -204,9 +200,7 @@
 	padding: 10px 0;
 	opacity: 0;
 	background: $c-table-action_menu-bg;
-
-	@include transition(opacity, .2s);
-	@include box-shadow(0, 0, 5px, 1px, $c-box_shadow);
+	box-shadow: 0 0 5px 1px $c-box_shadow;
 
 	li {
 		padding: 7px 20px;
@@ -253,12 +247,12 @@
 
 	&:after {
 		@extend .icon-arrow_down:before;
+		@include icon_stuff;
 		float: right;
 		margin-top: -2em;
 		font-size: 4px;
 		color: $c-tablesorter-icon;
 		visibility: hidden;
-		@include icon_stuff();
 	}
 }
 
@@ -266,8 +260,8 @@
 	background: $c-table-th-highlight;
 
 	&:after {
-		visibility: visible;
 		@extend .icon-arrow_down:before;
+		visibility: visible;
 	}
 }
 
@@ -275,8 +269,8 @@
 	background: $c-table-th-highlight;
 
 	&:after {
-		visibility: visible;
 		@extend .icon-arrow_up:before;
+		visibility: visible;
 	}
 }
 
@@ -358,6 +352,11 @@
 
 .collapsible {
 	margin-bottom: 10px;
+
+	table {
+		display: none;
+	}
+
 	h3 {
 		background: $c-white;
 		padding: 20px 0 20px 37px;
@@ -365,9 +364,10 @@
 		border: 1px solid $c-border;
 		cursor: pointer;
 		margin-bottom: 0;
+
 		&:after {
 			@extend .icon-arrow_down:before;
-			@include icon_stuff();
+			@include icon_stuff;
 			position: absolute;
 			right: 25px;
 			top: 22px;
@@ -378,17 +378,15 @@
 	&.active {
 		h3 {
 			border-bottom: none;
+
 			&:after {
 				@extend .icon-arrow_up:before;
 			}
 		}
+
 		table {
 			display: table;
 		}
-	}
-
-	table {
-		display: none;
 	}
 }
 
@@ -397,15 +395,17 @@
 	margin: 12px 0 24px;
 	cursor: pointer;
 	padding-right: 25px;
+
 	&:after {
 		@extend .icon-arrow_down:before;
-		@include icon_stuff();
+		@include icon_stuff;
 		font-size: 5px;
 		display: inline-block;
 		vertical-align: middle;
 		margin-left: 6px;
 		margin-top: -3px;
 	}
+
 	&.close-all {
 		&:after {
 			@extend .icon-arrow_up:before;

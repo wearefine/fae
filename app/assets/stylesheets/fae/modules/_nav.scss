@@ -1,21 +1,6 @@
-%inset-nav-shadow {
-	@include box-shadow-inset(-15px, 0, 15px, -15px, $c-box_shadow);
-}
-
-%main_nav-all_links {
-	@include transition(background, .2s);
-	display: block;
-	color: $c-text;
-
-	&:hover {
-		color: $c-nav-link;
-		background: $c-nav-bg-hover;
-	}
-}
-
 .main_nav {
 	@extend %inset-nav-shadow;
-	@include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
+	@include transition($mobile-menu-transition);
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -96,8 +81,8 @@
 	> a {
 		&:after {
 			@extend .icon-chevron_down:before;
-			@include icon_stuff();
-			@include transition(color, .2s);
+			@include icon_stuff;
+			@include transition(color .2s);
 			position: absolute;
 			right: 13px;
 			font-size: 8px;
@@ -139,7 +124,7 @@
 			position: relative;
 
 			&:after {
-				@include icon_stuff();
+				@include icon_stuff;
 				position: absolute;
 				right: 10px;
 				top: 11px;
@@ -183,7 +168,7 @@
 		background: $c-lightest_grey;
 
 		&:after {
-			@include icon_stuff();
+			@include icon_stuff;
 			top: 15px;
 			right: 13px;
 			position: absolute;
@@ -244,8 +229,8 @@
 
 		&:after {
 			@extend .icon-home:before;
-			@include icon_stuff();
-			@include transition(color, .2s);
+			@include icon_stuff;
+			@include transition(color .2s);
 			position: absolute;
 			right: 10px;
 			top: 11px;
