@@ -33,7 +33,7 @@
 
 .main_nav-sub-nav {
   @include bp(large-down) {
-    @include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
+    @include transition($mobile-menu-transition);
     position: fixed;
     top: 0;
     left: 0;
@@ -56,18 +56,18 @@
       background-color: $c-light_grey;
       color: $c-white;
 
+      @include bp(large) {
+        display: none;
+      }
+
       &:before {
         @extend .icon-chevron_left:before;
-        @include icon_stuff();
-        @include border-radius(50%);
+        @include icon_stuff;
+        border-radius: 50%;
         padding: 5px 9px 5px 7px;
         border: 2px solid $c-white;
         margin-right: 10px;
         color: $c-white;
-      }
-
-      @include bp(large) {
-        display: none;
       }
     }
   }

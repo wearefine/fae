@@ -1,6 +1,6 @@
 %gray-button {
   @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
-  @include border-radius(3px);
+  border-radius: 3px;
 
   color: $c-form-button;
   border: 1px solid $c-border;
@@ -15,7 +15,7 @@ input[type=submit],
 button[type=button],
 .add-button,
 .csv-button {
-  @include border-radius(3px);
+  border-radius: 3px;
 
   display: inline-block;
   font-size: 13px;
@@ -45,7 +45,7 @@ a.file_input-button,
 .table-filter-controls {
   margin: 12px 0 0;
 
-  @include bp(tablet) {
+  @include bp(medium) {
     float: right;
   }
 

@@ -10,13 +10,12 @@ html, body {
 }
 
 body {
+	@include transition($mobile-menu-transition);
 	padding-top: 55px;
 	font-family: $f-lato;
 	font-size: 16px;
 	color: $c-text;
 	background: $c-body-bg;
-
-	@include transition(margin-left, .3s, cubic-bezier(0.250, 0.460, 0.450, 0.940)); // for mobile menu
 
 	@include bp(large) {
 		padding-top: 0;
@@ -24,10 +23,9 @@ body {
 }
 
 a {
+	@include transition(color .2s);
 	color: $c-custom-highlight;
 	text-decoration: none;
-
-	@include transition(color, .2s);
 
 	&:hover {
 		color: $c-text;

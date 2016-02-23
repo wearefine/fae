@@ -1,5 +1,6 @@
 // Styles needed for the fileinputer
 .file_input-wrapper {
+  @include transition(background .2s);
   position: relative;
   display: inline-block;
   width: 90%;
@@ -10,13 +11,11 @@
   background: $c-form-file-bg;
   font-size: 13px;
   cursor: pointer;
-
-  @include transition(background, .2s);
-  @include border-radius(2px);
+  border-radius: 2px;
 
   span {
+    @include transition(color .2s);
     color: $c-text-sub;
-    @include transition(color, .2s);
   }
 
   &.js-active {
@@ -29,13 +28,12 @@
 }
 
 .file_input-button {
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
   color: $c-text;
   padding: 11px 14px;
   border: 1px solid $c-border;
   margin-right: 10px;
   cursor: pointer;
-
-  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
 
   &:hover {
     background: $c-form-submit-gradient-hover;

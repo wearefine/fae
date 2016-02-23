@@ -15,16 +15,16 @@
 
     &:before {
       @extend .icon-alert;
-      @include icon-stuff();
+      @include icon_stuff;
       padding-right: 10px;
     }
 
     &:after {
+      @include right-triangle(10px, $c-error-bg);
       content: "";
       position: absolute;
       bottom: -8px;
       left: 0;
-      @include right-triangle(10px, $c-error-bg);
     }
   }
 

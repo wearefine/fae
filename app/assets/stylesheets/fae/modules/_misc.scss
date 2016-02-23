@@ -12,16 +12,15 @@
   background: $c-slider-option-selector;
 }
 
-.slider-yes-selected .slider-options {
-  left: 0;
-}
-
 .slider-options {
+  @include transition(left .2s);
   position: relative;
   left: -35px;
   white-space: nowrap;
 
-  @include transition(left, .2s);
+  .slider-yes-selected & {
+    left: 0;
+  }
 }
 
 .slider-option-selector {
@@ -29,13 +28,13 @@
   width: 18px;
 }
 
-.slider-option-no, .slider-option-yes {
+.slider-option-no,
+.slider-option-yes {
+  @include user-select(none);
   display: inline-block;
   width: 35px;
   padding: 3px 4px;
   text-align: center;
-
-  @include user-select(none);
 }
 
 .slider-option-yes {
@@ -46,19 +45,6 @@
 .slider-option-no {
   color: $c-slider-no-color;
   background: $c-slider-no-bg;
-}
-
-// notices
-%alerts {
-  padding: 20px;
-  border-style: solid;
-  border-left-width: 3px;
-  margin-bottom: 10px;
-
-  &:before {
-    @include icon_stuff();
-    margin-right: 10px;
-  }
 }
 
 .notice {
