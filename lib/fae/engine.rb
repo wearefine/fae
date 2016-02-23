@@ -1,11 +1,9 @@
-require 'devise'
-require 'judge'
-
 module Fae
   class Engine < ::Rails::Engine
     isolate_namespace Fae
 
     # include libraries
+    require 'devise'
     require 'simple_form'
     require 'jquery-rails'
     require 'jquery-ui-rails'
