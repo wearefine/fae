@@ -33,6 +33,7 @@
 // DATEPICKER
 // DatePicker Container
 .ui-datepicker {
+  @extend %table-reset;
   width: 216px;
   height: auto;
   margin: 5px auto 0;
@@ -217,6 +218,7 @@
 }
 
 .date-picker-wrapper {
+  @extend %table-reset;
   box-shadow: 0 0 10px 0 $c-box_shadow;
   background: $c-border;
   font-family: inherit;
@@ -227,6 +229,11 @@
 
   &.no-shortcuts {
     padding-bottom: 0;
+  }
+
+  th {
+    background: none;
+    color: inherit;
   }
 
   .month-wrapper {
