@@ -4,9 +4,7 @@
       = render 'fae/shared/form_header', header: @klass_name
       = render 'fae/shared/form_buttons', f: f, item: @item
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :name
+  section.main_content-section-area
+    = fae_input f, :name
 
-        = fae_association f, :contact, collection: Person.all
+    = fae_association f, :contact, collection: Person.all

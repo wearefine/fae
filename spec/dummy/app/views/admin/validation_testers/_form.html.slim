@@ -4,20 +4,17 @@
       == render 'fae/shared/form_header', header: @klass_name
       == render 'fae/shared/form_buttons'
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :name, input_class: 'slugger'
-        = fae_input f, :slug
-        = fae_input f, :email
-        = fae_input f, :second_email
-        = fae_input f, :unique_email
-        = fae_input f, :url
-        = fae_input f, :second_url
-        = fae_input f, :phone
-        = fae_input f, :second_phone
-        = fae_input f, :zip
-        = fae_input f, :second_zip
-        = fae_input f, :youtube_url
-        = fae_input f, :second_youtube_url
-
+  section.main_content-section-area
+    = fae_input f, :name, input_class: 'slugger'
+    = fae_input f, :slug
+    = fae_input f, :email
+    = fae_input f, :second_email
+    = fae_input f, :unique_email
+    = fae_input f, :url
+    = fae_input f, :second_url
+    = fae_input f, :phone
+    = fae_input f, :second_phone
+    = fae_input f, :zip
+    = fae_input f, :second_zip
+    = fae_input f, :youtube_url
+    = fae_input f, :second_youtube_url

@@ -8,12 +8,10 @@
 
   == render 'flash_messages'
 
-  .main_content-section
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :title, label: "Project Name"
-        = fae_input f, :time_zone, wrapper_class: 'select'
-        = fae_input f, :live_url, label: 'Live URL <h6>Include http:// for external links.</h6>'.html_safe
-        = fae_input f, :stage_url, label: 'Stage URL <h6>Include http:// for external links.</h6>'.html_safe
-        = fae_image_form f, :logo
-        = fae_image_form f, :favicon
+  section.main_content-section-area
+    = fae_input f, :title, label: "Project Name"
+    = fae_input f, :time_zone, wrapper_class: 'select'
+    = fae_input f, :live_url, label: 'Live URL <h6>Include http:// for external links.</h6>'.html_safe
+    = fae_input f, :stage_url, label: 'Stage URL <h6>Include http:// for external links.</h6>'.html_safe
+    = fae_image_form f, :logo
+    = fae_image_form f, :favicon

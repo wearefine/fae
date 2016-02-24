@@ -4,16 +4,14 @@ section.main_content-header
 
 == render 'flash_messages'
 
-.main_content-sections
-  section.main_content-section
-    .main_content-section-area
-      table.main_table-sort_columns
-        thead
-          tr
-            th Name
-            th.-modified Modified
-        tbody
-          - @items.each do |item|
-            tr id="fae_content_block_#{item.id}"
-              td.main_table-description-item = link_to item.title.titleize, fae.edit_content_block_path(item.slug)
-              td = fae_date_format item.updated_at
+main.main_content-section-area
+  table.main_table-sort_columns
+    thead
+      tr
+        th Name
+        th.-modified Modified
+    tbody
+      - @items.each do |item|
+        tr id="fae_content_block_#{item.id}"
+          td.main_table-description-item = link_to item.title.titleize, fae.edit_content_block_path(item.slug)
+          td = fae_date_format item.updated_at
