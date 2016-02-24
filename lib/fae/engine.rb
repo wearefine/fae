@@ -1,5 +1,4 @@
 require 'devise'
-require 'judge'
 
 module Fae
   class Engine < ::Rails::Engine
