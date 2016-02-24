@@ -6,7 +6,6 @@ services:
 rvm:
   - 2.0.0
   - 2.1
-  - 2.2
 install:
   - bundle install --retry=3
 before_script:
