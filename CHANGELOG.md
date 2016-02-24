@@ -25,6 +25,7 @@
     + \#54608: Highlight next section on detail page's sub nav click
     + \#54608: Include `on_production` in live toggle attribute check
     + \#53749: Hide filters when no records are present
+    + Fix rspec depreciation warnings
 
 ## 1.2.3
 
