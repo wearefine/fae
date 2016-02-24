@@ -9,7 +9,7 @@ GIT
 PATH
   remote: ../
   specs:
-    fae-rails (1.2.3)
+    fae-rails (1.2.4)
       acts_as_list (~> 0.4.0)
       browser (~> 0.8.0)
       carrierwave (~> 0.10.0)
@@ -24,6 +24,7 @@ PATH
       sass (>= 3.4.0)
       sass-rails (>= 5.0.3)
       simple_form (~> 3.1.0)
+      slim
       uglifier
 
 GEM
@@ -349,7 +350,7 @@ GEM
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    warden (1.2.4)
+    warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
     wraith (2.3.4)
@@ -401,6 +402,5 @@ DEPENDENCIES
   sass
   selenium-webdriver (~> 2.42.0)
   shoulda-matchers
-  slim
   thin
   yarjuf
