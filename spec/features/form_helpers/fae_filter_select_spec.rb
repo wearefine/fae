@@ -2,6 +2,10 @@ require 'spec_helper'
 
 feature 'fae_filter_select' do
 
+  before {
+    FactoryGirl.create(:release)
+  }
+
   scenario 'collection options defaults to Class.for_fae_index' do
     FactoryGirl.create(:wine, name_en: 'Some Wine')
     FactoryGirl.create(:wine, name_en: 'Another Wine')

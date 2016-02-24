@@ -2,6 +2,10 @@ require 'rails_helper'
 
 describe 'fae_filter_select' do
 
+  before {
+    FactoryGirl.create(:release)
+  }
+
   describe 'label option' do
     it 'should default to attribute.to_s.titleize' do
       admin_login
