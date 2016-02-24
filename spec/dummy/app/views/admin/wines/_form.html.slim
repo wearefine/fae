@@ -7,18 +7,16 @@
       = render 'fae/shared/form_header', header: @klass_name
       = render 'fae/shared/form_buttons', f: f, item: @item
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'
-        = fae_input f, :name_zh
-        = fae_input f, :name_ja
-        = fae_input f, :description_en
-        = fae_input f, :description_zh
-        = fae_input f, :description_ja
-        = fae_input f, :food_pairing_en
-        = fae_input f, :food_pairing_zh
-        = fae_input f, :food_pairing_ja
+  main.main_content-section-area
+    = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'
+    = fae_input f, :name_zh
+    = fae_input f, :name_ja
+    = fae_input f, :description_en
+    = fae_input f, :description_zh
+    = fae_input f, :description_ja
+    = fae_input f, :food_pairing_en
+    = fae_input f, :food_pairing_zh
+    = fae_input f, :food_pairing_ja
 
 - if params[:action] == 'edit'
   section.main_content-section id='winemakers_section'

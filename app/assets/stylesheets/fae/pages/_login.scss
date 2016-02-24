@@ -73,9 +73,9 @@
   width: 75%;
   padding: 75px 23px;
 
-    @include bp(login_container) {
-      width: 50%;
-    }
+  @include bp(login_container) {
+    width: 50%;
+  }
 }
 
 .login-form-actions {

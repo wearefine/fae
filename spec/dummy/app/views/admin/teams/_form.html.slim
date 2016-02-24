@@ -4,10 +4,7 @@
       = render 'fae/shared/form_header', header: @klass_name
       = render 'fae/shared/form_buttons'
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :name
-        = fae_input f, :city
-        = fae_input f, :history
-
+  section.main_content-section-area
+    = fae_input f, :name
+    = fae_input f, :city
+    = fae_input f, :history

@@ -38,6 +38,15 @@
   }
 }
 
+// content secitons
+.main_content-section {
+  width: 100%;
+
+  &.extra-bottom-padding {
+    padding-bottom: 200px;
+  }
+}
+
 ///////////////////////////////
 // Elements not found in Fae //
 ///////////////////////////////
