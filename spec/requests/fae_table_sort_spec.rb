@@ -3,6 +3,8 @@ require 'rails_helper'
 feature 'fae_table_sort' do
 
   scenario 'save sort preferences in session', js: true do
+    FactoryGirl.create(:release)
+
     admin_login
     visit admin_releases_path
 
