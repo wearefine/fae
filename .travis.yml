@@ -1,11 +1,16 @@
 sudo: false
 cache: bundler
 language: ruby
+services:
+  - mysql
 rvm:
   - 2.0.0
   - 2.1
   - 2.2
 install:
   - bundle install --retry=3
+before_script:
+  - mysql -e 'create database if not exists fae_dummy_test CHARACTER SET utf8 COLLATE utf8_general_ci;'
+  - cd spec/dummy && rake db:schema:load RAILS_ENV=test && cd ../../
 script:
   - bundle exec rspec
