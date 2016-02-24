@@ -47,9 +47,13 @@
   }
 }
 
+
+
 ///////////////////////////////
 // Elements not found in Fae //
 ///////////////////////////////
+
+
 
 .main_table-description-item-sub {
   margin-top: 7px;
@@ -130,4 +134,79 @@
 .main_table-action-area {
   float: right;
   margin-bottom: 10px;
+}
+
+.main_content-section-sub {
+  margin-top: 50px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+// Button Menu Dropdown
+.button-dropdown.button-dropdown {
+  @extend button[type=button];
+  position: relative;
+  padding: 9px 11px;
+  z-index: 1;
+
+  &:after {
+    @extend .icon-arrow_down:before;
+    @include icon_stuff;
+    vertical-align: middle;
+    font-size: 5px;
+    color: $c-text-sub;
+  }
+
+  &:hover {
+    &:after, .icon-settings {
+      color: $c-grey;
+    }
+  }
+
+  .icon-settings {
+    font-size: 17px;
+    vertical-align: middle;
+    color: $c-text-sub;
+  }
+
+  .button-dropdown-menu {
+    display: none;
+  }
+}
+
+.button-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  width: 240px;
+  padding: 9px 15px;
+  background: $c-white;
+  z-index: 1;
+  text-align: left;
+  box-shadow: 0 0 5px 1px $c-box_shadow;
+
+  a {
+    display: block;
+    padding: 5px;
+    color: $c-text;
+  }
+}
+
+.button-dropdown--opened.button-dropdown--opened {
+  &:after,
+  .icon-settings {
+    color: $c-grey;
+  }
+
+  .button-dropdown-menu {
+    display: block;
+  }
+}
+
+.table-button-dropdown {
+  float: right;
+  position: relative;
+  bottom: 10px;
 }

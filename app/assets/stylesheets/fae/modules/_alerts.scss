@@ -7,11 +7,11 @@
   &:before {
     @extend .icon-check:before;
   }
-}
 
-.sample .notice {
-  display: block !important;
-  height: 58px !important;
+  .sample & {
+    display: block !important;
+    height: 58px !important;
+  }
 }
 
 .alert {

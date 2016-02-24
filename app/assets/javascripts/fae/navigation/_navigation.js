@@ -12,7 +12,6 @@ Fae.navigation = {
   init: function() {
     this.selectCurrentNavItem();
     this.utilityNav();
-    this.buttonDropdown();
     this.fadeNotices();
     this.stickyHeaders();
     this.subnavHighlighter.init();
@@ -234,23 +233,6 @@ Fae.navigation = {
           FCH.$document.off('click#js-utility-nav');
         }
       });
-    });
-  },
-
-  /**
-   * Toggle class on button dropdown; close dropdown on click anywhere
-   */
-  buttonDropdown: function() {
-    // button dropdown class toggle
-    $('.button-dropdown').click(function(){
-      $(this).toggleClass('button-dropdown--opened');
-    });
-
-    // button dropdown click anywhere but the dropdown close
-    FCH.$document.click(function(e){
-      if (!$(e.target).closest('.button-dropdown').length) {
-        $('.button-dropdown').removeClass('button-dropdown--opened');
-      }
     });
   },
 

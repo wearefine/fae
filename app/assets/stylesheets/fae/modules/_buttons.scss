@@ -43,7 +43,6 @@ a.file_input-button,
     &:hover {
       color: $c-form-button;
     }
-
   }
 }
 
@@ -53,22 +52,5 @@ a.file_input-button,
     @include icon-stuff;
     font-size: 12px;
     margin-right: 7px;
-  }
-}
-
-.main_content-header-save {
-  a:not(.add-button) {
-    @extend %gray-button;
-    font-size: 13px;
-    margin-right: 5px;
-  }
-
-  input[type=submit] {
-    padding: 10px 14px 11px;
-  }
-
-  .clone-button{
-    font-size: 13px;
-    margin-left: 5px;
   }
 }

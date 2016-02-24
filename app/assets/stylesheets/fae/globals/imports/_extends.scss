@@ -48,3 +48,40 @@
     background: $c-form-button-gradient-hover;
   }
 }
+
+%table-reset {
+  table {
+    table-layout: initial;
+    border-collapse: inherit;
+    border: initial;
+  }
+
+  td {
+    border: initial;
+
+    &,
+    &:hover {
+      border-left: initial;
+    }
+  }
+
+  tbody {
+    tr {
+      &,
+      &:nth-child(even) {
+        &,
+        &:hover {
+          background: initial;
+          border-left: initial;
+
+          td {
+            &,
+            &:first-child {
+              border-left: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+}
