@@ -220,18 +220,18 @@ Fae.navigation = {
       var $sub_nav = $(this);
 
       // there could be more than one. so remove all of the clicked statuses and add to the specific one
-      $('.utility_nav-clicked').removeClass('utility_nav-clicked');
-      $sub_nav.addClass('utility_nav-clicked');
+      $('#js-utility-nav').removeClass('-clicked');
+      $sub_nav.addClass('-clicked');
 
       // assign a once function to close the menus
-      FCH.$document.on('click.utility_nav', function(e){
+      FCH.$document.on('click#js-utility-nav', function(e){
         // as long as the click is not in the menu
         if (!$(e.target).closest('.utility_sub_nav').length) {
           // remove the class from the utility nav
-          $sub_nav.removeClass('utility_nav-clicked');
+          $sub_nav.removeClass('-clicked');
 
           // unbind the click from the document, no need to keep it around.
-          FCH.$document.off('click.utility_nav');
+          FCH.$document.off('click#js-utility-nav');
         }
       });
     });

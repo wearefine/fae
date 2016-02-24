@@ -146,7 +146,7 @@
       placeholder_name: 'js-sticky-placeholder',
       make_placeholder: true,
       offset: 0,
-      header_selector: '#main_header'
+      header_selector: '#js-main-header'
     };
 
     // unite the default options with the passed-in ones

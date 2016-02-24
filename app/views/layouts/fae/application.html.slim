@@ -11,7 +11,7 @@ html
 
   body class=body_class
     == render "header"
-    section#main_content
+    section.main-content#js-main-content
       == render "nav" if user_signed_in?
       == yield
 

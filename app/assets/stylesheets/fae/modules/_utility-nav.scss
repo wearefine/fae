@@ -17,9 +17,8 @@
     margin-top: 20px;
   }
 
-  .utility_nav-clicked {
-    color: $c-white;
-
+  &.-clicked {
+    &,
     &:hover {
       color: $c-white;
     }

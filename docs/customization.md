@@ -210,7 +210,7 @@ Next we'll add the form to our view as the first child of `.main_content-section
     == fae_filter_select :company
     == fae_filter_select :groups
 
-  table.index_table.main_table-sort_columns
+  table.main_table-sort_columns
   // ...
 ```
 
@@ -377,11 +377,11 @@ Some pages have multiple tables that are easier to navigate if tables can be sho
 .main_content-section-area
   .collapsible
     h3 All Wine (#{@all_wine.length})
-    table.index_table
+    table
       ....
   .collapsible
     h3 White & Sparkling Wine (#{@white_sparkling_wine.length})
-    table.index_table
+    table
       ....
 ```
 
@@ -415,7 +415,7 @@ You may add the clone button to the index, edit form, or both.
 Add the following to your `thead`, usually after 'Delete':
 
 ```slim
-  th class="main_table-header-clone" data-sorter="false" Clone
+  th.-clone data-sorter="false" Clone
 ```
 
 And to your `tbody`:

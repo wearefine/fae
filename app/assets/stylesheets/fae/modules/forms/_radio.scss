@@ -46,7 +46,7 @@
     border-color: $c-custom-highlight;
 
     &:before {
-      @mixin transform( translate(-50%, -50%) );
+      @include transform( translate(-50%, -50%) );
       content: "";
       display: block;
       position: absolute;

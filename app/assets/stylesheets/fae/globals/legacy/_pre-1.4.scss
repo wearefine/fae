@@ -1,0 +1,124 @@
+// This legacy file is to preserve style for apps pre-1.4
+
+.main_table-header-modified {
+  width: 200px;
+  text-align: center;
+}
+
+.main_table-header-clone {
+  text-align: center;
+}
+
+.main_table-header-live {
+  width: 80px;
+  text-align: center;
+}
+
+.main_table-header-delete {
+  width: 90px;
+  text-align: center;
+}
+
+.main_table-header-edit {
+  width: 65px;
+  text-align: center;
+}
+
+.main_table-edit,
+.main_table-delete {
+  width: 1px;
+  text-align: center;
+
+  a {
+    color: $c-text-sub;
+
+    &:hover {
+      color: $c-text;
+    }
+  }
+}
+
+///////////////////////////////
+// Elements not found in Fae //
+///////////////////////////////
+
+.main_table-description-item-sub {
+  margin-top: 7px;
+  font-size: 12px;
+  color: $c-text-sub;
+}
+
+.main_table-modified {
+  text-align: center;
+}
+
+.main_table-live {
+  font-weight: bold;
+  text-align: center;
+}
+
+.main_table-action_menu-trigger {
+  @include transition(color .2s);
+  padding: 8px 10px;
+  font-size: 20px;
+  color: $c-text-sub;
+  cursor: pointer;
+
+  &.js-active {
+    color: $c-text;
+  }
+}
+
+.main_table-action_menu-content {
+  @include transition(opacity .2s);
+  position: absolute;
+  top: 42px;
+  left: -9999px;
+  width: 150px;
+  padding: 10px 0;
+  opacity: 0;
+  background: $c-table-action_menu-bg;
+  box-shadow: 0 0 5px 1px $c-box_shadow;
+
+  li {
+    padding: 7px 20px;
+    font-size: 14px;
+    color: $c-custom-highlight;
+    cursor: pointer;
+
+    &:hover {
+      background: $c-table-action_menu-link-bg;
+    }
+  }
+
+  .js-active + & {
+    right: 0;
+    left: auto;
+    opacity: 1;
+  }
+}
+
+.main_table-action_menu {
+  position: relative;
+  display: inline-block;
+  float: right;
+  border: 1px solid $c-border;
+  margin-bottom: 10px;
+
+  border-radius: 2px;
+
+  .icon-arrow_down {
+    font-size: 4px;
+    vertical-align: middle;
+  }
+
+  .icon-settings {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+}
+
+.main_table-action-area {
+  float: right;
+  margin-bottom: 10px;
+}

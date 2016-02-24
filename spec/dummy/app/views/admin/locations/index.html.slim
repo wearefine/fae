@@ -6,12 +6,12 @@
 
       == fae_filter_form title: 'Disregard, just testing filter options', search: false do
 
-      table.index_table.main_table-sort_columns
+      table.main_table-sort_columns
         thead
           tr
             th Name
             th Modified
-            th.main_table-header-delete data-sorter="false" Delete
+            th.-delete data-sorter="false" Delete
 
         tbody
           - if @items.present?
@@ -20,7 +20,7 @@
                 td.main_table-description-item
                   = link_to item.fae_display_field, edit_admin_location_path(item)
                 td = fae_date_format item.updated_at
-                td.main_table-delete
+                td.-delete
                   = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
                     span.icon-delete_x
           - else

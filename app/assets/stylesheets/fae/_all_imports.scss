@@ -20,9 +20,15 @@
   'modules/buttons',
   'modules/nav',
   'modules/utility-nav',
-  'modules/tables',
+  'modules/tables/base',
+  'modules/tables/actions',
+  'modules/tables/sorting',
+  'modules/tables/filters',
+  'modules/tables/collapsible',
+  'modules/tables/sticky',
   'modules/modal',
-  'modules/misc',
+  'modules/toggles',
+  'modules/alerts',
   'modules/mobilemenu'
 ;
 
@@ -50,3 +56,9 @@
   'pages/login',
   'pages/help'
 ;
+
+// Legacy styles
+@import
+  'globals/legacy/pre-1.4'
+;
+

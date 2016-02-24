@@ -39,7 +39,7 @@ Fae.form.validator = {
 
       if (_this.is_valid === false) {
         Fae.navigation.language.checkForHiddenErrors();
-        FCH.smoothScroll($('#main_header'), 500, 100, 0);
+        FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
         e.preventDefault();
       }
 
