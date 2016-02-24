@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.2.4
+
+- enhancements
     + \#50230: Check if Fae Roles have been created before recreating
     + Added in pattern in the documentation on configuring a Dynamic Relationship with a Page Model.
     + Added in documentation on configuring a conditionally required field.
