@@ -1,0 +1,11 @@
+sudo: false
+cache: bundler
+language: ruby
+rvm:
+  - 2.0.0
+  - 2.1
+  - 2.2
+install:
+  - bundle install --retry=3
+script:
+  - bundle exec rspec
