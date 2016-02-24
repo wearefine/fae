@@ -18,7 +18,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, slug: 'validation-tester 2')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -38,7 +38,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, email: 'testemail @gmail.com')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -58,7 +58,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, url: 'poop.bike')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -78,7 +78,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, zip: 'apple pie')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -98,7 +98,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, youtube_url: '1cat')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -118,7 +118,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, second_slug: 'some slug')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -138,7 +138,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, second_email: 'email/email.com')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -158,7 +158,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, second_url: 'poop.bike')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -178,7 +178,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, second_zip: '124!0')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
@@ -198,7 +198,7 @@ describe 'validation_testers#new' do
       get new_admin_validation_tester_path
       test = FactoryGirl.build(:validation_tester, second_youtube_url: '1cat')
 
-      test.should_not be_valid
+      expect(test).to_not be_valid
     end
 
   end
