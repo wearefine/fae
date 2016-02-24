@@ -1,16 +1,3 @@
-%gray-button {
-  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
-  border-radius: 3px;
-
-  color: $c-form-button;
-  border: 1px solid $c-border;
-  padding: 11px 14px;
-
-  &:hover {
-    background: $c-form-button-gradient-hover;
-  }
-}
-
 input[type=submit],
 button[type=button],
 .add-button,
@@ -25,7 +12,6 @@ button[type=button],
 input[type=submit],
 .add-button {
   @include gradient-vertical($start-color: $c-form-submit-gradient-start, $end-color: $c-form-submit-gradient-end);
-
   color: $c-form-submit;
   border: 1px solid $c-form-submit-gradient-start;
   padding: 11px 14px;
@@ -64,8 +50,8 @@ a.file_input-button,
 
 .add-button {
   &:before {
-    @include icon-stuff;
     @extend .icon-heavy_plus:before;
+    @include icon-stuff;
     font-size: 12px;
     margin-right: 7px;
   }

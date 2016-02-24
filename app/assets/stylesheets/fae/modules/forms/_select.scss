@@ -14,7 +14,6 @@
     }
   }
 
-
   .chosen-container {
     font-size: 14px;
 
@@ -22,9 +21,12 @@
       max-height: 140px;
     }
   }
-  .chosen-container-active .chosen-single {
-    border-color: $c-border;
-    background: $c-chosen-gradient-hover;
+
+  .chosen-container-active {
+    .chosen-single {
+      border-color: $c-border;
+      background: $c-chosen-gradient-hover;
+    }
   }
 
   .chosen-container-single {
@@ -51,8 +53,10 @@
     // overriding the inline js chosen makes
     width: 90% !important;
 
-    &.chosen-container-active .chosen-choices {
-      box-shadow: none;
+    &.chosen-container-active {
+      .chosen-choices {
+        box-shadow: none;
+      }
     }
 
     .chosen-choices {
@@ -86,8 +90,10 @@
       }
     }
 
-    li.search-field input[type="text"] {
-      height: 100%;
+    li.search-field {
+      input[type="text"] {
+        height: 100%;
+      }
     }
   }
 }
@@ -99,10 +105,13 @@
 
 // overwriting chosen for retina
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
-  .chosen-rtl .chosen-search input[type="text"], .chosen-container-single .chosen-single abbr,
-  .chosen-container-single .chosen-single div b, .chosen-container-single .chosen-search input[type="text"],
+  .chosen-rtl .chosen-search input[type="text"],
+  .chosen-container-single .chosen-single abbr,
+  .chosen-container-single .chosen-single div b,
+  .chosen-container-single .chosen-search input[type="text"],
   .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
-  .chosen-container .chosen-results-scroll-down span, .chosen-container .chosen-results-scroll-up span {
+  .chosen-container .chosen-results-scroll-down span,
+  .chosen-container .chosen-results-scroll-up span {
     background-image: image-url('fae/chosen/chosen-sprite@2x.png') !important;
   }
 }
@@ -160,10 +169,82 @@
     padding-right: 15px;
     background: $c-lightest_grey;
     color: $c-text-heavy;
+
+    li {
+      &.ms-elem-selectable,
+      &.ms-elem-selection {
+        position: relative;
+        padding: 10px 15px;
+        border-bottom: 1px $c-almost_white solid;
+        border-right: 1px $c-almost_white solid;
+        color: $c-text;
+        font-size: 13px;
+
+        &:after {
+          content: "Add";
+          position: absolute;
+          right: 15px;
+          top: 9px;
+          color: $c-custom-highlight;
+        }
+      }
+
+      &.ms-hover {
+        cursor: pointer;
+        text-decoration: none;
+        background-color: $c-almost_white;
+      }
+
+      &.disabled {
+        color: $c-almost_white;
+        cursor: text;
+      }
+    }
+
+    .custom-header {
+      padding: 10px 15px;
+      margin-right: -15px;
+      color: $c-text-heavy;
+      background: $c-lighter_grey;
+      font-size: 14px;
+    }
+  }
+
+  .ms-selectable {
+    li {
+      &.ms-elem-selectable {
+        padding-right: 45px
+      }
+    }
   }
 
   .ms-selection {
     float: right;
+
+    li {
+      &.ms-elem-selection {
+        padding-right: 30px;
+        padding-left: 35px;
+
+        &:after {
+          @extend .icon-delete_x:before;
+          @include icon_stuff;
+          color: $c-text-sub;
+        }
+
+        &:before {
+          @extend .icon-check:before;
+          @include icon_stuff;
+          padding-right: 5px;
+          margin-left: -19px;
+          color: $c-custom-highlight;
+        }
+      }
+
+      .custom-header {
+        background: $c-light_grey;
+      }
+    }
   }
 
   .ms-list {
@@ -172,80 +253,13 @@
     height: calc(100% - 25px);
     background: $c-white;
     overflow-y: auto;
-  }
 
-  .ms-list.ms-focus {
-    outline: 0;
+    &.ms-focus {
+      outline: 0;
+    }
   }
 
   .ms-optgroup-container {
     width: 100%;
   }
-
-  .ms-selectable li.ms-elem-selectable,
-  .ms-selection li.ms-elem-selection {
-    position: relative;
-    padding: 10px 15px;
-    border-bottom: 1px $c-almost_white solid;
-    border-right: 1px $c-almost_white solid;
-    color: $c-text;
-    font-size: 13px;
-
-    &:after {
-      content: "Add";
-      position: absolute;
-      right: 15px;
-      top: 9px;
-      color: $c-custom-highlight;
-    }
-  }
-
-  .ms-selectable li.ms-elem-selectable {
-    padding-right: 45px
-  }
-
-  .ms-selection li.ms-elem-selection {
-    padding-right: 30px;
-    padding-left: 35px;
-
-    &:after {
-      @extend .icon-delete_x:before;
-      @include icon_stuff;
-      color: $c-text-sub;
-    }
-
-    &:before {
-      @extend .icon-check:before;
-      @include icon_stuff;
-      padding-right: 5px;
-      margin-left: -19px;
-      color: $c-custom-highlight;
-    }
-  }
-
-  .ms-selectable li.ms-hover,
-  .ms-selection li.ms-hover {
-    cursor: pointer;
-    text-decoration: none;
-    background-color: $c-almost_white;
-  }
-
-  .ms-selectable li.disabled,
-  .ms-selection li.disabled {
-    color: $c-almost_white;
-    cursor: text;
-  }
-}
-
-.ms-selectable .custom-header,
-.ms-selection .custom-header {
-  padding: 10px 15px;
-  margin-right: -15px;
-  color: $c-text-heavy;
-  background: $c-lighter_grey;
-  font-size: 14px;
-}
-
-.ms-selection .custom-header {
-  background: $c-light_grey;
 }
