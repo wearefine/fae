@@ -54,18 +54,20 @@
 }
 
 .counter {
+  + .editor-toolbar {
+    margin-top: 10px;
+  }
+
   p {
     padding-top: 10px;
     font-size: 13px;
+
     span {
       color: $c-notice-content;
+
       &.overCount {
         color: $c-error-content;
       }
     }
-  }
-
-  + .editor-toolbar {
-    margin-top: 10px;
   }
 }
