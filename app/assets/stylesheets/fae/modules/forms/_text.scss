@@ -23,11 +23,11 @@
   &.text {
     max-width: 515px;
   }
-}
 
-input.string {
-  width: 100%;
-  min-width: 223px;
+  &.string {
+    width: 100%;
+    min-width: 223px;
+  }
 }
 
 .symbol {

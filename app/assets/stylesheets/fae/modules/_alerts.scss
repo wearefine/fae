@@ -7,11 +7,6 @@
   &:before {
     @extend .icon-check:before;
   }
-
-  .sample & {
-    display: block !important;
-    height: 58px !important;
-  }
 }
 
 .alert {
@@ -25,8 +20,7 @@
   }
 }
 
-.main-content > .error,
-.sample .error {
+.main-content > .error {
   @extend %alerts;
   border-color: $c-warning-content;
   background: $c-warning-bg;
