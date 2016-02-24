@@ -36,3 +36,15 @@
   font-size: 14px;
   color: $c-light_grey;
 }
+
+%gray-button {
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+  border-radius: 3px;
+  color: $c-form-button;
+  border: 1px solid $c-border;
+  padding: 11px 14px;
+
+  &:hover {
+    background: $c-form-button-gradient-hover;
+  }
+}

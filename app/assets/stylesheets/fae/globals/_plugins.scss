@@ -1,27 +1,24 @@
 // plugin overrides
-.jcrop-vline,.jcrop-hline{
-  background-image: image-url('fae/jcrop/Jcrop.gif');
-}
-
-.chosen-container-single .chosen-single abbr, .chosen-container-single .chosen-single div b,
+.chosen-container-single .chosen-single abbr,
+.chosen-container-single .chosen-single div b,
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
   background-image: image-url('fae/chosen/chosen-sprite.png')
 }
 
 .chosen-container-single .chosen-search input[type="text"] {
-  background: white image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px;
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: $c-white image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px;
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, $c-lightest-gray), color-stop(15%, $c-white));
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -webkit-linear-gradient($c-lightest-gray 1%, $c-white 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -moz-linear-gradient($c-lightest-gray 1%, $c-white 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, -o-linear-gradient($c-lightest-gray 1%, $c-white 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat 100% -20px, linear-gradient($c-lightest-gray 1%, $c-white 15%);
 }
 
 .chosen-rtl .chosen-search input[type="text"] {
   background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px;
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, $c-lightest-gray), color-stop(15%, $c-white));
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient($c-lightest-gray 1%, $c-white 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient($c-lightest-gray 1%, $c-white 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient($c-lightest-gray 1%, $c-white 15%);
+  background: image-url('fae/chosen/chosen-sprite.png') no-repeat -30px -20px, linear-gradient($c-lightest-gray 1%, $c-white 15%);
 }
