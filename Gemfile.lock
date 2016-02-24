@@ -414,6 +414,5 @@ DEPENDENCIES
   sass
   selenium-webdriver (~> 2.42.0)
   shoulda-matchers
-  slim
   thin
   yarjuf
