@@ -34,6 +34,15 @@
   width: 50%;
   margin: auto;
 
+  @include bp(login_container) {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+    padding: 35px 23px;
+    border-left: 1px solid $c-border;
+    margin-left: -6px;
+  }
+
   input[type=text],
   input[type=password],
   input[type=email] {
@@ -48,15 +57,6 @@
       float: right;
       margin: 0;
     }
-  }
-
-  @include bp(login_container) {
-    display: inline-block;
-    vertical-align: middle;
-    width: 50%;
-    padding: 35px 23px;
-    border-left: 1px solid $c-border;
-    margin-left: -6px;
   }
 }
 
@@ -124,19 +124,22 @@ input {
   }
 }
 
-.login-fine, .login-fine:hover {
-  float: right;
-  color: $c-login-footer-all;
+.login-fine {
+  &,
+  &:hover {
+    float: right;
+    color: $c-login-footer-all;
 
-	span {
-		display: inline-block;
-		width: 48px;
-		height: 16px;
-		background: image-url('fae/fine_footer.png');
-		text-indent: 100%;
-		white-space: nowrap;
-		overflow: hidden;
-	}
+    span {
+      display: inline-block;
+      width: 48px;
+      height: 16px;
+      background: image-url('fae/fine_footer.png');
+      text-indent: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+  }
 }
 
 .login-label-extra {
@@ -149,10 +152,10 @@ input {
 .login-form-password {
   label {
     margin-bottom: 10px;
-  }
 
-  label + label {
-    margin-bottom: 15px;
+    & + label {
+      margin-bottom: 15px;
+    }
   }
 }
 

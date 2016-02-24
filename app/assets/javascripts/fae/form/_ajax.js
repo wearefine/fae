@@ -332,7 +332,7 @@ Fae.form.ajax = {
    * Attaching click handlers to #main_content to allow ajax replacement
    */
   htmlListeners: function() {
-    $('#main_content')
+    $('#js-main-content')
 
       // for the yes/no slider
       .on('click', '.slider-wrapper', function(e){
@@ -341,7 +341,7 @@ Fae.form.ajax = {
       })
 
       // The settings menu for tables and checkboxe
-      .on('click', '.main_table-action_menu-trigger, .boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
+      .on('click', '.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
         $(this).toggleClass('js-active');
       })
 

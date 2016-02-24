@@ -2,28 +2,28 @@ ruby:
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb
-  table_class = ordered ? 'main_content-sortable index_table' : 'index_table'
+  table_class = ordered ? 'main_content-sortable' : ''
 
 table class=table_class
   thead
     tr
       - if ordered
-        th.main_content-sortable-handle-col
+        th.th-sortable-handle
       - if has_thumb
         th.main_content-thumb-col
       - cols.each do |col|
-        - th_class = [:on_production, :on_prod, :on_stage].include?(col) ? 'main_table-header-live' : ''
+        - th_class = [:on_production, :on_prod, :on_stage].include?(col) ? '-live' : ''
         th class=th_class = col.to_s.humanize
       - if edit_column
-        th.main_table-header-edit data-sorter="false" Edit
-      th.main_table-header-delete Delete
+        th.-edit data-sorter="false" Edit
+      th.-delete Delete
   tbody
     - records = index ? @items : parent_item.send(assoc)
     - if records.present?
       - records.each do |item|
         tr id="#{ tr_id(item) }"
           - if ordered
-            td.main_content-sortable-handle
+            td.sortable-handle
               span.icon-sort
           - if has_thumb
             td = image_tag(item.asset.thumb.url)
@@ -36,10 +36,10 @@ table class=table_class
             - else
               td = col_name_or_image(item, col)
           - if edit_column
-            td.main_table-edit
+            td.-edit
               a.js-edit-link href=self.send(edit_path, item)
                 span.icon-edit
-          td.main_table-delete
+          td.-delete
             = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
     - else
       tr

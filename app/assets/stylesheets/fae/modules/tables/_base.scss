@@ -1,0 +1,81 @@
+table {
+  width: 100%;
+  border: 1px solid $c-border;
+  border-collapse: separate;
+  table-layout: fixed;
+
+  tbody {
+    tr {
+      &:hover {
+        td {
+          background: $c-table-tr-hover;
+
+          &:first-child {
+            border-left: 3px solid $c-custom-highlight;
+          }
+        }
+
+        .icon-edit,
+        .icon-delete_x {
+          color: $c-custom-highlight;
+        }
+      }
+
+      &:nth-of-type(even) {
+        td {
+          background-color: $c-table-tr-even;
+
+          &:first-child {
+            border-left: 3px solid $c-table-tr-even;
+          }
+        }
+
+        &:hover {
+          td {
+            background: $c-table-tr-hover;
+
+            &:first-child {
+              border-left: 3px solid $c-custom-highlight;
+            }
+          }
+        }
+
+        .main_table-action {
+          border-color: $c-table-tr-even;
+
+          &:hover {
+            border-color: $c-border;
+          }
+        }
+      }
+    }
+
+    td {
+      &:first-child {
+        border-left: 3px solid $c-table-td; /* this blends it in to the background */
+      }
+    }
+  }
+}
+
+th,
+td {
+  vertical-align: middle;
+  font-size: 13px;
+  text-align: left;
+}
+
+th {
+  padding: 15px 10px;
+  border-bottom: 1px solid $c-border;
+  vertical-align: middle;
+  font-weight: bold;
+  color: $c-text-heavy;
+  background: $c-table-th;
+}
+
+td {
+  height: 56px;
+  padding: 14px 10px;
+  background-color: $c-table-td;
+}

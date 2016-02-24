@@ -145,12 +145,20 @@ Fae.tables = {
 
   /**
    * Make table rows draggable by user
+   * @todo remove sort_selector conditional in v2.0
    */
   rowSorting: function() {
-    $('.main_content-sortable').sortable({
+    var sort_selector = '.sortable-handle';
+    var content_selector = '.main_content-sortable';
+
+    if (!FCH.exists(sort_selector)) {
+      sort_selector = '.main_content-sortable-handle';
+    }
+
+    $(content_selector).sortable({
       items: 'tbody tr',
       opacity: 0.8,
-      handle: ('.main_content-sortable-handle'),
+      handle: (sort_selector),
 
       //helper funciton to preserve the width of the table row
       helper: function(e, $tr) {
@@ -328,7 +336,7 @@ Fae.tables = {
   sizeFixedHeader: function($this) {
     var headerHeight = $('.main_content-header').outerHeight();
     if(FCH.large_down) {
-      headerHeight = $('#main_header').outerHeight();
+      headerHeight = $('#js-main-header').outerHeight();
     }
 
     var tableOffset = $this.offset().top - headerHeight;

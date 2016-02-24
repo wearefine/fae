@@ -7,11 +7,11 @@ section.main_content-header
 .main_content-sections
   section.main_content-section
     .main_content-section-area
-      table.main_table-sort_columns.index_table
+      table.main_table-sort_columns
         thead
           tr
             th Name
-            th.main_table-header-modified Modified
+            th.-modified Modified
         tbody
           - @items.each do |item|
             tr id="fae_content_block_#{item.id}"

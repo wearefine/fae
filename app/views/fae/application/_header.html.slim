@@ -1,11 +1,11 @@
-header#main_header
+header.main-header#js-main-header
   span#js-main_nav-menu_button.main_nav-menu_button.icon-menu
-  h1.main_header-name
+  h1
     a href=root_path
       = @option.title
-      span.main_header-name-fine a FINE admin
+      span a FINE admin
   - if user_signed_in?
-    ul.utility_nav
+    ul.utility_nav#js-utility-nav
       li class="#{@option.stage_url.present? ? 'utility_nav-view' : ''}"
         a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
           | View Site

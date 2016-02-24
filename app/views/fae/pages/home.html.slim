@@ -3,12 +3,12 @@
 .main_content-sections
   section.main_content-section
     .main_content-section-area
-      table.index_table.main_content-sortable
+      table.main_content-sortable
         thead
           tr
             th Name
             th Type
-            th.main_table-header-modified Latest Changes
+            th.-modified Latest Changes
         tbody
           - @list.each do |item|
             - begin

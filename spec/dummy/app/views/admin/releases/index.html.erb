@@ -16,7 +16,7 @@
         <%= fae_filter_select :grouped_association, collection: Aroma.all, grouped_by: :release %>
       <% end %>
 
-      <table class="index_table main_table-sort_columns">
+      <table class="main_table-sort_columns">
         <thead>
           <tr>
             <th>Name</th>
@@ -24,11 +24,11 @@
             <th>Modified</th>
             <th>Slug</th>
             <th>Price</th>
-            <th class="main_table-header-live" data-sorter="false">On Stage</th>
-            <th class="main_table-header-live" data-sorter="false">On Prod</th>
-            <th class="main_table-header-edit" data-sorter="false">Edit</th>
-            <th class="main_table-header-clone" data-sorter="false">Clone</th>
-            <th class="main_table-header-delete" data-sorter="false">Delete</th>
+            <th class="-live" data-sorter="false">On Stage</th>
+            <th class="-live" data-sorter="false">On Prod</th>
+            <th class="-edit" data-sorter="false">Edit</th>
+            <th class="-clone" data-sorter="false">Clone</th>
+            <th class="-delete" data-sorter="false">Delete</th>
           </tr>
         </thead>
 
@@ -43,13 +43,13 @@
                 <td><%= item.price %></td>
                 <td><%= fae_toggle item, :on_stage %></td>
                 <td><%= fae_toggle item, :on_prod %></td>
-                <td class="main_table-edit">
+                <td class="-edit">
                   <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
                     <span class="icon-edit"></span>
                   <% end %>
                 </td>
                 <td><%= fae_clone_button item %></td>
-                <td class="main_table-delete">
+                <td class="-delete">
                   <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
                     <span class="icon-delete_x"></span>
                   <% end %>
