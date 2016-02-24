@@ -19,7 +19,6 @@ gem 'sass', require: 'sass'
 gem 'remotipart'
 gem 'carrierwave', '~> 0.10.0'
 gem 'rmagick', '~> 2.13.3', require: false
-gem 'slim'
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.0.2'
