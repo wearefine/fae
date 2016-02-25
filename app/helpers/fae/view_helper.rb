@@ -52,7 +52,7 @@ module Fae
     def fae_filter_form(options = {}, &block)
       options[:collection] ||= @items
       options[:action]     ||= "#{@index_path}/filter"
-      options[:title]      ||= "Search #{@klass_humanized.pluralize}"
+      options[:title]      ||= "Search #{@klass_humanized.pluralize.titleize}"
       options[:search]       = true if options[:search].nil?
       options[:cookie_key] ||= false
 

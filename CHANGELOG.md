@@ -3,6 +3,7 @@
 ## 1.3
 
 - enhancements
+    + \#54683: Titleize names for forms
 - bugs
     + \#46157: Logo in root setting is no longer marked required
 

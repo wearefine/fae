@@ -1,5 +1,5 @@
 - nested      ||= false
-- title       ||= @klass_humanized.pluralize
+- title       ||= @klass_humanized.pluralize.titleize
 - new_button    = !local_assigns[:new_button].eql?(false)
 - new_path    ||= "new_#{fae_path}_#{@klass_singular}_path"
 - button_text ||= "Add #{title.singularize}"

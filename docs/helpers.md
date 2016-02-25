@@ -298,7 +298,7 @@ Displays the filter form, including the search field, submit and reset buttons. 
 | option | type    | default                                | description |
 |--------|---------|----------------------------------------|-------------|
 | action | string  | "#{@index_path}/filter" | the path the form submits to |
-| title  | string  | "Search #{@klass_humanized.pluralize}" | the h2 text in the filter form |
+| title  | string  | "Search #{@klass_humanized.pluralize.titleize}" | the h2 text in the filter form |
 | search | boolean | true                                   | displays the search field |
 | cookie_key | string | false | set your cookie name on the fae_filter_form if you want to persist selected filtered state |
 
@@ -407,7 +407,7 @@ Displays page title, add button and flash messages.
 | option | type | default | description |
 |-|-|-|-|
 | nested | boolean | false | converts normal add button to nested add button
-| title | string | @klass_humanized.pluralize | the page's H1 |
+| title | string | @klass_humanized.pluralize.titleize | the page's H1 |
 | new_button | boolean | true | displays the add button |
 | button_text | string | "Add #{title.singularize}" | add button text |
 | csv | boolean | false | adds export to csv button |
