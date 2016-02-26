@@ -16,6 +16,7 @@
     + Changed fae_content_form from fae_input into more generic i.input to circumvent the additional methods and clear up an issue validations.
     + \#54548: Set on_prod to false when cloning
     + \#54625: use FINE logo as background to avoid the need to compile
+    + Add Travis CI for testing
 
 - bugs
     + \#53380: Don't link destroyed models in change tracker
