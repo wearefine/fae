@@ -2,6 +2,13 @@ require 'spec_helper'
 
 feature 'fae_nested_table' do
 
+  scenario 'should titleize index header', js: true do
+    admin_login
+    visit admin_selling_points_path
+
+    expect(page.find('.main_content-header-wrapper h1')).to have_content('Selling Points')
+  end
+
   scenario 'should allow adding new items', js: true do
     release = FactoryGirl.create(:release)
 
