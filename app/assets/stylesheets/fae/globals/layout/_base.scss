@@ -28,7 +28,7 @@
     padding-bottom: 150px;
   }
 
-  h2 {
+  > h2 {
     @include secondary-header;
   }
 
