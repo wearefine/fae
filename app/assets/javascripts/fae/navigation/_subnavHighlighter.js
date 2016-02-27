@@ -13,27 +13,25 @@ Fae.navigation.subnavHighlighter = {
     if (FCH.exists('.main_content-header-section-links')) {
       if(Fae.content_selector === '.content') {
         this.section_class = Fae.content_selector;
-        this.buffer = 32;
       } else {
         this.section_class = '.main_content-section';
-        this.buffer = 28;
       }
 
       this.FCHListeners();
 
       //makes the subnav clicks
       this.anchorClickListener();
-
-      // need to add more padding to the bottom to help the scrolling
-      $(this.section_class).last().css('min-height', FCH.$window.height());
     }
   },
 
   /**
    * Since subnavHighlighter is not a direct child of Fae and therefore unknown to FCH, these listeners are saved in private functions in this method
+   * @depreciation remove legacy_buffer in v2.0
    */
   FCHListeners: function() {
-    var section_class = this.section_class
+    var section_class = this.section_class;
+    var legacy_buffer = section_class === Fae.content_selector ? 0 : 32;
+    console.log(section_class)
 
     /**
      * On scroll, change highlight of nav item. Bread and butter of this subclass.
@@ -44,7 +42,7 @@ Fae.navigation.subnavHighlighter = {
 
       $(section_class).each(function(index) {
         var $this = $(this);
-        var position = $this.position().top - scroll_top;
+        var position = $this.position().top - scroll_top - legacy_buffer;
         var $link = $('a[href=#' + $this.attr('id') + ']').parent();
 
         $link.removeClass('main_content-header-section-links-active');
@@ -64,10 +62,11 @@ Fae.navigation.subnavHighlighter = {
      * On resize, ensure last section is the same as the window height so when we skip to it the label is at the top
      * @private
      */
-    function resizeCallback() {
-      $(_this.section_class).last().css('min-height', FCH.$window.height());
+    function lastSectionBuffer() {
+      $(section_class).last().css('min-height', FCH.$window.height());
     }
-    FCH.resize.push(resizeCallback);
+    lastSectionBuffer();
+    FCH.resize.push(lastSectionBuffer);
   },
 
   /**
