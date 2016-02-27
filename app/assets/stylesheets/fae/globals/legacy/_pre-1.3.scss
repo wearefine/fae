@@ -47,6 +47,23 @@
   }
 }
 
+.main_content-section-area {
+  @extend .content;
+}
+
+.main_content-section-title {
+  padding: 17px 40px;
+  color: $c-text-heavy;
+  background: $c-content-section-title;
+  border-top: 1px solid $c-border;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: .2em;
+
+  .main_content-section:first-child & {
+    border-top: 0;
+  }
+}
 
 
 ///////////////////////////////

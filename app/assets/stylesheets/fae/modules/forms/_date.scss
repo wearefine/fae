@@ -46,6 +46,7 @@
 
   table {
     width: 100%;
+    border-collapse: collapse;
   }
 
   thead {
@@ -59,6 +60,9 @@
     font-size: 6pt;
     padding: 5px 0;
     color: $c-grey;
+    text-align: center;
+    background: none;
+    font-weight: normal;
   }
 
   tbody {
@@ -145,7 +149,7 @@
 
 .ui-datepicker-calendar .ui-state-default {
   @include gradient-vertical($start-color: $c-lightest_grey, $end-color:$c-nav-sub-bg-active);
-  background: $c-lightest_grey;
+  background-color: $c-lightest_grey;
   box-shadow: 1px 1px 0 0 $c-box_shadow;
 }
 
@@ -197,6 +201,7 @@
 
   input[type=text] {
     padding-right: 50px;
+    width: 100%;
   }
 
   label:before {

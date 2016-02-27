@@ -1,6 +1,6 @@
 == render 'fae/shared/index_header', title: 'Activity Log', new_button: false
 
-main.main_content-section-area
+main.content
 
   == fae_filter_form title: 'Seach Changes', action: fae.activity_log_filter_path do
     == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }

@@ -4,7 +4,7 @@
       == render 'fae/shared/form_header', header: @item
       == render 'fae/shared/form_buttons', f: f
 
-  section.main_content-section-area
+  section.content
     = fae_input f, :title
 
     = fae_content_form f, :header, input_options: { wrapper_html: { class: 'hidden' } }

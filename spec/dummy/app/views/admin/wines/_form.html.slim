@@ -7,7 +7,7 @@
       = render 'fae/shared/form_header', header: @klass_name
       = render 'fae/shared/form_buttons', f: f, item: @item
 
-  main.main_content-section-area
+  main.content
     = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'
     = fae_input f, :name_zh
     = fae_input f, :name_ja
