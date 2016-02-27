@@ -127,26 +127,27 @@ Fae.form.ajax = {
           $html = $( $html.val() );
         }
 
-        if ($html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form'))) {
-          // we're returning the table, replace everything
-          var replacementHTML;
+        if ($html) {
+          if($html.hasClass( Fae.content_selector.substr(1) )) {
+            // we're returning the table, replace everything
+            var replacementHTML;
 
-          // Response is different between the js-index-addedit-form and the nested association form
-          if ($html.hasClass('main_content-section-area')) {
-            replacementHTML = $html.find('.js-addedit-form').get(0).outerHTML;
-          } else {
-            replacementHTML = $html.html();
+            // Response is different between the js-index-addedit-form and the nested association form
+            if ($html.attr('data-is-index')) {
+              replacementHTML = $html.html();
+            } else {
+              replacementHTML = $html.find('.js-addedit-form').get(0).outerHTML;
+            }
+
+            _this._addEditReplaceAndReinit($this, replacementHTML, $target);
+          } else if ($html.hasClass('form_content-wrapper')) {
+            // we're returning the form due to an error, just replace the form
+            $this.find('.form_content-wrapper').replaceWith(data);
+            $this.find('.select select').fae_chosen();
+            $this.find('.input.file').fileinputer();
+
+            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
-
-          _this._addEditReplaceAndReinit($this, replacementHTML, $target);
-
-        } else if ($html.hasClass('form_content-wrapper')) {
-          // we're returning the form due to an error, just replace the form
-          $this.find('.form_content-wrapper').replaceWith(data);
-          $this.find('.select select').fae_chosen();
-          $this.find('.input.file').fileinputer();
-
-          FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
         }
 
         if (_this.$filter_form.length) {

@@ -1,4 +1,10 @@
 .help-section {
+  overflow: hidden;
+
+  h2 {
+    @include secondary-header;
+  }
+
   h3 {
     color: $c-text-heavy;
     font-size: 20px;

@@ -199,12 +199,12 @@ end
 
 ## View Helpers
 
-Next we'll add the form to our view as the first child of `.main_content-section-area`:
+Next we'll add the form to our view as the first child of `.content`:
 
 `app/views/admin/people/index.html.slim`
 ```slim
 // ...
-.main_content-section-area
+.content
 
   == fae_filter_form do
     == fae_filter_select :company
@@ -374,7 +374,7 @@ For extra long tables, add the class `sticky-table-header` to a `table` and scro
 Some pages have multiple tables that are easier to navigate if tables can be shown or hidden. Wrap each table in a `.collapsible` div and prepend an `h3` with the item's name and count. Example below and on the dummy app's `events/index` page.
 
 ```slim
-.main_content-section-area
+.content
   .collapsible
     h3 All Wine (#{@all_wine.length})
     table
@@ -388,7 +388,7 @@ Some pages have multiple tables that are easier to navigate if tables can be sho
 For best results, include an Open/Close All toggle.
 
 ```slim
-.main_content-section-area
+.content
   .collapsible-toggle Open All
   .collapsible
     ....
@@ -507,7 +507,7 @@ In your form view nest the optional fields, and add some classes for js and sass
 
   .main_content-sections
     section.main_content-section
-      .main_content-section-area
+      .content
         = fae_input f, :name
         = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
         .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")

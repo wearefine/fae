@@ -38,8 +38,8 @@ Fae.tables = {
       this.collapsibleTable();
     }
 
-    if (FCH.exists('form .main_content-section-area')) {
-      this.endingSelectShim();
+    if (FCH.exists('form ' + Fae.content_selector)) {
+      this.endingSelectShim(Fae.content_selector);
     }
 
     this.addToTable();
@@ -261,9 +261,11 @@ Fae.tables = {
 
   /**
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
+   * @param {String} selector - Last of type element to target
+   * @deprecation remove selector arg in v2.0
    */
-  endingSelectShim: function() {
-    $('form .main_content-section-area:last-of-type').each(function() {
+  endingSelectShim: function(selector) {
+    $('form ' + selector + ':last-of-type').each(function() {
       var $last_item = $(this).find('.input:last-of-type');
 
       if( $last_item.hasClass('select') ) {

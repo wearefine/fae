@@ -20,22 +20,17 @@
 }
 
 
-.main_content-section-title {
-  padding: 17px 40px;
-  color: $c-text-heavy;
-  background: $c-content-section-title;
-  border-top: 1px solid $c-border;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: .2em;
 
-  .main_content-section:first-child & {
-    border-top: 0;
+.content {
+  padding: 30px $g-content-buffer 60px;
+
+  &.-bottom-shim {
+    padding-bottom: 150px;
   }
-}
 
-.main_content-section-area {
-  padding: 30px 40px 60px 40px;
+  h2 {
+    @include secondary-header;
+  }
 
   h3 {
     display: block;
@@ -44,10 +39,6 @@
     font-size: 15px;
     color: $c-text-heavy;
     margin-bottom: 20px;
-  }
-
-  &.-bottom-shim {
-    padding-bottom: 150px;
   }
 }
 

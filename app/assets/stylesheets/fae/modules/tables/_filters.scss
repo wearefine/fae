@@ -6,7 +6,7 @@
   border-bottom: 0;
   background: $c-form-table-bg;
 
-  h2 {
+  h4 {
     margin-bottom: 20px;
     color: $c-table-filter-header;
     font-size: 16px;
@@ -29,7 +29,7 @@
 .table-filter-header {
   @include clearfix;
 
-  h2 {
+  h4 {
     display: inline-block;
   }
 
