@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
 
 ## 1.2.4
