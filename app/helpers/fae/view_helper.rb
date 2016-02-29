@@ -62,7 +62,7 @@ module Fae
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
       filter_header = content_tag(:div, class: 'table-filter-header') do
-        concat content_tag :h2, options[:title]
+        concat content_tag :h4, options[:title]
         concat filter_search_field if options[:search]
       end
 

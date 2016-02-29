@@ -8,10 +8,8 @@
       h1 New #{@parent_item.name} Player
       = render 'fae/shared/form_buttons'
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :first_name
-        = fae_input f, :last_name
-        = fae_input f, :number
-        = fae_input f, :bio
+  section.content
+    = fae_input f, :first_name
+    = fae_input f, :last_name
+    = fae_input f, :number
+    = fae_input f, :bio

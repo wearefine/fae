@@ -6,14 +6,14 @@ feature 'Main Navigation' do
     admin_login
     visit admin_releases_path
 
-    expect(page.find('a.current').text).to eq('Releases')
+    expect(page.find('a.current').text).to eq('Current')
   end
 
   scenario 'should highlight first level new page', js: true do
     admin_login
     visit new_admin_release_path
 
-    expect(page.find('a.current').text).to eq('Releases')
+    expect(page.find('a.current').text).to eq('Current')
   end
 
   scenario 'should highlight first level edit page', js: true do
@@ -21,7 +21,7 @@ feature 'Main Navigation' do
     release = FactoryGirl.create(:release)
     visit edit_admin_release_path(release)
 
-    expect(page.find('a.current').text).to eq('Releases')
+    expect(page.find('a.current').text).to eq('Current')
   end
 
   scenario 'should highlight second level index', js: true do

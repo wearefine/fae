@@ -1,9 +1,10 @@
 # Fae Changelog
 
-## Unreleased
+## 1.3
 
 - enhancements
 - bugs
+    + \#46157: Logo in root setting is no longer marked required
 
 ## 1.2.4
 

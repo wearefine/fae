@@ -24,7 +24,7 @@
 	line-height: 1.5;
 	font-size: 13px;
 	overflow: scroll;
-	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
+	box-shadow: 0 3px 8px 0 $c-login-box_shadow;
 
 	h3 {
 		color: $c-text;
@@ -65,7 +65,7 @@
 
 .simplemodal-close {
 	&:before {
-		@include icon-stuff();
+		@include icon_stuff;
 		@extend .icon-delete_x:before;
 		position: absolute;
 		top: 20px;
@@ -83,16 +83,9 @@
 .simplemodal-container--dark {
 	background: $c-modal-bg;
 	color: $c-light_grey;
-	@include box-shadow(0);
+	box-shadow: none;
 
 	h3 {
 		color: $c-modal-header;
-	}
-}
-
-// used for the sample pages only
-.sample-modals {
-	.simplemodal-container {
-		width: 400px;
 	}
 }

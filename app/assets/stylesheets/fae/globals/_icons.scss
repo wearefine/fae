@@ -1,20 +1,5 @@
-// quick mixin for using icon font in :before :after
-@mixin icon_stuff() {
-	font-family: 'icons';
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-
-	/* Better Font Rendering =========== */
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
 [class^="icon-"], [class*=" icon-"] {
-	@include icon_stuff();
+	@include icon_stuff;
 }
 
 .icon-bars:before {

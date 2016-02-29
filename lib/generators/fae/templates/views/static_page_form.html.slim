@@ -4,17 +4,15 @@
       == render 'fae/shared/form_header', header: @item
       == render 'fae/shared/form_buttons', f: f
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :title
+  .content
+    = fae_input f, :title
 
 <% @attributes.each do |attr, type| -%>
 <% if ["Fae::TextArea", "Fae::TextField"].include? type -%>
-        = fae_content_form f, :<%= attr %>
+    = fae_content_form f, :<%= attr %>
 <% elsif "Fae::Image" == type -%>
-        = fae_image_form f, :<%= attr %>
+    = fae_image_form f, :<%= attr %>
 <% elsif "Fae::File" == type -%>
-        = fae_file_form f, :<%= attr %>
+    = fae_file_form f, :<%= attr %>
 <% end -%>
 <% end -%>
