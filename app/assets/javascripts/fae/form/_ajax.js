@@ -228,10 +228,11 @@ Fae.form.ajax = {
   applyCookies: function() {
     var cookie_key = $('.js-filter-form').attr('data-cookie-key');
 
-    this.grind = new Grinder(this._setFilterDropdowns);
+    this.fry = new Fryr(this._setFilterDropdowns);
 
     if (cookie_key) {
       var cookie = Cookies.getJSON(cookie_key);
+
       if (!$.isEmptyObject(cookie)) {
         var keys = Object.keys(cookie)
         var hash = '?';
@@ -260,39 +261,40 @@ Fae.form.ajax = {
         var key = $(this).find('select').attr('id').split('filter_')[1];
         var value = $(this).find('option:selected').val();
 
-        _this.grind.update(key, value, false, true);
+        _this.fry.update(key, value);
       }
     });
   },
 
   /**
-   * Check for cookie or hash and set dropdowns/ url accordingly (callback for Grinder)
-   * @param {Object} params - hash params broken out from Grinder
+   * Check for cookie or hash and set dropdowns/ url accordingly (callback for Fryr)
+   * @param {Object} params - hash params broken out from Fryr
    */
   _setFilterDropdowns: function(params) {
     var cookie_name = $('.js-filter-form').attr('data-cookie-key');
     Cookies.set(cookie_name, params);
 
-    if (!$.isEmptyObject(params)) {
-      $.each(params, function(k, v) {
-        $('.js-filter-form .table-filter-group').each(function(){
-          var $this = $(this);
-          var key = $this.find('select').attr('id').split('filter_')[1];
-          var value = $this.find('option:selected').val();
-
-          if (k === key) {
-            $this.find('option').each(function(){
-              if ($this.val() === v) {
-                $this.prop('selected', 'selected');
-                $('#filter_' + key).trigger('chosen:updated');
-              };
-            });
-          }
-        });
-      });
-
-      $('.js-filter-form').submit();
+    // Exit early if params is blank
+    if ($.isEmptyObject(params)) {
+      return;
     }
+
+    // Loop through all available params to find the select menu and the proper option
+    $.each(params, function(key, value) {
+      var $select = $('.js-filter-form .table-filter-group #filter_' + key);
+
+      if($select.length) {
+        var $option = $select.find('option[value="' + value + '"]');
+
+        // Ensure we find the option and that it isn't already chosen
+        if($option.length && $option.prop('selected') !== 'selected') {
+          $option.prop('selected', 'selected');
+          $select.trigger('chosen:updated');
+        }
+      }
+    });
+
+    $('.js-filter-form').submit();
   },
 
   /**
