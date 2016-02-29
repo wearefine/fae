@@ -128,18 +128,9 @@ Fae.form.ajax = {
         }
 
         if ($html) {
-          if($html.hasClass( Fae.content_selector.substr(1) )) {
+          if($html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
-            var replacementHTML;
-
-            // Response is different between the js-index-addedit-form and the nested association form
-            if ($html.attr('data-is-index')) {
-              replacementHTML = $html.html();
-            } else {
-              replacementHTML = $html.find('.js-addedit-form').get(0).outerHTML;
-            }
-
-            _this._addEditReplaceAndReinit($this, replacementHTML, $target);
+            _this._addEditReplaceAndReinit($this, $html.html(), $target);
           } else if ($html.hasClass('form_content-wrapper')) {
             // we're returning the form due to an error, just replace the form
             $this.find('.form_content-wrapper').replaceWith(data);
@@ -185,6 +176,7 @@ Fae.form.ajax = {
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
+      Fae.navigation.fadeNotices();
     };
 
     // if there's a form wrap, slide it up before replacing content

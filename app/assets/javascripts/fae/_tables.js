@@ -15,6 +15,7 @@ Fae.tables = {
    * @see {@link tables.defaultSortCookie}
    * @see {@link tables.columnSorting}
    * @see {@link tables.sortColumnsFromCookies}
+   * @depreciation remove sort_selector conditionals in v2.0
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
@@ -26,8 +27,13 @@ Fae.tables = {
       this.sortColumnsFromCookies();
     }
 
-    if (FCH.exists('.main_content-sortable')) {
-      this.rowSorting();
+    var sort_selector = '.sortable-handle';
+    if (!FCH.exists(sort_selector)) {
+      sort_selector = '.main_content-sortable-handle';
+    }
+
+    if (FCH.exists(sort_selector)) {
+      this.rowSorting(sort_selector);
     }
 
     if (FCH.exists('.sticky-table-header')) {
@@ -145,15 +151,11 @@ Fae.tables = {
 
   /**
    * Make table rows draggable by user
-   * @todo remove sort_selector conditional in v2.0
+   * @param {String} sort_selector - handle selector
+   * @depreciation remove sort_selector arg in v2.0
    */
-  rowSorting: function() {
-    var sort_selector = '.sortable-handle';
+  rowSorting: function(sort_selector) {
     var content_selector = '.main_content-sortable';
-
-    if (!FCH.exists(sort_selector)) {
-      sort_selector = '.main_content-sortable-handle';
-    }
 
     $(content_selector).sortable({
       items: 'tbody tr',
