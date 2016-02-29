@@ -62,7 +62,8 @@ Fae.navigation.subnavHighlighter = {
      * @private
      */
     function lastSectionBuffer() {
-      $(section_class).last().css('min-height', FCH.$window.height());
+      var last_selector = $('.main_content-header-section-links li:last-child a').attr('href');
+      $(last_selector).css('min-height', FCH.$window.height());
     }
     lastSectionBuffer();
     FCH.resize.push(lastSectionBuffer);
