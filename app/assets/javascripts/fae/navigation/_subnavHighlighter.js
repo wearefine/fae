@@ -51,7 +51,7 @@ Fae.navigation.subnavHighlighter = {
       });
 
       $('.js-highligher').last().addClass('main_content-header-section-links-active').removeClass('js-highligher');
-    };
+    }
     FCH.scroll.push(scrollCallback);
 
     //highlight the first one on page load
@@ -73,7 +73,7 @@ Fae.navigation.subnavHighlighter = {
    * Smooth scrolling on anchor links in the tab area.
    */
   anchorClickListener: function() {
-    var scroll_offset = parseInt( $('.main_content-header').css('height') );
+    var scroll_offset = parseInt( $('.main_content-header').css('height'), 10 );
     var should_find_h2 = this.section_class === Fae.content_selector;
 
     /**
