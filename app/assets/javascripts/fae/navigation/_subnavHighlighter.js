@@ -31,7 +31,6 @@ Fae.navigation.subnavHighlighter = {
   FCHListeners: function() {
     var section_class = this.section_class;
     var legacy_buffer = section_class === Fae.content_selector ? 0 : 32;
-    console.log(section_class)
 
     /**
      * On scroll, change highlight of nav item. Bread and butter of this subclass.

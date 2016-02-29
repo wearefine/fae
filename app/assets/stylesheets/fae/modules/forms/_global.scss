@@ -43,24 +43,29 @@ input[type=email] {
 
 .js-addedit-form-wrapper {
   display: none;
+}
 
-  .form_content-wrapper {
-    padding: 30px 30px 30px 40px;
-    border: 1px solid $c-border;
-    border-top: 0;
-    background: $c-form-table-bg;
-  }
+.form_content-wrapper {
+  padding: 30px 30px 30px 40px;
+  border: 1px solid $c-border;
+  border-top: 0;
+  background: $c-form-table-bg;
 
-  .form_content-header {
+  h2 {
     margin-bottom: 20px;
     font-size: 16px;
     color: $c-text-heavy;
     font-weight: bold;
+    letter-spacing: 0;
+    text-transform: none;
+    border: 0;
+    padding: 0;
+    margin: 0 auto 30px;
   }
+}
 
-  .cancel-nested-button {
-    margin-left: 10px;
-  }
+.cancel-nested-button {
+  margin-left: 10px;
 }
 
 .table-helper-text {

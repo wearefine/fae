@@ -131,7 +131,8 @@ Fae.form.ajax = {
           if($html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
             _this._addEditReplaceAndReinit($this, $html.html(), $target);
-          } else if ($html.hasClass('form_content-wrapper')) {
+          } else if ($html.hasClass('js-addedit-form') && $html.find('.js-addedit-form-wrapper').length) {
+
             // we're returning the form due to an error, just replace the form
             $this.find('.form_content-wrapper').replaceWith(data);
             $this.find('.select select').fae_chosen();
