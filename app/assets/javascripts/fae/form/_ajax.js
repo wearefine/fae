@@ -127,26 +127,19 @@ Fae.form.ajax = {
           $html = $( $html.val() );
         }
 
-        if ($html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form'))) {
-          // we're returning the table, replace everything
-          var replacementHTML;
+        if ($html) {
+          if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
+            // we're returning the table, replace everything
+            _this._addEditReplaceAndReinit($this, $html.html(), $target);
+          } else if ($html.hasClass('form_content-wrapper')) {
 
-          // Response is different between the js-index-addedit-form and the nested association form
-          if ($html.hasClass('main_content-section-area')) {
-            replacementHTML = $html.find('.js-addedit-form').get(0).outerHTML;
-          } else {
-            replacementHTML = $html.html();
+            // we're returning the form due to an error, just replace the form
+            $this.find('.form_content-wrapper').replaceWith(data);
+            $this.find('.select select').fae_chosen();
+            $this.find('.input.file').fileinputer();
+
+            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
-
-          _this._addEditReplaceAndReinit($this, replacementHTML, $target);
-
-        } else if ($html.hasClass('form_content-wrapper')) {
-          // we're returning the form due to an error, just replace the form
-          $this.find('.form_content-wrapper').replaceWith(data);
-          $this.find('.select select').fae_chosen();
-          $this.find('.input.file').fileinputer();
-
-          FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
         }
 
         if (_this.$filter_form.length) {
@@ -184,6 +177,7 @@ Fae.form.ajax = {
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
+      Fae.navigation.fadeNotices();
     };
 
     // if there's a form wrap, slide it up before replacing content
@@ -332,7 +326,7 @@ Fae.form.ajax = {
    * Attaching click handlers to #main_content to allow ajax replacement
    */
   htmlListeners: function() {
-    $('#main_content')
+    $('#js-main-content')
 
       // for the yes/no slider
       .on('click', '.slider-wrapper', function(e){
@@ -341,7 +335,7 @@ Fae.form.ajax = {
       })
 
       // The settings menu for tables and checkboxe
-      .on('click', '.main_table-action_menu-trigger, .boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
+      .on('click', '.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
         $(this).toggleClass('js-active');
       })
 

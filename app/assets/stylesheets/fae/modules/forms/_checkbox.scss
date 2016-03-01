@@ -36,7 +36,7 @@
     background: $c-form-checkbox-bg;
     cursor: pointer;
 
-    @include border-radius(2px);
+    border-radius: 2px;
   }
 
   .js-active {
@@ -46,14 +46,13 @@
 
     &:after {
       @extend .icon-check:before;
+      @include icon_stuff;
       position: absolute;
       top: -1px;
       left: 3px;
       font-size: 18px;
       color: $c-custom-highlight;
       cursor: pointer;
-
-      @include icon-stuff();
     }
   }
 }
@@ -80,7 +79,7 @@
     background: $c-form-checkbox-bg;
     cursor: pointer;
 
-    @include border-radius(2px);
+    border-radius: 2px;
 
     &:before {
       visibility: hidden;

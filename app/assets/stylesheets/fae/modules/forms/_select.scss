@@ -1,6 +1,18 @@
 
 // Select box and Chosen
-.select, .time, .city_time_zone, .table-filter-area, .date {
+.select,
+.time,
+.city_time_zone,
+.table-filter-area,
+.date {
+
+  select {
+    min-width: 300px;
+
+    &.small_pulldown {
+      min-width: 150px;
+    }
+  }
 
   .chosen-container {
     font-size: 14px;
@@ -10,34 +22,29 @@
     }
   }
 
-  select {
-    min-width: 300px;
+  .chosen-container-active {
+    .chosen-single {
+      border-color: $c-border;
+      background: $c-chosen-gradient-hover;
+    }
   }
 
-  select.small_pulldown {
-    min-width: 150px;
-  }
+  .chosen-container-single {
+    .chosen-single {
+      @include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
+      height: auto;
+      padding: 7px 15px;
+      border-radius: 2px;
+      box-shadow: none;
 
-  .chosen-container-active .chosen-single {
-    border-color: $c-border;
-    background: $c-chosen-gradient-hover;
-  }
+      div b {
+        margin-top: 7px;
+      }
+    }
 
-  .chosen-container-single .chosen-single {
-    height: auto;
-    padding: 7px 15px;
-
-    @include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
-    @include border-radius(2px);
-    @include box-shadow(0);
-  }
-
-  .chosen-container-single .chosen-default {
-    color: $c-text-heavy;
-  }
-
-  .chosen-container-single .chosen-single div b {
-    margin-top: 7px;
+    .chosen-default {
+      color: $c-text-heavy;
+    }
   }
 
   .chosen-container-multi {
@@ -45,6 +52,12 @@
     min-width: 223px;
     // overriding the inline js chosen makes
     width: 90% !important;
+
+    &.chosen-container-active {
+      .chosen-choices {
+        box-shadow: none;
+      }
+    }
 
     .chosen-choices {
       padding: 5px;
@@ -59,7 +72,6 @@
         padding: 5px 22px 5px 10px;
         border: 0;
         font-size: 12px;
-
         background: $c-chosen-multi-bg;
         color: $c-chosen-multi-text;
 
@@ -71,19 +83,17 @@
           color: $c-chosen-multi-delete;
 
           &:after {
-            @include icon-stuff();
             @extend .icon-delete_x:before;
+            @include icon_stuff;
           }
         }
       }
     }
 
-    &.chosen-container-active .chosen-choices {
-      box-shadow: none;
-    }
-
-    li.search-field input[type="text"] {
-      height: 100%;
+    li.search-field {
+      input[type="text"] {
+        height: 100%;
+      }
     }
   }
 }
@@ -95,10 +105,13 @@
 
 // overwriting chosen for retina
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
-  .chosen-rtl .chosen-search input[type="text"], .chosen-container-single .chosen-single abbr,
-  .chosen-container-single .chosen-single div b, .chosen-container-single .chosen-search input[type="text"],
+  .chosen-rtl .chosen-search input[type="text"],
+  .chosen-container-single .chosen-single abbr,
+  .chosen-container-single .chosen-single div b,
+  .chosen-container-single .chosen-search input[type="text"],
   .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
-  .chosen-container .chosen-results-scroll-down span, .chosen-container .chosen-results-scroll-up span {
+  .chosen-container .chosen-results-scroll-down span,
+  .chosen-container .chosen-results-scroll-up span {
     background-image: image-url('fae/chosen/chosen-sprite@2x.png') !important;
   }
 }
@@ -136,110 +149,117 @@
 // MultiSelect plugin for multiselect pagination-ellipsis
 .ms-container {
   width: 700px;
-}
-
-.ms-container:after {
-  content: ".";
-  display: block;
-  height: 0;
-  line-height: 0;
-  font-size: 0;
-  clear: both;
-  min-height: 0;
-  visibility: hidden;
-}
-
-.ms-container .ms-selectable, .ms-container .ms-selection {
-  float: left;
-  width: 50%;
-  height: 250px;
-  padding-right: 15px;
-  background: $c-lightest_grey;
-  color: $c-text-heavy;
-}
-
-.ms-container .ms-selection {
-  float: right;
-}
-
-.ms-container .ms-list {
-  position: relative;
-  height: 100%;
-  height: calc(100% - 25px);
-  background: $c-white;
-  overflow-y: auto;
-}
-
-.ms-container .ms-list.ms-focus {
-  outline: 0;
-}
-
-.ms-container .ms-optgroup-container {
-  width: 100%;
-}
-
-.ms-container .ms-optgroup-label {
-}
-
-.ms-container .ms-selectable li.ms-elem-selectable, .ms-container .ms-selection li.ms-elem-selection {
-  position: relative;
-  padding: 10px 15px;
-  border-bottom: 1px $c-almost_white solid;
-  border-right: 1px $c-almost_white solid;
-  color: $c-text;
-  font-size: 13px;
 
   &:after {
-    content: "Add";
-    position: absolute;
-    right: 15px;
-    top: 9px;
-    color: $c-custom-highlight;
-  }
-}
-
-.ms-container .ms-selectable li.ms-elem-selectable {
-  padding-right: 45px
-}
-
-.ms-container .ms-selection li.ms-elem-selection {
-  padding-right: 30px;
-  padding-left: 35px;
-
-  &:after {
-    @include icon-stuff();
-    @extend .icon-delete_x:before;
-    color: $c-text-sub;
+    content: ".";
+    display: block;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    clear: both;
+    min-height: 0;
+    visibility: hidden;
   }
 
-  &:before {
-    @include icon-stuff();
-    @extend .icon-check:before;
-    padding-right: 5px;
-    margin-left: -19px;
-    color: $c-custom-highlight;
+  .ms-selectable,
+  .ms-selection {
+    float: left;
+    width: 50%;
+    height: 250px;
+    padding-right: 15px;
+    background: $c-lightest_grey;
+    color: $c-text-heavy;
+
+    li {
+      &.ms-elem-selectable,
+      &.ms-elem-selection {
+        position: relative;
+        padding: 10px 15px;
+        border-bottom: 1px $c-almost_white solid;
+        border-right: 1px $c-almost_white solid;
+        color: $c-text;
+        font-size: 13px;
+
+        &:after {
+          content: "Add";
+          position: absolute;
+          right: 15px;
+          top: 9px;
+          color: $c-custom-highlight;
+        }
+      }
+
+      &.ms-hover {
+        cursor: pointer;
+        text-decoration: none;
+        background-color: $c-almost_white;
+      }
+
+      &.disabled {
+        color: $c-almost_white;
+        cursor: text;
+      }
+    }
+
+    .custom-header {
+      padding: 10px 15px;
+      margin-right: -15px;
+      color: $c-text-heavy;
+      background: $c-lighter_grey;
+      font-size: 14px;
+    }
   }
-}
 
-.ms-container .ms-selectable li.ms-hover, .ms-container .ms-selection li.ms-hover {
-  cursor: pointer;
-  text-decoration: none;
-  background-color: $c-almost_white;
-}
+  .ms-selectable {
+    li {
+      &.ms-elem-selectable {
+        padding-right: 45px
+      }
+    }
+  }
 
-.ms-container .ms-selectable li.disabled, .ms-container .ms-selection li.disabled {
-  color: $c-almost_white;
-  cursor: text;
-}
+  .ms-selection {
+    float: right;
 
-.ms-selectable .custom-header, .ms-selection .custom-header {
-  padding: 10px 15px;
-  margin-right: -15px;
-  color: $c-text-heavy;
-  background: $c-lighter_grey;
-  font-size: 14px;
-}
+    li {
+      &.ms-elem-selection {
+        padding-right: 30px;
+        padding-left: 35px;
 
-.ms-selection .custom-header {
-  background: $c-light_grey;
+        &:after {
+          @extend .icon-delete_x:before;
+          @include icon_stuff;
+          color: $c-text-sub;
+        }
+
+        &:before {
+          @extend .icon-check:before;
+          @include icon_stuff;
+          padding-right: 5px;
+          margin-left: -19px;
+          color: $c-custom-highlight;
+        }
+      }
+
+      .custom-header {
+        background: $c-light_grey;
+      }
+    }
+  }
+
+  .ms-list {
+    position: relative;
+    height: 100%;
+    height: calc(100% - 25px);
+    background: $c-white;
+    overflow-y: auto;
+
+    &.ms-focus {
+      outline: 0;
+    }
+  }
+
+  .ms-optgroup-container {
+    width: 100%;
+  }
 }

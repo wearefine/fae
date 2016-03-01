@@ -2,30 +2,30 @@
 
 <div class="main_content-sections">
   <section class="main_content-section">
-    <div class="main_content-section-area">
-      <table class="index_table main_content-sortable">
+    <div class="content">
+      <table class="main_content-sortable">
         <thead>
           <tr>
-            <th class="main_content-sortable-handle-col"></th>
+            <th class="th-sortable-handle"></th>
             <th>Name</th>
             <th>Modified</th>
-            <th class="main_table-header-live" data-sorter="false">On Stage</th>
-            <th class="main_table-header-live" data-sorter="false">On Prod</th>
-            <th class="main_table-header-delete" data-sorter="false">Delete</th>
+            <th class="-live" data-sorter="false">On Stage</th>
+            <th class="-live" data-sorter="false">On Prod</th>
+            <th class="-delete" data-sorter="false">Delete</th>
           </tr>
         </thead>
 
         <tbody>
           <% @items.each do |item| %>
             <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-              <td class="main_content-sortable-handle">
+              <td class="sortable-handle">
                 <span class="icon-sort"></span>
               </td>
               <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_varietal_path(item) %></td>
               <td><%= fae_date_format item.updated_at %></td>
               <td><%= fae_toggle item, :on_stage %></td>
               <td><%= fae_toggle item, :on_prod %></td>
-              <td class="main_table-delete">
+              <td class="-delete">
                 <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
                   <span class="icon-delete_x"></span>
                 <% end %>
