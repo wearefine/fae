@@ -1,4 +1,10 @@
-/* Version 1.2.0 */
+/*!
+ * Fryr v1.2.1
+ * Command location.hash like a cook in the kitchen
+ * CUSTOMIZED to avoid using .bind (.bind isn't supported on capybara-webkit)
+ * USE CAUTION WHEN UPDATING; only update with latest Fryr if migrating to qt5
+ * MIT License
+ */
 
 (function (window, factory) {
   'use strict';
@@ -133,6 +139,32 @@
     return (key_value ? key_value[1] : '');
   }
 
+
+  /**
+   * @private
+   * @see  {@link Fryr#parse documentation in the public `param` function}
+   */
+  function parseHash() {
+    var hash = window.location.hash;
+    var params = {};
+
+    if(hash && /\?/g.test(hash)) {
+      var params_array = hash.split('?')[1];
+      params_array = params_array.split('&');
+
+      // Separate params into key values
+      for(var i = 0; i < params_array.length; i++) {
+        var key_value = params_array[i].split('=');
+        var key = key_value[0];
+        var value = key_value[1];
+
+        params[key] = value;
+      }
+    }
+
+    return params;
+  }
+
   /**
    * Apply value to variable if it has none
    * @private
@@ -212,13 +244,20 @@
   }
 
   /**
+   * Private variable used to hold the callback function
+   * Necessary for the destory method when we decouple the event listener
+   * @type {Function}
+   */
+  var privateCallback = function() {};
+
+  /**
    * Callback with new params. Callback defined in initialization
    * @private
    * @fires hashChangeCallback
    */
   function privateHashChange() {
-    var params = this.parse();
-    this.callback.call(this, params);
+    var params = parseHash();
+    privateCallback( params );
   }
 
   /**
@@ -232,8 +271,7 @@
   function Fryr(hashChangeCallback, defaults, call_on_init) {
     defaults = setDefault(defaults, {});
     call_on_init = setDefault(call_on_init, true);
-
-    this.callback = hashChangeCallback;
+    privateCallback = hashChangeCallback;
 
     /**
      * Very important object holder
@@ -241,7 +279,7 @@
      */
     this.params = {};
 
-    window.addEventListener('hashchange', privateHashChange.bind(this));
+    window.addEventListener('hashchange', privateCallback);
 
     // Apply defaults (if present) to hash, which will file window.onhashchange
     if( Object.keys(defaults).length && window.location.hash === '' ) {
@@ -283,26 +321,7 @@
    * @return {Object} Key/value hash of the hash broken down by params
    */
   Fryr.prototype.parse = function() {
-    var hash = window.location.hash;
-    var params;
-
-    // clear zombie keys and values
-    this.params = {};
-
-    if(window.location.hash && /\?/g.test(hash)) {
-      params = hash.split('?')[1];
-      params = params.split('&');
-
-      // Separate params into key values
-      for(var i = 0; i < params.length; i++) {
-        var key_value = params[i].split('=');
-        var key = key_value[0];
-        var value = key_value[1];
-
-        this.params[key] = value;
-      }
-    }
-
+    this.params = parseHash();
     return this.params;
   };
 
@@ -414,7 +433,7 @@
   Fryr.prototype.destroy = function(retain_hash){
     retain_hash = setDefault(retain_hash, false);
 
-    window.removeEventListener('hashchange', privateHashChange);
+    window.removeEventListener('hashchange', privateCallback);
 
     if(!retain_hash) {
       window.location.hash = '';
