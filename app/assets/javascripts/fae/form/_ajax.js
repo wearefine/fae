@@ -20,12 +20,13 @@ Fae.form.ajax = {
 
     this.imageDeleteLinks();
     this.htmlListeners();
-    this.applyCookies();
 
     this.deleteNoForm();
 
-    // Re-applied once AJAX form is loaded in
     if (this.$filter_form.length) {
+      this.applyCookies();
+
+      // These are also re-applied once AJAX form is loaded in
       this.filterSelect();
       this.filterSubmission();
     }
