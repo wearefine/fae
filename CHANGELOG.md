@@ -4,6 +4,8 @@
 
 - enhancements
     + \#54683: Titleize names for forms
+    + \#55066: Major HTML and SCSS refactor
+    + \#55211: Change wording of "Replace Image" to be "Remove Image"
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
