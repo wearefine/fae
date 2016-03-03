@@ -175,8 +175,8 @@
       &.ms-elem-selection {
         position: relative;
         padding: 10px 15px;
-        border-bottom: 1px $c-almost_white solid;
-        border-right: 1px $c-almost_white solid;
+        border-bottom: 1px $c-near-white solid;
+        border-right: 1px $c-near-white solid;
         color: $c-text;
         font-size: 13px;
 
@@ -192,11 +192,11 @@
       &.ms-hover {
         cursor: pointer;
         text-decoration: none;
-        background-color: $c-almost_white;
+        background-color: $c-near-white;
       }
 
       &.disabled {
-        color: $c-almost_white;
+        color: $c-near-white;
         cursor: text;
       }
     }

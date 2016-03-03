@@ -50,8 +50,8 @@
   }
 
   thead {
-    @include gradient-vertical($start-color: $c-almost_white, $end-color: $c-content-header-bg);
-    background-color: $c-almost_white;
+    @include gradient-vertical($start-color: $c-near-white, $end-color: $c-content-header-bg);
+    background-color: $c-near-white;
     border-bottom: 1px solid $c-border;
   }
 
@@ -100,7 +100,7 @@
 
 
 .ui-datepicker-header {
-  background: $c-black;
+  background: $c-near-black;
   color: $c-white;
   font-weight: bold;
   line-height: 30px;
@@ -191,7 +191,7 @@
 }
 
 .ui-datepicker-unselectable .ui-state-default {
-  background: $c-almost_white;
+  background: $c-near-white;
   color: $c-lighter_grey;
 }
 
@@ -251,7 +251,7 @@
       font-weight: bold;
 
       .caption {
-        background: $c-black;
+        background: $c-near-black;
         color: $c-white;
         height: 30px;
         font-weight: bold;
@@ -259,7 +259,7 @@
         .prev,
         .next {
           @include icon_stuff;
-          color: $c-black;
+          color: $c-near-black;
 
           &:hover {
             background: none;
@@ -288,7 +288,7 @@
       .week-name {
         background: $c-white;
         border-bottom: 1px solid $c-border;
-        color: $c-black;
+        color: $c-near-black;
         line-height: 1;
         font-weight: 400;
 

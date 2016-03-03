@@ -209,26 +209,27 @@ Fae.navigation = {
    * Utility nav drop down
    */
   utilityNav: function() {
-    $('.utility_nav-user > a, .utility_nav-view > a').on('click', function(e) {
+    $('.js-utility-dropdown').on('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-      var $sub_nav = $(this);
+      var $this = $(this);
 
       // there could be more than one. so remove all of the clicked statuses and add to the specific one
-      $('#js-utility-nav').removeClass('-clicked');
-      $sub_nav.addClass('-clicked');
+      $this.siblings().removeClass('active');
+      $this.toggleClass('active');
 
-      // assign a once function to close the menus
-      FCH.$document.on('click#js-utility-nav', function(e){
-        // as long as the click is not in the menu
-        if (!$(e.target).closest('.utility_sub_nav').length) {
-          // remove the class from the utility nav
-          $sub_nav.removeClass('-clicked');
+      /**
+       * Close utility menu when click occurs on the document
+       * @private
+       */
+      function closeToggleMenu() {
+        $('.js-utility-dropdown.active').removeClass('active');
 
-          // unbind the click from the document, no need to keep it around.
-          FCH.$document.off('click#js-utility-nav');
-        }
-      });
+        // Unbind - no longer necessary to keep listening for the click
+        FCH.$document.off('click', closeToggleMenu);
+      }
+
+      FCH.$document.on('click', closeToggleMenu);
     });
   },
 

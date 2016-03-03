@@ -27,17 +27,17 @@ $sidenav-active-border-width: 7px;
 $f-lato: "Lato", $f-sans;
 
 // Colors
-$c-black: #261c16;
+$c-near-black: #261c16;
 $c-dark_grey: #303030;
 $c-grey: #595959;
 $c-light_grey: #999;
 $c-lighter_grey: #ccc;
 $c-lightest_grey: #eee;
-$c-almost_white: #f7f7f7;
+$c-near-white: #f7f7f7;
 
 
 // Functional name for colors
-$c-body-bg: $c-almost_white;
+$c-body-bg: $c-near-white;
 $c-text: $c-grey;
 $c-text-sub: $c-light_grey;
 $c-text-sub-hover: $c-lighter_grey;
@@ -46,14 +46,13 @@ $c-box_shadow: $c-lighter_grey;
 $c-border: $c-lighter_grey;
 
 // header area
-$c-header-bg: $c-black;
+$c-header-bg: $c-near-black;
 $c-header-logo: $c-white;
 
 // utility nav area
-$c-utility-sub-nav-bg: $c-white;
-$c-utility-sub-nav-link-bg: $c-white;
-$c-utility-sub-nav-link-bg-hover: $c-lightest_grey;
-$c-utility-sub-nav-link-color: $c-dark_grey;
+$c-utility-sub-nav-bg: $c-dark_grey;
+$c-utility-sub-nav-link-bg-hover: $c-grey;
+$c-utility-sub-nav-link-color: $c-lighter_grey;
 
 // nav area
 $c-nav-link: $c-dark_grey;
@@ -89,7 +88,7 @@ $c-form-button-gradient-start: $c-lightest_grey;
 $c-form-button-gradient-end: #e1e1e1;
 $c-form-button-gradient-hover: #e1e1e1;
 $c-form-checkbox-bg: $c-white;
-$c-form-file-bg: $c-almost_white;
+$c-form-file-bg: $c-near-white;
 $c-form-file-bg-active: $c-white;
 $c-form-file-link-bg: #f7f7f7;
 $c-form-file-link-bg-hover: #ddd;
