@@ -16,10 +16,12 @@
 
   @include bp(large) {
     padding-left: $sidenav_width;
+
+    .edit & {
+      padding-left: 0;
+    }
   }
 }
-
-
 
 .content {
   padding: 30px $g-content-buffer 60px;

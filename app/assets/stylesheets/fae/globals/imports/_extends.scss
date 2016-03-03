@@ -15,15 +15,6 @@
   box-shadow: -15px 0 15px -15px $c-box_shadow;
 }
 
-%sidenav-all_links {
-  display: block;
-  color: $c-text;
-
-  &:hover {
-    color: $c-nav-link;
-  }
-}
-
 // Inputs with icon
 %input-symbol {
   position: absolute;

@@ -10,9 +10,9 @@ html
     == csrf_meta_tags
 
   body class=body_class
-    == render "header"
+    == render 'header'
     section.main-content#js-main-content
-      == render "nav" if user_signed_in?
+      == render 'sidenav' if params[:action] != 'edit' && user_signed_in?
       == yield
 
     .markdown-hint

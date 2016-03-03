@@ -432,6 +432,8 @@ Displays breadcrumb links and form title.
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
 | breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
+| save_button_text (`v1.3 <=`)   | string | 'Save Settings' | save button text |
+| cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
 
 **Examples**
 
@@ -441,6 +443,7 @@ render 'fae/shared/form_header', header: @item, breadcrumb_text: "Areas of Focus
 ```
 
 ## form_buttons
+**Warning**: This partial will be depreceated in v2.0. Use `fae/shared/form_header` instead.
 
 Displays form's save and cancel buttons.
 

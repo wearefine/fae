@@ -1,11 +1,10 @@
 = simple_form_for(['admin', @item]) do |f|
-  section.main_content-header
+  header.content-header.js-content-header
 
     == render 'fae/shared/language_nav'
 
-    .main_content-header-wrapper
-      = render 'fae/shared/form_header', header: @klass_name
-      = render 'fae/shared/form_buttons', f: f, item: @item
+    = render 'fae/shared/form_header', header: @klass_name
+    = render 'fae/shared/form_buttons', f: f, item: @item
 
   main.content
     = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'

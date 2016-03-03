@@ -15,10 +15,13 @@ $breakpoints: (
 $breakpoints: map-merge($fine-breakpoints, $breakpoints);
 
 // widths, padding, margins, and the like
+$g-content-buffer: 30px;
+$content-header-height: 86px + $g-content-buffer;
+
 $sidenav_width: 250px;
 $sidenav-padding-one-level: 10px;
-$sidenav-padding-base-level: 25px;
-$sidenav-active-border-width: 5px;
+$sidenav-padding-base-level: $g-content-buffer;
+$sidenav-active-border-width: 7px;
 
 // TYPOGRAPHY
 $f-lato: "Lato", $f-sans;
@@ -130,4 +133,3 @@ $c-login-box_shadow: $c-lighter_grey;
 
 $mobile-menu-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
 
-$g-content-buffer: 40px;

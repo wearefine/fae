@@ -1,5 +1,5 @@
 // This legacy file is to preserve style for apps pre-1.3
-// This file should be deleted ENTIRELY in v2.0
+// @depreciation - This file should be deleted ENTIRELY in v2.0 (TS)
 
 .main_table-header-modified {
   width: 200px;
@@ -90,6 +90,125 @@
         padding: 0;
         margin: 0 auto 30px;
         background: none;
+      }
+    }
+  }
+}
+
+// content header
+.main_content-header {
+  @include clearfix;
+  width: 100%;
+  padding: 15px 20px 15px 40px;
+  background: $c-content-header-bg;
+  border-bottom: 1px solid $c-border;
+
+  h1 {
+    padding: 5px 0;
+    font-weight: bold;
+  }
+}
+
+.main_content-header-wrapper {
+  position: relative;
+
+  .content-header-buttons {
+    display: none;
+  }
+}
+
+.main_content-breadcrumbs {
+  padding-bottom: 5px;
+}
+
+.content-header {
+  ~ .main_content-sections {
+    padding-top: $content-header-height - 30px;
+  }
+}
+
+.main_content-header-save,
+.main_content-header-csv {
+  margin-top: 30px;
+
+  @include bp(medium) {
+    position: absolute;
+    right: 30px;
+    bottom: 0;
+    margin-top: 0;
+  }
+
+  @include bp(page_header_save_block) {
+    position: relative;
+    top: 0;
+    padding-bottom: 10px;
+  }
+
+  .main_content-header-section + & {
+    margin-bottom: 30px;
+  }
+}
+
+.main_content-header-csv {
+  @include bp(medium) {
+    right: 155px;
+  }
+}
+
+.main_content-header-save {
+  a:not(.add-button) {
+    @extend %gray-button;
+    font-size: 13px;
+    margin-right: 5px;
+  }
+
+  input[type=submit] {
+    padding: 10px 14px 11px;
+  }
+
+  .clone-button{
+    font-size: 13px;
+    margin-left: 5px;
+  }
+}
+
+.main_content-header-section-links {
+  margin-top: 5px;
+
+  @include bp(large) {
+    margin-bottom: -15px;
+  }
+
+  a {
+    @include transition(all .2s);
+    display: inline-block;
+    vertical-align: top;
+    padding: 8px 0;
+    border-bottom: 5px solid $c-content-header-bg;
+    margin: 0 8px;
+    font-size: 13px;
+    color: $c-text-sub;
+
+    &:hover {
+      color: $c-text-heavy;
+      border-bottom-color: $c-custom-highlight;
+    }
+  }
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+
+    &:first-child {
+      a {
+        margin-left: 0;
+      }
+    }
+
+    &.-active {
+      a {
+        color: $c-text-heavy;
+        border-bottom-color: $c-custom-highlight;
       }
     }
   }
@@ -324,5 +443,11 @@
     text-align: center;
     color: $c-grey;
     background: $c-lightest_grey;
+  }
+}
+
+.sidenav-third-link {
+  @include bp(large) {
+    padding: 10px 10px 10px 30px;
   }
 }

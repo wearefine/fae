@@ -243,10 +243,15 @@ Fae.navigation = {
    * Stick the header in the content area
    */
   stickyHeaders: function() {
-    $(".main_content-header").sticky();
-    $("#js-sidenav").sticky({
-      make_placeholder: false
-    });
+    if(FCH.exists('.content-header')) {
+      $('.content-header').sticky();
+    } else {
+      $('.main_content-header').sticky({
+        placeholder: true
+      });
+    }
+
+    $('#js-sidenav').sticky();
   },
 
 };

@@ -1,14 +1,27 @@
 // content header
-.main_content-header {
+.content-header {
   @include clearfix;
   width: 100%;
-  padding: 15px 20px 15px 40px;
+  padding: 24px $g-content-buffer;
   background: $c-content-header-bg;
   border-bottom: 1px solid $c-border;
+  position: absolute;
+  left: 0;
+
+  h1,
+  .breadcrumbs {
+    display: inline-block;
+    vertical-align: middle;
+    width: 70%;
+  }
 
   h1 {
     padding: 5px 0;
     font-weight: bold;
+  }
+
+  ~ .content {
+    padding-top: $content-header-height;
   }
 }
 
@@ -36,15 +49,11 @@
   }
 }
 
-.main_content-header-wrapper {
-  position: relative;
-}
-.main_content-header-section-links {
+.content-header-subnav {
   margin-top: 5px;
-  margin-bottom: -15px;
 
-  @include bp(medium) {
-    padding-right: 240px;
+  @include bp(large) {
+    margin-bottom: -24px;
   }
 
   a {
@@ -67,58 +76,42 @@
     display: inline-block;
     vertical-align: top;
 
-    &:first-child a {
-      margin-left: 0;
+    &:first-child {
+      a {
+        margin-left: 0;
+      }
+    }
+
+    &.-active {
+      a {
+        color: $c-text-heavy;
+        border-bottom-color: $c-custom-highlight;
+      }
     }
   }
 }
 
-.main_content-header-section-links-active a {
-  color: $c-text-heavy;
-  border-bottom-color: $c-custom-highlight;
-}
+.content-header-buttons {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: right;
+  width: 30%;
 
-.main_content-header-save,
-.main_content-header-csv {
-  margin-top: 30px;
-
-  @include bp(medium) {
-    position: absolute;
-    right: 30px;
-    bottom: 0;
-    margin-top: 0;
-  }
-
-  @include bp(page_header_save_block) {
-    position: relative;
-    top: 0;
-    padding-bottom: 10px;
-  }
-
-  .main_content-header-section + & {
-    margin-bottom: 30px;
-  }
-}
-
-.main_content-header-csv {
-  @include bp(medium) {
-    right: 155px;
-  }
-}
-
-.main_content-header-save {
-  a:not(.add-button) {
-    @extend %gray-button;
-    font-size: 13px;
+  a {
     margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:not(.add-button) {
+      @extend %gray-button;
+      font-size: 13px;
+    }
+
   }
 
   input[type=submit] {
     padding: 10px 14px 11px;
-  }
-
-  .clone-button{
-    font-size: 13px;
-    margin-left: 5px;
   }
 }

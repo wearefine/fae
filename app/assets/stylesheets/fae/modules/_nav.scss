@@ -2,13 +2,12 @@
   @extend %inset-nav-shadow;
   @include transition($mobile-menu-transition);
   position: fixed;
-  top: 0;
+  top: $content-header-height;
   left: 0;
   width: $sidenav_width;
   height: 100%;
   margin-left: negate($sidenav_width);
   overflow: auto;
-  padding: 10px 0;
   font-size: 15px;
 
   @include bp(large) {
@@ -17,9 +16,14 @@
   }
 
   a {
-    @extend %sidenav-all_links;
+    display: block;
+    color: $c-text;
     position: relative;
     padding: 15px 20px;
+
+    &:hover {
+      color: $c-nav-link;
+    }
 
     @include bp(large) {
       padding: 10px $sidenav-padding-base-level;
@@ -191,12 +195,6 @@
 
   @include bp(large) {
     display: none;
-  }
-}
-
-.sidenav-third-link {
-  @include bp(large) {
-    padding: 10px 10px 10px 30px;
   }
 }
 

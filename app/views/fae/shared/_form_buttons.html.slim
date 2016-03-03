@@ -1,3 +1,4 @@
+/ @depreciation - delete this file at v2.0
 - save_button_text   ||= 'Save Settings'
 - cancel_button_text ||= 'Cancel'
 - cloneable          ||= false
@@ -6,7 +7,5 @@
 .main_content-header-save
   a#main_content-header-save-cancel href=@index_path = cancel_button_text
   - if cloneable.present? && params[:id].present?
-    | &nbsp;
-    a#main_content-header-clone.clone-button data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
-  | &nbsp;
-  input name="commit" type="submit" value=save_button_text
+    a#main_content-header-clone.clone-button< data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
+  input< name="commit" type="submit" value=save_button_text

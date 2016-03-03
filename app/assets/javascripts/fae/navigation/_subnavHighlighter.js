@@ -6,15 +6,18 @@
  * Fae navigation subnav highlighter
  * @namespace navigation.subnavHighlighter
  * @memberof navigation
+ * @depreciation - remove this.section_class and this.subnav_class lookups in v2.0
  */
 Fae.navigation.subnavHighlighter = {
   init: function() {
     //only run everything if there is a subnav area
-    if (FCH.exists('.main_content-header-section-links')) {
+    if (FCH.exists('.main_content-header-section-links') || FCH.exists('.content-header-subnav')) {
       if(Fae.content_selector === '.content') {
         this.section_class = Fae.content_selector;
+        this.subnav_class = '.content-header-subnav';
       } else {
         this.section_class = '.main_content-section';
+        this.subnav_class = '.main_content-header-section-links';
       }
 
       this.FCHListeners();
@@ -30,6 +33,7 @@ Fae.navigation.subnavHighlighter = {
    */
   FCHListeners: function() {
     var section_class = this.section_class;
+    var subnav_class = this.subnav_class;
     var legacy_buffer = section_class === Fae.content_selector ? 0 : 32;
 
     /**
@@ -44,13 +48,13 @@ Fae.navigation.subnavHighlighter = {
         var position = $this.position().top - scroll_top - legacy_buffer;
         var $link = $('a[href=#' + $this.attr('id') + ']').parent();
 
-        $link.removeClass('main_content-header-section-links-active');
+        $link.removeClass('-active');
         if (position <= 0 || index === 0) {
           $link.addClass('js-highligher');
         }
       });
 
-      $('.js-highligher').last().addClass('main_content-header-section-links-active').removeClass('js-highligher');
+      $('.js-highligher').last().addClass('-active').removeClass('js-highligher');
     }
     FCH.scroll.push(scrollCallback);
 
@@ -62,7 +66,7 @@ Fae.navigation.subnavHighlighter = {
      * @private
      */
     function lastSectionBuffer() {
-      var last_selector = $('.main_content-header-section-links li:last-child a').attr('href');
+      var last_selector = $( subnav_class + ' li:last-child a').attr('href');
       $(last_selector).css('min-height', FCH.$window.height());
     }
     lastSectionBuffer();
@@ -73,7 +77,8 @@ Fae.navigation.subnavHighlighter = {
    * Smooth scrolling on anchor links in the tab area.
    */
   anchorClickListener: function() {
-    var scroll_offset = parseInt( $('.main_content-header').css('height'), 10 );
+    var scroll_offset_selector = FCH.exists('.main_content-header') ? '.main_content-header' : '.content-header';
+    var scroll_offset = parseInt( $(scroll_offset_selector).css('height'), 10 );
     var should_find_h2 = this.section_class === Fae.content_selector;
 
     /**
@@ -93,11 +98,11 @@ Fae.navigation.subnavHighlighter = {
         }
 
         if ($target.length) {
-          FCH.smoothScroll($target, 500, 0, -scroll_offset)
+          FCH.smoothScroll($target, 500, 0, -scroll_offset);
         }
       }
     }
 
-    $('.main_content-header-section-links a').on('click', scroller);
+    $(this.subnav_class + ' a').on('click', scroller);
   },
 };

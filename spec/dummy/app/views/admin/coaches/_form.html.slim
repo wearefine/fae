@@ -1,12 +1,6 @@
 = simple_form_for(['admin', @parent_item, @item]) do |f|
-  section.main_content-header
-    .main_content-header-wrapper
-      nav.main_content-breadcrumbs
-        ul.breadcrumbs
-          li: a href=@index_path All #{@klass_name.titleize.pluralize}
-
-      h1 New #{@parent_item.name} Coach
-      = render 'fae/shared/form_buttons'
+  header.content-header
+    = render 'fae/shared/form_header', header: "New #{@parent_item.name} Coach"
 
   section.content
     = fae_input f, :first_name

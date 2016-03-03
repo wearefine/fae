@@ -1,18 +1,16 @@
 = simple_form_for(@user, html: {multipart: true, novalidate: true}) do |f|
-  section.main_content-header
-    .main_content-header-wrapper
-      nav.main_content-breadcrumbs
-        ul.breadcrumbs
-          - if current_user.super_admin?
-            li: a href=users_path All Users
-      - if params[:action] === 'settings'
-        h1 Your Settings
-      - else
-        = form_header @user
-      .main_content-header-save
-        - cancel_path = params[:action] == 'settings' ? root_path : users_path
-        a#main_content-header-save-cancel href=cancel_path Cancel
-        = f.submit "Save Settings"
+  header.content-header.js-content-header
+    ul.breadcrumbs
+      - if current_user.super_admin?
+        li: a href=users_path All Users
+    - if params[:action] === 'settings'
+      h1 Your Settings
+    - else
+      = form_header @user
+    .content-header-buttons
+      - cancel_path = params[:action] == 'settings' ? root_path : users_path
+      a#main_content-header-save-cancel href=cancel_path Cancel
+      = f.submit "Save Settings"
 
   main.content
     = fae_input f, :first_name

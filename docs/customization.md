@@ -426,10 +426,10 @@ td = fae_clone_button item
 
 #### For Form
 
-Simply pass `cloneable: true` into your form_buttons partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
+Simply pass `cloneable: true` into your form_header partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
 
 ```ruby
-  render 'fae/shared/form_buttons', cloneable: true, clone_button_text: 'Duplicate Me!'
+  render 'fae/shared/form_header', cloneable: true, clone_button_text: 'Duplicate Me!'
 ```
 
 That's all for basic set-up.

@@ -27,7 +27,7 @@
     $el.addClass('js-will-be-sticky');
 
     // create a placeholder
-    if (this.options.make_placeholder) {
+    if (this.options.placeholder) {
       this.createPlaceholder(height);
     }
 
@@ -79,7 +79,7 @@
    */
   Sticky.prototype._stickItLogic = function() {
     if (FCH.$window.scrollTop() >= this.dimensions.top) {
-      if (this.options.make_placeholder) {
+      if (this.options.placeholder) {
         this.$placeholder.show();
         this.$el.css({ width: this.$placeholder.width() });
       }
@@ -104,7 +104,7 @@
       .removeClass(this.options.class_name)
       .removeAttr('style');
 
-    if (this.options.make_placeholder) {
+    if (this.options.placeholder) {
       this.$placeholder.hide();
     }
   };
@@ -144,7 +144,7 @@
     var defaults = {
       class_name: 'js-sticky',
       placeholder_name: 'js-sticky-placeholder',
-      make_placeholder: true,
+      placeholder: false,
       offset: 0,
       header_selector: '#js-main-header'
     };
