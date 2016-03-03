@@ -1,16 +1,16 @@
-nav#js-main_nav.main_nav
+nav.sidenav#js-sidenav
   ul
     - @fae_nav_items.each do |item|
       ruby:
         item[:path] ||= '#'
-        main_class = item[:sublinks].present? ? 'main_nav-accordion js-accordion' : ''
+        main_class = item[:sublinks].present? ? 'sidenav-accordion js-accordion' : ''
         main_class << " #{item[:class_name]}" if item[:class_name].present?
 
       li class=main_class
         a href=item[:path] = item[:text]
 
         - if item[:sublinks].present?
-          ul.main_nav-sub-nav
+          ul.sidenav-sub-nav
             li
               / <span>s are for the mobile titles
               span.js-mobile-back = item[:text]
@@ -18,38 +18,38 @@ nav#js-main_nav.main_nav
             - item[:sublinks].each do |subitem|
               ruby:
                 subitem[:path] ||= '#'
-                sub_class = 'main_nav-accordion -sub js-accordion' if subitem[:sublinks].present?
+                sub_class = 'sidenav-accordion -sub js-accordion' if subitem[:sublinks].present?
                 link_class = subitem[:class_name] if subitem[:class_name].present?
 
               li class=sub_class
                 a class=link_class href=subitem[:path] = subitem[:text]
 
                 - if subitem[:sublinks].present?
-                  ul.main_nav-sub-nav
+                  ul.sidenav-sub-nav
                     li: span.js-mobile-back = subitem[:text]
                     - subitem[:sublinks].each do |thirditem|
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]
 
     - if user_signed_in?
-      li.main_nav-header-mobile
+      li.sidenav-header-mobile
         span.header_drawer-content-username = current_user.full_name
-      li.main_nav-header-mobile
+      li.sidenav-header-mobile
         a.-logout href=fae.destroy_user_session_path Log Out
-      li.main_nav-header-mobile
+      li.sidenav-header-mobile
         a.-settings href=fae.settings_path Your Settings
-      li.main_nav-header-mobile
+      li.sidenav-header-mobile
         a.-support href=fae.help_path Support
       - site_urls_are_present = @option.stage_url.present? || @option.live_url.present?
-      - view_site_class = site_urls_are_present ? 'main_nav-accordion js-accordion show--mobile' : 'main_nav-header-mobile'
+      - view_site_class = site_urls_are_present ? 'sidenav-accordion js-accordion show--mobile' : 'sidenav-header-mobile'
       li class=view_site_class
         - if site_urls_are_present
           a.-viewsite href="#" View Site
-          ul.main_nav-sub-nav
+          ul.sidenav-sub-nav
             li: span.js-mobile-back View Site
             li
-              a.main_nav-sub-link.-viewsite href=@option.stage_url target="_blank" Preview Site
+              a.sidenav-sub-link.-viewsite href=@option.stage_url target="_blank" Preview Site
             li
-              a.main_nav-sub-link.-viewsite href=@option.live_url target="_blank" Live Site
+              a.sidenav-sub-link.-viewsite href=@option.live_url target="_blank" Live Site
         - else
           a.-viewsite href=@option.stage_url target="_blank" Preview Site

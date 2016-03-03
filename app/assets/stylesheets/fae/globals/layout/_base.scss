@@ -8,14 +8,14 @@
   &:before {
     content: '';
     position: absolute;
-    left: $main_nav_width - 10px;
+    left: $sidenav_width - 10px;
     top: 0;
     width: 10px;
     height: 100%;
   }
 
   @include bp(large) {
-    padding-left: $main_nav_width;
+    padding-left: $sidenav_width;
   }
 }
 

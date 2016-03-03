@@ -1,17 +1,17 @@
 .menu-active {
   body {
-    margin-left: $main_nav_width;
+    margin-left: $sidenav_width;
   }
 
-  .main_nav {
+  .sidenav {
     margin-left: 0;
   }
 
   .main-header {
-    margin-left: $main_nav_width;
+    margin-left: $sidenav_width;
   }
 
-  .main_nav-menu_button:after {
+  .sidenav-menu_button:after {
     content: "";
     position: absolute;
     top: 0;
@@ -22,7 +22,7 @@
   }
 }
 
-.main_nav-accordion {
+.sidenav-accordion {
   &.-open {
     > ul {
       margin-left: 0;
@@ -31,15 +31,15 @@
   }
 }
 
-.main_nav-sub-nav {
+.sidenav-sub-nav {
   @include bp(large-down) {
     @include transition($mobile-menu-transition);
     position: fixed;
     top: 0;
     left: 0;
-    width: $main_nav_width;
+    width: $sidenav_width;
     height: 100%;
-    margin-left: negate($main_nav_width);
+    margin-left: negate($sidenav_width);
     overflow: auto;
     padding: 0 5px 10px 0;
     background: image-url('fae/bg_tile.gif');

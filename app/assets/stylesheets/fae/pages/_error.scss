@@ -11,10 +11,10 @@
     border-top: 8px solid $c-custom-highlight;
     border-radius: 4px;
     background: white;
-    color: #595959;
+    color: $c-grey;
     line-height: 1.5;
     font-size: 13px;
-    box-shadow: 0 3px 8px 0 #cccccc;
+    box-shadow: 0 3px 8px 0 $c-lighter_grey;
 
     p {
       margin-top: 30px;

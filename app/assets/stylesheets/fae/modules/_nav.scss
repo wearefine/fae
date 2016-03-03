@@ -1,15 +1,15 @@
-.main_nav {
+.sidenav {
   @extend %inset-nav-shadow;
   @include transition($mobile-menu-transition);
   position: fixed;
   top: 0;
   left: 0;
-  width: $main_nav_width;
+  width: $sidenav_width;
   height: 100%;
-  margin-left: negate($main_nav_width);
+  margin-left: negate($sidenav_width);
   overflow: auto;
   padding: 10px 0;
-  font-size: 14px;
+  font-size: 15px;
 
   @include bp(large) {
     position: absolute;
@@ -17,36 +17,33 @@
   }
 
   a {
-    @extend %main_nav-all_links;
+    @extend %sidenav-all_links;
     position: relative;
     padding: 15px 20px;
 
-    &.current {
-      padding-left: 20px;
-      font-weight: bold;
-      border-left: 5px solid $c-custom-highlight;
-      color: $c-custom-highlight;
-    }
-
     @include bp(large) {
-      padding: 10px 25px;
+      padding: 10px $sidenav-padding-base-level;
     }
   }
 
   li {
     li {
       a {
-        font-size: 14px;
+        font-size: 13px;
+        padding-top: 7px;
+        padding-bottom: 7px;
 
         @include bp(large) {
-          padding: 10px 35px;
+          padding-left: $sidenav-padding-base-level + $sidenav-padding-one-level;
+          padding-right: $sidenav-padding-base-level + $sidenav-padding-one-level;
         }
       }
 
       li {
         a {
           @include bp(large) {
-            padding-left: 45px;
+            padding-left: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
+            padding-right: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
           }
         }
       }
@@ -55,18 +52,36 @@
 }
 
 // The accordion. An <li> element.
-.main_nav-accordion {
+.sidenav-accordion {
   &.-open {
     > a {
       &:after {
-        @extend .icon-chevron_up:before;
+        @extend .icon-arrow_up:before;
+        color: $c-black;
       }
     }
   }
 
-  &.current {
+  &.-current {
+
+    &:not(.-sub) {
+      > a {
+        padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
+        border-left: $sidenav-active-border-width solid $c-custom-highlight;
+      }
+    }
+
+    > a,
+    a.-current {
+      font-weight: bold;
+      color: $c-black;
+    }
+
+    // Expand nested accordions when the main nav is -current
     > ul {
-      display: block;
+      @include bp(large) {
+        display: block;
+      }
     }
   }
 
@@ -74,15 +89,14 @@
     @extend %nav-icon;
 
     &:after {
-      @extend .icon-chevron_down:before;
-      right: 25px;
-      font-size: 8px;
+      @extend .icon-arrow_down:before;
+      font-size: 6px;
       top: 14px;
 
       @include bp(large-down) {
         top: 18px;
         // overrides the up arrow on open at desktop
-        content: '\e610' !important;
+        content: '\e615' !important;
       }
     }
   }
@@ -94,18 +108,13 @@
   }
 }
 
-.main_nav-sub-nav-admin {
+.sidenav-admin {
   a {
-    &.-users,
-    &.-settings,
-    &.-activity {
-      @extend %nav-icon;
-      position: relative;
+    @extend %nav-icon;
+    position: relative;
 
-      &:after {
-        right: 25px;
-        top: 11px;
-      }
+    &:after {
+      top: 11px;
     }
 
     &.-users {
@@ -128,7 +137,7 @@
   }
 }
 
-.main_nav-header-mobile {
+.sidenav-header-mobile {
   @include bp(large) {
     display: none;
   }
@@ -185,46 +194,13 @@
   }
 }
 
-.main_nav-third-link {
+.sidenav-third-link {
   @include bp(large) {
     padding: 10px 10px 10px 30px;
   }
 }
 
-.main_nav-link-dashboard {
-  a,
-  .header_drawer-content {
-    @extend %nav-icon;
-    position: relative;
-
-    &:after {
-      @extend .icon-home:before;
-      right: 25px;
-      top: 11px;
-    }
-  }
-}
-
-// when the main nav is current
-@include bp(large) {
-  .main_nav-accordion.current {
-    a.current {
-      padding-left: 15px;
-    }
-
-    .main_nav-accordion {
-      &.current {
-        display: block;
-      }
-
-      a.current {
-        padding-left: 25px;
-      }
-    }
-  }
-}
-
-.main_nav-menu_button {
+.sidenav-menu_button {
   position: absolute;
   top: 0;
   left: 0;

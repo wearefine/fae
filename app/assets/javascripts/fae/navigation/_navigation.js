@@ -30,9 +30,8 @@ Fae.navigation = {
    * @fires {@link navigation._updateNavClasses}
    */
   selectCurrentNavItem: function() {
-    var _this = this;
     var current_base_url = window.location.pathname.replace('#', '');
-    var $currentLink = $('#js-main_nav a[href="' + current_base_url + '"]');
+    var $currentLink = $('#js-sidenav a[href="' + current_base_url + '"]');
 
     /**
      * Apply current nav class or keep looking deeper from path for the answer
@@ -46,9 +45,9 @@ Fae.navigation = {
       url_array.pop();
       mutated_url = url_array.join('/');
 
-      var $currentLink = $('#js-main_nav a[href="' + mutated_url + '"]');
+      var $currentLink = $('#js-sidenav a[href="' + mutated_url + '"]');
       if ($currentLink.length) {
-        $currentLink.addClass('current');
+        $currentLink.addClass('-current');
 
       } else {
         // Defend from exceeding call stack (SUPER RECURSION)
@@ -61,7 +60,7 @@ Fae.navigation = {
 
     if ($currentLink.length) {
       // Try to find link that matches the URL exactly
-      $currentLink.addClass('current');
+      $currentLink.addClass('-current');
 
     } else {
       // If link can't be found, recursively search for it
@@ -72,8 +71,8 @@ Fae.navigation = {
     $('.js-accordion').each(function() {
       var $this = $(this);
 
-      if($this.find('.current').length) {
-        $this.addClass('current');
+      if($this.find('.-current').length) {
+        $this.addClass('-current');
 
         if(FCH.bp.large) {
           $this.addClass('-open');
@@ -130,7 +129,7 @@ Fae.navigation = {
     $el.addClass('-open');
 
     if(FCH.bp.large) {
-      $el.find('.main_nav-sub-nav').first().stop().slideDown();
+      $el.find('.sidenav-sub-nav').first().stop().slideDown();
     }
   },
 
@@ -141,7 +140,7 @@ Fae.navigation = {
    */
   close: function($el) {
     if(FCH.bp.large) {
-      $el.find('.main_nav-sub-nav')
+      $el.find('.sidenav-sub-nav')
         .first()
         .stop()
         .slideUp()
@@ -180,10 +179,9 @@ Fae.navigation = {
    * Mobile - Push body over and display nav
    */
   openDrawer: function() {
-    var _this = this;
     var $html = $('html');
 
-    $('#js-main_nav-menu_button').click(function(e){
+    $('#js-sidenav-menu_button').click(function(e){
       e.preventDefault();
 
       if ($html.hasClass( 'menu-active' )) {
@@ -198,8 +196,6 @@ Fae.navigation = {
    * Mobile - Collapse sub headers on sub nav click
    */
   clickBack: function() {
-    var _this = this;
-
     $('.js-mobile-back').click(function(e){
       e.preventDefault();
 
@@ -248,7 +244,7 @@ Fae.navigation = {
    */
   stickyHeaders: function() {
     $(".main_content-header").sticky();
-    $("#js-main_nav").sticky({
+    $("#js-sidenav").sticky({
       make_placeholder: false
     });
   },

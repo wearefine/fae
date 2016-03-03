@@ -15,7 +15,7 @@
   box-shadow: -15px 0 15px -15px $c-box_shadow;
 }
 
-%main_nav-all_links {
+%sidenav-all_links {
   display: block;
   color: $c-text;
 
@@ -91,6 +91,7 @@
     position: absolute;
     font-size: 15px;
     color: $c-nav-icons;
+    right: 0;
   }
 
   &:hover {

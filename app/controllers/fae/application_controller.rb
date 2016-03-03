@@ -36,9 +36,7 @@ module Fae
 
     def build_nav
       if current_user
-        @fae_nav_items = [
-          { text: "Dashboard", path: fae.root_path, class_name: 'main_nav-link-dashboard' }
-          ]
+        @fae_nav_items = []
 
         @fae_nav_items += nav_items if nav_items.present?
 
@@ -47,7 +45,7 @@ module Fae
           sublinks << { text: 'Users', path: fae.users_path, class_name: '-users' }
           sublinks << { text: 'Root Settings', path: fae.option_path, class_name: '-settings'}
           sublinks << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
-          @fae_nav_items << { text: 'Admin', path: '#', class_name: 'main_nav-sub-nav-admin', sublinks: sublinks }
+          @fae_nav_items << { text: 'Admin', path: '#', class_name: 'sidenav-admin', sublinks: sublinks }
         elsif current_user.admin?
           @fae_nav_items << { text: 'Users', path: fae.users_path, class_name: '-users' }
           @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}

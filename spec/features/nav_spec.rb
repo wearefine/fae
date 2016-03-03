@@ -74,22 +74,22 @@ feature 'Main Navigation' do
     admin_login
     visit admin_releases_path
 
-    expect(page).to_not have_selector('.main_nav a', text: 'Except Open To Another Drawer')
+    expect(page).to_not have_selector('.sidenav a', text: 'Except Open To Another Drawer')
 
-    page.find('.main_nav-accordion a', text: 'Look This Drawer Does Nothing').click
+    page.find('.sidenav-accordion a', text: 'Look This Drawer Does Nothing').click
 
     # Link is now visible
-    expect(page).to have_selector('.main_nav a', text: 'Except Open To Another Drawer')
+    expect(page).to have_selector('.sidenav a', text: 'Except Open To Another Drawer')
   end
 
   scenario 'should expand second level accordion', js: true do
     admin_login
     visit admin_releases_path
 
-    page.find('.main_nav a', text: 'Look This Drawer Does Nothing').click
-    page.find('.main_nav a', text: 'Except Open To Another Drawer').click
+    page.find('.sidenav a', text: 'Look This Drawer Does Nothing').click
+    page.find('.sidenav a', text: 'Except Open To Another Drawer').click
 
-    expect(page).to have_selector('.main_nav a', text: 'To A Link That Goes Nowhere')
+    expect(page).to have_selector('.sidenav a', text: 'To A Link That Goes Nowhere')
   end
 
 end

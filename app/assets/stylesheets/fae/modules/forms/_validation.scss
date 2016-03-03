@@ -21,7 +21,7 @@
 
     &:after {
       @include right-triangle(10px, $c-error-bg);
-      content: "";
+      content: '';
       position: absolute;
       bottom: -8px;
       left: 0;
