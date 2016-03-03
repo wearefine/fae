@@ -4,15 +4,14 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 10px 0 12px 0;
+  padding: 10px 0 12px;
   background: $c-header-bg;
-  border-bottom: 4px solid $c-custom-highlight;
   text-align: center;
   z-index: 1;
 
   @include bp(large) {
     position: relative;
-    padding: 25px 20px;
+    padding: 22px 20px;
     text-align: left;
   }
 

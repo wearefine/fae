@@ -16,13 +16,11 @@
 }
 
 %main_nav-all_links {
-  @include transition(background .2s);
   display: block;
   color: $c-text;
 
   &:hover {
     color: $c-nav-link;
-    background: $c-nav-bg-hover;
   }
 }
 
@@ -82,6 +80,22 @@
           }
         }
       }
+    }
+  }
+}
+
+%nav-icon {
+  &:after {
+    @include icon_stuff;
+    @include transition(color .2s);
+    position: absolute;
+    font-size: 15px;
+    color: $c-nav-icons;
+  }
+
+  &:hover {
+    &:after {
+      color: $c-nav-icons-hover;
     }
   }
 }
