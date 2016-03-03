@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + Update hash-parsing library to Fryr and fix cookie/hash filtering on load
 
 ## 1.2.4
 
