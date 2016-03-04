@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116015621) do
+ActiveRecord::Schema.define(version: 20160226000222) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -371,5 +371,4 @@ ActiveRecord::Schema.define(version: 20160116015621) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
-  add_foreign_key "winemakers", "wines"
 end
