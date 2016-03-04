@@ -15,12 +15,12 @@ $breakpoints: (
 $breakpoints: map-merge($fine-breakpoints, $breakpoints);
 
 // widths, padding, margins, and the like
-$g-content-buffer: 30px;
-$content-header-height: 86px + $g-content-buffer;
+$content-buffer: 30px;
+$content-header-height: 86px + $content-buffer;
 
 $sidenav_width: 250px;
 $sidenav-padding-one-level: 10px;
-$sidenav-padding-base-level: $g-content-buffer;
+$sidenav-padding-base-level: $content-buffer;
 $sidenav-active-border-width: 7px;
 
 // TYPOGRAPHY
@@ -46,13 +46,10 @@ $c-box_shadow: $c-lighter_grey;
 $c-border: $c-lighter_grey;
 
 // header area
-$c-header-bg: $c-near-black;
+$c-header-bg: #1e1e1e;
 $c-header-logo: $c-white;
 
-// utility nav area
-$c-utility-sub-nav-bg: $c-dark_grey;
-$c-utility-sub-nav-link-bg-hover: $c-grey;
-$c-utility-sub-nav-link-color: $c-lighter_grey;
+$c-header-dropdown-bg: #3b3b3b;
 
 // nav area
 $c-nav-link: $c-dark_grey;
@@ -90,7 +87,7 @@ $c-form-button-gradient-hover: #e1e1e1;
 $c-form-checkbox-bg: $c-white;
 $c-form-file-bg: $c-near-white;
 $c-form-file-bg-active: $c-white;
-$c-form-file-link-bg: #f7f7f7;
+$c-form-file-link-bg: $c-near-white;
 $c-form-file-link-bg-hover: #ddd;
 $c-form-file-link-text: $c-custom-highlight;
 $c-form-table-bg: #ebebeb;

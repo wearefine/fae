@@ -133,7 +133,7 @@
   float: left;
 
   &:before {
-    @include icon_stuff;
+    @include icon-stuff;
     @extend .icon-chevron_left:before;
   }
 }
@@ -143,7 +143,7 @@
 
   &:before {
     @extend .icon-chevron_right:before;
-    @include icon_stuff;
+    @include icon-stuff;
   }
 }
 
@@ -206,7 +206,7 @@
 
   label:before {
     @extend .icon-calendar:before;
-    @include icon_stuff;
+    @include icon-stuff;
     position: absolute;
     right: 20px;
     bottom: 0;
@@ -258,7 +258,7 @@
 
         .prev,
         .next {
-          @include icon_stuff;
+          @include icon-stuff;
           color: $c-near-black;
 
           &:hover {

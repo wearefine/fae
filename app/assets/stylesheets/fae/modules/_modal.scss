@@ -65,7 +65,7 @@
 
 .simplemodal-close {
 	&:before {
-		@include icon_stuff;
+		@include icon-stuff;
 		@extend .icon-delete_x:before;
 		position: absolute;
 		top: 20px;

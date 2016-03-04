@@ -15,7 +15,7 @@
 
     &:before {
       @extend .icon-alert;
-      @include icon_stuff;
+      @include icon-stuff;
       padding-right: 10px;
     }
 

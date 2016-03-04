@@ -27,7 +27,7 @@ input[type=email] {
   margin-right: 20px;
 
   &:before {
-    @include icon_stuff;
+    @include icon-stuff;
     @extend .icon-delete_x:before;
     font-size: 12px;
     margin-right: 6px;

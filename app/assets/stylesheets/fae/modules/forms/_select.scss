@@ -84,7 +84,7 @@
 
           &:after {
             @extend .icon-delete_x:before;
-            @include icon_stuff;
+            @include icon-stuff;
           }
         }
       }
@@ -228,13 +228,13 @@
 
         &:after {
           @extend .icon-delete_x:before;
-          @include icon_stuff;
+          @include icon-stuff;
           color: $c-text-sub;
         }
 
         &:before {
           @extend .icon-check:before;
-          @include icon_stuff;
+          @include icon-stuff;
           padding-right: 5px;
           margin-left: -19px;
           color: $c-custom-highlight;

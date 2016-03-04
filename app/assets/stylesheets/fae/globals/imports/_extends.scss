@@ -6,7 +6,7 @@
   margin-bottom: 10px;
 
   &:before {
-    @include icon_stuff;
+    @include icon-stuff;
     margin-right: 10px;
   }
 }
@@ -77,7 +77,7 @@
 
 %nav-icon {
   &:after {
-    @include icon_stuff;
+    @include icon-stuff;
     @include transition(color .2s);
     position: absolute;
     font-size: 15px;

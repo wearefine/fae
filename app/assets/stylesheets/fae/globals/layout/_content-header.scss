@@ -2,7 +2,7 @@
 .content-header {
   @include clearfix;
   width: 100%;
-  padding: 24px $g-content-buffer;
+  padding: 24px $content-buffer;
   background: $c-content-header-bg;
   border-bottom: 1px solid $c-border;
   position: absolute;
@@ -27,7 +27,8 @@
 
 .main_content-section-toggles {
   list-style: none;
-  margin: -15px 0 30px;
+  margin: -25px negate($content-buffer) 5px;
+  padding: 0 $content-buffer;
 
   li {
     display: inline-block;

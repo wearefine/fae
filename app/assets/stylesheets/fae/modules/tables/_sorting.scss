@@ -26,7 +26,7 @@
 
   &:after {
     @extend .icon-arrow_down:before;
-    @include icon_stuff;
+    @include icon-stuff;
     float: right;
     margin-top: -2em;
     font-size: 4px;

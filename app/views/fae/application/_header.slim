@@ -2,24 +2,43 @@ header.main-header#js-main-header
   span.sidenav-menu_button.icon-menu#js-sidenav-menu_button
   h1: a href=root_path = @option.title
 
+  nav
+    ul.main-header-nav
+      li: a href="#" Top-level
+      li
+        a href="#" Top w/ Children
+        ul
+          li: a href="#" Second-level
+          li: a href="#" Second-level
+          li: a href="#" Second-level
+          li: a href="#" Second-level
+      li: a href="#" Top-level
+      li: a href="#" Top-level
+      li
+        a href="#" Top w/ Children
+        ul
+          li: a href="#" Second-level
+          li: a href="#" Second-level
+          li: a href="#" Second-level
+          li: a href="#" Second-level
+
+
   - if user_signed_in?
-    ul.utility_nav#js-utility-nav
-      li class="#{'js-utility-dropdown' if @option.stage_url.present?}"
+    ul.utility-nav#js-utility-nav
+      li class="#{'utility-dropdown js-utility-dropdown' if @option.stage_url.present?}"
         a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
           | Website
         - if @option.stage_url.present?
-          i.icon-arrow_down<
-          ul.utility_sub_nav
+          ul
             li: a href=@option.live_url target="_blank" Live Site
             li: a href=@option.stage_url target="_blank" Stage Site
 
-      li.js-utility-dropdown
-        a href=fae.help_path Help
+      li: a href=fae.help_path Help
 
-      li.js-utility-dropdown
+      li.utility-dropdown.js-utility-dropdown
         a href="#"
           / TODO - grabatar here
-          i.icon-arrow_down
-        ul.utility_sub_nav
+          .grabatar
+        ul
           li: a href=fae.destroy_user_session_path Log Out
           li: a href=fae.settings_path Your Settings
