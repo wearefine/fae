@@ -19,6 +19,7 @@ Fae.navigation = {
     this.clickBack();
     this.language.init();
     this.accordionClickEventListener();
+    this.utilitySearch();
   },
 
   resize: function() {
@@ -230,6 +231,19 @@ Fae.navigation = {
       }
 
       FCH.$document.on('click', closeToggleMenu);
+    });
+  },
+
+  /**
+   * Click event of the admin search in the main nav
+   */
+  utilitySearch: function() {
+    $('#js-utility-search').click(function() {
+      var $this = $(this);
+
+      if($this.hasClass('active')) {
+        $this.find('input').focus();
+      }
     });
   },
 

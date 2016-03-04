@@ -13,14 +13,16 @@
   'globals/tags',
   'globals/layout/base',
   'globals/layout/content-header',
-  'globals/layout/breadcrumbs'
+  'globals/layout/breadcrumbs',
+  'globals/navigation/base',
+  'globals/navigation/mobilemenu',
+  'globals/navigation/sidenav',
+  'globals/navigation/utility'
 ;
 
 // Modules
 @import
-  'modules/header',
   'modules/buttons',
-  'modules/nav',
   'modules/tables/base',
   'modules/tables/actions',
   'modules/tables/sorting',
@@ -29,8 +31,7 @@
   'modules/tables/sticky',
   'modules/modal',
   'modules/toggles',
-  'modules/alerts',
-  'modules/mobilemenu'
+  'modules/alerts'
 ;
 
 // Forms

@@ -1,0 +1,113 @@
+// Utility nav. View Site, Support, Username, etc.
+.utility-nav {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: $content-buffer;
+  font-weight: 200;
+
+  @include bp(large) {
+    display: block;
+  }
+
+  @include bp(page_header_save_block) {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-top: 20px;
+  }
+
+  a {
+    font-size: 14px;
+    color: $c-text-sub;
+    padding-left: 18px;
+    padding-right: 18px;
+
+    &:hover {
+      color: $c-text-sub-hover;
+    }
+  }
+
+  li {
+    &:last-child {
+      a {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.utility-dropdown {
+  &.active {
+    ul,
+    .utility-search-wrapper {
+      display: block;
+    }
+  }
+
+  &.utility-search a {
+    &:after {
+      display: none;
+    }
+  }
+
+  > a {
+    &:after {
+      @extend .icon-arrow_down:before;
+      @include icon-stuff;
+      font-size: 6px;
+      color: $c-text-sub;
+      display: inline-block;
+      padding-left: 5px;
+      vertical-align: middle;
+    }
+  }
+
+  li {
+    display: block;
+    margin-left: 0;
+  }
+
+  ul,
+  .utility-search-wrapper {
+    font-weight: normal;
+    width: 150px;
+    display: none;
+    background: $c-header-dropdown-bg;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding: 8px 0;
+    z-index: 2;
+    font-size: 14px;
+
+
+    a {
+      padding: 7px 25px;
+    }
+  }
+}
+
+.grabatar {
+  border-radius: 40px;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  background: $c-custom-highlight;
+}
+
+.utility-search {
+  input[type="text"] {
+    background: none;
+    margin: 0 auto;
+    width: 85%;
+    border: 0;
+    border-bottom: 1px solid $c-white;
+    color: $c-white;
+  }
+
+  a {
+    color: $c-white;
+  }
+}
