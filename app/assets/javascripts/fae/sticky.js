@@ -115,10 +115,11 @@
   Sticky.prototype.windowListeners = function() {
     var _this = this;
 
-    var scrollCallback = function() {
+    function scrollCallback() {
       _this.stickIt();
-    };
-    FCH.scroll.push(scrollCallback);
+    }
+
+    FCH.scroll.push( scrollCallback );
 
     FCH.$window.smartresize(function(){
       if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
@@ -145,8 +146,7 @@
       class_name: 'js-sticky',
       placeholder_name: 'js-sticky-placeholder',
       placeholder: false,
-      offset: 0,
-      header_selector: '#js-main-header'
+      offset: 0
     };
 
     // unite the default options with the passed-in ones

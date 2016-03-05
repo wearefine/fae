@@ -36,9 +36,7 @@ Fae.tables = {
       this.rowSorting(sort_selector);
     }
 
-    if (FCH.exists('.sticky-table-header')) {
-      this.stickyTableHeader();
-    }
+    this.stickyTableHeader();
 
     if (FCH.exists('.collapsible')) {
       this.collapsibleTable();
@@ -280,18 +278,15 @@ Fae.tables = {
    * Fix a table header to the top of the view on scroll
    */
   stickyTableHeader: function() {
-    var $sticky_tables = $('.sticky-table-header');
-    var sticky_table_header_selector = '.sticky-table-header--hidden';
-    var $window = $(window);
+    var $sticky_tables = $('.content table:not(.stuck-table)');
 
     // Add sticky psuedo tables after our main table to hold the fixed header
     $sticky_tables.each(function() {
       var $this = $(this);
       var $header = $this.find('thead').clone();
-      var new_classes = $this.attr('class').replace('sticky-table-header', sticky_table_header_selector.substr(1));
 
       var $fixedHeader = $('<table />', {
-        class: new_classes
+        class: 'sticky-table-header--hidden stuck-table'
       });
 
       $fixedHeader.append( $header );
@@ -300,9 +295,9 @@ Fae.tables = {
 
     /**
      * FCH callback for scroll - If the table header is in range, show it, otherwise hide it
-     * @access private
+     * @private
      */
-    var stickyTableHeaderScroll = function() {
+    function stickyTableHeaderScroll() {
       var offset = FCH.$window.scrollTop();
 
       $('.sticky-table-header--hidden').each(function() {
@@ -310,23 +305,25 @@ Fae.tables = {
         var tableOffset = $this.data('table-offset');
         var tableBottom = $this.data('table-bottom');
 
+        console.log(tableOffset)
+
         if (offset >= tableOffset && offset <= tableBottom) {
           $this.show();
         } else {
           $this.hide();
         }
       });
-    };
+    }
 
     /**
      * FCH callback for resize and load - Get all values squared away again if the viewport gets smaller
-     * @access private
+     * @private
      */
-    var sizeTableHeader = function() {
+    function sizeTableHeader() {
       $sticky_tables.each(function() {
         Fae.tables.sizeFixedHeader($(this));
       });
-    };
+    }
 
     FCH.load.push(sizeTableHeader);
     FCH.resize.push(sizeTableHeader);
@@ -336,22 +333,23 @@ Fae.tables = {
   /**
    * Cache offset and height values to spare expensive calculations on scroll
    * @param {jQuery} $this
+   * @depreciation remove ternary for header_height variable
    */
   sizeFixedHeader: function($this) {
-    var headerHeight = $('.main_content-header').outerHeight();
+    var header_height = FCH.exists('.content-header') ? $('.content-header').outerHeight() : $('.main_content-header').outerHeight();
     if(FCH.large_down) {
-      headerHeight = $('#js-main-header').outerHeight();
+      header_height = $('#js-main-header').outerHeight();
     }
 
-    var tableOffset = $this.offset().top - headerHeight;
+    var tableOffset = $this.offset().top - header_height;
     var theadHeight = $this.find('thead').outerHeight();
     var bottomOffset = $this.height() + tableOffset - theadHeight;
     var $fixedHeader = $this.next('.sticky-table-header--hidden');
 
     // For whatever reason IE9 does not pickup the .sticky plugin
     if(!$('.js-will-be-sticky').length) {
-      tableOffset += headerHeight;
-      headerHeight = 0;
+      tableOffset += header_height;
+      header_height = 0;
     }
 
     $fixedHeader.data({
@@ -362,7 +360,7 @@ Fae.tables = {
     $fixedHeader.css({
       width: $this.outerWidth(),
       height: theadHeight,
-      top: headerHeight,
+      top: header_height,
     });
 
     $this.find('thead tr th').each(function(index){

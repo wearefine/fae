@@ -16,7 +16,7 @@ $breakpoints: map-merge($fine-breakpoints, $breakpoints);
 
 // widths, padding, margins, and the like
 $content-buffer: 30px;
-$content-header-height: 86px + $content-buffer;
+$content-header-height: 106px;
 
 $sidenav_width: 250px;
 $sidenav-padding-one-level: 10px;

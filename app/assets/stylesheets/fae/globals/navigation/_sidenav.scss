@@ -2,7 +2,8 @@
   @extend %inset-nav-shadow;
   @include transition($mobile-menu-transition);
   position: fixed;
-  top: $content-header-height;
+  padding-top: $content-header-height;
+  top: 0;
   left: 0;
   width: $sidenav_width;
   height: 100%;

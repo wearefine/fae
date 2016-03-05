@@ -365,10 +365,6 @@ Fae provides a partial to display tracked changes in an object's form. Read more
 
 # CSS Classes
 
-## Fixed position table headers
-
-For extra long tables, add the class `sticky-table-header` to a `table` and scroll away. Multiple sticky tables can appear on one page.
-
 ## Collapsible tables
 
 Some pages have multiple tables that are easier to navigate if tables can be shown or hidden. Wrap each table in a `.collapsible` div and prepend an `h3` with the item's name and count. Example below and on the dummy app's `events/index` page.
