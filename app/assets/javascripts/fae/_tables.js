@@ -305,8 +305,6 @@ Fae.tables = {
         var tableOffset = $this.data('table-offset');
         var tableBottom = $this.data('table-bottom');
 
-        console.log(tableOffset)
-
         if (offset >= tableOffset && offset <= tableBottom) {
           $this.show();
         } else {
