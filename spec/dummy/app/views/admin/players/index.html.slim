@@ -12,8 +12,7 @@ main.content
       - if @items.present?
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
-            td.main_table-description-item
-              = link_to item.fae_display_field, edit_admin_team_player_path(@parent_item, item)
+            td = link_to item.fae_display_field, edit_admin_team_player_path(@parent_item, item)
             td = fae_date_format item.updated_at
             td.-delete
               = link_to ['admin', @parent_item, item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do

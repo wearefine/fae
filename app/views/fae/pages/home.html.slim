@@ -19,9 +19,7 @@ main.content
           - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
           - index_path = polymorphic_path([main_app, fae_scope, parent, item.class.to_s.pluralize.underscore])
           tr
-            td.main_table-description-item
-              a href=edit_path = item.fae_display_field
-            td
-              a href=index_path = item.class.to_s
+            td: a href=edit_path = item.fae_display_field
+            td: a href=index_path = item.class.to_s
             td = fae_date_format item.updated_at
         - rescue

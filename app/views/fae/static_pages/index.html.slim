@@ -12,5 +12,5 @@ main.content
     tbody
       - @items.each do |item|
         tr id="fae_content_block_#{item.id}"
-          td.main_table-description-item = link_to item.title.titleize, fae.edit_content_block_path(item.slug)
+          td = link_to item.title.titleize, fae.edit_content_block_path(item.slug)
           td = fae_date_format item.updated_at
