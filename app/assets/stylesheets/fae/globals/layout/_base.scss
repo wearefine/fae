@@ -58,13 +58,15 @@
   padding: 10px $g-content-buffer 30px;
   text-align: right;
   font-size: 14px;
+  color: $c-grey;
 
   a {
-    color: $c-grey;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 25px;
+    max-width: 35px;
 
     &:hover {
-      color: $c-custom-highlight;
-
       path {
         fill: $c-custom-highlight;
       }
@@ -77,10 +79,7 @@
   }
 
   svg {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 25px;
-    max-width: 35px;
+    max-width: 100%;
     height: auto;
   }
 
