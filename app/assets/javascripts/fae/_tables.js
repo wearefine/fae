@@ -205,6 +205,7 @@ Fae.tables = {
   collapsibleTable: function() {
     var $collapsible = $('.collapsible');
     var $toggle = $('.collapsible-toggle');
+    var _this = this;
 
     // If there's only one table, don't bother with collapsing everything
     // Also, remove the open/close all toggle and the table subheaders
@@ -228,6 +229,8 @@ Fae.tables = {
         $collapsible.addClass('active');
 
       }
+
+      Fae.tables.sizeFixedHeader();
 
       $this.toggleClass('close-all');
     });
@@ -256,6 +259,8 @@ Fae.tables = {
           $toggle.removeClass('close-all');
         }
       }
+
+      Fae.tables.sizeFixedHeader();
     });
   },
 
@@ -313,59 +318,59 @@ Fae.tables = {
       });
     }
 
-    /**
-     * FCH callback for resize and load - Get all values squared away again if the viewport gets smaller
-     * @private
-     */
-    function sizeTableHeader() {
-      $sticky_tables.each(function() {
-        Fae.tables.sizeFixedHeader($(this));
-      });
-    }
-
-    FCH.load.push(sizeTableHeader);
-    FCH.resize.push(sizeTableHeader);
+    FCH.load.push( Fae.tables.sizeFixedHeader );
+    FCH.resize.push( Fae.tables.sizeFixedHeader );
     FCH.scroll.push(stickyTableHeaderScroll);
   },
 
   /**
    * Cache offset and height values to spare expensive calculations on scroll
-   * @param {jQuery} $this
-   * @depreciation remove ternary for header_height variable
+   * @depreciation remove ternary for header_height variable in v2.0
    */
-  sizeFixedHeader: function($this) {
-    var header_height = FCH.exists('.content-header') ? $('.content-header').outerHeight() : $('.main_content-header').outerHeight();
+  sizeFixedHeader: function() {
+    var $tables = $('.content table');
+    var header_height = FCH.exists('.js-content-header') ? $('.js-content-header').outerHeight() : $('.main_content-header').outerHeight();
     if(FCH.large_down) {
       header_height = $('#js-main-header').outerHeight();
     }
 
-    var tableOffset = $this.offset().top - header_height;
-    var theadHeight = $this.find('thead').outerHeight();
-    var bottomOffset = $this.height() + tableOffset - theadHeight;
-    var $fixedHeader = $this.next('.sticky-table-header--hidden');
+    /**
+     * Add offset and height values per each table
+     * @private
+     */
+    function applyOffset() {
+      var $this = $(this);
 
-    // For whatever reason IE9 does not pickup the .sticky plugin
-    if(!$('.js-will-be-sticky').length) {
-      tableOffset += header_height;
-      header_height = 0;
+      var tableOffset = $this.offset().top - header_height;
+      var theadHeight = $this.find('thead').outerHeight();
+      var bottomOffset = $this.height() + tableOffset - theadHeight;
+      var $fixedHeader = $this.next('.sticky-table-header--hidden');
+
+      // For whatever reason IE9 does not pickup the .sticky plugin
+      if(!$('.js-will-be-sticky').length) {
+        tableOffset += header_height;
+        header_height = 0;
+      }
+
+      $fixedHeader.data({
+        'table-offset' : tableOffset,
+        'table-bottom' : bottomOffset
+      });
+
+      $fixedHeader.css({
+        width: $this.outerWidth(),
+        height: theadHeight,
+        top: header_height,
+      });
+
+      $this.find('thead tr th').each(function(index){
+        var original_width = $(this).outerWidth()
+        // Using .width() as a setter is bunk
+        $($fixedHeader.find('tr > th')[index]).css('width', original_width);
+      });
     }
 
-    $fixedHeader.data({
-      'table-offset' : tableOffset,
-      'table-bottom' : bottomOffset
-    });
-
-    $fixedHeader.css({
-      width: $this.outerWidth(),
-      height: theadHeight,
-      top: header_height,
-    });
-
-    $this.find('thead tr th').each(function(index){
-      var original_width = $(this).outerWidth()
-      // Using .width() as a setter is bunk
-      $($fixedHeader.find('tr > th')[index]).css('width', original_width);
-    });
+    $tables.each( applyOffset );
   },
 
   /**

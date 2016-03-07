@@ -1,9 +1,5 @@
-header.content-header.js-content-header
-  h1 Users
-  .content-header-buttons
-    a.add-button href=new_user_path Add User
-
-== render 'flash_messages'
+- @new_path = new_user_path
+== render 'fae/shared/index_header', title: 'Users', new_button: true, button_text: 'Add User', breadcrumbs: false
 
 main.content
   table.main_table-sort_columns

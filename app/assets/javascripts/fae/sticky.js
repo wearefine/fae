@@ -45,12 +45,17 @@
    * @param {Number} height - Size of stuck element
    */
   Sticky.prototype.createPlaceholder = function(height) {
+    var css_properties = {
+      height: height
+    };
+
+    if(!this.options.perpetual_placeholder) {
+      css.display = 'none';
+    }
+
     var $placeholder = $('<div />', {
        class: this.options.placeholder_name,
-       css: {
-        height: height,
-        display: 'none'
-      }
+       css: css_properties
     });
 
     $placeholder.insertAfter(this.$el);
@@ -102,9 +107,13 @@
   Sticky.prototype._unStick = function() {
     this.$el
       .removeClass(this.options.class_name)
-      .removeAttr('style');
+      .css({
+        top: '',
+        left: '',
+        position: ''
+      });
 
-    if (this.options.placeholder) {
+    if (this.options.placeholder && !this.options.perpetual_placeholder) {
       this.$placeholder.hide();
     }
   };
@@ -146,7 +155,8 @@
       class_name: 'js-sticky',
       placeholder_name: 'js-sticky-placeholder',
       placeholder: false,
-      offset: 0
+      offset: 0,
+      perpetual_placeholder: false
     };
 
     // unite the default options with the passed-in ones

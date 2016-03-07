@@ -4,15 +4,19 @@
 - new_path    ||= "new_#{fae_path}_#{@klass_singular}_path"
 - button_text ||= "Add #{title.singularize}"
 - csv         ||= false
+- breadcrumbs   = !local_assigns[:breadcrumbs].eql?(false)
 
-header.content-header.js-content-header.-index
-  ul.breadcrumbs
-    li
-      a href=fae.root_path
-        i.icon-home
-    li: a href=fae.root_path First Level
-    li: a href=fae.root_path Second Level
-    li = title
+header.content-header.js-content-header
+  - if breadcrumbs
+    ul.breadcrumbs
+      li
+        a href=fae.root_path
+          i.icon-home
+      li: a href=fae.root_path First Level
+      li: a href=fae.root_path Second Level
+      li = title
+  - else
+    h1 = title
 
   .content-header-buttons
     - if csv && @items.present?

@@ -256,17 +256,29 @@ Fae.navigation = {
 
   /**
    * Stick the header in the content area
+   * @param {Boolean} [just_headers=false] Only initialize stickiness for `.js-content-header`
    */
-  stickyHeaders: function() {
-    if(FCH.exists('.content-header')) {
-      $('.content-header').sticky();
+  stickyHeaders: function(just_headers) {
+    just_headers = FCH.setDefault(just_headers, false);
+
+    if(FCH.exists('.js-content-header')) {
+      var $header = $('.js-content-header');
+      var sidebar_top_offset = (parseInt( $header.css('height'), 10) + 20) + 'px';
+      $('#js-sidenav').css('padding-top',  sidebar_top_offset );
+
+      $header.sticky({
+        placeholder: true,
+        perpetual_placeholder: true
+      });
     } else {
       $('.main_content-header').sticky({
         placeholder: true
       });
     }
 
-    $('#js-sidenav').sticky();
+    if(!just_headers) {
+      $('#js-sidenav').sticky();
+    }
   },
 
 };

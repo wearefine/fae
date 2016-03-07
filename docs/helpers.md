@@ -411,6 +411,7 @@ Displays page title, add button and flash messages.
 | new_button | boolean | true | displays the add button |
 | button_text | string | "Add #{title.singularize}" | add button text |
 | csv | boolean | false | adds export to csv button |
+| breadcrumbs | boolean | true | display breadcrumb navigation before title |
 
 **Examples**
 

@@ -8,6 +8,13 @@
   position: absolute;
   left: 0;
 
+  &:after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: static;
+  }
+
   h1,
   .breadcrumbs {
     display: inline-block;
@@ -18,10 +25,6 @@
   h1 {
     padding: 5px 0;
     font-weight: bold;
-  }
-
-  ~ .content {
-    padding-top: $content-header-height;
   }
 }
 

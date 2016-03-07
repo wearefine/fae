@@ -123,7 +123,8 @@
 
 .content-header {
   ~ .main_content-sections {
-    padding-top: $content-header-height - 30px;
+    // height of content header minus 30
+    padding-top: 76px;
   }
 }
 
@@ -134,7 +135,7 @@
   @include bp(medium) {
     position: absolute;
     right: 30px;
-    bottom: 0;
+    bottom: 22px;
     margin-top: 0;
   }
 
@@ -390,13 +391,21 @@
   }
 
   .error {
-    @extend %alerts;
+    padding: 20px;
+    border-style: solid;
+    border-left-width: 3px;
     border-color: $c-warning-content;
     background: $c-warning-bg;
     color: $c-warning-content;
 
     &:before {
       @extend .icon-alert:before;
+      @include icon-stuff;
+      margin-right: 10px;
+    }
+
+    + .content.content {
+      padding-top: 0;
     }
   }
 }
