@@ -19,7 +19,7 @@ describe 'Global nav' do
       get fae_path
 
       nav_items = assigns[:fae_nav_items]
-      expect(nav_items.second[:text]).to eq('Releases')
+      expect(nav_items.second[:text]).to eq('Wines')
     end
   end
 

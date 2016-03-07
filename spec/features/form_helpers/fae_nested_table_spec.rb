@@ -6,7 +6,7 @@ feature 'fae_nested_table' do
     admin_login
     visit admin_selling_points_path
 
-    expect(page.find('.main_content-header-wrapper h1')).to have_content('Selling Points')
+    expect(page.find('.breadcrumbs li:last-child')).to have_content('Selling Points')
   end
 
   scenario 'should allow adding new items', js: true do
