@@ -20,6 +20,7 @@ Fae.navigation = {
     this.language.init();
     this.accordionClickEventListener();
     this.utilitySearch();
+    this.typeaheadSearch();
   },
 
   resize: function() {
@@ -245,6 +246,65 @@ Fae.navigation = {
         $this.find('input').focus();
       }
     });
+  },
+
+  /**
+   * Initialize the typeahead navigation in the header nav
+   */
+  typeaheadSearch: function() {
+    function onTypeaheadSelected(ev, data) {
+      window.location.href = data.path;
+    }
+
+    function onTypeaheadFocused() {
+      $(this).attr('placeholder', '');
+    }
+
+    function onTypeaheadBlur() {
+      if($(this).val() === '') {
+        $(this).attr('placeholder', 'Jump to...');
+      }
+    }
+
+    var sample_data = [
+      {
+        fae_display_field: 'Releases'
+      },
+      {
+        fae_display_field: 'Wines'
+      },
+      {
+        fae_display_field: 'Coaches'
+      }
+    ];
+
+    var models = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('fae_display_field'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      // prefetch: {
+      //   url: '/data/models.json',
+      //   ttl: 60000
+      // }
+      local: sample_data
+    });
+    models.initialize();
+
+    $('#js-all-search').typeahead(
+      {
+        hint: true,
+        highlight: true,
+        minLength: 2,
+        autoselect: true
+      },
+      {
+        name: 'models',
+        displayKey: 'fae_display_field',
+        source: models.ttAdapter()
+      }
+    )
+    .on('typeahead:selected', onTypeaheadSelected)
+    .on('typeahead:focused', onTypeaheadFocused)
+    .on('typeahead:blur', onTypeaheadBlur);
   },
 
   /**

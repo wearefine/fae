@@ -26,9 +26,16 @@
     &:hover {
       color: $c-text-sub-hover;
     }
+
+    &.grabatar-link {
+      padding-top: 23px;
+      padding-bottom: 23px;
+    }
   }
 
   li {
+    vertical-align: top;
+
     &:last-child {
       a {
         padding-right: 0;
@@ -68,19 +75,21 @@
     margin-left: 0;
   }
 
-  ul,
+  > ul,
   .utility-search-wrapper {
     font-weight: normal;
-    width: 150px;
     display: none;
     background: $c-header-dropdown-bg;
     position: absolute;
     top: 100%;
     right: 0;
-    padding: 8px 0;
     z-index: 2;
     font-size: 14px;
+  }
 
+  > ul {
+    width: 150px;
+    padding: 8px 0;
 
     a {
       padding: 7px 25px;
@@ -99,15 +108,55 @@
 
 .utility-search {
   input[type="text"] {
-    background: none;
-    margin: 0 auto;
-    width: 85%;
+    background: rgba($c-white, 0.2);
+    width: 100%;
     border: 0;
-    border-bottom: 1px solid $c-white;
-    color: $c-white;
+    border-radius: 4px;
+    display: block;
   }
 
   a {
     color: $c-white;
   }
+}
+
+.utility-search-wrapper {
+  padding: 14px 16px;
+  width: 270px;
+}
+
+/////////////////////////
+//     Typeahead       //
+/////////////////////////
+
+.twitter-typeahead {
+  // Overrides inline styles
+  display: block!important;
+}
+
+.tt-menu {
+  // Overrides inline styles
+  position: static!important;
+  margin-top: 10px;
+}
+
+.tt-suggestion {
+  color: $c-text-sub;
+  padding: 8px 10px;
+}
+
+.tt-cursor {
+  background: rgba($c-white, 0.1);
+}
+
+.tt-highlight {
+  color: $c-white;
+}
+
+.tt-input {
+  color: $c-white;
+}
+
+.tt-hint {
+  color: $c-text-sub;
 }

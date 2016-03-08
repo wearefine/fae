@@ -24,13 +24,13 @@
 //= require js.cookie
 //= require moment.min
 //= require jquery.daterangepicker
-//= require imagesloaded.pkgd.min
 //= require touch_punch
 //= require underscore
 //= require json2
 //= require judge
 //= require grinder
 //= require simplemde.min
+//= require typeahead.bundle
 
 //= require fae/judge_path
 //= require fae/extensions
