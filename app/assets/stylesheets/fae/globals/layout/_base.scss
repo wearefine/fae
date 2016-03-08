@@ -60,11 +60,24 @@
   font-size: 14px;
   color: $c-grey;
 
-  a {
+  span {
     display: inline-block;
     vertical-align: middle;
-    margin-left: 25px;
-    max-width: 35px;
+    margin-right: 25px;
+  }
+
+  a {
+    color: $c-grey;
+
+    &:hover {
+      color: $c-custom-highlight;
+    }
+  }
+
+  // SVG link
+  > a {
+    display: inline-block;
+    vertical-align: middle;
 
     &:hover {
       path {
@@ -73,13 +86,9 @@
     }
   }
 
-  span {
-    display: inline-block;
-    vertical-align: middle;
-  }
 
   svg {
-    max-width: 100%;
+    max-width: 35px;
     height: auto;
   }
 
