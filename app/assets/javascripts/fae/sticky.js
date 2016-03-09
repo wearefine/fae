@@ -86,7 +86,6 @@
     if (FCH.$window.scrollTop() >= this.dimensions.top) {
       if (this.options.placeholder) {
         this.$placeholder.show();
-        this.$el.css({ width: this.$placeholder.width() });
       }
 
       this.$el
