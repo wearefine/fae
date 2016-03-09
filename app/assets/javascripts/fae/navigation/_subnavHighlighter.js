@@ -14,7 +14,7 @@ Fae.navigation.subnavHighlighter = {
     if (FCH.exists('.main_content-header-section-links') || FCH.exists('.content-header-subnav')) {
       if(Fae.content_selector === '.content') {
         this.section_class = Fae.content_selector;
-        this.subnav_class = '.content-header-subnav';
+        this.subnav_class = '.js-content-header-subnav';
       } else {
         this.section_class = '.main_content-section';
         this.subnav_class = '.main_content-header-section-links';

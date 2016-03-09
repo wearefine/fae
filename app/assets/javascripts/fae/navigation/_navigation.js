@@ -131,7 +131,7 @@ Fae.navigation = {
     $el.addClass('-open');
 
     if(FCH.bp.large) {
-      $el.find('.sidenav-sub-nav').first().stop().slideDown();
+      $el.find('.js-subnav').first().stop().slideDown();
     }
   },
 
@@ -142,7 +142,7 @@ Fae.navigation = {
    */
   close: function($el) {
     if(FCH.bp.large) {
-      $el.find('.sidenav-sub-nav')
+      $el.find('.js-subnav')
         .first()
         .stop()
         .slideUp()
@@ -164,7 +164,7 @@ Fae.navigation = {
    */
   closeAll: function(nuclear) {
     var _this = this;
-    $('html').removeClass( 'menu-active' );
+    $('html').removeClass( 'mobile-active' );
 
     $('.js-accordion').each(function(){
       var $this = $(this);
@@ -183,13 +183,13 @@ Fae.navigation = {
   openDrawer: function() {
     var $html = $('html');
 
-    $('#js-sidenav-menu_button').click(function(e){
+    $('#js-mobilenav-toggle').click(function(e){
       e.preventDefault();
 
-      if ($html.hasClass( 'menu-active' )) {
+      if ($html.hasClass( 'mobile-active' )) {
         Fae.navigation.closeAll(true);
       } else {
-        $html.addClass( 'menu-active' );
+        $html.addClass( 'mobile-active' );
       }
     });
   },

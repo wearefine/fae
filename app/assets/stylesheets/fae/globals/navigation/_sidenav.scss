@@ -1,54 +1,25 @@
 .sidenav {
-  @extend %inset-nav-shadow;
-  @include transition($mobile-menu-transition);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: $sidenav_width;
-  height: 100%;
-  margin-left: negate($sidenav_width);
-  overflow: auto;
-  font-size: 15px;
+  position: absolute;
 
-  @include bp(large) {
-    position: absolute;
-    margin-left: 0;
+  @include bp(large-down) {
+    display: none;
   }
 
   a {
-    display: block;
-    color: $c-text;
-    position: relative;
-    padding: 15px 20px;
-
-    &:hover {
-      color: $c-nav-link;
-    }
-
-    @include bp(large) {
-      padding: 10px $sidenav-padding-base-level;
-    }
+    padding: 10px $sidenav-padding-base-level;
   }
 
   li {
     li {
       a {
         font-size: 13px;
-        padding-top: 7px;
-        padding-bottom: 7px;
-
-        @include bp(large) {
-          padding-left: $sidenav-padding-base-level + $sidenav-padding-one-level;
-          padding-right: $sidenav-padding-base-level + $sidenav-padding-one-level;
-        }
+        padding: 7px ($sidenav-padding-base-level + $sidenav-padding-one-level);
       }
 
       li {
         a {
-          @include bp(large) {
-            padding-left: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
-            padding-right: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
-          }
+          padding-left: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
+          padding-right: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
         }
       }
     }
@@ -67,7 +38,6 @@
   }
 
   &.-current {
-
     &:not(.-sub) {
       > a {
         padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
@@ -75,17 +45,14 @@
       }
     }
 
+    > ul {
+      display: block;
+    }
+
     > a,
     a.-current {
       font-weight: bold;
       color: $c-black;
-    }
-
-    // Expand nested accordions when the main nav is -current
-    > ul {
-      @include bp(large) {
-        display: block;
-      }
     }
   }
 
@@ -94,21 +61,14 @@
 
     &:after {
       @extend .icon-arrow_down:before;
-      font-size: 6px;
       top: 14px;
-
-      @include bp(large-down) {
-        top: 18px;
-        // overrides the up arrow on open at desktop
-        content: '\e615' !important;
-      }
+      font-size: 6px;
     }
   }
 
+  // Expand nested accordions when the main nav is -current
   ul {
-    @include bp(large) {
-      display: none;
-    }
+    display: none;
   }
 }
 
@@ -138,81 +98,5 @@
         @extend .icon-bars:before;
       }
     }
-  }
-}
-
-.sidenav-header-mobile {
-  @include bp(large) {
-    display: none;
-  }
-
-  a {
-    @extend %inset-nav-shadow;
-    @extend %nav-icon;
-    color: $c-dark_grey;
-    background: $c-lightest_grey;
-
-    &:after {
-      top: 15px;
-      right: 13px;
-      font-size: 16px;
-    }
-
-    &.-logout {
-      &:after {
-        @extend .icon-logout:before;
-      }
-    }
-
-    &.-settings {
-      &:after {
-        @extend .icon-settings:before;
-      }
-    }
-
-    &.-support {
-      &:after {
-        @extend .icon-support:before;
-      }
-    }
-
-    &.-viewsite {
-      &:after {
-        @extend .icon-offlink:before;
-      }
-    }
-  }
-}
-
-.header_drawer-content-username {
-  @extend %inset-nav-shadow;
-  display: block;
-  position: relative;
-  padding: 15px 10px 15px 20px;
-  cursor: pointer;
-  color: $c-black;
-  background: $c-lighter_grey;
-
-  @include bp(large) {
-    display: none;
-  }
-}
-
-.sidenav-menu_button {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 18px;
-  cursor: pointer;
-  color: $c-white;
-
-  @include bp(large) {
-    display: none;
-  }
-}
-
-.show--mobile {
-  @include bp(large) {
-    display: none;
   }
 }

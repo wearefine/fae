@@ -613,7 +613,7 @@ end
 * in the nested table arguments, instead of making the `parent_item` argument item virtual (which is just the instance of the `AboutUsPage`, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
 
 ```ruby
- section.main_content-section
+ section.content
   = render 'fae/shared/nested_table',
     assoc: :promos,
     parent_item: Fae::StaticPage.find_by_id(@item.id),

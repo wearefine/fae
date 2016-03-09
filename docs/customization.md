@@ -163,16 +163,15 @@ $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intr
 
 ## Language Nav Partial
 
-Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.main_content-header`:
+Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.content-header`:
 
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  section.main_content-header
-
+  section.content-header.js-content-header
+    
     == render 'fae/shared/language_nav'
 
-    .main_content-header-wrapper
     // ...
 ```
 
@@ -501,13 +500,11 @@ In your form view nest the optional fields, and add some classes for js and sass
 = simple_form_for(['admin', @item]) do |f|
   ...
 
-  .main_content-sections
-    section.main_content-section
-      .content
-        = fae_input f, :name
-        = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
-        .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")
-          = fae_input f, :slug, label_html: { class: 'is_required_and_hidden'}
+  .content
+    = fae_input f, :name
+    = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
+    .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")
+      = fae_input f, :slug, label_html: { class: 'is_required_and_hidden'}
 ```
 
 Update Judge so that judge loads your custom `EachValidtor` on the FE.

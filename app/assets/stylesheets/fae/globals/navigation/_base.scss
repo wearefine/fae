@@ -1,5 +1,5 @@
 .main-header {
-  @include transition($mobile-menu-transition);
+  @include transition($mobilenav-transition);
   position: fixed;
   top: 0;
   left: 0;
@@ -106,6 +106,30 @@
         color: $c-white;
         background: none;
       }
+    }
+  }
+}
+
+/////////////////////////////////////////////
+// Shared styles b/w mobilenav and sidenav //
+/////////////////////////////////////////////
+
+.nav {
+  @extend %inset-nav-shadow;
+  top: 0;
+  left: 0;
+  width: $sidenav_width;
+  height: 100%;
+  font-size: 15px;
+  overflow: auto;
+
+  a {
+    display: block;
+    color: $c-text;
+    position: relative;
+
+    &:hover {
+      color: $c-nav-link;
     }
   }
 }

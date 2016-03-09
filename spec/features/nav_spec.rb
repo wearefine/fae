@@ -46,7 +46,7 @@ feature 'Main Navigation' do
 
     expect(page).to_not have_selector('.sidenav a', text: 'Except Open To Another Drawer')
 
-    page.find('.sidenav-accordion a', text: 'Look This Drawer Does Nothing').click
+    page.find('.sidenav .nav-accordion a', text: 'Look This Drawer Does Nothing').click
 
     # Link is now visible
     expect(page).to have_selector('.sidenav a', text: 'Except Open To Another Drawer')
