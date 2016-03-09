@@ -12,7 +12,7 @@ html
   body class=body_class
     == render 'header'
     section.main-content#js-main-content
-      == render 'sidenav' if ['edit', 'new'].exclude?( params[:action] ) && user_signed_in?
+      == render 'sidenav' if ['index', 'home', 'pages'].include?(params[:action]) && user_signed_in?
       == yield
 
     .markdown-hint

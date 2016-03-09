@@ -14,17 +14,17 @@
     height: 100%;
   }
 
-  @include bp(large) {
-    padding-left: $sidenav_width;
-
-    .edit & {
-      padding-left: 0;
-    }
-  }
 }
 
 .content {
   padding: 30px $content-buffer 60px;
+
+  @include bp(large) {
+    .index &,
+    .home & {
+      padding-left: $sidenav_width + $content-buffer;
+    }
+  }
 
   &.-bottom-shim {
     padding-bottom: 150px;
@@ -54,6 +54,5 @@
 }
 
 .js-sticky-placeholder {
-  margin-left: -1px;
   visibility: hidden;
 }
