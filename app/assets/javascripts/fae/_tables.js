@@ -45,8 +45,6 @@ Fae.tables = {
     if (FCH.exists('form ' + Fae.content_selector)) {
       this.endingSelectShim(Fae.content_selector);
     }
-
-    this.addToTable();
   },
 
   /**
@@ -371,16 +369,5 @@ Fae.tables = {
     }
 
     $tables.each( applyOffset );
-  },
-
-  /**
-   * Scroll_to event for non-ajax'd table forms
-   */
-  addToTable: function() {
-    $('.table-add-link-visible').click('on', function(){
-      var $parent = $(this).closest('section');
-
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
-    });
   }
 };

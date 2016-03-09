@@ -41,15 +41,9 @@
   .valid {
     border: 1px solid $c-notice-content !important;
   }
+
   .invalid {
     border: 1px solid $c-error-content !important;
-  }
-
-  .editor-toolbar {
-    border-bottom: 0 !important;
-  }
-  .CodeMirror-wrap {
-    border-top-color: #ddd !important;
   }
 }
 
