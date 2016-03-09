@@ -66,14 +66,6 @@
     margin-right: 25px;
   }
 
-  a {
-    color: $c-grey;
-
-    &:hover {
-      color: $c-custom-highlight;
-    }
-  }
-
   // SVG link
   > a {
     display: inline-block;
