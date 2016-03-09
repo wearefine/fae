@@ -4,8 +4,7 @@
 
 // Project Specific breakpoints
 $breakpoints: (
-  'desktop':                ( min-width:  1100px ),
-  'mobile':                 ( max-width:  520px ),
+  // @depreciation - remove page_header_save_block in v2.0
   'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
   'login_submit':           ( min-width: 475px ),

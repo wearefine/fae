@@ -1,4 +1,4 @@
-nav.nav.sidenav#js-sidenav
+nav.nav.sidenav.js-nav#js-sidenav
   ul
     - @fae_nav_items.each do |item|
       ruby:
@@ -22,7 +22,6 @@ nav.nav.sidenav#js-sidenav
 
                 - if subitem[:sublinks].present?
                   ul.subnav.js-subnav
-                    li: span.js-mobile-back = subitem[:text]
                     - subitem[:sublinks].each do |thirditem|
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]

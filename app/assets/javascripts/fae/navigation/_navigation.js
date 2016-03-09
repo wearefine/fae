@@ -33,7 +33,7 @@ Fae.navigation = {
    */
   selectCurrentNavItem: function() {
     var current_base_url = window.location.pathname.replace('#', '');
-    var $currentLink = $('#js-sidenav a[href="' + current_base_url + '"]');
+    var $currentLink = $('.js-nav a[href="' + current_base_url + '"]');
 
     /**
      * Apply current nav class or keep looking deeper from path for the answer
@@ -47,7 +47,7 @@ Fae.navigation = {
       url_array.pop();
       mutated_url = url_array.join('/');
 
-      var $currentLink = $('#js-sidenav a[href="' + mutated_url + '"]');
+      var $currentLink = $('.js-nav a[href="' + mutated_url + '"]');
       if ($currentLink.length) {
         $currentLink.addClass('-current');
 
@@ -289,7 +289,7 @@ Fae.navigation = {
     });
     models.initialize();
 
-    $('#js-all-search').typeahead(
+    $('#js-search').typeahead(
       {
         hint: true,
         highlight: true,
@@ -320,6 +320,7 @@ Fae.navigation = {
    */
   stickyHeaders: function(just_headers) {
     just_headers = FCH.setDefault(just_headers, false);
+
 
     if(FCH.exists('.js-content-header')) {
       var $header = $('.js-content-header');

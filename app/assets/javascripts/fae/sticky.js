@@ -142,6 +142,14 @@
 
       _this.stickIt();
     });
+
+    if (this.options.placeholder) {
+      function resizePlaceholder() {
+        _this.$placeholder.css( 'height', _this.$el.outerHeight() );
+      }
+
+      FCH.resize.push( resizePlaceholder );
+    }
   };
 
   /**

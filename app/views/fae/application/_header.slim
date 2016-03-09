@@ -25,16 +25,6 @@ header.main-header#js-main-header
 
   - if user_signed_in?
     ul.utility-nav#js-utility-nav
-      li class="#{'utility-dropdown js-utility-dropdown' if @option.stage_url.present?}"
-        a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
-          | Website
-        - if @option.stage_url.present?
-          ul
-            li: a href=@option.live_url target="_blank" Live Site
-            li: a href=@option.stage_url target="_blank" Stage Site
-
-      li: a href=fae.help_path Help
-
       li.utility-dropdown.js-utility-dropdown
         a.grabatar-link href="#"
           / TODO - grabatar here
@@ -43,8 +33,20 @@ header.main-header#js-main-header
           li: a href=fae.destroy_user_session_path Log Out
           li: a href=fae.settings_path Your Settings
 
+      li
+        a href=fae.help_path
+          i.icon-support
+
+      li class="#{'utility-dropdown js-utility-dropdown' if @option.stage_url.present?}"
+        a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
+          i.icon-settings
+        - if @option.stage_url.present?
+          ul
+            li: a href=@option.live_url target="_blank" Live Site
+            li: a href=@option.stage_url target="_blank" Stage Site
+
       li.utility-dropdown.utility-search.js-utility-dropdown#js-utility-search
         a href="#": i.icon-search
 
         .utility-search-wrapper
-          input#js-all-search type="text"
+          input#js-search type="text"
