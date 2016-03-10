@@ -11,7 +11,7 @@ main.content
 <% num_columns += 1 -%>
 <% end -%>
         th <%= @display_field.present? ? @display_field.capitalize : 'Name' %>
-        th Modified
+        th.-modified Modified
 <% @toggle_attrs.each do |attr| -%>
         th.-live data-sorter="false" <%= attr.humanize %>
 <% num_columns += 1 -%>
