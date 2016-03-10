@@ -18,11 +18,11 @@ main.content
         th Modified
         th Slug
         th Price
-        th.-live[data-sorter="false"] On Stage
-        th.-live[data-sorter="false"] On Prod
-        th.-edit[data-sorter="false"] Edit
-        th.-clone[data-sorter="false"] Clone
-        th.-delete[data-sorter="false"] Delete
+        th.-live data-sorter="false" On Stage
+        th.-live data-sorter="false" On Prod
+        th.-edit data-sorter="false" Edit
+        th.-clone data-sorter="false" Clone
+        th.-delete data-sorter="false" Delete
     tbody
       - if @items.present?
         - @items.each do |item|
