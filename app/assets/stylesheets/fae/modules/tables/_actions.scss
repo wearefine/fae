@@ -45,7 +45,8 @@ th {
     width: 80px;
   }
 
-  &.-edit {
+  &.-edit,
+  &.-clone {
     width: 65px;
   }
 }
