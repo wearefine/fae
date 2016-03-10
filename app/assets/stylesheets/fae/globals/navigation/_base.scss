@@ -115,7 +115,6 @@
 /////////////////////////////////////////////
 
 .nav {
-  @extend %inset-nav-shadow;
   top: 0;
   left: 0;
   width: $sidenav_width;

@@ -1,7 +1,3 @@
-%inset-nav-shadow {
-  box-shadow: -15px 0 15px -15px $c-box_shadow;
-}
-
 %gray-button {
   @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
   border-radius: 3px;

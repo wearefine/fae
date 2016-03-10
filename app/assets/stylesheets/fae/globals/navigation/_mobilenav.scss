@@ -18,7 +18,7 @@
     margin-left: negate($sidenav_width);
     overflow: auto;
     padding: 0 5px 10px 0;
-    background: image-url('fae/bg_tile.gif');
+    background: $c-body-bg;
   }
 
   .sidenav-admin {
@@ -55,7 +55,6 @@
 }
 
 .mobilenav-subheader {
-  @extend %inset-nav-shadow;
   margin-bottom: 0;
   display: block;
   padding: 15px 20px;
@@ -112,7 +111,6 @@
 
 .mobilenav-user {
   a {
-    @extend %inset-nav-shadow;
     @extend %nav-icon;
     color: $c-dark_grey;
     background: $c-lightest_grey;
@@ -150,7 +148,6 @@
 }
 
 .mobilenav-user-header {
-  @extend %inset-nav-shadow;
   display: block;
   position: relative;
   padding: 15px 10px 15px 20px;
