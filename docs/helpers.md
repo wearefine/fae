@@ -364,13 +364,19 @@ fae_toggle item, :on_prod
 
 ## fae_clone_button
 
-You can use fae_clone_button in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
+You can use `fae_clone_button` in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
 
 ```ruby
 fae_clone_button item
 ```
 
-More info about cloning can be found here: [cloning.md](cloning.md)
+## fae_delete_button
+
+You can use `fae_delete_button` in your list view tables to provide easy access to delete an item.
+
+```ruby
+fae_delete_button item
+```
 
 ## form_header
 
