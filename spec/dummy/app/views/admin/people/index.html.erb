@@ -27,11 +27,7 @@
               <td class="main_table-modified"><%= fae_date_format item.updated_at %></td>
               <td><%= fae_toggle item, :on_stage %></td>
               <td><%= fae_toggle item, :on_prod %></td>
-              <td class="-delete">
-                <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
-                  <span class="icon-delete_x"></span>
-                <% end %>
-              </td>
+              <td class="-delete"><%= fae_delete_button item %></td>
             </tr>
           <% end %>
         </tbody>
