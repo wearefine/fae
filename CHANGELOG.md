@@ -8,6 +8,7 @@
     + \#55211: Change wording of "Replace Image" to be "Remove Image"
     + \#55188: Add version and GitHub icon to footer on all pages
     + \#54556: Add confirm dialogue before cloning
+    + Add `fae_delete_button` helper method
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
