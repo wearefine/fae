@@ -15,6 +15,7 @@ Fae.tables = {
    * @see {@link tables.defaultSortCookie}
    * @see {@link tables.columnSorting}
    * @see {@link tables.sortColumnsFromCookies}
+   * @depreciation remove sort_selector conditionals in v2.0
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
@@ -26,8 +27,13 @@ Fae.tables = {
       this.sortColumnsFromCookies();
     }
 
-    if (FCH.exists('.main_content-sortable')) {
-      this.rowSorting();
+    var sort_selector = '.sortable-handle';
+    if (!FCH.exists(sort_selector)) {
+      sort_selector = '.main_content-sortable-handle';
+    }
+
+    if (FCH.exists(sort_selector)) {
+      this.rowSorting(sort_selector);
     }
 
     if (FCH.exists('.sticky-table-header')) {
@@ -38,8 +44,8 @@ Fae.tables = {
       this.collapsibleTable();
     }
 
-    if (FCH.exists('form .main_content-section-area')) {
-      this.endingSelectShim();
+    if (FCH.exists('form ' + Fae.content_selector)) {
+      this.endingSelectShim(Fae.content_selector);
     }
 
     this.addToTable();
@@ -145,12 +151,16 @@ Fae.tables = {
 
   /**
    * Make table rows draggable by user
+   * @param {String} sort_selector - handle selector
+   * @depreciation remove sort_selector arg in v2.0
    */
-  rowSorting: function() {
-    $('.main_content-sortable').sortable({
+  rowSorting: function(sort_selector) {
+    var content_selector = '.main_content-sortable';
+
+    $(content_selector).sortable({
       items: 'tbody tr',
       opacity: 0.8,
-      handle: ('.main_content-sortable-handle'),
+      handle: (sort_selector),
 
       //helper funciton to preserve the width of the table row
       helper: function(e, $tr) {
@@ -253,9 +263,11 @@ Fae.tables = {
 
   /**
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
+   * @param {String} selector - Last of type element to target
+   * @deprecation remove selector arg in v2.0
    */
-  endingSelectShim: function() {
-    $('form .main_content-section-area:last-of-type').each(function() {
+  endingSelectShim: function(selector) {
+    $('form ' + selector + ':last-of-type').each(function() {
       var $last_item = $(this).find('.input:last-of-type');
 
       if( $last_item.hasClass('select') ) {
@@ -328,7 +340,7 @@ Fae.tables = {
   sizeFixedHeader: function($this) {
     var headerHeight = $('.main_content-header').outerHeight();
     if(FCH.large_down) {
-      headerHeight = $('#main_header').outerHeight();
+      headerHeight = $('#js-main-header').outerHeight();
     }
 
     var tableOffset = $this.offset().top - headerHeight;

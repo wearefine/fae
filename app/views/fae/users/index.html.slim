@@ -6,29 +6,27 @@ section.main_content-header
 
 == render 'flash_messages'
 
-.main_content-sections
-  section.main_content-section
-    .main_content-section-area
-      table.main_table-sort_columns.index_table
-        thead
-          tr
-            th Name
-            th Email
-            th Role
-            th Last Logged In
-            th.main_table-header-live data-sorter="false" Active
-            th.main_table-header-delete data-sorter="false" Delete
+main.content
+  table.main_table-sort_columns
+    thead
+      tr
+        th Name
+        th Email
+        th Role
+        th Last Logged In
+        th.-live data-sorter="false" Active
+        th.-delete data-sorter="false" Delete
 
-        tbody
-          - @users.each do |user|
-            tr id="fae_user_#{user.id}"
-              td.main_table-description-item
-                a href=edit_user_path(user) #{user.first_name} #{user.last_name}
-              td = user.email
-              td = user.role.name
-              td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
-              td = attr_toggle user, :active unless current_user == user
-              td.main_table-delete
-                - unless current_user == user
-                  = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action'
-                    span.icon-delete_x
+    tbody
+      - @users.each do |user|
+        tr id="fae_user_#{user.id}"
+          td.main_table-description-item
+            a href=edit_user_path(user) #{user.first_name} #{user.last_name}
+          td = user.email
+          td = user.role.name
+          td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
+          td = attr_toggle user, :active unless current_user == user
+          td.-delete
+            - unless current_user == user
+              = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action'
+                span.icon-delete_x

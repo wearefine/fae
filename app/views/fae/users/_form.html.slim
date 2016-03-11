@@ -14,13 +14,11 @@
         a#main_content-header-save-cancel href=cancel_path Cancel
         = f.submit "Save Settings"
 
-  .main_content-section
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :first_name
-        = fae_input f, :last_name
-        = fae_input f, :email
-        = fae_input f, :password, helper_text: 'To update your password, fill out the fields below. Otherwise leave blank. Passwords must contain at least 8 characters.'
-        = fae_input f, :password_confirmation
-        - if current_user.admin? || current_user.super_admin?
-          = fae_association f, :role, collection: @role_collection
+  main.content
+    = fae_input f, :first_name
+    = fae_input f, :last_name
+    = fae_input f, :email
+    = fae_input f, :password, helper_text: 'To update your password, fill out the fields below. Otherwise leave blank. Passwords must contain at least 8 characters.'
+    = fae_input f, :password_confirmation
+    - if current_user.admin? || current_user.super_admin?
+      = fae_association f, :role, collection: @role_collection

@@ -5,13 +5,11 @@
       == render 'fae/shared/form_buttons'
   == render 'fae/shared/errors'
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
+  section.content
 <% @form_attrs.each do |attr| -%>
-        = fae_input f, :<%= attr %>
+    = fae_input f, :<%= attr %>
 <% end -%>
 
 <% @association_names.each do |attr| -%>
-        = fae_association f, :<%= attr %>
+    = fae_association f, :<%= attr %>
 <% end -%>

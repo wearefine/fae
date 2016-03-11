@@ -1,0 +1,71 @@
+.main_table-clone {
+  text-align: center;
+}
+
+.main_table-action {
+  @include transition(border-color .2s);
+  display: inline-block;
+  padding: 5px;
+  border: 2px solid $c-table-td;
+
+  &:hover {
+    border-color: $c-border;
+  }
+
+  &.main_table-clone {
+    display: block;
+    width: 34px;
+    margin: 0 auto;
+  }
+
+  .icon-edit {
+    font-size: 15px;
+  }
+
+}
+
+th {
+  &.-modified,
+  &.-live,
+  &.-delete,
+  &.-edit,
+  &.-clone {
+    text-align: center;
+  }
+
+  &.-modified {
+    width: 200px;
+  }
+
+  &.-delete {
+    width: 90px;
+  }
+
+  &.-live {
+    width: 80px;
+  }
+
+  &.-edit {
+    width: 65px;
+  }
+}
+
+td {
+  &.-edit,
+  &.-delete {
+    width: 1px;
+    text-align: center;
+
+    a {
+      color: $c-text-sub;
+
+      &:hover {
+        color: $c-text;
+      }
+    }
+  }
+}
+
+.main_content-thumb-col {
+  width: 150px;
+}

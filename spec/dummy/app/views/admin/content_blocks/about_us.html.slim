@@ -4,14 +4,12 @@
       == render 'fae/shared/form_header', header: @item
       == render 'fae/shared/form_buttons', f: f
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :title
+  section.content
+    = fae_input f, :title
 
-        = fae_content_form f, :header, input_options: { wrapper_html: { class: 'hidden' } }
-        = fae_content_form f, :introduction, markdown: true, input_options: { input_html: { class: 'js-intro-field' } }
-        = fae_content_form f, :body, markdown_supported: true
-        = fae_image_form f, :header_image
+    = fae_content_form f, :header, input_options: { wrapper_html: { class: 'hidden' } }
+    = fae_content_form f, :introduction, markdown: true, input_options: { input_html: { class: 'js-intro-field' } }
+    = fae_content_form f, :body, markdown_supported: true
+    = fae_image_form f, :header_image
 
 == render 'fae/shared/recent_changes'

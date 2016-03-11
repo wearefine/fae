@@ -1,28 +1,24 @@
 = render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}"
 
-.main_content-sections
-  section.main_content-section
-    .main_content-section-area
-      table.index_table.main_content-sortable
-        thead
-          tr
-            th.main_content-sortable-handle-col
-            th Name
-            th Modified
-            th.main_table-header-live data-sorter="false" On Stage
-            th.main_table-header-live data-sorter="false" On Prod
-            th.main_table-header-delete data-sorter="false" Delete
+main.content
+  table.main_content-sortable
+    thead
+      tr
+        th.th-sortable-handle
+        th Name
+        th Modified
+        th.-live data-sorter="false" On Stage
+        th.-live data-sorter="false" On Prod
+        th.-delete data-sorter="false" Delete
 
-        tbody
-          - @items.each do |item|
-            tr id="#{@klass_singular}_#{item.id}"
-              td.main_content-sortable-handle
-                span.icon-sort
-              td.main_table-description-item
-                = link_to item.fae_display_field, edit_admin_wine_path(item)
-              td = fae_date_format item.updated_at
-              td = fae_toggle item, :on_stage
-              td = fae_toggle item, :on_prod
-              td.main_table-delete
-                = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
-                  span.icon-delete_x
+    tbody
+      - @items.each do |item|
+        tr id="#{@klass_singular}_#{item.id}"
+          td.sortable-handle
+            span.icon-sort
+          td.main_table-description-item
+            = link_to item.fae_display_field, edit_admin_wine_path(item)
+          td = fae_date_format item.updated_at
+          td = fae_toggle item, :on_stage
+          td = fae_toggle item, :on_prod
+          td.-delete = fae_delete_button item

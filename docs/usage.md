@@ -520,7 +520,7 @@ end
 
   .main_content-sections
     section.main_content-section
-      .main_content-section-area
+      .content
         = fae_input f, :title
 
         = fae_image_form f, :hero_image

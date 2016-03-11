@@ -1,0 +1,61 @@
+* {
+  // -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba($c-black, 0);
+  // scss-lint:disable DuplicateProperty
+  -webkit-tap-highlight-color: transparent;
+
+  &,
+  &:before,
+  &:after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  // scss-lint:disable DuplicateProperty
+  font-size: 100%;
+  font-size: remCalc(16px);
+  height: 100%;
+}
+
+body {
+  @include transition($mobile-menu-transition);
+  padding-top: 55px;
+  height: 100%;
+  font-family: $f-lato;
+  font-size: 16px;
+  color: $c-text;
+  background: $c-body-bg;
+
+  @include bp(large) {
+    padding-top: 0;
+  }
+}
+
+a {
+  @include transition(color .2s);
+  color: $c-custom-highlight;
+  text-decoration: none;
+
+  &:hover {
+    color: $c-text;
+  }
+}
+
+h1 {
+  font-size: 30px;
+  color: $c-text-heavy;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

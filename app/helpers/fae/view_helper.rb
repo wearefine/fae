@@ -49,6 +49,13 @@ module Fae
       end
     end
 
+    def fae_delete_button(item)
+      return if item.blank?
+      link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
+        concat content_tag :span, nil, class: 'icon-delete_x'
+      end
+    end
+
     def fae_filter_form(options = {}, &block)
       options[:collection] ||= @items
       options[:action]     ||= "#{@index_path}/filter"
@@ -62,7 +69,7 @@ module Fae
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
       filter_header = content_tag(:div, class: 'table-filter-header') do
-        concat content_tag :h2, options[:title]
+        concat content_tag :h4, options[:title]
         concat filter_search_field if options[:search]
       end
 

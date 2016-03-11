@@ -1,0 +1,87 @@
+// notices
+%alerts {
+  padding: 20px;
+  border-style: solid;
+  border-left-width: 3px;
+  margin-bottom: 10px;
+
+  &:before {
+    @include icon_stuff;
+    margin-right: 10px;
+  }
+}
+
+%inset-nav-shadow {
+  box-shadow: -15px 0 15px -15px $c-box_shadow;
+}
+
+%main_nav-all_links {
+  @include transition(background .2s);
+  display: block;
+  color: $c-text;
+
+  &:hover {
+    color: $c-nav-link;
+    background: $c-nav-bg-hover;
+  }
+}
+
+// Inputs with icon
+%input-symbol {
+  position: absolute;
+  bottom: 0;
+  border: 0 solid $c-lightest_grey;
+  padding: 14px 16px 13px;
+  margin-bottom: 1px;
+  font-size: 14px;
+  color: $c-light_grey;
+}
+
+%gray-button {
+  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+  border-radius: 3px;
+  color: $c-form-button;
+  border: 1px solid $c-border;
+  padding: 11px 14px;
+
+  &:hover {
+    background: $c-form-button-gradient-hover;
+  }
+}
+
+%table-reset {
+  table {
+    table-layout: initial;
+    border-collapse: inherit;
+    border: initial;
+  }
+
+  td {
+    border: initial;
+
+    &,
+    &:hover {
+      border-left: initial;
+    }
+  }
+
+  tbody {
+    tr {
+      &,
+      &:nth-child(even) {
+        &,
+        &:hover {
+          background: initial;
+          border-left: initial;
+
+          td {
+            &,
+            &:first-child {
+              border-left: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+}

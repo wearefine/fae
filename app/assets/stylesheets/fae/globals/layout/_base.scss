@@ -1,0 +1,91 @@
+// Structural elements for pagesss
+
+.main-content {
+  position: relative;
+  min-height: 100%;
+  min-height: calc(100% - 90px); // roughly the size of the header
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: $main_nav_width - 10px;
+    top: 0;
+    width: 10px;
+    height: 100%;
+  }
+
+  @include bp(large) {
+    padding-left: $main_nav_width;
+  }
+}
+
+.content {
+  padding: 30px $g-content-buffer 60px;
+
+  &.-bottom-shim {
+    padding-bottom: 150px;
+  }
+
+  h2 {
+    @include secondary-header;
+  }
+
+  h3 {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 15px;
+    color: $c-text-heavy;
+    margin-bottom: 20px;
+  }
+}
+
+.js-sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1005;
+  border-bottom: 1px solid $c-border;
+  opacity: .95;
+}
+
+.js-sticky-placeholder {
+  margin-left: -1px;
+  visibility: hidden;
+}
+
+.main-footer {
+  padding: 10px $g-content-buffer 30px;
+  text-align: right;
+  font-size: 14px;
+  color: $c-grey;
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 25px;
+  }
+
+  // SVG link
+  > a {
+    display: inline-block;
+    vertical-align: middle;
+
+    &:hover {
+      path {
+        fill: $c-custom-highlight;
+      }
+    }
+  }
+
+
+  svg {
+    max-width: 35px;
+    height: auto;
+  }
+
+  path {
+    @include transition(fill 0.2s);
+    fill: $c-grey;
+  }
+}

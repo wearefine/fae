@@ -33,22 +33,71 @@
 // DATEPICKER
 // DatePicker Container
 .ui-datepicker {
+  @extend %table-reset;
   width: 216px;
   height: auto;
   margin: 5px auto 0;
   font: 9pt Arial, sans-serif;
-
-  @include box-shadow(0, 0, 10px, 0, $c-box_shadow);
+  box-shadow: 0 0 10px 0 $c-box_shadow;
 
   a {
     text-decoration: none;
   }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    @include gradient-vertical($start-color: $c-almost_white, $end-color: $c-content-header-bg);
+    background-color: $c-almost_white;
+    border-bottom: 1px solid $c-border;
+  }
+
+  th {
+    text-transform: uppercase;
+    font-size: 6pt;
+    padding: 5px 0;
+    color: $c-grey;
+    text-align: center;
+    background: none;
+    font-weight: normal;
+  }
+
+  tbody {
+    td {
+      padding: 0;
+      border-right: 1px solid $c-border;
+
+      &:last-child {
+        border-right: 0px;
+      }
+    }
+
+    tr {
+      border-bottom: 1px solid $c-border;
+
+      &:last-child {
+        border-bottom: 0px;
+      }
+    }
+  }
+
+  td {
+    span,
+    a {
+      display: inline-block;
+      font-weight: bold;
+      text-align: center;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      color: $c-grey;
+    }
+  }
 }
 
-// DatePicker Table
-.ui-datepicker table {
-  width: 100%;
-}
 
 .ui-datepicker-header {
   background: $c-black;
@@ -59,7 +108,7 @@
   border-style: solid;
   border-color: $c-border;
 
-  @include box-shadow(0, 1px, 1px, 0, $c-box_shadow);
+  box-shadow: 0 1px 1px 0 $c-box_shadow;
 }
 
 .ui-datepicker-title {
@@ -84,7 +133,7 @@
   float: left;
 
   &:before {
-    @include icon-stuff();
+    @include icon_stuff;
     @extend .icon-chevron_left:before;
   }
 }
@@ -93,84 +142,57 @@
   float: right;
 
   &:before {
-    @include icon-stuff();
     @extend .icon-chevron_right:before;
+    @include icon_stuff;
   }
 }
 
-.ui-datepicker thead {
-  background-color: $c-almost_white;
-  @include gradient-vertical($start-color: $c-almost_white, $end-color: $c-content-header-bg);
-  border-bottom: 1px solid $c-border;
-}
-
-.ui-datepicker th {
-  text-transform: uppercase;
-  font-size: 6pt;
-  padding: 5px 0;
-  color: $c-grey;
-}
-
-.ui-datepicker tbody td {
-  padding: 0;
-  border-right: 1px solid $c-border;
-}
-
-.ui-datepicker tbody td:last-child {
-  border-right: 0px;
-}
-
-.ui-datepicker tbody tr {
-  border-bottom: 1px solid $c-border;
-}
-
-.ui-datepicker tbody tr:last-child {
-  border-bottom: 0px;
-}
-
-.ui-datepicker td span, .ui-datepicker td a {
-  display: inline-block;
-  font-weight: bold;
-  text-align: center;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  color: $c-grey;
-}
-
 .ui-datepicker-calendar .ui-state-default {
-  background: $c-lightest_grey;
   @include gradient-vertical($start-color: $c-lightest_grey, $end-color:$c-nav-sub-bg-active);
-  @include box-shadow(1px, 1px, 0, 0, $c-box_shadow);
+  background-color: $c-lightest_grey;
+  box-shadow: 1px 1px 0 0 $c-box_shadow;
 }
 
-.ui-datepicker-calendar .ui-state-hover {
-  color: $c-custom-highlight;
-}
+.ui-datepicker-calendar {
+  .ui-state-hover {
+    color: $c-custom-highlight;
+  }
 
-.ui-datepicker-calendar .ui-state-active {
-  background: $c-custom-highlight;
-  color: $c-white;
-  position: relative;
+  .ui-state-active {
+    background: $c-custom-highlight;
+    color: $c-white;
+    position: relative;
+  }
+
+  td {
+    &:first-child {
+      .ui-state-active {
+        width: 29px;
+        margin-left: 0;
+      }
+    }
+
+    &:last-child {
+      .ui-state-active {
+        width: 29px;
+        margin-right: 0;
+      }
+    }
+  }
+
+  tr {
+    &:last-child {
+      .ui-state-active {
+        height: 29px;
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 .ui-datepicker-unselectable .ui-state-default {
   background: $c-almost_white;
   color: $c-lighter_grey;
-}
-
-.ui-datepicker-calendar td:first-child .ui-state-active {
-  width: 29px;
-  margin-left: 0;
-}
-.ui-datepicker-calendar td:last-child .ui-state-active {
-  width: 29px;
-  margin-right: 0;
-}
-
-.ui-datepicker-calendar tr:last-child .ui-state-active {
-  height: 29px;
-  margin-bottom: 0;
 }
 
 .datepicker {
@@ -179,11 +201,12 @@
 
   input[type=text] {
     padding-right: 50px;
+    width: 100%;
   }
 
   label:before {
-    @include icon-stuff();
     @extend .icon-calendar:before;
+    @include icon_stuff;
     position: absolute;
     right: 20px;
     bottom: 0;
@@ -200,45 +223,60 @@
 }
 
 .date-picker-wrapper {
-  @include box-shadow(0, 0, 10px, 0, $c-box_shadow);
+  @extend %table-reset;
+  box-shadow: 0 0 10px 0 $c-box_shadow;
   background: $c-border;
   font-family: inherit;
   padding: 0;
   width: 380px;
   border: 0;
   margin-top: 5px;
+
   &.no-shortcuts {
     padding-bottom: 0;
   }
+
+  th {
+    background: none;
+    color: inherit;
+  }
+
   .month-wrapper {
     background-color: $c-border;
     border: 0;
     padding: 0;
+
     table {
       table-layout: fixed;
       font-weight: bold;
+
       .caption {
         background: $c-black;
         color: $c-white;
         height: 30px;
         font-weight: bold;
+
         .prev,
         .next {
-          @include icon-stuff();
+          @include icon_stuff;
           color: $c-black;
+
           &:hover {
             background: none;
+
             &:before {
               color: $c-grey;
             }
           }
         }
+
         .next {
           &:before {
             @extend .icon-chevron_right:before;
             color: $c-white;
           }
         }
+
         .prev {
           &:before {
             @extend .icon-chevron_left:before;
@@ -246,37 +284,44 @@
           }
         }
       }
+
       .week-name {
         background: $c-white;
         border-bottom: 1px solid $c-border;
         color: $c-black;
         line-height: 1;
         font-weight: 400;
+
         th {
           font-size: 6pt;
           text-transform: uppercase;
           color: $c-grey;
         }
       }
+
       .day {
         @include gradient-vertical($start-color: $c-lightest_grey, $end-color:$c-nav-sub-bg-active);
         height: 30px;
         padding: 6px;
         border-right: 1px solid $c-border;
+
         &.lastMonth,
         &.nextMonth {
           background: $c-white;
           color: $c-border;
         }
+
         &.checked,
         &.toMonth.valid.checked {
           background: $c-custom-highlight;
           color: $c-white;
         }
+
         &.real-today.checked {
           background: $c-custom-highlight;
         }
       }
+
       div.day {
         &.lastMonth,
         &.nextMonth {
@@ -285,9 +330,11 @@
       }
     }
   }
+
   .drp_top-bar {
     display: none;
   }
+
   .gap {
     display: none !important; //overrides JS display: block;
   }
