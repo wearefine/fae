@@ -383,4 +383,5 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
+  add_foreign_key "winemakers", "wines"
 end
