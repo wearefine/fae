@@ -12,15 +12,13 @@ module Fae
       attribute = params[:col]
       attributes = params[:cols]
       item = params[:item]
-      edit_path = params[:edit_path]
-      edit_column = params[:edit_column]
 
       attribute = (attribute.is_a?(Hash) && attribute[:attr]) ? attribute[:attr] : attribute
       first_attribute = (attributes.first.kind_of?(Hash) && attributes.first[:attr]) ? attributes.first[:attr] : attributes.first
 
-      if attribute == first_attribute && !edit_column
+      if attribute == first_attribute && !params[:edit_column]
         content_tag(:td, class: 'main_table-description-item') do
-          content_tag(:a, class: 'js-edit-link', href: self.send(edit_path, item)) do
+          content_tag(:a, class: 'js-edit-link', href: self.send(params[:edit_path], item)) do
             col_name_or_image(item, attribute)
           end
         end

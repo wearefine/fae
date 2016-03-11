@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160116015621) do
+ActiveRecord::Schema.define(version: 20160311225043) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20160116015621) do
     t.text     "description", limit: 65535
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
+    t.integer  "aroma_id",    limit: 4
   end
 
   create_table "coaches", force: :cascade do |t|
@@ -307,6 +308,17 @@ ActiveRecord::Schema.define(version: 20160116015621) do
     t.datetime "updated_at"
   end
 
+  create_table "tasting_notes", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.boolean  "active"
+    t.integer  "position",   limit: 4
+    t.integer  "release_id", limit: 4
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
+
   create_table "teams", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "city",       limit: 255
@@ -371,5 +383,4 @@ ActiveRecord::Schema.define(version: 20160116015621) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
-  add_foreign_key "winemakers", "wines"
 end
