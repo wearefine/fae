@@ -125,7 +125,7 @@
     <%= render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,
-      cols: [:name, :live],
+      cols: [{ attr: :name, title: 'Pew Pew' }, :live, :image],
       ordered: true,
       header: 'Aromas (nested table)' %>
   </section>
