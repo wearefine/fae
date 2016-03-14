@@ -18,11 +18,11 @@ main.content
         th Modified
         th Slug
         th Price
-        th.-live[data-sorter="false"] On Stage
-        th.-live[data-sorter="false"] On Prod
-        th.-edit[data-sorter="false"] Edit
-        th.-clone[data-sorter="false"] Clone
-        th.-delete[data-sorter="false"] Delete
+        th.-live data-sorter="false" On Stage
+        th.-live data-sorter="false" On Prod
+        th.-edit data-sorter="false" Edit
+        th.-clone data-sorter="false" Clone
+        th.-delete data-sorter="false" Delete
     tbody
       - if @items.present?
         - @items.each do |item|
@@ -38,8 +38,6 @@ main.content
               a.main_table-action href=edit_admin_release_path(item)
                 span.icon-edit
             td = fae_clone_button item
-            td.-delete
-              = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
-                span.icon-delete_x
+            td.-delete = fae_delete_button item
       - else
         tr: td colspan="9" No items found
