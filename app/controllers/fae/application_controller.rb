@@ -40,10 +40,11 @@ module Fae
       @fae_topnav_items = []
       @fae_sidenav_items = []
       fae_navigation = Fae::Navigation.new
+      @fae_navigation_items = fae_navigation.structure
 
       if Fae.has_top_nav
         # top nav is enabled, set top and side navs from Fae::Navigation
-        @fae_topnav_items = fae_navigation.structure
+        @fae_topnav_items = @fae_navigation_items
         # sidenav logic here
         @fae_sidenav_items = fae_navigation.current_sidenav request.path
       elsif nav_items.defined? && nav_items.present?
