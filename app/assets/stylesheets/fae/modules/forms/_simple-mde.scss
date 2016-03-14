@@ -1,8 +1,9 @@
 .input {
   .editor-toolbar {
+    @include transition(border-color .2s);
     opacity: 1;
     border-color: $c-lighter_grey;
-    @include transition(border-color .2s);
+    border-bottom: 0;
 
     a {
       opacity: .6;
@@ -10,12 +11,14 @@
   }
 
   .CodeMirror-wrap {
-    border-color: $c-lighter_grey;
     @include transition(border-color .2s);
+    border-color: $c-lighter_grey;
+    border-top-color: #ddd; // TODO use a SCSS variable
   }
 
   &.mde-focus {
-    .editor-toolbar, .CodeMirror-wrap {
+    .CodeMirror-wrap,
+    .editor-toolbar {
       border-color: $c-custom-highlight;
     }
   }

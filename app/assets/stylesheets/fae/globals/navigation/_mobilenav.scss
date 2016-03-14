@@ -1,0 +1,157 @@
+.mobilenav {
+  @include transition($mobilenav-transition);
+  position: fixed;
+  margin-left: negate($sidenav_width);
+
+  a {
+    // Right padding prevents text from running over arrow
+    padding: 12px 35px 12px 20px;
+  }
+
+  .subnav {
+    @include transition($mobilenav-transition);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: $sidenav_width;
+    height: 100%;
+    margin-left: negate($sidenav_width);
+    overflow: auto;
+    padding: 0 5px 10px 0;
+    background: $c-body-bg;
+  }
+
+  .sidenav-admin {
+    a {
+      &:after {
+        right: 20px;
+      }
+    }
+  }
+}
+
+.mobilenav-accordion {
+  > a {
+    @extend %nav-icon;
+
+    &:after {
+      @extend .icon-chevron_right:before;
+      right: 18px;
+      top: 14px;
+      font-size: 11px;
+    }
+  }
+
+  &.-open {
+    > ul {
+      margin-left: 0;
+      z-index: 1;
+    }
+
+    > .subnav {
+      padding-right: 0;
+    }
+  }
+}
+
+.mobilenav-subheader {
+  margin-bottom: 0;
+  display: block;
+  padding: 15px 20px;
+  cursor: pointer;
+  background-color: $c-light_grey;
+  color: $c-white;
+
+  &:before {
+    @extend .icon-chevron_left:before;
+    @include icon-stuff;
+    border-radius: 50%;
+    padding: 5px 9px 5px 7px;
+    border: 2px solid $c-white;
+    margin-right: 10px;
+    color: $c-white;
+  }
+}
+
+.mobilenav-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 14px $content-buffer;
+  cursor: pointer;
+  color: $c-white;
+
+  @include bp(large) {
+    display: none;
+  }
+}
+
+.mobile-active {
+  body,
+  .main-header {
+    margin-left: $sidenav_width;
+  }
+
+  .mobilenav {
+    margin-left: 0;
+  }
+
+  .mobilenav-toggle {
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      height: 2000%;
+      width: 2000%;
+    }
+  }
+}
+
+.mobilenav-user {
+  a {
+    @extend %nav-icon;
+    color: $c-dark_grey;
+    background: $c-lightest_grey;
+
+    &:after {
+      top: 15px;
+      right: 13px;
+      font-size: 16px;
+    }
+
+    &.-logout {
+      &:after {
+        @extend .icon-logout:before;
+      }
+    }
+
+    &.-settings {
+      &:after {
+        @extend .icon-settings:before;
+      }
+    }
+
+    &.-support {
+      &:after {
+        @extend .icon-support:before;
+      }
+    }
+
+    &.-viewsite {
+      &:after {
+        @extend .icon-offlink:before;
+      }
+    }
+  }
+}
+
+.mobilenav-user-header {
+  display: block;
+  position: relative;
+  padding: 15px 10px 15px 20px;
+  cursor: pointer;
+  color: $c-black;
+  background: $c-lighter_grey;
+}

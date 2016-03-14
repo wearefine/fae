@@ -33,7 +33,7 @@ Fae.navigation = {
    */
   selectCurrentNavItem: function() {
     var current_base_url = window.location.pathname.replace('#', '');
-    var $currentLink = $('#js-sidenav a[href="' + current_base_url + '"]');
+    var $currentLink = $('.js-nav a[href="' + current_base_url + '"]');
 
     /**
      * Apply current nav class or keep looking deeper from path for the answer
@@ -47,7 +47,7 @@ Fae.navigation = {
       url_array.pop();
       mutated_url = url_array.join('/');
 
-      var $currentLink = $('#js-sidenav a[href="' + mutated_url + '"]');
+      var $currentLink = $('.js-nav a[href="' + mutated_url + '"]');
       if ($currentLink.length) {
         $currentLink.addClass('-current');
 
@@ -131,7 +131,7 @@ Fae.navigation = {
     $el.addClass('-open');
 
     if(FCH.bp.large) {
-      $el.find('.sidenav-sub-nav').first().stop().slideDown();
+      $el.find('.js-subnav').first().stop().slideDown();
     }
   },
 
@@ -142,7 +142,7 @@ Fae.navigation = {
    */
   close: function($el) {
     if(FCH.bp.large) {
-      $el.find('.sidenav-sub-nav')
+      $el.find('.js-subnav')
         .first()
         .stop()
         .slideUp()
@@ -164,7 +164,7 @@ Fae.navigation = {
    */
   closeAll: function(nuclear) {
     var _this = this;
-    $('html').removeClass( 'menu-active' );
+    $('html').removeClass( 'mobile-active' );
 
     $('.js-accordion').each(function(){
       var $this = $(this);
@@ -183,13 +183,13 @@ Fae.navigation = {
   openDrawer: function() {
     var $html = $('html');
 
-    $('#js-sidenav-menu_button').click(function(e){
+    $('#js-mobilenav-toggle').click(function(e){
       e.preventDefault();
 
-      if ($html.hasClass( 'menu-active' )) {
+      if ($html.hasClass( 'mobile-active' )) {
         Fae.navigation.closeAll(true);
       } else {
-        $html.addClass( 'menu-active' );
+        $html.addClass( 'mobile-active' );
       }
     });
   },
@@ -289,7 +289,7 @@ Fae.navigation = {
     });
     models.initialize();
 
-    $('#js-all-search').typeahead(
+    $('#js-search').typeahead(
       {
         hint: true,
         highlight: true,
@@ -320,6 +320,7 @@ Fae.navigation = {
    */
   stickyHeaders: function(just_headers) {
     just_headers = FCH.setDefault(just_headers, false);
+
 
     if(FCH.exists('.js-content-header')) {
       var $header = $('.js-content-header');

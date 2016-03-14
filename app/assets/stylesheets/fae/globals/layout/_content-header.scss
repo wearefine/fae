@@ -17,9 +17,11 @@
 
   h1,
   .breadcrumbs {
-    display: inline-block;
-    vertical-align: middle;
-    width: 70%;
+    @include bp(large) {
+      display: inline-block;
+      vertical-align: middle;
+      width: 70%;
+    }
   }
 
   h1 {
@@ -55,10 +57,7 @@
 
 .content-header-subnav {
   margin-top: 5px;
-
-  @include bp(large) {
-    margin-bottom: -24px;
-  }
+  margin-bottom: -24px;
 
   a {
     @include transition(all .2s);
@@ -96,10 +95,15 @@
 }
 
 .content-header-buttons {
-  display: inline-block;
-  vertical-align: middle;
-  text-align: right;
-  width: 30%;
+  margin: 10px 0;
+
+  @include bp(large) {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+    width: 30%;
+    margin: 0;
+  }
 
   a {
     margin-right: 5px;

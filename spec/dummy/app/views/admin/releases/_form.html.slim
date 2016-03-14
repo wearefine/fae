@@ -1,7 +1,7 @@
 = simple_form_for(['admin', @item]) do |f|
   header.content-header.js-content-header
     = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true
-    ul.content-header-subnav
+    ul.content-header-subnav.js-content-header-subnav
       li: a href="#general_info" Attributes
       li: a href="#asset_section" Assets
       li: a href="#associations_section" Associations

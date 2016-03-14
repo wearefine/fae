@@ -492,7 +492,7 @@ The nested_table should go after the main form ends and should only placed on th
 Full Slim implementation with section wrapper and edit page conditional
 ```slim
 - if params[:action] == 'edit'
-  section.main_content-section
+  section.content
     = render 'fae/shared/nested_table',
       assoc: :tasting_notes,
       parent_item: @item,
@@ -515,8 +515,8 @@ render 'fae/shared/recent_changes'
 
 Optionally, you can add a link to it in the form nav:
 ```slim
-nav.main_content-header-section
-  ul.main_content-header-section-links
+nav.content-header.js-content-header
+  ul.content-header-subnav.js-content-header-subnav
     - if params[:action] == 'edit'
       li: a href="#recent_changes" Recent Changes
 ```

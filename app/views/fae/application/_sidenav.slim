@@ -1,4 +1,4 @@
-nav.sidenav#js-sidenav
+nav.nav.sidenav.js-nav#js-sidenav
   ul
     - @fae_sidenav_items.each do |item|
       ruby:
@@ -10,11 +10,7 @@ nav.sidenav#js-sidenav
         a href=item[:path] = item[:text]
 
         - if item[:sublinks].present?
-          ul.sidenav-sub-nav
-            li
-              / <span>s are for the mobile titles
-              span.js-mobile-back = item[:text]
-
+          ul.subnav.js-subnav.js-subnav.js-subnav
             - item[:sublinks].each do |subitem|
               ruby:
                 subitem[:path] ||= '#'
@@ -25,31 +21,7 @@ nav.sidenav#js-sidenav
                 a class=link_class href=subitem[:path] = subitem[:text]
 
                 - if subitem[:sublinks].present?
-                  ul.sidenav-sub-nav
-                    li: span.js-mobile-back = subitem[:text]
+                  ul.subnav.js-subnav
                     - subitem[:sublinks].each do |thirditem|
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]
-
-    - if user_signed_in?
-      li.sidenav-header-mobile
-        span.header_drawer-content-username = current_user.full_name
-      li.sidenav-header-mobile
-        a.-logout href=fae.destroy_user_session_path Log Out
-      li.sidenav-header-mobile
-        a.-settings href=fae.settings_path Your Settings
-      li.sidenav-header-mobile
-        a.-support href=fae.help_path Support
-      - site_urls_are_present = @option.stage_url.present? || @option.live_url.present?
-      - view_site_class = site_urls_are_present ? 'sidenav-accordion js-accordion show--mobile' : 'sidenav-header-mobile'
-      li class=view_site_class
-        - if site_urls_are_present
-          a.-viewsite href="#" View Site
-          ul.sidenav-sub-nav
-            li: span.js-mobile-back View Site
-            li
-              a.sidenav-sub-link.-viewsite href=@option.stage_url target="_blank" Preview Site
-            li
-              a.sidenav-sub-link.-viewsite href=@option.live_url target="_blank" Live Site
-        - else
-          a.-viewsite href=@option.stage_url target="_blank" Preview Site

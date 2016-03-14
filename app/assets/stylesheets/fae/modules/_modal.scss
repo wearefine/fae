@@ -1,7 +1,12 @@
 .hinter-clicker {
+	@include transition(color .2s);
   margin-left: 5px;
   cursor: pointer;
-  color: $c-custom-highlight;
+  color: $c-light_grey;
+
+  &:hover {
+  	color: $c-text-heavy;
+  }
 
   &.hovered {
     position: relative;
@@ -49,7 +54,7 @@
 
 	table {
 		width: calc(100% + 40px);
-		margin: 20px -20px -20px -20px;
+		margin: 20px -20px -20px;
 	}
 
 	.icon-support {

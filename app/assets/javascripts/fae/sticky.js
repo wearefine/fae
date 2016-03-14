@@ -86,7 +86,6 @@
     if (FCH.$window.scrollTop() >= this.dimensions.top) {
       if (this.options.placeholder) {
         this.$placeholder.show();
-        this.$el.css({ width: this.$placeholder.width() });
       }
 
       this.$el
@@ -143,6 +142,14 @@
 
       _this.stickIt();
     });
+
+    if (this.options.placeholder) {
+      function resizePlaceholder() {
+        _this.$placeholder.css( 'height', _this.$el.outerHeight() );
+      }
+
+      FCH.resize.push( resizePlaceholder );
+    }
   };
 
   /**

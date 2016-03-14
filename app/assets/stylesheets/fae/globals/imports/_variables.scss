@@ -4,8 +4,7 @@
 
 // Project Specific breakpoints
 $breakpoints: (
-  'desktop':                ( min-width:  1100px ),
-  'mobile':                 ( max-width:  520px ),
+  // @depreciation - remove page_header_save_block in v2.0
   'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
   'login_submit':           ( min-width: 475px ),
@@ -78,11 +77,9 @@ $c-table-filter-input: #333;
 $c-form-submit: $c-white;
 $c-form-submit-gradient-start: #454545;
 $c-form-submit-gradient-end: #252525;
-$c-form-submit-gradient-hover: #252525;
 $c-form-button: #555;
 $c-form-button-gradient-start: $c-lightest_grey;
 $c-form-button-gradient-end: #e1e1e1;
-$c-form-button-gradient-hover: #e1e1e1;
 $c-form-checkbox-bg: $c-white;
 $c-form-file-bg: $c-near-white;
 $c-form-file-bg-active: $c-white;
@@ -93,7 +90,6 @@ $c-form-table-bg: #ebebeb;
 $c-chosen-bg: $c-white;
 $c-chosen-gradient-start: $c-lightest_grey;
 $c-chosen-gradient-end: #e1e1e1;
-$c-chosen-gradient-hover:  #e1e1e1;
 $c-chosen-multi-bg: $c-lightest_grey;
 $c-chosen-multi-text: #555;
 $c-chosen-multi-delete: $c-light_grey;
@@ -126,5 +122,4 @@ $c-login-bg: $c-white;
 $c-login-footer-all: #aaa;
 $c-login-box_shadow: $c-lighter_grey;
 
-$mobile-menu-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
-
+$mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
