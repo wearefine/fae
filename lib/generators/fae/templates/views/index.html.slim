@@ -31,8 +31,6 @@ main.content
 <% @toggle_attrs.each do |attr| -%>
             td = fae_toggle item, :<%= attr %>
 <% end -%>
-            td.-delete
-              = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
-                span.icon-delete_x
+            td.-delete = fae_delete_button item
       - else
         tr: td colspan="<%= num_columns %>" No items found
