@@ -192,6 +192,8 @@ end
 
 ## Validation
 
+![Validation](images/length_validation.gif)
+
 Fae doesn't deal with any validation definitions in your application models, you'll have to add those. However, there are some pre-defined regex validation helpers to use in your models. See examples below.
 
 ### Validation Helpers
