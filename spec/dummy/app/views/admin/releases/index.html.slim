@@ -1,15 +1,7 @@
 = render 'fae/shared/index_header', title: @klass_humanized.pluralize, csv: true
 main.content
   = fae_filter_form do
-    = fae_filter_select :wine
-    = fae_filter_select :acclaims,
-      label: 'Acclaim',
-      collection: Acclaim.for_release_filter,
-      label_method: :score,
-      placeholder: 'Select some stuff'
-    = fae_filter_select :test, options: [['one', 1], ['two', 2]]
-    = fae_filter_select :grouped_test, grouped_options: { 'Numbers' => [['one', 1], ['two', 2]], 'Letters' => [['The letter J', 'J'], ['The letter N', 'N']] }
-    = fae_filter_select :grouped_association, collection: Aroma.all, grouped_by: :release
+    = fae_filter_select :test, label: 'Option', options: [['One', 1], ['Two', 2], ['Three', 3], ['Four', 4]]
   table.main_table-sort_columns
     thead
       tr
