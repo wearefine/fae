@@ -321,7 +321,6 @@ Fae.navigation = {
   stickyHeaders: function(just_headers) {
     just_headers = FCH.setDefault(just_headers, false);
 
-
     if(FCH.exists('.js-content-header')) {
       var $header = $('.js-content-header');
       var sidebar_top_offset = (parseInt( $header.css('height'), 10) + 20) + 'px';
