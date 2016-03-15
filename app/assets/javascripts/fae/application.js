@@ -36,6 +36,10 @@
 //= require fae/extensions
 
 //= require fae/frob_core_helpers
+
+//= require fae/hinter
+//= require fae/sticky
+
 //= require fae/admin
 
 //= require fae/form/_form
@@ -53,10 +57,9 @@
 //= require fae/navigation/_subnavHighlighter
 //= require fae/navigation/_language
 
-//= require fae/hinter
 //= require fae/_modals
 //= require fae/_tables
-//= require fae/sticky
+
 //= require fae/fae_init
 
 //= require fae

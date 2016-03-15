@@ -1,8 +1,7 @@
 /* global FCH */
 
-'use strict';
-
 (function ( $ ) {
+  'use strict';
 
   /**
    * Private initialization of Sticky object.
@@ -157,7 +156,6 @@
    * @function external:'jQuery.fn'.sticky
    */
   $.fn.sticky = function( options ) {
-
     var defaults = {
       class_name: 'js-sticky',
       placeholder_name: 'js-sticky-placeholder',

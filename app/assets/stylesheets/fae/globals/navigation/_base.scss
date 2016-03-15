@@ -36,7 +36,7 @@
 
     a {
       font-size: 20px;
-      color: $c-header-logo;
+      color: $c-white;
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
@@ -100,10 +100,8 @@
       background: none;
       padding-top: 10px;
       padding-bottom: 10px;
-      color: $c-lighter-grey;
 
       &:hover {
-        color: $c-white;
         background: none;
       }
     }

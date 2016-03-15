@@ -112,7 +112,6 @@
 .mobilenav-user {
   a {
     @extend %nav-icon;
-    color: $c-dark_grey;
     background: $c-lightest_grey;
 
     &:after {

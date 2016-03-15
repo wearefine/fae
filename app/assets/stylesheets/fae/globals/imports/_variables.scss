@@ -24,83 +24,105 @@ $sidenav-active-border-width: 7px;
 // TYPOGRAPHY
 $f-lato: "Lato", $f-sans;
 
-// Colors
-$c-near-black: #261c16;
-$c-dark_grey: #303030;
-$c-grey: #595959;
-$c-light_grey: #999;
-$c-lighter_grey: #ccc;
-$c-lightest_grey: #eee;
-$c-near-white: #f7f7f7;
-
+// In order from dark to light
+// These are stacked in 10s so new colors can be easily inserted between if/when this list changes
+$grays: (
+  10: #1e1e1e,
+  20: #261c16,
+  30: #222,
+  40: #252525,
+  50: #2b2b2b,
+  60: #333,
+  70: #303030,
+  80: #3b3b3b,
+  90: #454545,
+  100: #555,
+  110: #595959,
+  120: #777,
+  130: #999,
+  140: #aaa,
+  150: #ccc,
+  160: #ddd,
+  170: #d6d6d6,
+  180: #dedede,
+  190: #dfdfdf,
+  200: #eee,
+  210: #e1e1e1,
+  220: #e7e7e7,
+  230: #ebebeb,
+  240: #f2f2f2,
+  250: #f7f7f7,
+  260: #f9f9f9,
+  270: #fdfdfd,
+  280: #fefefe
+);
 
 // Functional name for colors
-$c-body-bg: $c-near-white;
-$c-text: $c-grey;
-$c-text-sub: $c-light_grey;
-$c-text-sub-hover: $c-lighter_grey;
-$c-text-heavy: #2b2b2b;
-$c-box_shadow: $c-lighter_grey;
-$c-border: $c-lighter_grey;
+// Avoid assigning variables to variables (i.e. $c-text: $c-light_grey)
+$c-near-black: gray(20);
+$c-grey: gray(110);
+$c-light_grey: gray(130);
+$c-lighter_grey: gray(150);
+$c-lightest_grey: gray(200);
+$c-near-white: gray(250);
+
+$c-body-bg: gray(250);
+$c-text: gray(110);
+$c-text-sub: gray(130);
+$c-text-sub-hover: gray(150);
+$c-text-heavy: gray(50);
+$c-box_shadow: gray(150);
+$c-border: gray(150);
 
 // header area
-$c-header-bg: #1e1e1e;
-$c-header-logo: $c-white;
-
-$c-header-dropdown-bg: #3b3b3b;
+$c-header-bg: gray(10);
+$c-header-dropdown-bg: gray(80);
 
 // nav area
-$c-nav-link: $c-dark_grey;
-$c-nav-bg-hover: #d6d6d6;
-$c-nav-sub-bg-active: #dedede;
-$c-nav-sub-bg-active-highlight: #d6d6d6;
-$c-nav-icons: #999;
-$c-nav-icons-hover: #777;
+$c-nav-link: gray(70);
+$c-nav-bg-hover: gray(170);
+$c-nav-sub-bg-active: gray(180);
+$c-nav-sub-bg-active-highlight: gray(170);
+$c-nav-icons: gray(130);
+$c-nav-icons-hover: gray(120);
 
 // main_content areas
-$c-content-header-bg: #fdfdfd;
-$c-content-section-title: $c-lightest_grey;
+$c-content-header-bg: gray(270);
+$c-content-section-title: gray(200);
 
 // tables
-$c-table-th: #dfdfdf;
-$c-table-th-highlight: #e7e7e7;
-$c-table-tr-even: #f2f2f2;
-$c-table-td: #f9f9f9;
-$c-table-tr-hover: #fefefe;
-$c-table-action_menu-bg: $c-white;
-$c-table-action_menu-link-bg: $c-white;
-$c-tablesorter-icon: $c-light_grey;
-$c-table-filter-header: #222;
-$c-table-filter-input: #333;
+$c-table-th: gray(190);
+$c-table-th-highlight: gray(220);
+$c-table-tr-even: gray(240);
+$c-table-td: gray(260);
+$c-table-tr-hover: gray(280);
+$c-tablesorter-icon: gray(130);
+$c-table-filter-header: gray(30);
+$c-table-filter-input: gray(60);
 
 // forms
 $c-form-submit: $c-white;
-$c-form-submit-gradient-start: #454545;
-$c-form-submit-gradient-end: #252525;
-$c-form-button: #555;
-$c-form-button-gradient-start: $c-lightest_grey;
-$c-form-button-gradient-end: #e1e1e1;
-$c-form-checkbox-bg: $c-white;
-$c-form-file-bg: $c-near-white;
-$c-form-file-bg-active: $c-white;
-$c-form-file-link-bg: $c-near-white;
-$c-form-file-link-bg-hover: #ddd;
-$c-form-file-link-text: $c-custom-highlight;
-$c-form-table-bg: #ebebeb;
-$c-chosen-bg: $c-white;
-$c-chosen-gradient-start: $c-lightest_grey;
-$c-chosen-gradient-end: #e1e1e1;
-$c-chosen-multi-bg: $c-lightest_grey;
-$c-chosen-multi-text: #555;
-$c-chosen-multi-delete: $c-light_grey;
+$c-form-submit-gradient-start: gray(90);
+$c-form-submit-gradient-end: gray(40);
+$c-form-button: gray(100);
+$c-form-button-gradient-start: gray(200);
+$c-form-button-gradient-end: gray(210);
+$c-form-file-bg: gray(250);
+$c-form-file-link-bg: gray(250);
+$c-form-file-link-bg-hover: gray(160);
+$c-form-table-bg: gray(230);
+$c-chosen-gradient-start: gray(200);
+$c-chosen-gradient-end: gray(210);
+$c-chosen-multi-bg: gray(200);
+$c-chosen-multi-text: gray(100);
+$c-chosen-multi-delete: gray(130);
+
+$c-markdown-border: gray(160);
 
 // Yes / No Sliders
-$c-slider-option-selector: $c-white;
-$c-slider-yes-color: $c-white;
-$c-slider-yes-bg: $c-custom-highlight;
-$c-slider-no-color: $c-lighter_grey;
-$c-slider-no-bg: $c-light_grey;
-$c-slider-border: #dedede;
+$c-slider-no-color: gray(150);
+$c-slider-no-bg: gray(130);
+$c-slider-border: gray(180);
 
 // Notices and Errors
 $c-notice-bg: #d8f0d0;
@@ -111,15 +133,12 @@ $c-error-bg: #f6cfcf;
 $c-error-content: #b75553;
 
 // Modal
-$c-modal-overlay-bg: $c-lighter_grey;
-$c-modal-bg: #333;
-$c-modal-light-bg: $c-white;
-$c-modal-text: $c-light_grey;
-$c-modal-header: $c-white;
+$c-modal-overlay-bg: gray(150);
+$c-modal-bg: gray(60);
+$c-modal-text: gray(130);
 
 // login page
-$c-login-bg: $c-white;
-$c-login-footer-all: #aaa;
-$c-login-box_shadow: $c-lighter_grey;
+$c-login-footer-all: gray(140);
+$c-login-box_shadow: gray(150);
 
 $mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);

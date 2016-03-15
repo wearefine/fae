@@ -13,7 +13,7 @@
   .CodeMirror-wrap {
     @include transition(border-color .2s);
     border-color: $c-lighter_grey;
-    border-top-color: #ddd; // TODO use a SCSS variable
+    border-top-color: $c-markdown-border;
   }
 
   &.mde-focus {
