@@ -5,7 +5,6 @@
 
   /**
    * Private initialization of Sticky object.
-   * @access private
    * @class
    */
   function Sticky($el, options) {
@@ -37,7 +36,7 @@
     this.windowListeners();
 
     return this;
-  };
+  }
 
   /**
    * Create a placeholder element to use to keep the top spacing
@@ -142,11 +141,11 @@
       _this.stickIt();
     });
 
-    if (this.options.placeholder) {
-      function resizePlaceholder() {
-        _this.$placeholder.css( 'height', _this.$el.outerHeight() );
-      }
+    function resizePlaceholder() {
+      _this.$placeholder.css( 'height', _this.$el.outerHeight() );
+    }
 
+    if (this.options.placeholder) {
       FCH.resize.push( resizePlaceholder );
     }
   };
