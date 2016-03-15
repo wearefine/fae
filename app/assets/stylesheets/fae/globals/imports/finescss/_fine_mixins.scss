@@ -293,3 +293,12 @@
   top: 50%;
   transform: translateY(-50%);
 }
+
+@function gray($number: 100) {
+  @if map-has-key($grays, $number) {
+    @return map-get($grays, $number);
+  } @else {
+    // Obvious off brand color for error detection
+    @return #00f;
+  }
+}
