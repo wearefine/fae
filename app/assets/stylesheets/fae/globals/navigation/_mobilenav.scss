@@ -2,6 +2,7 @@
   @include transition($mobilenav-transition);
   position: fixed;
   margin-left: negate($sidenav-width);
+  visibility: hidden;
 
   a {
     // Right padding prevents text from running over arrow
@@ -94,6 +95,7 @@
 
   .mobilenav {
     margin-left: 0;
+    visibility: hidden;
   }
 
   .mobilenav-toggle {

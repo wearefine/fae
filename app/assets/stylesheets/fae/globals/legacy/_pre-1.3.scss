@@ -121,13 +121,6 @@
   padding-bottom: 5px;
 }
 
-.content-header {
-  ~ .main_content-sections {
-    // height of content header minus 30
-    padding-top: 76px;
-  }
-}
-
 .main_content-header-save,
 .main_content-header-csv {
   margin-top: 30px;
@@ -217,7 +210,7 @@
 
 .content-header-buttons {
   ~ .main_content-header-save {
-    display: none;
+    bottom: 0;
   }
 }
 
