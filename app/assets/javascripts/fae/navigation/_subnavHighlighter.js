@@ -6,12 +6,13 @@
  * Fae navigation subnav highlighter
  * @namespace navigation.subnavHighlighter
  * @memberof navigation
- * @depreciation - remove this.section_class and this.subnav_class lookups in v2.0
  */
 Fae.navigation.subnavHighlighter = {
   init: function() {
     //only run everything if there is a subnav area
+    // @depreciation - change conditional to FCH.exists('.content-header-subnav') in v2.0
     if (FCH.exists('.main_content-header-section-links') || FCH.exists('.content-header-subnav')) {
+      // @depreciation - remove entire conditional block (following 7 lines) in v2.0
       if(Fae.content_selector === '.content') {
         this.section_class = Fae.content_selector;
         this.subnav_class = '.js-content-header-subnav';
@@ -29,11 +30,13 @@ Fae.navigation.subnavHighlighter = {
 
   /**
    * Since subnavHighlighter is not a direct child of Fae and therefore unknown to FCH, these listeners are saved in private functions in this method
-   * @depreciation remove legacy_buffer in v2.0
    */
   FCHListeners: function() {
+    // @depreciation - change value of section_class to '.content' in v2.0
     var section_class = this.section_class;
+    // @depreciation - change value of subnav_class to '.js-content-header-subnav' in v2.0
     var subnav_class = this.subnav_class;
+    // @depreciation - remove legacy_buffer expression in v2.0 (the value should be 0, so it will be unnecessary)
     var legacy_buffer = section_class === Fae.content_selector ? 0 : 32;
 
     /**
@@ -77,8 +80,10 @@ Fae.navigation.subnavHighlighter = {
    * Smooth scrolling on anchor links in the tab area.
    */
   anchorClickListener: function() {
+    // @depreciation - replace scroll_offset_selector variable with string '.content-header' in v2.0
     var scroll_offset_selector = FCH.exists('.main_content-header') ? '.main_content-header' : '.content-header';
     var scroll_offset = parseInt( $(scroll_offset_selector).css('height'), 10 );
+    // @depreciation - remove should_find_h2 in v2.0
     var should_find_h2 = this.section_class === Fae.content_selector;
 
     /**
@@ -92,6 +97,7 @@ Fae.navigation.subnavHighlighter = {
       if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') && location.hostname === this.hostname) {
         var $target = $(this.hash);
         $target = $target.length ? $target : $('[name=' + this.hash.slice(1) + ']');
+        // @depreciation - remove conditional wrapping (keep $target = ... and scroll_offset -= ...) in v2.0
         if(should_find_h2 && $target.find('h2').length) {
           $target = $target.find('h2');
           scroll_offset -= 2;
