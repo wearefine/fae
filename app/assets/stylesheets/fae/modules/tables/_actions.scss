@@ -34,7 +34,7 @@ th {
   }
 
   &.-modified {
-    width: 200px;
+    width: 130px;
   }
 
   &.-delete {
@@ -64,6 +64,10 @@ td {
         color: $c-text;
       }
     }
+  }
+
+  &.-modified {
+    text-align: center;
   }
 }
 
