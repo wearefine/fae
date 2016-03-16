@@ -11,7 +11,7 @@
   'globals/icons',
   'globals/plugins',
   'globals/tags',
-  'globals/layout/global',
+  'globals/layout/base',
   'globals/layout/content-header',
   'globals/layout/breadcrumbs',
   'globals/navigation/global',
@@ -24,7 +24,7 @@
 // Modules
 @import
   'modules/buttons',
-  'modules/tables/global',
+  'modules/tables/base',
   'modules/tables/actions',
   'modules/tables/sorting',
   'modules/tables/filters',
