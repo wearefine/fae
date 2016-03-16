@@ -29,9 +29,10 @@
 
   a {
     color: inherit;
+    text-decoration: underline;
 
     &:hover {
-      color: $c-custom-highlight;
+      text-decoration: none;
     }
   }
 }

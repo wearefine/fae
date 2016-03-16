@@ -11,7 +11,6 @@ Fae.navigation = {
 
   init: function() {
     this.selectCurrentNavItem();
-    this.utilityNav();
     this.fadeNotices();
     this.stickyHeaders();
     this.subnavHighlighter.init();
@@ -33,7 +32,7 @@ Fae.navigation = {
    */
   selectCurrentNavItem: function() {
     var current_base_url = window.location.pathname.replace('#', '');
-    var $currentLink = $('.js-nav a[href="' + current_base_url + '"]');
+    var $ready_current_link = $('.js-nav a[href="' + current_base_url + '"]');
 
     /**
      * Apply current nav class or keep looking deeper from path for the answer
@@ -47,9 +46,9 @@ Fae.navigation = {
       url_array.pop();
       mutated_url = url_array.join('/');
 
-      var $currentLink = $('.js-nav a[href="' + mutated_url + '"]');
-      if ($currentLink.length) {
-        $currentLink.addClass('-current');
+      var $current_link = $('.js-nav a[href="' + mutated_url + '"]');
+      if ($current_link.length) {
+        $current_link.addClass('-current');
 
       } else {
         // Defend from exceeding call stack (SUPER RECURSION)
@@ -60,9 +59,9 @@ Fae.navigation = {
       }
     }
 
-    if ($currentLink.length) {
+    if ($ready_current_link.length) {
       // Try to find link that matches the URL exactly
-      $currentLink.addClass('-current');
+      $ready_current_link.addClass('-current');
 
     } else {
       // If link can't be found, recursively search for it
@@ -70,13 +69,13 @@ Fae.navigation = {
 
     }
 
-    $('.js-accordion').each(function() {
+    $('.js-accordion, .js-main-header-parent').each(function() {
       var $this = $(this);
 
       if($this.find('.-current').length) {
         $this.addClass('-current');
 
-        if(FCH.bp.large) {
+        if(FCH.bp.large && $this.hasClass('.js-accordion')) {
           $this.addClass('-open');
         }
       }
@@ -208,43 +207,23 @@ Fae.navigation = {
   },
 
   /**
-   * Utility nav drop down
-   */
-  utilityNav: function() {
-    $('.js-utility-dropdown').on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var $this = $(this);
-
-      // there could be more than one. so remove all of the clicked statuses and add to the specific one
-      $this.siblings().removeClass('active');
-      $this.toggleClass('active');
-
-      /**
-       * Close utility menu when click occurs on the document
-       * @private
-       */
-      function closeToggleMenu() {
-        $('.js-utility-dropdown.active').removeClass('active');
-
-        // Unbind - no longer necessary to keep listening for the click
-        FCH.$document.off('click', closeToggleMenu);
-      }
-
-      FCH.$document.on('click', closeToggleMenu);
-    });
-  },
-
-  /**
    * Click event of the admin search in the main nav
    */
   utilitySearch: function() {
-    $('#js-utility-search').click(function() {
-      var $this = $(this);
 
-      if($this.hasClass('active')) {
+    $('#js-utility-search').click(function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var $this = $(this);
+      var $search_wrapper = $this.find('.utility-search-wrapper');
+
+      $search_wrapper.toggle();
+
+      if($search_wrapper.is(':visible')) {
         $this.find('input').focus();
       }
+
     });
   },
 

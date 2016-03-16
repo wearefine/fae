@@ -39,7 +39,7 @@ $grays: (
   70: #ebebeb,
   80: #f2f2f2,
   90: #f7f7f7,
-);
+) !default;
 
 // Functional name for colors
 $c-darkest-grey: gray(10) !default;

@@ -2,7 +2,7 @@
 .content-header {
   @include clearfix;
   width: 100%;
-  padding: 24px $content-buffer;
+  padding: 16px $content-buffer;
   background: $c-content-header-bg;
   border-bottom: 1px solid $c-grey;
   position: absolute;
@@ -13,6 +13,11 @@
     display: block;
     height: 100%;
     position: static;
+  }
+
+  &.-dashboard {
+    padding-top: 26px;
+    padding-bottom: 26px;
   }
 
   h1,

@@ -1,4 +1,4 @@
-header.main-header#js-main-header
+header.main-header#js-main-header.js-nav
   span.mobilenav-toggle.icon-menu#js-mobilenav-toggle
   h1: a href=root_path = @option.title
 
@@ -6,7 +6,7 @@ header.main-header#js-main-header
     nav
       ul.main-header-nav
         - @fae_topnav_items.each do |item|
-          li
+          li.js-main-header-parent
             a href=item[:path] = item[:text]
             - if item[:subitems]
               ul
@@ -24,10 +24,6 @@ header.main-header#js-main-header
           li: a href=fae.destroy_user_session_path Log Out
           li: a href=fae.settings_path Your Settings
 
-      li
-        a href=fae.help_path
-          i.icon-support
-
       li class="#{'utility-dropdown js-utility-dropdown' if @option.stage_url.present?}"
         a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
           i.icon-settings
@@ -35,6 +31,10 @@ header.main-header#js-main-header
           ul
             li: a href=@option.live_url target="_blank" Live Site
             li: a href=@option.stage_url target="_blank" Stage Site
+
+      li
+        a href=fae.help_path
+          i.icon-support
 
       li.utility-dropdown.utility-search.js-utility-dropdown#js-utility-search
         a href="#": i.icon-search
