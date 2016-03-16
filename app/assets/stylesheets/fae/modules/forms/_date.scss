@@ -106,7 +106,7 @@
   line-height: 30px;
   border-width: 1px 0 0 0;
   border-style: solid;
-  border-color: $c-border;
+  border-color: $c-mid-grey;
 
   box-shadow: 0 1px 1px 0 $c-box_shadow;
 }
@@ -225,7 +225,7 @@
 .date-picker-wrapper {
   @extend %table-reset;
   box-shadow: 0 0 10px 0 $c-box_shadow;
-  background: $c-border;
+  background: $c-mid-grey;
   font-family: inherit;
   padding: 0;
   width: 380px;
@@ -242,7 +242,7 @@
   }
 
   .month-wrapper {
-    background-color: $c-border;
+    background-color: $c-mid-grey;
     border: 0;
     padding: 0;
 
@@ -308,7 +308,7 @@
         &.lastMonth,
         &.nextMonth {
           background: $c-white;
-          color: $c-border;
+          color: $c-mid-grey;
         }
 
         &.checked,
@@ -325,7 +325,7 @@
       div.day {
         &.lastMonth,
         &.nextMonth {
-          color: $c-border;
+          color: $c-mid-grey;
         }
       }
     }
