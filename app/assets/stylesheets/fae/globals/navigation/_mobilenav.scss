@@ -59,7 +59,7 @@
   display: block;
   padding: 15px 20px;
   cursor: pointer;
-  background-color: $c-light_grey;
+  background-color: $c-darker-grey;
   color: $c-white;
 
   &:before {
@@ -112,7 +112,7 @@
 .mobilenav-user {
   a {
     @extend %nav-icon;
-    background: $c-lightest_grey;
+    background: $c-lightest-grey;
 
     &:after {
       top: 15px;
@@ -152,5 +152,5 @@
   padding: 15px 10px 15px 20px;
   cursor: pointer;
   color: $c-black;
-  background: $c-lighter_grey;
+  background: $c-mid-grey;
 }

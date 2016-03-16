@@ -32,24 +32,22 @@
   &.tablesorter-headerAsc,
   &.tablesorter-headerDesc {
     border-bottom: 1px solid $c-custom-highlight;
+
+    &:after {
+      visibility: visible;
+    }
   }
 
 }
 
 .tablesorter-headerDesc {
-  background: $c-table-th-highlight;
-
   &:after {
     @extend .icon-arrow_down:before;
-    visibility: visible;
   }
 }
 
 .tablesorter-headerAsc {
-  background: $c-table-th-highlight;
-
   &:after {
     @extend .icon-arrow_up:before;
-    visibility: visible;
   }
 }

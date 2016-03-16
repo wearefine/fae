@@ -28,101 +28,88 @@ $f-lato: "Lato", $f-sans;
 // These are stacked in 10s so new colors can be easily inserted between if/when this list changes
 $grays: (
   10: #1e1e1e,
-  20: #261c16,
-  30: #222,
-  40: #252525,
-  50: #2b2b2b,
-  60: #333,
-  70: #303030,
-  80: #3b3b3b,
-  90: #454545,
-  100: #555,
-  110: #595959,
-  120: #777,
-  130: #999,
-  140: #aaa,
-  150: #ccc,
-  160: #ddd,
-  170: #d6d6d6,
-  180: #dedede,
-  190: #dfdfdf,
-  200: #eee,
-  210: #e1e1e1,
-  220: #e7e7e7,
-  230: #ebebeb,
-  240: #f2f2f2,
-  250: #f7f7f7,
-  260: #f9f9f9,
-  270: #fdfdfd,
-  280: #fefefe
+  20: #3b3b3b,
+  30: #595959,
+  40: #999,
+  50: #ccc,
+  60: #dfdfdf,
+  70: #ebebeb,
+  80: #f2f2f2,
+  90: #f7f7f7,
 );
 
 // Functional name for colors
-// Avoid assigning variables to variables (i.e. $c-text: $c-light_grey)
-$c-near-black: gray(20);
-$c-grey: gray(110);
-$c-light_grey: gray(130);
-$c-lighter_grey: gray(150);
-$c-lightest_grey: gray(200);
-$c-near-white: gray(250);
+$c-darkest-grey: gray(10);
+$c-dark-grey: gray(20);
+$c-mid-dark-grey: gray(30);
+$c-darker-grey: gray(40);
+$c-mid-grey: gray(50);
+$c-grey: gray(60);
+$c-light-grey: gray(70);
+$c-lightest-grey: gray(80);
+$c-near-white: gray(90);
 
-$c-body-bg: gray(250);
-$c-text: gray(110);
-$c-text-sub: gray(130);
-$c-text-sub-hover: gray(150);
-$c-text-heavy: gray(50);
-$c-box_shadow: gray(150);
-$c-border: gray(150);
+$c-body-bg: $c-near-white;
+$c-text: $c-mid-dark-grey;
+$c-text-sub: $c-darker-grey;
+$c-text-sub-hover: $c-mid-grey;
+$c-text-heavy: $c-darkest-grey;
+$c-box_shadow: $c-mid-grey;
+$c-border: $c-mid-grey;
 
 // header area
-$c-header-bg: gray(10);
-$c-header-dropdown-bg: gray(80);
+$c-header-bg: $c-darkest-grey;
+$c-header-dropdown-bg: $c-dark-grey;
 
 // nav area
-$c-nav-link: gray(70);
-$c-nav-bg-hover: gray(170);
-$c-nav-sub-bg-active: gray(180);
-$c-nav-sub-bg-active-highlight: gray(170);
-$c-nav-icons: gray(130);
-$c-nav-icons-hover: gray(120);
+$c-nav-link: $c-dark-grey;
+$c-nav-icons: $c-darker-grey;
+$c-nav-icons-hover: $c-darker-grey;
 
 // main_content areas
-$c-content-header-bg: gray(270);
-$c-content-section-title: gray(200);
+$c-content-header-bg: $c-white;
+$c-content-section-title: $c-lightest-grey;
 
 // tables
-$c-table-th: gray(190);
-$c-table-th-highlight: gray(220);
-$c-table-tr-even: gray(240);
-$c-table-td: gray(260);
-$c-table-tr-hover: gray(280);
-$c-tablesorter-icon: gray(130);
-$c-table-filter-header: gray(30);
-$c-table-filter-input: gray(60);
+$c-table-th: $c-grey;
+$c-table-tr-even: $c-lightest-grey;
+$c-table-td: $c-near-white;
+$c-table-tr-hover: $c-white;
+$c-tablesorter-icon: $c-darker-grey;
+$c-table-filter-header: $c-darkest-grey;
+$c-table-filter-input: $c-dark-grey;
 
 // forms
 $c-form-submit: $c-white;
-$c-form-submit-gradient-start: gray(90);
-$c-form-submit-gradient-end: gray(40);
-$c-form-button: gray(100);
-$c-form-button-gradient-start: gray(200);
-$c-form-button-gradient-end: gray(210);
-$c-form-file-bg: gray(250);
-$c-form-file-link-bg: gray(250);
-$c-form-file-link-bg-hover: gray(160);
-$c-form-table-bg: gray(230);
-$c-chosen-gradient-start: gray(200);
-$c-chosen-gradient-end: gray(210);
-$c-chosen-multi-bg: gray(200);
-$c-chosen-multi-text: gray(100);
-$c-chosen-multi-delete: gray(130);
+$c-form-submit-gradient-start: $c-darkest-grey;
+$c-form-submit-gradient-end: $c-dark-grey;
+$c-form-button: $c-dark-grey;
+$c-form-button-gradient-start: $c-lightest-grey;
+$c-form-button-gradient-end: $c-light-grey;
+$c-form-file-link-bg: $c-grey;
+$c-form-file-link-bg-hover: $c-grey;
+$c-form-table-bg: $c-light-grey;
+$c-chosen-gradient-start: $c-lightest-grey;
+$c-chosen-gradient-end: $c-light-grey;
+$c-chosen-multi-bg: $c-lightest-grey;
+$c-chosen-multi-text: $c-dark-grey;
+$c-chosen-multi-delete: $c-darker-grey;
 
-$c-markdown-border: gray(160);
+$c-markdown-border: $c-grey;
 
 // Yes / No Sliders
-$c-slider-no-color: gray(150);
-$c-slider-no-bg: gray(130);
-$c-slider-border: gray(180);
+$c-slider-no-color: $c-mid-grey;
+$c-slider-no-bg: $c-darker-grey;
+$c-slider-border: $c-grey;
+
+// Modal
+$c-modal-overlay-bg: $c-mid-grey;
+$c-modal-bg: $c-dark-grey;
+$c-modal-text: $c-darker-grey;
+
+// login page
+$c-login-footer-all: $c-darker-grey;
+$c-login-box_shadow: $c-mid-grey;
 
 // Notices and Errors
 $c-notice-bg: #d8f0d0;
@@ -131,14 +118,5 @@ $c-warning-bg: #f7f2c8;
 $c-warning-content: #ca953a;
 $c-error-bg: #f6cfcf;
 $c-error-content: #b75553;
-
-// Modal
-$c-modal-overlay-bg: gray(150);
-$c-modal-bg: gray(60);
-$c-modal-text: gray(130);
-
-// login page
-$c-login-footer-all: gray(140);
-$c-login-box_shadow: gray(150);
 
 $mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);

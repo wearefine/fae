@@ -61,7 +61,7 @@
     @include transition(background-color .2s ease-in-out, color .2s ease-in-out);
     padding-left: 15px;
     padding-right: 15px;
-    color: $c-lighter-grey;
+    color: $c-mid-grey;
 
     &:hover {
       color: $c-white;
