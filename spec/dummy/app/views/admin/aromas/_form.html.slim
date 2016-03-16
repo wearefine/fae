@@ -5,6 +5,7 @@
   = fae_input f, :live
   = fae_image_form f, :image
   = f.hidden_field :release_id
+  = fae_association f, :cats
 
   = f.submit
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'

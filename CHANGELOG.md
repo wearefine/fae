@@ -3,6 +3,7 @@
 ## 1.3
 
 - enhancements
+    + \#50420: Nested forms now accept custom titles
     + \#54683: Titleize names for forms
     + \#55066: Major HTML and SCSS refactor
     + \#55211: Change wording of "Replace Image" to be "Remove Image"

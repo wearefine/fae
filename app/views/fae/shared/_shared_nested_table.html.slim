@@ -4,6 +4,8 @@ ruby:
   colspan += 1 if has_thumb
   table_class = ordered ? 'main_content-sortable' : ''
 
+  options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
+
 table class=table_class
   thead
     tr
@@ -12,8 +14,7 @@ table class=table_class
       - if has_thumb
         th.main_content-thumb-col
       - cols.each do |col|
-        - th_class = [:on_production, :on_prod, :on_stage].include?(col) ? '-live' : ''
-        th class=th_class = col.to_s.humanize
+        = th_columns(col)
       - if edit_column
         th.-edit data-sorter="false" Edit
       th.-delete Delete
@@ -28,13 +29,9 @@ table class=table_class
           - if has_thumb
             td = image_tag(item.asset.thumb.url)
           - cols.each do |col|
-            - if col == cols.first && !edit_column
-              td.main_table-description-item
-                a.js-edit-link href=self.send(edit_path, item) = col_name_or_image(item, col)
-            - elsif item.class.columns_hash[col.to_s].present? && item.class.columns_hash[col.to_s].type == :boolean
-              td = attr_toggle item, col
-            - else
-              td = col_name_or_image(item, col)
+            - options_for_td[:col] = col
+            - options_for_td[:item] = item
+            = td_columns(options_for_td)
           - if edit_column
             td.-edit
               a.js-edit-link href=self.send(edit_path, item)

@@ -503,7 +503,7 @@ The nested_table should go after the main form ends and should only placed on th
 | index | false | boolean | used for nested index forms |
 | assoc   | symbol | | **(required)** the association's name, or the item's name if it's for the index  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
-| cols | array of symbols | [] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
+| cols* | array of symbols, or array of symbols and hashes | [], [{}] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
 | header | string | title | the section's header |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
@@ -513,6 +513,23 @@ The nested_table should go after the main form ends and should only placed on th
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
 | helper_text | string | '' | the h6 directly above the nested table, and below the tite,used to provide the user with some helper_text to describe the context |
 
+***Example**
+
+* cols option now accepts hashes for custom titles, using attr: and title:
+```ruby
+cols: [{ attr: :name, title: 'What did you call me?' }, :image, :title]
+```
+
+You may also pass in custom columns, like an association's count by first defining a method on the model, then passing it in to the cols option.
+
+**Example**
+```ruby
+def cat_size
+  cats.size.to_s
+end
+
+cols: [{ attr: :cat_size, title: 'Kitten Count' }]
+```
 
 **Examples**
 
