@@ -8,7 +8,7 @@
   &:before {
     content: '';
     position: absolute;
-    left: $sidenav_width - 10px;
+    left: $sidenav-width - 10px;
     top: 0;
     width: 10px;
     height: 100%;
@@ -22,7 +22,7 @@
   @include bp(large) {
     .index &,
     .home & {
-      padding-left: $sidenav_width + $content-buffer;
+      padding-left: $sidenav-width + $content-buffer;
     }
   }
 

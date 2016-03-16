@@ -294,7 +294,7 @@
   transform: translateY(-50%);
 }
 
-@function gray($number: 100) {
+@function gray($number: 60) {
   @if map-has-key($grays, $number) {
     @return map-get($grays, $number);
   } @else {

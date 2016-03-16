@@ -11,10 +11,11 @@
   'globals/icons',
   'globals/plugins',
   'globals/tags',
-  'globals/layout/base',
+  'globals/layout/global',
   'globals/layout/content-header',
   'globals/layout/breadcrumbs',
-  'globals/navigation/base',
+  'globals/navigation/global',
+  'globals/navigation/header',
   'globals/navigation/sidenav',
   'globals/navigation/mobilenav',
   'globals/navigation/utility'
@@ -23,7 +24,7 @@
 // Modules
 @import
   'modules/buttons',
-  'modules/tables/base',
+  'modules/tables/global',
   'modules/tables/actions',
   'modules/tables/sorting',
   'modules/tables/filters',

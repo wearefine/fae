@@ -2,27 +2,30 @@
 // Project Specific Variables
 //////////////////////////////
 
-// Project Specific breakpoints
-$breakpoints: (
+// Empty variable for user-defined breakpoints
+$custom-breakpoints: () !default;
+
+// Fae-specific breakpoints
+$fae-breakpoints: (
   // @depreciation - remove page_header_save_block in v2.0
   'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
   'login_submit':           ( min-width: 475px ),
 );
 
-// Merge $fine_breakpoints and $breakpoints to use with bp() mixin
-$breakpoints: map-merge($fine-breakpoints, $breakpoints);
+// Merge $custom-breakpoints, $fae-breakpoints, and Frob Core's $fine-breakpoints to one variable to use with bp() mixin
+$fae-breakpoints: map-merge($fae-breakpoints, $custom-breakpoints);
+$breakpoints: map-merge($fine-breakpoints, $fae-breakpoints);
 
-// widths, padding, margins, and the like
-$content-buffer: 30px;
+// Widths, padding, margins, and the like
+$content-buffer: 30px !default;
+$sidenav-width: 250px !default;
+$sidenav-padding-one-level: 10px !default;
+$sidenav-padding-base-level: $content-buffer !default;
+$sidenav-active-border-width: 7px !default;
 
-$sidenav_width: 250px;
-$sidenav-padding-one-level: 10px;
-$sidenav-padding-base-level: $content-buffer;
-$sidenav-active-border-width: 7px;
-
-// TYPOGRAPHY
-$f-lato: "Lato", $f-sans;
+// Typography
+$f-content: 'Lato', $f-sans !default;
 
 // In order from dark to light
 // These are stacked in 10s so new colors can be easily inserted between if/when this list changes
@@ -39,84 +42,73 @@ $grays: (
 );
 
 // Functional name for colors
-$c-darkest-grey: gray(10);
-$c-dark-grey: gray(20);
-$c-mid-dark-grey: gray(30);
-$c-darker-grey: gray(40);
-$c-mid-grey: gray(50);
-$c-grey: gray(60);
-$c-light-grey: gray(70);
-$c-lightest-grey: gray(80);
-$c-near-white: gray(90);
+$c-darkest-grey: gray(10) !default;
+$c-dark-grey: gray(20) !default;
+$c-mid-dark-grey: gray(30) !default;
+$c-darker-grey: gray(40) !default;
+$c-mid-grey: gray(50) !default;
+$c-grey: gray(60) !default;
+$c-light-grey: gray(70) !default;
+$c-lightest-grey: gray(80) !default;
+$c-near-white: gray(90) !default;
 
-$c-body-bg: $c-near-white;
-$c-text: $c-mid-dark-grey;
-$c-text-sub: $c-darker-grey;
-$c-text-sub-hover: $c-mid-grey;
-$c-text-heavy: $c-darkest-grey;
-$c-box_shadow: $c-mid-grey;
-$c-border: $c-mid-grey;
+// Text
+$c-body-bg: $c-near-white !default;
+$c-text: $c-mid-dark-grey !default;
+$c-text-sub: $c-darker-grey !default;
+$c-text-sub-hover: $c-mid-grey !default;
+$c-text-heavy: $c-darkest-grey !default;
+$c-box_shadow: $c-mid-grey !default;
+$c-border: $c-mid-grey !default;
 
-// header area
-$c-header-bg: $c-darkest-grey;
-$c-header-dropdown-bg: $c-dark-grey;
+// Nav
+$c-header-dropdown-bg: $c-dark-grey !default;
 
-// nav area
-$c-nav-link: $c-dark-grey;
-$c-nav-icons: $c-darker-grey;
-$c-nav-icons-hover: $c-darker-grey;
+// Content Headers
+$c-content-header-bg: $c-white !default;
+$c-content-section-title: $c-lightest-grey !default;
 
-// main_content areas
-$c-content-header-bg: $c-white;
-$c-content-section-title: $c-lightest-grey;
+// Tables
+$c-table-th: $c-grey !default;
+$c-table-tr-even: $c-lightest-grey !default;
+$c-table-td: $c-near-white !default;
+$c-table-tr-hover: $c-white !default;
+$c-table-filter-header: $c-darkest-grey !default;
 
-// tables
-$c-table-th: $c-grey;
-$c-table-tr-even: $c-lightest-grey;
-$c-table-td: $c-near-white;
-$c-table-tr-hover: $c-white;
-$c-tablesorter-icon: $c-darker-grey;
-$c-table-filter-header: $c-darkest-grey;
-$c-table-filter-input: $c-dark-grey;
-
-// forms
-$c-form-submit: $c-white;
-$c-form-submit-gradient-start: $c-darkest-grey;
-$c-form-submit-gradient-end: $c-dark-grey;
-$c-form-button: $c-dark-grey;
-$c-form-button-gradient-start: $c-lightest-grey;
-$c-form-button-gradient-end: $c-light-grey;
-$c-form-file-link-bg: $c-grey;
-$c-form-file-link-bg-hover: $c-grey;
-$c-form-table-bg: $c-light-grey;
-$c-chosen-gradient-start: $c-lightest-grey;
-$c-chosen-gradient-end: $c-light-grey;
-$c-chosen-multi-bg: $c-lightest-grey;
-$c-chosen-multi-text: $c-dark-grey;
-$c-chosen-multi-delete: $c-darker-grey;
-
-$c-markdown-border: $c-grey;
+// Forms
+$c-form-submit: $c-white !default;
+$c-form-submit-gradient-start: $c-darkest-grey !default;
+$c-form-submit-gradient-end: $c-dark-grey !default;
+$c-form-button: $c-dark-grey !default;
+$c-form-button-gradient-start: $c-lightest-grey !default;
+$c-form-button-gradient-end: $c-light-grey !default;
+$c-form-file-link-bg: $c-grey !default;
+$c-form-file-link-bg-hover: $c-grey !default;
+$c-form-table-bg: $c-light-grey !default;
+$c-chosen-gradient-start: $c-lightest-grey !default;
+$c-chosen-gradient-end: $c-light-grey !default;
+$c-chosen-multi-bg: $c-lightest-grey !default;
+$c-chosen-multi-text: $c-dark-grey !default;
+$c-chosen-multi-delete: $c-darker-grey !default;
 
 // Yes / No Sliders
-$c-slider-no-color: $c-mid-grey;
-$c-slider-no-bg: $c-darker-grey;
-$c-slider-border: $c-grey;
+$c-slider-no-color: $c-mid-grey !default;
+$c-slider-no-bg: $c-darker-grey !default;
 
 // Modal
-$c-modal-overlay-bg: $c-mid-grey;
-$c-modal-bg: $c-dark-grey;
-$c-modal-text: $c-darker-grey;
+$c-modal-overlay-bg: $c-mid-grey !default;
+$c-modal-bg: $c-dark-grey !default;
+$c-modal-text: $c-darker-grey !default;
 
-// login page
-$c-login-footer-all: $c-darker-grey;
-$c-login-box_shadow: $c-mid-grey;
+// Login
+$c-login-footer-all: $c-darker-grey !default;
 
 // Notices and Errors
-$c-notice-bg: #d8f0d0;
-$c-notice-content: #4c884e;
-$c-warning-bg: #f7f2c8;
-$c-warning-content: #ca953a;
-$c-error-bg: #f6cfcf;
-$c-error-content: #b75553;
+$c-notice-bg: #d8f0d0 !default;
+$c-notice-content: #4c884e !default;
+$c-warning-bg: #f7f2c8 !default;
+$c-warning-content: #ca953a !default;
+$c-error-bg: #f6cfcf !default;
+$c-error-content: #b75553 !default;
 
-$mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+$mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940) !default;

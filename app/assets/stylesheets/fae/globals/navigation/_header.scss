@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   padding: 0 $content-buffer;
-  background: $c-header-bg;
+  background: $c-darkest-grey;
   text-align: center;
   z-index: 1;
 
@@ -104,29 +104,6 @@
       &:hover {
         background: none;
       }
-    }
-  }
-}
-
-/////////////////////////////////////////////
-// Shared styles b/w mobilenav and sidenav //
-/////////////////////////////////////////////
-
-.nav {
-  top: 0;
-  left: 0;
-  width: $sidenav_width;
-  height: 100%;
-  font-size: 15px;
-  overflow: auto;
-
-  a {
-    display: block;
-    color: $c-text;
-    position: relative;
-
-    &:hover {
-      color: $c-nav-link;
     }
   }
 }

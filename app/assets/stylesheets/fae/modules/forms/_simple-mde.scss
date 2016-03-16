@@ -13,7 +13,7 @@
   .CodeMirror-wrap {
     @include transition(border-color .2s);
     border-color: $c-mid-grey;
-    border-top-color: $c-markdown-border;
+    border-top-color: $c-grey;
   }
 
   &.mde-focus {

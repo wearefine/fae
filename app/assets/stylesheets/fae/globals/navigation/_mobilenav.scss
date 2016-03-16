@@ -1,7 +1,7 @@
 .mobilenav {
   @include transition($mobilenav-transition);
   position: fixed;
-  margin-left: negate($sidenav_width);
+  margin-left: negate($sidenav-width);
 
   a {
     // Right padding prevents text from running over arrow
@@ -13,9 +13,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: $sidenav_width;
+    width: $sidenav-width;
     height: 100%;
-    margin-left: negate($sidenav_width);
+    margin-left: negate($sidenav-width);
     overflow: auto;
     padding: 0 5px 10px 0;
     background: $c-body-bg;
@@ -89,7 +89,7 @@
 .mobile-active {
   body,
   .main-header {
-    margin-left: $sidenav_width;
+    margin-left: $sidenav-width;
   }
 
   .mobilenav {
