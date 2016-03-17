@@ -1,4 +1,5 @@
 .sidenav {
+  @include stack($fae-nav-stack);
   position: absolute;
 
   @include bp(large-down) {
@@ -22,6 +23,12 @@
           padding-right: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
         }
       }
+    }
+  }
+
+  ~ .content {
+    @include bp(large) {
+      padding-left: $sidenav-width;
     }
   }
 }

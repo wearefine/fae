@@ -1,17 +1,5 @@
-::-webkit-input-placeholder {
-   color: $c-mid-grey;
-}
-
-:-moz-placeholder {
-   color: $c-mid-grey;
-}
-
-::-moz-placeholder {
-   color: $c-mid-grey;
-}
-
-:-ms-input-placeholder {
-   color: $c-mid-grey;
+@include placeholder {
+  color: $c-mid-grey;
 }
 
 .input {

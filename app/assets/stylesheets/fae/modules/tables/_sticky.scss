@@ -1,8 +1,8 @@
 // sticky table header
-.sticky-table-header--hidden {
+.sticky-table-header {
+  @include stack($fae-nav-stack);
   position: fixed;
   top: 70px;
-  z-index: 1;
   display: none;
   border-top: 0;
   border-bottom: 0;

@@ -19,13 +19,6 @@
 .content {
   padding: 30px $content-buffer 60px;
 
-  @include bp(large) {
-    .index &,
-    .home & {
-      padding-left: $sidenav-width + $content-buffer;
-    }
-  }
-
   &.-bottom-shim {
     padding-bottom: 150px;
   }
@@ -42,19 +35,6 @@
     color: $c-text-heavy;
     margin-bottom: 20px;
   }
-}
-
-.js-sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1005;
-  border-bottom: 1px solid $c-border;
-  opacity: .95;
-}
-
-.js-sticky-placeholder {
-  visibility: hidden;
 }
 
 .main-footer {

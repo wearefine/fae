@@ -40,6 +40,15 @@
 }
 
 // content secitons
+
+.sidenav {
+  ~ .main_content-sections {
+    @include bp(large) {
+      padding-left: $sidenav-width;
+    }
+  }
+}
+
 .main_content-section {
   width: 100%;
 
