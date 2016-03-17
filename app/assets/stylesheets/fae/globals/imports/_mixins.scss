@@ -19,7 +19,7 @@
 }
 
 @mixin ghost-center() {
-  content: "";
+  content: '';
   display: inline-block;
   vertical-align: middle;
   height: 100%;
@@ -51,7 +51,7 @@
   transform-origin: $h $v;
 }
 
-@mixin gradient-vertical($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+@mixin gradient-vertical($start-color: $c-form-button, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
   background-image: -webkit-gradient(linear, left $start-percent, left $end-percent, from($start-color), to($end-color));
   background-image: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
   background-image:  -moz-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
@@ -60,17 +60,8 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0);
 }
 
-@mixin gradient-horizontal($start-color: #555, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
-  background-image: -webkit-gradient(linear, $start-percent top, $end-percent top, from($start-color), to($end-color));
-  background-image: -webkit-linear-gradient(left, color-stop($start-color $start-percent), color-stop($end-color $end-percent));
-  background-image: -moz-linear-gradient(left, $start-color $start-percent, $end-color $end-percent);
-  background-image:  linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=1);
-}
-
 // quick mixin for using icon font in :before :after
-@mixin icon_stuff {
+@mixin icon-stuff {
   font-family: 'icons';
   speak: none;
   font-style: normal;
@@ -85,7 +76,7 @@
 }
 
 @mixin secondary-header {
-  padding: 17px $g-content-buffer;
+  padding: 17px $content-buffer;
   color: $c-text-heavy;
   background: $c-content-section-title;
   border-top: 1px solid $c-border;
@@ -93,5 +84,5 @@
   font-size: 14px;
   letter-spacing: .2em;
   // counters the padding from .content
-  margin: 0 negate($g-content-buffer) 30px;
+  margin: 0 negate($content-buffer) 30px;
 }

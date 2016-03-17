@@ -19,16 +19,15 @@ html {
 }
 
 body {
-  @include transition($mobile-menu-transition);
-  padding-top: 55px;
+  @include transition($mobilenav-transition);
   height: 100%;
-  font-family: $f-lato;
+  font-family: $f-content;
   font-size: 16px;
   color: $c-text;
   background: $c-body-bg;
 
-  @include bp(large) {
-    padding-top: 0;
+  @include bp(large-down) {
+    padding-top: 45px;
   }
 }
 
@@ -58,4 +57,8 @@ h3 {
 img {
   max-width: 100%;
   height: auto;
+}
+
+strong {
+  font-weight: bold;
 }

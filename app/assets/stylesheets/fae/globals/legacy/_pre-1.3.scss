@@ -1,5 +1,5 @@
 // This legacy file is to preserve style for apps pre-1.3
-// This file should be deleted ENTIRELY in v2.0
+// @depreciation - This file should be deleted ENTIRELY in v2.0 (TS)
 
 .main_table-header-modified {
   width: 200px;
@@ -40,6 +40,15 @@
 }
 
 // content secitons
+
+.sidenav {
+  ~ .main_content-sections {
+    @include bp(large) {
+      padding-left: $sidenav-width;
+    }
+  }
+}
+
 .main_content-section {
   width: 100%;
 
@@ -95,6 +104,126 @@
   }
 }
 
+// content header
+.main_content-header {
+  @include clearfix;
+  width: 100%;
+  padding: 15px $content-buffer;
+  background: $c-content-header-bg;
+  border-bottom: 1px solid $c-border;
+
+  h1 {
+    padding: 5px 0;
+    font-weight: bold;
+
+    @include bp(large) {
+      float: left;
+    }
+  }
+}
+
+.main_content-header-wrapper {
+  @include clearfix;
+  position: relative;
+}
+
+.main_content-breadcrumbs {
+  padding-bottom: 5px;
+}
+
+.main_content-header-save,
+.main_content-header-csv {
+  margin-top: 30px;
+
+  @include bp(medium) {
+    position: absolute;
+    right: 30px;
+    bottom: 22px;
+    margin-top: 0;
+  }
+
+  @include bp(page_header_save_block) {
+    position: relative;
+    top: 0;
+    padding-bottom: 10px;
+  }
+
+  .main_content-header-section + & {
+    margin-bottom: 30px;
+  }
+}
+
+.main_content-header-csv {
+  @include bp(medium) {
+    right: 155px;
+  }
+}
+
+.main_content-header-save {
+  a:not(.add-button) {
+    @extend %gray-button;
+    font-size: 13px;
+    margin-right: 5px;
+  }
+
+  input[type=submit] {
+    padding: 10px 14px 11px;
+  }
+
+  .clone-button{
+    font-size: 13px;
+    margin-left: 5px;
+  }
+}
+
+.main_content-header-section-links {
+  margin-top: 5px;
+
+  @include bp(large) {
+    margin-bottom: -15px;
+  }
+
+  a {
+    @include transition(all .2s);
+    display: inline-block;
+    vertical-align: top;
+    padding: 8px 0;
+    border-bottom: 5px solid $c-content-header-bg;
+    margin: 0 8px;
+    font-size: 13px;
+    color: $c-text-sub;
+
+    &:hover {
+      color: $c-text-heavy;
+      border-bottom-color: $c-custom-highlight;
+    }
+  }
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+
+    &:first-child {
+      a {
+        margin-left: 0;
+      }
+    }
+
+    &.-active {
+      a {
+        color: $c-text-heavy;
+        border-bottom-color: $c-custom-highlight;
+      }
+    }
+  }
+}
+
+.content-header-buttons {
+  ~ .main_content-header-save {
+    display: none;
+  }
+}
+
 
 ///////////////////////////////
 // Elements not found in Fae //
@@ -137,7 +266,7 @@
   width: 150px;
   padding: 10px 0;
   opacity: 0;
-  background: $c-table-action_menu-bg;
+  background: $c-white;
   box-shadow: 0 0 5px 1px $c-box_shadow;
 
   li {
@@ -147,7 +276,7 @@
     cursor: pointer;
 
     &:hover {
-      background: $c-table-action_menu-link-bg;
+      background: $c-white;
     }
   }
 
@@ -200,7 +329,7 @@
 
   &:after {
     @extend .icon-arrow_down:before;
-    @include icon_stuff;
+    @include icon-stuff;
     vertical-align: middle;
     font-size: 5px;
     color: $c-text-sub;
@@ -208,7 +337,7 @@
 
   &:hover {
     &:after, .icon-settings {
-      color: $c-grey;
+      color: $c-mid-dark-grey;
     }
   }
 
@@ -244,7 +373,7 @@
 .button-dropdown--opened.button-dropdown--opened {
   &:after,
   .icon-settings {
-    color: $c-grey;
+    color: $c-mid-dark-grey;
   }
 
   .button-dropdown-menu {
@@ -265,13 +394,21 @@
   }
 
   .error {
-    @extend %alerts;
+    padding: 20px;
+    border-style: solid;
+    border-left-width: 3px;
     border-color: $c-warning-content;
     background: $c-warning-bg;
     color: $c-warning-content;
 
     &:before {
       @extend .icon-alert:before;
+      @include icon-stuff;
+      margin-right: 10px;
+    }
+
+    + .content.content {
+      padding-top: 0;
     }
   }
 }
@@ -305,7 +442,7 @@
     min-width: 35px;
     border: 1px solid $c-border;
     text-align: center;
-    color: $c-grey;
+    color: $c-mid-dark-grey;
 
     &:hover {
       color: $c-white;
@@ -322,7 +459,58 @@
     min-width: 35px;
     border: 1px solid $c-border;
     text-align: center;
-    color: $c-grey;
-    background: $c-lightest_grey;
+    color: $c-mid-dark-grey;
+    background: $c-lightest-grey;
+  }
+}
+
+.sidenav-third-link {
+  @include bp(large) {
+    padding: 10px 10px 10px 30px;
+  }
+}
+
+.form_content-wrapper-visible {
+  padding: 30px;
+  border: 1px solid $c-border;
+  border-top: 0;
+  background: $c-form-table-bg;
+
+  .input {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
+  }
+
+  .select .chosen-container-single .chosen-single {
+    padding: 8px 15px;
+  }
+}
+
+.form_content-wrapper-visible-complex {
+  padding: 30px;
+  border: 1px solid $c-border;
+  border-top: 0;
+  background: $c-form-table-bg;
+
+  .select .chosen-container-single .chosen-single {
+    padding: 8px 15px;
+  }
+}
+
+.table-add-link-visible {
+  float: right;
+  font-size: 12px;
+}
+
+.main_content-header-delete {
+  color: #ce0202;
+  margin-right: 20px;
+
+  &:before {
+    @include icon-stuff;
+    @extend .icon-delete_x:before;
+    font-size: 12px;
+    margin-right: 6px;
   }
 }

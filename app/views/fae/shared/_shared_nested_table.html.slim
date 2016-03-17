@@ -2,7 +2,7 @@ ruby:
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb
-  table_class = ordered ? 'main_content-sortable' : ''
+  table_class = ordered ? 'main_content-sortable' : nil
 
   options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
 
@@ -12,7 +12,7 @@ table class=table_class
       - if ordered
         th.th-sortable-handle
       - if has_thumb
-        th.main_content-thumb-col
+        th.-thumb
       - cols.each do |col|
         = th_columns(col)
       - if edit_column
@@ -22,7 +22,7 @@ table class=table_class
     - records = index ? @items : parent_item.send(assoc)
     - if records.present?
       - records.each do |item|
-        tr id="#{ tr_id(item) }"
+        tr id=tr_id(item)
           - if ordered
             td.sortable-handle
               span.icon-sort
@@ -41,10 +41,10 @@ table class=table_class
     - else
       tr
         - if index
-          - td_link = link_to "add some", self.send(new_path), class: 'js-add-link'
+          - td_link = link_to 'add some', self.send(new_path), class: 'js-add-link'
         - else
-          - td_link = link_to "add some", self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link'
+          - td_link = link_to 'add some', self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link'
 
-        td colspan=colspan.to_s == "No #{title} yet, #{td_link}."
+        td colspan=colspan.to_s No #{title} yet, #{td_link}.
 
 .js-addedit-form-wrapper

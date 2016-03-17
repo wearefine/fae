@@ -4,12 +4,12 @@
 <div class="main_content-sections">
   <section class="main_content-section">
     <div class="content">
-      <table class="main_content-sortable sticky-table-header">
+      <table class="main_content-sortable">
         <thead>
           <tr>
             <th class="th-sortable-handle"></th>
-            <th class="main_content-header-name">Name</th>
-            <th class="main_content-thumb-col">Image</th>
+            <th>Name</th>
+            <th class="-thumb">Image</th>
             <th class="-modified">Modified</th>
             <th class="-live" data-sorter="false">On Stage</th>
             <th class="-live" data-sorter="false">On Prod</th>
@@ -22,9 +22,9 @@
               <td class="sortable-handle">
                 <span class="icon-sort"></span>
               </td>
-              <td class="main_table-name"><%= link_to item.name, edit_admin_person_path(item.id) %></td>
-              <td class="main_table-image"><%= image_tag item.image.asset.thumb.url if item.image.present? %></td>
-              <td class="main_table-modified"><%= fae_date_format item.updated_at %></td>
+              <td><%= link_to item.name, edit_admin_person_path(item.id) %></td>
+              <td><%= image_tag item.image.asset.thumb.url if item.image.present? %></td>
+              <td class="-modified"><%= fae_date_format item.updated_at %></td>
               <td><%= fae_toggle item, :on_stage %></td>
               <td><%= fae_toggle item, :on_prod %></td>
               <td class="-delete"><%= fae_delete_button item %></td>

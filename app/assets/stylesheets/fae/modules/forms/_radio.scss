@@ -47,7 +47,7 @@
 
     &:before {
       @include transform( translate(-50%, -50%) );
-      content: "";
+      content: '';
       display: block;
       position: absolute;
       top: 50%;

@@ -1,0 +1,43 @@
+header.main-header#js-main-header.js-nav
+  span.mobilenav-toggle.icon-menu#js-mobilenav-toggle
+  h1: a href=root_path = @option.title
+
+  - if @fae_topnav_items.present?
+    nav
+      ul.main-header-nav
+        - @fae_topnav_items.each do |item|
+          li.js-main-header-parent
+            a href=item[:path] = item[:text]
+            - if item[:subitems]
+              ul
+                - item[:subitems].each do |subitem|
+                  li: a href=subitem[:nested_path] = subitem[:text]
+
+
+  - if user_signed_in?
+    ul.utility-nav#js-utility-nav
+      li.utility-dropdown.js-utility-dropdown
+        a.grabatar-link href="#"
+          / TODO - grabatar here
+          .grabatar
+        ul
+          li: a href=fae.destroy_user_session_path Log Out
+          li: a href=fae.settings_path Your Settings
+
+      li class="#{'utility-dropdown js-utility-dropdown' if @option.stage_url.present?}"
+        a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
+          i.icon-settings
+        - if @option.stage_url.present?
+          ul
+            li: a href=@option.live_url target="_blank" Live Site
+            li: a href=@option.stage_url target="_blank" Stage Site
+
+      li
+        a href=fae.help_path
+          i.icon-support
+
+      li.utility-dropdown.utility-search.js-utility-dropdown#js-utility-search
+        a href="#": i.icon-search
+
+        .utility-search-wrapper
+          input#js-search type="text"

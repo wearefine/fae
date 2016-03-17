@@ -15,13 +15,13 @@
 
     &:before {
       @extend .icon-alert;
-      @include icon_stuff;
+      @include icon-stuff;
       padding-right: 10px;
     }
 
     &:after {
       @include right-triangle(10px, $c-error-bg);
-      content: "";
+      content: '';
       position: absolute;
       bottom: -8px;
       left: 0;
@@ -41,15 +41,9 @@
   .valid {
     border: 1px solid $c-notice-content !important;
   }
+
   .invalid {
     border: 1px solid $c-error-content !important;
-  }
-
-  .editor-toolbar {
-    border-bottom: 0 !important;
-  }
-  .CodeMirror-wrap {
-    border-top-color: #ddd !important;
   }
 }
 

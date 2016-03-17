@@ -25,7 +25,7 @@
                 <td class="sortable-handle">
                   <span class="icon-sort"></span>
                 </td>
-                <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_selling_point_path(item) %></td>
+                <td><%= link_to item.fae_display_field, edit_admin_selling_point_path(item) %></td>
                 <td><%= fae_date_format item.updated_at %></td>
                 <td><%= fae_toggle item, :on_stage %></td>
                 <td><%= fae_toggle item, :on_prod %></td>

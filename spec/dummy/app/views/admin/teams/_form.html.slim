@@ -1,8 +1,6 @@
 = simple_form_for(['admin', @item]) do |f|
-  section.main_content-header
-    .main_content-header-wrapper
-      = render 'fae/shared/form_header', header: @klass_name
-      = render 'fae/shared/form_buttons'
+  header.content-header.js-content-header
+    = render 'fae/shared/form_header', header: @klass_name
 
   section.content
     = fae_input f, :name

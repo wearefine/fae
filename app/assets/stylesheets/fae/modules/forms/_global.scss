@@ -22,18 +22,6 @@ input[type=email] {
   margin-bottom: 20px;
 }
 
-.main_content-header-delete {
-  color: #ce0202;
-  margin-right: 20px;
-
-  &:before {
-    @include icon_stuff;
-    @extend .icon-delete_x:before;
-    font-size: 12px;
-    margin-right: 6px;
-  }
-}
-
 .js-addedit-form {
   h3 {
     @extend label;
@@ -81,37 +69,4 @@ input[type=email] {
 
 .table-add-link {
   float: right;
-}
-
-.table-add-link-visible {
-  float: right;
-  font-size: 12px;
-}
-
-.form_content-wrapper-visible {
-  padding: 30px;
-  border: 1px solid $c-border;
-  border-top: 0;
-  background: $c-form-table-bg;
-
-  .input {
-    display: inline-block;
-    vertical-align: top;
-    margin: 0;
-  }
-
-  .select .chosen-container-single .chosen-single {
-    padding: 8px 15px;
-  }
-}
-
-.form_content-wrapper-visible-complex {
-  padding: 30px;
-  border: 1px solid $c-border;
-  border-top: 0;
-  background: $c-form-table-bg;
-
-  .select .chosen-container-single .chosen-single {
-    padding: 8px 15px;
-  }
 }

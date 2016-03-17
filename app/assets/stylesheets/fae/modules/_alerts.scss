@@ -1,5 +1,17 @@
+.flash-message {
+  border-style: solid;
+  border-left-width: 3px;
+  margin: 0 auto;
+  padding: 20px;
+  width: calc(100% - #{$content-buffer * 2});
+
+  &:before {
+    @include icon-stuff;
+    margin-right: 10px;
+  }
+}
+
 .notice {
-  @extend %alerts;
   border-color: $c-notice-content;
   background: $c-notice-bg;
   color: $c-notice-content;
@@ -10,21 +22,9 @@
 }
 
 .alert {
-  @extend %alerts;
   border-color: $c-error-content;
   background: $c-error-bg;
   color: $c-error-content;
-
-  &:before {
-    @extend .icon-alert:before;
-  }
-}
-
-.main-content > .error {
-  @extend %alerts;
-  border-color: $c-warning-content;
-  background: $c-warning-bg;
-  color: $c-warning-content;
 
   &:before {
     @extend .icon-alert:before;

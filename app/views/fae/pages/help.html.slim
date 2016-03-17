@@ -1,7 +1,8 @@
 = render 'fae/shared/index_header', title: 'Need some help?', new_button: false
+
 section.help-section
-  h2 Contact Us
-  .content
+  article.content
+    h2 Contact Us
     p
       strong> Phone:
       | 503.243.3463
@@ -12,9 +13,9 @@ section.help-section
       strong> Website:
       a href="http://www.wearefine.com" target="_blank" wearefine.com
 
-section.help-section
-  h2 Reporting A Bug?
-  .content
+  article.content
+    h2 Reporting A Bug?
+
     h3 Please include this helpful information:
     p
       strong Version: Fae v #{Fae::VERSION}
