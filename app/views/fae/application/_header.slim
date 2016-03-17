@@ -11,7 +11,7 @@ header.main-header#js-main-header
             - if item[:subitems]
               ul
                 - item[:subitems].each do |subitem|
-                  li: a href=subitem[:path] = subitem[:text]
+                  li: a href=subitem[:nested_path] = subitem[:text]
 
 
   - if user_signed_in?
