@@ -163,16 +163,15 @@ $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intr
 
 ## Language Nav Partial
 
-Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.main_content-header`:
+Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.content-header`:
 
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  section.main_content-header
-
+  section.content-header.js-content-header
+    
     == render 'fae/shared/language_nav'
 
-    .main_content-header-wrapper
     // ...
 ```
 
@@ -365,10 +364,6 @@ Fae provides a partial to display tracked changes in an object's form. Read more
 
 # CSS Classes
 
-## Fixed position table headers
-
-For extra long tables, add the class `sticky-table-header` to a `table` and scroll away. Multiple sticky tables can appear on one page.
-
 ## Collapsible tables
 
 ![Collapsible](images/collapsible.gif)
@@ -428,10 +423,10 @@ td = fae_clone_button item
 
 #### For Form
 
-Simply pass `cloneable: true` into your form_buttons partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
+Simply pass `cloneable: true` into your form_header partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
 
 ```ruby
-  render 'fae/shared/form_buttons', cloneable: true, clone_button_text: 'Duplicate Me!'
+  render 'fae/shared/form_header', cloneable: true, clone_button_text: 'Duplicate Me!'
 ```
 
 That's all for basic set-up.
@@ -507,13 +502,11 @@ In your form view nest the optional fields, and add some classes for js and sass
 = simple_form_for(['admin', @item]) do |f|
   ...
 
-  .main_content-sections
-    section.main_content-section
-      .content
-        = fae_input f, :name
-        = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
-        .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")
-          = fae_input f, :slug, label_html: { class: 'is_required_and_hidden'}
+  .content
+    = fae_input f, :name
+    = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
+    .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")
+      = fae_input f, :slug, label_html: { class: 'is_required_and_hidden'}
 ```
 
 Update Judge so that judge loads your custom `EachValidtor` on the FE.

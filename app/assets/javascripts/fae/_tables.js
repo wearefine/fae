@@ -36,19 +36,16 @@ Fae.tables = {
       this.rowSorting(sort_selector);
     }
 
-    if (FCH.exists('.sticky-table-header')) {
-      this.stickyTableHeader();
-    }
+    this.stickyTableHeader();
 
     if (FCH.exists('.collapsible')) {
       this.collapsibleTable();
     }
 
+    // @depreciation - remove conditional wrapping and call endingSelectShim like `this.endingSelectShim()` in v2.0
     if (FCH.exists('form ' + Fae.content_selector)) {
       this.endingSelectShim(Fae.content_selector);
     }
-
-    this.addToTable();
   },
 
   /**
@@ -131,9 +128,8 @@ Fae.tables = {
    * @has_test {requests/fae_table_sort_spec.rb}
    */
   sortColumnsFromCookies: function() {
-    var _this = this;
     var path = window.location.pathname;
-    var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
+    var cookie_value = Cookies.getJSON(this.sort_cookie_name);
 
     // Exit early if sort cookie is nothing or there's no cookie at the present path
     if (!cookie_value || $.isEmptyObject(cookie_value) || !cookie_value[path] || $.isEmptyObject(cookie_value[path])) {
@@ -152,17 +148,16 @@ Fae.tables = {
   /**
    * Make table rows draggable by user
    * @param {String} sort_selector - handle selector
-   * @depreciation remove sort_selector arg in v2.0
+   * @depreciation - remove sort_selector arg in v2.0
    */
   rowSorting: function(sort_selector) {
-    var content_selector = '.main_content-sortable';
-
-    $(content_selector).sortable({
+    $('.main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,
+      // @depreciation - replace sort_selector with '.sortable-handle' in v2.0
       handle: (sort_selector),
 
-      //helper funciton to preserve the width of the table row
+      //helper function to preserve the width of the table row
       helper: function(e, $tr) {
         var $originals = $tr.children();
         var $helper = $tr.clone();
@@ -231,6 +226,8 @@ Fae.tables = {
 
       }
 
+      Fae.tables.sizeFixedHeader();
+
       $this.toggleClass('close-all');
     });
 
@@ -258,13 +255,15 @@ Fae.tables = {
           $toggle.removeClass('close-all');
         }
       }
+
+      Fae.tables.sizeFixedHeader();
     });
   },
 
   /**
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
    * @param {String} selector - Last of type element to target
-   * @deprecation remove selector arg in v2.0
+   * @deprecation remove selector arg and replace selector variable with '.content' in v2.0
    */
   endingSelectShim: function(selector) {
     $('form ' + selector + ':last-of-type').each(function() {
@@ -280,18 +279,15 @@ Fae.tables = {
    * Fix a table header to the top of the view on scroll
    */
   stickyTableHeader: function() {
-    var $sticky_tables = $('.sticky-table-header');
-    var sticky_table_header_selector = '.sticky-table-header--hidden';
-    var $window = $(window);
+    var $sticky_tables = $('.content table:not(.stuck-table)');
 
     // Add sticky psuedo tables after our main table to hold the fixed header
     $sticky_tables.each(function() {
       var $this = $(this);
       var $header = $this.find('thead').clone();
-      var new_classes = $this.attr('class').replace('sticky-table-header', sticky_table_header_selector.substr(1));
 
       var $fixedHeader = $('<table />', {
-        class: new_classes
+        class: 'sticky-table-header stuck-table'
       });
 
       $fixedHeader.append( $header );
@@ -300,12 +296,12 @@ Fae.tables = {
 
     /**
      * FCH callback for scroll - If the table header is in range, show it, otherwise hide it
-     * @access private
+     * @private
      */
-    var stickyTableHeaderScroll = function() {
+    function stickyTableHeaderScroll() {
       var offset = FCH.$window.scrollTop();
 
-      $('.sticky-table-header--hidden').each(function() {
+      $('.sticky-table-header').each(function() {
         var $this = $(this);
         var tableOffset = $this.data('table-offset');
         var tableBottom = $this.data('table-bottom');
@@ -316,70 +312,60 @@ Fae.tables = {
           $this.hide();
         }
       });
-    };
+    }
 
-    /**
-     * FCH callback for resize and load - Get all values squared away again if the viewport gets smaller
-     * @access private
-     */
-    var sizeTableHeader = function() {
-      $sticky_tables.each(function() {
-        Fae.tables.sizeFixedHeader($(this));
-      });
-    };
-
-    FCH.load.push(sizeTableHeader);
-    FCH.resize.push(sizeTableHeader);
+    FCH.load.push( Fae.tables.sizeFixedHeader );
+    FCH.resize.push( Fae.tables.sizeFixedHeader );
     FCH.scroll.push(stickyTableHeaderScroll);
   },
 
   /**
    * Cache offset and height values to spare expensive calculations on scroll
-   * @param {jQuery} $this
    */
-  sizeFixedHeader: function($this) {
-    var headerHeight = $('.main_content-header').outerHeight();
+  sizeFixedHeader: function() {
+    var $tables = $('.content table');
+    // @depreciation - change value from ternary to $('.js-content-header').outerHeight() in v2.0
+    var header_height = FCH.exists('.js-content-header') ? $('.js-content-header').outerHeight() : $('.main_content-header').outerHeight();
     if(FCH.large_down) {
-      headerHeight = $('#js-main-header').outerHeight();
+      header_height = $('#js-main-header').outerHeight();
     }
 
-    var tableOffset = $this.offset().top - headerHeight;
-    var theadHeight = $this.find('thead').outerHeight();
-    var bottomOffset = $this.height() + tableOffset - theadHeight;
-    var $fixedHeader = $this.next('.sticky-table-header--hidden');
+    /**
+     * Add offset and height values per each table
+     * @private
+     */
+    function applyOffset() {
+      var $this = $(this);
 
-    // For whatever reason IE9 does not pickup the .sticky plugin
-    if(!$('.js-will-be-sticky').length) {
-      tableOffset += headerHeight;
-      headerHeight = 0;
+      var tableOffset = $this.offset().top - header_height;
+      var theadHeight = $this.find('thead').outerHeight();
+      var bottomOffset = $this.height() + tableOffset - theadHeight;
+      var $fixedHeader = $this.next('.sticky-table-header');
+
+      // For whatever reason IE9 does not pickup the .sticky plugin
+      if(!FCH.exists('.js-will-be-sticky')) {
+        tableOffset += header_height;
+        header_height = 0;
+      }
+
+      $fixedHeader.data({
+        'table-offset' : tableOffset,
+        'table-bottom' : bottomOffset
+      });
+
+      $fixedHeader.css({
+        width: $this.outerWidth(),
+        height: theadHeight,
+        top: header_height,
+      });
+
+      $this.find('thead tr th').each(function(index){
+        var original_width = $(this).outerWidth()
+        // Using .width() as a setter is bunk
+        $($fixedHeader.find('tr > th')[index]).css('width', original_width);
+      });
     }
 
-    $fixedHeader.data({
-      'table-offset' : tableOffset,
-      'table-bottom' : bottomOffset
-    });
-
-    $fixedHeader.css({
-      width: $this.outerWidth(),
-      height: theadHeight,
-      top: headerHeight,
-    });
-
-    $this.find('thead tr th').each(function(index){
-      var original_width = $(this).outerWidth()
-      // Using .width() as a setter is bunk
-      $($fixedHeader.find('tr > th')[index]).css('width', original_width);
-    });
-  },
-
-  /**
-   * Scroll_to event for non-ajax'd table forms
-   */
-  addToTable: function() {
-    $('.table-add-link-visible').click('on', function(){
-      var $parent = $(this).closest('section');
-
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
-    });
+    $tables.each( applyOffset );
   }
 };

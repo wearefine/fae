@@ -8,19 +8,16 @@
   &:before {
     content: '';
     position: absolute;
-    left: $main_nav_width - 10px;
+    left: $sidenav-width - 10px;
     top: 0;
     width: 10px;
     height: 100%;
   }
 
-  @include bp(large) {
-    padding-left: $main_nav_width;
-  }
 }
 
 .content {
-  padding: 30px $g-content-buffer 60px;
+  padding: 30px $content-buffer 60px;
 
   &.-bottom-shim {
     padding-bottom: 150px;
@@ -40,25 +37,11 @@
   }
 }
 
-.js-sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1005;
-  border-bottom: 1px solid $c-border;
-  opacity: .95;
-}
-
-.js-sticky-placeholder {
-  margin-left: -1px;
-  visibility: hidden;
-}
-
 .main-footer {
-  padding: 10px $g-content-buffer 30px;
+  padding: 10px $content-buffer 30px;
   text-align: right;
   font-size: 14px;
-  color: $c-grey;
+  color: $c-mid-dark-grey;
 
   span {
     display: inline-block;
@@ -86,6 +69,6 @@
 
   path {
     @include transition(fill 0.2s);
-    fill: $c-grey;
+    fill: $c-mid-dark-grey;
   }
 }

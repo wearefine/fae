@@ -519,21 +519,17 @@ end
 `app/views/fae/pages/about_us.html.slim`
 ```ruby
 = simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
-  section.main_content-header
-    .main_content-header-wrapper
-      = render 'fae/shared/form_header', header: @item
-      = render 'fae/shared/form_buttons', f: f
+  header.content-header
+    = render 'fae/shared/form_header', header: @item, f: f
 
-  .main_content-sections
-    section.main_content-section
-      .content
-        = fae_input f, :title
+  .content
+    = fae_input f, :title
 
-        = fae_image_form f, :hero_image
-        = fae_content_form f, :hero_text
-        = fae_content_form f, :introduction
-        = fae_content_form f, :body
-        = fae_file_form f, :annual_report
+    = fae_image_form f, :hero_image
+    = fae_content_form f, :hero_text
+    = fae_content_form f, :introduction
+    = fae_content_form f, :body
+    = fae_file_form f, :annual_report
 ```
 
 Since this is the first page the generator will create `app/controllers/admin/content_blocks_controller.rb`, otherwise it would just add to the `fae_pages` array.
@@ -623,7 +619,7 @@ end
 * in the nested table arguments, instead of making the `parent_item` argument item virtual (which is just the instance of the `AboutUsPage`, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
 
 ```ruby
- section.main_content-section
+ section.content
   = render 'fae/shared/nested_table',
     assoc: :promos,
     parent_item: Fae::StaticPage.find_by_id(@item.id),

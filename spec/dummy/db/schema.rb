@@ -111,7 +111,8 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.boolean  "required",                  default: false
   end
 
-  add_index "fae_files", ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type", using: :btree
+  add_index "fae_files", ["attached_as"], name: "index_fae_files_on_attached_as", using: :btree
+  add_index "fae_files", ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id", using: :btree
 
   create_table "fae_images", force: :cascade do |t|
     t.string   "name",           limit: 255
@@ -130,7 +131,8 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.boolean  "required",                   default: false
   end
 
-  add_index "fae_images", ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type", using: :btree
+  add_index "fae_images", ["attached_as"], name: "index_fae_images_on_attached_as", using: :btree
+  add_index "fae_images", ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id", using: :btree
 
   create_table "fae_options", force: :cascade do |t|
     t.string   "title",           limit: 255
@@ -198,7 +200,7 @@ ActiveRecord::Schema.define(version: 20160311225043) do
   end
 
   add_index "fae_text_fields", ["attached_as"], name: "index_fae_text_fields_on_attached_as", using: :btree
-  add_index "fae_text_fields", ["contentable_id", "contentable_type"], name: "index_fae_text_fields_on_contentable_id_and_contentable_type", using: :btree
+  add_index "fae_text_fields", ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable_type_and_contentable_id", using: :btree
   add_index "fae_text_fields", ["on_prod"], name: "index_fae_text_fields_on_on_prod", using: :btree
   add_index "fae_text_fields", ["on_stage"], name: "index_fae_text_fields_on_on_stage", using: :btree
   add_index "fae_text_fields", ["position"], name: "index_fae_text_fields_on_position", using: :btree
@@ -308,17 +310,6 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.datetime "updated_at"
   end
 
-  create_table "tasting_notes", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.boolean  "active"
-    t.integer  "position",   limit: 4
-    t.integer  "release_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
-
   create_table "teams", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "city",       limit: 255
@@ -383,5 +374,4 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
-  add_foreign_key "winemakers", "wines"
 end

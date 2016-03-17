@@ -10,9 +10,10 @@ html
     == csrf_meta_tags
 
   body class=body_class
+    == render 'mobilenav'
     == render 'header'
     section.main-content#js-main-content
-      == render 'nav' if user_signed_in?
+      == render 'sidenav'
 
       == yield
 

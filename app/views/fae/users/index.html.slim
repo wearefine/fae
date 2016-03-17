@@ -1,10 +1,5 @@
-section.main_content-header
-  .main_content-header-wrapper
-    h1 Users
-    .main_content-header-save
-      a.add-button href=new_user_path Add User
-
-== render 'flash_messages'
+- @new_path = new_user_path
+== render 'fae/shared/index_header', title: 'Users', new_button: true, button_text: 'Add User', breadcrumbs: false
 
 main.content
   table.main_table-sort_columns
@@ -20,8 +15,7 @@ main.content
     tbody
       - @users.each do |user|
         tr id="fae_user_#{user.id}"
-          td.main_table-description-item
-            a href=edit_user_path(user) #{user.first_name} #{user.last_name}
+          td: a href=edit_user_path(user) #{user.first_name} #{user.last_name}
           td = user.email
           td = user.role.name
           td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
