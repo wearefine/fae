@@ -37,7 +37,7 @@ $grays: (
   50: #ccc,
   60: #dfdfdf,
   70: #ebebeb,
-  80: #f2f2f2,
+  80: #efefef,
   90: #f7f7f7,
 ) !default;
 
@@ -77,8 +77,8 @@ $c-table-filter-header: $c-darkest-grey !default;
 
 // Forms
 $c-form-submit: $c-white !default;
-$c-form-submit-gradient-start: $c-darkest-grey !default;
-$c-form-submit-gradient-end: $c-dark-grey !default;
+$c-form-submit-gradient-start: $c-dark-grey !default;
+$c-form-submit-gradient-end: $c-darkest-grey !default;
 $c-form-button: $c-dark-grey !default;
 $c-form-button-gradient-start: $c-lightest-grey !default;
 $c-form-button-gradient-end: $c-light-grey !default;
