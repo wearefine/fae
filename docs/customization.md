@@ -366,6 +366,8 @@ Fae provides a partial to display tracked changes in an object's form. Read more
 
 ## Collapsible tables
 
+![Collapsible](images/collapsible.gif)
+
 Some pages have multiple tables that are easier to navigate if tables can be shown or hidden. Wrap each table in a `.collapsible` div and prepend an `h3` with the item's name and count. Example below and on the dummy app's `events/index` page.
 
 ```slim
