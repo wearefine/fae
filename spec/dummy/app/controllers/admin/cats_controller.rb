@@ -8,6 +8,7 @@ module Admin
 
     def new
       @item = Cat.new
+      @item.aroma_id = params[:item_id]
     end
 
     def index
