@@ -14,7 +14,7 @@ input[type=email] {
   max-width: 100%;
 
   &:focus {
-    border-color: $c-custom-highlight;
+    border-color: $c-darker-grey;
   }
 }
 
