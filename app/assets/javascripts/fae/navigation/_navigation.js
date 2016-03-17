@@ -210,18 +210,17 @@ Fae.navigation = {
    * Click event of the admin search in the main nav
    */
   utilitySearch: function() {
+    var $search_wrapper = $('.utility-search-wrapper');
 
-    $('#js-utility-search').click(function(e) {
-      e.preventDefault();
-      e.stopPropagation();
+    $('.js-utility-dropdown').hover(function() {
+      $search_wrapper.hide();
+    });
 
-      var $this = $(this);
-      var $search_wrapper = $this.find('.utility-search-wrapper');
-
+    $('#js-utility-search').click(function() {
       $search_wrapper.toggle();
 
       if($search_wrapper.is(':visible')) {
-        $this.find('input').focus();
+        $search_wrapper.find('input').focus();
       }
 
     });

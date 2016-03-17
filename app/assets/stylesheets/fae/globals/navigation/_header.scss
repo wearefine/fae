@@ -41,6 +41,7 @@
     font-size: 18px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    font-weight: 500;
 
     a {
       color: $c-white;
@@ -50,7 +51,7 @@
   nav {
     display: none;
     vertical-align: middle;
-    margin-left: 20px;
+    margin-left: $content-buffer;
 
     @include bp(large) {
       display: inline-block;
@@ -62,7 +63,7 @@
   @include transition(opacity .2s ease-in-out);
 
   a {
-    @include transition(color 0s);
+    // @include transition(color 0s);
     padding-left: 15px;
     padding-right: 15px;
     color: $c-mid-grey;
@@ -76,8 +77,13 @@
     &:hover,
     &.-current {
       > a {
-        background: $c-custom-highlight;
         color: $c-white;
+      }
+    }
+
+    &.-current {
+      > a {
+        background: $c-custom-highlight;
       }
     }
 

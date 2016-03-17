@@ -23,7 +23,7 @@
     padding-right: 14px;
 
     &:hover {
-      color: $c-text-sub-hover;
+      color: $c-white;
     }
 
     &.grabatar-link {
@@ -67,6 +67,10 @@
     top: 70px;
     z-index: 2;
     font-size: 14px;
+  }
+
+  a {
+    font-size: 13px;
   }
 
   ul {
@@ -114,7 +118,7 @@
 .utility-search-wrapper {
   padding: 14px 16px;
   width: 270px;
-  right: 0;
+  right: negate($content-buffer);
 }
 
 /////////////////////////
