@@ -8,12 +8,12 @@ module Fae
           item('Wines', class: 'custom-class', subitems: wine_subitems),
           item('Releases', path: admin_releases_path),
           item('Attributes', subitems: [
-            item('Varietal', path: admin_varietals_path),
-            item('Selling Point', path: admin_selling_points_path)
+            item('Varietals', path: admin_varietals_path),
+            item('Selling Points', path: admin_selling_points_path)
           ])
         ]),
         item('Events', subitems: [
-          item('Event', path: admin_events_path),
+          item('Events', path: admin_events_path),
           item('Event Hosts', path: admin_people_path),
           item('Locations', path: admin_locations_path)
         ]),
