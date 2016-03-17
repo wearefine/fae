@@ -1,6 +1,7 @@
 .breadcrumbs {
   font-size: 16px;
   color: $c-text-sub;
+  padding: 10px 0; // Vertical align hack. Should be removed in an HTML refactor in v2.0
 
   li {
     display: inline-block;

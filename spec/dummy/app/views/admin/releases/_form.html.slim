@@ -1,17 +1,12 @@
 = simple_form_for(['admin', @item]) do |f|
   header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true
-    ul.content-header-subnav.js-content-header-subnav
-      li: a href="#general_info" Attributes
-      li: a href="#asset_section" Assets
-      li: a href="#associations_section" Associations
-      - if params[:action] == 'edit'
-        li: a href="#aromas_section" Nested Table
-        li: a href="#recent_changes" Recent Changes
+    - subnav_array = ['Attributes', 'Assets', 'Associations']
+    - subnav_array.concat ['Nested Table', 'Recent Changes'] if params[:action] == 'edit'
+    = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true, subnav: subnav_array
 
   = render 'fae/shared/errors'
 
-  section.content#general_info
+  section.content#attributes
     = fae_input f, :name,
       input_class: 'slugger',
       helper_text: 'text input',
@@ -53,7 +48,7 @@
 
     = fae_input f, :created_at, as: :hidden
 
-  section.content#asset_section
+  section.content#assets
     h2 Assets
     = fae_image_form f, :bottle_shot, helper_text: 'image form (w/ alt)', required: true
 
@@ -61,7 +56,7 @@
 
     = fae_file_form f, :label_pdf, helper_text: 'file form'
 
-  section.content#associations_section
+  section.content#associations
     h2 Associations
     = fae_association f, :varietal, helper_text: 'pulldown', input_class: 'slugger'
 
@@ -74,7 +69,7 @@
     = fae_checkbox f, :events, helper_text: 'checkboxes vertical'
 
 - if params[:action] == 'edit'
-  section.content#aromas_section
+  section.content#nested_table
     = render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,

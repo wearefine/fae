@@ -115,15 +115,16 @@
   h1 {
     padding: 5px 0;
     font-weight: bold;
+
+    @include bp(large) {
+      float: left;
+    }
   }
 }
 
 .main_content-header-wrapper {
+  @include clearfix;
   position: relative;
-
-  .content-header-buttons {
-    display: none;
-  }
 }
 
 .main_content-breadcrumbs {
@@ -219,7 +220,7 @@
 
 .content-header-buttons {
   ~ .main_content-header-save {
-    bottom: 0;
+    display: none;
   }
 }
 

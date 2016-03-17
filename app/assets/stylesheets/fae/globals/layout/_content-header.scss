@@ -25,9 +25,7 @@
   h1,
   .breadcrumbs {
     @include bp(large) {
-      display: inline-block;
-      vertical-align: middle;
-      width: 70%;
+      float: left;
     }
   }
 
@@ -39,7 +37,7 @@
 
 .main_content-section-toggles {
   list-style: none;
-  margin: -25px negate($content-buffer) 5px;
+  margin: -16px negate($content-buffer) 5px;
   padding: 0 $content-buffer;
 
   li {
@@ -63,7 +61,10 @@
 }
 
 .content-header-subnav {
-  margin-bottom: -16px;
+  position: absolute;
+  left: $content-buffer;
+  bottom: 0;
+  width: 100%;
 
   a {
     @include transition(all .2s);
@@ -104,10 +105,7 @@
   margin: 10px 0;
 
   @include bp(large) {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: right;
-    width: 30%;
+    float: right;
     margin: 0;
   }
 

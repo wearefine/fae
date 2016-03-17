@@ -26,7 +26,10 @@
     }
   }
 
-  ~ .content {
+  // Index pages
+  ~ .content,
+  // Edit pages
+  ~ .simple_form {
     @include bp(large) {
       padding-left: $sidenav-width;
     }

@@ -1,8 +1,10 @@
-- require_locals ['header'], local_assigns
-- save_button_text   ||= 'Save Settings'
-- cancel_button_text ||= 'Cancel'
-- cloneable          ||= false
-- clone_button_text  ||= 'Clone'
+ruby:
+  require_locals ['header'], local_assigns
+  save_button_text   ||= 'Save Settings'
+  cancel_button_text ||= 'Cancel'
+  cloneable          ||= false
+  clone_button_text  ||= 'Clone'
+  subnav             ||= []
 
 = form_header header
 
@@ -11,3 +13,9 @@
   - if cloneable.present? && params[:id].present?
     a.clone-button#main_content-header-clone data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
   input name="commit" type="submit" value=save_button_text
+
+- if subnav.present?
+  ul.content-header-subnav.js-content-header-subnav
+    - subnav.each do |link, id_selector|
+      - id_selector ||= link.parameterize('_')
+      li: a href="##{link.parameterize('_')}" = link

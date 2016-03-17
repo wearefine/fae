@@ -412,14 +412,11 @@ fae_delete_button item
 
 ## form_header
 
-![Form header](images/form_header.png)
-
 The form_header helper takes an AR object or string to render an `<h1>` based on the action. Can also display breadcrumb links.
 
 | option | type | description |
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
-| breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
 
 **Examples**
 
@@ -474,20 +471,40 @@ render 'fae/shared/index_header', title: 'Something Entirely Different', new_but
 
 ## form_header
 
+![Form header](images/form_header.png)
+
 Displays breadcrumb links and form title.
 
 | option | type | description |
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
-| breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
 | save_button_text (`v1.3 <=`)   | string | 'Save Settings' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
+| 
+| cloneable | boolean | false | includes Clone button |
+| clone_button_text | string | 'Clone' | clone button text |
+| subnav | Array<String> | [] | generates "jump to" anchor links for long forms |
+
+If `subnav` is supplied, sections within the form must include IDs matching the [parameterized](http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize) items. Note that `parameterize` will use `_` as a separator. 
+
+```slim
+- subnav_array = ['SEO']
+- subnav_array.concat ['Nested Image Gallery', 'Recent Changes'] if params[:action] == 'edit'
+= render 'fae/shared/form_header', header: @klass_name, subnav: subnav_array
+
+section.content#attributes
+  ...
+section.content#nested_image_gallery
+  ...
+section.content#recent_changes
+  ...
+```
 
 **Examples**
 
 Standard implementation
 ```ruby
-render 'fae/shared/form_header', header: @item, breadcrumb_text: "Areas of Focus"
+render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery', 'Recent Changes']
 ```
 
 ## form_buttons
@@ -576,15 +593,12 @@ This partial is best placed at the bottom of the form and will automatically hid
 
 Standard implementation
 ```ruby
-render 'fae/shared/recent_changes'
+= render 'fae/shared/recent_changes'
 ```
 
 Optionally, you can add a link to it in the form nav:
 ```slim
-nav.content-header.js-content-header
-  ul.content-header-subnav.js-content-header-subnav
-    - if params[:action] == 'edit'
-      li: a href="#recent_changes" Recent Changes
+= render 'fae/shared/form_header', ..., subnav: [...,  'Recent Changes']
 ```
 
 ---
