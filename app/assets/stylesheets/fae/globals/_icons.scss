@@ -2,6 +2,9 @@
 	@include icon-stuff;
 }
 
+.icon-home:before {
+    content: "\e904";
+}
 .icon-bars:before {
     content: "\e901";
 }
@@ -46,9 +49,6 @@
 }
 .icon-logout:before {
     content: "\e60c";
-}
-.icon-home:before {
-    content: "\e60d";
 }
 .icon-edit:before {
     content: "\e60e";
