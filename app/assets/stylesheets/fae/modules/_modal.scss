@@ -2,7 +2,7 @@
 	@include transition(color .2s);
   margin-left: 5px;
   cursor: pointer;
-  color: $c-light_grey;
+  color: $c-darker-grey;
 
   &:hover {
   	color: $c-text-heavy;
@@ -29,7 +29,7 @@
 	line-height: 1.5;
 	font-size: 13px;
 	overflow: scroll;
-	box-shadow: 0 3px 8px 0 $c-login-box_shadow;
+	box-shadow: 0 3px 8px 0 $c-box-shadow;
 
 	h3 {
 		color: $c-text;
@@ -87,7 +87,7 @@
 
 .simplemodal-container--dark {
 	background: $c-modal-bg;
-	color: $c-light_grey;
+	color: $c-darker-grey;
 	box-shadow: none;
 
 	h3 {

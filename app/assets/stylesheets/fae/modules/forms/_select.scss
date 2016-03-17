@@ -23,7 +23,7 @@
 
   .chosen-container-active {
     .chosen-single {
-      border-color: $c-border;
+      border-color: $c-mid-grey;
       background: $c-chosen-gradient-end;
     }
   }
@@ -166,7 +166,7 @@
     width: 50%;
     height: 250px;
     padding-right: 15px;
-    background: $c-lightest_grey;
+    background: $c-lightest-grey;
     color: $c-text-heavy;
 
     li {
@@ -204,7 +204,7 @@
       padding: 10px 15px;
       margin-right: -15px;
       color: $c-text-heavy;
-      background: $c-lighter_grey;
+      background: $c-mid-grey;
       font-size: 14px;
     }
   }
@@ -241,7 +241,7 @@
       }
 
       .custom-header {
-        background: $c-light_grey;
+        background: $c-darker-grey;
       }
     }
   }

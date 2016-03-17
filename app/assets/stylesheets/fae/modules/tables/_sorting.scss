@@ -17,7 +17,7 @@
     float: right;
     margin-top: -2em;
     font-size: 4px;
-    color: $c-tablesorter-icon;
+    color: $c-darker-grey;
     visibility: hidden;
   }
 
@@ -32,24 +32,22 @@
   &.tablesorter-headerAsc,
   &.tablesorter-headerDesc {
     border-bottom: 1px solid $c-custom-highlight;
+
+    &:after {
+      visibility: visible;
+    }
   }
 
 }
 
 .tablesorter-headerDesc {
-  background: $c-table-th-highlight;
-
   &:after {
     @extend .icon-arrow_down:before;
-    visibility: visible;
   }
 }
 
 .tablesorter-headerAsc {
-  background: $c-table-th-highlight;
-
   &:after {
     @extend .icon-arrow_up:before;
-    visibility: visible;
   }
 }

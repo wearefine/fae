@@ -21,7 +21,7 @@ html {
 body {
   @include transition($mobilenav-transition);
   height: 100%;
-  font-family: $f-lato;
+  font-family: $f-content;
   font-size: 16px;
   color: $c-text;
   background: $c-body-bg;

@@ -2,143 +2,113 @@
 // Project Specific Variables
 //////////////////////////////
 
-// Project Specific breakpoints
-$breakpoints: (
+// Empty variable for user-defined breakpoints
+$custom-breakpoints: () !default;
+
+// Fae-specific breakpoints
+$fae-breakpoints: (
   // @depreciation - remove page_header_save_block in v2.0
   'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
   'login_submit':           ( min-width: 475px ),
 );
 
-// Merge $fine_breakpoints and $breakpoints to use with bp() mixin
-$breakpoints: map-merge($fine-breakpoints, $breakpoints);
+// Merge $custom-breakpoints, $fae-breakpoints, and Frob Core's $fine-breakpoints to one variable to use with bp() mixin
+$fae-breakpoints: map-merge($fae-breakpoints, $custom-breakpoints);
+$breakpoints: map-merge($fine-breakpoints, $fae-breakpoints);
 
-// widths, padding, margins, and the like
-$content-buffer: 30px;
+// Widths, padding, margins, and the like
+$content-buffer: 30px !default;
+$sidenav-width: 250px !default;
+$sidenav-padding-one-level: 10px !default;
+$sidenav-padding-base-level: $content-buffer !default;
+$sidenav-active-border-width: 7px !default;
 
-$sidenav_width: 250px;
-$sidenav-padding-one-level: 10px;
-$sidenav-padding-base-level: $content-buffer;
-$sidenav-active-border-width: 7px;
-
-// TYPOGRAPHY
-$f-lato: "Lato", $f-sans;
+// Typography
+$f-content: 'Lato', $f-sans !default;
 
 // In order from dark to light
 // These are stacked in 10s so new colors can be easily inserted between if/when this list changes
 $grays: (
   10: #1e1e1e,
-  20: #261c16,
-  30: #222,
-  40: #252525,
-  50: #2b2b2b,
-  60: #333,
-  70: #303030,
-  80: #3b3b3b,
-  90: #454545,
-  100: #555,
-  110: #595959,
-  120: #777,
-  130: #999,
-  140: #aaa,
-  150: #ccc,
-  160: #ddd,
-  170: #d6d6d6,
-  180: #dedede,
-  190: #dfdfdf,
-  200: #eee,
-  210: #e1e1e1,
-  220: #e7e7e7,
-  230: #ebebeb,
-  240: #f2f2f2,
-  250: #f7f7f7,
-  260: #f9f9f9,
-  270: #fdfdfd,
-  280: #fefefe
-);
+  20: #3b3b3b,
+  30: #595959,
+  40: #999,
+  50: #ccc,
+  60: #dfdfdf,
+  70: #ebebeb,
+  80: #f2f2f2,
+  90: #f7f7f7,
+) !default;
 
 // Functional name for colors
-// Avoid assigning variables to variables (i.e. $c-text: $c-light_grey)
-$c-near-black: gray(20);
-$c-grey: gray(110);
-$c-light_grey: gray(130);
-$c-lighter_grey: gray(150);
-$c-lightest_grey: gray(200);
-$c-near-white: gray(250);
+$c-darkest-grey: gray(10) !default;
+$c-dark-grey: gray(20) !default;
+$c-mid-dark-grey: gray(30) !default;
+$c-darker-grey: gray(40) !default;
+$c-mid-grey: gray(50) !default;
+$c-grey: gray(60) !default;
+$c-light-grey: gray(70) !default;
+$c-lightest-grey: gray(80) !default;
+$c-near-white: gray(90) !default;
 
-$c-body-bg: gray(250);
-$c-text: gray(110);
-$c-text-sub: gray(130);
-$c-text-sub-hover: gray(150);
-$c-text-heavy: gray(50);
-$c-box_shadow: gray(150);
-$c-border: gray(150);
+// Text
+$c-body-bg: $c-near-white !default;
+$c-text: $c-mid-dark-grey !default;
+$c-text-sub: $c-darker-grey !default;
+$c-text-sub-hover: $c-mid-grey !default;
+$c-text-heavy: $c-darkest-grey !default;
+$c-box_shadow: $c-mid-grey !default;
+$c-border: $c-mid-grey !default;
 
-// header area
-$c-header-bg: gray(10);
-$c-header-dropdown-bg: gray(80);
+// Nav
+$c-header-dropdown-bg: $c-dark-grey !default;
 
-// nav area
-$c-nav-link: gray(70);
-$c-nav-bg-hover: gray(170);
-$c-nav-sub-bg-active: gray(180);
-$c-nav-sub-bg-active-highlight: gray(170);
-$c-nav-icons: gray(130);
-$c-nav-icons-hover: gray(120);
+// Content Headers
+$c-content-header-bg: $c-white !default;
+$c-content-section-title: $c-lightest-grey !default;
 
-// main_content areas
-$c-content-header-bg: gray(270);
-$c-content-section-title: gray(200);
+// Tables
+$c-table-th: $c-grey !default;
+$c-table-tr-even: $c-lightest-grey !default;
+$c-table-td: $c-near-white !default;
+$c-table-tr-hover: $c-white !default;
+$c-table-filter-header: $c-darkest-grey !default;
 
-// tables
-$c-table-th: gray(190);
-$c-table-th-highlight: gray(220);
-$c-table-tr-even: gray(240);
-$c-table-td: gray(260);
-$c-table-tr-hover: gray(280);
-$c-tablesorter-icon: gray(130);
-$c-table-filter-header: gray(30);
-$c-table-filter-input: gray(60);
-
-// forms
-$c-form-submit: $c-white;
-$c-form-submit-gradient-start: gray(90);
-$c-form-submit-gradient-end: gray(40);
-$c-form-button: gray(100);
-$c-form-button-gradient-start: gray(200);
-$c-form-button-gradient-end: gray(210);
-$c-form-file-bg: gray(250);
-$c-form-file-link-bg: gray(250);
-$c-form-file-link-bg-hover: gray(160);
-$c-form-table-bg: gray(230);
-$c-chosen-gradient-start: gray(200);
-$c-chosen-gradient-end: gray(210);
-$c-chosen-multi-bg: gray(200);
-$c-chosen-multi-text: gray(100);
-$c-chosen-multi-delete: gray(130);
-
-$c-markdown-border: gray(160);
+// Forms
+$c-form-submit: $c-white !default;
+$c-form-submit-gradient-start: $c-darkest-grey !default;
+$c-form-submit-gradient-end: $c-dark-grey !default;
+$c-form-button: $c-dark-grey !default;
+$c-form-button-gradient-start: $c-lightest-grey !default;
+$c-form-button-gradient-end: $c-light-grey !default;
+$c-form-file-link-bg: $c-grey !default;
+$c-form-file-link-bg-hover: $c-grey !default;
+$c-form-table-bg: $c-light-grey !default;
+$c-chosen-gradient-start: $c-lightest-grey !default;
+$c-chosen-gradient-end: $c-light-grey !default;
+$c-chosen-multi-bg: $c-lightest-grey !default;
+$c-chosen-multi-text: $c-dark-grey !default;
+$c-chosen-multi-delete: $c-darker-grey !default;
 
 // Yes / No Sliders
-$c-slider-no-color: gray(150);
-$c-slider-no-bg: gray(130);
-$c-slider-border: gray(180);
-
-// Notices and Errors
-$c-notice-bg: #d8f0d0;
-$c-notice-content: #4c884e;
-$c-warning-bg: #f7f2c8;
-$c-warning-content: #ca953a;
-$c-error-bg: #f6cfcf;
-$c-error-content: #b75553;
+$c-slider-no-color: $c-mid-grey !default;
+$c-slider-no-bg: $c-darker-grey !default;
 
 // Modal
-$c-modal-overlay-bg: gray(150);
-$c-modal-bg: gray(60);
-$c-modal-text: gray(130);
+$c-modal-overlay-bg: $c-mid-grey !default;
+$c-modal-bg: $c-dark-grey !default;
+$c-modal-text: $c-darker-grey !default;
 
-// login page
-$c-login-footer-all: gray(140);
-$c-login-box_shadow: gray(150);
+// Login
+$c-login-footer-all: $c-darker-grey !default;
 
-$mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+// Notices and Errors
+$c-notice-bg: #d8f0d0 !default;
+$c-notice-content: #4c884e !default;
+$c-warning-bg: #f7f2c8 !default;
+$c-warning-content: #ca953a !default;
+$c-error-bg: #f6cfcf !default;
+$c-error-content: #b75553 !default;
+
+$mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940) !default;

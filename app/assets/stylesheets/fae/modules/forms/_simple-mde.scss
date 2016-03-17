@@ -2,7 +2,7 @@
   .editor-toolbar {
     @include transition(border-color .2s);
     opacity: 1;
-    border-color: $c-lighter_grey;
+    border-color: $c-mid-grey;
     border-bottom: 0;
 
     a {
@@ -12,8 +12,8 @@
 
   .CodeMirror-wrap {
     @include transition(border-color .2s);
-    border-color: $c-lighter_grey;
-    border-top-color: $c-markdown-border;
+    border-color: $c-mid-grey;
+    border-top-color: $c-grey;
   }
 
   &.mde-focus {

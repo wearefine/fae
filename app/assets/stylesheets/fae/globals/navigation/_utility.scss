@@ -4,7 +4,6 @@
   position: absolute;
   top: 0;
   right: $content-buffer;
-  font-weight: 200;
 
   @include bp(large) {
     display: block;
@@ -28,9 +27,13 @@
     }
 
     &.grabatar-link {
-      padding-top: 23px;
-      padding-bottom: 23px;
+      padding-top: 15px;
+      padding-bottom: 15px;
     }
+  }
+
+  ul {
+    display: none;
   }
 
   li {
@@ -45,9 +48,8 @@
 }
 
 .utility-dropdown {
-  &.active {
-    ul,
-    .utility-search-wrapper {
+  &:hover {
+    ul {
       display: block;
     }
   }
@@ -57,21 +59,20 @@
     margin-left: 0;
   }
 
-  > ul,
+  ul,
   .utility-search-wrapper {
-    font-weight: normal;
     display: none;
     background: $c-header-dropdown-bg;
     position: absolute;
-    top: 75px;
-    right: 0;
+    top: 70px;
     z-index: 2;
     font-size: 14px;
   }
 
-  > ul {
+  ul {
     width: 150px;
     padding: 8px 0;
+    left: 0;
 
     a {
       padding: 7px 25px;
@@ -80,9 +81,9 @@
 }
 
 .grabatar {
-  border-radius: 40px;
-  width: 30px;
-  height: 30px;
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
   display: inline-block;
   vertical-align: middle;
   background: $c-custom-highlight;
@@ -108,15 +109,12 @@
     border-radius: 4px;
     display: block;
   }
-
-  a {
-    color: $c-white;
-  }
 }
 
 .utility-search-wrapper {
   padding: 14px 16px;
   width: 270px;
+  right: 0;
 }
 
 /////////////////////////

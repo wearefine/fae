@@ -1,17 +1,17 @@
 ::-webkit-input-placeholder {
-   color: $c-lighter_grey;
+   color: $c-mid-grey;
 }
 
 :-moz-placeholder {
-   color: $c-lighter_grey;
+   color: $c-mid-grey;
 }
 
 ::-moz-placeholder {
-   color: $c-lighter_grey;
+   color: $c-mid-grey;
 }
 
 :-ms-input-placeholder {
-   color: $c-lighter_grey;
+   color: $c-mid-grey;
 }
 
 .input {
@@ -50,11 +50,11 @@
 .input-symbol--suffix {
   position: absolute;
   bottom: 0;
-  border: 0 solid $c-lightest_grey;
+  border: 0 solid $c-lightest-grey;
   padding: 14px 16px 13px;
   margin-bottom: 1px;
   font-size: 14px;
-  color: $c-light_grey;
+  color: $c-darker-grey;
 }
 
 .input-symbol--prefix {

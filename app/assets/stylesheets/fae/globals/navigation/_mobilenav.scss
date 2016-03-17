@@ -1,7 +1,8 @@
 .mobilenav {
   @include transition($mobilenav-transition);
   position: fixed;
-  margin-left: negate($sidenav_width);
+  margin-left: negate($sidenav-width);
+  visibility: hidden;
 
   a {
     // Right padding prevents text from running over arrow
@@ -13,9 +14,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: $sidenav_width;
+    width: $sidenav-width;
     height: 100%;
-    margin-left: negate($sidenav_width);
+    margin-left: negate($sidenav-width);
     overflow: auto;
     padding: 0 5px 10px 0;
     background: $c-body-bg;
@@ -59,7 +60,7 @@
   display: block;
   padding: 15px 20px;
   cursor: pointer;
-  background-color: $c-light_grey;
+  background-color: $c-darker-grey;
   color: $c-white;
 
   &:before {
@@ -89,11 +90,12 @@
 .mobile-active {
   body,
   .main-header {
-    margin-left: $sidenav_width;
+    margin-left: $sidenav-width;
   }
 
   .mobilenav {
     margin-left: 0;
+    visibility: hidden;
   }
 
   .mobilenav-toggle {
@@ -112,7 +114,7 @@
 .mobilenav-user {
   a {
     @extend %nav-icon;
-    background: $c-lightest_grey;
+    background: $c-lightest-grey;
 
     &:after {
       top: 15px;
@@ -152,5 +154,5 @@
   padding: 15px 10px 15px 20px;
   cursor: pointer;
   color: $c-black;
-  background: $c-lighter_grey;
+  background: $c-mid-grey;
 }

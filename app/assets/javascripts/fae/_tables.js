@@ -42,6 +42,7 @@ Fae.tables = {
       this.collapsibleTable();
     }
 
+    // @depreciation - remove conditional wrapping and call endingSelectShim like `this.endingSelectShim()` in v2.0
     if (FCH.exists('form ' + Fae.content_selector)) {
       this.endingSelectShim(Fae.content_selector);
     }
@@ -127,9 +128,8 @@ Fae.tables = {
    * @has_test {requests/fae_table_sort_spec.rb}
    */
   sortColumnsFromCookies: function() {
-    var _this = this;
     var path = window.location.pathname;
-    var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
+    var cookie_value = Cookies.getJSON(this.sort_cookie_name);
 
     // Exit early if sort cookie is nothing or there's no cookie at the present path
     if (!cookie_value || $.isEmptyObject(cookie_value) || !cookie_value[path] || $.isEmptyObject(cookie_value[path])) {
@@ -148,17 +148,16 @@ Fae.tables = {
   /**
    * Make table rows draggable by user
    * @param {String} sort_selector - handle selector
-   * @depreciation remove sort_selector arg in v2.0
+   * @depreciation - remove sort_selector arg in v2.0
    */
   rowSorting: function(sort_selector) {
-    var content_selector = '.main_content-sortable';
-
-    $(content_selector).sortable({
+    $('.main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,
+      // @depreciation - replace sort_selector with '.sortable-handle' in v2.0
       handle: (sort_selector),
 
-      //helper funciton to preserve the width of the table row
+      //helper function to preserve the width of the table row
       helper: function(e, $tr) {
         var $originals = $tr.children();
         var $helper = $tr.clone();
@@ -203,7 +202,6 @@ Fae.tables = {
   collapsibleTable: function() {
     var $collapsible = $('.collapsible');
     var $toggle = $('.collapsible-toggle');
-    var _this = this;
 
     // If there's only one table, don't bother with collapsing everything
     // Also, remove the open/close all toggle and the table subheaders
@@ -265,7 +263,7 @@ Fae.tables = {
   /**
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
    * @param {String} selector - Last of type element to target
-   * @deprecation remove selector arg in v2.0
+   * @deprecation remove selector arg and replace selector variable with '.content' in v2.0
    */
   endingSelectShim: function(selector) {
     $('form ' + selector + ':last-of-type').each(function() {
@@ -323,10 +321,10 @@ Fae.tables = {
 
   /**
    * Cache offset and height values to spare expensive calculations on scroll
-   * @depreciation remove ternary for header_height variable in v2.0
    */
   sizeFixedHeader: function() {
     var $tables = $('.content table');
+    // @depreciation - change value from ternary to $('.js-content-header').outerHeight() in v2.0
     var header_height = FCH.exists('.js-content-header') ? $('.js-content-header').outerHeight() : $('.main_content-header').outerHeight();
     if(FCH.large_down) {
       header_height = $('#js-main-header').outerHeight();
@@ -345,7 +343,7 @@ Fae.tables = {
       var $fixedHeader = $this.next('.sticky-table-header--hidden');
 
       // For whatever reason IE9 does not pickup the .sticky plugin
-      if(!$('.js-will-be-sticky').length) {
+      if(!FCH.exists('.js-will-be-sticky')) {
         tableOffset += header_height;
         header_height = 0;
       }

@@ -8,7 +8,7 @@
   &:before {
     content: '';
     position: absolute;
-    left: $sidenav_width - 10px;
+    left: $sidenav-width - 10px;
     top: 0;
     width: 10px;
     height: 100%;
@@ -22,7 +22,7 @@
   @include bp(large) {
     .index &,
     .home & {
-      padding-left: $sidenav_width + $content-buffer;
+      padding-left: $sidenav-width + $content-buffer;
     }
   }
 
@@ -61,7 +61,7 @@
   padding: 10px $content-buffer 30px;
   text-align: right;
   font-size: 14px;
-  color: $c-grey;
+  color: $c-mid-dark-grey;
 
   span {
     display: inline-block;
@@ -89,6 +89,6 @@
 
   path {
     @include transition(fill 0.2s);
-    fill: $c-grey;
+    fill: $c-mid-dark-grey;
   }
 }
