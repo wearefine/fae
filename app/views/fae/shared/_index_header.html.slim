@@ -1,10 +1,11 @@
-- nested      ||= false
-- title       ||= @klass_humanized.pluralize.titleize
-- new_button    = !local_assigns[:new_button].eql?(false)
-- new_path    ||= "new_#{fae_path}_#{@klass_singular}_path"
-- button_text ||= "Add #{title.singularize}"
-- csv         ||= false
-- breadcrumbs   = !local_assigns[:breadcrumbs].eql?(false)
+ruby:
+  nested      ||= false
+  title       ||= @klass_humanized.pluralize.titleize
+  new_button    = !local_assigns[:new_button].eql?(false)
+  new_path    ||= "new_#{fae_path}_#{@klass_singular}_path"
+  button_text ||= "Add #{title.singularize}"
+  csv         ||= false
+  breadcrumbs   = !local_assigns[:breadcrumbs].eql?(false)
 
 header.content-header.js-content-header
   - if breadcrumbs
@@ -12,9 +13,15 @@ header.content-header.js-content-header
       li
         a.-home href=fae.root_path
           i.icon-home
-      li: a href=fae.root_path First Level
-      li: a href=fae.root_path Second Level
-      li = title
+      - fav_nav_array = @fae_navigation.structure
+      - @fae_navigation.coordinates.each_with_index do |coors, i|
+        - link = fav_nav_array[coors][:path]
+        - if (i < @fae_navigation.coordinates.length - 1) && fav_nav_array[coors][:path].present? && fav_nav_array[coors][:path] != '#'
+          li
+            a href=fav_nav_array[coors][:path] = fav_nav_array[coors][:text]
+        - else
+          li = fav_nav_array[coors][:text]
+        - fav_nav_array = fav_nav_array[coors][:subitems]
   - else
     h1 = title
 
