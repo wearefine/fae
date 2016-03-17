@@ -44,7 +44,8 @@
    */
   Sticky.prototype.createPlaceholder = function(height) {
     var css_properties = {
-      height: height
+      height: height,
+      visibility: 'hidden'
     };
 
     if(!this.options.perpetual_placeholder) {
@@ -52,7 +53,7 @@
     }
 
     var $placeholder = $('<div />', {
-       class: this.options.placeholder_name,
+       class: this.options.placeholder_class,
        css: css_properties
     });
 
@@ -89,7 +90,6 @@
       this.$el
         .addClass(this.options.class_name)
         .css({
-          top: 0,
           left: this.dimensions.left,
           position: 'fixed'
         });
@@ -105,7 +105,6 @@
     this.$el
       .removeClass(this.options.class_name)
       .css({
-        top: '',
         left: '',
         position: ''
       });
@@ -157,7 +156,7 @@
   $.fn.sticky = function( options ) {
     var defaults = {
       class_name: 'js-sticky',
-      placeholder_name: 'js-sticky-placeholder',
+      placeholder_class: 'js-sticky-placeholder',
       placeholder: false,
       offset: 0,
       perpetual_placeholder: false

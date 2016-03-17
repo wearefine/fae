@@ -1,12 +1,14 @@
 // content header
 .content-header {
   @include clearfix;
+  @include stack($fae-nav-stack);
   width: 100%;
   padding: 16px $content-buffer;
   background: $c-content-header-bg;
   border-bottom: 1px solid $c-grey;
   position: absolute;
   left: 0;
+  top: 0;
 
   &:after {
     content: '';

@@ -287,7 +287,7 @@ Fae.tables = {
       var $header = $this.find('thead').clone();
 
       var $fixedHeader = $('<table />', {
-        class: 'sticky-table-header--hidden stuck-table'
+        class: 'sticky-table-header stuck-table'
       });
 
       $fixedHeader.append( $header );
@@ -301,7 +301,7 @@ Fae.tables = {
     function stickyTableHeaderScroll() {
       var offset = FCH.$window.scrollTop();
 
-      $('.sticky-table-header--hidden').each(function() {
+      $('.sticky-table-header').each(function() {
         var $this = $(this);
         var tableOffset = $this.data('table-offset');
         var tableBottom = $this.data('table-bottom');
@@ -340,7 +340,7 @@ Fae.tables = {
       var tableOffset = $this.offset().top - header_height;
       var theadHeight = $this.find('thead').outerHeight();
       var bottomOffset = $this.height() + tableOffset - theadHeight;
-      var $fixedHeader = $this.next('.sticky-table-header--hidden');
+      var $fixedHeader = $this.next('.sticky-table-header');
 
       // For whatever reason IE9 does not pickup the .sticky plugin
       if(!FCH.exists('.js-will-be-sticky')) {

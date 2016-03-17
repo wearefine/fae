@@ -112,3 +112,10 @@ $c-error-bg: #f6cfcf !default;
 $c-error-content: #b75553 !default;
 
 $mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940) !default;
+
+$fae-nav-stack: (
+  '.sidenav',
+  '.content-header',
+  '.sticky-table-header',
+  '.main-header'
+);

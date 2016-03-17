@@ -308,17 +308,6 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.datetime "updated_at"
   end
 
-  create_table "tasting_notes", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.boolean  "active"
-    t.integer  "position",   limit: 4
-    t.integer  "release_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
-
   create_table "teams", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "city",       limit: 255
@@ -383,5 +372,4 @@ ActiveRecord::Schema.define(version: 20160311225043) do
     t.text     "food_pairing_ja", limit: 65535
   end
 
-  add_foreign_key "winemakers", "wines"
 end
