@@ -1,27 +1,28 @@
-nav.nav.sidenav.js-nav#js-sidenav
-  ul
-    - @fae_sidenav_items.each do |item|
-      ruby:
-        item[:path] ||= '#'
-        main_class = item[:sublinks].present? ? 'sidenav-accordion js-accordion' : ''
-        main_class << " #{item[:class_name]}" if item[:class_name].present?
+- if user_signed_in? && @fae_sidenav_items.present?
+  nav.nav.sidenav.js-nav#js-sidenav
+    ul
+      - @fae_sidenav_items.each do |item|
+        ruby:
+          item[:path] ||= '#'
+          main_class = item[:sublinks].present? ? 'sidenav-accordion js-accordion' : ''
+          main_class << " #{item[:class_name]}" if item[:class_name].present?
 
-      li class=main_class
-        a href=item[:path] = item[:text]
+        li class=main_class
+          a href=item[:path] = item[:text]
 
-        - if item[:sublinks].present?
-          ul.subnav.js-subnav.js-subnav.js-subnav
-            - item[:sublinks].each do |subitem|
-              ruby:
-                subitem[:path] ||= '#'
-                sub_class = 'sidenav-accordion -sub js-accordion' if subitem[:sublinks].present?
-                link_class = subitem[:class_name] if subitem[:class_name].present?
+          - if item[:sublinks].present?
+            ul.subnav.js-subnav.js-subnav.js-subnav
+              - item[:sublinks].each do |subitem|
+                ruby:
+                  subitem[:path] ||= '#'
+                  sub_class = 'sidenav-accordion -sub js-accordion' if subitem[:sublinks].present?
+                  link_class = subitem[:class_name] if subitem[:class_name].present?
 
-              li class=sub_class
-                a class=link_class href=subitem[:path] = subitem[:text]
+                li class=sub_class
+                  a class=link_class href=subitem[:path] = subitem[:text]
 
-                - if subitem[:sublinks].present?
-                  ul.subnav.js-subnav
-                    - subitem[:sublinks].each do |thirditem|
-                      - thirditem[:path] ||= '#'
-                      li: a href=thirditem[:path] = thirditem[:text]
+                  - if subitem[:sublinks].present?
+                    ul.subnav.js-subnav
+                      - subitem[:sublinks].each do |thirditem|
+                        - thirditem[:path] ||= '#'
+                        li: a href=thirditem[:path] = thirditem[:text]

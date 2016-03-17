@@ -39,21 +39,20 @@ module Fae
 
       @fae_topnav_items = []
       @fae_sidenav_items = []
-      fae_navigation = Fae::Navigation.new
-      @fae_navigation_items = fae_navigation.structure
+
+      @fae_navigation = Fae::Navigation.new(request.path)
+      raise_define_structure_error unless @fae_navigation.respond_to? :structure
 
       if Fae.has_top_nav
-        # top nav is enabled, set top and side navs from Fae::Navigation
-        @fae_topnav_items = @fae_navigation_items
-        # sidenav logic here
-        @fae_sidenav_items = fae_navigation.current_sidenav request.path
+        @fae_topnav_items = @fae_navigation.structure
+        @fae_sidenav_items = @fae_navigation.side_nav
       elsif nav_items.defined? && nav_items.present?
         # support nav_items defined from legacy Fae::NavItems concern
         # deprecate in v2.0
         @fae_sidenav_items = nav_items
       else
         # otherwise use Fae::Navigation to define the sidenav
-        @fae_sidenav_items = fae_navigation.current_sidenav
+        @fae_sidenav_items = @fae_navigation.structure
       end
 
       # TODO: move to top nav
@@ -85,6 +84,10 @@ module Fae
 
     def set_change_user
       Fae::Change.current_user = current_user.id if current_user.present?
+    end
+
+    def raise_define_structure_error
+      raise 'Fae::Navigation#structure is not defined, please define it in `app/models/concerns/fae/navigation_concern.rb`'
     end
 
   end
