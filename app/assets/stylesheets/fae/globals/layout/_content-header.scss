@@ -61,15 +61,14 @@
 }
 
 .content-header-subnav {
-  margin-top: 5px;
-  margin-bottom: -24px;
+  margin-bottom: -16px;
 
   a {
     @include transition(all .2s);
     display: inline-block;
     vertical-align: top;
     padding: 8px 0;
-    border-bottom: 5px solid $c-content-header-bg;
+    border-bottom: 5px solid transparent;
     margin: 0 8px;
     font-size: 13px;
     color: $c-text-sub;

@@ -29,10 +29,13 @@
 
   a {
     color: inherit;
-    text-decoration: underline;
 
-    &:hover {
-      text-decoration: none;
+    &:not(.-home) {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }
