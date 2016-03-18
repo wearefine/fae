@@ -22,7 +22,7 @@ module Fae
       @coordinates.push(0)
 
       array_of_items.each do |item|
-        return item if item[:path] == @current_path
+        return item if item[:path] == current_section
 
         if item[:subitems].present?
           current_sidenav = find_current_hash(item[:subitems])
@@ -39,6 +39,10 @@ module Fae
     def increment_coordinates
       last_item = @coordinates.pop
       @coordinates.push(last_item + 1)
+    end
+
+    def current_section
+      @current_path.gsub(/\/new|\/[0-9]\/edit/, '')
     end
 
     def item(text, options={})
