@@ -56,8 +56,9 @@ feature 'Clone record' do
 
         # habtm duplicates the join records
         expect(cloned_release.events).to eq(release.events)
-        expect(page.find('.release_events')).to have_content(event_1.name)
-        expect(page.find('.release_events')).to have_content(event_2.name)
+        # Case insensitive matching in case labels become text-transform: uppercase
+        expect(page).to have_selector('.release_events', text: /#{event_1.name}/i)
+        expect(page).to have_selector('.release_events', text: /#{event_2.name}/i)
       }
     end
 
