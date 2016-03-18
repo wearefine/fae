@@ -55,6 +55,9 @@ module Fae
         @fae_sidenav_items = @fae_navigation.structure
       end
 
+      # hide sidenav on form pages
+      @fae_sidenav_items = [] if params[:action] == 'new' || params[:action] == 'edit'
+
       # TODO: move to top nav
       # if current_user.super_admin?
       #   sublinks = []
