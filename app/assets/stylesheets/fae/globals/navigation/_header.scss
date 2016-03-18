@@ -8,7 +8,6 @@
   padding: 0 $content-buffer;
   background: $c-darkest-grey;
   text-align: center;
-  font-weight: 200;
 
   @include bp(large) {
     position: relative;
@@ -107,8 +106,8 @@
 
     a {
       background: none;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 6px;
+      padding-bottom: 6px;
 
       &:hover {
         background: none;

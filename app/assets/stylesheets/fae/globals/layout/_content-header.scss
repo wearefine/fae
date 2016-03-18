@@ -20,6 +20,11 @@
   &.-dashboard {
     padding-top: 26px;
     padding-bottom: 26px;
+    color: $c-darker-grey;
+
+    strong {
+      color: $c-darkest-grey;
+    }
   }
 
   h1,
