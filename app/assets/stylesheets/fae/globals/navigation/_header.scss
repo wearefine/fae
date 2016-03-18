@@ -18,11 +18,13 @@
   a {
     display: block;
     padding: 15px 0;
+    color: $c-mid-grey;
 
     @include bp(large) {
       padding: 27px 0;
     }
 
+    &:hover,
     &.-current {
       color: $c-white;
     }
@@ -66,11 +68,6 @@
     // @include transition(color 0s);
     padding-left: 15px;
     padding-right: 15px;
-    color: $c-mid-grey;
-
-    &:hover {
-      color: $c-white;
-    }
   }
 
   > li {

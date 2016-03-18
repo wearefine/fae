@@ -18,13 +18,8 @@
 
   a {
     font-size: 16px;
-    color: $c-text-sub;
     padding-left: 14px;
     padding-right: 14px;
-
-    &:hover {
-      color: $c-white;
-    }
 
     &.grabatar-link {
       padding-top: 15px;
@@ -69,10 +64,6 @@
     font-size: 14px;
   }
 
-  a {
-    font-size: 13px;
-  }
-
   ul {
     width: 150px;
     padding: 8px 0;
@@ -80,6 +71,7 @@
 
     a {
       padding: 7px 25px;
+      font-size: 13px;
     }
   }
 }
