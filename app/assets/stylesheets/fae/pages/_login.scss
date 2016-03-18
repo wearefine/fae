@@ -77,8 +77,8 @@
     width: 50%;
   }
 }
-
 .login-form-actions {
+
   @include clearfix;
   padding-bottom: 20px;
 
@@ -105,48 +105,20 @@ input {
   }
 }
 
-.login-helper-area {
-  margin-top: 10px;
+.login-helper {
   font-size: 13px;
-  color: $c-login-footer-all;
+  color: $c-darker-grey;
+}
 
-  li {
+.login-footer {
+  margin-top: 10px;
+
+  .credit,
+  .login-helper {
     display: inline-block;
-    padding-left: 10px;
-    border-left: 1px solid $c-login-footer-all;
-    margin-left: 10px;
-
-    &:first-child {
-      border: 0;
-      padding: 0;
-      margin: 0;
-    }
+    width: 50%;
+    vertical-align: middle;
   }
-}
-
-.login-fine {
-  &,
-  &:hover {
-    float: right;
-    color: $c-login-footer-all;
-
-    span {
-      display: inline-block;
-      width: 48px;
-      height: 16px;
-      background: image-url('fae/fine_footer.png');
-      text-indent: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-  }
-}
-
-.login-label-extra {
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 15px;
-  color: $c-text-heavy;
 }
 
 .login-form-password {

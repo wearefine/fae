@@ -39,9 +39,12 @@
 
 .main-footer {
   padding: 10px $content-buffer 30px;
-  text-align: right;
+}
+
+.credit {
   font-size: 14px;
   color: $c-mid-dark-grey;
+  text-align: right;
 
   span {
     display: inline-block;
