@@ -4,13 +4,14 @@ module Fae
 
     def structure
       [
-        item('Wines', subitems: [
-          item('Wines', class: 'custom-class', subitems: wine_subitems),
+        item('Products', subitems: [
+          item('Wines', class: 'custom-class', path: admin_wines_path),
           item('Releases', path: admin_releases_path),
           item('Attributes', subitems: [
             item('Varietals', path: admin_varietals_path),
             item('Selling Points', path: admin_selling_points_path)
-          ])
+          ]),
+          item('Cats', path: admin_cats_path)
         ]),
         item('Events', subitems: [
           item('Events', path: admin_events_path),
@@ -24,7 +25,6 @@ module Fae
               item('With a link That Goes Nowhere', path: 'nowhere')
             ])
           ]),
-          item('Cats', path: admin_cats_path),
           item('Validation Testers', path: admin_validation_testers_path),
         ]),
         item('Pages', subitems: [
@@ -35,14 +35,6 @@ module Fae
     end
 
     private
-
-    def wine_subitems
-      wines_arr = [ item('New Wine', path: new_admin_wine_path) ]
-      Wine.all.each do |wine|
-        wines_arr << item(wine.name_en, path: edit_admin_wine_path(wine))
-      end
-      wines_arr
-    end
 
     def team_subitems
       teams_arr = []
