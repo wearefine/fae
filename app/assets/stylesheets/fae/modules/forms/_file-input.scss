@@ -41,11 +41,8 @@
 }
 
 .file_input-delete {
+  float: right;
   display: none;
-  position: absolute;
-  right: 10px;
-  top: 19px;
-  color: $c-text-sub;
 
   .js-active & {
     display: block;

@@ -10,15 +10,20 @@
   font-size: 13px;
   border-radius: 2px;
 
+  a {
+    font-size: 18px;
+    color: $c-darkest-grey;
+    padding: 6px;
+    display: inline-block;
+
+    &:hover {
+      color: $c-custom-highlight;
+    }
+  }
+
   &.asset-actions--files {
     a {
       line-height: 32px;
-    }
-
-    .icon-delete_x {
-      padding-top: 0;
-      right: 0;
-      line-height: 16px;
     }
   }
 
@@ -30,33 +35,10 @@
     display: block;
   }
 
-  .icon-delete_x {
-    float: left;
-    display: block;
-    width: 5%;
-    color: $c-text-sub;
-    padding-top: 15px;
-  }
-
   a.file_input-button {
     display: inline-block;
     font-size: 14px;
     line-height: 20px;
-  }
-}
-
-.asset-actions-image-link {
-  @include transition(all .2s);
-  padding: 5px;
-  font-size: 12px;
-  background: $c-form-file-link-bg;
-  color: $c-custom-highlight;
-  display: inline-block;
-  margin-top: 7px;
-  border-radius: 5px;
-
-  &:hover {
-    background: $c-form-file-link-bg-hover;
   }
 }
 
@@ -68,5 +50,5 @@
 }
 
 .asset-actions-image-name {
-  color: $c-custom-highlight;
+  color: $c-darkest-grey;
 }

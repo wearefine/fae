@@ -17,7 +17,7 @@ table class=table_class
         = th_columns(col)
       - if edit_column
         th.-action data-sorter="false" Edit
-      th.-action Delete
+      th.-action
   tbody
     - records = index ? @items : parent_item.send(assoc)
     - if records.present?
@@ -37,7 +37,7 @@ table class=table_class
               a.js-edit-link href=self.send(edit_path, item)
                 span.icon-edit
           td.-action
-            = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
+            = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-trash', remote: true
     - else
       tr
         - if index

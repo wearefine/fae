@@ -13,6 +13,7 @@ main.content
   table.main_table-sort_columns
     thead
       tr
+        th.-action data-sorter="false"
         th Name
         th Wine
         th Modified
@@ -22,11 +23,13 @@ main.content
         th.-live data-sorter="false" On Prod
         th.-action data-sorter="false"
         th.-action data-sorter="false"
-        th.-action data-sorter="false"
     tbody
       - if @items.present?
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
+            td.-action
+              a.table-action href=edit_admin_release_path(item)
+                span.icon-edit
             td = link_to item.fae_display_field, edit_admin_release_path(item)
             td = item.wine.name_en
             td = fae_date_format item.updated_at
@@ -34,9 +37,6 @@ main.content
             td = item.price
             td = fae_toggle item, :on_stage
             td = fae_toggle item, :on_prod
-            td.-action
-              a.table-action href=edit_admin_release_path(item)
-                span.icon-edit
             td = fae_clone_button item
             td.-action = fae_delete_button item
       - else

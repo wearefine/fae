@@ -162,7 +162,7 @@
       text: 'Choose File',
       file_text: 'No File Chosen',
       active_class: 'js-active',
-      delete_class: 'icon-delete_x file_input-delete'
+      delete_class: 'icon-trash file_input-delete'
     };
 
     // unite the default options with the passed-in ones
