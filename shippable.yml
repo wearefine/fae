@@ -13,14 +13,11 @@ env:
   global:
     - CI_REPORTS=shippable/testresults
     - DEPLOY_BRANCH=$BRANCH
-    - secure: FpiO+8qrxOgKfFrg8Y1pwd7w/GjhN+WuYZ60A/LN8ATIF1kFEzXO+VB8HThIZjsKoHzmjbyGi/LXIO7cfLdiyehf4KQ6xUTPHYGlmRaBjmv5iDtCClYjKFac9d/+9TLcygzHlXxhyKKyjVx1DaTB3G6qp14mGE9do36GXeE5PIPDPyQG+9otjcrb38TTuiiIHNwrDgnWZSR9UCurKaycki+TiVpUiheruP7zY1oYBTKotb7VKqF9aXDYHJc9e89oMCqLbFQZd3A0aNgUILV0ORZwOYneXuTNzSPqpDpDHYkzE+gi+mSKEPBx0TADslubnySCK6OgOVTGLtrjzkm0Fw==
 before_script:
-  - rm -Rf shippable-setup
   - mkdir -p shippable/testresults
   - mysql -e 'create database if not exists fae_dummy_test CHARACTER SET utf8 COLLATE utf8_general_ci;'
   - cd spec/dummy && rake db:schema:load RAILS_ENV=test && cd ../../
   - if [ "$BRANCH" == "master" ] ; then DEPLOY_BRANCH="prod" ; fi
-  - git clone git@github.com:wearefine/shippable-setup.git
 script:
   - xvfb-run rspec -f JUnit -o shippable/testresults/results.xml
-  - if [ $PULL_REQUEST == false ] ; then ssh-agent bash -c 'ssh-add /home/shippable/.ssh/id_rsa; ssh -i /home/shippable/.ssh/id_rsa -vT git@github.com; cap $DEPLOY_BRANCH deploy' ; fi
+  - if [ $PULL_REQUEST == false ] ; then ssh-agent bash -c 'ssh-add /tmp/ssh/00_sub; ssh -i /tmp/ssh/00_sub -vT git@github.com; cap $DEPLOY_BRANCH deploy' ; fi

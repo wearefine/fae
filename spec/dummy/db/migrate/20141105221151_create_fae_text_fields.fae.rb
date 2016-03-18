@@ -12,10 +12,5 @@ class CreateFaeTextFields < ActiveRecord::Migration
 
       t.timestamps
     end
-
-    add_index :fae_text_fields, :attatched_as
-    add_index :fae_text_fields, :position
-    add_index :fae_text_fields, :on_stage
-    add_index :fae_text_fields, :on_prod
   end
 end

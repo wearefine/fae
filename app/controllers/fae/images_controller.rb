@@ -27,6 +27,7 @@ module Fae
       image = Image.find_by_id(params[:id])
       image.remove_asset = true
       image.save
+      CarrierWave.clean_cached_files!
       render :nothing => true
     end
 
