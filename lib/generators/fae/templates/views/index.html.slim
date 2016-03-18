@@ -16,7 +16,7 @@ main.content
         th.-live data-sorter="false" <%= attr.humanize %>
 <% num_columns += 1 -%>
 <% end -%>
-        th.-delete data-sorter="false" Delete
+        th.-action data-sorter="false" Delete
 
     tbody
       - if @items.present?
@@ -30,6 +30,6 @@ main.content
 <% @toggle_attrs.each do |attr| -%>
             td = fae_toggle item, :<%= attr %>
 <% end -%>
-            td.-delete = fae_delete_button item
+            td.-action = fae_delete_button item
       - else
         tr: td colspan="<%= num_columns %>" No items found

@@ -30,13 +30,8 @@
     tr {
       &,
       &:nth-child(even) {
-        &,
         &:hover {
-          background: initial;
-          border-left: initial;
-
           td {
-            &,
             &:first-child {
               border-left: inherit;
             }

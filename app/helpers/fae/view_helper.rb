@@ -44,15 +44,15 @@ module Fae
 
     def fae_clone_button(item)
       return if item.blank?
-      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', data: { confirm: t('fae.clone_confirmation') }, class: 'main_table-action main_table-clone' do
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', data: { confirm: t('fae.clone_confirmation') }, class: 'table-action -clone' do
         concat content_tag :span, nil, class: 'icon-copy'
       end
     end
 
     def fae_delete_button(item)
       return if item.blank?
-      link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
-        concat content_tag :span, nil, class: 'icon-delete_x'
+      link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'table-action -delete' do
+        concat content_tag :span, nil, class: 'icon-trash'
       end
     end
 

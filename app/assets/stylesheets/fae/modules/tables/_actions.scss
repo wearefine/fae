@@ -1,52 +1,18 @@
-.main_table-clone {
-  text-align: center;
-}
-
-.main_table-action {
-  @include transition(border-color .2s);
-  display: inline-block;
-  padding: 5px;
-  border: 2px solid $c-table-td;
-
-  &:hover {
-    border-color: $c-mid-grey;
-  }
-
-  &.main_table-clone {
-    display: block;
-    width: 34px;
-    margin: 0 auto;
-  }
-
-  .icon-edit {
-    font-size: 15px;
-  }
-
-}
-
 th {
-  &.-modified,
-  &.-live,
-  &.-delete,
-  &.-edit,
-  &.-clone {
+  &.-live {
     text-align: center;
+  }
+
+  &.-action {
+    width: 35px;
   }
 
   &.-modified {
     width: 200px;
   }
 
-  &.-delete {
-    width: 90px;
-  }
-
   &.-live {
     width: 80px;
-  }
-
-  &.-edit {
-    width: 65px;
   }
 
   &.-thumb {
@@ -54,18 +20,20 @@ th {
   }
 }
 
+.table-action {
+  color: $c-mid-dark-grey;
+  display: block;
+  padding: 2px;
+
+  &:hover {
+    color: $c-darkest-grey;
+  }
+}
+
 td {
-  &.-edit,
-  &.-delete {
-    width: 1px;
-    text-align: center;
-
+  &.-action {
     a {
-      color: $c-text-sub;
-
-      &:hover {
-        color: $c-text;
-      }
+      @extend .table-action;
     }
   }
 }

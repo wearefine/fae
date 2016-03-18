@@ -75,6 +75,38 @@
   }
 }
 
+.main_table-clone {
+  text-align: center;
+}
+
+.main_table-action {
+
+  &.main_table-clone {
+    display: block;
+    width: 34px;
+    margin: 0 auto;
+  }
+
+  .icon-edit {
+    font-size: 15px;
+  }
+
+}
+
+tbody {
+  tr {
+    &:nth-of-type(even) {
+      .main_table-action {
+        border-color: $c-table-tr-even;
+
+        &:hover {
+          border-color: $c-mid-grey;
+        }
+      }
+    }
+  }
+}
+
 
 ///////////////////////////////
 //   Hacks to fix updates    //

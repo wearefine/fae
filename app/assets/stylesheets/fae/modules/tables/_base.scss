@@ -3,56 +3,27 @@ table {
   border: 1px solid $c-grey;
   border-collapse: separate;
   table-layout: fixed;
+}
 
-  tbody {
-    tr {
-      &:hover {
-        td {
-          background: $c-table-tr-hover;
+tbody {
+  td {
+    &:first-child {
+      border-left: 3px solid transparent; // this blends it in to the background
+    }
+  }
 
-          &:first-child {
-            border-left: 3px solid $c-custom-highlight;
-          }
-        }
-
-        .icon-edit,
-        .icon-delete_x {
-          color: $c-custom-highlight;
-        }
-      }
-
-      &:nth-of-type(even) {
-        td {
-          background-color: $c-table-tr-even;
-
-          &:first-child {
-            border-left: 3px solid $c-table-tr-even;
-          }
-        }
-
-        &:hover {
-          td {
-            background: $c-table-tr-hover;
-
-            &:first-child {
-              border-left: 3px solid $c-custom-highlight;
-            }
-          }
-        }
-
-        .main_table-action {
-          border-color: $c-table-tr-even;
-
-          &:hover {
-            border-color: $c-mid-grey;
-          }
+  tr {
+    &:hover {
+      td {
+        &:first-child {
+          border-color: $c-custom-highlight;
         }
       }
     }
 
-    td {
-      &:first-child {
-        border-left: 3px solid $c-table-td; /* this blends it in to the background */
+    &:nth-of-type(even) {
+      td {
+        background-color: $c-table-tr-even;
       }
     }
   }

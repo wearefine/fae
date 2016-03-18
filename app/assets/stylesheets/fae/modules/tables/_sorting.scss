@@ -11,21 +11,23 @@
 
 // tablesorter classes
 .tablesorter-header {
-  &:after {
-    @extend .icon-arrow_down:before;
-    @include icon-stuff;
-    float: right;
-    margin-top: -2em;
-    font-size: 4px;
-    color: $c-darker-grey;
-    visibility: hidden;
-  }
-
   &:not(.sorter-false) {
     cursor: pointer;
 
+    .tablesorter-header-inner {
+      &:after {
+        display: inline-block;
+      }
+    }
+
     &:hover {
       border-bottom: 1px solid $c-custom-highlight;
+
+      .tablesorter-header-inner {
+        &:after {
+          color: $c-darkest-grey;
+        }
+      }
     }
   }
 
@@ -33,21 +35,40 @@
   &.tablesorter-headerDesc {
     border-bottom: 1px solid $c-custom-highlight;
 
-    &:after {
-      visibility: visible;
+    .tablesorter-header-inner {
+      &:after {
+        color: $c-darkest-grey;
+      }
     }
   }
 
 }
 
-.tablesorter-headerDesc {
+.tablesorter-header-inner {
   &:after {
     @extend .icon-arrow_down:before;
+    @include icon-stuff;
+    display: none;
+    font-size: 4px;
+    position: relative;
+    top: -3px;
+    left: 6px;
+    color: $c-darker-grey;
+  }
+}
+
+.tablesorter-headerDesc {
+  .tablesorter-header-inner {
+    &:after {
+      @extend .icon-arrow_down:before;
+    }
   }
 }
 
 .tablesorter-headerAsc {
-  &:after {
-    @extend .icon-arrow_up:before;
+  .tablesorter-header-inner {
+    &:after {
+      @extend .icon-arrow_up:before;
+    }
   }
 }

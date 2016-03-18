@@ -9,7 +9,7 @@ main.content
         th Modified
         th.-live data-sorter="false" On Stage
         th.-live data-sorter="false" On Prod
-        th.-delete data-sorter="false" Delete
+        th.-action data-sorter="false" Delete
 
     tbody
       - @items.each do |item|
@@ -20,4 +20,4 @@ main.content
           td = fae_date_format item.updated_at
           td = fae_toggle item, :on_stage
           td = fae_toggle item, :on_prod
-          td.-delete = fae_delete_button item
+          td.-action = fae_delete_button item
