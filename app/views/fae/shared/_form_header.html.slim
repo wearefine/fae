@@ -5,8 +5,15 @@ ruby:
   cloneable          ||= false
   clone_button_text  ||= 'Clone'
   subnav             ||= []
+  header_as_string     = header.is_a?(String) ? header : header.class.name.split('::').last
+  header_as_string     = header_as_string.singularize
+  title              ||= "#{params[:action]} #{header_as_string}".titleize
+  breadcrumb           = !local_assigns[:breadcrumbs].eql?(false)
 
-= form_header header
+- if breadcrumb
+  == render 'breadcrumb', title: title
+- else
+  = form_header header
 
 .content-header-buttons
   a#main_content-header-save-cancel href=@index_path = cancel_button_text
