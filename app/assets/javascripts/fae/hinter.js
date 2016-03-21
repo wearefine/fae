@@ -18,15 +18,11 @@
     $hint.modal({
       minHeight: new_height,
       minWidth: new_width,
+      maxWidth: 250,
       position: [top, left],
       overlayClose: true,
       opacity: 0,
-      containerCss: { position: 'absolute' },
-      onShow: function(){
-        if ($hint.find('.dark').length) {
-          $('#simplemodal-container').addClass('simplemodal-container--dark')
-        };
-      }
+      containerCss: { position: 'absolute' }
     });
 
   }
