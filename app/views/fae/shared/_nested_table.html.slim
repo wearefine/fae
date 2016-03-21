@@ -32,7 +32,7 @@ section.js-addedit-form class="#{'content' if index}"
 
   - else
     h2 = header
-    a.js-add-link.table-add-link href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
+    a.js-add-link.table-add-link.button.-small href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
     h3 = title
     - if helper_text.present?
       h6.table-helper-text = helper_text

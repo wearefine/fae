@@ -107,6 +107,31 @@ tbody {
   }
 }
 
+// Styles needed for the fileinputer
+.file_input-wrapper {
+  @include transition(background .2s);
+  position: relative;
+  display: inline-block;
+  width: 90%;
+  min-width: 223px;
+  max-width: 515px;
+  padding: 5px;
+  border: 1px solid $c-border;
+  background: $c-body-bg;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &.js-active {
+    background: $c-white;
+  }
+
+  span {
+    @include transition(color .2s);
+    color: $c-text-sub;
+  }
+}
+
 
 ///////////////////////////////
 //   Hacks to fix updates    //
@@ -467,7 +492,7 @@ tbody {
   }
 
   a {
-    @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+    @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
     display: block;
     padding: 10px;
     min-height: 30px;

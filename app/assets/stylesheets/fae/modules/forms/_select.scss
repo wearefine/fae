@@ -145,6 +145,12 @@
   }
 }
 
+.chosen-container {
+  .chosen-drop {
+    border-color: $c-mid-grey;
+  }
+}
+
 // MultiSelect plugin for multiselect pagination-ellipsis
 .ms-container {
   width: 700px;

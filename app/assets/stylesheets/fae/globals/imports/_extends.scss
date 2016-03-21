@@ -1,12 +1,13 @@
 %gray-button {
-  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+  @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
   border-radius: 3px;
-  color: $c-form-button;
+  color: $c-light-button;
   border: 1px solid $c-border;
   padding: 11px 14px;
+  cursor: pointer;
 
   &:hover {
-    background: $c-form-button-gradient-end;
+    background: $c-light-button-gradient-end;
   }
 }
 

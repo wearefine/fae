@@ -17,10 +17,10 @@ ruby:
         h6.helper_text = helper_text
 
     - if the_file.asset.present?
-      .asset-actions.asset-actions--files
-        a href=the_file.asset.url target="_blank" = the_file.asset.file.filename
+      .asset-actions.-files
+        a.asset-title href=the_file.asset.url target="_blank" = the_file.asset.file.filename
 
-        = link_to '', fae.delete_file_path(the_file.id), class: 'icon-trash file_input-delete js-asset-delete-link', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+        = link_to '', fae.delete_file_path(the_file.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
 
     .asset-inputs style="#{'display: none;' unless the_file.asset.blank?}"
       = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_file_upload_size, exceeded: t('fae.exceeded_upload_limit') } }

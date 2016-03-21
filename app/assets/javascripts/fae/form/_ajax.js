@@ -147,7 +147,7 @@ Fae.form.ajax = {
 
         Fae.navigation.fadeNotices();
 
-      } else if ($target.hasClass('js-asset-delete-link')) {
+      } else if ($target.hasClass('js-asset-delete')) {
         // handle remove asset links on nested forms
         var $parent = $target.closest('.asset-actions');
 
@@ -295,7 +295,7 @@ Fae.form.ajax = {
    * Delete or replace file for non-AJAX'd fields
    */
   deleteNoForm: function() {
-    $('.js-asset-delete-link').on('ajax:success', function(){
+    $('.js-asset-delete').on('ajax:success', function(){
       var $this = $(this);
       if (!$this.closest('.js-addedit-form-wrapper').length) {
         // handle remove asset links

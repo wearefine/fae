@@ -10,21 +10,8 @@
   font-size: 13px;
   border-radius: 2px;
 
-  a {
-    font-size: 18px;
-    color: $c-darkest-grey;
-    padding: 6px;
-    display: inline-block;
-
-    &:hover {
-      color: $c-custom-highlight;
-    }
-  }
-
-  &.asset-actions--files {
-    a {
-      line-height: 32px;
-    }
+  &.active {
+    background: $c-white;
   }
 
   > img {
@@ -35,20 +22,50 @@
     display: block;
   }
 
-  a.file_input-button {
+  a {
+    padding: 6px;
     display: inline-block;
-    font-size: 14px;
-    line-height: 20px;
+  }
+
+  span {
+    @include transition(color .2s);
+    color: $c-text-sub;
+  }
+
+  .button {
+    display: inline-block;
+    margin-right: 10px;
+
+    span {
+      padding-right: 30px;
+    }
   }
 }
 
-.asset-actions-title {
-  float: left;
-  display: block;
-  width: 70%;
-  padding: 10px 7px 0 0;
+.asset-delete {
+  @include transition(color 0.2s);
+  float: right;
+  display: none;
+  padding: 12px 0;
+  color: $c-darker-grey;
+
+  &:before {
+    @include icon-stuff;
+    @extend .icon-trash:before;
+  }
+
+  &:hover {
+    color: $c-mid-dark-grey;
+  }
+
+  .active & {
+    display: block;
+  }
 }
 
-.asset-actions-image-name {
+.asset-title {
+  display: inline-block;
+  width: 70%;
+  padding: 10px 7px 0 0;
   color: $c-darkest-grey;
 }

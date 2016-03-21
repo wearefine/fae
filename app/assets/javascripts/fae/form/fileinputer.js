@@ -156,13 +156,13 @@
   $.fn.fileinputer = function( options ) {
 
     var defaults = {
-      wrapper_class: 'file_input-wrapper',
-      button_class: 'file_input-button',
-      delete_class: 'file_input-delete',
+      wrapper_class: 'asset-actions',
+      button_class: 'button',
+      delete_class: 'asset-delete',
       text: 'Choose File',
       file_text: 'No File Chosen',
-      active_class: 'js-active',
-      delete_class: 'icon-trash file_input-delete'
+      active_class: 'active',
+      delete_class: 'asset-delete'
     };
 
     // unite the default options with the passed-in ones

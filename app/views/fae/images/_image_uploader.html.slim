@@ -28,10 +28,9 @@ ruby:
     - if the_image.asset.present?
       .asset-actions
         img.js-image-modal src=the_image.asset.url
-        .asset-actions-title
-          .asset-actions-image-name = the_image.asset.file.filename
+        .asset-title = the_image.asset.file.filename
 
-        = link_to '', fae.delete_image_path(the_image.id), class: 'js-asset-delete-link icon-trash', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present?
+        = link_to '', fae.delete_image_path(the_image.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present?
 
     .asset-inputs style="#{'display:none;' if the_image.asset.present?}"
       = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_image_upload_size, exceeded: t('fae.exceeded_upload_limit') } }

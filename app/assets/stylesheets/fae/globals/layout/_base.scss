@@ -24,7 +24,15 @@
   }
 
   h2 {
-    @include secondary-header;
+    padding: 17px $content-buffer;
+    color: $c-text-heavy;
+    background: $c-content-section-title;
+    border-top: 1px solid $c-border;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: .2em;
+    // counters the padding from .content
+    margin: 0 negate($content-buffer) 30px;
   }
 
   h3 {

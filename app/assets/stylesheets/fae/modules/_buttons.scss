@@ -1,3 +1,5 @@
+// All buttons
+//
 input[type=submit],
 button[type=button],
 .add-button,
@@ -8,23 +10,48 @@ button[type=button],
   cursor: pointer;
 }
 
+// Dark buttons
+
 input[type=submit],
 .add-button {
-  @include gradient-vertical($start-color: $c-form-submit-gradient-start, $end-color: $c-form-submit-gradient-end);
-  color: $c-form-submit;
-  border: 1px solid $c-form-submit-gradient-start;
+  @include gradient-vertical($start-color: $c-dark-button-gradient-start, $end-color: $c-dark-button-gradient-end);
+  color: $c-dark-button;
+  border: 1px solid $c-dark-button-gradient-start;
   padding: 11px 14px;
 
   &:hover {
-    color: $c-form-submit;
-    background: $c-form-submit-gradient-end;
+    background: $c-dark-button-gradient-end;
   }
 }
 
+.add-button {
+  &:before {
+    @extend .icon-heavy_plus:before;
+    @include icon-stuff;
+    font-size: 12px;
+    margin-right: 7px;
+  }
+}
+
+// Light buttons
+
 button[type=button],
-a.file_input-button,
-.csv-button {
+.file_input-button,
+.csv-button,
+.button {
   @extend %gray-button;
+}
+
+.button {
+  &.-small {
+    padding: 5px;
+    font-size: 12px;
+    margin: 3px;
+
+    &:hover {
+      color: $c-light-button;
+    }
+  }
 }
 
 .table-filter-controls {
@@ -35,22 +62,6 @@ a.file_input-button,
   }
 
   input[type=submit] {
-    @extend %gray-button;
-    padding: 5px;
-    font-size: 12px;
-    margin: 3px;
-
-    &:hover {
-      color: $c-form-button;
-    }
-  }
-}
-
-.add-button {
-  &:before {
-    @extend .icon-heavy_plus:before;
-    @include icon-stuff;
-    font-size: 12px;
-    margin-right: 7px;
+    @extend .button.-small;
   }
 }
