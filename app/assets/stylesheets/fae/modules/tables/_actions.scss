@@ -4,7 +4,7 @@ th {
   }
 
   &.-action {
-    width: 35px;
+    width: 40px;
   }
 
   &.-modified {
@@ -21,12 +21,13 @@ th {
 }
 
 .table-action {
-  color: $c-mid-dark-grey;
+  color: $c-darker-grey;
   display: block;
   padding: 2px;
+  font-size: 16px;
 
   &:hover {
-    color: $c-darkest-grey;
+    color: $c-mid-dark-grey;
   }
 }
 

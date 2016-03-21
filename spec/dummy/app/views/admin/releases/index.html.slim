@@ -16,28 +16,29 @@ main.content
         th.-action data-sorter="false"
         th Name
         th Wine
-        th Modified
         th Slug
         th Price
+        th Modified
         th.-live data-sorter="false" On Stage
         th.-live data-sorter="false" On Prod
         th.-action data-sorter="false"
         th.-action data-sorter="false"
+
     tbody
       - if @items.present?
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
             td.-action
               a.table-action href=edit_admin_release_path(item)
-                span.icon-edit
+                i.icon-edit
             td = link_to item.fae_display_field, edit_admin_release_path(item)
             td = item.wine.name_en
-            td = fae_date_format item.updated_at
             td = item.slug
             td = item.price
+            td = fae_date_format item.updated_at
             td = fae_toggle item, :on_stage
             td = fae_toggle item, :on_prod
-            td = fae_clone_button item
+            td.-action = fae_clone_button item
             td.-action = fae_delete_button item
       - else
         tr: td colspan="9" No items found
