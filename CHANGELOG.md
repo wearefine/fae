@@ -13,6 +13,7 @@
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
+    + \#55752: YouTube helper image converted to display as a background image because of Sprockets compilation issue
 
 ## 1.2.4
 
