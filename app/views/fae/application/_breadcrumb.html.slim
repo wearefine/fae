@@ -1,0 +1,19 @@
+ruby:
+  title ||= nil
+
+ul.breadcrumbs
+  li
+    a.-home href=fae.root_path
+      i.icon-home
+  - fav_nav_array = @fae_navigation.structure
+  - @fae_navigation.coordinates.each_with_index do |coors, i|
+    - link = fav_nav_array[coors][:path]
+    - if (i < @fae_navigation.coordinates.length - 1 || title.present?) && fav_nav_array[coors][:nested_path].present?
+      li
+        a href=fav_nav_array[coors][:nested_path] = fav_nav_array[coors][:text]
+    - else
+      li = fav_nav_array[coors][:text]
+    - fav_nav_array = fav_nav_array[coors][:subitems]
+
+  - if title.present?
+    li = title
