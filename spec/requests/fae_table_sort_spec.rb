@@ -9,18 +9,18 @@ feature 'fae_table_sort' do
     visit admin_releases_path
 
     # Ensure nothing is selected
-    expect(page).to_not have_selector('th.tablesorter-headerAsc[data-column="3"]')
+    expect(page).to_not have_selector('th.tablesorter-headerAsc[data-column="5"]')
 
     page.find('.tablesorter-header-inner', text: 'Modified').click
 
     # After click, it should have header
-    expect(page).to have_selector('th.tablesorter-headerAsc[data-column="3"]')
+    expect(page).to have_selector('th.tablesorter-headerAsc[data-column="5"]')
 
     # Go to a new page and come back
     visit new_admin_person_path
     visit admin_releases_path
 
-    expect(page).to have_selector('th.tablesorter-headerAsc[data-column="3"]')
+    expect(page).to have_selector('th.tablesorter-headerAsc[data-column="5"]')
   end
 
 end
