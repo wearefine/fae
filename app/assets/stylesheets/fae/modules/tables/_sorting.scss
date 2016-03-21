@@ -21,8 +21,6 @@
     }
 
     &:hover {
-      border-bottom: 1px solid $c-custom-highlight;
-
       .tablesorter-header-inner {
         &:after {
           color: $c-darkest-grey;
@@ -33,8 +31,6 @@
 
   &.tablesorter-headerAsc,
   &.tablesorter-headerDesc {
-    border-bottom: 1px solid $c-custom-highlight;
-
     .tablesorter-header-inner {
       &:after {
         color: $c-darkest-grey;
