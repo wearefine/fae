@@ -18,8 +18,8 @@ module Fae
         klass = params[:object].classify.constantize
         items = klass.find(ids)
         items.each do |item|
-          item.position = ids.index(item.id.to_s) + 1
-          item.save
+          position = ids.index(item.id.to_s) + 1
+          item.update_attribute(:position, position)
         end
       end
       render nothing: true

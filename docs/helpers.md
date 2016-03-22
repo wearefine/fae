@@ -440,6 +440,19 @@ If one of the locals aren't set when the partial is called and error will be rai
 require_locals ['item', 'text'], local_assigns
 ```
 
+## fae_avatar
+
+Retrieve a user's Gravatar image URL based on their email.
+
+| option | type | description |
+|-|-|-|
+| user | Fae::User | defaults to `current_user` |
+
+```ruby
+fae_avatar(current_user)
+#=> 'https://secure.gravatar.com/....'
+```
+
 ---
 
 # Fae Partials

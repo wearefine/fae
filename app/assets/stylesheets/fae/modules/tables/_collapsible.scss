@@ -10,7 +10,7 @@
       }
     }
 
-    table {
+    table:not(.sticky-table-header) {
       display: table;
     }
   }
