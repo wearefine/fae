@@ -7,6 +7,10 @@ table {
   a {
     @extend %underline-link;
   }
+
+  i {
+    color: $c-darker-grey;
+  }
 }
 
 tbody {
