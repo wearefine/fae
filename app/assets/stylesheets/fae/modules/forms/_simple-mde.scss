@@ -15,4 +15,8 @@
     border-color: $c-mid-grey;
     border-top-color: $c-grey;
   }
+
+  .CodeMirror-scroll {
+    z-index: 0;
+  }
 }

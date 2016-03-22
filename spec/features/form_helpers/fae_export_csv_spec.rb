@@ -6,7 +6,6 @@ feature 'fae_export_csv' do
     admin_login
     visit admin_releases_path
 
-    expect(page).to_not have_css('a.csv-button')
     expect(page).to_not have_content("Export to CSV")
   end
 
@@ -16,9 +15,8 @@ feature 'fae_export_csv' do
     admin_login
     visit admin_releases_path
 
-    expect(page).to have_css('a.csv-button')
     expect(page).to have_content("Export to CSV")
-    page.find('.csv-button').click
+    page.find('.button', text: 'Export to CSV').click
     expect(page).to have_content('This is the introduction')
   end
 
