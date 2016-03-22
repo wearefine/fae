@@ -30,7 +30,7 @@ main.content
             td
               i.icon-edit
               = link_to item.fae_display_field, edit_admin_release_path(item)
-            td = item.wine.name_en
+            td = item.wine.name_en if item.wine.present?
             td = item.slug
             td = item.price
             td = fae_date_format item.updated_at

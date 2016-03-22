@@ -286,12 +286,12 @@ Fae.tables = {
       var $this = $(this);
       var $header = $this.find('thead').clone();
 
-      var $fixedHeader = $('<table />', {
+      var $fixed_header = $('<table />', {
         class: 'sticky-table-header stuck-table'
       });
 
-      $fixedHeader.append( $header );
-      $this.after($fixedHeader);
+      $fixed_header.append( $header );
+      $this.after($fixed_header);
     });
 
     /**
@@ -303,10 +303,10 @@ Fae.tables = {
 
       $('.sticky-table-header').each(function() {
         var $this = $(this);
-        var tableOffset = $this.data('table-offset');
+        var top_offset = $this.data('table-top');
         var tableBottom = $this.data('table-bottom');
 
-        if (offset >= tableOffset && offset <= tableBottom) {
+        if (offset >= top_offset && offset <= tableBottom) {
           $this.show();
         } else {
           $this.hide();
@@ -337,32 +337,35 @@ Fae.tables = {
     function applyOffset() {
       var $this = $(this);
 
-      var tableOffset = $this.offset().top - header_height;
-      var theadHeight = $this.find('thead').outerHeight();
-      var bottomOffset = $this.height() + tableOffset - theadHeight;
-      var $fixedHeader = $this.next('.sticky-table-header');
+      // If this is a collapsible item and the table is hidden, forget it
+      if($this.parent().hasClass('collapsible') && !$this.parent().hasClass('active')) {
+        return;
+      }
+
+      var top_offset = $this.offset().top - header_height;
+      var thead_height = $this.find('thead').outerHeight();
+      var bottom_offset = $this.height() + top_offset - thead_height;
+      var $fixed_header = $this.next('.sticky-table-header');
 
       // For whatever reason IE9 does not pickup the .sticky plugin
       if(!FCH.exists('.js-will-be-sticky')) {
-        tableOffset += header_height;
+        top_offset += header_height;
         header_height = 0;
       }
 
-      $fixedHeader.data({
-        'table-offset' : tableOffset,
-        'table-bottom' : bottomOffset
+      // Force offsets to be greater than the header_height
+      top_offset = Math.max(header_height, top_offset);
+      bottom_offset = Math.max(header_height, bottom_offset);
+
+      $fixed_header.data({
+        'table-top' : top_offset,
+        'table-bottom' : bottom_offset
       });
 
-      $fixedHeader.css({
+      $fixed_header.css({
         width: $this.outerWidth(),
-        height: theadHeight,
+        height: thead_height,
         top: header_height,
-      });
-
-      $this.find('thead tr th').each(function(index){
-        var original_width = $(this).outerWidth()
-        // Using .width() as a setter is bunk
-        $($fixedHeader.find('tr > th')[index]).css('width', original_width);
       });
     }
 

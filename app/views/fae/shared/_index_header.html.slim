@@ -5,23 +5,11 @@ ruby:
   new_path    ||= "new_#{fae_path}_#{@klass_singular}_path"
   button_text ||= "Add #{title.singularize}"
   csv         ||= false
-  breadcrumbs   = !local_assigns[:breadcrumbs].eql?(false)
+  breadcrumb    = !local_assigns[:breadcrumbs].eql?(false)
 
 header.content-header.js-content-header
-  - if breadcrumbs
-    ul.breadcrumbs
-      li
-        a.-home href=fae.root_path
-          i.icon-home
-      - fav_nav_array = @fae_navigation.structure
-      - @fae_navigation.coordinates.each_with_index do |coors, i|
-        - link = fav_nav_array[coors][:path]
-        - if (i < @fae_navigation.coordinates.length - 1) && fav_nav_array[coors][:path].present? && fav_nav_array[coors][:path] != '#'
-          li
-            a href=fav_nav_array[coors][:path] = fav_nav_array[coors][:text]
-        - else
-          li = fav_nav_array[coors][:text]
-        - fav_nav_array = fav_nav_array[coors][:subitems]
+  - if breadcrumb
+    == render 'breadcrumb'
   - else
     h1 = title
 

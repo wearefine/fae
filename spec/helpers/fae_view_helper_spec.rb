@@ -70,4 +70,12 @@ describe Fae::ViewHelper do
 
   end
 
+  describe '#fae_avatar' do
+    it 'should return a gravatar with the correct MD5 hash' do
+      user = FactoryGirl.create(:fae_user, email: 'fae_is_great@facts.com')
+
+      expect( fae_avatar(user) ).to eq('https://secure.gravatar.com/avatar/d21c5b2c4ee9b417a9be23358ee14c91?s=80&d=mm')
+    end
+  end
+
 end
