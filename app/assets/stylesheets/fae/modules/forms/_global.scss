@@ -69,4 +69,14 @@ input[type=email] {
 
 .table-add-link {
   float: right;
+
+  &:before {
+    @extend .icon-plus:before;
+    @include icon-stuff;
+    font-size: 7px;
+    position: relative;
+    bottom: 2px;
+    display: inline-block;
+    margin-right: 3px;
+  }
 }
