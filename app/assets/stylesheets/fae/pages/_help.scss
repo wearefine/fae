@@ -1,4 +1,8 @@
 .help-section {
+  a {
+    @extend %underline-link;
+  }
+
   h3 {
     color: $c-text-heavy;
     font-size: 20px;
