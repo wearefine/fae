@@ -1,10 +1,33 @@
 // content header
-.main_content-header {
+.content-header {
   @include clearfix;
+  @include stack($fae-nav-stack);
   width: 100%;
-  padding: 15px 20px 15px 40px;
+  padding: 16px $content-buffer;
   background: $c-content-header-bg;
-  border-bottom: 1px solid $c-border;
+  border-bottom: 1px solid $c-grey;
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  &:after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: static;
+  }
+
+  &.-dashboard {
+    padding-top: 26px;
+    padding-bottom: 26px;
+  }
+
+  h1,
+  .breadcrumbs {
+    @include bp(large) {
+      float: left;
+    }
+  }
 
   h1 {
     padding: 5px 0;
@@ -14,7 +37,8 @@
 
 .main_content-section-toggles {
   list-style: none;
-  margin: -15px 0 30px;
+  margin: -16px negate($content-buffer) 5px;
+  padding: 0 $content-buffer;
 
   li {
     display: inline-block;
@@ -36,23 +60,18 @@
   }
 }
 
-.main_content-header-wrapper {
-  position: relative;
-}
-.main_content-header-section-links {
-  margin-top: 5px;
-  margin-bottom: -15px;
-
-  @include bp(medium) {
-    padding-right: 240px;
-  }
+.content-header-subnav {
+  position: absolute;
+  left: $content-buffer;
+  bottom: 0;
+  width: 100%;
 
   a {
     @include transition(all .2s);
     display: inline-block;
     vertical-align: top;
     padding: 8px 0;
-    border-bottom: 5px solid $c-content-header-bg;
+    border-bottom: 5px solid transparent;
     margin: 0 8px;
     font-size: 13px;
     color: $c-text-sub;
@@ -67,58 +86,44 @@
     display: inline-block;
     vertical-align: top;
 
-    &:first-child a {
-      margin-left: 0;
+    &:first-child {
+      a {
+        margin-left: 0;
+      }
+    }
+
+    &.-active {
+      a {
+        color: $c-text-heavy;
+        border-bottom-color: $c-custom-highlight;
+      }
     }
   }
 }
 
-.main_content-header-section-links-active a {
-  color: $c-text-heavy;
-  border-bottom-color: $c-custom-highlight;
-}
+.content-header-buttons {
+  margin: 10px 0;
 
-.main_content-header-save,
-.main_content-header-csv {
-  margin-top: 30px;
-
-  @include bp(medium) {
-    position: absolute;
-    right: 30px;
-    bottom: 0;
-    margin-top: 0;
+  @include bp(large) {
+    float: right;
+    margin: 0;
   }
 
-  @include bp(page_header_save_block) {
-    position: relative;
-    top: 0;
-    padding-bottom: 10px;
-  }
-
-  .main_content-header-section + & {
-    margin-bottom: 30px;
-  }
-}
-
-.main_content-header-csv {
-  @include bp(medium) {
-    right: 155px;
-  }
-}
-
-.main_content-header-save {
-  a:not(.add-button) {
-    @extend %gray-button;
-    font-size: 13px;
+  a {
     margin-right: 5px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:not(.add-button) {
+      @extend %gray-button;
+      font-size: 13px;
+    }
+
   }
 
   input[type=submit] {
     padding: 10px 14px 11px;
-  }
-
-  .clone-button{
-    font-size: 13px;
-    margin-left: 5px;
   }
 }

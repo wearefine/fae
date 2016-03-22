@@ -9,7 +9,7 @@
   border: 2px solid $c-table-td;
 
   &:hover {
-    border-color: $c-border;
+    border-color: $c-mid-grey;
   }
 
   &.main_table-clone {
@@ -49,6 +49,10 @@ th {
   &.-clone {
     width: 65px;
   }
+
+  &.-thumb {
+    width: 150px;
+  }
 }
 
 td {
@@ -69,8 +73,4 @@ td {
   &.-modified {
     text-align: center;
   }
-}
-
-.main_content-thumb-col {
-  width: 150px;
 }

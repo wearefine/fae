@@ -1,27 +1,42 @@
-.main_content-breadcrumbs {
-  padding-bottom: 5px;
-}
-
 .breadcrumbs {
+  font-size: 16px;
+  color: $c-text-sub;
+  padding: 10px 0; // Vertical align hack. Should be removed in an HTML refactor in v2.0
+
   li {
     display: inline-block;
-    vertical-align: top;
-    font-size: 13px;
-    color: $c-text-sub;
 
-    &:first-child:before {
-      @extend .icon-chevron_left:before;
-      @include icon_stuff;
-      font-size: 10px;
+    &:after {
+      @extend .icon-chevron_right:before;
+      @include icon-stuff;
+      font-size: 8px;
+      display: inline-block;
+      padding: 0 10px;
+      vertical-align: middle;
+    }
+
+    &:last-child {
+      &,
+      a {
+        color: $c-darkest-grey;
+        font-weight: bold;
+      }
+
+      &:after {
+        display: none;
+      }
     }
   }
 
   a {
-    padding-left: 5px;
-    color: $c-custom-highlight;
+    color: inherit;
 
-    &:hover {
-      color: $c-text-heavy;
+    &:not(.-home) {
+      text-decoration: underline;
+
+      &:hover {
+        text-decoration: none;
+      }
     }
   }
 }

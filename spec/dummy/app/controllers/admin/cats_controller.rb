@@ -8,6 +8,7 @@ module Admin
 
     def new
       @item = Cat.new
+      @item.aroma_id = params[:item_id]
     end
 
     def index
@@ -57,7 +58,7 @@ module Admin
       @klass = klass_base.classify.constantize            # used as class reference in this controller
       @klass_singular = klass_base.singularize            # used in index views
       @klass_humanized = @klass_name.singularize.humanize # used in index views
-      @index_path = '/' + params[:controller]             # used in form_header and form_buttons partials
+      @index_path = '/' + params[:controller]             # used in form_header partial
       @new_path = @index_path + '/new'                    # used in index_header partial
     end
 

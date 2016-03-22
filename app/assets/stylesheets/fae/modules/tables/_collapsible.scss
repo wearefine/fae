@@ -10,7 +10,7 @@
       }
     }
 
-    table {
+    table:not(.sticky-table-header) {
       display: table;
     }
   }
@@ -29,7 +29,7 @@
 
     &:after {
       @extend .icon-arrow_down:before;
-      @include icon_stuff;
+      @include icon-stuff;
       position: absolute;
       right: 25px;
       top: 22px;
@@ -46,7 +46,7 @@
 
   &:after {
     @extend .icon-arrow_down:before;
-    @include icon_stuff;
+    @include icon-stuff;
     font-size: 5px;
     display: inline-block;
     vertical-align: middle;

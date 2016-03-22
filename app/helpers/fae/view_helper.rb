@@ -44,8 +44,15 @@ module Fae
 
     def fae_clone_button(item)
       return if item.blank?
-      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'main_table-action main_table-clone' do
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', data: { confirm: t('fae.clone_confirmation') }, class: 'main_table-action main_table-clone' do
         concat content_tag :span, nil, class: 'icon-copy'
+      end
+    end
+
+    def fae_delete_button(item)
+      return if item.blank?
+      link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
+        concat content_tag :span, nil, class: 'icon-delete_x'
       end
     end
 
@@ -109,6 +116,12 @@ module Fae
         <label for="filter_city">Input</label>
         <input type="text" />
       </div>'.html_safe
+    end
+
+    def fae_avatar(user = current_user)
+      hash = Digest::MD5.hexdigest(user.email.downcase)
+
+      "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
     end
 
     private

@@ -1,6 +1,6 @@
 table {
   width: 100%;
-  border: 1px solid $c-border;
+  border: 1px solid $c-grey;
   border-collapse: separate;
   table-layout: fixed;
 
@@ -44,7 +44,7 @@ table {
           border-color: $c-table-tr-even;
 
           &:hover {
-            border-color: $c-border;
+            border-color: $c-mid-grey;
           }
         }
       }
@@ -67,9 +67,9 @@ td {
 
 th {
   padding: 15px 10px;
-  border-bottom: 1px solid $c-border;
   vertical-align: middle;
   font-weight: bold;
+  border-bottom: 1px solid transparent;
   color: $c-text-heavy;
   background: $c-table-th;
 }

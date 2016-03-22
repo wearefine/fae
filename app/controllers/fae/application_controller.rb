@@ -1,6 +1,6 @@
 module Fae
   class ApplicationController < ActionController::Base
-    include Fae::NavItems
+    include Fae::NavItems # deprecate in Fae v2.0
     include Fae::ApplicationControllerConcern
 
     helper Fae::ViewHelper
@@ -35,24 +35,40 @@ module Fae
     end
 
     def build_nav
-      if current_user
-        @fae_nav_items = [
-          { text: "Dashboard", path: fae.root_path, class_name: 'main_nav-link-dashboard' }
-          ]
+      return unless current_user
 
-        @fae_nav_items += nav_items if nav_items.present?
+      @fae_topnav_items = []
+      @fae_sidenav_items = []
 
-        if current_user.super_admin?
-          sublinks = []
-          sublinks << { text: 'Users', path: fae.users_path, class_name: '-users' }
-          sublinks << { text: 'Root Settings', path: fae.option_path, class_name: '-settings'}
-          sublinks << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
-          @fae_nav_items << { text: 'Admin', path: '#', class_name: 'main_nav-sub-nav-admin', sublinks: sublinks }
-        elsif current_user.admin?
-          @fae_nav_items << { text: 'Users', path: fae.users_path, class_name: '-users' }
-          @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
-        end
+      @fae_navigation = Fae::Navigation.new(request.path)
+      raise_define_structure_error unless @fae_navigation.respond_to? :structure
+
+      if Fae.has_top_nav
+        @fae_topnav_items = @fae_navigation.structure
+        @fae_sidenav_items = @fae_navigation.side_nav
+      elsif nav_items.defined? && nav_items.present?
+        # deprecate in v2.0
+        # support nav_items defined from legacy Fae::NavItems concern
+        @fae_sidenav_items = nav_items
+      else
+        # otherwise use Fae::Navigation to define the sidenav
+        @fae_sidenav_items = @fae_navigation.structure
       end
+
+      # hide sidenav on form pages
+      @fae_sidenav_items = [] if params[:action] == 'new' || params[:action] == 'edit'
+
+      # TODO: move to top nav
+      # if current_user.super_admin?
+      #   sublinks = []
+      #   sublinks << { text: 'Users', path: fae.users_path, class_name: '-users' }
+      #   sublinks << { text: 'Root Settings', path: fae.option_path, class_name: '-settings'}
+      #   sublinks << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
+      #   @fae_nav_items << { text: 'Admin', path: '#', class_name: 'sidenav-admin', sublinks: sublinks }
+      # elsif current_user.admin?
+      #   @fae_nav_items << { text: 'Users', path: fae.users_path, class_name: '-users' }
+      #   @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
+      # end
     end
 
     # redirect to login after sign out
@@ -71,6 +87,10 @@ module Fae
 
     def set_change_user
       Fae::Change.current_user = current_user.id if current_user.present?
+    end
+
+    def raise_define_structure_error
+      raise 'Fae::Navigation#structure is not defined, please define it in `app/models/concerns/fae/navigation_concern.rb`'
     end
 
   end

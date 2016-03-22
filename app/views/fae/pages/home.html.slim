@@ -1,4 +1,7 @@
-== render 'fae/shared/index_header', title: "Welcome, #{current_user.full_name}", new_button: false
+header.content-header.js-content-header.-dashboard
+  i.icon-home>
+  | &nbsp;&nbsp;Welcome,
+  strong< = current_user.full_name
 
 main.content
   table.main_content-sortable
@@ -14,9 +17,7 @@ main.content
           - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
           - index_path = polymorphic_path([main_app, fae_scope, parent, item.class.to_s.pluralize.underscore])
           tr
-            td.main_table-description-item
-              a href=edit_path = item.fae_display_field
-            td
-              a href=index_path = item.class.to_s
+            td: a href=edit_path = item.fae_display_field
+            td: a href=index_path = item.class.to_s
             td = fae_date_format item.updated_at
         - rescue
