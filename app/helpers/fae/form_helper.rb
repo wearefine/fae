@@ -96,7 +96,7 @@ module Fae
 
     def fae_video_url(f, attribute, options={})
       options[:helper_text] ||= "Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long."
-      options[:hint] ||= "#{image_tag('fae/youtube_helper.jpg')}"
+      options[:hint] ||= '<div class="youtube-hint"></div>'
       options[:input_class] = "#{options[:input_class]} youtube-api"
       fae_input f, attribute, options
     end
