@@ -7,6 +7,7 @@
     + \#54683: Titleize names for forms
     + \#55066: Major HTML and SCSS refactor
     + \#55211: Change wording of "Replace Image" to be "Remove Image"
+    + \#49891: Increase list efficiency by decreasing table cell height
     + \#55188: Add version and GitHub icon to footer on all pages
     + \#55067: Standardize regular column widths
     + \#46060: Tab no longer skips checkbox inputs
