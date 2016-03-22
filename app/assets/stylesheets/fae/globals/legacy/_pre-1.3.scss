@@ -218,9 +218,18 @@ tbody {
 
 .main_content-header-save {
   a:not(.add-button) {
-    @extend %gray-button;
+    @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
+    border-radius: 3px;
+    color: $c-light-button;
+    border: 1px solid $c-border;
+    padding: 11px 14px;
+    cursor: pointer;
     font-size: 13px;
     margin-right: 5px;
+
+    &:hover {
+      background: $c-light-button-gradient-end;
+    }
   }
 
   input[type=submit] {

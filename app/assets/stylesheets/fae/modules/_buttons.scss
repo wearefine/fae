@@ -1,13 +1,15 @@
 // All buttons
-//
+
 input[type=submit],
 button[type=button],
 .add-button,
-.csv-button {
+.button {
   border-radius: 3px;
   display: inline-block;
   font-size: 13px;
   cursor: pointer;
+  padding: 11px 14px;
+  border: 1px solid transparent;
 }
 
 // Dark buttons
@@ -16,11 +18,11 @@ input[type=submit],
 .add-button {
   @include gradient-vertical($start-color: $c-dark-button-gradient-start, $end-color: $c-dark-button-gradient-end);
   color: $c-dark-button;
-  border: 1px solid $c-dark-button-gradient-start;
-  padding: 11px 14px;
+  border-color: $c-dark-button-gradient-start;
 
   &:hover {
     background: $c-dark-button-gradient-end;
+    color: $c-white;
   }
 }
 
@@ -36,10 +38,14 @@ input[type=submit],
 // Light buttons
 
 button[type=button],
-.file_input-button,
-.csv-button,
 .button {
-  @extend %gray-button;
+  @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
+  color: $c-light-button;
+  border-color: $c-border;
+
+  &:hover {
+    background: $c-light-button-gradient-end;
+  }
 }
 
 .button {
@@ -62,6 +68,7 @@ button[type=button],
   }
 
   input[type=submit] {
-    @extend .button.-small;
+    @extend .button; // Gray button
+    @extend .button.-small; // Small styles
   }
 }

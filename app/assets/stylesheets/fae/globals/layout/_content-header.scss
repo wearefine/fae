@@ -120,12 +120,6 @@
     &:last-child {
       margin-right: 0;
     }
-
-    &:not(.add-button) {
-      @extend %gray-button;
-      font-size: 13px;
-    }
-
   }
 
   input[type=submit] {

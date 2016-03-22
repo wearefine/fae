@@ -7,19 +7,6 @@
   }
 }
 
-%gray-button {
-  @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
-  border-radius: 3px;
-  color: $c-light-button;
-  border: 1px solid $c-border;
-  padding: 11px 14px;
-  cursor: pointer;
-
-  &:hover {
-    background: $c-light-button-gradient-end;
-  }
-}
-
 %table-reset {
   table {
     table-layout: initial;
