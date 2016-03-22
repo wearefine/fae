@@ -12,4 +12,6 @@ Fae.setup do |config|
     ja: 'Japanese'
   }
 
+  config.has_top_nav = true
+
 end

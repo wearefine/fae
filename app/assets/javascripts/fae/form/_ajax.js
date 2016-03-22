@@ -51,7 +51,7 @@ Fae.form.ajax = {
 
   /**
    * Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
-   * @access protected
+   * @protected
    * @param {String} remote_url - Remote page to load form from
    * @param {jQuery} $wrapper - Whole form container
    * @see addEditLinks
@@ -91,8 +91,6 @@ Fae.form.ajax = {
    * Click event listener for cancel links applied to both index and nested forms; clears form to prevent saving errors
    */
   addCancelLinks: function() {
-    var _this = this;
-
     this.$addedit_form.on('click', '.js-cancel-nested', function(ev) {
       ev.preventDefault();
       var $this = $(this);
@@ -162,7 +160,7 @@ Fae.form.ajax = {
 
   /**
    * Replace AJAX'd form and add calls to all new HTML elements
-   * @access protected
+   * @protected
    * @param $el {jQuery} - Object to be replaced
    * @param html {String} - New HTML
    * @param $target {jQuery} - Original form wrapper
@@ -172,13 +170,17 @@ Fae.form.ajax = {
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
     // Private function replaces parent element with HTML and reinits select and sorting
-    var regenerateHTML = function() {
+    function regenerateHTML() {
       // .html() is not replacing it properly
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
       Fae.navigation.fadeNotices();
-    };
+
+      if ($el.find('.js-content-header').length) {
+        Fae.navigation.stickyHeaders(true);
+      }
+    }
 
     // if there's a form wrap, slide it up before replacing content
     if ($form_wrapper.length) {

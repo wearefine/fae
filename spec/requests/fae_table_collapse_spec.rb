@@ -25,7 +25,7 @@ feature 'fae_table_collapse' do
     page.find('.collapsible-toggle').click
 
     # Ensure all collapsed tables expands
-    expect(page).to have_selector('.collapsible table', count: 4)
+    expect(page).to have_selector('.collapsible table:not(.sticky-table-header)', count: 4)
 
     page.find('.collapsible-toggle').click
 

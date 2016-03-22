@@ -5,5 +5,6 @@ en:
     delete_notice: 'Item was successfully removed.'
     delete_error: 'This item has associated objects that prevent it from being removed.'
     delete_confirmation: 'Are you sure you want to permanently delete this item?'
+    clone_confirmation: "Once you clone, you'll need to delete if you later change your mind. Still want to?"
     unauthorized_error: 'You are not authorized to view that page.'
     exceeded_upload_limit: "Let's aim for smaller. This asset is larger than the ### MB limit. Got another?"

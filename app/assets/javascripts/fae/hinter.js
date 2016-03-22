@@ -1,12 +1,38 @@
 /* global FCH */
 
-'use strict';
-
 (function ( $ ) {
+  'use strict';
+
+  /**
+   * Display inline modal of helper text. This is the bread and butter of the plugin.
+   * @private
+   * @param {jQuery} $el - The object to display the text relative to
+   */
+  function showModal($el) {
+    var top = $el.offset().top - FCH.$window.scrollTop();
+    var left = $el.offset().left + 20;
+    var $hint = $el.closest('label').siblings('.hint');
+    var new_height = $hint.height() + 80;
+    var new_width = $hint.width() + 40;
+
+    $hint.modal({
+      minHeight: new_height,
+      minWidth: new_width,
+      position: [top, left],
+      overlayClose: true,
+      opacity: 0,
+      containerCss: { position: 'absolute' },
+      onShow: function(){
+        if ($hint.find('.dark').length) {
+          $('#simplemodal-container').addClass('simplemodal-container--dark')
+        };
+      }
+    });
+
+  }
 
   /**
    * Private initialization of Hinter object.
-   * @access private
    * @class
    */
   function Hinter($el, options) {
@@ -21,7 +47,7 @@
 
   /**
    * Create jQuery object of the $icon and add it to the DOM
-   * @access protected
+   * @protected
    */
   Hinter.prototype._drawElements = function($el) {
     var $label = $el.parent().find('label');
@@ -43,13 +69,11 @@
 
   /**
    * Show the modal on click
-   * @access protected
+   * @protected
    */
   Hinter.prototype._clickListener = function() {
-    var _this = this;
-
-    _this.$icon.click(function(){
-      _this._showModal( $(this) );
+    this.$icon.click(function(){
+      showModal( $(this) );
     });
   };
 
@@ -57,46 +81,17 @@
    * Allow hover to do the same as a clicking
    */
   Hinter.prototype._hoverListener = function(){
-    var _this = this;
     var $clicker = $('.hinter-clicker');
 
-    _this.$icon.mouseenter(function() {
+    this.$icon.mouseenter(function() {
       $clicker.addClass('hovered');
-      _this._showModal( $(this) );
+      showModal( $(this) );
     });
 
-    _this.$icon.mouseleave(function() {
+    this.$icon.mouseleave(function() {
       $clicker.removeClass('hovered');
       $.modal.close();
     });
-  };
-
-  /**
-   * Display inline modal of helper text. This is the bread and butter of the plugin.
-   * @access private
-   * @param {jQuery} $el - The object to display the text relative to
-   */
-  Hinter.prototype._showModal = function($el) {
-    var top = $el.offset().top - FCH.$window.scrollTop();
-    var left = $el.offset().left + 20;
-    var new_height = $el.closest('label').siblings('.hint').height() + 80;
-    var new_width = $el.closest('label').siblings('.hint').width() + 40;
-    var $hint = $el.closest('label').siblings('.hint');
-
-    $hint.modal({
-      minHeight: new_height,
-      minWidth: new_width,
-      position: [top, left],
-      overlayClose: true,
-      opacity: 0,
-      containerCss: { position: 'absolute' },
-      onShow: function(){
-        if ($hint.find('.dark').length) {
-          $('#simplemodal-container').addClass('simplemodal-container--dark')
-        };
-      }
-    });
-
   };
 
   /**

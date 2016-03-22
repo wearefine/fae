@@ -10,7 +10,7 @@ feature 'Sign Out' do
 
     # visit fae.root_path
 
-    # find('.utility_nav-user').click
+    # find('.utility-nav-user').click
 
     # eventually {
     #   click_link 'Log Out'

@@ -1,4 +1,3 @@
-
 // Select box and Chosen
 .select,
 .time,
@@ -24,8 +23,8 @@
 
   .chosen-container-active {
     .chosen-single {
-      border-color: $c-border;
-      background: $c-chosen-gradient-hover;
+      border-color: $c-mid-grey;
+      background: $c-chosen-gradient-end;
     }
   }
 
@@ -62,7 +61,7 @@
     .chosen-choices {
       padding: 5px;
       border: 1px solid $c-border;
-      background: $c-chosen-bg;
+      background: $c-white;
 
       .li.search-field input[type="text"] {
         height: auto;
@@ -84,7 +83,7 @@
 
           &:after {
             @extend .icon-delete_x:before;
-            @include icon_stuff;
+            @include icon-stuff;
           }
         }
       }
@@ -167,7 +166,7 @@
     width: 50%;
     height: 250px;
     padding-right: 15px;
-    background: $c-lightest_grey;
+    background: $c-lightest-grey;
     color: $c-text-heavy;
 
     li {
@@ -175,8 +174,8 @@
       &.ms-elem-selection {
         position: relative;
         padding: 10px 15px;
-        border-bottom: 1px $c-almost_white solid;
-        border-right: 1px $c-almost_white solid;
+        border-bottom: 1px $c-near-white solid;
+        border-right: 1px $c-near-white solid;
         color: $c-text;
         font-size: 13px;
 
@@ -192,11 +191,11 @@
       &.ms-hover {
         cursor: pointer;
         text-decoration: none;
-        background-color: $c-almost_white;
+        background-color: $c-near-white;
       }
 
       &.disabled {
-        color: $c-almost_white;
+        color: $c-near-white;
         cursor: text;
       }
     }
@@ -205,7 +204,7 @@
       padding: 10px 15px;
       margin-right: -15px;
       color: $c-text-heavy;
-      background: $c-lighter_grey;
+      background: $c-mid-grey;
       font-size: 14px;
     }
   }
@@ -228,13 +227,13 @@
 
         &:after {
           @extend .icon-delete_x:before;
-          @include icon_stuff;
+          @include icon-stuff;
           color: $c-text-sub;
         }
 
         &:before {
           @extend .icon-check:before;
-          @include icon_stuff;
+          @include icon-stuff;
           padding-right: 5px;
           margin-left: -19px;
           color: $c-custom-highlight;
@@ -242,7 +241,7 @@
       }
 
       .custom-header {
-        background: $c-light_grey;
+        background: $c-darker-grey;
       }
     }
   }

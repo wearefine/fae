@@ -5,15 +5,24 @@ html
     meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
     - if @option.favicon.present? && @option.favicon.asset.present?
       link href=@option.favicon.asset_url rel="shortcut icon"
-    == stylesheet_link_tag "fae/application", media: "all"
-    == javascript_include_tag "fae/application"
+    == stylesheet_link_tag 'fae/application', media: 'all'
+    == javascript_include_tag 'fae/application'
     == csrf_meta_tags
 
   body class=body_class
-    == render "header"
+    == render 'mobilenav'
+    == render 'header'
     section.main-content#js-main-content
-      == render "nav" if user_signed_in?
+      == render 'sidenav'
+
       == yield
+
+      footer.main-footer
+        span a <a href="https://wearefine.com" target="_blank">FINE</a> Admin v#{Fae::VERSION}
+
+        a href="https://github.com/wearefine/fae" target="_blank" title="a FINE Admin"
+          svg height="1000" width="937.5" viewBox="0 0 1000 937.5" xmlns="http://www.w3.org/2000/svg"
+            path d="M0 500.288q0 129.32 62.952 234.728 62.952 108.824 170.8 171.288t234.728 62.464q127.368 0 235.704 -62.464 108.336 -62.952 170.556 -171.044t62.22 -234.972q0 -128.832 -62.464 -235.704 -62.952 -108.336 -171.044 -170.556t-234.972 -62.22q-129.32 0 -234.728 62.952 -108.824 62.952 -171.288 170.8t-62.464 234.728zm78.08 0q0 -78.08 30.744 -150.792t83.936 -125.416q53.192 -53.192 125.416 -83.692t150.304 -30.5 150.792 30.5 125.904 83.692q52.704 52.704 83.204 125.416t30.5 150.792q0 83.936 -34.404 160.064t-96.624 131.516 -142.252 80.276v-137.616q0 -51.24 -41.968 -80.032 102.968 -9.272 150.548 -52.216t47.58 -136.152q0 -72.224 -44.408 -121.512 8.784 -26.352 8.784 -50.752 0 -36.112 -16.592 -66.368 -32.696 0 -58.56 10.736t-63.44 37.088q-45.384 -10.248 -93.696 -10.248 -55.144 0 -102.968 11.224 -36.6 -26.84 -63.196 -37.82t-60.268 -10.98q-16.104 30.744 -16.104 66.368 0 25.376 8.296 51.24 -44.408 47.824 -44.408 121.024 0 93.208 47.336 135.664t151.768 52.216q-27.816 18.544 -38.552 54.168 -23.912 8.296 -49.776 8.296 -19.52 0 -33.672 -8.784 -4.392 -2.44 -8.052 -5.124t-7.564 -6.588 -6.344 -6.1 -6.344 -7.564 -5.124 -6.832 -5.856 -7.808 -5.124 -6.832q-22.936 -30.256 -54.656 -30.256 -17.08 0 -17.08 7.32 0 2.928 8.296 9.76 15.616 13.664 16.592 14.64 11.712 9.272 13.176 11.712 14.152 17.568 21.472 38.552 27.328 61 93.696 61 10.736 0 41.968 -4.88v103.456q-80.032 -24.888 -142.252 -80.276t-96.624 -131.516 -34.404 -160.064z"
 
     .markdown-hint
       .markdown-hint-wrapper = markdown_helper
