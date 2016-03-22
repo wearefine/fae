@@ -8,7 +8,7 @@
 
   &:after {
     @extend .icon-support:before;
-    @include icon_stuff;
+    @include icon-stuff;
     position: absolute;
     padding-left: 7px;
     text-decoration: none;
@@ -34,3 +34,13 @@
     max-width: 100%;
   }
 }
+
+.youtube-hint {
+  width: 530px;
+  height: 300px;
+  background-image: image-url('fae/youtube_helper.jpg');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+

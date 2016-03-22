@@ -9,7 +9,7 @@ var Fae = {
 
   init: function(){
     // Selector to support pre-1.3 changes
-    // @depreciation remove this lookup and all instances of it in v2.0
+    // @depreciation - replace Fae.content_selector property and all instances of it with '.content' in v2.0
     Fae.content_selector = FCH.exists('.main_content-section') || FCH.exists('.main_content-sections') ? '.main_content-section-area' : '.content';
 
     Fae.form.init();

@@ -50,8 +50,8 @@
   }
 
   thead {
-    @include gradient-vertical($start-color: $c-almost_white, $end-color: $c-content-header-bg);
-    background-color: $c-almost_white;
+    @include gradient-vertical($start-color: $c-near-white, $end-color: $c-content-header-bg);
+    background-color: $c-near-white;
     border-bottom: 1px solid $c-border;
   }
 
@@ -59,7 +59,7 @@
     text-transform: uppercase;
     font-size: 6pt;
     padding: 5px 0;
-    color: $c-grey;
+    color: $c-mid-dark-grey;
     text-align: center;
     background: none;
     font-weight: normal;
@@ -93,20 +93,20 @@
       width: 30px;
       height: 30px;
       line-height: 30px;
-      color: $c-grey;
+      color: $c-mid-dark-grey;
     }
   }
 }
 
 
 .ui-datepicker-header {
-  background: $c-black;
+  background: $c-darkest-grey;
   color: $c-white;
   font-weight: bold;
   line-height: 30px;
   border-width: 1px 0 0 0;
   border-style: solid;
-  border-color: $c-border;
+  border-color: $c-mid-grey;
 
   box-shadow: 0 1px 1px 0 $c-box_shadow;
 }
@@ -133,7 +133,7 @@
   float: left;
 
   &:before {
-    @include icon_stuff;
+    @include icon-stuff;
     @extend .icon-chevron_left:before;
   }
 }
@@ -143,13 +143,13 @@
 
   &:before {
     @extend .icon-chevron_right:before;
-    @include icon_stuff;
+    @include icon-stuff;
   }
 }
 
 .ui-datepicker-calendar .ui-state-default {
-  @include gradient-vertical($start-color: $c-lightest_grey, $end-color:$c-nav-sub-bg-active);
-  background-color: $c-lightest_grey;
+  @include gradient-vertical($start-color: $c-lightest-grey, $end-color: darken($c-lightest-grey, 4%));
+  background-color: $c-lightest-grey;
   box-shadow: 1px 1px 0 0 $c-box_shadow;
 }
 
@@ -191,8 +191,8 @@
 }
 
 .ui-datepicker-unselectable .ui-state-default {
-  background: $c-almost_white;
-  color: $c-lighter_grey;
+  background: $c-near-white;
+  color: $c-mid-grey;
 }
 
 .datepicker {
@@ -206,13 +206,13 @@
 
   label:before {
     @extend .icon-calendar:before;
-    @include icon_stuff;
+    @include icon-stuff;
     position: absolute;
     right: 20px;
     bottom: 0;
     padding: 12px;
     font-size: 19px;
-    color: $c-light_grey;
+    color: $c-darker-grey;
   }
 }
 
@@ -225,7 +225,7 @@
 .date-picker-wrapper {
   @extend %table-reset;
   box-shadow: 0 0 10px 0 $c-box_shadow;
-  background: $c-border;
+  background: $c-mid-grey;
   font-family: inherit;
   padding: 0;
   width: 380px;
@@ -242,7 +242,7 @@
   }
 
   .month-wrapper {
-    background-color: $c-border;
+    background-color: $c-mid-grey;
     border: 0;
     padding: 0;
 
@@ -251,21 +251,21 @@
       font-weight: bold;
 
       .caption {
-        background: $c-black;
+        background: $c-darkest-grey;
         color: $c-white;
         height: 30px;
         font-weight: bold;
 
         .prev,
         .next {
-          @include icon_stuff;
-          color: $c-black;
+          @include icon-stuff;
+          color: $c-darkest-grey;
 
           &:hover {
             background: none;
 
             &:before {
-              color: $c-grey;
+              color: $c-mid-dark-grey;
             }
           }
         }
@@ -288,19 +288,19 @@
       .week-name {
         background: $c-white;
         border-bottom: 1px solid $c-border;
-        color: $c-black;
+        color: $c-darkest-grey;
         line-height: 1;
         font-weight: 400;
 
         th {
           font-size: 6pt;
           text-transform: uppercase;
-          color: $c-grey;
+          color: $c-mid-dark-grey;
         }
       }
 
       .day {
-        @include gradient-vertical($start-color: $c-lightest_grey, $end-color:$c-nav-sub-bg-active);
+        @include gradient-vertical($start-color: $c-lightest-grey, $end-color: darken($c-lightest-grey, 4%));
         height: 30px;
         padding: 6px;
         border-right: 1px solid $c-border;
@@ -308,7 +308,7 @@
         &.lastMonth,
         &.nextMonth {
           background: $c-white;
-          color: $c-border;
+          color: $c-mid-grey;
         }
 
         &.checked,
@@ -325,7 +325,7 @@
       div.day {
         &.lastMonth,
         &.nextMonth {
-          color: $c-border;
+          color: $c-mid-grey;
         }
       }
     }

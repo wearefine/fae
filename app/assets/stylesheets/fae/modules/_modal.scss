@@ -1,7 +1,12 @@
 .hinter-clicker {
+	@include transition(color .2s);
   margin-left: 5px;
   cursor: pointer;
-  color: $c-custom-highlight;
+  color: $c-darker-grey;
+
+  &:hover {
+  	color: $c-text-heavy;
+  }
 
   &.hovered {
     position: relative;
@@ -19,12 +24,12 @@
 	max-width: 75%;
 	padding: 35px;
 	border-top: 4px solid $c-custom-highlight;
-	background: $c-modal-light-bg;
+	background: $c-white;
 	color: $c-text;
 	line-height: 1.5;
 	font-size: 13px;
 	overflow: scroll;
-	box-shadow: 0 3px 8px 0 $c-login-box_shadow;
+	box-shadow: 0 3px 8px 0 $c-box-shadow;
 
 	h3 {
 		color: $c-text;
@@ -49,7 +54,7 @@
 
 	table {
 		width: calc(100% + 40px);
-		margin: 20px -20px -20px -20px;
+		margin: 20px -20px -20px;
 	}
 
 	.icon-support {
@@ -65,7 +70,7 @@
 
 .simplemodal-close {
 	&:before {
-		@include icon_stuff;
+		@include icon-stuff;
 		@extend .icon-delete_x:before;
 		position: absolute;
 		top: 20px;
@@ -82,10 +87,10 @@
 
 .simplemodal-container--dark {
 	background: $c-modal-bg;
-	color: $c-light_grey;
+	color: $c-darker-grey;
 	box-shadow: none;
 
 	h3 {
-		color: $c-modal-header;
+		color: $c-white;
 	}
 }

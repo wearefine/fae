@@ -8,7 +8,7 @@
   max-width: 515px;
   padding: 5px;
   border: 1px solid $c-border;
-  background: $c-form-file-bg;
+  background: $c-body-bg;
   font-size: 13px;
   cursor: pointer;
   border-radius: 2px;
@@ -19,7 +19,7 @@
   }
 
   &.js-active {
-    background: $c-form-file-bg-active;
+    background: $c-white;
 
     span {
       color: $c-custom-highlight;
@@ -36,7 +36,7 @@
   cursor: pointer;
 
   &:hover {
-    background: $c-form-submit-gradient-hover;
+    background: $c-form-submit-gradient-end;
   }
 
   + span {

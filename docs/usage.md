@@ -83,14 +83,7 @@ rails g fae:page [PageName] [field:type] [field:type]
 |-----------|-------------|
 | PageName  | the name of the page |
 | field   | the name of the content block |
-| type    | the type of the content block (see table below) |
-
-| content block | associated object |
-|---------------|-------------------|
-| string    | Fae::TextField |
-| text      | Fae::TextArea |
-| image     | Fae::Image |
-| file      | Fae::File |
+| type    | the type of the content block (see [table below](#pages-vs-content-blocks)) |
 
 The page generator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
 
@@ -191,6 +184,8 @@ end
 ```
 
 ## Validation
+
+![Validation](images/length_validation.gif)
 
 Fae doesn't deal with any validation definitions in your application models, you'll have to add those. However, there are some pre-defined regex validation helpers to use in your models. See examples below.
 
@@ -478,7 +473,18 @@ The system is just your basic inherited singleton with dynamic polymorphic assoc
 
 ## Pages vs Content Blocks
 
-**Pages** are groups of **content blocks** based on the actual pages they appear on the site. For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
+**Pages** are groups of **content blocks** based on the actual pages they appear on the site. 
+
+Content blocks are defined in the model and called in the form view. The `type` refers to the generator API (more information available in [the following section](#generating-pages))
+
+| associated object | type | form helper |
+|-|-|-|
+| Fae::TextField | string | fae_content_form |
+| Fae::TextArea | text | fae_content_form |
+| Fae::Image | image | fae_image_form |
+| Fae::File | file | fae_file_form |
+
+For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
 
 ## Generating Pages
 
@@ -513,21 +519,17 @@ end
 `app/views/fae/pages/about_us.html.slim`
 ```ruby
 = simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
-  section.main_content-header
-    .main_content-header-wrapper
-      = render 'fae/shared/form_header', header: @item
-      = render 'fae/shared/form_buttons', f: f
+  header.content-header
+    = render 'fae/shared/form_header', header: @item, f: f
 
-  .main_content-sections
-    section.main_content-section
-      .content
-        = fae_input f, :title
+  .content
+    = fae_input f, :title
 
-        = fae_image_form f, :hero_image
-        = fae_content_form f, :hero_text
-        = fae_content_form f, :introduction
-        = fae_content_form f, :body
-        = fae_file_form f, :annual_report
+    = fae_image_form f, :hero_image
+    = fae_content_form f, :hero_text
+    = fae_content_form f, :introduction
+    = fae_content_form f, :body
+    = fae_file_form f, :annual_report
 ```
 
 Since this is the first page the generator will create `app/controllers/admin/content_blocks_controller.rb`, otherwise it would just add to the `fae_pages` array.
@@ -617,7 +619,7 @@ end
 * in the nested table arguments, instead of making the `parent_item` argument item virtual (which is just the instance of the `AboutUsPage`, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
 
 ```ruby
- section.main_content-section
+ section.content
   = render 'fae/shared/nested_table',
     assoc: :promos,
     parent_item: Fae::StaticPage.find_by_id(@item.id),
@@ -714,3 +716,23 @@ end
 ```
 
 Validations can only be applied to types `Fae::TextField` and `Fae::TextArea`.
+
+## Linking to Pages Within Fae
+
+Link to the edit screen of a page and its respective content blocks by adding an item to [the navigation items](#navigation-items).
+
+```ruby
+def nav_items 
+  [
+    ...
+    {
+      text: 'Pages', sublinks: [
+        { text: 'All', path: fae.pages_path },
+        # For example, if `@slug = 'home'`
+        { text: 'Home', path: fae.edit_content_block_path('home') }
+      ]
+    }
+    ...
+  ]
+end
+```

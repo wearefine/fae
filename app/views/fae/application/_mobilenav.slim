@@ -1,0 +1,51 @@
+nav.nav.mobilenav.js-nav
+  ul
+    - @fae_navigation.structure.each do |item|
+      ruby:
+        item[:path] ||= '#'
+        main_class = item[:sublinks].present? ? 'mobilenav-accordion js-accordion' : ''
+        main_class << " #{item[:class_name]}" if item[:class_name].present?
+
+      li class=main_class
+        a href=item[:path] = item[:text]
+
+        - if item[:sublinks].present?
+          ul.subnav.js-subnav.js-subnav.js-subnav
+            li
+              / <span>s are for the mobile titles
+              span.mobilenav-subheader.js-mobile-back = item[:text]
+
+            - item[:sublinks].each do |subitem|
+              ruby:
+                subitem[:path] ||= '#'
+                sub_class = 'mobilenav-accordion -sub js-accordion' if subitem[:sublinks].present?
+                link_class = subitem[:class_name] if subitem[:class_name].present?
+
+              li class=sub_class
+                a class=link_class href=subitem[:path] = subitem[:text]
+
+                - if subitem[:sublinks].present?
+                  ul.subnav.js-subnav
+                    li: span.mobilenav-subheader.js-mobile-back = subitem[:text]
+                    - subitem[:sublinks].each do |thirditem|
+                      - thirditem[:path] ||= '#'
+                      li: a href=thirditem[:path] = thirditem[:text]
+
+    - if user_signed_in?
+      li.mobilenav-user
+        span.mobilenav-user-header = current_user.full_name
+        ul
+          li: a.-logout href=fae.destroy_user_session_path Log Out
+          li: a.-settings href=fae.settings_path Your Settings
+          li: a.-support href=fae.help_path Support
+          - site_urls_are_present = @option.stage_url.present? || @option.live_url.present?
+    - view_site_class = site_urls_are_present ? 'mobilenav-accordion js-accordion' : nil
+    li class=view_site_class
+      - if site_urls_are_present
+        a href="#" View Site
+        ul.subnav.js-subnav
+          li: span.mobilenav-subheader.js-mobile-back View Site
+          li: a.-viewsite href=@option.stage_url target="_blank" Preview Site
+          li: a.-viewsite href=@option.live_url target="_blank" Live Site
+      - else
+        a.-viewsite href=@option.stage_url target="_blank" Preview Site

@@ -47,7 +47,6 @@ fae_method_name(f, attribute, options)
 
 fae_input is the basic input method derived from simple_form's f.input. What it displays will depend on the column type of the attribute. See [simple_form's documentationn](https://github.com/plataformatec/simple_form#available-input-types-and-defaults-for-each-column-type) to learn more.
 
-
 **Examples**
 
 An input[type=text] with an added wrapper_class and helper_text:
@@ -79,6 +78,8 @@ fae_association f, :people, collection: Person.active
 
 ## fae_checkbox
 
+![Checkbox](images/checkbox.png)
+
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
 | type | 'stacked' or 'inline' | stacked | determines how multiple checkboxes are displayed |
@@ -96,6 +97,8 @@ fae_checkbox f, :promos, type: 'inline', collection: Promo.live
 ```
 
 ## fae_radio
+
+![Radio](images/radio.png)
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
@@ -115,6 +118,8 @@ fae_radio f, :wine
 
 ## fae_pulldown
 
+![Pulldown](images/pulldown.gif)
+
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
 | collection | array or AR:Relation | AssociationClass.all | an array or ActiveRecord object of items to populate the element |
@@ -128,7 +133,13 @@ A short pulldown of a belongs_to association
 fae_pulldown f, :wine, size: 'short', collection: Wine.order(:name)
 ```
 
+With search:
+
+![Pulldown with search](images/pulldown_search.gif)
+
 ## fae_multiselect
+
+![Multiselect](images/multiselect.gif)
 
 *associations only*
 
@@ -148,6 +159,8 @@ A two pane style multiselect
 fae_multiselect f, :selling_points, two_pane: true
 ```
 
+![Multiselect](images/two_pane_multiselect.gif)
+
 ## fae_grouped_select
 
 | option | type | default | description |
@@ -158,6 +171,8 @@ fae_multiselect f, :selling_points, two_pane: true
 
 ## fae_datepicker
 
+![Datepicker](images/datepicker.gif)
+
 *attributes only*
 
 **Examples**
@@ -167,6 +182,8 @@ fae_datepicker f, :release_date
 ```
 
 ## fae_daterangepicker
+
+![Daterange picker](images/daterange_picker.gif)
 
 *attributes only*
 
@@ -179,6 +196,8 @@ fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 ```
 
 ## fae_prefix
+
+![Prefix](images/prefix.png)
 
 *attributes only*
 
@@ -195,6 +214,8 @@ fae_prefix f, :price, prefix: '$', placeholder: '50.00'
 
 ## fae_suffix
 
+![Suffix](images/suffix.png)
+
 *attributes only*
 
 | option | type | default | description |
@@ -209,6 +230,8 @@ fae_suffix f, :weight, suffix: 'lbs'
 ```
 
 ## fae_video_url
+
+![Video URL](images/video_url.gif)
 
 *attributes only*
 
@@ -225,6 +248,8 @@ fae_video_url f, :video_url
 # Nested Form Helpers
 
 ## fae_image_form
+
+![Image upload](images/image.png) 
 
 *Fae::Image association only*
 
@@ -248,6 +273,8 @@ fae_image_form f, :logo, label: 'Corporate Logo', required: true
 ```
 
 ## fae_file_form
+
+![File upload](images/file.png)
 
 *Fae::File association only*
 
@@ -293,6 +320,8 @@ fae_content_form f, :ad, input_options: { collection: ['Header', 'Footer'], inpu
 
 ## fae_filter_form
 
+![Filter form](images/filter_form.png)
+
 Displays the filter form, including the search field, submit and reset buttons. Accepts options and a block.
 
 | option | type    | default                                | description |
@@ -310,8 +339,9 @@ Displays the filter form, including the search field, submit and reset buttons. 
   // form elements
 ```
 
-
 ## fae_filter_select(attribute, options)
+
+![Filter select](images/filter_select.png)
 
 Dislays a select tag to be used within a `fae_filter_form`.
 
@@ -356,6 +386,8 @@ fae_datetime_format item.updated_at
 
 ## fae_toggle
 
+![Fae toggle](images/toggles.gif)
+
 The fae_toggle helper method takes an AR object and attribute. It then creates the HTML necessary for a working Fae on/off toggle switch.
 
 ```ruby
@@ -364,27 +396,39 @@ fae_toggle item, :on_prod
 
 ## fae_clone_button
 
-You can use fae_clone_button in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
+You can use `fae_clone_button` in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
 
 ```ruby
 fae_clone_button item
 ```
 
-More info about cloning can be found here: [cloning.md](cloning.md)
+## fae_delete_button
+
+You can use `fae_delete_button` in your list view tables to provide easy access to delete an item.
+
+```ruby
+fae_delete_button item
+```
 
 ## form_header
 
-The form_header helper takes an AR object or string to render an `<h1>` based on the action.
+The form_header helper takes an AR object or string to render an `<h1>` based on the action. Can also display breadcrumb links.
+
+| option | type | description |
+|--------|------|-------------|
+| header | ActiveRecord object | **(required)** passed to form_header helper method  |
+
+**Examples**
 
 ```ruby
 form_header @user
 ```
-renders `<h1>Edit User</h1>` on the edit page
+renders `Edit User` on the edit page
 
 ```ruby
 form_header 'Release'
 ```
-renders `<h1>New Release</h1>` on the new page
+renders `New Release` on the new page
 
 ## require_locals
 
@@ -394,6 +438,19 @@ If one of the locals aren't set when the partial is called and error will be rai
 
 ```ruby
 require_locals ['item', 'text'], local_assigns
+```
+
+## fae_avatar
+
+Retrieve a user's Gravatar image URL based on their email.
+
+| option | type | description |
+|-|-|-|
+| user | Fae::User | defaults to `current_user` |
+
+```ruby
+fae_avatar(current_user)
+#=> 'https://secure.gravatar.com/....'
 ```
 
 ---
@@ -411,6 +468,7 @@ Displays page title, add button and flash messages.
 | new_button | boolean | true | displays the add button |
 | button_text | string | "Add #{title.singularize}" | add button text |
 | csv | boolean | false | adds export to csv button |
+| breadcrumbs | boolean | true | display breadcrumb navigation before title |
 
 **Examples**
 
@@ -426,21 +484,44 @@ render 'fae/shared/index_header', title: 'Something Entirely Different', new_but
 
 ## form_header
 
+![Form header](images/form_header.png)
+
 Displays breadcrumb links and form title.
 
 | option | type | description |
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
-| breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
+| save_button_text (`v1.3 <=`)   | string | 'Save Settings' | save button text |
+| cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
+| 
+| cloneable | boolean | false | includes Clone button |
+| clone_button_text | string | 'Clone' | clone button text |
+| subnav | Array<String> | [] | generates "jump to" anchor links for long forms |
+
+If `subnav` is supplied, sections within the form must include IDs matching the [parameterized](http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize) items. Note that `parameterize` will use `_` as a separator. 
+
+```slim
+- subnav_array = ['SEO']
+- subnav_array.concat ['Nested Image Gallery', 'Recent Changes'] if params[:action] == 'edit'
+= render 'fae/shared/form_header', header: @klass_name, subnav: subnav_array
+
+section.content#attributes
+  ...
+section.content#nested_image_gallery
+  ...
+section.content#recent_changes
+  ...
+```
 
 **Examples**
 
 Standard implementation
 ```ruby
-render 'fae/shared/form_header', header: @item, breadcrumb_text: "Areas of Focus"
+render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery', 'Recent Changes']
 ```
 
 ## form_buttons
+**Warning**: This partial will be depreceated in v2.0. Use `fae/shared/form_header` instead.
 
 Displays form's save and cancel buttons.
 
@@ -472,7 +553,7 @@ The nested_table should go after the main form ends and should only placed on th
 | index | false | boolean | used for nested index forms |
 | assoc   | symbol | | **(required)** the association's name, or the item's name if it's for the index  |
 | parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
-| cols | array of symbols | [] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
+| cols* | array of symbols, or array of symbols and hashes | [], [{}] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
 | header | string | title | the section's header |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
@@ -482,13 +563,30 @@ The nested_table should go after the main form ends and should only placed on th
 | assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
 | helper_text | string | '' | the h6 directly above the nested table, and below the tite,used to provide the user with some helper_text to describe the context |
 
+***Example**
+
+* cols option now accepts hashes for custom titles, using attr: and title:
+```ruby
+cols: [{ attr: :name, title: 'What did you call me?' }, :image, :title]
+```
+
+You may also pass in custom columns, like an association's count by first defining a method on the model, then passing it in to the cols option.
+
+**Example**
+```ruby
+def cat_size
+  cats.size.to_s
+end
+
+cols: [{ attr: :cat_size, title: 'Kitten Count' }]
+```
 
 **Examples**
 
 Full Slim implementation with section wrapper and edit page conditional
 ```slim
 - if params[:action] == 'edit'
-  section.main_content-section
+  section.content
     = render 'fae/shared/nested_table',
       assoc: :tasting_notes,
       parent_item: @item,
@@ -498,6 +596,8 @@ Full Slim implementation with section wrapper and edit page conditional
 
 ## recent_changes
 
+![Recent changes](images/recent_changes.png)
+
 Displays recent changes to an object as logged by [Fae's change tracker](usage.md#markdown-header-change-tracker) in a table. Columns include the change's user, type, updated attributes and datetime.
 
 This partial is best placed at the bottom of the form and will automatically hide itself in create forms, where there wouldn't be changes to display.
@@ -506,15 +606,12 @@ This partial is best placed at the bottom of the form and will automatically hid
 
 Standard implementation
 ```ruby
-render 'fae/shared/recent_changes'
+= render 'fae/shared/recent_changes'
 ```
 
 Optionally, you can add a link to it in the form nav:
 ```slim
-nav.main_content-header-section
-  ul.main_content-header-section-links
-    - if params[:action] == 'edit'
-      li: a href="#recent_changes" Recent Changes
+= render 'fae/shared/form_header', ..., subnav: [...,  'Recent Changes']
 ```
 
 ---
@@ -522,6 +619,8 @@ nav.main_content-header-section
 # Add-ons
 
 ## Slug generation
+
+![Slugger](images/slugger.gif)
 
 Auto-generate a slug from a field. Only populates if the `slug` input is blank.
 

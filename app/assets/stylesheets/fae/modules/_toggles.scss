@@ -3,13 +3,13 @@
   display: block;
   position: relative;
   width: 60px;
-  border: 2px solid $c-slider-border;
+  border: 2px solid $c-grey;
   border-radius: 2px;
   font-size: 12px;
   overflow: hidden;
   cursor: pointer;
   text-decoration: none;
-  background: $c-slider-option-selector;
+  background: $c-white;
 }
 
 .slider-options {
@@ -37,12 +37,12 @@
   text-align: center;
 }
 
-.slider-option-yes {
-  color: $c-slider-yes-color;
-  background: $c-slider-yes-bg;
-}
-
 .slider-option-no {
   color: $c-slider-no-color;
   background: $c-slider-no-bg;
+}
+
+.slider-option-yes {
+  color: $c-white;
+  background: $c-custom-highlight;
 }
