@@ -13,7 +13,6 @@ main.content
   table.main_table-sort_columns
     thead
       tr
-        th.-action data-sorter="false"
         th Name
         th Wine
         th Slug
@@ -28,10 +27,9 @@ main.content
       - if @items.present?
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
-            td.-action
-              a.table-action href=edit_admin_release_path(item)
-                i.icon-edit
-            td = link_to item.fae_display_field, edit_admin_release_path(item)
+            td
+              i.icon-edit
+              = link_to item.fae_display_field, edit_admin_release_path(item)
             td = item.wine.name_en
             td = item.slug
             td = item.price

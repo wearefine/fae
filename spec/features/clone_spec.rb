@@ -70,7 +70,7 @@ feature 'Clone record' do
       release = FactoryGirl.create(:release, name: 'Ima Release', vintage: '2012', price: 13, varietal_id: 2, show: Date.today)
       admin_login
       visit admin_releases_path
-      page.find('.table-action.-clone').click
+      page.find('td.-action a[title="Clone"]').click
 
       # support/async_helper.rb
       eventually {
@@ -85,7 +85,7 @@ feature 'Clone record' do
       release = FactoryGirl.create(:release, name: 'Ima Release', vintage: '2012', on_prod: true, price: 13, varietal_id: 2, show: Date.today)
       admin_login
       visit admin_releases_path
-      page.find('.table-action.-clone').click
+      page.find('td.-action a[title="Clone"]').click
 
       eventually {
         expect(find_field('release_on_prod_false').value).to eq('false')
