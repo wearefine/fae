@@ -8,6 +8,7 @@
     + \#55066: Major HTML and SCSS refactor
     + \#55211: Change wording of "Replace Image" to be "Remove Image"
     + \#55188: Add version and GitHub icon to footer on all pages
+    + \#55067: Standardize regular column widths
     + \#46060: Tab no longer skips checkbox inputs
     + Add `fae_delete_button` helper method
     + \#54556: Add confirm dialogue before cloning

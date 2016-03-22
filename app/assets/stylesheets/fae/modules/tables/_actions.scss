@@ -34,7 +34,7 @@ th {
   }
 
   &.-modified {
-    width: 200px;
+    width: 130px;
   }
 
   &.-delete {
@@ -45,7 +45,8 @@ th {
     width: 80px;
   }
 
-  &.-edit {
+  &.-edit,
+  &.-clone {
     width: 65px;
   }
 
@@ -67,5 +68,9 @@ td {
         color: $c-text;
       }
     }
+  }
+
+  &.-modified {
+    text-align: center;
   }
 }
