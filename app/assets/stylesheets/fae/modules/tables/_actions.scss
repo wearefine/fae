@@ -35,6 +35,7 @@ td {
   &.-action {
     a {
       @extend .table-action;
+      text-decoration: none;
     }
   }
 }

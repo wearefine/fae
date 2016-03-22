@@ -79,4 +79,9 @@ input[type=email] {
     display: inline-block;
     margin-right: 3px;
   }
+
+  // Specificity hack
+  &.table-add-link {
+    margin-bottom: 10px;
+  }
 }

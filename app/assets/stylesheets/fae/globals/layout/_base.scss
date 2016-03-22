@@ -55,6 +55,10 @@
     display: inline-block;
     vertical-align: middle;
     margin-right: 25px;
+
+    a {
+      @extend %underline-link;
+    }
   }
 
   // SVG link

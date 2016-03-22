@@ -3,6 +3,10 @@ table {
   border: 1px solid $c-grey;
   border-collapse: separate;
   table-layout: fixed;
+
+  a {
+    @extend %underline-link;
+  }
 }
 
 tbody {

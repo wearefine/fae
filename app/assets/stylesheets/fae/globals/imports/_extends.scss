@@ -1,3 +1,12 @@
+%underline-link {
+  text-decoration: underline;
+  color: $c-mid-dark-grey;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 %gray-button {
   @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
   border-radius: 3px;
@@ -16,6 +25,11 @@
     table-layout: initial;
     border-collapse: inherit;
     border: initial;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 
   td {
