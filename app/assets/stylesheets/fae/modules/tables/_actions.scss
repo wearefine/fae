@@ -1,17 +1,5 @@
 th {
-  &.-live {
-    text-align: center;
-  }
-
   &.-action {
-    width: 40px;
-  }
-
-  &.-modified {
-    width: 200px;
-  }
-
-  &.-live {
     width: 80px;
   }
 
@@ -22,6 +10,8 @@ th {
 
 td {
   &.-action {
+    text-align: center;
+
     a {
       color: $c-darker-grey;
       display: block;
