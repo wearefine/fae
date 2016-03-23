@@ -10,7 +10,7 @@ main.content
         th Role
         th Last Logged In
         th.-action data-sorter="false" Active
-        th.-action data-sorter="false" Delete
+        th.-action data-sorter="false"
 
     tbody
       - @users.each do |user|
@@ -23,4 +23,4 @@ main.content
           td.-action
             - unless current_user == user
               = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }
-                i.icon-delete_x
+                i.icon-trash

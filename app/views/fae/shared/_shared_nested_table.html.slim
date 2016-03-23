@@ -16,7 +16,7 @@ table class=table_class
       - cols.each do |col|
         = th_columns(col)
       - if edit_column
-        th.-action data-sorter="false" Edit
+        th.-action data-sorter="false"
       th.-action
   tbody
     - records = index ? @items : parent_item.send(assoc)
