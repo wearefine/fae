@@ -8,7 +8,6 @@
   padding: 0 $content-buffer;
   background: $c-darkest-grey;
   text-align: center;
-  font-weight: 200;
 
   @include bp(large) {
     position: relative;
@@ -18,11 +17,13 @@
   a {
     display: block;
     padding: 15px 0;
+    color: $c-mid-grey;
 
     @include bp(large) {
       padding: 27px 0;
     }
 
+    &:hover,
     &.-current {
       color: $c-white;
     }
@@ -41,7 +42,6 @@
     font-size: 18px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    font-weight: 500;
 
     a {
       color: $c-white;
@@ -66,11 +66,6 @@
     // @include transition(color 0s);
     padding-left: 15px;
     padding-right: 15px;
-    color: $c-mid-grey;
-
-    &:hover {
-      color: $c-white;
-    }
   }
 
   > li {
@@ -103,6 +98,7 @@
     opacity: 0;
     width: 260px;
     padding: 8px 0;
+    line-height: 1.2;
 
     li {
       display: block;
@@ -110,8 +106,8 @@
 
     a {
       background: none;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 6px;
+      padding-bottom: 6px;
 
       &:hover {
         background: none;

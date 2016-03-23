@@ -20,7 +20,7 @@ Fae.form = {
     // input type=file customization
     // This doesn't work in IE. It's not worth figuring out why by this point. IE9 gets plain file uploader.
     if (!FCH.IE9) {
-      $('.input.file').fileinputer({delete_class: 'icon-delete_x file_input-delete'});
+      $('.input.file').fileinputer({delete_class: 'asset-delete'});
     }
 
     // make all the hint areas

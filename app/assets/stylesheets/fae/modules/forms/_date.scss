@@ -200,7 +200,7 @@
   width: 240px;
 
   input[type=text] {
-    padding-right: 50px;
+    padding-right: 40px;
     width: 100%;
   }
 
@@ -208,7 +208,7 @@
     @extend .icon-calendar:before;
     @include icon-stuff;
     position: absolute;
-    right: 20px;
+    right: 5px;
     bottom: 0;
     padding: 12px;
     font-size: 19px;

@@ -76,23 +76,23 @@ $c-table-tr-hover: $c-white !default;
 $c-table-filter-header: $c-darkest-grey !default;
 
 // Forms
-$c-form-submit: $c-white !default;
-$c-form-submit-gradient-start: $c-dark-grey !default;
-$c-form-submit-gradient-end: $c-darkest-grey !default;
-$c-form-button: $c-dark-grey !default;
-$c-form-button-gradient-start: $c-lightest-grey !default;
-$c-form-button-gradient-end: $c-light-grey !default;
+$c-dark-button: $c-white !default;
+$c-dark-button-gradient-start: $c-dark-grey !default;
+$c-dark-button-gradient-end: $c-darkest-grey !default;
+$c-light-button: $c-dark-grey !default;
+$c-light-button-gradient-start: $c-near-white !default;
+$c-light-button-gradient-end: $c-light-grey !default;
 $c-form-file-link-bg: $c-grey !default;
 $c-form-file-link-bg-hover: $c-grey !default;
 $c-form-table-bg: $c-light-grey !default;
-$c-chosen-gradient-start: $c-lightest-grey !default;
+$c-chosen-gradient-start: $c-near-white !default;
 $c-chosen-gradient-end: $c-light-grey !default;
 $c-chosen-multi-bg: $c-lightest-grey !default;
 $c-chosen-multi-text: $c-dark-grey !default;
 $c-chosen-multi-delete: $c-darker-grey !default;
 
 // Yes / No Sliders
-$c-slider-no-color: $c-mid-grey !default;
+$c-slider-no-color: $c-light-grey !default;
 $c-slider-no-bg: $c-darker-grey !default;
 
 // Modal

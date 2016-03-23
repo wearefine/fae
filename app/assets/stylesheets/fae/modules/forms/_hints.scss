@@ -1,9 +1,8 @@
 .markdown-support {
+  @extend %underline-link;
   position: relative;
   display: inline-block;
   padding-left: 7px;
-  color: $c-custom-highlight;
-  text-decoration: underline;
   cursor: pointer;
 
   &:after {

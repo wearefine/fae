@@ -10,15 +10,14 @@
   font-size: 13px;
   border-radius: 2px;
 
-  &.asset-actions--files {
-    a {
-      line-height: 32px;
-    }
+  &.active {
+    background: $c-white;
+  }
 
-    .icon-delete_x {
-      padding-top: 0;
-      right: 0;
-      line-height: 16px;
+  &.-files {
+    a {
+      padding-top: 9px;
+      padding-bottom: 9px;
     }
   }
 
@@ -30,43 +29,49 @@
     display: block;
   }
 
-  .icon-delete_x {
-    float: left;
-    display: block;
-    width: 5%;
-    color: $c-text-sub;
-    padding-top: 15px;
+  a {
+    padding: 6px;
+    display: inline-block;
   }
 
-  a.file_input-button {
+  span {
+    @include transition(color .2s);
+    color: $c-text-sub;
+  }
+
+  .button {
     display: inline-block;
-    font-size: 14px;
-    line-height: 20px;
+    margin-right: 10px;
+
+    span {
+      padding-right: 30px;
+    }
   }
 }
 
-.asset-actions-image-link {
-  @include transition(all .2s);
-  padding: 5px;
-  font-size: 12px;
-  background: $c-form-file-link-bg;
-  color: $c-custom-highlight;
-  display: inline-block;
-  margin-top: 7px;
-  border-radius: 5px;
+.asset-delete {
+  @include transition(color 0.2s);
+  float: right;
+  display: none;
+  color: $c-darker-grey;
+
+  &:before {
+    @include icon-stuff;
+    @extend .icon-trash:before;
+  }
 
   &:hover {
-    background: $c-form-file-link-bg-hover;
+    color: $c-mid-dark-grey;
+  }
+
+  .active & {
+    display: block;
   }
 }
 
-.asset-actions-title {
-  float: left;
-  display: block;
+.asset-title {
+  display: inline-block;
   width: 70%;
   padding: 10px 7px 0 0;
-}
-
-.asset-actions-image-name {
-  color: $c-custom-highlight;
+  color: $c-darkest-grey;
 }

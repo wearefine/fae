@@ -20,6 +20,11 @@
   &.-dashboard {
     padding-top: 26px;
     padding-bottom: 26px;
+    color: $c-darker-grey;
+
+    strong {
+      color: $c-darkest-grey;
+    }
   }
 
   h1,
@@ -71,7 +76,7 @@
     display: inline-block;
     vertical-align: top;
     padding: 8px 0;
-    border-bottom: 5px solid transparent;
+    border-bottom: 3px solid transparent;
     margin: 0 8px;
     font-size: 13px;
     color: $c-text-sub;
@@ -115,12 +120,6 @@
     &:last-child {
       margin-right: 0;
     }
-
-    &:not(.add-button) {
-      @extend %gray-button;
-      font-size: 13px;
-    }
-
   }
 
   input[type=submit] {
