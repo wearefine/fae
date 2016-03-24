@@ -85,7 +85,6 @@ describe 'pages#error404' do
       create_super_user
       get '/admin/nothinghere'
 
-      # binding.pry
       expect(response.status).to eq(302)
       expect(response).to redirect_to('/admin/login')
     end

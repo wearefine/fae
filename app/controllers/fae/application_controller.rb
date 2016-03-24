@@ -93,5 +93,11 @@ module Fae
       raise 'Fae::Navigation#structure is not defined, please define it in `app/models/concerns/fae/navigation_concern.rb`'
     end
 
+    def all_models
+      # load of all models since Rails caches activerecord queries.
+      Rails.application.eager_load!
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
+    end
+
   end
 end

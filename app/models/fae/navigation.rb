@@ -16,6 +16,10 @@ module Fae
       structure[@coordinates.first][:subitems][@coordinates.second][:subitems] if @coordinates.length > 2
     end
 
+    def search(query)
+      find_items_by_text(structure, query, [])
+    end
+
     private
 
     def find_current_hash(array_of_items)
@@ -34,6 +38,18 @@ module Fae
       # if nothing is returned, remove last coor and return nil
       @coordinates.pop
       nil
+    end
+
+    def find_items_by_text(items, query, results)
+      items.each do |item|
+        if item[:text].present? && item[:text].downcase.include?(query.downcase)
+          results << { text: item[:text], nested_path: item[:nested_path] }
+        end
+        if item[:subitems].present?
+          results = find_items_by_text(item[:subitems], query, results)
+        end
+      end
+      results
     end
 
     def increment_coordinates

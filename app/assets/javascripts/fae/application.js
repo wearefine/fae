@@ -56,6 +56,7 @@
 //= require fae/navigation/_navigation
 //= require fae/navigation/_subnavHighlighter
 //= require fae/navigation/_language
+//= require fae/navigation/_global_search
 
 //= require fae/_modals
 //= require fae/_tables
