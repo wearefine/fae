@@ -43,7 +43,7 @@ Fae.form.ajax = {
       var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
 
       _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
     });
