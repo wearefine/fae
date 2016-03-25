@@ -183,6 +183,15 @@ tbody {
 .main_content-header-wrapper {
   @include clearfix;
   position: relative;
+
+  h1,
+  ul {
+    display: inline-block;
+  }
+
+  .content-header-buttons {
+    float: right;
+  }
 }
 
 .main_content-breadcrumbs {
