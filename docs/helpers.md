@@ -32,14 +32,13 @@ fae_method_name(f, attribute, options)
 | ------ | ---- | ------- | ----------- |
 | label | string | attribute.humanize | the form label |
 | helper_text | string | | helper text that appears under label |
-| hint | string | | text that appears in a hint modal (cannot be combined with `dark_hint`) |
-| dark_hint | string | | text that appears in a dark color scheme (cannot be combined with `hint`) |
+| hint | string | | text that appears in a hint modal |
+| dark_hint | string | | **warning: this option will be depreciated in v2.0** text that appears in a dark color scheme (`hint` will override `dark_hint` if simultaneously supplied) |
 | markdown | boolean | false | adds markdown GUI toolbar |
 | markdown_supported | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
 | wrapper_class | string | | a class to add to the wrapper element |
 | validate | boolean | true | triggers `judge` to validate element |
-
 
 ## fae_input
 
