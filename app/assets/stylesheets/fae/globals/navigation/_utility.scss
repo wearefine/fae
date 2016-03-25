@@ -33,12 +33,11 @@
 
   li {
     vertical-align: top;
+  }
 
-    &:last-child {
-      a {
-        padding-right: 0;
-      }
-    }
+  [class^="icon-"] {
+    display: block;
+    height: 16px;
   }
 }
 
@@ -72,6 +71,27 @@
     a {
       padding: 7px 25px;
       font-size: 13px;
+    }
+  }
+
+  &.utility-search {
+    ul {
+      display: block;
+      position: relative;
+      top: 0;
+      padding: 0;
+
+      &.utility-search-results {
+        padding-top: 15px;
+      }
+
+      ul {
+        margin-left: 15px;
+      }
+
+      a {
+        padding: 7px 20px;
+      }
     }
   }
 }
