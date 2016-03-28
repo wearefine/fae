@@ -97,10 +97,11 @@
     position: absolute;
     left: 0;
     opacity: 0;
-    width: 160px;
+    min-width: 160px;
     padding: 10px 10px 13px;
     line-height: 1.2;
     font-size: 15px;
+    white-space: nowrap;
 
     li {
       display: block;
