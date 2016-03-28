@@ -8,6 +8,15 @@
 .icon-bars:before {
     content: "\e901";
 }
+.icon-edit:before {
+    content: "\e900";
+}
+.icon-copy:before {
+    content: "\e905";
+}
+.icon-trash:before {
+    content: "\e906";
+}
 .icon-settings:before {
     content: "\e902";
 }
@@ -29,9 +38,6 @@
 .icon-user:before {
     content: "\e603";
 }
-.icon-trash:before {
-    content: "\e604";
-}
 .icon-sort:before {
     content: "\e606";
 }
@@ -49,9 +55,6 @@
 }
 .icon-logout:before {
     content: "\e60c";
-}
-.icon-edit:before {
-    content: "\e60e";
 }
 .icon-delete_x:before {
     content: "\e60f";
@@ -86,8 +89,17 @@
 .icon-chevron_down:before {
     content: "\e619";
 }
-.icon-copy:before {
-    content: "\e900";
+.icon-fullscreen:before {
+    content: "\e61e";
+}
+.icon-question:before {
+    content: "\e61b";
+}
+.icon-eye:before {
+    content: "\e61c";
+}
+.icon-columns:before {
+    content: "\e61d";
 }
 .icon-image:before {
     content: "\e90d";
@@ -128,15 +140,4 @@
 .icon-code:before {
     content: "\ea80";
 }
-.icon-fullscreen:before {
-    content: "\e61e";
-}
-.icon-question:before {
-    content: "\e61b";
-}
-.icon-eye:before {
-    content: "\e61c";
-}
-.icon-columns:before {
-    content: "\e61d";
-}
+

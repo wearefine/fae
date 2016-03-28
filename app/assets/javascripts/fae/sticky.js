@@ -49,7 +49,7 @@
     };
 
     if(!this.options.perpetual_placeholder) {
-      css.display = 'none';
+      css_properties.display = 'none';
     }
 
     var $placeholder = $('<div />', {

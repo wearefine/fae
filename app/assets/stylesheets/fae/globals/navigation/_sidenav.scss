@@ -31,7 +31,7 @@
   // Edit pages
   ~ .simple_form {
     @include bp(large) {
-      padding-left: $sidenav-width;
+      padding-left: $sidenav-width + $content-buffer;
     }
   }
 }

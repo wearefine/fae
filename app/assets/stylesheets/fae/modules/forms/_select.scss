@@ -35,6 +35,7 @@
       padding: 7px 15px;
       border-radius: 2px;
       box-shadow: none;
+      border-color: $c-mid-grey;
 
       div b {
         margin-top: 7px;
@@ -145,6 +146,12 @@
   }
 }
 
+.chosen-container {
+  .chosen-drop {
+    border-color: $c-mid-grey;
+  }
+}
+
 // MultiSelect plugin for multiselect pagination-ellipsis
 .ms-container {
   width: 700px;
@@ -204,7 +211,7 @@
       padding: 10px 15px;
       margin-right: -15px;
       color: $c-text-heavy;
-      background: $c-mid-grey;
+      background: $c-grey;
       font-size: 14px;
     }
   }

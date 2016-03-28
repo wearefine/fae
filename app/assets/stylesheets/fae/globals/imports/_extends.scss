@@ -1,12 +1,9 @@
-%gray-button {
-  @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
-  border-radius: 3px;
-  color: $c-form-button;
-  border: 1px solid $c-border;
-  padding: 11px 14px;
+%underline-link {
+  text-decoration: underline;
+  color: $c-mid-dark-grey;
 
   &:hover {
-    background: $c-form-button-gradient-end;
+    text-decoration: none;
   }
 }
 
@@ -15,6 +12,11 @@
     table-layout: initial;
     border-collapse: inherit;
     border: initial;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 
   td {
@@ -30,13 +32,8 @@
     tr {
       &,
       &:nth-child(even) {
-        &,
         &:hover {
-          background: initial;
-          border-left: initial;
-
           td {
-            &,
             &:first-child {
               border-left: inherit;
             }

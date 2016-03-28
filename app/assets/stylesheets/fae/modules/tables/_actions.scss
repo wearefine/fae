@@ -1,53 +1,10 @@
-.main_table-clone {
-  text-align: center;
-}
-
-.main_table-action {
-  @include transition(border-color .2s);
-  display: inline-block;
-  padding: 5px;
-  border: 2px solid $c-table-td;
-
-  &:hover {
-    border-color: $c-mid-grey;
-  }
-
-  &.main_table-clone {
-    display: block;
-    width: 34px;
-    margin: 0 auto;
-  }
-
-  .icon-edit {
-    font-size: 15px;
-  }
-
-}
-
 th {
-  &.-modified,
-  &.-live,
-  &.-delete,
-  &.-edit,
-  &.-clone {
-    text-align: center;
+  &.-action {
+    width: 60px;
   }
 
-  &.-modified {
-    width: 130px;
-  }
-
-  &.-delete {
-    width: 90px;
-  }
-
-  &.-live {
-    width: 80px;
-  }
-
-  &.-edit,
-  &.-clone {
-    width: 65px;
+  &.-action-wide {
+    width: 120px
   }
 
   &.-thumb {
@@ -56,21 +13,24 @@ th {
 }
 
 td {
-  &.-edit,
-  &.-delete {
-    width: 1px;
+  &.-action {
     text-align: center;
 
     a {
-      color: $c-text-sub;
+      color: $c-darker-grey;
+      display: block;
+      padding: 2px;
+      font-size: 16px;
+      text-decoration: none;
 
       &:hover {
-        color: $c-text;
+        color: $c-mid-dark-grey;
       }
     }
   }
 
-  &.-modified {
-    text-align: center;
+  i + a {
+    display: inline-block;
+    padding-left: 8px;
   }
 }

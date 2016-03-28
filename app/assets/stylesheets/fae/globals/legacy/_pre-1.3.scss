@@ -45,7 +45,7 @@
 .sidenav {
   ~ .main_content-sections {
     @include bp(large) {
-      padding-left: $sidenav-width;
+      padding-left: $sidenav-width + $content-buffer;
     }
   }
 }
@@ -73,6 +73,63 @@
 
   .main_content-section:first-child & {
     border-top: 0;
+  }
+}
+
+.main_table-clone {
+  text-align: center;
+}
+
+.main_table-action {
+
+  &.main_table-clone {
+    display: block;
+    width: 34px;
+    margin: 0 auto;
+  }
+
+  .icon-edit {
+    font-size: 15px;
+  }
+
+}
+
+tbody {
+  tr {
+    &:nth-of-type(even) {
+      .main_table-action {
+        border-color: $c-table-tr-even;
+
+        &:hover {
+          border-color: $c-mid-grey;
+        }
+      }
+    }
+  }
+}
+
+// Styles needed for the fileinputer
+.file_input-wrapper {
+  @include transition(background .2s);
+  position: relative;
+  display: inline-block;
+  width: 90%;
+  min-width: 223px;
+  max-width: 515px;
+  padding: 5px;
+  border: 1px solid $c-border;
+  background: $c-body-bg;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 2px;
+
+  &.js-active {
+    background: $c-white;
+  }
+
+  span {
+    @include transition(color .2s);
+    color: $c-text-sub;
   }
 }
 
@@ -162,9 +219,18 @@
 
 .main_content-header-save {
   a:not(.add-button) {
-    @extend %gray-button;
+    @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
+    border-radius: 3px;
+    color: $c-light-button;
+    border: 1px solid $c-border;
+    padding: 11px 14px;
+    cursor: pointer;
     font-size: 13px;
     margin-right: 5px;
+
+    &:hover {
+      background: $c-light-button-gradient-end;
+    }
   }
 
   input[type=submit] {
@@ -436,7 +502,7 @@
   }
 
   a {
-    @include gradient-vertical($start-color: $c-form-button-gradient-start, $end-color: $c-form-button-gradient-end);
+    @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
     display: block;
     padding: 10px;
     min-height: 30px;
@@ -514,4 +580,11 @@
     font-size: 12px;
     margin-right: 6px;
   }
+}
+
+.login-label-extra {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  color: $c-text-heavy;
 }
