@@ -46,7 +46,7 @@ module Fae
       if Fae.has_top_nav
         @fae_topnav_items = @fae_navigation.structure
         @fae_sidenav_items = @fae_navigation.side_nav
-      elsif nav_items.defined? && nav_items.present?
+      elsif defined?(nav_items) && nav_items.present?
         # deprecate in v2.0
         # support nav_items defined from legacy Fae::NavItems concern
         @fae_sidenav_items = nav_items
