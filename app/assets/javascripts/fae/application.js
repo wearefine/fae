@@ -30,7 +30,6 @@
 //= require judge
 //= require grinder
 //= require simplemde.min
-//= require typeahead.bundle
 
 //= require fae/judge_path
 //= require fae/extensions

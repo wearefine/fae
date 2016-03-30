@@ -132,39 +132,3 @@
   width: 270px;
   right: negate($content-buffer);
 }
-
-/////////////////////////
-//     Typeahead       //
-/////////////////////////
-
-.twitter-typeahead {
-  // Overrides inline styles
-  display: block!important;
-}
-
-.tt-menu {
-  // Overrides inline styles
-  position: static!important;
-  margin-top: 10px;
-}
-
-.tt-suggestion {
-  color: $c-text-sub;
-  padding: 8px 10px;
-}
-
-.tt-cursor {
-  background: rgba($c-white, 0.1);
-}
-
-.tt-highlight {
-  color: $c-white;
-}
-
-.tt-input {
-  color: $c-white;
-}
-
-.tt-hint {
-  color: $c-text-sub;
-}
