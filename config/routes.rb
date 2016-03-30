@@ -29,6 +29,8 @@ Fae::Engine.routes.draw do
   post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
   post 'sort/:object', to: 'utilities#sort', as: 'sort'
   post 'language_preference/:language', to: 'utilities#language_preference'
+  post 'search/:query', to: 'utilities#global_search'
+  post 'search', to: 'utilities#global_search'
 
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]

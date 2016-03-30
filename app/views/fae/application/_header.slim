@@ -1,9 +1,9 @@
-header.main-header#js-main-header.js-nav
+header.main-header#js-main-header
   span.mobilenav-toggle.icon-menu#js-mobilenav-toggle
   h1: a href=root_path = @option.title
 
   - if @fae_topnav_items.present?
-    nav
+    nav.js-nav
       ul.main-header-nav
         - @fae_topnav_items.each do |item|
           li.js-main-header-parent
@@ -38,5 +38,7 @@ header.main-header#js-main-header.js-nav
       li.utility-dropdown.utility-search.js-utility-dropdown#js-utility-search
         a href="#": i.icon-search
 
-        .utility-search-wrapper
-          input#js-search type="text"
+        .utility-search-wrapper.js-utility-search-wrapper
+          input#js-global-search type="text"
+
+          == render 'global_search_results', show_nav: true
