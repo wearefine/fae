@@ -2,7 +2,7 @@
   header.content-header.js-content-header
     h1 Root Settings
     .main_content-header-save
-      a#main_content-header-save-cancel href=fae.root_path(cancelled: true) Cancel
+      a.button#js-header-cancel href=fae.root_path(cancelled: true) Cancel
       = f.submit "Save Settings"
 
   == render 'flash_messages'

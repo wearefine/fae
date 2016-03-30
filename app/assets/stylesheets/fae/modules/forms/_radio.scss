@@ -39,21 +39,23 @@
   border: 1px solid $c-border;
   border-radius: 50%;
 
+  &:before {
+    @include transform( translate(-50%, -50%) );
+    content: '';
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 9px;
+    width: 9px;
+    background: $c-darkest-grey;
+    border-radius: 50%;
+  }
+
   input:checked + label &,
   input:checked + & {
-    border-color: $c-darkest-grey;
-
     &:before {
-      @include transform( translate(-50%, -50%) );
-      content: '';
       display: block;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      height: 9px;
-      width: 9px;
-      background: $c-darkest-grey;
-      border-radius: 50%;
     }
   }
 }

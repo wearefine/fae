@@ -57,7 +57,8 @@
   ul,
   .utility-search-wrapper {
     display: none;
-    background: $c-header-dropdown-bg;
+    background: $c-header-bg;
+    border-top: 1px solid $c-dark-grey;
     position: absolute;
     top: 70px;
     z-index: 2;
@@ -65,8 +66,8 @@
   }
 
   ul {
-    width: 150px;
-    padding: 8px 0;
+    width: 140px;
+    padding: 8px 0 12px;
     left: -11px;
 
     a {
