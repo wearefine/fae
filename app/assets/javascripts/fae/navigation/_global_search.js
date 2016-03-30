@@ -19,7 +19,7 @@ Fae.globalSearch = {
    * Caches common elements into globally accessible variables
    */
   setElements: function() {
-    this.$wrapper = $('.utility-search-wrapper');
+    this.$wrapper = $('.js-utility-search-wrapper');
     this.$input = $('#js-global-search');
   },
 

@@ -30,7 +30,7 @@ Fae.navigation = {
    */
   selectCurrentNavItem: function() {
     var current_base_url = window.location.pathname.replace('#', '');
-    var $ready_current_link = $('.js-nav nav a[href="' + current_base_url + '"]');
+    var $ready_current_link = $('.js-nav a[href="' + current_base_url + '"]');
 
     /**
      * Apply current nav class or keep looking deeper from path for the answer
