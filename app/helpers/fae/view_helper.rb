@@ -44,14 +44,14 @@ module Fae
 
     def fae_clone_button(item)
       return if item.blank?
-      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', data: { confirm: t('fae.clone_confirmation') } do
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'js-tooltip', data: { confirm: t('fae.clone_confirmation') } do
         concat content_tag :i, nil, class: 'icon-copy'
       end
     end
 
     def fae_delete_button(item)
       return if item.blank?
-      link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') } do
+      link_to ['admin', item], method: :delete, title: 'Delete', class: 'js-tooltip', data: { confirm: t('fae.delete_confirmation') } do
         concat content_tag :i, nil, class: 'icon-trash'
       end
     end

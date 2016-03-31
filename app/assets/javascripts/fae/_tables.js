@@ -46,6 +46,10 @@ Fae.tables = {
     if (FCH.exists('form ' + Fae.content_selector)) {
       this.endingSelectShim(Fae.content_selector);
     }
+
+    if (FCH.exists('.js-tooltip')) {
+      this.tooltip();
+    }
   },
 
   /**
@@ -370,5 +374,27 @@ Fae.tables = {
     }
 
     $tables.each( applyOffset );
+  },
+
+  /**
+   * Generate a tooltip for all .js-tooltip elements using their title attribute
+   */
+  tooltip: function() {
+    // Generate tooltip
+    $('.js-tooltip').each(function() {
+      var $this = $(this);
+      var left = $this.width() / 2
+      var $tooltip_element = $('<span />', {
+        class: 'tooltip',
+        text: $this.attr('title')
+      });
+
+      $this.addClass('tooltip-parent');
+
+      $this.prepend( $tooltip_element );
+
+      // Center the tooltip absolutely
+      $tooltip_element.css('left', left - ($tooltip_element.outerWidth() / 2) );
+    });
   }
 };

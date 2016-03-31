@@ -1,0 +1,21 @@
+.tooltip {
+  @include transition(opacity 0.2s);
+  background: $c-darkest-grey;
+  color: $c-white;
+  opacity: 0;
+  position: absolute;
+  top: -22px;
+  border-radius: 2px;
+  font-size: 10px;
+  padding: 5px;
+}
+
+.tooltip-parent {
+  position: relative;
+
+  &:hover {
+    .tooltip {
+      opacity: 1;
+    }
+  }
+}
