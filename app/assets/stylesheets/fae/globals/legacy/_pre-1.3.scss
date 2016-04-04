@@ -45,7 +45,8 @@
 .sidenav {
   ~ .main_content-sections {
     @include bp(large) {
-      padding-left: $sidenav-width + $content-buffer;
+      // .content adds a 30px buffer in 1.3 <=
+      padding-left: $sidenav-width + $content-buffer - 30px;
     }
   }
 }
