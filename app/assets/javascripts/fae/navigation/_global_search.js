@@ -53,7 +53,7 @@ Fae.globalSearch = {
 
     _this.$input.on('keyup', function(ev) {
       // handle arrow keys
-      if ($.inArray(ev.keyCode, arrow_keycodes) >= 0) {
+      if (arrow_keycodes.indexOf(ev.keyCode) >= 0) {
         _this.moveSelection(ev.keyCode);
         return;
       }
@@ -69,7 +69,7 @@ Fae.globalSearch = {
       }
 
       // ignore keys that won't change the result set
-      if ($.inArray(ev.keyCode, ignored_keycodes) >= 0) {
+      if (ignored_keycodes.indexOf(ev.keyCode) >= 0) {
         return;
       }
 

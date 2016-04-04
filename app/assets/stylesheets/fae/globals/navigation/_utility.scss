@@ -81,17 +81,22 @@
       position: relative;
       top: 0;
       padding: 0;
+      width: 100%;
+      border-top: 0;
+      left: 0;
 
       &.utility-search-results {
-        padding-top: 15px;
+        margin-top: 15px;
+        max-height: 200px;
+        overflow: scroll;
       }
 
       ul {
-        margin-left: 15px;
+        padding-left: 15px;
       }
 
       a {
-        padding: 7px 20px;
+        padding: 7px 12px;
       }
     }
   }
@@ -125,6 +130,7 @@
     border: 0;
     border-radius: 4px;
     display: block;
+    color: $c-white;
   }
 }
 
