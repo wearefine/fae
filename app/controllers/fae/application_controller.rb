@@ -46,7 +46,7 @@ module Fae
       if Fae.has_top_nav
         @fae_topnav_items = @fae_navigation.structure
         @fae_sidenav_items = @fae_navigation.side_nav
-      elsif nav_items.defined? && nav_items.present?
+      elsif defined?(nav_items) && nav_items.present?
         # deprecate in v2.0
         # support nav_items defined from legacy Fae::NavItems concern
         @fae_sidenav_items = nav_items
@@ -91,6 +91,12 @@ module Fae
 
     def raise_define_structure_error
       raise 'Fae::Navigation#structure is not defined, please define it in `app/models/concerns/fae/navigation_concern.rb`'
+    end
+
+    def all_models
+      # load of all models since Rails caches activerecord queries.
+      Rails.application.eager_load!
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
     end
 
   end

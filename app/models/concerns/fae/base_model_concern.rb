@@ -10,6 +10,10 @@ module Fae
     end
 
     module ClassMethods
+      def fae_display_field
+        # override this method in your model
+      end
+
       def for_fae_index
         order(order_method)
       end
@@ -35,6 +39,10 @@ module Fae
       def filter(params)
         # override this method in your model
         for_fae_index
+      end
+
+      def fae_search(query)
+        all.to_a.keep_if { |i| i.fae_display_field.present? && i.fae_display_field.downcase.include?(query.downcase) }
       end
 
       def to_csv

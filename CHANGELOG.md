@@ -13,6 +13,7 @@
     + \#46060: Tab no longer skips checkbox inputs
     + Add `fae_delete_button` helper method
     + \#54556: Add confirm dialogue before cloning
+    + \#55186: Add global search feature
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required

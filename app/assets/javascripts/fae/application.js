@@ -30,7 +30,6 @@
 //= require judge
 //= require grinder
 //= require simplemde.min
-//= require typeahead.bundle
 
 //= require fae/judge_path
 //= require fae/extensions
@@ -56,6 +55,7 @@
 //= require fae/navigation/_navigation
 //= require fae/navigation/_subnavHighlighter
 //= require fae/navigation/_language
+//= require fae/navigation/_global_search
 
 //= require fae/_modals
 //= require fae/_tables

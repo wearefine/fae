@@ -18,16 +18,7 @@
 
 .hint,
 .markdown-hint {
-  // hide it so the javascript can do its thing and retain it's size
-  display: inline-block;
-  position: absolute;
-  left: -9999px;
-  visibility: hidden;
-
-  &.simplemodal-data {
-    position: static;
-    visibility: visible;
-  }
+  display: none;
 
   img {
     max-width: 100%;

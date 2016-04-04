@@ -164,11 +164,13 @@ tbody {
 
 // content header
 .main_content-header {
+  @include stack($fae-nav-stack, '.content-header');
   @include clearfix;
   width: 100%;
   padding: 15px $content-buffer;
   background: $c-content-header-bg;
   border-bottom: 1px solid $c-border;
+  top: 0;
 
   h1 {
     padding: 5px 0;
@@ -183,6 +185,15 @@ tbody {
 .main_content-header-wrapper {
   @include clearfix;
   position: relative;
+
+  h1,
+  ul {
+    display: inline-block;
+  }
+
+  .content-header-buttons {
+    float: right;
+  }
 }
 
 .main_content-breadcrumbs {

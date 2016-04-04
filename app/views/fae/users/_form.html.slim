@@ -6,7 +6,7 @@
       = form_header @user
     .content-header-buttons
       - cancel_path = params[:action] == 'settings' ? root_path : users_path
-      a#main_content-header-save-cancel href=cancel_path Cancel
+      a.button#js-header-cancel href=cancel_path Cancel
       = f.submit "Save Settings"
 
   main.content

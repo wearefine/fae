@@ -9,6 +9,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  box-shadow: 0 0 10px $c-grey;
 
   &:after {
     content: '';
@@ -20,7 +21,7 @@
   &.-dashboard {
     padding-top: 26px;
     padding-bottom: 26px;
-    color: $c-darker-grey;
+    color: $c-darkest-grey;
 
     strong {
       color: $c-darkest-grey;
@@ -75,11 +76,11 @@
     @include transition(all .2s);
     display: inline-block;
     vertical-align: top;
-    padding: 8px 0;
-    border-bottom: 3px solid transparent;
-    margin: 0 8px;
+    padding: 6px 0;
+    border-bottom: 4px solid transparent;
+    margin: 0 12px;
     font-size: 13px;
-    color: $c-text-sub;
+    color: $c-darkest-grey;
 
     &:hover {
       color: $c-text-heavy;
