@@ -43,12 +43,12 @@ describe 'pages#home' do
     end
 
     it 'should exlude Fae.dashoard_exclusions from dashboard list' do
-      varietal = FactoryGirl.create(:varietal)
+      aroma = FactoryGirl.create(:aroma)
 
       super_admin_login
       get fae_path
 
-      expect(assigns(:list)).to_not include(varietal)
+      expect(assigns(:list)).to_not include(aroma)
     end
   end
 
