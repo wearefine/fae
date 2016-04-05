@@ -102,6 +102,37 @@
   }
 }
 
+.utility-search {
+  input[type="text"] {
+    background: rgba($c-white, 0.2);
+    width: 100%;
+    border: 0;
+    border-radius: 4px;
+    display: block;
+    color: $c-white;
+  }
+}
+
+.utility-search-wrapper {
+  padding: 14px 16px;
+  width: 270px;
+  right: negate($content-buffer);
+}
+
+.search-record {
+  @include clearfix;
+
+  span {
+    float: left;
+    width: 50%;
+
+    &:last-child {
+      text-align: right;
+      font-style: italic;
+    }
+  }
+}
+
 .grabatar {
   border-radius: 50px;
   width: 40px;
@@ -123,19 +154,3 @@
   }
 }
 
-.utility-search {
-  input[type="text"] {
-    background: rgba($c-white, 0.2);
-    width: 100%;
-    border: 0;
-    border-radius: 4px;
-    display: block;
-    color: $c-white;
-  }
-}
-
-.utility-search-wrapper {
-  padding: 14px 16px;
-  width: 270px;
-  right: negate($content-buffer);
-}

@@ -28,7 +28,9 @@ ul.utility-search-results
           - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
           - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
           li
-            a href=edit_path #{item.fae_display_field} (#{item.class.name})
+            a.search-record href=edit_path
+              span> = item.fae_display_field
+              span = item.class.name
         - rescue
 
   - else
