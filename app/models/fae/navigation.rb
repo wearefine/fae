@@ -58,7 +58,7 @@ module Fae
     end
 
     def current_section
-      @current_path.gsub(/\/new|\/[0-9]\/edit/, '')
+      @current_path.gsub(/\/new|\/[0-9]*\/edit/, '')
     end
 
     def item(text, options={})
