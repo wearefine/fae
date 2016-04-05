@@ -12,12 +12,15 @@ Fae.navigation = {
   init: function() {
     this.selectCurrentNavItem();
     this.fadeNotices();
-    this.stickyHeaders();
     this.subnavHighlighter.init();
     this.openDrawer();
     this.clickBack();
     this.language.init();
     this.accordionClickEventListener();
+  },
+
+  load: function() {
+    this.stickyHeaders();
   },
 
   resize: function() {
@@ -220,7 +223,7 @@ Fae.navigation = {
 
     if(FCH.exists('.js-content-header')) {
       var $header = $('.js-content-header');
-      var sidebar_top_offset = (parseInt( $header.css('height'), 10) + 20) + 'px';
+      var sidebar_top_offset = (parseInt( $header.outerHeight(), 10) + 20) + 'px';
       $('#js-sidenav').css('padding-top',  sidebar_top_offset );
 
       $header.sticky({

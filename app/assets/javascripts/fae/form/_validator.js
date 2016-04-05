@@ -33,7 +33,7 @@ Fae.form.validator = {
       // Scope the data-validation only to the form submitted
       $('[data-validate]', $(this)).each(function () {
         if ($(this).data('validate').length) {
-          _this.judge_it($(this));
+          _this._judgeIt($(this));
         }
       });
 
@@ -62,19 +62,19 @@ Fae.form.validator = {
         if ($this.is('input:not(.hasDatepicker), textarea')) {
           // normal inputs validate on blur
           $this.blur(function () {
-            _this.judge_it($this);
+            _this._judgeIt($this);
           });
 
         } else if ($this.hasClass('hasDatepicker')) {
           // date pickers need a little delay
           $this.blur(function () {
-            setTimeout(function(){ _this.judge_it($this); }, 500);
+            setTimeout(function(){ _this._judgeIt($this); }, 500);
           });
 
         } else if ($this.is('select')) {
           // selects validate on change
           $this.change(function () {
-            _this.judge_it($this);
+            _this._judgeIt($this);
           });
         }
       }
@@ -82,8 +82,12 @@ Fae.form.validator = {
   },
 
 
-  // main judge call
-  judge_it: function ($input) {
+  /**
+   * Initialize Judge on a field
+   * @protected
+   * @param  {jQuery} $input - field to be validated
+   */
+  _judgeIt: function ($input) {
     var _this = this;
 
     judge.validate($input[0], {
@@ -92,25 +96,19 @@ Fae.form.validator = {
       },
       invalid: function (input, messages) {
         _this.is_valid = false;
-        _this.label_named_message($input, messages);
+        _this._labelNamedMessage($input, messages);
         _this._createOrReplaceError($input, messages);
       }
     });
   },
 
   /**
-   * Determines if field is a chosen input
-   * @access protected
-   * @param {jQuery} $input - Input field (can be a chosen object)
-   * @return {Boolean}
+   * Print label text before its relevent error message
+   * @protected
+   * @param  {jQuery} $el      Field
+   * @param  {Array<String>} messages  Existing error messages
    */
-  _isChosen: function ($input) {
-    return $input.next('.chosen-container').length;
-  },
-
-
-
-  label_named_message: function ($el, messages) {
+  _labelNamedMessage: function ($el, messages) {
     var $label;
     var index = 0;
 
@@ -129,10 +127,9 @@ Fae.form.validator = {
     }
   },
 
-
   /**
    * Adds and removes the appropriate classes to display the success styles
-   * @access protected
+   * @protected
    * @param {jQuery} $input - Input field (can be a chosen object)
    */
   _createSuccessClass: function ($input) {
@@ -143,8 +140,8 @@ Fae.form.validator = {
   },
 
   /**
-   * @access protected
    * Adds and removes the appropriate classes to display the error styles
+   * @protected
    * @param {jQuery} $input - Input field
    * @param {Array} messages - Error messages to display
    */
@@ -162,21 +159,25 @@ Fae.form.validator = {
 
   /**
    * A DRY method for setting the element that should take the .valid or .invalid style
-   * @access protected
+   * @protected
    * @param {jQuery} $input - Input field for a chosen object
    * @return {jQuery} The chosen container
    */
   _setTargetInput: function ($input) {
     var $styled_input = $input;
 
-    if (this._isChosen($input)) {
+    // If field is a chosen input
+    if ( $input.next('.chosen-container').length ) {
       if ($input.next('.chosen-container').find('.chosen-single').length) {
         $styled_input = $input.next('.chosen-container').find('.chosen-single');
+
       } else if ($input.next('.chosen-container').find('.chosen-choices').length) {
         $styled_input = $input.next('.chosen-container').find('.chosen-choices');
+
       }
     } else if ($input.hasClass('mde-enabled')) {
       $styled_input = $input.siblings('.editor-toolbar, .CodeMirror-wrap');
+
     }
 
     return $styled_input;
@@ -233,37 +234,35 @@ Fae.form.validator = {
     addCustomValidation: function() {
       var _this = this;
 
-      _this.$password_confirmation_field.on('blur', function() {
-        _this._validateConfirmation(_this);
-      });
+      /**
+       * Displays success or error depending on password validation
+       * @private
+       * @param {Object} self - The password_confirmation_validation object
+       * @see {@link validator.password_confirmation_validation.addCustomValidation addCustomValidation}
+       */
+      function validateConfirmation() {
+        var validator = Fae.form.validator;
+
+        if (_this.$password_field.val() === _this.$password_confirmation_field.val()) {
+          validator._createSuccessClass(_this.$password_confirmation_field);
+        } else {
+          var message = ['must match Password'];
+          validator.is_valid = false;
+          validator._labelNamedMessage(_this.$password_confirmation_field, message);
+          validator._createOrReplaceError(_this.$password_confirmation_field, message);
+        }
+      }
+
+      this.$password_confirmation_field.on('blur', validateConfirmation);
 
       $('form').on('submit', function(ev) {
         _this.is_valid = true;
-        _this._validateConfirmation(_this);
+        validateConfirmation();
 
         if (!_this.is_valid) {
           ev.preventDefault();
         }
       });
-    },
-
-    /**
-     * Displays success or error depending on password validation
-     * @access protected
-     * @param {Object} self - The password_confirmation_validation object
-     * @see {@link validator.password_confirmation_validation.addCustomValidation addCustomValidation}
-     */
-    _validateConfirmation: function(self) {
-      var validator = Fae.form.validator;
-
-      if (self.$password_field.val() === self.$password_confirmation_field.val()) {
-        validator._createSuccessClass(self.$password_confirmation_field);
-      } else {
-        var message = ['must match Password'];
-        validator.is_valid = false;
-        validator.label_named_message(self.$password_confirmation_field, message);
-        validator._createOrReplaceError(self.$password_confirmation_field, message);
-      }
     }
   },
 
@@ -319,11 +318,11 @@ Fae.form.validator = {
       var _this = this;
 
       _this._createCounterDiv($elem);
-      _this._updateCounter($elem);
+      _this.updateCounter($elem);
 
       $elem
         .keyup(function() {
-          _this._updateCounter($elem);
+          _this.updateCounter($elem);
         })
         .keypress(function(e) {
           if (_this._charactersLeft($elem) <= 0) {
@@ -336,7 +335,7 @@ Fae.form.validator = {
 
     /**
      * Creates counter HTML
-     * @access protected
+     * @protected
      * @param {jQuery} $elem - Input field to evaluate
      */
     _createCounterDiv: function($elem) {
@@ -355,10 +354,9 @@ Fae.form.validator = {
 
     /**
      * Updates the counter count and class
-     * @access protected
      * @param {jQuery} $elem - Input field to evaluate
      */
-    _updateCounter: function($elem) {
+    updateCounter: function($elem) {
       var $count_span = $elem.siblings('.counter').find('.characters-left');
       if ($count_span.length) {
         var current = this._charactersLeft($elem);
@@ -378,7 +376,7 @@ Fae.form.validator = {
 
     /**
      * Calculate character's left
-     * @access protected
+     * @protected
      * @param {jQuery} $elem - Input field being counted
      * @return {integer} The number of characters left
      */

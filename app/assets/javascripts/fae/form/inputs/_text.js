@@ -51,7 +51,7 @@ Fae.form.text = {
 
   /**
    * Convert a group of selects or text fields into one slug string
-   * @access protected
+   * @protected
    * @param {jQuery} $sluggers - Input or inputs that should be converted into a URL-safe string
    * @return {String}
    */
@@ -146,7 +146,7 @@ Fae.form.text = {
           // updates the original textarea's value for JS validations
           $this.val(editor.value());
           // update length counter
-          Fae.form.validator.length_counter._updateCounter($this);
+          Fae.form.validator.length_counter.updateCounter($this);
         });
         editor.codemirror.on('focus', function(){
           $this.parent().addClass('mde-focus');
