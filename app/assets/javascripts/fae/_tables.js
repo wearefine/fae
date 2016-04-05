@@ -383,7 +383,6 @@ Fae.tables = {
     // Generate tooltip
     $('.js-tooltip').each(function() {
       var $this = $(this);
-      var left = $this.width() / 2
       var $tooltip_element = $('<span />', {
         class: 'tooltip',
         text: $this.attr('title')
@@ -392,9 +391,6 @@ Fae.tables = {
       $this.addClass('tooltip-parent');
 
       $this.prepend( $tooltip_element );
-
-      // Center the tooltip absolutely
-      $tooltip_element.css('left', left - ($tooltip_element.outerWidth() / 2) );
     });
   }
 };
