@@ -24,7 +24,8 @@
     }
 
     &:hover,
-    &.-current {
+    &.-current,
+    &.-parent-current {
       color: $c-white;
     }
   }
@@ -70,13 +71,14 @@
 
   > li {
     &:hover,
-    &.-current {
+    &.-current,
+    &.-parent-current {
       > a {
         color: $c-white;
       }
     }
 
-    &.-current {
+    &.-parent-current {
       > a {
         background: $c-custom-highlight;
       }
