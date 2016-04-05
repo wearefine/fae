@@ -30,10 +30,17 @@
     &:after {
       @extend .icon-arrow_down:before;
       @include icon-stuff;
+      color: $c-text-sub;
       position: absolute;
       right: 25px;
       top: 22px;
-      font-size: 5px;
+      font-size: 4px;
+    }
+
+    &:hover {
+      &:after {
+        color: $c-black;
+      }
     }
   }
 }
@@ -47,11 +54,18 @@
   &:after {
     @extend .icon-arrow_down:before;
     @include icon-stuff;
-    font-size: 5px;
+    color: $c-text-sub;
+    font-size: 4px;
     display: inline-block;
     vertical-align: middle;
     margin-left: 6px;
     margin-top: -3px;
+  }
+
+  &:hover {
+    &:after {
+      color: $c-black;
+    }
   }
 
   &.close-all {
