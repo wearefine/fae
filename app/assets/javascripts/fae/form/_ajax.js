@@ -155,6 +155,8 @@ Fae.form.ajax = {
           $parent.next('.asset-inputs').fadeIn();
         });
       }
+
+      Fae.navigation.lockFooter();
     });
   },
 
@@ -204,7 +206,9 @@ Fae.form.ajax = {
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
+        Fae.navigation.lockFooter();
       })
+
       .on('click', '.js-reset-btn', function(ev) {
         var $form = $(this).closest('form');
 
@@ -213,6 +217,7 @@ Fae.form.ajax = {
         // reset hashies
         window.location.hash = '';
       })
+
       .on('change', 'select', function() {
         _this.$filter_form.submit();
       });
@@ -263,7 +268,9 @@ Fae.form.ajax = {
 
   /**
    * Check for cookie or hash and set dropdowns/ url accordingly (callback for Grinder)
+   * @protected
    * @param {Object} params - hash params broken out from Grinder
+   * @see applyCookies
    */
   _setFilterDropdowns: function(params) {
     var cookie_name = $('.js-filter-form').attr('data-cookie-key');

@@ -21,10 +21,12 @@ Fae.navigation = {
 
   load: function() {
     this.stickyHeaders();
+    this.lockFooter();
   },
 
   resize: function() {
     this.closeAll(false);
+    this.lockFooter();
   },
 
   /**
@@ -230,15 +232,36 @@ Fae.navigation = {
         placeholder: true,
         perpetual_placeholder: true
       });
+
     } else {
       $('.main_content-header').sticky({
         placeholder: true
       });
+
     }
 
-    if(!just_headers) {
+    if (!just_headers) {
       $('#js-sidenav').sticky();
     }
+  },
+
+  /**
+   * Fix footer to bottom of screen if viewport extends beyond content. Display after calculation has been performed
+   */
+  lockFooter: function() {
+    var $footer = $('#js-footer');
+
+    // Reset
+    $footer.removeClass('active');
+
+    // Lock or unlock
+    if ($footer.offset().top < (FCH.dimensions.wh - 40) ) {
+      $footer.addClass('-locked');
+    } else {
+      $footer.removeClass('-locked');
+    }
+
+    $footer.addClass('active');
   },
 
 };

@@ -1,0 +1,54 @@
+.main-footer {
+  @include transition(opacity 0.4s);
+  padding: 10px $content-buffer $content-buffer;
+  opacity: 0;
+
+  &.active {
+    opacity: 1;
+  }
+
+  &.-locked {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.credit {
+  font-size: 14px;
+  color: $c-mid-dark-grey;
+  text-align: right;
+
+  span {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 25px;
+
+    a {
+      @extend %underline-link;
+    }
+  }
+
+  // SVG link
+  > a {
+    display: inline-block;
+    vertical-align: middle;
+
+    &:hover {
+      path {
+        fill: $c-custom-highlight;
+      }
+    }
+  }
+
+
+  svg {
+    max-width: 35px;
+    height: auto;
+  }
+
+  path {
+    @include transition(fill 0.2s);
+    fill: $c-mid-dark-grey;
+  }
+}

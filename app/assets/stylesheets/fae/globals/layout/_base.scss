@@ -1,9 +1,7 @@
-// Structural elements for pagesss
-
 .main-content {
   position: relative;
   min-height: 100%;
-  min-height: calc(100% - 90px); // roughly the size of the header
+  min-height: calc(100% - 70px); // roughly the size of the header
 
   &:before {
     content: '';
@@ -42,48 +40,5 @@
     font-size: 15px;
     color: $c-text-heavy;
     margin-bottom: 20px;
-  }
-}
-
-.main-footer {
-  padding: 10px $content-buffer 30px;
-}
-
-.credit {
-  font-size: 14px;
-  color: $c-mid-dark-grey;
-  text-align: right;
-
-  span {
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 25px;
-
-    a {
-      @extend %underline-link;
-    }
-  }
-
-  // SVG link
-  > a {
-    display: inline-block;
-    vertical-align: middle;
-
-    &:hover {
-      path {
-        fill: $c-custom-highlight;
-      }
-    }
-  }
-
-
-  svg {
-    max-width: 35px;
-    height: auto;
-  }
-
-  path {
-    @include transition(fill 0.2s);
-    fill: $c-mid-dark-grey;
   }
 }
