@@ -11,11 +11,11 @@
           a href=item[:path] = item[:text]
 
           - if item[:sublinks].present?
-            ul.subnav.js-subnav.js-subnav.js-subnav
+            ul.subnav.js-subnav
               - item[:sublinks].each do |subitem|
                 ruby:
                   subitem[:path] ||= '#'
-                  sub_class = 'sidenav-accordion -sub js-accordion' if subitem[:sublinks].present?
+                  sub_class = 'sidenav-accordion js-accordion' if subitem[:sublinks].present?
                   link_class = subitem[:class_name] if subitem[:class_name].present?
 
                 li class=sub_class
