@@ -1,30 +1,63 @@
+// All buttons
+
 input[type=submit],
 button[type=button],
 .add-button,
-.csv-button {
+.button {
   border-radius: 3px;
   display: inline-block;
   font-size: 13px;
   cursor: pointer;
+  padding: 11px 14px;
+  border: 1px solid transparent;
 }
+
+// Dark buttons
 
 input[type=submit],
 .add-button {
-  @include gradient-vertical($start-color: $c-form-submit-gradient-start, $end-color: $c-form-submit-gradient-end);
-  color: $c-form-submit;
-  border: 1px solid $c-form-submit-gradient-start;
-  padding: 11px 14px;
+  @include gradient-vertical($start-color: $c-dark-button-gradient-start, $end-color: $c-dark-button-gradient-end);
+  color: $c-dark-button;
+  border-color: $c-dark-button-gradient-start;
 
   &:hover {
-    color: $c-form-submit;
-    background: $c-form-submit-gradient-end;
+    background: $c-dark-button-gradient-end;
+    color: $c-white;
   }
 }
 
+.add-button {
+  &:before {
+    @extend .icon-heavy_plus:before;
+    @include icon-stuff;
+    font-size: 12px;
+    margin-right: 7px;
+  }
+}
+
+// Light buttons
+
 button[type=button],
-a.file_input-button,
-.csv-button {
-  @extend %gray-button;
+.button {
+  @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
+  color: $c-light-button;
+  border-color: $c-border;
+
+  &:hover {
+    background: $c-light-button-gradient-end;
+  }
+}
+
+.button {
+  &.-small {
+    padding: 5px;
+    font-size: 12px;
+    margin: 3px;
+
+    &:hover {
+      color: $c-light-button;
+    }
+  }
 }
 
 .table-filter-controls {
@@ -35,22 +68,7 @@ a.file_input-button,
   }
 
   input[type=submit] {
-    @extend %gray-button;
-    padding: 5px;
-    font-size: 12px;
-    margin: 3px;
-
-    &:hover {
-      color: $c-form-button;
-    }
-  }
-}
-
-.add-button {
-  &:before {
-    @extend .icon-heavy_plus:before;
-    @include icon-stuff;
-    font-size: 12px;
-    margin-right: 7px;
+    @extend .button; // Gray button
+    @extend .button.-small; // Small styles
   }
 }

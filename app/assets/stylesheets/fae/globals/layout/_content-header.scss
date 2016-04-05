@@ -9,6 +9,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  box-shadow: 0 0 10px $c-grey;
 
   &:after {
     content: '';
@@ -20,14 +21,17 @@
   &.-dashboard {
     padding-top: 26px;
     padding-bottom: 26px;
+    color: $c-darkest-grey;
+
+    strong {
+      color: $c-darkest-grey;
+    }
   }
 
   h1,
   .breadcrumbs {
     @include bp(large) {
-      display: inline-block;
-      vertical-align: middle;
-      width: 70%;
+      float: left;
     }
   }
 
@@ -39,7 +43,7 @@
 
 .main_content-section-toggles {
   list-style: none;
-  margin: -25px negate($content-buffer) 5px;
+  margin: -16px negate($content-buffer) 5px;
   padding: 0 $content-buffer;
 
   li {
@@ -63,17 +67,20 @@
 }
 
 .content-header-subnav {
-  margin-bottom: -16px;
+  position: absolute;
+  left: $content-buffer;
+  bottom: 0;
+  width: 100%;
 
   a {
     @include transition(all .2s);
     display: inline-block;
     vertical-align: top;
-    padding: 8px 0;
-    border-bottom: 5px solid transparent;
-    margin: 0 8px;
+    padding: 6px 0;
+    border-bottom: 4px solid transparent;
+    margin: 0 12px;
     font-size: 13px;
-    color: $c-text-sub;
+    color: $c-darkest-grey;
 
     &:hover {
       color: $c-text-heavy;
@@ -104,10 +111,7 @@
   margin: 10px 0;
 
   @include bp(large) {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: right;
-    width: 30%;
+    float: right;
     margin: 0;
   }
 
@@ -117,12 +121,6 @@
     &:last-child {
       margin-right: 0;
     }
-
-    &:not(.add-button) {
-      @extend %gray-button;
-      font-size: 13px;
-    }
-
   }
 
   input[type=submit] {

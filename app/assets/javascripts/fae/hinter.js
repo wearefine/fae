@@ -13,20 +13,15 @@
     var left = $el.offset().left + 20;
     var $hint = $el.closest('label').siblings('.hint');
     var new_height = $hint.height() + 80;
-    var new_width = $hint.width() + 40;
 
     $hint.modal({
       minHeight: new_height,
-      minWidth: new_width,
+      minWidth: 250,
+      maxWidth: 250,
       position: [top, left],
       overlayClose: true,
       opacity: 0,
-      containerCss: { position: 'absolute' },
-      onShow: function(){
-        if ($hint.find('.dark').length) {
-          $('#simplemodal-container').addClass('simplemodal-container--dark')
-        };
-      }
+      containerCss: { position: 'absolute' }
     });
 
   }

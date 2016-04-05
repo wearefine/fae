@@ -32,14 +32,13 @@ fae_method_name(f, attribute, options)
 | ------ | ---- | ------- | ----------- |
 | label | string | attribute.humanize | the form label |
 | helper_text | string | | helper text that appears under label |
-| hint | string | | text that appears in a hint modal (cannot be combined with `dark_hint`) |
-| dark_hint | string | | text that appears in a dark color scheme (cannot be combined with `hint`) |
+| hint | string | | text that appears in a hint modal |
+| dark_hint | string | | **warning: this option will be depreciated in v2.0** text that appears in a dark color scheme (`hint` will override `dark_hint` if simultaneously supplied) |
 | markdown | boolean | false | adds markdown GUI toolbar |
 | markdown_supported | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
 | wrapper_class | string | | a class to add to the wrapper element |
 | validate | boolean | true | triggers `judge` to validate element |
-
 
 ## fae_input
 
@@ -412,14 +411,11 @@ fae_delete_button item
 
 ## form_header
 
-![Form header](images/form_header.png)
-
 The form_header helper takes an AR object or string to render an `<h1>` based on the action. Can also display breadcrumb links.
 
 | option | type | description |
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
-| breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
 
 **Examples**
 
@@ -441,6 +437,19 @@ If one of the locals aren't set when the partial is called and error will be rai
 
 ```ruby
 require_locals ['item', 'text'], local_assigns
+```
+
+## fae_avatar
+
+Retrieve a user's Gravatar image URL based on their email.
+
+| option | type | description |
+|-|-|-|
+| user | Fae::User | defaults to `current_user` |
+
+```ruby
+fae_avatar(current_user)
+#=> 'https://secure.gravatar.com/....'
 ```
 
 ---
@@ -474,20 +483,40 @@ render 'fae/shared/index_header', title: 'Something Entirely Different', new_but
 
 ## form_header
 
+![Form header](images/form_header.png)
+
 Displays breadcrumb links and form title.
 
 | option | type | description |
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
-| breadcrumb_text | String | passed to form_header helper method, defaults to klass_name.titleize.pluralize  |
 | save_button_text (`v1.3 <=`)   | string | 'Save Settings' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
+| 
+| cloneable | boolean | false | includes Clone button |
+| clone_button_text | string | 'Clone' | clone button text |
+| subnav | Array<String> | [] | generates "jump to" anchor links for long forms |
+
+If `subnav` is supplied, sections within the form must include IDs matching the [parameterized](http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize) items. Note that `parameterize` will use `_` as a separator. 
+
+```slim
+- subnav_array = ['SEO']
+- subnav_array.concat ['Nested Image Gallery', 'Recent Changes'] if params[:action] == 'edit'
+= render 'fae/shared/form_header', header: @klass_name, subnav: subnav_array
+
+section.content#attributes
+  ...
+section.content#nested_image_gallery
+  ...
+section.content#recent_changes
+  ...
+```
 
 **Examples**
 
 Standard implementation
 ```ruby
-render 'fae/shared/form_header', header: @item, breadcrumb_text: "Areas of Focus"
+render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery', 'Recent Changes']
 ```
 
 ## form_buttons
@@ -576,15 +605,12 @@ This partial is best placed at the bottom of the form and will automatically hid
 
 Standard implementation
 ```ruby
-render 'fae/shared/recent_changes'
+= render 'fae/shared/recent_changes'
 ```
 
 Optionally, you can add a link to it in the form nav:
 ```slim
-nav.content-header.js-content-header
-  ul.content-header-subnav.js-content-header-subnav
-    - if params[:action] == 'edit'
-      li: a href="#recent_changes" Recent Changes
+= render 'fae/shared/form_header', ..., subnav: [...,  'Recent Changes']
 ```
 
 ---

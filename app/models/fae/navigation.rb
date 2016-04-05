@@ -16,13 +16,17 @@ module Fae
       structure[@coordinates.first][:subitems][@coordinates.second][:subitems] if @coordinates.length > 2
     end
 
+    def search(query)
+      find_items_by_text(structure, query, [])
+    end
+
     private
 
     def find_current_hash(array_of_items)
       @coordinates.push(0)
 
       array_of_items.each do |item|
-        return item if item[:path] == @current_path
+        return item if item[:path] == current_section
 
         if item[:subitems].present?
           current_sidenav = find_current_hash(item[:subitems])
@@ -36,9 +40,25 @@ module Fae
       nil
     end
 
+    def find_items_by_text(items, query, results)
+      items.each do |item|
+        if item[:text].present? && item[:text].downcase.include?(query.downcase)
+          results << { text: item[:text], nested_path: item[:nested_path] }
+        end
+        if item[:subitems].present?
+          results = find_items_by_text(item[:subitems], query, results)
+        end
+      end
+      results
+    end
+
     def increment_coordinates
       last_item = @coordinates.pop
       @coordinates.push(last_item + 1)
+    end
+
+    def current_section
+      @current_path.gsub(/\/new|\/[0-9]\/edit/, '')
     end
 
     def item(text, options={})

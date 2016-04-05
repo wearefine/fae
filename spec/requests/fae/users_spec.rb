@@ -69,7 +69,7 @@ describe 'users#edit' do
     it "should cancel to users#index" do
       get fae.edit_user_path(edit_user)
 
-      expect(response.body).to include('href="/admin/users" id="main_content-header-save-cancel"')
+      expect(response.body).to include('href="/admin/users" id="js-header-cancel"')
     end
   end
 
@@ -110,7 +110,7 @@ describe 'users#settings' do
     it "should cancel to dashboard" do
       get fae.settings_path
 
-      expect(response.body).to include('href="/admin/" id="main_content-header-save-cancel"')
+      expect(response.body).to include('href="/admin/" id="js-header-cancel"')
     end
   end
 
@@ -122,7 +122,7 @@ describe 'users#settings' do
     it "should cancel to dashboard" do
       get fae.settings_path
 
-      expect(response.body).to include('href="/admin/" id="main_content-header-save-cancel"')
+      expect(response.body).to include('href="/admin/" id="js-header-cancel"')
     end
   end
 

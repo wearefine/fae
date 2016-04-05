@@ -1,4 +1,18 @@
 .help-section {
+  .content {
+    &:first-child {
+      padding-top: 0;
+
+      h2 {
+        border-top: 0;
+      }
+    }
+  }
+
+  a {
+    @extend %underline-link;
+  }
+
   h3 {
     color: $c-text-heavy;
     font-size: 20px;

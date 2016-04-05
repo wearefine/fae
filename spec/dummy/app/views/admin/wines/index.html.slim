@@ -6,18 +6,18 @@ main.content
       tr
         th.th-sortable-handle
         th Name
-        th Modified
-        th.-live data-sorter="false" On Stage
-        th.-live data-sorter="false" On Prod
-        th.-delete data-sorter="false" Delete
+        th.-action-wide Modified
+        th.-action-wide data-sorter="false" On Stage
+        th.-action-wide data-sorter="false" On Prod
+        th.-action data-sorter="false" Delete
 
     tbody
       - @items.each do |item|
         tr id="#{@klass_singular}_#{item.id}"
           td.sortable-handle
-            span.icon-sort
+            i.icon-sort
           td = link_to item.fae_display_field, edit_admin_wine_path(item)
           td = fae_date_format item.updated_at
           td = fae_toggle item, :on_stage
           td = fae_toggle item, :on_prod
-          td.-delete = fae_delete_button item
+          td.-action = fae_delete_button item

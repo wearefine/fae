@@ -18,8 +18,6 @@ Fae.navigation = {
     this.clickBack();
     this.language.init();
     this.accordionClickEventListener();
-    this.utilitySearch();
-    this.typeaheadSearch();
   },
 
   resize: function() {
@@ -46,7 +44,7 @@ Fae.navigation = {
       url_array.pop();
       mutated_url = url_array.join('/');
 
-      var $current_link = $('.js-nav a[href="' + mutated_url + '"]');
+      var $current_link = $('.js-nav nav a[href="' + mutated_url + '"]');
       if ($current_link.length) {
         $current_link.addClass('-current');
 
@@ -73,9 +71,9 @@ Fae.navigation = {
       var $this = $(this);
 
       if($this.find('.-current').length) {
-        $this.addClass('-current');
+        $this.addClass('-accordion-current');
 
-        if(FCH.bp.large && $this.hasClass('.js-accordion')) {
+        if(FCH.bp.large && $this.hasClass('js-accordion')) {
           $this.addClass('-open');
         }
       }
@@ -204,86 +202,6 @@ Fae.navigation = {
         .closest('.js-accordion')
         .removeClass('-open');
     });
-  },
-
-  /**
-   * Click event of the admin search in the main nav
-   */
-  utilitySearch: function() {
-
-    $('#js-utility-search').click(function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      var $this = $(this);
-      var $search_wrapper = $this.find('.utility-search-wrapper');
-
-      $search_wrapper.toggle();
-
-      if($search_wrapper.is(':visible')) {
-        $this.find('input').focus();
-      }
-
-    });
-  },
-
-  /**
-   * Initialize the typeahead navigation in the header nav
-   */
-  typeaheadSearch: function() {
-    function onTypeaheadSelected(ev, data) {
-      window.location.href = data.path;
-    }
-
-    function onTypeaheadFocused() {
-      $(this).attr('placeholder', '');
-    }
-
-    function onTypeaheadBlur() {
-      if($(this).val() === '') {
-        $(this).attr('placeholder', 'Jump to...');
-      }
-    }
-
-    var sample_data = [
-      {
-        fae_display_field: 'Releases'
-      },
-      {
-        fae_display_field: 'Wines'
-      },
-      {
-        fae_display_field: 'Coaches'
-      }
-    ];
-
-    var models = new Bloodhound({
-      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('fae_display_field'),
-      queryTokenizer: Bloodhound.tokenizers.whitespace,
-      // prefetch: {
-      //   url: '/data/models.json',
-      //   ttl: 60000
-      // }
-      local: sample_data
-    });
-    models.initialize();
-
-    $('#js-search').typeahead(
-      {
-        hint: true,
-        highlight: true,
-        minLength: 2,
-        autoselect: true
-      },
-      {
-        name: 'models',
-        displayKey: 'fae_display_field',
-        source: models.ttAdapter()
-      }
-    )
-    .on('typeahead:selected', onTypeaheadSelected)
-    .on('typeahead:focused', onTypeaheadFocused)
-    .on('typeahead:blur', onTypeaheadBlur);
   },
 
   /**

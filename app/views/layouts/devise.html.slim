@@ -24,11 +24,6 @@ html
         == yield
 
       footer.login-footer
-        a.login-fine href="http://www.wearefine.com" target="_blank"
-          | a
-          span<> FINE
-          | admin
+        .login-helper == render 'devise/shared/links' unless params[:controller] == 'fae/setup'
 
-        ul.login-helper-area
-          li == render "devise/shared/links" unless params[:controller] == 'fae/setup'
-          li Fae v #{Fae::VERSION}
+        == render 'fae/application/credit'

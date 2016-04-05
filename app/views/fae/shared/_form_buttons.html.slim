@@ -5,7 +5,7 @@
 - clone_button_text  ||= 'Clone'
 
 .main_content-header-save
-  a#main_content-header-save-cancel href=@index_path = cancel_button_text
+  a.button#js-header-cancel href=@index_path = cancel_button_text
   - if cloneable.present? && params[:id].present?
-    a#main_content-header-clone.clone-button< data-method="post" data-confirm=t('fae.clone_confirmation') href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
+    a.button< data-method="post" data-confirm=t('fae.clone_confirmation') href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
   input< name="commit" type="submit" value=save_button_text

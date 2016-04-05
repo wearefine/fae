@@ -16,10 +16,7 @@
     border-top-color: $c-grey;
   }
 
-  &.mde-focus {
-    .CodeMirror-wrap,
-    .editor-toolbar {
-      border-color: $c-custom-highlight;
-    }
+  .CodeMirror-scroll {
+    z-index: 0;
   }
 }

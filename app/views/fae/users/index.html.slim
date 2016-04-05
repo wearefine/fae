@@ -9,8 +9,8 @@ main.content
         th Email
         th Role
         th Last Logged In
-        th.-live data-sorter="false" Active
-        th.-delete data-sorter="false" Delete
+        th.-action data-sorter="false" Active
+        th.-action data-sorter="false"
 
     tbody
       - @users.each do |user|
@@ -20,7 +20,7 @@ main.content
           td = user.role.name
           td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
           td = attr_toggle user, :active unless current_user == user
-          td.-delete
+          td.-action
             - unless current_user == user
-              = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action'
-                span.icon-delete_x
+              = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+                i.icon-trash

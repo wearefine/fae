@@ -11,12 +11,12 @@ main.content
 <% num_columns += 1 -%>
 <% end -%>
         th <%= @display_field.present? ? @display_field.capitalize : 'Name' %>
-        th Modified
+        th.-action-wide Modified
 <% @toggle_attrs.each do |attr| -%>
-        th.-live data-sorter="false" <%= attr.humanize %>
+        th.-action-wide data-sorter="false" <%= attr.humanize %>
 <% num_columns += 1 -%>
 <% end -%>
-        th.-delete data-sorter="false" Delete
+        th.-action data-sorter="false"
 
     tbody
       - if @items.present?
@@ -25,11 +25,13 @@ main.content
 <% if @has_position -%>
             td.sortable-handle: span.icon-sort
 <% end -%>
-            td = link_to item.fae_display_field, edit_<%= options.namespace %>_<%= class_name.underscore %>_path(item)
+            td
+              i.icon-edit
+              = link_to item.fae_display_field, edit_<%= options.namespace %>_<%= class_name.underscore %>_path(item)
             td = fae_date_format item.updated_at
 <% @toggle_attrs.each do |attr| -%>
             td = fae_toggle item, :<%= attr %>
 <% end -%>
-            td.-delete = fae_delete_button item
+            td.-action = fae_delete_button item
       - else
         tr: td colspan="<%= num_columns %>" No items found

@@ -1,4 +1,4 @@
-= render 'fae/shared/index_header', title: 'Need some help?', new_button: false
+= render 'fae/shared/index_header', title: 'Need some help?', breadcrumbs: false, new_button: false
 
 section.help-section
   article.content
@@ -17,23 +17,19 @@ section.help-section
     h2 Reporting A Bug?
 
     h3 Please include this helpful information:
+    ruby:
+      help_information = {
+        'Version'  => "Fae v#{Fae::VERSION}",
+        'Date'     => Time.now,
+        'Site'     => request.url,
+        'Env'      => Rails.env,
+        'Browser'  => "#{@browser.name} #{@browser.full_version}",
+        'Platform' => @browser.platform,
+        'User ID'  => current_user.id
+      }
+
     p
-      strong Version: Fae v #{Fae::VERSION}
-      br
-
-      strong Date: #{Time.now}
-      br
-
-      strong Site: #{request.url}
-      br
-
-      strong Env: #{Rails.env}
-      br
-
-      strong Browser: #{@browser.name} #{@browser.full_version}
-      br
-
-      strong Platform: #{@browser.platform}
-      br
-
-      strong User ID: #{current_user.id}
+      - help_information.each do |identifier, value|
+        strong> #{identifier}:
+        = value
+        br

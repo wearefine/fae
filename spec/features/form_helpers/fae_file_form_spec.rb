@@ -6,7 +6,7 @@ feature 'fae_file_form' do
     admin_login
     visit new_admin_release_path
 
-    expect(page).to have_css('.release_label_pdf_asset button.file_input-button')
+    expect(page).to have_css('.release_label_pdf_asset button.button')
   end
 
 end

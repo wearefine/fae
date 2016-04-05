@@ -61,5 +61,10 @@ RSpec.configure do |config|
 
   # Stop running tests on first caught fail, this is best used with config.order = "defined"
   # config.fail_fast = true
+  # config.allow_url('gravatar.com')
 
+end
+
+Capybara::Webkit.configure do |config|
+  config.allow_url("secure.gravatar.com")
 end

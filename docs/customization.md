@@ -412,7 +412,7 @@ You may add the clone button to the index, edit form, or both.
 Add the following to your `thead`, usually after 'Delete':
 
 ```slim
-  th.-clone data-sorter="false" Clone
+  th.-action data-sorter="false" Clone
 ```
 
 And to your `tbody`:

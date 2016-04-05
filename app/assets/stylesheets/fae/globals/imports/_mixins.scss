@@ -18,16 +18,6 @@
   border-color: $color transparent transparent transparent;
 }
 
-@mixin ghost-center() {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-  width: 1px;
-  margin-left: -5px;
-  visibility: hidden;
-}
-
 @mixin user-select($val){
   -webkit-user-select: $val; /* Chrome all / Safari all */
   -moz-user-select: $val; /* Firefox all */
@@ -43,15 +33,7 @@
   transform: $value;
 }
 
-@mixin transform-origin($h, $v){
-  -webkit-transform-origin: $h $v;
-  -moz-transform-origin: $h $v;
-  -o-transform-origin: $h $v;
-  -ms-transform-origin: $h $v;
-  transform-origin: $h $v;
-}
-
-@mixin gradient-vertical($start-color: $c-form-button, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
+@mixin gradient-vertical($start-color: $c-light-button, $end-color: #333, $start-percent: 0%, $end-percent: 100%) {
   background-image: -webkit-gradient(linear, left $start-percent, left $end-percent, from($start-color), to($end-color));
   background-image: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
   background-image:  -moz-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
@@ -73,16 +55,4 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-@mixin secondary-header {
-  padding: 17px $content-buffer;
-  color: $c-text-heavy;
-  background: $c-content-section-title;
-  border-top: 1px solid $c-border;
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: .2em;
-  // counters the padding from .content
-  margin: 0 negate($content-buffer) 30px;
 }

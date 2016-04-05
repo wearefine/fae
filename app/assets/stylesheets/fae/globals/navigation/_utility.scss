@@ -18,13 +18,8 @@
 
   a {
     font-size: 16px;
-    color: $c-text-sub;
     padding-left: 14px;
     padding-right: 14px;
-
-    &:hover {
-      color: $c-text-sub-hover;
-    }
 
     &.grabatar-link {
       padding-top: 15px;
@@ -38,12 +33,11 @@
 
   li {
     vertical-align: top;
+  }
 
-    &:last-child {
-      a {
-        padding-right: 0;
-      }
-    }
+  [class^="icon-"] {
+    display: block;
+    height: 16px;
   }
 }
 
@@ -62,7 +56,8 @@
   ul,
   .utility-search-wrapper {
     display: none;
-    background: $c-header-dropdown-bg;
+    background: $c-header-bg;
+    border-top: 1px solid $c-dark-grey;
     position: absolute;
     top: 70px;
     z-index: 2;
@@ -70,12 +65,34 @@
   }
 
   ul {
-    width: 150px;
-    padding: 8px 0;
-    left: 0;
+    width: 140px;
+    padding: 8px 0 12px;
+    left: -11px;
 
     a {
       padding: 7px 25px;
+      font-size: 13px;
+    }
+  }
+
+  &.utility-search {
+    ul {
+      display: block;
+      position: relative;
+      top: 0;
+      padding: 0;
+
+      &.utility-search-results {
+        padding-top: 15px;
+      }
+
+      ul {
+        margin-left: 15px;
+      }
+
+      a {
+        padding: 7px 20px;
+      }
     }
   }
 }
@@ -114,41 +131,5 @@
 .utility-search-wrapper {
   padding: 14px 16px;
   width: 270px;
-  right: 0;
-}
-
-/////////////////////////
-//     Typeahead       //
-/////////////////////////
-
-.twitter-typeahead {
-  // Overrides inline styles
-  display: block!important;
-}
-
-.tt-menu {
-  // Overrides inline styles
-  position: static!important;
-  margin-top: 10px;
-}
-
-.tt-suggestion {
-  color: $c-text-sub;
-  padding: 8px 10px;
-}
-
-.tt-cursor {
-  background: rgba($c-white, 0.1);
-}
-
-.tt-highlight {
-  color: $c-white;
-}
-
-.tt-input {
-  color: $c-white;
-}
-
-.tt-hint {
-  color: $c-text-sub;
+  right: negate($content-buffer);
 }

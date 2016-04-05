@@ -8,27 +8,25 @@
 
   a {
     padding: 10px $sidenav-padding-base-level;
-  }
 
-  li {
-    li {
-      a {
-        font-size: 13px;
-        padding: 7px ($sidenav-padding-base-level + $sidenav-padding-one-level);
-      }
-
-      li {
-        a {
-          padding-left: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
-          padding-right: $sidenav-padding-base-level + ($sidenav-padding-one-level * 2);
-        }
-      }
+    &.-current {
+      font-weight: bold;
+      color: $c-black;
+      padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
+      border-left: $sidenav-active-border-width solid $c-custom-highlight;
     }
   }
 
-  ~ .content {
+  .subnav {
+    padding-left: $sidenav-padding-base-level;
+  }
+
+  // Index pages
+  ~ .content,
+  // Edit pages
+  ~ .simple_form {
     @include bp(large) {
-      padding-left: $sidenav-width;
+      padding-left: $sidenav-width + $content-buffer;
     }
   }
 }
@@ -44,22 +42,30 @@
     }
   }
 
-  &.-current {
-    &:not(.-sub) {
-      > a {
-        padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
-        border-left: $sidenav-active-border-width solid $c-custom-highlight;
-      }
+  &.-accordion-current {
+    > a {
+      color: $c-black;
+      font-weight: bold;
+      padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
+      border-left: $sidenav-active-border-width solid $c-custom-highlight;
     }
 
     > ul {
       display: block;
     }
+  }
 
-    > a,
-    a.-current {
-      font-weight: bold;
-      color: $c-black;
+  a {
+    &.-current {
+      border-left: 0;
+      padding-left: $sidenav-padding-one-level;
+    }
+  }
+
+  li {
+    a {
+      font-size: 13px;
+      padding-left: $sidenav-padding-one-level;
     }
   }
 

@@ -21,11 +21,23 @@ Fae.navigation.subnavHighlighter = {
         this.subnav_class = '.main_content-header-section-links';
       }
 
+      this.addBuffer();
+
       this.FCHListeners();
 
       //makes the subnav clicks
       this.anchorClickListener();
     }
+  },
+
+  /**
+   * Add space above subnav links if they're present
+   * @depreciation - Remove this function in favor of a better HTML solution in form_header in a v2.0 refactor.
+   */
+  addBuffer: function() {
+    var $subnav = $( this.subnav_class );
+    var height = $subnav.css('height');
+    $subnav.parent().css('padding-bottom', height);
   },
 
   /**

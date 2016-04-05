@@ -22,7 +22,7 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: 'My Brand New Smell!'
       click_button('Create Aroma')
     end
-    expect(page.find('#aromas_section table')).to have_content('My Brand New Smell!')
+    expect(page.find('#nested_table table')).to have_content('My Brand New Smell!')
   end
 
   scenario 'should allow editing existing item', js: true do
@@ -32,7 +32,7 @@ feature 'fae_nested_table' do
     admin_login
     visit edit_admin_release_path(release)
 
-    expect(page.find('#aromas_section table')).to have_content('Roses')
+    expect(page.find('#nested_table table')).to have_content('Roses')
 
     click_link aroma.name
     expect(page).to have_css("form#edit_aroma_#{aroma.id}")
@@ -41,8 +41,8 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: 'Lavender'
       click_button('Update Aroma')
     end
-    expect(page.find('#aromas_section table')).to have_content('Lavender')
-    expect(page.find('#aromas_section table')).to_not have_content('Roses')
+    expect(page.find('#nested_table table')).to have_content('Lavender')
+    expect(page.find('#nested_table table')).to_not have_content('Roses')
   end
 
   scenario 'should allow deletion of item', js: true do
@@ -52,7 +52,7 @@ feature 'fae_nested_table' do
     admin_login
     visit edit_admin_release_path(release)
 
-    expect(page.find('#aromas_section table')).to have_content('Roses')
+    expect(page.find('#nested_table table')).to have_content('Roses')
 
     # super hack due to webkit not able to click links without content
     # see: https://github.com/thoughtbot/capybara-webkit/issues/494
@@ -60,7 +60,7 @@ feature 'fae_nested_table' do
     # should be more like...
     # page.find("tr#aromas_#{aroma.id} .js-delete-link").click
 
-    expect(page.find('#aromas_section table')).to_not have_content('Roses')
+    expect(page.find('#nested_table table')).to_not have_content('Roses')
   end
 
   scenario 'should allow reordering of items', js: true do

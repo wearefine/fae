@@ -6,9 +6,8 @@
   left: 0;
   width: 100%;
   padding: 0 $content-buffer;
-  background: $c-darkest-grey;
+  background: $c-header-bg;
   text-align: center;
-  font-weight: 200;
 
   @include bp(large) {
     position: relative;
@@ -18,11 +17,13 @@
   a {
     display: block;
     padding: 15px 0;
+    color: $c-darker-grey;
 
     @include bp(large) {
       padding: 27px 0;
     }
 
+    &:hover,
     &.-current {
       color: $c-white;
     }
@@ -38,7 +39,7 @@
     display: inline-block;
     vertical-align: middle;
     line-height: 0.8;
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 0.05em;
     text-transform: uppercase;
 
@@ -50,7 +51,7 @@
   nav {
     display: none;
     vertical-align: middle;
-    margin-left: 20px;
+    margin-left: $content-buffer;
 
     @include bp(large) {
       display: inline-block;
@@ -62,22 +63,22 @@
   @include transition(opacity .2s ease-in-out);
 
   a {
-    @include transition(color 0s);
+    // @include transition(color 0s);
     padding-left: 15px;
     padding-right: 15px;
-    color: $c-mid-grey;
-
-    &:hover {
-      color: $c-white;
-    }
   }
 
   > li {
     &:hover,
     &.-current {
       > a {
-        background: $c-custom-highlight;
         color: $c-white;
+      }
+    }
+
+    &.-current {
+      > a {
+        background: $c-custom-highlight;
       }
     }
 
@@ -90,13 +91,17 @@
   }
 
   ul {
-    background: $c-header-dropdown-bg;
+    background: $c-header-bg;
+    border-top: 1px solid $c-dark-grey;
     visibility: hidden;
     position: absolute;
     left: 0;
     opacity: 0;
-    width: 260px;
-    padding: 8px 0;
+    min-width: 160px;
+    padding: 10px 10px 13px;
+    line-height: 1.2;
+    font-size: 15px;
+    white-space: nowrap;
 
     li {
       display: block;
@@ -104,8 +109,8 @@
 
     a {
       background: none;
-      padding-top: 10px;
-      padding-bottom: 10px;
+      padding-top: 6px;
+      padding-bottom: 6px;
 
       &:hover {
         background: none;
