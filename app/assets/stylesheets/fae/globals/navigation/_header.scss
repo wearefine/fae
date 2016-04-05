@@ -48,6 +48,13 @@
     }
   }
 
+  ul {
+    ul {
+      overflow: auto;
+      max-height: 450px;
+    }
+  }
+
   nav {
     display: none;
     vertical-align: middle;

@@ -1,23 +1,14 @@
 // Utility nav. View Site, Support, Username, etc.
 .utility-nav {
-  display: none;
   position: absolute;
   top: 0;
   right: $content-buffer;
 
-  @include bp(large) {
-    display: block;
-  }
-
   @include bp(large-down) {
-    position: relative;
-    top: 0;
-    right: 0;
-    margin-top: 20px;
+    display: none;
   }
 
   a {
-    font-size: 16px;
     padding-left: 14px;
     padding-right: 14px;
 
@@ -28,16 +19,12 @@
   }
 
   ul {
+    font-size: 16px;
     display: none;
   }
 
   li {
     vertical-align: top;
-  }
-
-  [class^="icon-"] {
-    display: block;
-    height: 16px;
   }
 }
 
@@ -54,13 +41,17 @@
   }
 
   ul,
-  .utility-search-wrapper {
-    display: none;
-    background: $c-header-bg;
-    border-top: 1px solid $c-dark-grey;
+  .utility-search-hit-area {
     position: absolute;
     top: 70px;
     z-index: 2;
+    display: none;
+  }
+
+  ul,
+  .utility-search-wrapper {
+    background: $c-header-bg;
+    border-top: 1px solid $c-dark-grey;
     font-size: 14px;
   }
 
@@ -68,36 +59,10 @@
     width: 140px;
     padding: 8px 0 12px;
     left: -11px;
+    font-size: 13px;
 
     a {
       padding: 7px 25px;
-      font-size: 13px;
-    }
-  }
-
-  &.utility-search {
-    ul {
-      display: block;
-      position: relative;
-      top: 0;
-      padding: 0;
-      width: 100%;
-      border-top: 0;
-      left: 0;
-
-      &.utility-search-results {
-        margin-top: 15px;
-        max-height: 200px;
-        overflow: scroll;
-      }
-
-      ul {
-        padding-left: 15px;
-      }
-
-      a {
-        padding: 7px 12px;
-      }
     }
   }
 }
@@ -115,8 +80,28 @@
 
 .utility-search-wrapper {
   padding: 14px 16px;
-  width: 270px;
-  right: negate($content-buffer);
+  width: 320px;
+
+  > ul {
+    margin-top: 15px;
+    font-size: 15px;
+  }
+
+  ul {
+    position: static;
+    width: 100%;
+    border-top: 0;
+    padding: 0;
+    display: block;
+
+    ul {
+      padding-left: 15px;
+    }
+
+    a {
+      padding: 7px 12px;
+    }
+  }
 }
 
 .search-record {
@@ -131,6 +116,11 @@
       font-style: italic;
     }
   }
+}
+
+.utility-search-hit-area {
+  padding: 0 0 $content-buffer $content-buffer;
+  right: negate($content-buffer);
 }
 
 .grabatar {
@@ -153,4 +143,3 @@
     vertical-align: middle;
   }
 }
-

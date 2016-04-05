@@ -10,17 +10,11 @@
 Fae.globalSearch = {
 
   init: function() {
-    this.setElements();
+    this.$wrapper = $('#js-utility-search-wrapper');
+    this.$input = $('#js-global-search');
+
     this.utilitySearch();
     this.searchListener();
-  },
-
-  /**
-   * Caches common elements into globally accessible variables
-   */
-  setElements: function() {
-    this.$wrapper = $('.js-utility-search-wrapper');
-    this.$input = $('#js-global-search');
   },
 
   /**
@@ -28,18 +22,38 @@ Fae.globalSearch = {
    */
   utilitySearch: function() {
     var _this = this;
+    var $header = $('#js-main-header');
+    var timer;
 
-    $('.js-utility-dropdown').hover(function() {
+    /**
+     * Hide search menu, unbind listener, and blur the input
+     * @private
+     */
+    function hideSearch() {
+      // Avoid duplicate/rapid bindings
+      $header.off('mouseleave', hideSearch);
       _this.$wrapper.hide();
-    });
+      _this.$input.blur();
+    }
 
-    $('#js-utility-search').click(function() {
-      _this.$wrapper.toggle();
+    // If user leaves search, remove menu
+    _this.$wrapper.on('mouseleave', hideSearch);
 
-      if(_this.$wrapper.is(':visible')) {
-        _this.$input.focus();
-      }
+    // Hover over search icon
+    $('#js-utility-search').mouseover(function() {
+      // Reset timeout
+      clearTimeout(timer);
+      $header.on('mouseleave', hideSearch);
 
+      // Hover intent
+      // If user gets from header to search within .8s, they can pass over other icons
+      // but after .8s, the search menu will disappear if they leave the area
+      timer = setTimeout(function() {
+        $header.off('mouseleave', hideSearch);
+      }, 800);
+
+      _this.$wrapper.show();
+      _this.$input.focus();
     });
   },
 
@@ -61,7 +75,7 @@ Fae.globalSearch = {
       // handle enter key
       if (ev.keyCode === 13) {
         // if there's a highlighted result, redirect to it's href
-        var $current_link = $('.utility-search-results a.-current');
+        var $current_link = $('.js-search-results a.-current');
         if ($current_link.length) {
           window.location = $current_link.attr('href');
         }
@@ -86,8 +100,8 @@ Fae.globalSearch = {
    * @param {Number} keyCode - the key pressed
    */
   moveSelection: function(keyCode) {
-    var $result_links = $('.utility-search-results a');
-    var $current_link = $('.utility-search-results a.-current');
+    var $result_links = $('.js-search-results a');
+    var $current_link = $('.js-search-results a.-current');
     var current_index = $.inArray($current_link[0], $result_links);
 
     // handle up and left arrow keys
