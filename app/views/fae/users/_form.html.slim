@@ -7,7 +7,7 @@
     .content-header-buttons
       - cancel_path = params[:action] == 'settings' ? root_path : users_path
       a.button#js-header-cancel href=cancel_path Cancel
-      = f.submit "Save Settings"
+      = f.submit 'Save'
 
   main.content
     = fae_input f, :first_name
