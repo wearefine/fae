@@ -57,18 +57,6 @@ module Fae
 
       # hide sidenav on form pages
       @fae_sidenav_items = [] if params[:action] == 'new' || params[:action] == 'edit'
-
-      # TODO: move to top nav
-      # if current_user.super_admin?
-      #   sublinks = []
-      #   sublinks << { text: 'Users', path: fae.users_path, class_name: '-users' }
-      #   sublinks << { text: 'Root Settings', path: fae.option_path, class_name: '-settings'}
-      #   sublinks << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
-      #   @fae_nav_items << { text: 'Admin', path: '#', class_name: 'sidenav-admin', sublinks: sublinks }
-      # elsif current_user.admin?
-      #   @fae_nav_items << { text: 'Users', path: fae.users_path, class_name: '-users' }
-      #   @fae_nav_items << { text: 'Activity Log', path: fae.activity_log_path, class_name: '-activity'}
-      # end
     end
 
     # redirect to login after sign out

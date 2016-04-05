@@ -13,7 +13,6 @@ header.main-header#js-main-header
                 - item[:subitems].each do |subitem|
                   li: a href=subitem[:nested_path] = subitem[:text]
 
-
   - if user_signed_in?
     ul.utility-nav#js-utility-nav
       li.utility-dropdown.js-utility-dropdown
@@ -23,12 +22,18 @@ header.main-header#js-main-header
           li: a href=fae.destroy_user_session_path Log Out
           li: a href=fae.settings_path Your Settings
 
-      li class="#{'utility-dropdown js-utility-dropdown' if @option.stage_url.present?}"
-        a href="#{@option.stage_url.present? ? '#' : @option.live_url}" target="_blank"
+      li class="utility-dropdown js-utility-dropdown"
+        a href="#" target="_blank"
           i.icon-settings
-        - if @option.stage_url.present?
-          ul
+        ul
+          - if current_user.super_admin_or_admin?
+            li: a href=fae.users_path Users
+            li: a href=fae.activity_log_path Activity Log
+          - if current_user.super_admin?
+            li: a href=fae.option_path Root Settings
+          - if @option.live_url.present?
             li: a href=@option.live_url target="_blank" Live Site
+          - if @option.stage_url.present?
             li: a href=@option.stage_url target="_blank" Stage Site
 
       li
