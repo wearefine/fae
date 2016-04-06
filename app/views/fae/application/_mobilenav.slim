@@ -31,6 +31,22 @@ nav.nav.mobilenav.js-nav
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]
 
+              li: a.-users href=fae.users_path Users
+              li: a.-activity href=fae.activity_log_path Activity Log
+              li: a.-settings href=fae.option_path Root Settings
+
+    - if current_user.super_admin_or_admin?
+      li.mobilenav-accordion.js-accordion
+        a href="#" Admin
+        ul.subnav.js-subnav.js-subnav.js-subnav
+          li
+            span.mobilenav-subheader.js-mobile-back Admin
+            ul
+              li: a href=fae.users_path Users
+              li: a href=fae.activity_log_path Activity Log
+              - if current_user.super_admin?
+                li: a href=fae.option_path Root Settings
+
     - if user_signed_in?
       li.mobilenav-user
         span.mobilenav-user-header = current_user.full_name
@@ -38,14 +54,17 @@ nav.nav.mobilenav.js-nav
           li: a.-logout href=fae.destroy_user_session_path Log Out
           li: a.-settings href=fae.settings_path Your Settings
           li: a.-support href=fae.help_path Support
-          - site_urls_are_present = @option.stage_url.present? || @option.live_url.present?
+    - site_urls_are_present = @option.stage_url.present? && @option.live_url.present?
     - view_site_class = site_urls_are_present ? 'mobilenav-accordion js-accordion' : nil
-    li class=view_site_class
-      - if site_urls_are_present
-        a href="#" View Site
-        ul.subnav.js-subnav
-          li: span.mobilenav-subheader.js-mobile-back View Site
-          li: a.-viewsite href=@option.stage_url target="_blank" Preview Site
-          li: a.-viewsite href=@option.live_url target="_blank" Live Site
-      - else
-        a.-viewsite href=@option.stage_url target="_blank" Preview Site
+    - if @option.stage_url.present? || @option.live_url.present?
+      li class=view_site_class
+        - if site_urls_are_present
+          a href="#" View Site
+          ul.subnav.js-subnav
+            li: span.mobilenav-subheader.js-mobile-back View Site
+            li: a.-viewsite href=@option.stage_url target="_blank" Preview Site
+            li: a.-viewsite href=@option.live_url target="_blank" Live Site
+        - elsif @option.stage_url.present?
+          a.-viewsite href=@option.stage_url target="_blank" Preview Site
+        - elsif @option.live_url.present?
+          a.-viewsite href=@option.live_url target="_blank" Live Site

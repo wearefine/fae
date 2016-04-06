@@ -44,7 +44,7 @@ Fae.navigation = {
       url_array.pop();
       mutated_url = url_array.join('/');
 
-      var $current_link = $('.js-nav nav a[href="' + mutated_url + '"]');
+      var $current_link = $('.js-nav a[href="' + mutated_url + '"]');
       if ($current_link.length) {
         $current_link.addClass('-current');
 
@@ -71,9 +71,9 @@ Fae.navigation = {
       var $this = $(this);
 
       if($this.find('.-current').length) {
-        $this.addClass('-current');
+        $this.addClass('-accordion-current');
 
-        if(FCH.bp.large && $this.hasClass('.js-accordion')) {
+        if(FCH.bp.large && $this.hasClass('js-accordion')) {
           $this.addClass('-open');
         }
       }
