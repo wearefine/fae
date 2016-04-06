@@ -2,29 +2,18 @@ require 'spec_helper'
 
 feature 'Main Navigation' do
 
-  # TODO: fix failing specs
+  scenario 'should highlight all levels of navigation', js: true do
+    admin_login
+    visit admin_varietals_path
 
-  # scenario 'should highlight first level index', js: true do
-  #   admin_login
-  #   visit admin_releases_path
-
-  #   expect(page.find('a.-current').text).to eq('Current')
-  # end
-
-  # scenario 'should highlight second level index', js: true do
-  #   super_admin_login
-  #   visit fae.users_path
-
-  #   expect(page.find('a.-current').text).to eq('Users')
-  # end
-
-  # scenario 'should highlight third level index', js: true do
-  #   admin_login
-  #   team = FactoryGirl.create(:team)
-  #   visit admin_team_coaches_path(team)
-
-  #   expect(page.find('a.-current').text).to eq('Coaches')
-  # end
+    # top nav (TODO)
+    # expect(page.find('.main-header-nav .-parent-current a').text).to eq ('Products')
+    # top nav dropdown
+    expect(page.find('.main-header-nav a.-current', visible: false).text(:all)).to eq('Attributes')
+    # sidenav first level
+    expect(page.find('.sidenav a.-current').text).to eq ('Varietals')
+    # sidenav second level (TODO)
+  end
 
   scenario 'should not exist on a new page', js: true do
     admin_login
@@ -41,27 +30,5 @@ feature 'Main Navigation' do
 
     expect(page).to_not have_selector('.sidenav')
   end
-
-  # scenario 'should expand first level accordion', js: true do
-  #   admin_login
-  #   visit admin_releases_path
-
-  #   expect(page).to_not have_selector('.sidenav a', text: 'Except Open To Another Drawer')
-
-  #   page.find('.sidenav .nav-accordion a', text: 'Look This Drawer Does Nothing').click
-
-  #   # Link is now visible
-  #   expect(page).to have_selector('.sidenav a', text: 'Except Open To Another Drawer')
-  # end
-
-  # scenario 'should expand second level accordion', js: true do
-  #   admin_login
-  #   visit admin_releases_path
-
-  #   page.find('.sidenav a', text: 'Look This Drawer Does Nothing').click
-  #   page.find('.sidenav a', text: 'Except Open To Another Drawer').click
-
-  #   expect(page).to have_selector('.sidenav a', text: 'To A Link That Goes Nowhere')
-  # end
 
 end

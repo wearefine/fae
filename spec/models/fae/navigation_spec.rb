@@ -2,10 +2,18 @@ require 'rails_helper'
 
 describe Fae::Navigation do
 
-  describe '.sidenav' do
-    it 'should return nil on new and edit forms'
-    it 'should return nil when current section is less than three levels'
-    it 'should return the current sections third+ levels if present'
+  describe '.side_nav' do
+    it 'should return nil when current section is less than three levels' do
+      nav = Fae::Navigation.new('/admin/content_blocks/home')
+
+      expect(nav.side_nav).to be_nil
+    end
+
+    it 'should return the current sections third+ levels if present' do
+      nav = Fae::Navigation.new('/admin/varietals')
+
+      expect(nav.side_nav.map { |i| i[:text] }).to eq(['Varietals', 'Selling Points'])
+    end
   end
 
   describe '.search' do
