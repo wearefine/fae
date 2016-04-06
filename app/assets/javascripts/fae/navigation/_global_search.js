@@ -113,7 +113,6 @@ Fae.globalSearch = {
 
       $.post(post_url, function(data) {
         // Wrap query in b tags
-        console.log(data);
         data = data.replace(val_regex, '<b>$&</b>');
         _this.$wrapper.find('ul').replaceWith(data);
       });
