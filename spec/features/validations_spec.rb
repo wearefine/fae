@@ -16,7 +16,7 @@ feature 'validations' do
   scenario 'inputs should validate on form submission', js: true do
     admin_login
     visit new_admin_release_path
-    click_button('Save Settings')
+    click_button('Save')
 
     expect(page).to have_selector('#release_name.invalid')
     expect(page).to have_selector('div.release_name.field_with_errors')
@@ -75,7 +75,7 @@ feature 'validations' do
     admin_login
     visit admin_releases_path
     visit new_admin_release_path
-    click_button('Save Settings')
+    click_button('Save')
 
     expect(page).to have_selector('div.flash-message.alert')
   end
