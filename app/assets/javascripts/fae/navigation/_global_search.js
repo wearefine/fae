@@ -30,31 +30,45 @@ Fae.globalSearch = {
      * @private
      */
     function hideSearch() {
-      // Avoid duplicate/rapid bindings
-      $header.off('mouseleave', hideSearch);
+      _this.$wrapper.data('hover', 0);
       _this.$wrapper.hide();
       _this.$input.blur();
+      // Avoid duplicate/rapid bindings
+      $header.off('mouseleave', hideSearch);
     }
 
     // If user leaves search, remove menu
     _this.$wrapper.on('mouseleave', hideSearch);
 
-    // Hover over search icon
-    $('#js-utility-search').mouseover(function() {
-      // Reset timeout
-      clearTimeout(timer);
-      $header.on('mouseleave', hideSearch);
+    // Search mouseover effects
+    $('#js-utility-search')
+      // Ensure that the cursor is over the search menu after timeout
+      .hover(function() {
+        _this.$wrapper.data('hover', 1);
+      }, function() {
+        _this.$wrapper.data('hover', 0);
+      })
 
-      // Hover intent
-      // If user gets from header to search within .8s, they can pass over other icons
-      // but after .8s, the search menu will disappear if they leave the area
-      timer = setTimeout(function() {
-        $header.off('mouseleave', hideSearch);
-      }, 800);
+      .mouseover(function() {
+        // Reset timeout
+        clearTimeout(timer);
+        $header.on('mouseleave', hideSearch);
 
-      _this.$wrapper.show();
-      _this.$input.focus();
-    });
+        // Hover intent
+        // If user gets from header to search within .8s, they can pass over other icons
+        // but after .8s, the search menu will disappear if they leave the area
+        timer = setTimeout(function() {
+          $header.off('mouseleave', hideSearch);
+
+          // If cursor is no long on search, collapse it
+          if ( !_this.$wrapper.data('hover') ) {
+            hideSearch();
+          }
+        }, 800);
+
+        _this.$wrapper.show();
+        _this.$input.focus();
+      });
   },
 
   /**
@@ -88,8 +102,19 @@ Fae.globalSearch = {
       }
 
       // otherwise update the live search
-      var post_url = Fae.path + '/search/' + _this.$input.val();
+      var val = _this.$input.val();
+      var post_url = Fae.path + '/search/' + val;
+      // Match only values that exist within links - we don't want to highlight the labels
+      // Positive lookahead start
+        // Ignore if > is present (to avoid matches in href=".*">)
+        // End at </a> tag (to ensure that we don't highlight any other markup, like the labels)
+      // Case insensitive; find all
+      var val_regex = new RegExp(val + '(?=[^>]*<\/a>)', 'ig');
+
       $.post(post_url, function(data) {
+        // Wrap query in b tags
+        console.log(data);
+        data = data.replace(val_regex, '<b>$&</b>');
         _this.$wrapper.find('ul').replaceWith(data);
       });
     });

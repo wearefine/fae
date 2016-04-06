@@ -105,18 +105,21 @@
   }
 }
 
-.search-record {
-  @include clearfix;
+.search-record-label {
+  display: block;
+  font-size: 13px;
+  font-style: italic;
+}
 
-  span {
-    float: left;
-    width: 50%;
-
-    &:last-child {
-      text-align: right;
-      font-style: italic;
-    }
+.search-results {
+  b {
+    color: $c-white;
+    font-weight: normal;
   }
+}
+
+.search-nav-item {
+  border-bottom: 1px solid $c-dark-grey;
 }
 
 .utility-search-hit-area {

@@ -3,13 +3,13 @@ ruby:
   navigation_items ||= []
   records          ||= []
 
-ul.js-search-results
+ul.search-results.js-search-results
 
   - if show_nav && @fae_topnav_items.present?
 
     - @fae_topnav_items.each do |item|
       li
-        a href=item[:nested_path] = item[:text]
+        a.search-nav-item href=item[:nested_path] = item[:text]
         - if item[:subitems]
           ul
             - item[:subitems].each do |subitem|
@@ -20,7 +20,7 @@ ul.js-search-results
     - if navigation_items.present?
       - navigation_items.each do |item|
         li
-          a href=item[:nested_path] = item[:text]
+          a.search-nav-item href=item[:nested_path] = item[:text]
 
     - if records.present?
       - records.each do |item|
@@ -28,9 +28,9 @@ ul.js-search-results
           - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
           - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
           li
-            a.search-record href=edit_path
-              span = item.fae_display_field
-              span = item.class.name
+            a href=edit_path
+              span.search-record-label = item.class.name
+              = item.fae_display_field
         - rescue
 
   - else
