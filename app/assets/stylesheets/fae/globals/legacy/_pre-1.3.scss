@@ -596,3 +596,37 @@ tbody {
   font-size: 15px;
   color: $c-text-heavy;
 }
+
+.checkbox_styled {
+  display: inline-block;
+
+  input[type=checkbox] {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    visibility: hidden;
+  }
+
+  .checkbox {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    padding: 2px 0 0 2px;
+    border: 1px solid $c-border;
+    margin-bottom: 0;
+    font-size: 13px;
+    color: $c-text-heavy;
+    background: $c-white;
+    cursor: pointer;
+
+    border-radius: 2px;
+
+    &:before {
+      visibility: hidden;
+    }
+
+    &.js-active:before {
+      visibility: visible;
+    }
+  }
+}

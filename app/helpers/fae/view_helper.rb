@@ -111,14 +111,6 @@ module Fae
       end
     end
 
-    # this isn't implemented yet, but saving the markup here
-    def fae_filter_input(attribute, options = {})
-      '<div class="table-filter-group">
-        <label for="filter_city">Input</label>
-        <input type="text" />
-      </div>'.html_safe
-    end
-
     def fae_avatar(user = current_user)
       hash = Digest::MD5.hexdigest(user.email.downcase)
 

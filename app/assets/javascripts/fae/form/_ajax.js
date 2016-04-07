@@ -343,13 +343,13 @@ Fae.form.ajax = {
         $(this).toggleClass('slider-yes-selected');
       })
 
-      // The settings menu for tables and checkboxe
-      .on('click', '.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
-        $(this).toggleClass('js-active');
+      // The settings menu for tables and checkboxes
+      .on('click', '.boolean label, .js-checkbox-wrapper label', function(e){
+        $(this).toggleClass('active');
       })
 
       // stop the event bubbling and running the above toggleClass twice
-      .on('click', '.boolean :checkbox, .checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
+      .on('click', '.boolean :checkbox, .js-checkbox-wrapper :checkbox', function(e){
         e.stopPropagation();
       });
   }
