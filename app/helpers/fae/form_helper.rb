@@ -38,7 +38,6 @@ module Fae
       fae_input f, attribute, options
     end
 
-
     def fae_radio(f, attribute, options={})
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
@@ -47,9 +46,8 @@ module Fae
     end
 
     def fae_checkbox(f, attribute, options={})
-      options[:alignment] = 'checkbox_collection--horizontal' if options[:type] == 'inline'
-      options[:alignment] = 'checkbox_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
-      options.update(as: :check_boxes, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}", no_label_div: true)
+      options[:type] ||= 'stacked'
+      options.update(as: :check_boxes, wrapper_class: "checkbox-wrapper js-checkbox-wrapper #{options[:wrapper_class]} -#{options[:type]}", no_label_div: true)
       association_or_input f, attribute, options
     end
 

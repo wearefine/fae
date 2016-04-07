@@ -66,7 +66,7 @@
 
     = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
 
-    = fae_checkbox f, :events, helper_text: 'checkboxes vertical'
+    = fae_checkbox f, :events, helper_text: 'checkboxes vertical', type: 'inline'
 
 - if params[:action] == 'edit'
   section.content#nested_table
