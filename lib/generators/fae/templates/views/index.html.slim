@@ -25,9 +25,7 @@ main.content
 <% if @has_position -%>
             td.sortable-handle: span.icon-sort
 <% end -%>
-            td
-              i.icon-edit
-              = link_to item.fae_display_field, edit_<%= options.namespace %>_<%= class_name.underscore %>_path(item)
+            td = link_to item.fae_display_field, edit_<%= options.namespace %>_<%= class_name.underscore %>_path(item)
             td = fae_date_format item.updated_at
 <% @toggle_attrs.each do |attr| -%>
             td = fae_toggle item, :<%= attr %>

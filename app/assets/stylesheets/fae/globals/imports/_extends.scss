@@ -1,9 +1,11 @@
 %underline-link {
-  text-decoration: underline;
-  color: $c-mid-dark-grey;
+  @include transition(border-bottom-color 0.2s);
+  display: inline-block;
+  padding-bottom: 3px;
+  border-bottom: 1px solid $c-grey;
 
   &:hover {
-    text-decoration: none;
+    border-bottom-color: transparent;
   }
 }
 

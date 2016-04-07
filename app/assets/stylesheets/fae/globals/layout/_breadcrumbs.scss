@@ -32,11 +32,7 @@
     color: inherit;
 
     &:not(.-home) {
-      text-decoration: underline;
-
-      &:hover {
-        text-decoration: none;
-      }
+      @extend %underline-link;
     }
   }
 }
