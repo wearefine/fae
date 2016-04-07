@@ -12,7 +12,6 @@ Fae.navigation = {
   init: function() {
     this.selectCurrentNavItem();
     this.fadeNotices();
-    this.stickyHeaders();
     this.subnavHighlighter.init();
     this.openDrawer();
     this.clickBack();
@@ -20,8 +19,14 @@ Fae.navigation = {
     this.accordionClickEventListener();
   },
 
+  load: function() {
+    this.stickyHeaders();
+    this.lockFooter();
+  },
+
   resize: function() {
     this.closeAll(false);
+    this.lockFooter();
   },
 
   /**
@@ -220,22 +225,43 @@ Fae.navigation = {
 
     if(FCH.exists('.js-content-header')) {
       var $header = $('.js-content-header');
-      var sidebar_top_offset = (parseInt( $header.css('height'), 10) + 20) + 'px';
+      var sidebar_top_offset = (parseInt( $header.outerHeight(), 10) + 20) + 'px';
       $('#js-sidenav').css('padding-top',  sidebar_top_offset );
 
       $header.sticky({
         placeholder: true,
         perpetual_placeholder: true
       });
+
     } else {
       $('.main_content-header').sticky({
         placeholder: true
       });
+
     }
 
-    if(!just_headers) {
+    if (!just_headers) {
       $('#js-sidenav').sticky();
     }
+  },
+
+  /**
+   * Fix footer to bottom of screen if viewport extends beyond content. Display after calculation has been performed
+   */
+  lockFooter: function() {
+    var $footer = $('#js-footer');
+
+    // Reset
+    $footer.removeClass('active');
+
+    // Lock or unlock
+    if ($footer.offset().top < (FCH.dimensions.wh - 40) ) {
+      $footer.addClass('-locked');
+    } else {
+      $footer.removeClass('-locked');
+    }
+
+    $footer.addClass('active');
   },
 
 };

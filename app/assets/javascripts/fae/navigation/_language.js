@@ -50,15 +50,22 @@ Fae.navigation.language = {
         _this.el.$toggles.find('.active').removeClass('active');
         $this.addClass('active');
 
-        _this._saveLanguagePreference(lang);
-        _this._removeHiddenErrorsMessage();
+        // POSTs to Utilities#language_preference to save user's language preference
+        lang = lang || 'all'
+        var post_url = Fae.path + '/language_preference/' + lang;
+        $.post(post_url);
+
+        // Fade out extra error messages
+        $('.hidden_errors').fadeOut(200, function() {
+          $(this).remove();
+        });
       }
     });
   },
 
   /**
    * Hides all language fields and fades in ones according to language
-   * @access protected
+   * @protected
    * @param {String} lang - Language of fields to fade in
    * @param {Number} speed - Speed of the fade transitions in ms
    */
@@ -74,35 +81,12 @@ Fae.navigation.language = {
   },
 
   /**
-   * POSTs to Utilities#language_preference to save user's language preference
-   * @access protected
-   * @param {String} lang - Preferred language
-   */
-  _saveLanguagePreference: function(lang) {
-    lang = lang || 'all'
-    var post_url = Fae.path + '/language_preference/' + lang;
-    $.post(post_url);
-  },
-
-  /**
    * Called on form validation; checks for hidden fields with errors and displays a message
    * @see {@link form.validator.formValidate}
    */
   checkForHiddenErrors: function() {
-    if (this.el.$toggles.length && $('div.field_with_errors:hidden').length && !$('.hidden_errors').length) {
+    if (this.el.$toggles.length && $('div.field_with_errors:hidden').length && !FCH.exists('.hidden_errors')) {
       $(Fae.content_selector).prepend('<div class="hidden_errors field_with_errors"><span class="error">There are hidden errors. Click "All Languages" in the language nav to view all errors.</span></div>');
     }
-  },
-
-  /**
-   * Fade out extra error messages
-   * @access protected
-   * @see {@link navigation.language.addNavEvents}
-   */
-  _removeHiddenErrorsMessage: function() {
-    $('.hidden_errors').fadeOut(200, function() {
-      $(this).remove();
-    });
-  },
-
+  }
 };

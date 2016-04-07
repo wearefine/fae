@@ -374,6 +374,8 @@ Fae.tables = {
     }
 
     $tables.each( applyOffset );
+
+    Fae.navigation.lockFooter();
   },
 
   /**
