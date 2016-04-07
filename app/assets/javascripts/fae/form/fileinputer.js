@@ -1,6 +1,5 @@
-'use strict';
-
 (function ( $ ) {
+  'use strict';
 
   /**
    * Private initialization of FileInputer object.
@@ -17,7 +16,7 @@
     this.changeListener();
 
     return this;
-  };
+  }
 
   /**
    * Create jQuery objects of all necessary components and add them to the DOM
@@ -42,7 +41,7 @@
     });
 
     this.$text = $('<span />', {
-      text: this.options.file_text
+      choose_text: this.options.file_text
     });
 
     var $button = $('<button />', {
@@ -50,7 +49,7 @@
       attr: {
         type: 'button'
       },
-      text: this.options.text
+      choose_text: this.options.text
     });
 
     var $deleter = $('<div />', {
@@ -128,7 +127,7 @@
     var input_files = this.$input.get(0).files;
 
     // IE9 doesn't support size lookups; exit early and return true to clear validation
-    if (typeof input_files === 'undefined') {
+    if (typeof input_files === undefined) {
       return true;
     }
 
@@ -136,7 +135,7 @@
 
     var error_obj = $('<span />', {
       class: 'error',
-      text: this.$input.attr('data-exceeded').replace('###', limit)
+      choose_text: this.$input.attr('data-exceeded').replace('###', limit)
     });
 
     if (size > limit) {
@@ -158,8 +157,7 @@
     var defaults = {
       wrapper_class: 'asset-actions',
       button_class: 'button',
-      delete_class: 'asset-delete',
-      text: 'Choose File',
+      choose_text: 'Choose File',
       file_text: 'No File Chosen',
       active_class: 'active',
       delete_class: 'asset-delete'
