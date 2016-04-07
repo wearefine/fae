@@ -117,6 +117,7 @@
 
   a {
     margin-right: 5px;
+    height: 37px; // Fix height so descenders don't mess up the visual balance
 
     &:last-child {
       margin-right: 0;
