@@ -490,7 +490,7 @@ Displays breadcrumb links and form title.
 | option | type | description |
 |--------|------|-------------|
 | header | ActiveRecord object | **(required)** passed to form_header helper method  |
-| save_button_text (`v1.3 <=`)   | string | 'Save Settings' | save button text |
+| save_button_text (`v1.3 <=`)   | string | 'Save' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
 | 
 | cloneable | boolean | false | includes Clone button |
@@ -526,7 +526,7 @@ Displays form's save and cancel buttons.
 
 | option | type | default | description |
 |-|-|-|-|
-| save_button_text   | string | 'Save Settings' | save button text  |
+| save_button_text   | string | 'Save' | save button text  |
 | cancel_button_text | string | 'Cancel' | cancel button text  |
 
 **Examples**

@@ -76,7 +76,7 @@ Fae.navigation = {
       var $this = $(this);
 
       if($this.find('.-current').length) {
-        $this.addClass('-accordion-current');
+        $this.addClass('-parent-current');
 
         if(FCH.bp.large && $this.hasClass('js-accordion')) {
           $this.addClass('-open');
