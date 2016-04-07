@@ -80,10 +80,16 @@
   &:after {
     @extend .icon-arrow_down:before;
     @include icon-stuff;
-    font-size: 6px;
+    font-size: 5px;
     color: $c-text-sub;
     display: inline-block;
     padding-left: 5px;
     vertical-align: middle;
+  }
+
+  &:hover {
+    &:after {
+      color: $c-white;
+    }
   }
 }

@@ -9,6 +9,13 @@
     @include icon-stuff;
     margin-right: 10px;
   }
+
+  .sidenav ~ & {
+    @include bp(large) {
+      margin-left: $sidenav-width + $content-buffer;
+      width: calc(100% - #{$sidenav-width + ($content-buffer * 2) });
+    }
+  }
 }
 
 .notice {
