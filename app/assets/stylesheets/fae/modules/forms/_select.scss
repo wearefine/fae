@@ -103,19 +103,6 @@
   min-width: 75px;
 }
 
-// overwriting chosen for retina
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-resolution: 144dpi) {
-  .chosen-rtl .chosen-search input[type="text"],
-  .chosen-container-single .chosen-single abbr,
-  .chosen-container-single .chosen-single div b,
-  .chosen-container-single .chosen-search input[type="text"],
-  .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
-  .chosen-container .chosen-results-scroll-down span,
-  .chosen-container .chosen-results-scroll-up span {
-    background-image: image-url('fae/chosen/chosen-sprite@2x.png') !important;
-  }
-}
-
 .select-no_search {
   .chosen-container .chosen-results {
     padding-top: 5px;
