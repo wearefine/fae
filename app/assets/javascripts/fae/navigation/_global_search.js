@@ -104,8 +104,9 @@ Fae.globalSearch = {
       // otherwise update the live search
       var val = _this.$input.val();
       var post_url = Fae.path + '/search/' + val;
+
       // Match only values that exist within links - we don't want to highlight the labels
-      // Positive lookahead start
+      // Positive lookahead
         // Ignore if > is present (to avoid matches in href=".*">)
         // End at </a> tag (to ensure that we don't highlight any other markup, like the labels)
       // Case insensitive; find all
@@ -115,6 +116,11 @@ Fae.globalSearch = {
         // Wrap query in b tags
         data = data.replace(val_regex, '<b>$&</b>');
         _this.$wrapper.find('ul').replaceWith(data);
+
+        // If only one result, remove border from header nav item (set by the .search-nav-item class)
+        if ($('.js-search-results li').length === 1) {
+          $('.js-search-results .search-nav-item').removeClass('search-nav-item');
+        }
       });
     });
   },

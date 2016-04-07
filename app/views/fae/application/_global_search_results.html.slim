@@ -9,7 +9,7 @@ ul.search-results.js-search-results
 
     - @fae_topnav_items.each do |item|
       li
-        a.search-nav-item href=item[:nested_path] = item[:text]
+        a href=item[:nested_path] = item[:text]
         - if item[:subitems]
           ul
             - item[:subitems].each do |subitem|
@@ -19,8 +19,7 @@ ul.search-results.js-search-results
 
     - if navigation_items.present?
       - navigation_items.each do |item|
-        li
-          a.search-nav-item href=item[:nested_path] = item[:text]
+        li: a.search-nav-item href=item[:nested_path] = item[:text]
 
     - if records.present?
       - records.each do |item|

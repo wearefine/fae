@@ -31,7 +31,8 @@
     }
 
     a {
-      padding: 7px 12px;
+      padding: 10px 12px;
+      line-height: 1.2;
     }
   }
 }
@@ -40,9 +41,18 @@
   display: block;
   font-size: 13px;
   font-style: italic;
+  margin-bottom: 5px;
 }
 
 .search-results {
+  a {
+    &:hover {
+      span {
+        color: $c-darker-grey;
+      }
+    }
+  }
+
   b {
     color: $c-white;
     font-weight: normal;
