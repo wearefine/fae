@@ -255,7 +255,7 @@ Fae.navigation = {
     $footer.removeClass('active');
 
     // Lock or unlock
-    if ($footer.offset().top < (FCH.dimensions.wh - 40) ) {
+    if ($footer.offset().top < (FCH.dimensions.wh - $footer.outerHeight()) ) {
       $footer.addClass('-locked');
     } else {
       $footer.removeClass('-locked');
