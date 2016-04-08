@@ -16,10 +16,18 @@
   }
 }
 
+.chosen-container-single .chosen-single {
+  &:hover {
+    div b:after {
+      color: $c-darkest-grey;
+    }
+  }
+}
+
 .chosen-container-active.chosen-with-drop .chosen-single div b {
   &:after {
     @extend .icon-arrow_up:before;
-    color: $c-black;
+    color: $c-darkest-grey;
   }
 }
 
