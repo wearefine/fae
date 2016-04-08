@@ -6,7 +6,8 @@
 * [Validation](#validation)
 * [Image and File Associations](#image-and-file-associations)
 * [Controllers](#controllers)
-* [Navigation Items](#navigation-items)
+* [Navigation](#navigation)
+* [Global Search](#global-search)
 * [Form Helpers](#form-helpers)
 * [Pages and Content Blocks](#pages-and-content-blocks)
 
@@ -348,79 +349,132 @@ This will affect the add button text and index/form page titles.
 
 ---
 
-# Navigation Items
+# Navigation
 
-When you use the generators, a link to the section appears in the main navigation of the admin. This is done by automatically adding to `app/controllers/concerns/fae/nav_items.rb`. However, this file is available for you to customize the nav however you'd like.
+When using Fae's installer and generators, navigation items to the objects you create will automatically get added to the side nav of the admin. Behind the scenes the generator is updating `app/models/concerns/fae/navigation_concern.rb`. However, this file is available for you to customize the nav however you like.
 
-The navigation is built of of the array set in the `nav_items` method. Each array item is a hash with these available keys:
+## Updating navigation_concern.rb
 
-| Key | Type | Description |
+To define your own navigation structure you just need to update the `structure` method within `app/models/concerns/fae/navigation_concern.rb`. Here's a look at an example:
+
+```ruby
+def structure
+  [
+    item('Products', subitems: [
+      item('Apparel', class: 'custom-class', path: admin_apparel_path),
+      item('Beverage', subitems: [
+        item('Wines', subitems: [
+          item('Releases', path: admin_releases_path)
+        ]),
+        item('Board Games', path: admin_board_games_path)
+      ]),
+    ]),
+    item('Pages', subitems: [
+      item('Home', path: fae.edit_content_block_path('home')),
+      item('About Us', path: fae.edit_content_block_path('about_us'))
+    ])
+  ]
+end
+```
+
+`structure` is an array of nav items which are defined with the `item` method. The `item` method takes a title as the first argument, followed by a hash options. To nest subitems within an item, pass an array of items into the `subitems` option.
+
+```ruby
+item(title, options = {})
+```
+
+| Option | Type | Description |
 | --- | ---- | ----------- |
-| text | string | the link's text |
-| path | string or named route | the link's href (defaults to '#') |
-| class | string | an added class to the link |
-| sublinks | array of hashes | nested links to be displayed in a dropdown |
+| path | string or named route* | the link's href (defaults to '#') |
+| class | string | a custom class that gets added to the link |
+| subitems | array of items | nested links to be displayed in a dropdown |
 
-## Named Routes in nav_items.rb
-
-Since the `nav_items` concern hooks directly into Fae, named routes need context using the following prefixes:
+\* if you want to access a named route that exists in Fae, call the named route on the `fae` object.
 
 ```ruby
-def nav_items
+fae.pages_path
+```
+
+## Top Nav
+
+Fae has an alternative top navigation that's ideal if you have a lot of objects or want to nest them more than two levels.
+
+![Top Nav](images/navigation.png)
+
+To enable the top nav, add this option to `config/initializers/fae.rb`:
+
+```ruby
+config.has_top_nav = true
+```
+
+### Top/Side Nav Hierarchy
+
+When the top nav is enabled, the first and second level of `structure` defines the main nav and dropdown items respectively. When you click into a section that has third and/or fourth levels, a side nav will appear to display those items.
+
+```ruby
+def structure
   [
-    # use `main_app.` for application routes (even in your admin)
-    { text: 'Cities', path: main_app.admin_cities_path },
-    # use `fae.` for Fae routes
-    { text: 'Pages', path: fae.pages_path }
+    item('Top nav item', subitems: [
+      item('Top nav dropdown item', subitems: [
+        item('Side nav item', subitems: [
+          item('Side nav nested item', path: '#')
+        ])
+      ]),
+    ])
   ]
 end
 ```
 
-## Sublinks
+If the main nav dropdown doesn't have a defined `path`, it will search the `subitems` for the first available path to link to.
 
-When sublinks are present, the main nav item will trigger a drawer holding the sublinks to open/close. Add sublinks using the following format:
+Note: the side nav is hidden in forms by design, this removes clutter and allows the user to focus on the content of that object.
 
-```ruby
-def nav_items
-  [
-    {
-      text: 'Items with sublinks', sublinks: [
-        { text: 'Item Sublink 1', path: main_app.admin_some_path },
-        { text: 'Item Sublink 2', path: main_app.admin_someother_path }
-      ]
-    }
-  ]
-end
-```
+## Dynamic Content in the Navigation
 
-## Dynamic Content in Nav
-
-Dynamic content is allowed in the the `nav_items` concern. Here's an example:
+Dynamic content can be defined in `navigation_concern.rb`. Here's an example:
 
 ```ruby
 module Fae
-  module NavItems
+  module NavigationConcern
     extend ActiveSupport::Concern
 
-    def nav_items
+    def structure
       [
-        { text: 'Releases', path: main_app.admin_releases_path },
-        { text: 'Tiers', sublinks: tier_sublinks }
+        item('Teams', subitems: team_subitems)
+        # scaffold inject marker
       ]
     end
 
     private
 
-    def tier_sublinks
-      tiers_arr = [{ text: 'New Tier', path: main_app.new_admin_tier_path }]
-      Tier.each do |tier|
-        tiers_arr << { text: tier.name, path: main_app.edit_admin_tier_path(tier) }
+    def team_subitems
+      teams_arr = [ item('Team List', path: admin_teams_path) ]
+      Team.all.each do |team|
+        teams_arr << item(team.name, subitems: [
+          item('Coaches', path: admin_team_coaches_path(team)),
+          item('Players', path: admin_team_players_path(team))
+        ])
       end
-      tiers_arr
+      teams_arr
     end
-
   end
 end
+```
+
+---
+
+# Global Search
+
+Fae features a global search/navigation in the upper right. Clicking on this will automatically display the first two levels of navigation. By entering at least three characters in the search bar results will be displayed from both navigation items and objects in your DB.
+
+Navigation items are matched by their defined titles, ignoring case. Objects are matched by their `fae_display_field`.
+
+## Omitting an Object
+
+To omit an object from global search, add it to the `dashboard_exclusions` array in `config/initializers/fae.rb`
+
+```ruby
+config.dashboard_exclusions = %w( Cat )
 ```
 
 ---
@@ -473,7 +527,7 @@ The system is just your basic inherited singleton with dynamic polymorphic assoc
 
 ## Pages vs Content Blocks
 
-**Pages** are groups of **content blocks** based on the actual pages they appear on the site. 
+**Pages** are groups of **content blocks** based on the actual pages they appear on the site.
 
 Content blocks are defined in the model and called in the form view. The `type` refers to the generator API (more information available in [the following section](#generating-pages))
 
