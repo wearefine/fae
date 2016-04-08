@@ -444,7 +444,7 @@ require_locals ['item', 'text'], local_assigns
 Retrieve a user's Gravatar image URL based on their email.
 
 | option | type | description |
-|-|-|-|
+|---|---|---|
 | user | Fae::User | defaults to `current_user` |
 
 ```ruby
