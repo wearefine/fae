@@ -525,7 +525,7 @@ render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery',
 Displays form's save and cancel buttons.
 
 | option | type | default | description |
-|-|-|-|-|
+|--------|------|---------|-------------|
 | save_button_text   | string | 'Save' | save button text  |
 | cancel_button_text | string | 'Cancel' | cancel button text  |
 
