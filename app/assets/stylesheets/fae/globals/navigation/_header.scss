@@ -20,7 +20,8 @@
     color: $c-darker-grey;
 
     @include bp(large) {
-      padding: 27px 0;
+      padding-top: 27px;
+      padding-bottom: 27px;
     }
 
     &:hover,

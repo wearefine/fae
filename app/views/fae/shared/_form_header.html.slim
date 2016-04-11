@@ -22,7 +22,7 @@ ruby:
   input name="commit" type="submit" value=save_button_text
 
 - if subnav.present?
-  ul.content-header-subnav.js-content-header-subnav
+  ul.content-header-subnav#js-content-header-subnav
     - subnav.each do |link, id_selector|
       - id_selector ||= link.parameterize('_')
       li: a href="##{link.parameterize('_')}" = link

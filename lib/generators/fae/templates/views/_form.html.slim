@@ -1,9 +1,9 @@
 = simple_form_for(['admin', @item]) do |f|
-  header.main-content
+  header.content-header
     == render 'fae/shared/form_header', header: @klass_name
   == render 'fae/shared/errors'
 
-  section.content
+  main.content
 <% @form_attrs.each do |attr| -%>
     = fae_input f, :<%= attr %>
 <% end -%>
