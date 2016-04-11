@@ -34,7 +34,7 @@ Fae.tables = {
     }
 
     if (FCH.exists(arrange_selector)) {
-      this.rowSorting(arrange_selector);
+      this.rowArranging(arrange_selector);
     }
 
     this.stickyTableHeader();
@@ -157,7 +157,7 @@ Fae.tables = {
    * @param {String} arrange_selector - handle selector
    * @depreciation - remove arrange_selector arg in v2.0
    */
-  rowSorting: function(arrange_selector) {
+  rowArranging: function(arrange_selector) {
     // @depreciation - remove `, .main_content-sortable` and just use '.js-table-arrange' in v2.0
     $('.js-table-arrange, .main_content-sortable').sortable({
       items: 'tbody tr',

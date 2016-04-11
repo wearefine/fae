@@ -179,7 +179,7 @@ Fae.form.ajax = {
       // .html() is not replacing it properly
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
-      Fae.tables.rowSorting();
+      Fae.tables.rowArranging();
       Fae.navigation.fadeNotices();
 
       if ($el.find('.js-content-header').length) {
