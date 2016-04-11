@@ -15,6 +15,7 @@
     + \#54556: Add confirm dialogue before cloning
     + \#55186: Add global search feature
     + \#56040: Add tooltips to index table icons (clone and delete)
+    + \#56439: Consolidate initial install migrations
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
