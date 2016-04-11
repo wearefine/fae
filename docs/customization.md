@@ -161,16 +161,15 @@ Using Fae's generators let's quickly scaffold a model that supports multiple lan
 $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
 ```
 
-## Language Nav Partial
+## Displaying the Language Nav
 
-Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.content-header`:
+Finally, to display the language select menu, you'll need to add `language: true` to your [`form_header`](helpers.md#form_header-1) partial:
 
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  section.content-header.js-content-header
-    
-    == render 'fae/shared/language_nav'
+  header.content-header.js-content-header
+    = render 'fae/shared/form_header', header: @klass_name, language: true
 
     // ...
 ```

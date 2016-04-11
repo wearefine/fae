@@ -23,15 +23,19 @@ feature 'Language nav' do
     expect(page).to have_selector('.wine_name_en.test-class')
   end
 
-  scenario 'clicking a language toggle should only show those language fields', js: true do
+  scenario 'selecting a language toggle should only show those language fields', js: true do
     admin_login
     visit new_admin_wine_path
 
-    page.find('a[data-language=en]').click
+    # Open the chosen menu
+    page.find('#js_language_chosen').click
+    page.find('#js_language_chosen li', text: 'English').click
     expect(page).to     have_selector('div[data-language=en]')
     expect(page).to_not have_selector('div[data-language=ja]')
 
-    page.find('a[data-language=ja]').click
+    # Open the chosen menu
+    page.find('#js_language_chosen').click
+    page.find('#js_language_chosen li', text: 'Japanese').click
     expect(page).to     have_selector('div[data-language=ja]')
     expect(page).to_not have_selector('div[data-language=en]')
   end
@@ -41,15 +45,17 @@ feature 'Language nav' do
     # admin_login
     # visit new_admin_wine_path
 
-    # page.find('a[data-language=ja]').click
+    # Open the chosen menu
+    # page.find('#js_language_chosen').click
+    # page.find('#js_language_chosen li', text: 'Japanese').click
     # visit new_admin_wine_path
-    # expect(page).to     have_selector('a.active[data-language=ja]')
     # expect(page).to     have_selector('div[data-language=ja]')
     # expect(page).to_not have_selector('div[data-language=en]')
 
-    # click_link('All Languages')
+    # page.find('#js_language_chosen').click
+    # page.find('#js_language_chosen li:first-child').click
     # visit new_admin_wine_path
-    # expect(find('.main_content-section-toggles a.active')).to have_content('All Languages')
+    # expect(find('#js_language_chosen li.result-selected')).to have_content('All Languages')
   end
 
 end

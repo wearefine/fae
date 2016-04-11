@@ -2,7 +2,7 @@
   header.content-header.js-content-header
     - subnav_array = ['Attributes', 'Assets', 'Associations']
     - subnav_array.concat ['Nested Table', 'Recent Changes'] if params[:action] == 'edit'
-    = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true, subnav: subnav_array
+    = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true, subnav: subnav_array, language: true
 
   = render 'fae/shared/errors'
 
