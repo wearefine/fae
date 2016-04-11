@@ -8,7 +8,7 @@ ul.search-results.js-search-results
   - if show_nav && @fae_topnav_items.present?
 
     - @fae_topnav_items.each do |item|
-      li
+      li.search-topnav
         a href=item[:nested_path] = item[:text]
         - if item[:subitems]
           ul

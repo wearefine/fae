@@ -14,7 +14,7 @@
   width: 320px;
 
   > ul {
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 15px;
   }
 
@@ -33,6 +33,16 @@
     a {
       padding: 10px 12px;
       line-height: 1.2;
+
+      &.search-nav-item {
+        padding-bottom: 20px; // Equal spacing before visual separator
+      }
+    }
+  }
+
+  .search-topnav {
+    a {
+      padding: 6px 12px;
     }
   }
 }
@@ -45,12 +55,8 @@
 }
 
 .search-results {
-  a {
-    &:hover {
-      span {
-        color: $c-darker-grey;
-      }
-    }
+  span {
+    color: $c-darker-grey;
   }
 
   b {
@@ -61,6 +67,7 @@
 
 .search-nav-item {
   border-bottom: 1px solid $c-dark-grey;
+  margin-bottom: 10px; // Equal spacing after visual separator
 }
 
 .utility-search-hit-area {
