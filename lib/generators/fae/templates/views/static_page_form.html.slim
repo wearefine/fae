@@ -2,7 +2,7 @@
   header.content-header.js-content-header
     == render 'fae/shared/form_header', header: @item, f: f
 
-  .content
+  main.content
     = fae_input f, :title
 
 <% @attributes.each do |attr, type| -%>
