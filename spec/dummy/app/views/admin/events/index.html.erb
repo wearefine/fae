@@ -8,10 +8,10 @@
 
       <div class="collapsible" id="first-table">
         <%= content_tag(:h3, "#{@klass_humanized.pluralize} (#{@items.length})") %>
-        <table class="main_content-sortable">
+        <table class="js-table-arrange">
           <thead>
             <tr>
-              <th class="th-sortable-handle"></th>
+              <th class="th-arrange-handle"></th>
               <th>Name</th>
               <th class="-action-wide">Modified</th>
               <th>Extra Column</th>
@@ -24,7 +24,40 @@
           <tbody>
             <% @items.each do |item| %>
               <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-                <td class="sortable-handle">
+                <td class="arrange-handle">
+                  <span class="icon-sort"></span>
+                </td>
+                <td><%= link_to item.fae_display_field, edit_admin_event_path(item) %></td>
+                <td><%= fae_date_format item.updated_at %></td>
+                <td>Extra cell</td>
+                <td>Fourth cell</td>
+                <td>###</td>
+                <td class="-action"><%= fae_delete_button item %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="collapsible">
+        <%= content_tag(:h3, "#{@klass_humanized.pluralize} (#{@items.length})") %>
+        <table class="js-table-arrange">
+          <thead>
+            <tr>
+              <th class="th-arrange-handle"></th>
+              <th>Name</th>
+              <th class="-action-wide">Modified</th>
+              <th>Extra Column</th>
+              <th>Fourth Column</th>
+              <th>Some number</th>
+              <th class="-action" data-sorter="false">Delete</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @items.each do |item| %>
+              <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
+                <td class="arrange-handle">
                   <span class="icon-sort"></span>
                 </td>
                 <td><%= link_to item.fae_display_field, edit_admin_event_path(item) %></td>
@@ -44,7 +77,7 @@
         <table class="main_content-sortable">
           <thead>
             <tr>
-              <th class="th-sortable-handle"></th>
+              <th class="th-arrange-handle"></th>
               <th>Name</th>
               <th class="-action-wide">Modified</th>
               <th>Extra Column</th>
@@ -57,7 +90,7 @@
           <tbody>
             <% @items.each do |item| %>
               <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-                <td class="sortable-handle">
+                <td class="arrange-handle">
                   <span class="icon-sort"></span>
                 </td>
                 <td><%= link_to item.fae_display_field, edit_admin_event_path(item) %></td>
@@ -77,7 +110,7 @@
         <table class="main_content-sortable">
           <thead>
             <tr>
-              <th class="th-sortable-handle"></th>
+              <th class="th-arrange-handle"></th>
               <th>Name</th>
               <th class="-action-wide">Modified</th>
               <th>Extra Column</th>
@@ -90,40 +123,7 @@
           <tbody>
             <% @items.each do |item| %>
               <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-                <td class="sortable-handle">
-                  <span class="icon-sort"></span>
-                </td>
-                <td><%= link_to item.fae_display_field, edit_admin_event_path(item) %></td>
-                <td><%= fae_date_format item.updated_at %></td>
-                <td>Extra cell</td>
-                <td>Fourth cell</td>
-                <td>###</td>
-                <td class="-action"><%= fae_delete_button item %></td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="collapsible">
-        <%= content_tag(:h3, "#{@klass_humanized.pluralize} (#{@items.length})") %>
-        <table class="main_content-sortable">
-          <thead>
-            <tr>
-              <th class="th-sortable-handle"></th>
-              <th>Name</th>
-              <th class="-action-wide">Modified</th>
-              <th>Extra Column</th>
-              <th>Fourth Column</th>
-              <th>Some number</th>
-              <th class="-action" data-sorter="false">Delete</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @items.each do |item| %>
-              <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-                <td class="sortable-handle">
+                <td class="arrange-handle">
                   <span class="icon-sort"></span>
                 </td>
                 <td><%= link_to item.fae_display_field, edit_admin_event_path(item) %></td>

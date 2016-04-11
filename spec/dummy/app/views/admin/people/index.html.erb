@@ -7,7 +7,7 @@
       <table class="main_content-sortable">
         <thead>
           <tr>
-            <th class="th-sortable-handle"></th>
+            <th class="main_content-sortable-handle-col"></th>
             <th>Name</th>
             <th class="-thumb">Image</th>
             <th class="-modified">Modified</th>
@@ -19,7 +19,7 @@
         <tbody>
           <% @items.each do |item| %>
             <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-              <td class="sortable-handle">
+              <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
               <td><%= link_to item.name, edit_admin_person_path(item.id) %></td>

@@ -134,6 +134,16 @@ tbody {
   }
 }
 
+.main_content-sortable-handle-col {
+  width: 25px;
+  padding: 0;
+}
+
+.main_content-sortable-handle {
+  padding-right: 5px;
+  color: $c-text-sub;
+  cursor: pointer;
+}
 
 ///////////////////////////////
 //   Hacks to fix updates    //

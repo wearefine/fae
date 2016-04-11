@@ -209,7 +209,7 @@ Next we'll add the form to our view as the first child of `.content`:
     == fae_filter_select :company
     == fae_filter_select :groups
 
-  table.main_table-sort_columns
+  table.js-table-sort
   // ...
 ```
 
