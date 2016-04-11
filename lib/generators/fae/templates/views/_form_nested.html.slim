@@ -4,7 +4,7 @@
 <% end -%>
 <% if options.parent_model.present? %>
   = f.hidden_field :<%= options.parent_model.underscore %>_id
-<% end %>
+<% end -%>
 
   = f.submit
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
