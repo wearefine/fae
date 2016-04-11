@@ -41,7 +41,7 @@
     });
 
     this.$text = $('<span />', {
-      choose_text: this.options.file_text
+      text: this.options.file_text
     });
 
     var $button = $('<button />', {
@@ -49,7 +49,7 @@
       attr: {
         type: 'button'
       },
-      choose_text: this.options.text
+      text: this.options.choose_text
     });
 
     var $deleter = $('<div />', {
@@ -135,7 +135,7 @@
 
     var error_obj = $('<span />', {
       class: 'error',
-      choose_text: this.$input.attr('data-exceeded').replace('###', limit)
+      text: this.$input.attr('data-exceeded').replace('###', limit)
     });
 
     if (size > limit) {

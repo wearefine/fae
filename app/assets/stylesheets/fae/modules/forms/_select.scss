@@ -20,6 +20,12 @@
 
   .chosen-results {
     max-height: 140px;
+
+    li {
+      &.highlighted {
+        background: $c-lightest-grey;
+      }
+    }
   }
 }
 
