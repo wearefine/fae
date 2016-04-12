@@ -20,4 +20,18 @@ describe Fae::ApplicationHelper do
     end
   end
 
+  # describe "#change_item_link" do
+
+  #   it 'should display a number for the item field' do
+
+  #     admin_login
+  #     @item = FactoryGirl.create(:varietal, name: 2016)
+  #     @change = FactoryGirl.build(:fae_change, changeable: @item, user: current_user )
+
+  #     expect(change_item_link(@change)).to include("Varietel: 2016")
+
+  #   end
+
+  # end
+
 end
