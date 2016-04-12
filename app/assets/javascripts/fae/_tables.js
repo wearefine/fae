@@ -19,8 +19,8 @@ Fae.tables = {
   sort_cookie_name: 'Fae_table_sort_preferences',
 
   init: function() {
-    // @depreciate - remove `|| FCH.exists('.main_table-sort_columns')` and just use FCH.exists('.js-table-sort') in v2.0
-    if (FCH.exists('.js-table-sort') || FCH.exists('.main_table-sort_columns')) {
+    // @depreciate - remove `|| FCH.exists('.main_table-sort_columns')` and just use FCH.exists('.js-sort-column') in v2.0
+    if (FCH.exists('.js-sort-column') || FCH.exists('.main_table-sort_columns')) {
       this.dateColumnSorting();
       this.columnSorting();
       this.defaultSortCookie();
@@ -28,7 +28,7 @@ Fae.tables = {
     }
 
     // @depreciation remove arrange_selector conditionals in v2.0
-    var arrange_selector = '.arrange-handle';
+    var arrange_selector = '.sortable-handle';
     if (!FCH.exists(arrange_selector)) {
       arrange_selector = '.main_content-sortable-handle';
     }
@@ -61,8 +61,8 @@ Fae.tables = {
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
 
-    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-table-sort' in v2.0
-    $('.js-table-sort, .main_table-sort_columns')
+    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-sort-column' in v2.0
+    $('.js-sort-column, .main_table-sort_columns')
       .tablesorter()
       .on('sortEnd', function(e) {
         var $this = $(this);
@@ -142,8 +142,8 @@ Fae.tables = {
       return;
     }
 
-    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-table-sort' in v2.0
-    $('.js-table-sort, .main_table-sort_columns').each(function(idx) {
+    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-sort-column' in v2.0
+    $('.js-sort-column, .main_table-sort_columns').each(function(idx) {
       // If this table exists in the cookie hash
       if (cookie_value[path].hasOwnProperty(idx)) {
         // Use array value within another array because of how tablesorter accepts this argument
@@ -158,11 +158,11 @@ Fae.tables = {
    * @depreciation - remove arrange_selector arg in v2.0
    */
   rowArranging: function(arrange_selector) {
-    // @depreciation - remove `, .main_content-sortable` and just use '.js-table-arrange' in v2.0
-    $('.js-table-arrange, .main_content-sortable').sortable({
+    // @depreciation - remove `, .main_content-sortable` and just use '.js-sort-row' in v2.0
+    $('.js-sort-row, .main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,
-      // @depreciation - replace arrange_selector with '.arrange-handle' in v2.0
+      // @depreciation - replace arrange_selector with '.sortable-handle' in v2.0
       handle: (arrange_selector),
 
       //helper function to preserve the width of the table row

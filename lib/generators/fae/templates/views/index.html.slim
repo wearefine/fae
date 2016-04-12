@@ -1,4 +1,4 @@
-<% table_class = @has_position ? 'js-table-arrange' : 'js-table-sort' -%>
+<% table_class = @has_position ? 'js-sort-row' : 'js-sort-column' -%>
 <% num_columns = 3 -%>
 == render 'fae/shared/index_header', title: @klass_humanized.pluralize.titleize
 
@@ -7,7 +7,7 @@ main.content
     thead
       tr
 <% if @has_position -%>
-        th.th-arrange-handle
+        th.th-sortable-handle
 <% num_columns += 1 -%>
 <% end -%>
         th <%= @display_field.present? ? @display_field.capitalize : 'Name' %>
@@ -23,7 +23,7 @@ main.content
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
 <% if @has_position -%>
-            td.arrange-handle: span.icon-sort
+            td.sortable-handle: span.icon-sort
 <% end -%>
             td
               i.icon-edit

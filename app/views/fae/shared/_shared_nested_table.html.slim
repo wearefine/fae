@@ -2,7 +2,7 @@ ruby:
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb
-  table_class = ordered ? 'js-table-arrange' : nil
+  table_class = ordered ? 'js-sort-row' : nil
 
   options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
 
@@ -10,7 +10,7 @@ table class=table_class
   thead
     tr
       - if ordered
-        th.th-arrange-handle
+        th.th-sortable-handle
       - if has_thumb
         th.-thumb
       - cols.each do |col|
@@ -24,7 +24,7 @@ table class=table_class
       - records.each do |item|
         tr id=tr_id(item)
           - if ordered
-            td.arrange-handle
+            td.sortable-handle
               span.icon-sort
           - if has_thumb
             td = image_tag(item.asset.thumb.url)

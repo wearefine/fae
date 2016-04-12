@@ -6,7 +6,7 @@
       <table class="main_content-sortable">
         <thead>
           <tr>
-            <th class="th-arrange-handle"></th>
+            <th class="th-sortable-handle"></th>
             <th>Name</th>
             <th>Modified</th>
             <th class="-action-wide" data-sorter="false">On Stage</th>
@@ -18,7 +18,7 @@
         <tbody>
           <% @items.each do |item| %>
             <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-              <td class="arrange-handle">
+              <td class="sortable-handle">
                 <span class="icon-sort"></span>
               </td>
               <td><%= link_to item.fae_display_field, edit_admin_acclaim_path(item) %></td>
