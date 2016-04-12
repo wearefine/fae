@@ -28,7 +28,7 @@
 //= require underscore
 //= require json2
 //= require judge
-//= require grinder
+//= require fryr
 //= require simplemde.min
 
 //= require fae/judge_path

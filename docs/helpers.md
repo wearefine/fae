@@ -10,7 +10,7 @@
 
 # Form Helpers
 
-Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers it to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
+Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as its base. In most cases, options that simple_form accepts can be passed into these helpers directly. The reason we have established these helpers is to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
 
 ## Format
 
@@ -22,7 +22,7 @@ fae_method_name(f, attribute, options)
 
 | argument | description |
 | -------- | ----------- |
-| f | **(required)** The variable simple_form passes through in it's block. The actual variable can vary based on how you setup the view, but `f` is the generated default. |
+| f | **(required)** The variable simple_form passes through in its block. The actual variable can vary based on how you setup the view, but `f` is the generated default. |
 | attribute | **(required)** The attribute the form element is displaying. It's recommended you use symbols over strings. |
 | options | An optional hash of options to customize the form element. |
 
@@ -53,7 +53,7 @@ An input[type=text] with an added wrapper_class and helper_text:
 fae_input f, :first_name, wrapper_class: 'special_wrapper', helper_text: 'No more than 50 characters'
 ```
 
-A textarea with Fae's built-in markdown hint:
+A text area with Fae's built-in markdown hint:
 ```ruby
 fae_input f, :description, markdown_supported: true
 ```
@@ -144,7 +144,7 @@ With search:
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| two_pane | boolean | false | By default this will display a chosen style multiselect, setting this to true will display the 'two pane' style. |
+| two_pane | boolean | false | By default this will display a chosen style multiselect. Setting this to true will display the 'two pane' style. |
 
 **Examples**
 
@@ -202,7 +202,7 @@ fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| prefix | string | | **(required)** string to appear in prefix box |
+| prefix | string | | **(required)** string will appear in prefix box |
 | icon | boolean | false | determines whether or not to display prefix icon |
 
 **Examples**
@@ -219,7 +219,7 @@ fae_prefix f, :price, prefix: '$', placeholder: '50.00'
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| suffix | string | | **(required)** string to appear in suffix box |
+| suffix | string | | **(required)** string will appear in suffix box |
 | icon | boolean | false | determines whether or not to display prefix icon |
 
 **Examples**
@@ -260,8 +260,8 @@ fae_video_url f, :video_url
 | alt_helper_text     | string | | the alt field's helper text |
 | caption_label       | string | "#{image_label} caption" | the caption field's label |
 | caption_helper_text | string | | the caption field's helper text |
-| show_alt            | boolean | true | displays the alt field, label and helper text |
-| show_caption        | boolean | false | displays the caption field, label and helper text |
+| show_alt            | boolean | true | displays the alt field, label, and helper text |
+| show_caption        | boolean | false | displays the caption field, label, and helper text |
 | required            | boolean | false | adds required validation to the uploader |
 | attached_as         | symbol | image_name.to_s | Sets the `attached_as` atrribute on upload. You'll need to customize this if your `attached_as` condition doesn't match the images associaiton name. |
 
@@ -303,7 +303,7 @@ fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
 | hint          | string | | the field's hint text (supports HTML) |
 | markdown      | boolean | false | adds markdown GUI toolbar |
 | markdown_supported | boolean | false | displays support text and hint for markdown |
-| input_options | hash with simple form options | false | adds simple form options to input field |
+| input_options | hash with simple form options | false | adds simple form options to the input field |
 
 image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil, wrapper_html: nil, input_options: nil
 
@@ -321,14 +321,14 @@ fae_content_form f, :ad, input_options: { collection: ['Header', 'Footer'], inpu
 
 ![Filter form](images/filter_form.png)
 
-Displays the filter form, including the search field, submit and reset buttons. Accepts options and a block.
+Displays the filter form, which includes the search field, submit, and reset buttons. It accepts options and a block.
 
 | option | type    | default                                | description |
 |--------|---------|----------------------------------------|-------------|
 | action | string  | "#{@index_path}/filter" | the path the form submits to |
 | title  | string  | "Search #{@klass_humanized.pluralize.titleize}" | the h2 text in the filter form |
 | search | boolean | true                                   | displays the search field |
-| cookie_key | string | false | set your cookie name on the fae_filter_form if you want to persist selected filtered state |
+| cookie_key | string | false | set your cookie name on the fae_filter_form if you want to persist the selected filtered state |
 
 
 **Examples**
@@ -349,7 +349,7 @@ Dislays a select tag to be used within a `fae_filter_form`.
 | label        | string                  | attribute.to_s.titleize        | label on select |
 | collection   | ActiveRecord collection | AttributeAsClass.for_fae_index | the collection of AR objects to populate the select options |
 | label_method | symbol                  | :fae_display_field             | the attribute to use as the label in the select options |
-| placeholder  | string or boolean       | "All #{options[:label]}"       | the blank value in the select, can be set to false to disable |
+| placeholder  | string or boolean       | "All #{options[:label]}"       | the blank value in the select. It can be set to false to disable |
 | options      | array                   | []                             | an alternative array of options if the options aren't an ActiveRecord collection |
 | grouped_options | array                | []                             | an alternative array of grouped options if the options aren't an ActiveRecord collection |
 | grouped_by   | symbol                  |                                | a Fae association on the models in `collection`. The association must have a `fae_display_name` method |
@@ -369,7 +369,7 @@ Dislays a select tag to be used within a `fae_filter_form`.
 ## fae_date_format
 
 The fae_date_format and fae_datetime_format helpers format a DateTime object in Fae's preferred method.
-The default, fae_date_format, formats to 06/23/15.
+The default fae_date_format formats to: 06/23/15.
 
 ```ruby
 fae_date_format item.updated_at
@@ -377,7 +377,7 @@ fae_date_format item.updated_at
 
 ## fae_datetime_format
 
-You may also use fae_datetime_format for the long date format with time (Jun 23, 2015  4:56pm PDT).
+You can also use fae_datetime_format for the long date format with the timestamp: Jun 23, 2015  4:56pm PDT.
 
 ```ruby
 fae_datetime_format item.updated_at
@@ -431,9 +431,9 @@ renders `New Release` on the new page
 
 ## require_locals
 
-The require_locals method is intended to be used at the beginning of any partial that pulls in a local variable from the page that renders it. It takes a Array of strings containing the variables that are required and the local_assigns view helper method.
+The require_locals method is intended to be used at the beginning of any partial that pulls in a local variable from the page that renders it. It takes an Array of strings containing the variables that are required and the local_assigns view helper method.
 
-If one of the locals aren't set when the partial is called and error will be raised with an informative message.
+If one of the locals aren't set when the partial is called, an error will be raised with an informative message.
 
 ```ruby
 require_locals ['item', 'text'], local_assigns
@@ -458,7 +458,7 @@ fae_avatar(current_user)
 
 ## index_header
 
-Displays page title, add button and flash messages.
+Displays page title, add button, and flash messages.
 
 | option | type | default | description |
 |-|-|-|-|
@@ -546,22 +546,22 @@ render 'fae/shared/form_buttons', save_button_text: 'Yes!', cancel_button_text: 
 
 The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display a nested ajax form for creating associated items in the edit form.
 
-The nested_table should go after the main form ends and should only placed on the edit page (it requires the parent_item to be present to associate new items to).
+The nested_table should go after the main form ends and should only be placed on the edit page (it requires the parent_item to be present to associate new items to).
 
 | option | type | default | description |
 |--------|------|---------|-------------|
 | index | false | boolean | used for nested index forms |
 | assoc   | symbol | | **(required)** the association's name, or the item's name if it's for the index  |
-| parent_item | ActiveRecord object | | **(required)** the item the new objects will be associated to  |
+| parent_item | ActiveRecord object | | **(required)** the item that the new objects will be associated to  |
 | cols* | array of symbols, or array of symbols and hashes | [], [{}] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.humanize | the H3 directly above the form |
 | header | string | title | the section's header |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
-| ordered | boolean | false | allows list view to be sortable, which is saved to a `position` atttribute |
+| ordered | boolean | false | allows list view to be sortable, which is saved to a `position` attribute |
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | edit_column | boolean | false | displays edit link
-| assoc_name | string | assoc.to_s | the stringified association name, used in the paths, **only update if you know what you're doing** |
-| helper_text | string | '' | the h6 directly above the nested table, and below the tite,used to provide the user with some helper_text to describe the context |
+| assoc_name | string | assoc.to_s | the stringified association name, which is used in the paths. **only update if you know what you're doing** |
+| helper_text | string | '' | the h6 directly above the nested table and below the tite, which is used to provide the user with some helper_text to describe the context |
 
 ***Example**
 
@@ -598,7 +598,7 @@ Full Slim implementation with section wrapper and edit page conditional
 
 ![Recent changes](images/recent_changes.png)
 
-Displays recent changes to an object as logged by [Fae's change tracker](usage.md#markdown-header-change-tracker) in a table. Columns include the change's user, type, updated attributes and datetime.
+Displays recent changes to an object as logged by [Fae's change tracker](usage.md#markdown-header-change-tracker) in a table. Columns include the user, type, updated attributes, and datetime of the change.
 
 This partial is best placed at the bottom of the form and will automatically hide itself in create forms, where there wouldn't be changes to display.
 
