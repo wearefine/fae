@@ -9,6 +9,7 @@ class CreateFaeFiles < ActiveRecord::Migration
       t.string :attached_as, index: true
       t.boolean :on_stage, default: true
       t.boolean :on_prod, default: false
+      t.boolean :required, default: false
 
       t.timestamps
     end

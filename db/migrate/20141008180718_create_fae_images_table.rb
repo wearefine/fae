@@ -4,13 +4,14 @@ class CreateFaeImagesTable < ActiveRecord::Migration
       t.string :name
       t.string :asset
       t.references :imageable, polymorphic: true, index: true
-      t.references :faviconable, polymorphic: true, index: true
       t.string :alt
       t.string :caption
       t.integer :position, default: 0
       t.string :attached_as, index: true
       t.boolean :on_stage, default: true
       t.boolean :on_prod, default: false
+      t.integer :file_size
+      t.boolean :required, default: false
 
       t.timestamps
     end
