@@ -5,6 +5,7 @@ module Fae
 
     def go
       generate_model
+      generate_serialized_model
       inject_display_field_to_model
       generate_controller_file
       generate_view_files

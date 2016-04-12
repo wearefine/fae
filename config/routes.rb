@@ -39,9 +39,11 @@ Fae::Engine.routes.draw do
 
   get '/generate-api-key', to: 'options#generate_api_key', as: 'api_create'
 
-  namespace :api, defaults: { format: 'json' } do
-    scope :v1 do
-      # get 'retailers' => 'retailers#domestic', as: :api_retailers
+  # Api definition
+  namespace :api, defaults: { format: :json },
+                              constraints: { subdomain: 'api' }, path: '/'  do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
+      # We are going to list our resources here
     end
   end
 
