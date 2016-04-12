@@ -24,8 +24,7 @@ table class=table_class
       - records.each do |item|
         tr id=tr_id(item)
           - if ordered
-            td.sortable-handle
-              span.icon-sort
+            td.sortable-handle: i.icon-sort
           - if has_thumb
             td = image_tag(item.asset.thumb.url)
           - cols.each do |col|
@@ -35,7 +34,7 @@ table class=table_class
           - if edit_column
             td.-action
               a.js-edit-link href=self.send(edit_path, item)
-                span.icon-edit
+                i.icon-edit
           td.-action
             = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-trash', remote: true
     - else
