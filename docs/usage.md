@@ -377,7 +377,7 @@ def structure
 end
 ```
 
-`structure` is an array of nav items which are defined with the `item` method. The `item` method takes a title as the first argument, followed by a hash options. To nest subitems within an item, pass an array of items into the `subitems` option.
+`structure` is an array of nav items which are defined with the `item` method. The `item` method takes a title as the first argument, followed by a hash of options. To nest subitems within an item, pass an array of items into the `subitems` option.
 
 ```ruby
 item(title, options = {})
@@ -465,7 +465,7 @@ end
 
 # Global Search
 
-Fae features a global search/navigation in the upper right. Clicking on this will automatically display the first two levels of navigation. By entering at least three characters in the search bar results will be displayed from both navigation items and objects in your DB.
+Fae features a global search/navigation in the upper right. Clicking on this will automatically display the first two levels of navigation. Search results will be displayed from both navigation items and DB objects when three characters or more are entered in the search bar.
 
 Navigation items are matched by their defined titles, ignoring case. Objects are matched by their `fae_display_field`.
 
