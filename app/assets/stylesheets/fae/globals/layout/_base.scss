@@ -1,7 +1,10 @@
 .main-content {
   position: relative;
   min-height: 100%;
-  min-height: calc(100% - 70px); // roughly the size of the header
+
+  @include bp(large) {
+    min-height: calc(100% - 90px); // roughly the size of the header
+  }
 
   &:before {
     content: '';
@@ -11,11 +14,11 @@
     width: 10px;
     height: 100%;
   }
-
 }
 
 .content {
   padding: 30px $content-buffer 60px;
+  display: block; // IE, Safari don't treat <main> as a block element
 
   &.-bottom-shim {
     padding-bottom: 150px;

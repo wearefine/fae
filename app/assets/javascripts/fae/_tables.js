@@ -350,6 +350,11 @@ Fae.tables = {
         return;
       }
 
+      // Content header is not present on mobile but the main header is stuck
+      if (FCH.bp.large_down) {
+        header_height = $('#js-main-header').outerHeight();
+      }
+
       var top_offset = $this.offset().top - header_height;
       var thead_height = $this.find('thead').outerHeight();
       var bottom_offset = $this.height() + top_offset - thead_height;

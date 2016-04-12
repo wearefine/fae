@@ -9,6 +9,7 @@ ruby:
   header_as_string     = header_as_string.singularize
   title              ||= "#{params[:action]} #{header_as_string}".titleize
   breadcrumb           = !local_assigns[:breadcrumbs].eql?(false)
+  language           ||= false
 
 - if breadcrumb
   == render 'breadcrumb', title: title
@@ -16,13 +17,19 @@ ruby:
   = form_header header
 
 .content-header-buttons
+  - if language
+    - selected = current_user.language || ''
+
+    .content-header-select
+      = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown', prompt: 'All Languages'
+
   a.button#js-header-cancel href=@index_path = cancel_button_text
   - if cloneable.present? && params[:id].present?
     a.button data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
   input name="commit" type="submit" value=save_button_text
 
 - if subnav.present?
-  ul.content-header-subnav.js-content-header-subnav
+  ul.content-header-subnav#js-content-header-subnav
     - subnav.each do |link, id_selector|
       - id_selector ||= link.parameterize('_')
       li: a href="##{link.parameterize('_')}" = link

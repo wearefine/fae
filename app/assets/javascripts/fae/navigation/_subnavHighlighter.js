@@ -15,13 +15,13 @@ Fae.navigation.subnavHighlighter = {
       // @depreciation - remove entire conditional block (following 7 lines) in v2.0
       if(Fae.content_selector === '.content') {
         this.section_class = Fae.content_selector;
-        this.subnav_class = '.js-content-header-subnav';
+        this.subnav_class = '#js-content-header-subnav';
+        this.addBuffer();
       } else {
         this.section_class = '.main_content-section';
         this.subnav_class = '.main_content-header-section-links';
       }
 
-      this.addBuffer();
 
       this.FCHListeners();
 
@@ -46,7 +46,8 @@ Fae.navigation.subnavHighlighter = {
   FCHListeners: function() {
     // @depreciation - change value of section_class to '.content' in v2.0
     var section_class = this.section_class;
-    // @depreciation - change value of subnav_class to '.js-content-header-subnav' in v2.0
+    // @depreciation - change value of subnav_class to '#js-content-header-subnav' in v2.0
+    // Ideally, form_header will include header.content-header.js-content-header
     var subnav_class = this.subnav_class;
     // @depreciation - remove legacy_buffer expression in v2.0 (the value should be 0, so it will be unnecessary)
     var legacy_buffer = section_class === Fae.content_selector ? 0 : 32;

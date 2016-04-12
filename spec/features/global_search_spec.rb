@@ -11,11 +11,11 @@ feature 'Global search' do
     admin_login
     visit fae_path
 
-    within('.utility-search') do
+    within('#js-utility-search') do
       expect(page).to_not have_content('Products')
 
-      # user clicks the search icon
-      first('a').click
+      # user hovers on the search icon
+      first('a').hover
       # expect the first to levels of nav
       expect(page).to have_content('Products')
       expect(page).to have_content('Wines')

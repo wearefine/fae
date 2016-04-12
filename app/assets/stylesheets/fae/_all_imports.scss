@@ -1,4 +1,4 @@
-// Globals
+// Globals (doesn't output CSS)
 @import
   'globals/imports/finescss/fine',
   'globals/imports/variables',
@@ -6,32 +6,46 @@
   'globals/imports/extends'
 ;
 
+// Fonts, vendor, and root HTML tag styles
 @import
   'globals/fonts',
   'globals/icons',
   'globals/plugins',
-  'globals/tags',
+  'globals/tags'
+;
+
+// Layout
+@import
   'globals/layout/base',
   'globals/layout/content-header',
-  'globals/layout/breadcrumbs',
-  'globals/navigation/global',
+  'globals/layout/breadcrumbs'
+;
+
+// Navigation
+@import
+  'globals/navigation/base',
   'globals/navigation/header',
   'globals/navigation/footer',
   'globals/navigation/sidenav',
   'globals/navigation/mobilenav',
-  'globals/navigation/utility'
+  'globals/navigation/utility',
+  'globals/navigation/search'
 ;
 
-// Modules
+// Tables
 @import
-  'modules/buttons',
   'modules/tables/base',
   'modules/tables/actions',
   'modules/tables/sorting',
   'modules/tables/filters',
   'modules/tables/collapsible',
   'modules/tables/sticky',
-  'modules/tables/tooltips',
+  'modules/tables/tooltips'
+;
+
+// Modules
+@import
+  'modules/buttons',
   'modules/modal',
   'modules/toggles',
   'modules/alerts'
@@ -39,7 +53,7 @@
 
 // Forms
 @import
-  'modules/forms/global',
+  'modules/forms/base',
   'modules/forms/label',
   'modules/forms/textarea',
   'modules/forms/text',

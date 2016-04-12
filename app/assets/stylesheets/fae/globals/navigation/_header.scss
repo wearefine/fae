@@ -20,7 +20,8 @@
     color: $c-darker-grey;
 
     @include bp(large) {
-      padding: 27px 0;
+      padding-top: 27px;
+      padding-bottom: 27px;
     }
 
     &:hover,
@@ -46,6 +47,25 @@
 
     a {
       color: $c-white;
+    }
+  }
+
+  ul {
+    ul {
+      overflow: auto;
+      max-height: 320px;
+      scrollbar-track-color: $c-header-bg;
+      scrollbar-face-color: $c-dark-grey;
+
+      &::-webkit-scrollbar-thumb {
+        background: none;
+        border: 1px solid $c-mid-dark-grey;
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: none;
+      }
     }
   }
 

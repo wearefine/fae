@@ -9,10 +9,10 @@ feature 'fae_checkbox' do
 
     within('.release_events') do
       page.first('span.checkbox').find('label').click
-      expect(page).to have_selector('label.js-active')
+      expect(page).to have_selector('label.active')
 
       page.first('span.checkbox').find('label').click
-      expect(page).to_not have_selector('label.js-active')
+      expect(page).to_not have_selector('label.active')
     end
   end
 
@@ -24,7 +24,7 @@ feature 'fae_checkbox' do
 
     click_link(aroma.name)
     within('.js-addedit-form-wrapper') do
-      expect(page).to have_selector('label.js-active')
+      expect(page).to have_selector('label.active')
     end
   end
 

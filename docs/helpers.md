@@ -444,7 +444,7 @@ require_locals ['item', 'text'], local_assigns
 Retrieve a user's Gravatar image URL based on their email.
 
 | option | type | description |
-|-|-|-|
+|---|---|---|
 | user | Fae::User | defaults to `current_user` |
 
 ```ruby
@@ -487,9 +487,10 @@ render 'fae/shared/index_header', title: 'Something Entirely Different', new_but
 
 Displays breadcrumb links and form title.
 
-| option | type | description |
-|--------|------|-------------|
-| header | ActiveRecord object | **(required)** passed to form_header helper method  |
+| option | type | default | description |
+|---|---|---|---|
+| header | ActiveRecord object or string | | **(required)** passed to form_header helper method |
+| language | boolean | false | display the [language changer](customization.md#multiple-language-support) |
 | save_button_text (`v1.3 <=`)   | string | 'Save' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
 | 
@@ -520,12 +521,12 @@ render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery',
 ```
 
 ## form_buttons
-**Warning**: This partial will be depreceated in v2.0. Use `fae/shared/form_header` instead.
+**Warning**: This partial will be depreceated in v2.0. Use [`fae/shared/form_header`](#form_header-1) instead.
 
 Displays form's save and cancel buttons.
 
 | option | type | default | description |
-|--------|------|---------|-------------|
+|---|---|---|---|
 | save_button_text   | string | 'Save' | save button text  |
 | cancel_button_text | string | 'Cancel' | cancel button text  |
 
