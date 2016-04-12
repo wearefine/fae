@@ -30,6 +30,16 @@ module Fae
         ]),
         item('Pages', subitems: [
           item('Home', path: fae.edit_content_block_path('home')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('About Us', path: fae.edit_content_block_path('about_us')),
           item('About Us', path: fae.edit_content_block_path('about_us'))
         ])
       ]

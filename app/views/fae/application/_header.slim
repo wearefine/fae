@@ -40,10 +40,11 @@ header.main-header#js-main-header
         a href=fae.help_path
           i.icon-support
 
-      li.utility-dropdown.utility-search.js-utility-dropdown#js-utility-search
+      li.utility-dropdown.utility-search#js-utility-search
         a href="#": i.icon-search
 
-        .utility-search-wrapper.js-utility-search-wrapper
-          input#js-global-search type="text"
+        .utility-search-hit-area#js-utility-search-wrapper
+          .utility-search-wrapper
+            input#js-global-search type="text" placeholder="Jump to..."
 
-          == render 'global_search_results', show_nav: true
+            == render 'global_search_results', show_nav: true
