@@ -1,6 +1,6 @@
 - if user_signed_in? && @fae_sidenav_items.present?
-  nav.nav.sidenav.js-nav#js-sidenav
-    ul
+  nav.nav.sidenav#js-sidenav
+    ul.js-nav data-coordinates=@fae_navigation.coordinates.drop(2).join(',')
       - @fae_sidenav_items.each do |item|
         ruby:
           item[:path] ||= '#'

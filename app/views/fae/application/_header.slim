@@ -3,10 +3,10 @@ header.main-header#js-main-header
   h1: a href=root_path = @option.title
 
   - if @fae_topnav_items.present?
-    nav.js-nav
-      ul.main-header-nav
+    nav
+      ul.main-header-nav.js-nav data-coordinates=@fae_navigation.coordinates[0..1].join(',')
         - @fae_topnav_items.each do |item|
-          li.js-main-header-parent
+          li
             a href=item[:path] = item[:text]
             - if item[:subitems]
               ul

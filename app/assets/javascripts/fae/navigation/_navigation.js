@@ -30,63 +30,52 @@ Fae.navigation = {
   },
 
   /**
-   * Set nested links to be current in the nav
-   * @fires {@link navigation._updateNavClasses}
+   * Add current classes to all relevant elements in all navs (header, side and mobile)
    */
   selectCurrentNavItem: function() {
-    var current_base_url = window.location.pathname.replace('#', '');
-    var $ready_current_link = $('.js-nav a[href="' + current_base_url + '"]');
-
     /**
-     * Apply current nav class or keep looking deeper from path for the answer
+     * Apply current nav class or keep looking deeper for the answer
      * @private
-     * @param {String} mutated_url - The remaining URL to be checked
-     * @return {Function} or add class
+     * @param {jQuery} $parent - will always be a <ul> element
+     * @param {Array<String>} coords - index of elements
+     * @has_test {features/nav_spec.rb}
+     * @return Recursive function until we find the nested <a>
      */
-    function findCurrentNavRecursively(mutated_url) {
-      // Remove last element of URL
-      var url_array = mutated_url.split('/');
-      url_array.pop();
-      mutated_url = url_array.join('/');
+    function addPerCoordinate($parent, coords) {
+      // JavaScript is usually smart enough to convert String to Int but just in case
+      // This expression could be removed if a better argument is presented
+      var coord = parseInt(coords[0], 10);
+      // $el will always be an <li> element
+      var $el = $parent.children().eq( coord );
 
-      var $current_link = $('.js-nav a[href="' + mutated_url + '"]');
-      if ($current_link.length) {
-        $current_link.addClass('-current');
+      // This is the parent li tag
+      $el.addClass('-parent-current');
+
+      // If there are nested elements, pop off the top and try again to find the current link
+      if ($el.find('ul').length) {
+        coords.shift();
+        addPerCoordinate($el.find('ul'), coords);
 
       } else {
-        // Defend from exceeding call stack (SUPER RECURSION)
-        if (url_array.length) {
-          // If it can't be found, start over and try again
-          findCurrentNavRecursively(mutated_url);
-        }
+        // We've found the a; we can go home happy
+        $el.find('a').addClass('-current');
+
       }
     }
 
-    if ($ready_current_link.length) {
-      // Try to find link that matches the URL exactly
-      $ready_current_link.addClass('-current');
-
-    } else {
-      // If link can't be found, recursively search for it
-      findCurrentNavRecursively(current_base_url);
-
-    }
-
-    $('.js-accordion, .js-main-header-parent').each(function() {
+    // Apply active classes to all navs
+    $('.js-nav').each(function() {
       var $this = $(this);
+      // Convert back to an array from Ruby
+      var coords = $this.attr('data-coordinates').split(',');
 
-      if($this.find('.-current').length) {
-        $this.addClass('-parent-current');
-
-        if(FCH.bp.large && $this.hasClass('js-accordion')) {
-          $this.addClass('-open');
-        }
-      }
+      addPerCoordinate($this, coords);
     });
   },
 
   /**
    * Attach click listener to main and sub links
+   * @has_test {features/nav_spec.rb}
    */
   accordionClickEventListener: function() {
     var _this = this;
