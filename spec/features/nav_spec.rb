@@ -57,17 +57,21 @@ feature 'Main Navigation' do
     expect(page).to_not have_selector('#js-sidenav')
   end
 
-  scenario 'accordions should expand when they are clicked', js: true do
+  scenario 'accordions should expand and collapse siblings when they are clicked', js: true do
     admin_login
     team = FactoryGirl.create(:team)
     team2 = FactoryGirl.create(:team)
     visit admin_team_coaches_path(team)
 
-    # Ensure coach is hidden
-    expect(page).to have_selector('#js-sidenav a', text: 'Coaches', count: 1)
+    # Ensure only one accordion is open on load
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: team2.name)
+    expect(page).to have_selector('#js-sidenav .js-accordion.-parent-current > a', text: team.name)
+
     page.find('#js-sidenav .js-accordion > a', text: team2.name).click
 
-    expect(page).to have_selector('#js-sidenav a', text: 'Coaches', count: 2)
+    # Ensure only one accordion is open after click
+    expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: team2.name)
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: team.name)
   end
 
 end
