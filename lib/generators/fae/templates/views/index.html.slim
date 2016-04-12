@@ -1,4 +1,4 @@
-<% table_class = @has_position ? 'main_content-sortable' : 'main_table-sort_columns' -%>
+<% table_class = @has_position ? 'js-sort-row' : 'js-sort-column' -%>
 <% num_columns = 3 -%>
 == render 'fae/shared/index_header', title: @klass_humanized.pluralize.titleize
 
@@ -23,7 +23,7 @@ main.content
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
 <% if @has_position -%>
-            td.sortable-handle: span.icon-sort
+            td.sortable-handle: i.icon-sort
 <% end -%>
             td
               i.icon-edit

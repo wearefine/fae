@@ -15,18 +15,19 @@ Fae.tables = {
    * @see {@link tables.defaultSortCookie}
    * @see {@link tables.columnSorting}
    * @see {@link tables.sortColumnsFromCookies}
-   * @depreciation remove sort_selector conditionals in v2.0
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
   init: function() {
-    if (FCH.exists('.main_table-sort_columns')) {
+    // @depreciate - remove `|| FCH.exists('.main_table-sort_columns')` and just use FCH.exists('.js-sort-column') in v2.0
+    if (FCH.exists('.js-sort-column') || FCH.exists('.main_table-sort_columns')) {
       this.dateColumnSorting();
       this.columnSorting();
       this.defaultSortCookie();
       this.sortColumnsFromCookies();
     }
 
+    // @depreciation remove sort_selector conditionals in v2.0
     var sort_selector = '.sortable-handle';
     if (!FCH.exists(sort_selector)) {
       sort_selector = '.main_content-sortable-handle';
@@ -60,7 +61,8 @@ Fae.tables = {
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
 
-    $('.main_table-sort_columns')
+    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-sort-column' in v2.0
+    $('.js-sort-column, .main_table-sort_columns')
       .tablesorter()
       .on('sortEnd', function(e) {
         var $this = $(this);
@@ -140,7 +142,8 @@ Fae.tables = {
       return;
     }
 
-    $('.main_table-sort_columns').each(function(idx) {
+    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-sort-column' in v2.0
+    $('.js-sort-column, .main_table-sort_columns').each(function(idx) {
       // If this table exists in the cookie hash
       if (cookie_value[path].hasOwnProperty(idx)) {
         // Use array value within another array because of how tablesorter accepts this argument
@@ -155,7 +158,8 @@ Fae.tables = {
    * @depreciation - remove sort_selector arg in v2.0
    */
   rowSorting: function(sort_selector) {
-    $('.main_content-sortable').sortable({
+    // @depreciation - remove `, .main_content-sortable` and just use '.js-sort-row' in v2.0
+    $('.js-sort-row, .main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,
       // @depreciation - replace sort_selector with '.sortable-handle' in v2.0

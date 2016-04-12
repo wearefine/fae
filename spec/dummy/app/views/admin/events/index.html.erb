@@ -8,7 +8,7 @@
 
       <div class="collapsible" id="first-table">
         <%= content_tag(:h3, "#{@klass_humanized.pluralize} (#{@items.length})") %>
-        <table class="main_content-sortable">
+        <table class="js-sort-row">
           <thead>
             <tr>
               <th class="th-sortable-handle"></th>
@@ -41,7 +41,7 @@
 
       <div class="collapsible">
         <%= content_tag(:h3, "#{@klass_humanized.pluralize} (#{@items.length})") %>
-        <table class="main_content-sortable">
+        <table class="js-sort-row">
           <thead>
             <tr>
               <th class="th-sortable-handle"></th>

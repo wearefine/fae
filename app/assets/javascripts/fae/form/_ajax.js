@@ -130,10 +130,13 @@ Fae.form.ajax = {
           if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
             _this._addEditReplaceAndReinit($this, $html.html(), $target);
-          } else if ($html.hasClass('form_content-wrapper')) {
+          } else if ($html.hasClass('nested-form') || $html.hasClass('form_content-wrapper')) {
+
+            // @depreciation - remove `|| $html.hasClass('form_content_wrapper')` from above conditional as well as the following ternary (value should just be '.nested-form') in v2.0
+            var form_wrapper_selector = $html.hasClass('nested-form') ? '.nested-form' : '.form_content-wrapper';
 
             // we're returning the form due to an error, just replace the form
-            $this.find('.form_content-wrapper').replaceWith(data);
+            $this.find( form_wrapper_selector ).replaceWith(data);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
 
