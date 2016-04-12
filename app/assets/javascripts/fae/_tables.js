@@ -27,14 +27,14 @@ Fae.tables = {
       this.sortColumnsFromCookies();
     }
 
-    // @depreciation remove arrange_selector conditionals in v2.0
-    var arrange_selector = '.sortable-handle';
-    if (!FCH.exists(arrange_selector)) {
-      arrange_selector = '.main_content-sortable-handle';
+    // @depreciation remove sort_selector conditionals in v2.0
+    var sort_selector = '.sortable-handle';
+    if (!FCH.exists(sort_selector)) {
+      sort_selector = '.main_content-sortable-handle';
     }
 
-    if (FCH.exists(arrange_selector)) {
-      this.rowArranging(arrange_selector);
+    if (FCH.exists(sort_selector)) {
+      this.rowSorting(sort_selector);
     }
 
     this.stickyTableHeader();
@@ -154,16 +154,16 @@ Fae.tables = {
 
   /**
    * Make table rows draggable by user
-   * @param {String} arrange_selector - handle selector
-   * @depreciation - remove arrange_selector arg in v2.0
+   * @param {String} sort_selector - handle selector
+   * @depreciation - remove sort_selector arg in v2.0
    */
-  rowArranging: function(arrange_selector) {
+  rowSorting: function(sort_selector) {
     // @depreciation - remove `, .main_content-sortable` and just use '.js-sort-row' in v2.0
     $('.js-sort-row, .main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,
-      // @depreciation - replace arrange_selector with '.sortable-handle' in v2.0
-      handle: (arrange_selector),
+      // @depreciation - replace sort_selector with '.sortable-handle' in v2.0
+      handle: (sort_selector),
 
       //helper function to preserve the width of the table row
       helper: function(e, $tr) {
