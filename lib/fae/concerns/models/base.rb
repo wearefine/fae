@@ -5,10 +5,6 @@ module Fae::Concerns::Models::Base
 
   included do
     include Fae::BaseModelConcern
-    # include ActiveModel::Serialization
-    # include ActiveModel::Serialization
-    # include Fae::BaseSerializer
-    # include Fae::BaseSerializerConcern
   end
 
 end

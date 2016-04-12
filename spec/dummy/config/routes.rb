@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :release_notes
     resources :milestones
+    resources :candies
     resources :validation_testers
     resources :winemakers
     resources :cats

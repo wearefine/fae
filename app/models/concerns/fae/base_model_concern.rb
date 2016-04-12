@@ -1,7 +1,6 @@
 module Fae
   module BaseModelConcern
     extend ActiveSupport::Concern
-    # extend FAE::BaseSerializer
     require 'csv'
 
     attr_accessor :filter

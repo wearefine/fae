@@ -44,6 +44,11 @@ module Fae
       inject_position_scope
     end
 
+    def generate_serialized_model
+      generate "serializer #{file_name} #{@@attributes_flat}"
+      update_base_serializer
+    end
+
     def generate_controller_file
       template "controllers/scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
     end
@@ -83,6 +88,10 @@ RUBY
   include Fae::BaseModelConcern\n
 RUBY
       end
+    end
+
+    def update_base_serializer
+      gsub_file "app/serializers/#{file_name}_serializer.rb", 'ActiveModel::Serializer','Fae::BaseSerializer'
     end
 
     def inject_display_field_to_model
