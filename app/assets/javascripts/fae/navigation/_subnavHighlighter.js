@@ -62,7 +62,7 @@ Fae.navigation.subnavHighlighter = {
       $(section_class).each(function(index) {
         var $this = $(this);
         var position = $this.position().top - scroll_top - legacy_buffer;
-        var $link = $('a[href=#' + $this.attr('id') + ']').parent();
+        var $link = $('a[href="#' + $this.attr('id') + '"]').parent();
 
         $link.removeClass('-active');
         if (position <= 0 || index === 0) {
