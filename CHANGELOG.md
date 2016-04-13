@@ -21,13 +21,17 @@
     + Add `fae_delete_button` helper method
     + \#54556: Add confirm dialogue before cloning
     + \#55186: Add global search feature
+    + \#55864: Add gravatar
     + \#56040: Add tooltips to index table icons (clone and delete)
+    + Add images and GIFs to documentation
     + \#56439: Consolidate initial install migrations
+    + Rename sorting classes to be more clear and intuitive
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
     + \#55752: YouTube helper image converted to display as a background image because of Sprockets compilation issue
     + \#55977: Fix positioning of smooth scroll on new models from nested forms
+    + Rearrange assets to expose the Fae JS API and SCSS mixins/variables to parent apps
 
 ## 1.2.4
 
