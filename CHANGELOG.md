@@ -1,5 +1,12 @@
 # Fae Changelog
 
+## Unreleased
+
+- enhancements
+- bugs
+    + Update hash-parsing library to Fryr and fix cookie/hash filtering on load
+    + \#55502: clear carrierwave cache when deleteing an image to allow an image of the same name to be immediately viewable
+
 ## 1.3
 
 - enhancements
@@ -15,6 +22,7 @@
     + \#54556: Add confirm dialogue before cloning
     + \#55186: Add global search feature
     + \#56040: Add tooltips to index table icons (clone and delete)
+    + \#56439: Consolidate initial install migrations
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
@@ -32,6 +40,7 @@
     + Changed fae_content_form from fae_input into more generic i.input to circumvent the additional methods and clear up an issue validations.
     + \#54548: Set on_prod to false when cloning
     + \#54625: use FINE logo as background to avoid the need to compile
+    + Add Travis CI for testing
 
 - bugs
     + \#53380: Don't link destroyed models in change tracker

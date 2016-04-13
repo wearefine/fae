@@ -2,7 +2,7 @@ class CreateFaeTextFields < ActiveRecord::Migration
   def change
     create_table :fae_text_fields do |t|
       t.references :contentable, polymorphic: true, index: true
-      t.string :attatched_as, index: true
+      t.string :attached_as, index: true
       t.string :label
       t.string :content
       t.integer :position, default: 0, index: true

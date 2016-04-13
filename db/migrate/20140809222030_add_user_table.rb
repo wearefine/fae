@@ -35,6 +35,7 @@ class AddUserTable < ActiveRecord::Migration
       t.string  :last_name
       t.integer :role_id
       t.boolean :active
+      t.string :language
 
       t.timestamps
     end
