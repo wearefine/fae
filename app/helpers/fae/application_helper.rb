@@ -98,7 +98,9 @@ module Fae
       if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && (!ActiveRecord::Base.connection.table_exists? change.changeable_type.tableize)
         return "#{change.changeable_type}: model destroyed"
       else
-        text += change.try(:changeable).try(:fae_display_field).to_s || "##{change.changeable_id}"
+        display_text = change.try(:changeable).try(:fae_display_field)
+        display_text = (display_text.is_a? Integer) ? display_text.to_s : display_text
+        text += display_text || "##{change.changeable_id}"
 
         begin
           return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'

@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + Updated change_item_link method so that it works w fae_display_fields that are integers not just strings.
     + Update hash-parsing library to Fryr and fix cookie/hash filtering on load
     + \#55502: clear carrierwave cache when deleteing an image to allow an image of the same name to be immediately viewable
 

@@ -32,6 +32,27 @@ describe Fae::ApplicationHelper do
 
   #   end
 
-  # end
+  #   it 'should display a string for the item field' do
+
+  #     admin_login
+  #     @item = FactoryGirl.create(:varietal, name: "Varietal Example Name 2016")
+  #     @change = FactoryGirl.build(:fae_change, changeable: @item, user: current_user )
+
+  #     expect(change_item_link(@change)).to include("Varietel: Varietal Example Name 2016")
+
+  #   end
+
+
+  #   it 'should display the Changeable_id for the item field if changeable items fae_dispaly_field is nil' do
+
+  #     admin_login
+  #     @item = FactoryGirl.create(:varietal, name: nil)
+  #     @change = FactoryGirl.build(:fae_change, changeable: @item, user: current_user )
+
+  #     expect(change_item_link(@change)).to include("Varietel: #{@item.id}")
+
+  #   end
+
+  end
 
 end
