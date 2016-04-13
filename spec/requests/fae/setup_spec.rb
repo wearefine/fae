@@ -3,6 +3,7 @@ require 'rails_helper'
 describe 'setup#first_user' do
 
   context 'when there are no super admins' do
+    FactoryGirl.create(:fae_role, name: 'super admin')
     it 'should redirect you to setup#first_user' do
       get fae.root_path
 
