@@ -16,6 +16,10 @@ module Fae
       @user.role    = super_admin
       @user.active  = true
 
+      if Fae::Role.all.empty?
+        logger.error("Role 'super admin' does not exist in Fae::Role, run rake fae:seed_db")
+      end
+
       if @user.save
         sign_in(@user)
         redirect_to fae.root_path
