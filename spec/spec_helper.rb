@@ -62,8 +62,4 @@ RSpec.configure do |config|
   # Stop running tests on first caught fail, this is best used with config.order = "defined"
   # config.fail_fast = true
 
-  # helpers for authentication
-  config.include Devise::TestHelpers, type: :controller
-  config.include Devise::TestHelpers, type: :view
-
 end
