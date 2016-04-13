@@ -37,7 +37,7 @@ feature 'Main Navigation' do
       expect(page.find('.-current')).to have_content('Teams')
     end
 
-    expect(page.find('#js-sidenav .js-nav > .-parent-current')).to have_content( team.name )
+    expect(page.find('#js-sidenav > ul > .-parent-current')).to have_content( team.name )
     expect(page.find('#js-sidenav .-current')).to have_content('Coaches')
   end
 

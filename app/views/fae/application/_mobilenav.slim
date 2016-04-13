@@ -1,5 +1,5 @@
 nav.nav.mobilenav
-  ul.js-nav data-coordinates=@fae_navigation.coordinates.join(',')
+  ul
     - @fae_navigation.structure.each do |item|
       ruby:
         item[:path] ||= '#'

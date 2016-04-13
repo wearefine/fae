@@ -10,7 +10,6 @@
 Fae.navigation = {
 
   init: function() {
-    this.selectCurrentNavItem();
     this.fadeNotices();
     this.subnavHighlighter.init();
     this.openDrawer();
@@ -27,50 +26,6 @@ Fae.navigation = {
   resize: function() {
     this.closeAll(false);
     this.lockFooter();
-  },
-
-  /**
-   * Add current classes to all relevant elements in all navs (header, side and mobile)
-   */
-  selectCurrentNavItem: function() {
-    /**
-     * Apply current nav class or keep looking deeper for the answer
-     * @private
-     * @param {jQuery} $parent - will always be a <ul> element
-     * @param {Array<String>} coords - index of elements
-     * @has_test {features/nav_spec.rb}
-     * @return Recursive function until we find the nested <a>
-     */
-    function addPerCoordinate($parent, coords) {
-      // JavaScript is usually smart enough to convert String to Int but just in case
-      // This expression could be removed if a better argument is presented
-      var coord = parseInt(coords[0], 10);
-      // $el will always be an <li> element
-      var $el = $parent.children().eq( coord );
-
-      // This is the parent li tag
-      $el.addClass('-parent-current');
-
-      // If there are nested elements, pop off the top and try again to find the current link
-      if ($el.find('ul').length) {
-        coords.shift();
-        addPerCoordinate($el.find('ul'), coords);
-
-      } else {
-        // We've found the a; we can go home happy
-        $el.find('a').addClass('-current');
-
-      }
-    }
-
-    // Apply active classes to all navs
-    $('.js-nav').each(function() {
-      var $this = $(this);
-      // Convert back to an array from Ruby
-      var coords = $this.attr('data-coordinates').split(',');
-
-      addPerCoordinate($this, coords);
-    });
   },
 
   /**

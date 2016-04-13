@@ -1,28 +1,26 @@
 - if user_signed_in? && @fae_sidenav_items.present?
   nav.nav.sidenav#js-sidenav
-    ul.js-nav data-coordinates=@fae_navigation.coordinates.drop(2).join(',')
-      - @fae_sidenav_items.each do |item|
-        ruby:
-          item[:path] ||= '#'
-          main_class = item[:sublinks].present? ? 'sidenav-accordion js-accordion' : ''
-          main_class << " #{item[:class_name]}" if item[:class_name].present?
+    ul
+      - @fae_sidenav_items.each_with_index do |item, idx|
+        - item[:path] ||= '#'
 
-        li class=main_class
+        li class=nav_li_class(2, idx, item: item)
           a href=item[:path] = item[:text]
 
           - if item[:sublinks].present?
             ul.subnav.js-subnav
-              - item[:sublinks].each do |subitem|
+              - item[:sublinks].each_with_index do |subitem, sub_idx|
                 ruby:
                   subitem[:path] ||= '#'
-                  sub_class = 'sidenav-accordion js-accordion' if subitem[:sublinks].present?
-                  link_class = subitem[:class_name] if subitem[:class_name].present?
+                  link_class = []
+                  link_class << subitem[:class_name] if subitem[:class_name].present?
+                  link_class << active_nav(3, sub_idx, idx, klass: '-current')
 
-                li class=sub_class
-                  a class=link_class href=subitem[:path] = subitem[:text]
+                li class=nav_li_class(3, sub_idx, idx, item: subitem)
+                  a class=link_class.join(' ') href=subitem[:path] = subitem[:text]
 
                   - if subitem[:sublinks].present?
                     ul.subnav.js-subnav
-                      - subitem[:sublinks].each do |thirditem|
+                      - subitem[:sublinks].each_with_index do |thirditem, third_idx|
                         - thirditem[:path] ||= '#'
-                        li: a href=thirditem[:path] = thirditem[:text]
+                        li: a class=active_nav(4, third_idx, sub_idx, klass: '-current') href=thirditem[:path] = thirditem[:text]
