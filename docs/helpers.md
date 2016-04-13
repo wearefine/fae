@@ -405,6 +405,11 @@ fae_clone_button item
 
 You can use `fae_delete_button` in your list view tables to provide easy access to delete an item.
 
+| option | type | description |
+|---|---|---|
+| item | ActiveRecord object | item to be deleted |
+| delete_path (optional) | String|Route helper | delete endpoint |
+
 ```ruby
 fae_delete_button item
 ```

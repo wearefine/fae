@@ -32,6 +32,6 @@ main.content
 <% @toggle_attrs.each do |attr| -%>
             td = fae_toggle item, :<%= attr %>
 <% end -%>
-            td.-action = fae_delete_button item
+            td = fae_delete_button item
       - else
         tr: td colspan="<%= num_columns %>" No items found
