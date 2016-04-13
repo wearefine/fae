@@ -3,11 +3,5 @@
  *= require chosen
  *= require daterangepicker
  *= require simplemde.min
+ *= require fae/base
  */
-
-/* used for universal style sheet */
-$useMediaQueries: true;
-$c-custom-highlight: #9aa142;
-@import 'fae';
-
-@import 'all_imports';
