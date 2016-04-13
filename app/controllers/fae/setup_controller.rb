@@ -1,6 +1,7 @@
 module Fae
   class SetupController < ActionController::Base
 
+    before_action :check_roles
     layout 'devise'
 
     def first_user
@@ -15,10 +16,6 @@ module Fae
       super_admin   = Fae::Role.find_by_name('super admin')
       @user.role    = super_admin
       @user.active  = true
-
-      if Fae::Role.all.empty?
-        logger.error("Role 'super admin' does not exist in Fae::Role, run rake fae:seed_db")
-      end
 
       if @user.save
         sign_in(@user)
@@ -39,5 +36,10 @@ module Fae
       params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
     end
 
+    def check_roles 
+      if Fae::Role.all.empty?
+        raise "Role 'super admin' does not exist in Fae::Role, run rake fae:seed_db"
+      end
+    end
   end
 end
