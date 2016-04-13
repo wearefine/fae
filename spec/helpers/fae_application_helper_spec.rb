@@ -45,7 +45,7 @@ describe Fae::ApplicationHelper do
       @change2 = FactoryGirl.build(:fae_change, changeable: @item2, user: @user )
 
       expect(change_item_link(@change)).to include("Varietal: ##{@item.id}")
-      expect(change_item_link(@change2)).to include("Milestone: ##{@item.id}")
+      expect(change_item_link(@change2)).to include("Milestone: ##{@item2.id}")
 
     end
   end
