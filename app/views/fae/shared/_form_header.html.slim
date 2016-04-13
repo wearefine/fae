@@ -31,5 +31,5 @@ ruby:
 - if subnav.present?
   ul.content-header-subnav#js-content-header-subnav
     - subnav.each do |link, id_selector|
-      - id_selector ||= link.parameterize('_')
-      li: a href="##{link.parameterize('_')}" = link
+      - subnav_item = link.is_a?(Array) ? link : [link, link.parameterize('_')]
+      li: a href="##{subnav_item[1]}" = subnav_item[0]

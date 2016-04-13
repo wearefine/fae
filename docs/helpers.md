@@ -513,6 +513,12 @@ section.content#recent_changes
   ...
 ```
 
+To separate name and ID selector, pass an Array instead of a String.
+
+```ruby
+- subnav_array = ['SEO', 'Attributes', ['Images', 'images_table']]
+```
+
 **Examples**
 
 Standard implementation
