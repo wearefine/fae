@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226000222) do
+ActiveRecord::Schema.define(version: 20160413202106) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -78,7 +78,6 @@ ActiveRecord::Schema.define(version: 20160226000222) do
     t.integer  "person_id",  limit: 4
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "position",   limit: 4
   end
 
   create_table "fae_changes", force: :cascade do |t|
@@ -143,6 +142,18 @@ ActiveRecord::Schema.define(version: 20160226000222) do
   end
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
+
+  create_table "fae_pages", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.integer  "position",   limit: 4,   default: 0
+    t.boolean  "on_stage",               default: true
+    t.boolean  "on_prod",                default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug",       limit: 255
+  end
+
+  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
 
   create_table "fae_roles", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -243,6 +254,13 @@ ActiveRecord::Schema.define(version: 20160226000222) do
   end
 
   add_index "locations", ["contact_id"], name: "index_locations_on_contact_id", using: :btree
+
+  create_table "milestones", force: :cascade do |t|
+    t.integer  "year",        limit: 4
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
   create_table "people", force: :cascade do |t|
     t.string   "name",       limit: 255
