@@ -4,7 +4,7 @@ module Fae
     def th_columns(attribute)
       attribute = (attribute.is_a?(Hash) && attribute[:title]) ? attribute[:title] : attribute
 
-      th_class = [:on_production, :on_prod, :on_stage].include?(attribute) ? '-action' : ''
+      th_class = '-action-wide' if [:on_production, :on_prod, :on_stage].include?(attribute)
       content_tag(:th, class: th_class) do attribute.to_s.titleize end
     end
 

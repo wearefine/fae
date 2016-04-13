@@ -60,6 +60,6 @@
 //= require fae/_modals
 //= require fae/_tables
 
-//= require fae/fae_init
-
 //= require fae
+
+//= require fae/fae_init
