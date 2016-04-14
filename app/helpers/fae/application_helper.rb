@@ -14,21 +14,10 @@ module Fae
       end
     end
 
-    def nav_class(level, idx)
-      class_name = level == 0 ? '-parent-current' : '-current'
-      class_name if @fae_navigation.coordinates[level] == idx
-    end
-
-    def active_nav(level_idx, idx, previous_idx = false, klass: '-current')
-      klass if (previous_idx && @fae_navigation.coordinates[level_idx - 1] == previous_idx) || @fae_navigation.coordinates[level_idx] == idx
-    end
-
-    def nav_li_class(level_idx, idx, previous_idx = false, item: nil, is_sidenav: true)
-      klass = []
-      klass << 'sidenav-accordion js-accordion' if item[:sublinks].present? && is_sidenav
-      klass << item[:class_name] if item[:class_name].present?
-      klass << active_nav(level_idx, idx, previous_idx, klass: '-parent-current')
-      klass.join(' ')
+    def nav_active_class(level, idx, parent_idx = nil)
+      return unless @fae_navigation.coordinates[level] == idx
+      return unless parent_idx.blank? || @fae_navigation.coordinates[level-1] == parent_idx
+      level == 0 ? '-parent-current' : '-current'
     end
 
     def col_name_or_image(item, attribute)
