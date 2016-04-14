@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :teams do
       resources :coaches
       resources :players
+      resources :jerseys
     end
   end
 
