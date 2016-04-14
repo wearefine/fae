@@ -17,7 +17,7 @@ module Fae
     def nav_active_class(level, idx, parent_idx = nil)
       return unless @fae_navigation.coordinates[level] == idx
       return unless parent_idx.blank? || @fae_navigation.coordinates[level-1] == parent_idx
-      level == 0 ? '-parent-current' : '-current'
+      parent_idx.blank? ? '-parent-current' : '-current'
     end
 
     def col_name_or_image(item, attribute)

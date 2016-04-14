@@ -21,6 +21,21 @@
     padding-left: $sidenav-padding-base-level;
   }
 
+  li {
+    &.-parent-current {
+      > a {
+        color: $c-black;
+        font-weight: bold;
+        padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
+        border-left: $sidenav-active-border-width solid $c-custom-highlight;
+      }
+
+      > ul {
+        display: block;
+      }
+    }
+  }
+
   // Index pages
   ~ .content,
   // Edit pages
@@ -39,19 +54,6 @@
         @extend .icon-arrow_up:before;
         color: $c-black;
       }
-    }
-  }
-
-  &.-parent-current {
-    > a {
-      color: $c-black;
-      font-weight: bold;
-      padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
-      border-left: $sidenav-active-border-width solid $c-custom-highlight;
-    }
-
-    > ul {
-      display: block;
     }
   }
 
