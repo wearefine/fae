@@ -20,7 +20,4 @@ main.content
           td = user.role.name
           td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
           td = attr_toggle user, :active unless current_user == user
-          td.-action
-            - unless current_user == user
-              = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }
-                i.icon-trash
+          td = fae_delete_button user, user unless current_user == user

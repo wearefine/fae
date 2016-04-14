@@ -44,15 +44,15 @@ module Fae
 
     def fae_clone_button(item)
       return if item.blank?
-      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'js-tooltip', data: { confirm: t('fae.clone_confirmation') } do
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'js-tooltip table-action', data: { confirm: t('fae.clone_confirmation') } do
         concat content_tag :i, nil, class: 'icon-copy'
       end
     end
 
-    def fae_delete_button(item)
+    def fae_delete_button(item, delete_path = nil)
       return if item.blank?
-      delete_path = polymorphic_path([main_app, fae_scope, item.try(:fae_parent), item])
-      link_to delete_path, method: :delete, title: 'Delete', class: 'js-tooltip', data: { confirm: t('fae.delete_confirmation') } do
+      delete_path ||= polymorphic_path([main_app, fae_scope, item.try(:fae_parent), item])
+      link_to delete_path, method: :delete, title: 'Delete', class: 'js-tooltip table-action', data: { confirm: t('fae.delete_confirmation') } do
         concat content_tag :i, nil, class: 'icon-trash'
       end
     end

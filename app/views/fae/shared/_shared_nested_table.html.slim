@@ -32,11 +32,11 @@ table class=table_class
             - options_for_td[:item] = item
             = td_columns(options_for_td)
           - if edit_column
-            td.-action
+            td
               a.js-edit-link href=self.send(edit_path, item)
                 i.icon-edit
-          td.-action
-            = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-trash', remote: true
+          td
+            = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-trash table-action', remote: true
     - else
       tr
         - if index
