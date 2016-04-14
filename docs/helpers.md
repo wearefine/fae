@@ -459,9 +459,9 @@ fae_avatar(current_user)
 
 ## fae_sort_id
 
-This method returns an string suitable for the row IDs on a sortable table (you can make a table sortable by adding the `js-sort-row` class to it).
+This method returns a string suitable for the row IDs on a sortable table. Note: you can make a table sortable by adding the `js-sort-row` class to it.
 
-The parsed string is formatted as `"#{class_name}_#{item_id}"`, which the sort method digests and exectues the sort logic.
+The parsed string is formatted as `"#{class_name}_#{item_id}"`, which the sort method digests and executes the sort logic.
 
 ```slim
 tr id=fae_sort_id(item)
