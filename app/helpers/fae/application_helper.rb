@@ -14,6 +14,11 @@ module Fae
       end
     end
 
+    def nav_class(level, idx)
+      class_name = level == 0 ? '-parent-current' : '-current'
+      class_name if @fae_navigation.coordinates[level] == idx
+    end
+
     def active_nav(level_idx, idx, previous_idx = false, klass: '-current')
       klass if (previous_idx && @fae_navigation.coordinates[level_idx - 1] == previous_idx) || @fae_navigation.coordinates[level_idx] == idx
     end

@@ -4,8 +4,8 @@
       - @fae_sidenav_items.each_with_index do |item, idx|
         - item[:path] ||= '#'
 
-        li class=nav_li_class(2, idx, item: item)
-          a href=item[:path] = item[:text]
+        li
+          a href=item[:path] class=nav_class(2, idx) = item[:text]
 
           - if item[:sublinks].present?
             ul.subnav.js-subnav
@@ -14,7 +14,7 @@
                   subitem[:path] ||= '#'
                   link_class = []
                   link_class << subitem[:class_name] if subitem[:class_name].present?
-                  link_class << active_nav(3, sub_idx, idx, klass: '-current')
+                  link_class << nav_class(3, sub_idx)
 
                 li class=nav_li_class(3, sub_idx, idx, item: subitem)
                   a class=link_class.join(' ') href=subitem[:path] = subitem[:text]
