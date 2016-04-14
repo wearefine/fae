@@ -22,3 +22,9 @@
 
                 li
                   a class=link_class.join(' ') href=subitem[:path] = subitem[:text]
+
+                  - if subitem[:sublinks].present?
+                    ul.subnav.js-subnav
+                      - subitem[:sublinks].each do |thirditem|
+                        - thirditem[:path] ||= '#'
+                        li: a href=thirditem[:path] = thirditem[:text]

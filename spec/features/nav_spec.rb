@@ -23,7 +23,7 @@ feature 'Main Navigation' do
       expect(page.find('.-current')).to have_content('Attributes')
     end
 
-    expect(page.find('#js-sidenav .-current')).to have_content('Varietals')
+    expect(page.find('#js-sidenav .-parent-current')).to have_content('Varietals')
   end
 
   scenario 'should highlight fourth level in sidebar', js: true do
@@ -32,12 +32,11 @@ feature 'Main Navigation' do
     visit admin_team_coaches_path(team)
 
     within('.main-header-nav > .-parent-current') do
-      expect(page).to have_content('Other Stuff')
       page.find('a').hover
-      expect(page.find('.-current')).to have_content('Teams')
+      expect(page.find('.-current')).to have_content(team.name)
     end
 
-    expect(page.find('#js-sidenav > ul > .-parent-current')).to have_content( team.name )
+    expect(page.find('#js-sidenav > ul > .-parent-current')).to have_content( 'Personnel' )
     expect(page.find('#js-sidenav .-current')).to have_content('Coaches')
   end
 
@@ -64,14 +63,14 @@ feature 'Main Navigation' do
     visit admin_team_coaches_path(team)
 
     # Ensure only one accordion is open on load
-    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: team2.name)
-    expect(page).to have_selector('#js-sidenav .js-accordion.-parent-current > a', text: team.name)
+    expect(page).to have_selector('#js-sidenav .js-accordion.-parent-current > a', text: 'Personnel')
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
 
-    page.find('#js-sidenav .js-accordion > a', text: team2.name).click
+    page.find('#js-sidenav .js-accordion > a', text: 'Equipment').click
 
     # Ensure only one accordion is open after click
-    expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: team2.name)
-    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: team.name)
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Personnel')
+    expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
   end
 
 end
