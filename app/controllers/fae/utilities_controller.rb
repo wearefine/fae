@@ -2,7 +2,7 @@ module Fae
   class UtilitiesController < ApplicationController
 
     def toggle
-      klass = params[:object].gsub('fae_', 'fae/').classify.constantize
+      klass = params[:object].gsub('__', '/').classify.constantize
       if can_toggle(klass)
         klass.find(params[:id]).toggle(params[:attr]).save(validate: false)
         render nothing: true
@@ -14,8 +14,7 @@ module Fae
     def sort
       if request.xhr?
         ids = params[params[:object]]
-        params[:object].gsub!('fae_', 'fae/')
-        klass = params[:object].classify.constantize
+        klass = params[:object].gsub('fae_', 'fae/').gsub('__', '/').classify.constantize
         items = klass.find(ids)
         items.each do |item|
           position = ids.index(item.id.to_s) + 1
