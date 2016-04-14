@@ -7,34 +7,6 @@ table {
   i {
     color: $c-darker-grey;
   }
-
-  // @depreciation - remove .content & parent selector in v2.0 (leave/merge the a properties)
-  .content & {
-    a {
-      color: $c-darkest-grey;
-      font-weight: bold;
-      position: relative;
-
-      &:hover {
-        &:before {
-          opacity: 1;
-        }
-      }
-
-      &:before {
-        @include transition(opacity 0.2s);
-        content: '';
-        left: -8px;
-        top: 5px;
-        height: 4px;
-        width: 4px;
-        position: absolute;
-        opacity: 0;
-        background-color: $c-custom-highlight;
-        border-radius: 10px;
-      }
-    }
-  }
 }
 
 tbody {

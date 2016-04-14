@@ -1,14 +1,3 @@
-%underline-link {
-  @include transition(border-bottom-color 0.2s);
-  display: inline-block;
-  padding-bottom: 3px;
-  border-bottom: 1px solid $c-grey;
-
-  &:hover {
-    border-bottom-color: transparent;
-  }
-}
-
 %table-reset {
   table {
     table-layout: initial;
