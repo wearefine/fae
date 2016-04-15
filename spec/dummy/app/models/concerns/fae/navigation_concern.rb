@@ -44,8 +44,13 @@ module Fae
       teams_arr = [ item('Team List', path: admin_teams_path) ]
       Team.order(:name).each do |team|
         teams_arr << item(team.name, subitems: [
-          item('Coaches', path: admin_team_coaches_path(team)),
-          item('Players', path: admin_team_players_path(team))
+          item('Personnel', subitems: [
+            item('Coaches', path: admin_team_coaches_path(team)),
+            item('Players', path: admin_team_players_path(team))
+          ]),
+          item('Equipment', subitems: [
+            item('Jerseys', path: admin_team_jerseys_path(team))
+          ])
         ])
       end
       teams_arr

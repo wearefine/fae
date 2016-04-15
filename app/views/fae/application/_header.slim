@@ -3,15 +3,15 @@ header.main-header#js-main-header
   h1: a href=root_path = @option.title
 
   - if @fae_topnav_items.present?
-    nav.js-nav
+    nav
       ul.main-header-nav
-        - @fae_topnav_items.each do |item|
-          li.js-main-header-parent
+        - @fae_topnav_items.each_with_index do |item, idx|
+          li class=nav_active_class(0, idx)
             a href=item[:path] = item[:text]
             - if item[:subitems]
               ul
-                - item[:subitems].each do |subitem|
-                  li: a href=subitem[:nested_path] = subitem[:text]
+                - item[:subitems].each_with_index do |subitem, sub_idx|
+                  li: a href=subitem[:nested_path] class=nav_active_class(1, sub_idx, idx) = subitem[:text]
 
   - if user_signed_in?
     ul.utility-nav#js-utility-nav

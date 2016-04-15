@@ -2,17 +2,42 @@ require 'spec_helper'
 
 feature 'Main Navigation' do
 
-  scenario 'should highlight all levels of navigation', js: true do
+  scenario 'should highlight first and second level in header', js: true do
+    admin_login
+    visit admin_releases_path
+
+    within('.main-header-nav > .-parent-current') do
+      expect(page).to have_content('Products')
+      page.find('a').hover
+      expect(page.find('.-current')).to have_content('Releases')
+    end
+  end
+
+  scenario 'should highlight third level in sidebar', js: true do
     admin_login
     visit admin_varietals_path
 
-    # top nav (TODO)
-    # expect(page.find('.main-header-nav .-parent-current a').text).to eq ('Products')
-    # top nav dropdown
-    expect(page.find('.main-header-nav a.-current', visible: false).text(:all)).to eq('Attributes')
-    # sidenav first level
-    expect(page.find('.sidenav a.-current').text).to eq ('Varietals')
-    # sidenav second level (TODO)
+    within('.main-header-nav > .-parent-current') do
+      expect(page).to have_content('Products')
+      page.find('a').hover
+      expect(page.find('.-current')).to have_content('Attributes')
+    end
+
+    expect(page.find('#js-sidenav .-parent-current')).to have_content('Varietals')
+  end
+
+  scenario 'should highlight fourth level in sidebar', js: true do
+    admin_login
+    team = FactoryGirl.create(:team)
+    visit admin_team_coaches_path(team)
+
+    within('.main-header-nav > .-parent-current') do
+      page.find('a').hover
+      expect(page.find('.-current')).to have_content(team.name)
+    end
+
+    expect(page.find('#js-sidenav > ul > .-parent-current')).to have_content( 'Personnel' )
+    expect(page.find('#js-sidenav .-current')).to have_content('Coaches')
   end
 
   scenario 'should not exist on a new page', js: true do
@@ -20,7 +45,7 @@ feature 'Main Navigation' do
     team = FactoryGirl.create(:team)
     visit new_admin_team_coach_path(team)
 
-    expect(page).to_not have_selector('.sidenav')
+    expect(page).to_not have_selector('#js-sidenav')
   end
 
   scenario 'should not exist on an edit page', js: true do
@@ -28,7 +53,24 @@ feature 'Main Navigation' do
     coach = FactoryGirl.create(:coach)
     visit edit_admin_team_coach_path(coach.team, coach)
 
-    expect(page).to_not have_selector('.sidenav')
+    expect(page).to_not have_selector('#js-sidenav')
+  end
+
+  scenario 'accordions should expand and collapse siblings when they are clicked', js: true do
+    admin_login
+    team = FactoryGirl.create(:team)
+    team2 = FactoryGirl.create(:team)
+    visit admin_team_coaches_path(team)
+
+    # Ensure only one accordion is open on load
+    expect(page).to have_selector('#js-sidenav .js-accordion.-parent-current > a', text: 'Personnel')
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
+
+    page.find('#js-sidenav .js-accordion > a', text: 'Equipment').click
+
+    # Ensure only one accordion is open after click
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Personnel')
+    expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
   end
 
 end

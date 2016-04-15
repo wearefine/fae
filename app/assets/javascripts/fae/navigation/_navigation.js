@@ -10,7 +10,6 @@
 Fae.navigation = {
 
   init: function() {
-    this.selectCurrentNavItem();
     this.fadeNotices();
     this.subnavHighlighter.init();
     this.openDrawer();
@@ -30,63 +29,8 @@ Fae.navigation = {
   },
 
   /**
-   * Set nested links to be current in the nav
-   * @fires {@link navigation._updateNavClasses}
-   */
-  selectCurrentNavItem: function() {
-    var current_base_url = window.location.pathname.replace('#', '');
-    var $ready_current_link = $('.js-nav a[href="' + current_base_url + '"]');
-
-    /**
-     * Apply current nav class or keep looking deeper from path for the answer
-     * @private
-     * @param {String} mutated_url - The remaining URL to be checked
-     * @return {Function} or add class
-     */
-    function findCurrentNavRecursively(mutated_url) {
-      // Remove last element of URL
-      var url_array = mutated_url.split('/');
-      url_array.pop();
-      mutated_url = url_array.join('/');
-
-      var $current_link = $('.js-nav a[href="' + mutated_url + '"]');
-      if ($current_link.length) {
-        $current_link.addClass('-current');
-
-      } else {
-        // Defend from exceeding call stack (SUPER RECURSION)
-        if (url_array.length) {
-          // If it can't be found, start over and try again
-          findCurrentNavRecursively(mutated_url);
-        }
-      }
-    }
-
-    if ($ready_current_link.length) {
-      // Try to find link that matches the URL exactly
-      $ready_current_link.addClass('-current');
-
-    } else {
-      // If link can't be found, recursively search for it
-      findCurrentNavRecursively(current_base_url);
-
-    }
-
-    $('.js-accordion, .js-main-header-parent').each(function() {
-      var $this = $(this);
-
-      if($this.find('.-current').length) {
-        $this.addClass('-parent-current');
-
-        if(FCH.bp.large && $this.hasClass('js-accordion')) {
-          $this.addClass('-open');
-        }
-      }
-    });
-  },
-
-  /**
    * Attach click listener to main and sub links
+   * @has_test {features/nav_spec.rb}
    */
   accordionClickEventListener: function() {
     var _this = this;
