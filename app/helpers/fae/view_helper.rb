@@ -28,7 +28,7 @@ module Fae
     def attr_toggle(item, column)
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
-      model_name = item.class.to_s.include?("Fae::") ? item.class.to_s.gsub('::','').underscore.pluralize : item.class.to_s.underscore.pluralize
+      model_name = item.class.to_s.gsub('::','__').underscore.pluralize
       url = fae.toggle_path(model_name, item.id.to_s, column)
 
       link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do
@@ -55,6 +55,12 @@ module Fae
       link_to delete_path, method: :delete, title: 'Delete', class: 'js-tooltip table-action', data: { confirm: t('fae.delete_confirmation') } do
         concat content_tag :i, nil, class: 'icon-trash'
       end
+    end
+
+    def fae_sort_id(item)
+      return if item.blank?
+      klass = item.class.name.underscore.gsub('/','__')
+      "#{klass}_#{item.id}"
     end
 
     def fae_filter_form(options = {}, &block)

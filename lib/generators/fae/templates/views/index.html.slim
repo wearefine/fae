@@ -21,7 +21,7 @@ main.content
     tbody
       - if @items.present?
         - @items.each do |item|
-          tr id="#{@klass_singular}_#{item.id}"
+          tr id=fae_sort_id(item)
 <% if @has_position -%>
             td.sortable-handle: i.icon-sort
 <% end -%>

@@ -26,6 +26,8 @@
     + Add images and GIFs to documentation
     + \#56439: Consolidate initial install migrations
     + Rename sorting classes to be more clear and intuitive
+    + \#55244: Add support toggle and sort support for scoped models
+    + Add fae_sort_id view helper
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
