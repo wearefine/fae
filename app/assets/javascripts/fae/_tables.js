@@ -18,7 +18,7 @@ Fae.tables = {
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
-  init: function() {
+  ready: function() {
     // @depreciate - remove `|| FCH.exists('.main_table-sort_columns')` and just use FCH.exists('.js-sort-column') in v2.0
     if (FCH.exists('.js-sort-column') || FCH.exists('.main_table-sort_columns')) {
       this.dateColumnSorting();

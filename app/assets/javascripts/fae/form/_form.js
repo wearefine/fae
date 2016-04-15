@@ -8,7 +8,7 @@
  * @memberof Fae
  */
 Fae.form = {
-  init: function() {
+  ready: function() {
     this.dates.init();
     this.text.init();
     this.select.init();
