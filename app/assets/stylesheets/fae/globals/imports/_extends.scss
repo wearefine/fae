@@ -1,12 +1,3 @@
-%underline-link {
-  text-decoration: underline;
-  color: $c-mid-dark-grey;
-
-  &:hover {
-    text-decoration: none;
-  }
-}
-
 %table-reset {
   table {
     table-layout: initial;
