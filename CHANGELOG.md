@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + \#56793: add `slug_separator` option
 - bugs
     + Updated change_item_link method so that it works w fae_display_fields that are integers not just strings.
     + Update hash-parsing library to Fryr and fix cookie/hash filtering on load
