@@ -1,0 +1,100 @@
+/* global Fae */
+
+'use strict';
+
+/**
+ * Fae form
+ * @namespace form
+ * @memberof Fae
+ */
+Fae.form.slugger = {
+  init: function() {
+    this.addListener();
+  },
+
+  /**
+   * Attach listeners to inputs and update slug fields with original safe values from the original inputs
+   */
+  addListener: function() {
+    var _this = this;
+
+    $('.slug').each(function() {
+      var $form = $(this).closest('form');
+      var $sluggers = $form.find('.slugger');
+      var $slug = $form.find('.slug');
+      var $select_slugger = $('.select.slugger');
+
+      if ($slug.val() !== '') {
+        $sluggers.removeClass('slugger');
+
+      } else {
+        // If it's a text field, listen for type input
+        $sluggers.keyup(function(){
+          var text = _this._digestSlug( $sluggers );
+          $slug.val( text );
+        });
+
+        // If it's a select field, listen for the change
+        if ($select_slugger.length) {
+          $select_slugger.change(function(){
+            var text = _this._digestSlug( $sluggers );
+            $slug.val( text );
+          });
+
+        };
+      }
+    });
+  },
+
+  /**
+   * Convert a group of selects or text fields into one slug string
+   * @access protected
+   * @param {jQuery} $sluggers - Input or inputs that should be converted into a URL-safe string
+   * @return {String}
+   */
+  _digestSlug: function($sluggers) {
+    var slug_text = []
+
+    $sluggers.each(function() {
+      var $this = $(this);
+
+      if ($this.val().length) {
+
+        if ($this.is('input')) {
+          slug_text.push( $this.val() );
+
+        } else {
+          slug_text.push( $this.find('option:selected').text() );
+
+        }
+      }
+    });
+
+    // Combine all active slug fields for the query
+    slug_text = slug_text.join(' ');
+
+    // Strip accented characters
+    var from = 'àáâãäæåçèéêëęēėìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ';
+    var to = 'aaaaaaaceeeeeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+
+    // Loop through all accented characters and replace with non-accents
+    for (var i = 0; i < from.length; i++) {
+      slug_text = slug_text.replace( new RegExp(from.charAt(i), 'g'), to.charAt(i) );
+    }
+
+    // Remove leading and trailing spaces
+    // Make them lowercase
+    // Remove slashes, quotes or periods
+    // Replace white spaces with a Fae.slug_separator
+    // Remove leading and trailing dashes
+    slug_text = slug_text
+      .trim()
+      .toLowerCase()
+      .replace(/[^<%= Fae.slug_separator %>\w\s]/g, '')
+      .replace(/[<%= Fae.slug_separator %>\s]+/g, '<%= Fae.slug_separator %>')
+      .replace(/(^<%= Fae.slug_separator %>)|(<%= Fae.slug_separator %>$)/g, '');
+
+    return slug_text;
+  }
+
+};
