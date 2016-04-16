@@ -9,13 +9,15 @@
  */
 Fae.navigation = {
 
-  init: function() {
+  ready: function() {
     this.fadeNotices();
-    this.subnavHighlighter.init();
     this.openDrawer();
     this.clickBack();
-    this.language.init();
     this.accordionClickEventListener();
+
+    this.language.init();
+    this.subnav_highlighter.init();
+    this.global_search.init();
   },
 
   load: function() {

@@ -31,10 +31,9 @@
 //= require fryr
 //= require simplemde.min
 
-//= require fae/judge_path
 //= require fae/extensions
 
-//= require fae/frob_core_helpers
+//= require frob_core_helpers
 
 //= require fae/hinter
 //= require fae/sticky
@@ -53,7 +52,7 @@
 //= require fae/form/fileinputer
 
 //= require fae/navigation/_navigation
-//= require fae/navigation/_subnavHighlighter
+//= require fae/navigation/_subnav_highlighter
 //= require fae/navigation/_language
 //= require fae/navigation/_global_search
 

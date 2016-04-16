@@ -4,10 +4,10 @@
 
 /**
  * Fae global search
- * @namespace globalSearch
+ * @namespace global_search
  * @memberof Fae
  */
-Fae.globalSearch = {
+Fae.navigation.global_search = {
 
   init: function() {
     this.$wrapper = $('#js-utility-search-wrapper');

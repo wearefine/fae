@@ -7,7 +7,7 @@
  * @namespace
  */
 Fae.modals = {
-  init: function() {
+  ready: function() {
     this.imageModals();
     this.markdownModalListener();
   },

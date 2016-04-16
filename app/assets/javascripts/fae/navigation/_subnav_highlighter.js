@@ -4,10 +4,10 @@
 
 /**
  * Fae navigation subnav highlighter
- * @namespace navigation.subnavHighlighter
+ * @namespace navigation.subnav_highlighter
  * @memberof navigation
  */
-Fae.navigation.subnavHighlighter = {
+Fae.navigation.subnav_highlighter = {
   init: function() {
     //only run everything if there is a subnav area
     // @depreciation - change conditional to FCH.exists('.content-header-subnav') in v2.0
