@@ -26,6 +26,8 @@ ruby:
   begin
     new_path = self.send( new_path, item_id: parent_item.id, item_class: parent_item.class.to_s)
   rescue
+    require 'pry'
+    binding.pry
     new_path += new_path['?'] ? '&' : '?'
     new_path += "item_id=#{parent_item.id}&=item_class=#{parent_item.class.to_s}"
   end
