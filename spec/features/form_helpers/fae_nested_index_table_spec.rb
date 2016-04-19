@@ -19,26 +19,26 @@ feature 'fae_nested_index_table' do
 
   scenario 'should allow editing existing item', js: true do
     ## TODO: fix flickering spec
-    # cat = FactoryGirl.create(:cat, name: 'Buttercup')
+    cat = FactoryGirl.create(:cat, name: 'Buttercup')
 
-    # admin_login
-    # visit admin_cats_path
+    admin_login
+    visit admin_cats_path
 
-    # expect(page.find('.cats .main_content-section-area table')).to have_content('Buttercup')
+    expect(page.find('.cats .main_content-section-area table')).to have_content('Buttercup')
 
-    # click_link cat.name
-    # expect(page).to have_css("form#edit_cat_#{cat.id}")
+    click_link cat.name
+    expect(page).to have_css("form#edit_cat_#{cat.id}")
 
-    # within(:css, "form#edit_cat_#{cat.id}") do
-    #   fill_in 'Name', with: 'Pew Pew'
-    #   click_button('Update Cat')
-    # end
+    within(:css, "form#edit_cat_#{cat.id}") do
+      fill_in 'Name', with: 'Pew Pew'
+      click_button('Update Cat')
+    end
 
-    # # support/async_helper.rb
-    # eventually {
-    #   expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
-    #   expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
-    # }
+    # support/async_helper.rb
+    eventually {
+      expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
+      expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
+    }
   end
 
   scenario 'should allow deletion of item', js: true do

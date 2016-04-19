@@ -28,3 +28,28 @@
       cols: [:name, :winemaker_image, :table_image],
       ordered: true,
       edit_column: true
+
+- if params[:action] == 'edit'
+  section.main_content-section id='winemakers_section'
+    = render 'fae/shared/nested_table',
+      assoc: :winemakers,
+      parent_item: @item,
+      cols: [:name, :winemaker_image, :table_image],
+      new_path: "/admin/winemakers/new?region_type_type=1",
+      ordered: true,
+      edit_column: true,
+      header: 'Oregon Winemaker',
+      title: 'Oregon Winemakers'
+
+- if params[:action] == 'edit'
+  section.main_content-section id='winemakers_section'
+    = render 'fae/shared/nested_table',
+      assoc: :winemakers,
+      parent_item: @item,
+      cols: [:name, :winemaker_image, :table_image],
+      new_path: "/admin/winemakers/new?region_type_type=2",
+      ordered: true,
+      edit_column: true,
+      header: 'California Winemaker',
+      title: 'California Winemakers'
+
