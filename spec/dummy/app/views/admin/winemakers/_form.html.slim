@@ -2,10 +2,10 @@ ruby:
   if @item.region_type.present? || params.present? && params['region_type'].present?
     if @item.region_type.present?
       region_type = @item.region_type
-    elsif params['region_type'] == '4'
-      region_type = '4'
-    elsif params['region_type'] == '5'
-      region_type = '5'
+    elsif params['region_type'] == '1'
+      region_type = '1'
+    elsif params['region_type'] == '2'
+      region_type = '2'
     end
   end
 

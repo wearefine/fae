@@ -1,12 +1,15 @@
-- if @item.present? && @item.region_type.present? || params['gallery_image_set'].present? && params['gallery_image_set']['region_type'].present?
-  - if params['gallery_image_set']['region_type'] == '1' || @item.region_type == 1
-    - association = :oregon_winemakers
-    - assoc_name_singular = "Oregon Winemaker"
-    - region_type = '1'
-  - elsif params['gallery_image_set']['region_type'] == '2' || @item.region_type == 2
-    - association = :california_winemakers
-    - assoc_name_singular = "California Winemaker"
-    - region_type = '2'
+ruby:
+  if @item.present? && @item.region_type.present? || params['winemaker'].present? && params['winemaker']['region_type'].present?
+    if params['winemaker'].present? && params['winemaker']['region_type'] == '1' || @item.region_type == 1
+      association = :oregon_winemakers
+      assoc_name_singular = "Oregon Winemaker"
+      region_type = '1'
+    elsif params['winemaker'].present? && params['winemaker']['region_type'] == '2' || @item.region_type == 2
+      association = :california_winemakers
+      assoc_name_singular = "California Winemaker"
+      region_type = '2'
+    end
+  end
 
 = render 'fae/shared/nested_table',
   assoc: association,
@@ -16,5 +19,6 @@
   cols: [:name, :winemaker_image, :table_image],
   ordered: true,
   edit_column: true,
-  header: 'Winmaker',
+  new_path: "/admin/winemakers/new?region_type=#{region_type}",
+  header: 'Winemaker',
   title: "#{assoc_name_singular.pluralize}"

@@ -67,12 +67,33 @@ feature 'fae_nested_table' do
 
     expect(page.body).to match(/First.*Middle.*Last/)
 
-    within(:css, '#winemakers_section') do
+    within first(:css, '#winemakers_section') do
       handle = all('tbody tr').last.find('.main_content-sortable-handle')
       handle.drag_to(find('thead'))
     end
 
     expect(page.body).to match(/Last.*First.*Middle/)
+  end
+
+  scenario 'should allow adding new items w params', js: true do
+    wine = FactoryGirl.create(:wine)
+
+    admin_login
+    visit edit_admin_wine_path(wine)
+
+    click_link 'Add Oregon Winemaker'
+    expect(page).to have_css('form#new_winemaker')
+
+    within(:css, 'form#new_winemaker') do
+      fill_in 'Name', with: 'Portland Joe'
+      click_button('Create Winemaker')
+    end
+
+    # require 'pry'
+    # binding.pry
+
+    expect(page.all('#winemakers_section table')[1]).to have_content('Portland Joe')
+    expect(page.all('#winemakers_section table')[2]).to have_no_content('Portland Joe')
   end
 
 end

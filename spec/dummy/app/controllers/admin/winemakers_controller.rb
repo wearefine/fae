@@ -16,8 +16,6 @@ module Admin
     end
 
     def create
-      require 'pry'
-      binding.pry
       @item = Winemaker.new(permitted_params)
 
       if @item.save
