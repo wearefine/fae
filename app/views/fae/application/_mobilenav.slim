@@ -31,10 +31,6 @@ nav.nav.mobilenav
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]
 
-              li: a.-users href=fae.users_path Users
-              li: a.-activity href=fae.activity_log_path Activity Log
-              li: a.-settings href=fae.option_path Root Settings
-
     - if current_user.super_admin_or_admin?
       li.mobilenav-accordion.js-accordion
         a href="#" Admin
