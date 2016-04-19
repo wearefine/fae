@@ -89,8 +89,7 @@ feature 'fae_nested_table' do
       click_button('Create Winemaker')
     end
 
-    # require 'pry'
-    # binding.pry
+    sleep(1)
 
     expect(page.all('#winemakers_section table')[1]).to have_content('Portland Joe')
     expect(page.all('#winemakers_section table')[2]).to have_no_content('Portland Joe')
