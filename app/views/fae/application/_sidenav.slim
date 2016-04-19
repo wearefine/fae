@@ -5,8 +5,7 @@
         ruby:
           item[:path] ||= '#'
           main_class = item[:sublinks].present? ? [ 'sidenav-accordion js-accordion' ] : []
-          main_class << item[:class_name] if item[:class_name].present?
-          main_class << nav_active_class(2, idx)
+          main_class << nav_active_class(item[:class_name], 2, idx)
 
         li class=main_class.join(' ')
           a href=item[:path] = item[:text]
@@ -14,14 +13,10 @@
           - if item[:sublinks].present?
             ul.subnav.js-subnav
               - item[:sublinks].each_with_index do |subitem, sub_idx|
-                ruby:
-                  subitem[:path] ||= '#'
-                  link_class = []
-                  link_class << subitem[:class_name] if subitem[:class_name].present?
-                  link_class << nav_active_class(3, sub_idx, idx)
+                - subitem[:path] ||= '#'
 
                 li
-                  a class=link_class.join(' ') href=subitem[:path] = subitem[:text]
+                  a class=nav_active_class(subitem[:class_name], 3, sub_idx, idx) href=subitem[:path] = subitem[:text]
 
                   - if subitem[:sublinks].present?
                     ul.subnav.js-subnav

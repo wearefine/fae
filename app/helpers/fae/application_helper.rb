@@ -14,10 +14,12 @@ module Fae
       end
     end
 
-    def nav_active_class(level, idx, parent_idx = nil)
-      return unless @fae_navigation.coordinates[level] == idx
-      return unless parent_idx.blank? || @fae_navigation.coordinates[level-1] == parent_idx
-      parent_idx.blank? ? '-parent-current' : '-current'
+    def nav_active_class(klass, level, idx, parent_idx = nil)
+      return klass unless @fae_navigation.coordinates[level] == idx
+      return klass unless parent_idx.blank? || @fae_navigation.coordinates[level-1] == parent_idx
+      new_klass = parent_idx.blank? ? '-parent-current' : '-current'
+      new_klass += " #{klass}" if klass.present?
+      new_klass
     end
 
     def col_name_or_image(item, attribute)
