@@ -409,11 +409,15 @@ You can use `fae_delete_button` in your list view tables to provide easy access 
 |---|---|---|
 | item | ActiveRecord object | item to be deleted |
 | delete_path (optional) | String|Route helper | delete endpoint |
+| attributes (optional) | symbol => value | pass custom attributes to the `link_to` helper |
 
 ```ruby
 fae_delete_button item
 ```
 
+```ruby
+fae_delete_button item, "/#{fae_path}/delete", remote: true, data: { delete: 'true' }
+```
 ## form_header
 
 The form_header helper takes an AR object or string to render an `<h1>` based on the action. Can also display breadcrumb links.

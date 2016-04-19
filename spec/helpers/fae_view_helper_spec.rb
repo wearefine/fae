@@ -101,6 +101,15 @@ describe Fae::ViewHelper do
       # as a string
       expect( fae_delete_button(item, '/admin/custom/route') ).to match /\/admin\/custom\/route/
     end
+
+    it 'should allow custom attributes' do
+      item = FactoryGirl.create(:coach)
+
+      expect( fae_delete_button(item, nil, custom_attribute: 'value') ).to match /custom_attribute="value"/
+      # Supports deep_merge
+      expect( fae_delete_button(item, nil, data: { custom_attribute: 'value' } ) ).to match /data-custom-attribute="value"/
+    end
+
   end
 
   describe '#fae_sort_id' do

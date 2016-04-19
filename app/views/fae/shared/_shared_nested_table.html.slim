@@ -33,10 +33,10 @@ table class=table_class
             = td_columns(options_for_td)
           - if edit_column
             td
-              a.js-edit-link href=self.send(edit_path, item)
+              a.js-edit-link.js-tooltip.table-action title="Edit" href=self.send(edit_path, item)
                 i.icon-edit
-          td
-            = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-trash table-action', remote: true
+          td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", remote: true
+
     - else
       tr
         - if index
