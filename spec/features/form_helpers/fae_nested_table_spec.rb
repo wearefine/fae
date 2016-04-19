@@ -58,16 +58,16 @@ feature 'fae_nested_table' do
 
   scenario 'should allow reordering of items', js: true do
     wine = FactoryGirl.create(:wine)
-    FactoryGirl.create(:winemaker, name: 'Last', wine: wine)
-    FactoryGirl.create(:winemaker, name: 'Middle', wine: wine)
-    FactoryGirl.create(:winemaker, name: 'First', wine: wine)
+    FactoryGirl.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
+    FactoryGirl.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
+    FactoryGirl.create(:winemaker, name: 'First', wine: wine, region_type: 1)
 
     admin_login
     visit edit_admin_wine_path(wine)
 
     expect(page.body).to match(/First.*Middle.*Last/)
 
-    within first(:css, '#winemakers_section') do
+    within first(:css, '#oregon_winemakers_section') do
       handle = all('tbody tr').last.find('.main_content-sortable-handle')
       handle.drag_to(find('thead'))
     end
@@ -89,10 +89,8 @@ feature 'fae_nested_table' do
       click_button('Create Winemaker')
     end
 
-    sleep(1)
-
-    expect(page.all('#winemakers_section table')[1]).to have_content('Portland Joe')
-    expect(page.all('#winemakers_section table')[2]).to have_no_content('Portland Joe')
+    expect(page.find('#oregon_winemakers_section table')).to have_content('Portland Joe')
+    expect(page.find('#california_winemakers_section table')).to have_no_content('Portland Joe')
   end
 
 end

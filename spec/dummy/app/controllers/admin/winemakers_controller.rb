@@ -7,6 +7,7 @@ module Admin
 
     def new
       @item = Winemaker.new
+      @item.region_type = params[:region_type] if ['1', '2'].include? params[:region_type]
       @item.wine_id = params[:item_id]
       build_assets
     end

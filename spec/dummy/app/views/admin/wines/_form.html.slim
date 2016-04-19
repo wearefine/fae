@@ -20,17 +20,17 @@
         = fae_input f, :food_pairing_zh
         = fae_input f, :food_pairing_ja
 
-- if params[:action] == 'edit'
-  section.main_content-section id='winemakers_section'
-    = render 'fae/shared/nested_table',
-      assoc: :winemakers,
-      parent_item: @item,
-      cols: [:name, :winemaker_image, :table_image],
-      ordered: true,
-      edit_column: true
+/ - if params[:action] == 'edit'
+/   section.main_content-section id='winemakers_section'
+/     = render 'fae/shared/nested_table',
+/       assoc: :winemakers,
+/       parent_item: @item,
+/       cols: [:name, :winemaker_image, :table_image],
+/       ordered: true,
+/       edit_column: true
 
 - if params[:action] == 'edit'
-  section.main_content-section id='winemakers_section'
+  section.main_content-section id='oregon_winemakers_section'
     = render 'fae/shared/nested_table',
       assoc: :oregon_winemakers,
       assoc_name: 'winemakers',
@@ -44,7 +44,7 @@
       title: 'Oregon Winemakers'
 
 - if params[:action] == 'edit'
-  section.main_content-section id='winemakers_section'
+  section.main_content-section id='california_winemakers_section'
     = render 'fae/shared/nested_table',
       assoc: :california_winemakers,
       assoc_name: 'winemakers',
