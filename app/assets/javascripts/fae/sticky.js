@@ -68,6 +68,8 @@
    * @fires _unStick (Conditionally)
    */
   Sticky.prototype.stickIt = function() {
+    console.log(FCH.bp.large);
+
     if (FCH.bp.large) {
       this._stickItLogic();
     } else {
@@ -124,9 +126,11 @@
       _this.stickIt();
     }
 
-    FCH.scroll.push( scrollCallback );
+    function resizePlaceholder() {
+      _this.$placeholder.css( 'height', _this.$el.outerHeight() );
+    }
 
-    FCH.$window.smartresize(function(){
+    function debounceResizeCallback() {
       if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
         _this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
         _this.dimensions.left = _this.$placeholder.offset().left;
@@ -138,11 +142,12 @@
       }
 
       _this.stickIt();
-    });
-
-    function resizePlaceholder() {
-      _this.$placeholder.css( 'height', _this.$el.outerHeight() );
     }
+
+    FCH.scroll.push( scrollCallback );
+    FCH.resize.push( FCH.debounce( debounceResizeCallback ) );
+
+    debounceResizeCallback();
 
     if (this.options.placeholder) {
       FCH.resize.push( resizePlaceholder );

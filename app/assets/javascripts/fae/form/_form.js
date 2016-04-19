@@ -1,7 +1,5 @@
 /* global Fae */
 
-'use strict';
-
 /**
  * Fae form
  * @namespace form

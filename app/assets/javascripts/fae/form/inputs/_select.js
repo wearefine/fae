@@ -1,7 +1,5 @@
 /* global Fae, multiSelect, fae_chosen */
 
-'use strict';
-
 /**
  * Fae form select
  * @namespace form.select

@@ -1,7 +1,5 @@
 /* global Fae, modal, FCH */
 
-'use strict';
-
 /**
  * Fae modals
  * @namespace

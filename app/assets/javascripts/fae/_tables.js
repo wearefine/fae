@@ -1,7 +1,5 @@
 /* global Fae, FCH, Cookies */
 
-'use strict';
-
 /**
  * Fae tables
  * @namespace tables

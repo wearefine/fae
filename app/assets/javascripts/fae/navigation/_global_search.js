@@ -1,7 +1,5 @@
 /* global Fae, FCH */
 
-'use strict';
-
 /**
  * Fae global search
  * @namespace global_search

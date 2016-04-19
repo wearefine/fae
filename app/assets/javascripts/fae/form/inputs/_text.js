@@ -1,7 +1,5 @@
 /* global Fae, SimpleMDE, toolbarBuiltInButtons */
 
-'use strict';
-
 /**
  * Fae form text
  * @namespace form.text
