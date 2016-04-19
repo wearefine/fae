@@ -1,6 +1,18 @@
+ruby:
+  if @item.region_type.present? || params.present? && params['region_type'].present?
+    if @item.region_type.present?
+      region_type = @item.region_type
+    elsif params['region_type'] == '4'
+      region_type = '4'
+    elsif params['region_type'] == '5'
+      region_type = '5'
+    end
+  end
+
 = simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
   = fae_input f, :name
   = fae_image_form f, :winemaker_image
   = f.hidden_field :wine_id
+  = f.hidden_field :region_type, value: region_type
 
   = f.submit

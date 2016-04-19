@@ -1,6 +1,20 @@
+- if @item.present? && @item.region_type.present? || params['gallery_image_set'].present? && params['gallery_image_set']['region_type'].present?
+  - if params['gallery_image_set']['region_type'] == '1' || @item.region_type == 1
+    - association = :oregon_winemakers
+    - assoc_name_singular = "Oregon Winemaker"
+    - region_type = '1'
+  - elsif params['gallery_image_set']['region_type'] == '2' || @item.region_type == 2
+    - association = :california_winemakers
+    - assoc_name_singular = "California Winemaker"
+    - region_type = '2'
+
 = render 'fae/shared/nested_table',
-  assoc: :winemakers,
+  assoc: association,
   parent_item: @parent_item,
+  assoc_name: 'winemakers',
+  assoc_name_singular: 'winemaker',
   cols: [:name, :winemaker_image, :table_image],
   ordered: true,
-  edit_column: true
+  edit_column: true,
+  header: 'Winmaker',
+  title: "#{assoc_name_singular.pluralize}"

@@ -4,6 +4,18 @@ class Wine < ActiveRecord::Base
   has_many :release
   has_many :winemakers
 
+  has_many :oregon_winemakers, -> { where(region_type: 1) },
+    class_name: 'Winemaker',
+    source: :winemakers
+
+  # accepts_nested_attributes_for :corp_winemakers, allow_destroy: true
+
+  has_many :california_winemakers, -> { where(region_type: 2) },
+    class_name: 'Winemaker',
+    source: :winemakers
+
+  # accepts_nested_attributes_for :corp_gallery_image_sets, allow_destroy: true
+
   validates :name_en, :name_zh, :name_ja, presence: true
 
   def fae_display_field

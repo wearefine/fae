@@ -32,7 +32,9 @@
 - if params[:action] == 'edit'
   section.main_content-section id='winemakers_section'
     = render 'fae/shared/nested_table',
-      assoc: :winemakers,
+      assoc: :oregon_winemakers,
+      assoc_name: 'winemakers',
+      assoc_name_singular: 'winemaker',
       parent_item: @item,
       cols: [:name, :winemaker_image, :table_image],
       new_path: "/admin/winemakers/new?region_type_type=1",
@@ -44,7 +46,9 @@
 - if params[:action] == 'edit'
   section.main_content-section id='winemakers_section'
     = render 'fae/shared/nested_table',
-      assoc: :winemakers,
+      assoc: :california_winemakers,
+      assoc_name: 'winemakers',
+      assoc_name_singular: 'winemaker',
       parent_item: @item,
       cols: [:name, :winemaker_image, :table_image],
       new_path: "/admin/winemakers/new?region_type_type=2",
