@@ -5,6 +5,7 @@ module Fae
 
     helper Fae::ViewHelper
 
+    before_filter :check_disabled_environment
     before_filter :first_user_redirect
     before_filter :authenticate_user!
     before_filter :build_nav
@@ -13,6 +14,12 @@ module Fae
     before_filter :set_change_user
 
     private
+
+    def check_disabled_environment
+      disabled_envs = Fae.disabled_environments.map { |e| e.to_s }
+      return unless disabled_envs.include? Rails.env.to_s
+      render template: 'fae/pages/disabled_environment.html.slim', layout: 'fae/error.html.slim'
+    end
 
     def super_admin_only
       redirect_to fae.root_path, flash: { error: t('fae.unauthorized_error') } unless current_user.super_admin?
