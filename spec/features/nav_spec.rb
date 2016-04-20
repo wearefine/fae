@@ -73,4 +73,15 @@ feature 'Main Navigation' do
     expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
   end
 
+  scenario 'should include custom CSS classes' do
+    admin_login
+    team = FactoryGirl.create(:team)
+    visit admin_team_coaches_path(team)
+
+    expect(page).to have_selector('.css-one-level-deep', text: 'Events')
+    expect(page).to have_selector('.css-two-levels-deep', text: 'Event Hosts', visible: false)
+    expect(page).to have_selector('.css-three-levels-deep', text: 'Personnel', visible: false)
+    expect(page).to have_selector('.css-four-levels-deep', text: 'Coaches', visible: false)
+  end
+
 end

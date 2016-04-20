@@ -2,7 +2,7 @@
 
 main.content
 
-  == fae_filter_form title: 'Seach Changes', action: fae.activity_log_filter_path do
+  == fae_filter_form title: 'Search Changes', action: fae.activity_log_filter_path do
     == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }
     == fae_filter_select :model, options: @items.unique_changeable_types
     == fae_filter_select :type, options: ['created', 'updated', 'deleted']

@@ -48,6 +48,12 @@
 
     a {
       color: $c-white;
+
+      @include bp(medium-down) {
+        padding-left: 30px; // Don't allow text to run over hamburger icon
+        text-align: left;
+        line-height: 1;
+      }
     }
   }
 

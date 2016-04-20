@@ -222,7 +222,7 @@ Finally we need to define our class methods to scope the `Person` class. This da
 
 ### filter(params)
 
-`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the seach field.
+`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the search field.
 
 From the form above we can assume our params look like this:
 
@@ -244,7 +244,7 @@ def self.filter(params)
   conditions[:company_id] = params['company'] if params['company'].present?
   conditions['groups.id'] = params['groups'] if params['groups'].present?
 
-  # use good 'ol MySQL to seach if search param is present
+  # use good 'ol MySQL to search if search param is present
   search = []
   if params['search'].present?
     search = ["people.name LIKE ? OR companies.name LIKE ?", "%#{params['search']}%", "%#{params['search']}%"]

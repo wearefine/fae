@@ -34,7 +34,7 @@ module Fae
           when 'Last Month' then  ['fae_changes.updated_at >= ?', 1.month.ago]
         end
 
-        # use good 'ol MySQL to seach if search param is present
+        # use good 'ol MySQL to search if search param is present
         search = []
         if params['search'].present?
           search = ["fae_users.first_name LIKE ? OR fae_users.last_name LIKE ? OR fae_changes.updated_attributes LIKE ? OR fae_changes.changeable_type LIKE ? OR fae_changes.change_type LIKE ?", "%#{params['search']}%", "%#{params['search']}%", "%#{params['search']}%", "%#{params['search']}%", "%#{params['search']}%"]

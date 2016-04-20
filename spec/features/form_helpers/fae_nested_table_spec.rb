@@ -54,11 +54,7 @@ feature 'fae_nested_table' do
 
     expect(page.find('#nested_table table')).to have_content('Roses')
 
-    # super hack due to webkit not able to click links without content
-    # see: https://github.com/thoughtbot/capybara-webkit/issues/494
-    evaluate_script "$('tr#aromas_#{aroma.id} .js-delete-link').click()"
-    # should be more like...
-    # page.find("tr#aromas_#{aroma.id} .js-delete-link").click
+    page.find("tr#aromas_#{aroma.id} .js-delete-link").click
 
     expect(page.find('#nested_table table')).to_not have_content('Roses')
   end

@@ -86,32 +86,3 @@
     display: none;
   }
 }
-
-.sidenav-admin {
-  a {
-    @extend %nav-icon;
-    position: relative;
-
-    &:after {
-      top: 11px;
-    }
-
-    &.-users {
-      &:after {
-        @extend .icon-users:before;
-      }
-    }
-
-    &.-settings {
-      &:after {
-        @extend .icon-settings:before;
-      }
-    }
-
-    &.-activity {
-      &:after {
-        @extend .icon-bars:before;
-      }
-    }
-  }
-}
