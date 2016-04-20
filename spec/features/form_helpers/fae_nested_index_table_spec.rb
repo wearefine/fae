@@ -17,7 +17,7 @@ feature 'fae_nested_index_table' do
     expect(page.find('.cats .main_content-section-area table')).to have_content('Fuzzball')
   end
 
-  scenario 'should allow editing existing item', js: true do
+  # scenario 'should allow editing existing item', js: true do
     ## TODO: fix flickering spec
     # cat = FactoryGirl.create(:cat, name: 'Buttercup')
 
@@ -39,7 +39,7 @@ feature 'fae_nested_index_table' do
     #   expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
     #   expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
     # }
-  end
+  # end
 
   scenario 'should allow deletion of item', js: true do
     cat = FactoryGirl.create(:cat, name: 'Snowball McPuffypants')
