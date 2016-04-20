@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Added in the ability to pass a param to the new path in nested_table.
     + \#56793: add `slug_separator` option
 - bugs
     + Updated change_item_link method so that it works w fae_display_fields that are integers not just strings.

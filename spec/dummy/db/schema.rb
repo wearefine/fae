@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160413202106) do
+ActiveRecord::Schema.define(version: 20160419164359) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -142,18 +142,6 @@ ActiveRecord::Schema.define(version: 20160413202106) do
   end
 
   add_index "fae_options", ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true, using: :btree
-
-  create_table "fae_pages", force: :cascade do |t|
-    t.string   "title",      limit: 255
-    t.integer  "position",   limit: 4,   default: 0
-    t.boolean  "on_stage",               default: true
-    t.boolean  "on_prod",                default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "slug",       limit: 255
-  end
-
-  add_index "fae_pages", ["slug"], name: "index_fae_pages_on_slug", using: :btree
 
   create_table "fae_roles", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -325,17 +313,6 @@ ActiveRecord::Schema.define(version: 20160413202106) do
     t.datetime "updated_at"
   end
 
-  create_table "tasting_notes", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.boolean  "active"
-    t.integer  "position",   limit: 4
-    t.integer  "release_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "tasting_notes", ["release_id"], name: "index_tasting_notes_on_release_id", using: :btree
-
   create_table "teams", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "city",       limit: 255
@@ -374,11 +351,12 @@ ActiveRecord::Schema.define(version: 20160413202106) do
   end
 
   create_table "winemakers", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "position",   limit: 4
-    t.integer  "wine_id",    limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",        limit: 255
+    t.integer  "position",    limit: 4
+    t.integer  "wine_id",     limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "region_type", limit: 4
   end
 
   add_index "winemakers", ["wine_id"], name: "index_winemakers_on_wine_id", using: :btree

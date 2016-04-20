@@ -2,5 +2,6 @@
   = fae_input f, :name
   = fae_image_form f, :winemaker_image
   = f.hidden_field :wine_id
+  = f.hidden_field :region_type, value: @item.region_type
 
   = f.submit

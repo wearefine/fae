@@ -18,4 +18,12 @@ class Winemaker < ActiveRecord::Base
     name
   end
 
+  def association_type
+    if region_type == 1
+      :oregon_winemakers
+    elsif region_type == 2
+      :california_winemakers
+    end
+  end
+
 end

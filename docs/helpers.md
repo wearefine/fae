@@ -481,6 +481,7 @@ The nested_table should go after the main form ends and should only be placed on
 | edit_column | boolean | false | displays edit link
 | assoc_name | string | assoc.to_s | the stringified association name, which is used in the paths. **only update if you know what you're doing** |
 | helper_text | string | '' | the h6 directly above the nested table and below the tite, which is used to provide the user with some helper_text to describe the context |
+| new_path | string | "new_#{fae_path}_#{assoc_name_singular}_path" | the path that the application will hit when creating a new object inside the nested table, which is used to provide the user with the ability to pass in some params |
 
 
 **Examples**
@@ -493,7 +494,8 @@ Full Slim implementation with section wrapper and edit page conditional
       assoc: :tasting_notes,
       parent_item: @item,
       cols: [:name, :author, :live],
-      ordered: true
+      ordered: true,
+      new_path: "/admin/winemakers/new?region_type=#{region_type}"
 ```
 
 ## recent_changes
