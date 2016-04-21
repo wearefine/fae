@@ -12,10 +12,8 @@ main.content
       - if @items.present?
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
-            td
-              i.icon-edit
-              = link_to item.fae_display_field, edit_admin_jersey_path(item)
+            td = link_to item.fae_display_field, edit_admin_jersey_path(item)
             td = fae_date_format item.updated_at
-            td.-action = fae_delete_button item
+            td = fae_delete_button item
       - else
         tr: td colspan="3" No items found

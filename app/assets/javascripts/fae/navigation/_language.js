@@ -1,7 +1,5 @@
 /* global Fae */
 
-'use strict';
-
 /**
  * Fae navigation language
  * @namespace navigation.language

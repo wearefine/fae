@@ -1,7 +1,5 @@
 /* global Fae */
 
-'use strict';
-
 /**
  * Fae form checkbox
  * @namespace form.checkbox

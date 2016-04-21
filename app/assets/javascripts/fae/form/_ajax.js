@@ -1,7 +1,5 @@
 /* global Fae, fae_chosen, fileinputer, FCH, Cookies */
 
-'use strict';
-
 /**
  * Fae AJAX
  * @namespace form.ajax

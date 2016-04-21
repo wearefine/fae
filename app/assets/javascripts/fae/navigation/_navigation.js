@@ -1,7 +1,5 @@
 /* global Fae, FCH */
 
-'use strict';
-
 /**
  * Fae navigation
  * @namespace navigation

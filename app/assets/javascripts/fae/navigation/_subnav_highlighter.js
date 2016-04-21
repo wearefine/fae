@@ -1,7 +1,5 @@
 /* global Fae, FCH */
 
-'use strict';
-
 /**
  * Fae navigation subnav highlighter
  * @namespace navigation.subnav_highlighter
@@ -21,7 +19,6 @@ Fae.navigation.subnav_highlighter = {
         this.section_class = '.main_content-section';
         this.subnav_class = '.main_content-header-section-links';
       }
-
 
       this.FCHListeners();
 

@@ -1,7 +1,5 @@
 /* global Fae, judge, FCH */
 
-'use strict';
-
 /**
  * Fae form validator
  * @namespace form.validator
@@ -12,7 +10,7 @@ Fae.form.validator = {
   is_valid: '',
 
   init: function () {
-    if ($('form').length) {
+    if (FCH.exists('form')) {
       this.password_confirmation_validation.init();
       this.passwordPresenceConditional();
       this.bindValidationEvents();
@@ -388,6 +386,6 @@ Fae.form.validator = {
 
       return current;
     }
-  },
+  }
 
 };
