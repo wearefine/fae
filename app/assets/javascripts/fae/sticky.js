@@ -68,8 +68,6 @@
    * @fires _unStick (Conditionally)
    */
   Sticky.prototype.stickIt = function() {
-    console.log(FCH.bp.large);
-
     if (FCH.bp.large) {
       this._stickItLogic();
     } else {
