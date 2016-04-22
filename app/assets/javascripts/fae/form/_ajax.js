@@ -208,6 +208,10 @@ Fae.form.ajax = {
     _this.$filter_form
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
+
+        Fae.tables.columnSorting();
+        Fae.tables.rowSorting();
+        Fae.tables.sortColumnsFromCookies();
         Fae.navigation.lockFooter();
       })
 
