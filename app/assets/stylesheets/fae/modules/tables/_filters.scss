@@ -6,6 +6,11 @@
   border-bottom: 0;
   background: $c-form-table-bg;
 
+  input[type=submit],
+  .button {
+    display: none;
+  }
+
   h4 {
     margin-bottom: 20px;
     color: $c-table-filter-header;
