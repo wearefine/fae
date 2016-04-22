@@ -193,19 +193,21 @@ Fae.navigation = {
    * Fix footer to bottom of screen if viewport extends beyond content. Display after calculation has been performed
    */
   lockFooter: function() {
-    var $footer = $('#js-footer');
+    if(FCH.exists('#js-footer')) {
+      var $footer = $('#js-footer');
 
-    // Reset
-    $footer.removeClass('active');
+      // Reset
+      $footer.removeClass('active');
 
-    // Lock or unlock
-    if ($footer.offset().top < (FCH.dimensions.wh - $footer.outerHeight()) ) {
-      $footer.addClass('-locked');
-    } else {
-      $footer.removeClass('-locked');
+      // Lock or unlock
+      if ($footer.offset().top < (FCH.dimensions.wh - $footer.outerHeight()) ) {
+        $footer.addClass('-locked');
+      } else {
+        $footer.removeClass('-locked');
+      }
+
+      $footer.addClass('active');
     }
-
-    $footer.addClass('active');
   },
 
 };
