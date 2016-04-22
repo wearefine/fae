@@ -31,8 +31,6 @@
 //= require fryr
 //= require simplemde.min
 
-//= require fae/extensions
-
 //= require frob_core_helpers
 
 //= require fae/hinter
