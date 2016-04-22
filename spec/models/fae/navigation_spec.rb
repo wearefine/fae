@@ -39,4 +39,31 @@ describe Fae::Navigation do
 
     end
   end
+
+  describe '.current_section' do
+    it "should remove '/new' at the end of a URL" do
+      nav = Fae::Navigation.new('/admin/cat_busses/new')
+      expect(nav.current_section).to eq('/admin/cat_busses')
+    end
+
+    it "should leave '/new' in the middle of a URL" do
+      nav = Fae::Navigation.new('/admin/news_items/new')
+      expect(nav.current_section).to eq('/admin/news_items')
+    end
+
+    it "should remove '/#/edit' at the end of a URL" do
+      nav = Fae::Navigation.new('/admin/totoros/2/edit')
+      expect(nav.current_section).to eq('/admin/totoros')
+    end
+
+    it "should leave '/edit' in the middle of a URL" do
+      nav = Fae::Navigation.new('/admin/editors/new')
+      expect(nav.current_section).to eq('/admin/editors')
+    end
+
+    it 'should leave index URLs the same' do
+      nav = Fae::Navigation.new('/admin/news_items')
+      expect(nav.current_section).to eq('/admin/news_items')
+    end
+  end
 end
