@@ -1,7 +1,7 @@
 /**
- *= require reset
- *= require chosen
- *= require daterangepicker
- *= require simplemde.min
+ *= require fae/vendor/reset
+ *= require fae/vendor/chosen
+ *= require fae/vendor/daterangepicker
+ *= require fae/vendor/simplemde.min
  *= require fae/base
  */
