@@ -93,11 +93,42 @@ Fae.form.validator = {
         _this._createSuccessClass($input);
       },
       invalid: function (input, messages) {
-        _this.is_valid = false;
-        _this._labelNamedMessage($input, messages);
-        _this._createOrReplaceError($input, messages);
+        messages = _this._removeIgnoredErrors(messages);
+        if (messages.length) {
+          _this.is_valid = false;
+          _this._labelNamedMessage($input, messages);
+          _this._createOrReplaceError($input, messages);
+        }
       }
     });
+  },
+
+  /**
+   * Strips out ignored error messages
+   * @protected
+   * @param  messages - array of error messages from Judge
+   */
+  _removeIgnoredErrors: function (messages) {
+    // Ignored error messages from Judge:
+    // 'Judge validation for Release#name not allowed'
+    // 'Slug Request error: 0'
+    var ignored_error_substrings = ['Judge validation', 'Request error'];
+
+    // loop through messages
+    for (var i = 0; i < messages.length; i++) {
+      // loop through ignored errors
+      for (var j = 0; j < ignored_error_substrings.length; j++) {
+        // if the substring exists in the error message
+        if (messages[i].indexOf(ignored_error_substrings[j]) > -1) {
+          // log it in the console and remove message
+          window.console && console.log('Ignoring error: ', messages[i]);
+          messages.splice(i, 1);
+          break;
+        }
+      }
+    }
+
+    return messages;
   },
 
   /**

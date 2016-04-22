@@ -29,7 +29,8 @@
     + \#55244: Add support toggle and sort support for scoped models
     + Add fae_sort_id view helper
     + \#52457: Allow diabling admin on specific environments
-    + \#57073: add options and documentation to generated initializer
+    + \#57073: Add options and documentation to generated initializer
+    + \#52775: Ignore unhelpful Judge errors
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
