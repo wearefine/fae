@@ -20,6 +20,10 @@ module Fae
       find_items_by_text(structure, query, [])
     end
 
+    def current_section
+      @current_path.gsub(/\/new$|\/\d+\/edit/, '')
+    end
+
     private
 
     def find_current_hash(array_of_items)
@@ -55,10 +59,6 @@ module Fae
     def increment_coordinates
       last_item = @coordinates.pop
       @coordinates.push(last_item + 1)
-    end
-
-    def current_section
-      @current_path.gsub(/\/new|\/\d+\/edit/, '')
     end
 
     def item(text, options={})
