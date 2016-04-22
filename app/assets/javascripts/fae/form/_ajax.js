@@ -206,6 +206,10 @@ Fae.form.ajax = {
     var _this = this;
 
     _this.$filter_form
+      .on('submit', function() {
+        $('.js-reset-btn').show();
+      })
+
       // On filter change, update table data
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
@@ -233,8 +237,11 @@ Fae.form.ajax = {
         $(this).hide();
       })
 
+      .on('click', '.table-filter-keyword-wrapper i', function() {
+        _this.$filter_form.submit();
+      })
+
       .on('change', 'select', function() {
-        $('.js-reset-btn').show();
         _this.$filter_form.submit();
       });
   },

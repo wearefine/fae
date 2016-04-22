@@ -131,7 +131,8 @@ module Fae
 
     def filter_search_field
       content_tag :div, class: 'table-filter-keyword-wrapper' do
-        text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword', class: 'table-filter-keyword-input'
+        concat text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword'
+        concat content_tag(:i, '', class: 'icon-search')
       end
     end
 

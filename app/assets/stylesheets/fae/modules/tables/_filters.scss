@@ -32,22 +32,17 @@
   h4 {
     display: inline-block;
   }
-
-  input[type="text"] {
-    float: right;
-  }
 }
 
 .table-filter-keyword-wrapper {
   position: relative;
   float: right;
 
-  &:after {
-    @extend .icon-search:before;
-    @include icon-stuff;
+  i {
     position: absolute;
     top: 5px;
     right: 12px;
+    cursor: pointer;
   }
 }
 
