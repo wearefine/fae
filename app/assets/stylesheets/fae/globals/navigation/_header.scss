@@ -5,14 +5,12 @@
   top: 0;
   left: 0;
   width: 100%;
-  padding: 0 $content-buffer;
   background: $c-header-bg;
-  text-align: center;
   border-bottom: $header-border-width solid $c-custom-highlight;
 
   @include bp(large) {
+    padding: 0 $content-buffer;
     position: relative;
-    text-align: left;
   }
 
   a {
@@ -50,8 +48,10 @@
       color: $c-white;
 
       @include bp(medium-down) {
-        padding-left: 30px; // Don't allow text to run over hamburger icon
         text-align: left;
+      }
+
+      @include bp(large) {
         line-height: 1;
       }
     }

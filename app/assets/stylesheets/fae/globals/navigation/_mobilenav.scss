@@ -67,9 +67,8 @@
 }
 
 .mobilenav-toggle {
-  position: absolute;
-  top: 0;
-  left: 0;
+  display: inline-block;
+  vertical-align: middle;
   padding: 14px $content-buffer;
   cursor: pointer;
   color: $c-white;
