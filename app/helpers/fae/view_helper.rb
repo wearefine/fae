@@ -85,9 +85,11 @@ module Fae
       form_tag(options[:action], form_hash) do
         concat filter_header
 
-        filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
-          concat capture(&block)
-          concat filter_submit_btns
+        if block_given?
+          filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
+            concat capture(&block)
+            concat filter_submit_btns
+          end
         end
 
         concat filter_group_wrapper
