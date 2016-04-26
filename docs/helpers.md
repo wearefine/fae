@@ -321,7 +321,7 @@ fae_content_form f, :ad, input_options: { collection: ['Header', 'Footer'], inpu
 
 ![Filter form](images/filter_form.png)
 
-Displays the filter form, which includes the search field, submit, and reset buttons. It accepts options and a block.
+Displays the filter form, which includes the search field, submit, and reset buttons. It accepts options, followed by an optional block.
 
 | option | type    | default                                | description |
 |--------|---------|----------------------------------------|-------------|
@@ -335,7 +335,7 @@ Displays the filter form, which includes the search field, submit, and reset but
 
 ```slim
 == fae_filter_form title: 'Search some stuff', search: false do
-  // form elements
+  // optional form elements
 ```
 
 ## fae_filter_select(attribute, options)

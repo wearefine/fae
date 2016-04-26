@@ -85,13 +85,16 @@ module Fae
       form_tag(options[:action], form_hash) do
         concat filter_header
 
-        filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
-          concat capture(&block)
-          concat content_tag(:div, content_tag(:a, 'Reset Search', class: 'js-reset-btn button -small hidden', href: '#'), class: 'table-filter-group')
-          concat submit_tag 'Apply Filters', class: 'hidden'
+        if block_given?
+          filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
+            concat capture(&block)
+            concat content_tag(:div, content_tag(:a, 'Reset Search', class: 'js-reset-btn button -small hidden', href: '#'), class: 'table-filter-group')
+          end
         end
 
         concat filter_group_wrapper
+        # I know this `unless !` looks like it should be an `if` but it's definitely supposed to be `unless !`
+        concat submit_tag 'Apply Filters', class: 'hidden' unless !options[:search]
       end
     end
 

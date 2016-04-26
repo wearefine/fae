@@ -29,7 +29,9 @@
     + \#55244: Add support toggle and sort support for scoped models
     + Add fae_sort_id view helper
     + \#52457: Allow diabling admin on specific environments
-    + \#57073: add options and documentation to generated initializer
+    + \#57073: Add options and documentation to generated initializer
+    + \#52775: Ignore unhelpful Judge errors
+    + \#56740: Allows fae_filter_form's block to be optional
 - bugs
     + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
     + \#46157: Logo in root setting is no longer marked required
@@ -37,6 +39,7 @@
     + \#55977: Fix positioning of smooth scroll on new models from nested forms
     + Rearrange assets to expose the Fae JS API and SCSS mixins/variables to parent apps
     + \#57119: Table columns can now be sorted after the table has been filtered
+    + \#57071: Namespace vendor files within the Fae engine namespace
 
 ## 1.2.4
 
