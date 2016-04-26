@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.2.5
+
+- enhancements
     + Added in the ability to pass a param to the new path in nested_table.
     + \#56793: add `slug_separator` option
 - bugs
