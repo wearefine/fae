@@ -200,24 +200,45 @@ Fae.form.ajax = {
   },
 
   /**
-   * On filter change, update table data
+   * Attach filter listeners
    */
   filterSubmission: function() {
     var _this = this;
 
     _this.$filter_form
+      .on('submit', function() {
+        $('.js-reset-btn').show();
+      })
+
+      // On filter change, update table data
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
+
+        Fae.tables.columnSorting();
+        Fae.tables.rowSorting();
+        Fae.tables.sortColumnsFromCookies();
         Fae.navigation.lockFooter();
       })
 
+      // Reset filter button
       .on('click', '.js-reset-btn', function(ev) {
+        ev.preventDefault();
+
         var $form = $(this).closest('form');
 
         $form.get(0).reset();
         $form.find('select').val('').trigger('chosen:updated');
         // reset hashies
         window.location.hash = '';
+
+        // Spoof form submission
+        $form.submit();
+
+        $(this).hide();
+      })
+
+      .on('click', '.table-filter-keyword-wrapper i', function() {
+        _this.$filter_form.submit();
       })
 
       .on('change', 'select', function() {

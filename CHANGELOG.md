@@ -38,6 +38,7 @@
     + \#55752: YouTube helper image converted to display as a background image because of Sprockets compilation issue
     + \#55977: Fix positioning of smooth scroll on new models from nested forms
     + Rearrange assets to expose the Fae JS API and SCSS mixins/variables to parent apps
+    + \#57119: Table columns can now be sorted after the table has been filtered
     + \#57071: Namespace vendor files within the Fae engine namespace
 
 ## 1.2.4

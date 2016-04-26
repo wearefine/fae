@@ -17,7 +17,7 @@ Fae.tables = {
   sort_cookie_name: 'Fae_table_sort_preferences',
 
   ready: function() {
-    // @depreciate - remove `|| FCH.exists('.main_table-sort_columns')` and just use FCH.exists('.js-sort-column') in v2.0
+    // @depreciation - remove `|| FCH.exists('.main_table-sort_columns')` and only use FCH.exists('.js-sort-column') in v2.0
     if (FCH.exists('.js-sort-column') || FCH.exists('.main_table-sort_columns')) {
       this.dateColumnSorting();
       this.columnSorting();
@@ -25,14 +25,9 @@ Fae.tables = {
       this.sortColumnsFromCookies();
     }
 
-    // @depreciation remove sort_selector conditionals in v2.0
-    var sort_selector = '.sortable-handle';
-    if (!FCH.exists(sort_selector)) {
-      sort_selector = '.main_content-sortable-handle';
-    }
-
-    if (FCH.exists(sort_selector)) {
-      this.rowSorting(sort_selector);
+    // @depreciation - remove || FCH.exists('.main_content-sortable-handle') and only use FCH.exists('.sortable-handle') in v2.0
+    if (FCH.exists('.sortable-handle') || FCH.exists('.main_content-sortable-handle')) {
+      this.rowSorting();
     }
 
     this.stickyTableHeader();
@@ -59,7 +54,7 @@ Fae.tables = {
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
 
-    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-sort-column' in v2.0
+    // @depreciation - remove `, .main_table-sort_columns` and only use '.js-sort-column' in v2.0
     $('.js-sort-column, .main_table-sort_columns')
       .tablesorter()
       .on('sortEnd', function(e) {
@@ -140,7 +135,7 @@ Fae.tables = {
       return;
     }
 
-    // @depreciation - remove `, .main_table-sort_columns` and just use '.js-sort-column' in v2.0
+    // @depreciation - remove `, .main_table-sort_columns` and only use '.js-sort-column' in v2.0
     $('.js-sort-column, .main_table-sort_columns').each(function(idx) {
       // If this table exists in the cookie hash
       if (cookie_value[path].hasOwnProperty(idx)) {
@@ -152,11 +147,12 @@ Fae.tables = {
 
   /**
    * Make table rows draggable by user
-   * @param {String} sort_selector - handle selector
-   * @depreciation - remove sort_selector arg in v2.0
    */
-  rowSorting: function(sort_selector) {
-    // @depreciation - remove `, .main_content-sortable` and just use '.js-sort-row' in v2.0
+  rowSorting: function() {
+    // @depreciation - remove sort_selector var in v2.0
+    var sort_selector = FCH.exists('.sortable-handle') ? '.sortable-handle' : '.main_content-sortable-handle';
+
+    // @depreciation - remove `, .main_content-sortable` and only use '.js-sort-row' in v2.0
     $('.js-sort-row, .main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,

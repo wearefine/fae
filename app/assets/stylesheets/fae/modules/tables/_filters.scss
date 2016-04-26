@@ -6,6 +6,11 @@
   border-bottom: 0;
   background: $c-form-table-bg;
 
+  input[type=submit],
+  .button {
+    display: none;
+  }
+
   h4 {
     margin-bottom: 20px;
     color: $c-table-filter-header;
@@ -32,22 +37,17 @@
   h4 {
     display: inline-block;
   }
-
-  input[type="text"] {
-    float: right;
-  }
 }
 
 .table-filter-keyword-wrapper {
   position: relative;
   float: right;
 
-  &:after {
-    @extend .icon-search:before;
-    @include icon-stuff;
+  i {
     position: absolute;
     top: 5px;
     right: 12px;
+    cursor: pointer;
   }
 }
 

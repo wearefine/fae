@@ -88,11 +88,13 @@ module Fae
         if block_given?
           filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
             concat capture(&block)
-            concat filter_submit_btns
+            concat content_tag(:div, content_tag(:a, 'Reset Search', class: 'js-reset-btn button -small hidden', href: '#'), class: 'table-filter-group')
           end
         end
 
         concat filter_group_wrapper
+        # I know this `unless !` looks like it should be an `if` but it's definitely supposed to be `unless !`
+        concat submit_tag 'Apply Filters', class: 'hidden' unless !options[:search]
       end
     end
 
@@ -115,6 +117,7 @@ module Fae
         select_options = options_for_select(options[:options]) if options[:options].present?
       end
 
+
       content_tag :div, class: 'table-filter-group' do
         concat label_tag "filter[#{attribute}]", options[:label]
         concat select_tag "filter[#{attribute}]", select_options, prompt: options[:placeholder]
@@ -131,14 +134,8 @@ module Fae
 
     def filter_search_field
       content_tag :div, class: 'table-filter-keyword-wrapper' do
-        text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword', class: 'table-filter-keyword-input'
-      end
-    end
-
-    def filter_submit_btns
-      content_tag :div, class: 'table-filter-controls' do
-        concat submit_tag 'Apply Filters'
-        concat submit_tag 'Reset Search', class: 'js-reset-btn table-filter-reset'
+        concat text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword'
+        concat content_tag(:i, '', class: 'icon-search')
       end
     end
 

@@ -22,10 +22,17 @@ input[type=email] {
   margin-bottom: 20px;
 }
 
-.js-addedit-form {
+.addedit-form {
   h3 {
     @extend label;
     margin-bottom: 20px;
+  }
+
+
+  .flash-message {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 }
 

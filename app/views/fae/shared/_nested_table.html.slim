@@ -26,7 +26,7 @@ ruby:
   options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, header: header, add_button_text: add_button_text, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
   options_for_table[:parent_item] = parent_item unless index
 
-section.js-addedit-form class="#{'content' if index}"
+section.addedit-form.js-addedit-form class="#{'content' if index}"
   - if index
     == render 'fae/shared/shared_nested_table', options_for_table
 

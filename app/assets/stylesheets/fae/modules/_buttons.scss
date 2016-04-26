@@ -60,16 +60,3 @@ button[type=button],
     }
   }
 }
-
-.table-filter-controls {
-  margin: 12px 0 0;
-
-  @include bp(medium) {
-    float: right;
-  }
-
-  input[type=submit] {
-    @extend .button; // Gray button
-    @extend .button.-small; // Small styles
-  }
-}
