@@ -1,0 +1,54 @@
+table {
+  width: 100%;
+  border: 1px solid $c-grey;
+  border-collapse: separate;
+  table-layout: fixed;
+
+  i {
+    color: $c-darker-grey;
+  }
+}
+
+tbody {
+  td {
+    &:first-child {
+      border-left: 3px solid transparent; // this blends it in to the background
+    }
+  }
+
+  tr {
+    &:hover {
+      td {
+        &:first-child {
+          border-color: $c-custom-highlight;
+        }
+      }
+    }
+
+    &:nth-of-type(even) {
+      td {
+        background-color: $c-table-tr-even;
+      }
+    }
+  }
+}
+
+th,
+td {
+  vertical-align: middle;
+  font-size: 13px;
+  text-align: left;
+}
+
+th {
+  padding: 15px 10px;
+  vertical-align: middle;
+  font-weight: bold;
+  color: $c-text-heavy;
+  background: $c-table-th;
+}
+
+td {
+  padding: 12px 10px;
+  background-color: $c-table-td;
+}

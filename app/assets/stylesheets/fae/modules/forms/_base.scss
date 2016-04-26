@@ -1,0 +1,94 @@
+input[type=text],
+input[type=number],
+input[type=textarea],
+input[type=url],
+input[type=tel],
+input[type=password],
+input[type=email] {
+  @include transition(border-color .2s);
+  padding: 12px 15px;
+  border: 1px solid $c-border;
+  font-size: 14px;
+  outline: none;
+  border-radius: 2px;
+  max-width: 100%;
+
+  &:focus {
+    border-color: $c-darker-grey;
+  }
+}
+
+.input {
+  margin-bottom: 20px;
+}
+
+.addedit-form {
+  h3 {
+    @extend label;
+    margin-bottom: 20px;
+  }
+
+
+  .flash-message {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.js-addedit-form-wrapper {
+  display: none;
+}
+
+.nested-form {
+  padding: $content-buffer $content-buffer $content-buffer 40px;
+  border: 1px solid $c-border;
+  border-top: 0;
+  background: $c-form-table-bg;
+
+  h2 {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: $c-text-heavy;
+    font-weight: bold;
+    letter-spacing: 0;
+    text-transform: none;
+    border: 0;
+    padding: 0;
+    margin: 0 auto 30px;
+    background: none;
+  }
+}
+
+.cancel-nested-button {
+  margin-left: 10px;
+}
+
+.table-helper-text {
+  font-size: 14px;
+  font-style: italic;
+  padding-bottom: 14px;
+}
+
+.js-add-link {
+  font-size: 12px;
+}
+
+.table-add-link {
+  float: right;
+
+  &:before {
+    @extend .icon-plus:before;
+    @include icon-stuff;
+    font-size: 7px;
+    position: relative;
+    bottom: 2px;
+    display: inline-block;
+    margin-right: 3px;
+  }
+
+  // Specificity hack
+  &.table-add-link {
+    margin-bottom: 10px;
+  }
+}

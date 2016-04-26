@@ -1,59 +1,35 @@
-= render 'fae/shared/index_header', title: 'Need some help?', new_button: false
-.main_content-sections
-  section.main_content-section.help-section
-    h2.main_content-section-title
-      | Contact Us
-    .main_content-section-area
-      p
-        strong Phone:
-        |  503.243.3463
-        br
-        strong Email:
-        a href="mailto:fae@wearefine.com"
-          | &nbsp;fae@wearefine.com
-        br
-        strong Website:
-        | &nbsp;
-        a href="http://www.wearefine.com" target="_blank" wearefine.com
+= render 'fae/shared/index_header', title: 'Need some help?', breadcrumbs: false, new_button: false
 
-  section.main_content-section.help-section
-    h2.main_content-section-title Reporting A Bug?
-    .main_content-section-area
-      h3 Please include this helpful information:
-      p
-        strong Version:
-        | &nbsp;
-        | Fae v
-        = Fae::VERSION
-        br
+section.help-section
+  article.content
+    h2 Contact Us
+    p
+      strong> Phone:
+      | 503.243.3463
+      br
+      strong> Email:
+      a href="mailto:fae@wearefine.com" fae@wearefine.com
+      br
+      strong> Website:
+      a href="http://www.wearefine.com" target="_blank" wearefine.com
 
-        strong Date:
-        | &nbsp;
-        = Time.now
-        br
+  article.content
+    h2 Reporting A Bug?
 
-        strong Site:
-        | &nbsp;
-        = request.url
-        br
+    h3 Please include this helpful information:
+    ruby:
+      help_information = {
+        'Version'  => "Fae v#{Fae::VERSION}",
+        'Date'     => Time.now,
+        'Site'     => request.url,
+        'Env'      => Rails.env,
+        'Browser'  => "#{@browser.name} #{@browser.full_version}",
+        'Platform' => @browser.platform,
+        'User ID'  => current_user.id
+      }
 
-        strong Env:
-        | &nbsp;
-        = Rails.env
+    p
+      - help_information.each do |identifier, value|
+        strong> #{identifier}:
+        = value
         br
-
-        strong Browser:
-        | &nbsp;
-        = @browser.name
-        | &nbsp;
-        = @browser.full_version
-        br
-
-        strong Platform:
-        | &nbsp;
-        = @browser.platform
-        br
-
-        strong User ID:
-        | &nbsp;
-        = current_user.id

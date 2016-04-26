@@ -1,0 +1,95 @@
+// Utility nav. View Site, Support, Username, etc.
+.utility-nav {
+  position: absolute;
+  top: 0;
+  right: $content-buffer;
+
+  @include bp(large-down) {
+    display: none;
+  }
+
+  a {
+    padding-left: 14px;
+    padding-right: 14px;
+
+    &.grabatar-link {
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+  }
+
+  ul {
+    font-size: 16px;
+    display: none;
+  }
+
+  li {
+    vertical-align: top;
+  }
+}
+
+.utility-dropdown {
+  &:hover {
+    ul {
+      display: block;
+    }
+  }
+
+  li {
+    display: block;
+    margin-left: 0;
+  }
+
+  ul,
+  .utility-search-hit-area {
+    position: absolute;
+    top: 70px;
+    z-index: 2;
+    display: none;
+  }
+
+  ul,
+  .utility-search-wrapper {
+    background: $c-header-bg;
+    border-top: 1px solid $c-dark-grey;
+    font-size: 14px;
+  }
+
+  ul {
+    width: 140px;
+    padding: 8px 0 12px;
+    left: -11px;
+    font-size: 13px;
+
+    a {
+      padding: 7px 25px;
+    }
+  }
+}
+
+.grabatar {
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  vertical-align: middle;
+  background: $c-custom-highlight;
+}
+
+.grabatar-link {
+  &:after {
+    @extend .icon-arrow_down:before;
+    @include icon-stuff;
+    font-size: 5px;
+    color: $c-text-sub;
+    display: inline-block;
+    padding-left: 5px;
+    vertical-align: middle;
+  }
+
+  &:hover {
+    &:after {
+      color: $c-white;
+    }
+  }
+}

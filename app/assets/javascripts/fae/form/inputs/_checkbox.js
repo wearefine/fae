@@ -1,7 +1,5 @@
 /* global Fae */
 
-'use strict';
-
 /**
  * Fae form checkbox
  * @namespace form.checkbox
@@ -20,7 +18,7 @@ Fae.form.checkbox = {
   loginCheckbox: function() {
     $('.login-body')
       .on('click', 'label.boolean', function(e){
-        $(this).toggleClass('js-active');
+        $(this).toggleClass('active');
       })
       .on('click', '.input.boolean :checkbox', function(e){
         e.stopPropagation();
@@ -31,11 +29,11 @@ Fae.form.checkbox = {
    * Run through the checkboxes and see if they are checked. apply js class for styling.
    */
   setCheckboxAsActive: function() {
-    $('.boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label').each(function(){
+    $('.boolean label, .js-checkbox-wrapper label').each(function(){
       var $this = $(this);
 
       if ($this.find(':checkbox:checked').length) {
-        $this.addClass('js-active');
+        $this.addClass('active');
       }
     });
   }

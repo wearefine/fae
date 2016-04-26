@@ -1,7 +1,5 @@
 /* global Fae, SimpleMDE, toolbarBuiltInButtons */
 
-'use strict';
-
 /**
  * Fae form text
  * @namespace form.text
@@ -60,7 +58,7 @@ Fae.form.text = {
           // updates the original textarea's value for JS validations
           $this.val(editor.value());
           // update length counter
-          Fae.form.validator.length_counter._updateCounter($this);
+          Fae.form.validator.length_counter.updateCounter($this);
         });
         editor.codemirror.on('focus', function(){
           $this.parent().addClass('mde-focus');

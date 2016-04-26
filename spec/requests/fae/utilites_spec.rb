@@ -5,7 +5,7 @@ describe 'utilities#toggle' do
   context 'when role is user' do
     it "shouldn't be able to toggle user's active attr" do
       user_login
-      post '/admin/toggle/fae_users/1/active', format: :js
+      post '/admin/toggle/fae__users/1/active', format: :js
 
       expect(response.status).to eq(401)
     end

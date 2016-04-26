@@ -1,6 +1,5 @@
-'use strict';
-
 (function ( $ ) {
+  'use strict';
 
   /**
    * Private initialization of FileInputer object.
@@ -17,7 +16,7 @@
     this.changeListener();
 
     return this;
-  };
+  }
 
   /**
    * Create jQuery objects of all necessary components and add them to the DOM
@@ -50,7 +49,7 @@
       attr: {
         type: 'button'
       },
-      text: this.options.text
+      text: this.options.choose_text
     });
 
     var $deleter = $('<div />', {
@@ -128,7 +127,7 @@
     var input_files = this.$input.get(0).files;
 
     // IE9 doesn't support size lookups; exit early and return true to clear validation
-    if (typeof input_files === 'undefined') {
+    if (typeof input_files === undefined) {
       return true;
     }
 
@@ -156,13 +155,12 @@
   $.fn.fileinputer = function( options ) {
 
     var defaults = {
-      wrapper_class: 'file_input-wrapper',
-      button_class: 'file_input-button',
-      delete_class: 'file_input-delete',
-      text: 'Choose File',
+      wrapper_class: 'asset-actions',
+      button_class: 'button',
+      choose_text: 'Choose File',
       file_text: 'No File Chosen',
-      active_class: 'js-active',
-      delete_class: 'icon-delete_x file_input-delete'
+      active_class: 'active',
+      delete_class: 'asset-delete'
     };
 
     // unite the default options with the passed-in ones

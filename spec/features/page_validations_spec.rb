@@ -38,7 +38,7 @@ feature 'page validations' do
     scenario 'should validate presence on form submission', js: true do
       admin_login
       visit fae.edit_content_block_path('home')
-      click_button('Save Settings')
+      click_button('Save')
 
       expect(page).to have_selector('div.home_page_header_content.field_with_errors')
       expect(page).to have_selector('div.home_page_header_content span.error')
@@ -94,7 +94,7 @@ feature 'page validations' do
     scenario 'should validate presence on form submission', js: true do
       admin_login
       visit fae.edit_content_block_path('home')
-      click_button('Save Settings')
+      click_button('Save')
 
       expect(page).to have_selector('div.home_page_introduction_content.field_with_errors')
       expect(page).to have_selector('div.home_page_introduction_content span.error')

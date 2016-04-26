@@ -2,6 +2,7 @@ class Aroma < ActiveRecord::Base
   include Fae::BaseModelConcern
 
   belongs_to :release
+  has_many :cats
 
   default_scope { order(:position) }
 
@@ -14,5 +15,9 @@ class Aroma < ActiveRecord::Base
 
   def fae_tracker_blacklist
     'all'
+  end
+
+  def cat_size
+    cats.size.to_s
   end
 end

@@ -14,7 +14,7 @@ feature 'fae_nested_index_table' do
       fill_in 'Name', with: 'Fuzzball'
       click_button('Create Cat')
     end
-    expect(page.find('.cats .main_content-section-area table')).to have_content('Fuzzball')
+    expect(page.find('.cats .content table')).to have_content('Fuzzball')
   end
 
   # scenario 'should allow editing existing item', js: true do
@@ -24,7 +24,7 @@ feature 'fae_nested_index_table' do
     # admin_login
     # visit admin_cats_path
 
-    # expect(page.find('.cats .main_content-section-area table')).to have_content('Buttercup')
+    # expect(page.find('.cats .content table')).to have_content('Buttercup')
 
     # click_link cat.name
     # expect(page).to have_css("form#edit_cat_#{cat.id}")
@@ -36,8 +36,8 @@ feature 'fae_nested_index_table' do
 
     # # support/async_helper.rb
     # eventually {
-    #   expect(page.find('.cats .main_content-section-area table')).to have_content('Pew Pew')
-    #   expect(page.find('.cats .main_content-section-area table')).to_not have_content('Buttercup')
+    #   expect(page.find('.cats .content table')).to have_content('Pew Pew')
+    #   expect(page.find('.cats .content table')).to_not have_content('Buttercup')
     # }
   # end
 
@@ -47,15 +47,11 @@ feature 'fae_nested_index_table' do
     admin_login
     visit admin_cats_path
 
-    expect(page.find('.cats .main_content-section-area table')).to have_content('Snowball McPuffypants')
+    expect(page.find('.cats .content table')).to have_content('Snowball McPuffypants')
 
-    # super hack due to webkit not able to click links without content
-    # see: https://github.com/thoughtbot/capybara-webkit/issues/494
-    evaluate_script "$('tr#cats_#{cat.id} .js-delete-link').click()"
-    # should be more like...
-    # page.find("tr#cats_#{cat.id} .js-delete-link").click
+    page.find("tr#cats_#{cat.id} .js-delete-link").click
 
-    expect(page.find('.cats .main_content-section-area table')).to_not have_content('Snowball McPuffypants')
+    expect(page.find('.cats .content table')).to_not have_content('Snowball McPuffypants')
   end
 
 end

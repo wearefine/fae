@@ -1,0 +1,76 @@
+.collapsible {
+  margin-bottom: 10px;
+
+  &.active {
+    h3 {
+      border-bottom: none;
+
+      &:after {
+        @extend .icon-arrow_up:before;
+      }
+    }
+
+    table:not(.sticky-table-header) {
+      display: table;
+    }
+  }
+
+  table {
+    display: none;
+  }
+
+  h3 {
+    background: $c-white;
+    padding: 20px 0 20px 37px;
+    position: relative;
+    border: 1px solid $c-border;
+    cursor: pointer;
+    margin-bottom: 0;
+
+    &:after {
+      @extend .icon-arrow_down:before;
+      @include icon-stuff;
+      color: $c-text-sub;
+      position: absolute;
+      right: 25px;
+      top: 22px;
+      font-size: 4px;
+    }
+
+    &:hover {
+      &:after {
+        color: $c-black;
+      }
+    }
+  }
+}
+
+.collapsible-toggle {
+  text-align: right;
+  margin: 0 0 $content-buffer;
+  cursor: pointer;
+  padding-right: 25px;
+
+  &:after {
+    @extend .icon-arrow_down:before;
+    @include icon-stuff;
+    color: $c-text-sub;
+    font-size: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
+    margin-top: -3px;
+  }
+
+  &:hover {
+    &:after {
+      color: $c-black;
+    }
+  }
+
+  &.close-all {
+    &:after {
+      @extend .icon-arrow_up:before;
+    }
+  }
+}

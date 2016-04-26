@@ -1,0 +1,119 @@
+// content header
+.content-header {
+  @include clearfix;
+  @include stack($fae-nav-stack);
+  width: 100%;
+  padding: 16px $content-buffer;
+  background: $c-content-header-bg;
+  border-bottom: 1px solid $c-grey;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-shadow: 0 0 10px $c-grey;
+
+  &:after {
+    content: '';
+    display: block;
+    height: 100%;
+    position: static;
+  }
+
+  &.-dashboard {
+    padding-top: 26px;
+    padding-bottom: 26px;
+    color: $c-darkest-grey;
+
+    strong {
+      color: $c-darkest-grey;
+    }
+  }
+
+  h1,
+  .breadcrumbs {
+    @include bp(large) {
+      float: left;
+    }
+  }
+
+  h1 {
+    padding: 5px 0;
+    font-weight: bold;
+  }
+}
+
+.content-header-subnav {
+  position: absolute;
+  left: $content-buffer;
+  bottom: 0;
+  width: 100%;
+
+  a {
+    @include transition(all .2s);
+    display: inline-block;
+    vertical-align: top;
+    padding: 6px 0;
+    border-bottom: 4px solid transparent;
+    margin: 0 12px;
+    font-size: 13px;
+    color: $c-darkest-grey;
+
+    &:hover {
+      color: $c-text-heavy;
+      border-bottom-color: $c-custom-highlight;
+    }
+  }
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+
+    &:first-child {
+      a {
+        margin-left: 0;
+      }
+    }
+
+    &.-active {
+      a {
+        color: $c-text-heavy;
+        border-bottom-color: $c-custom-highlight;
+      }
+    }
+  }
+}
+
+.content-header-buttons {
+  margin: 10px 0;
+
+  @include bp(large) {
+    float: right;
+    margin: 0;
+  }
+
+  a {
+    margin-right: 5px;
+
+    @include bp(medium) {
+      height: 37px; // Fix height so descenders don't mess up the visual balance
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.content-header-select {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+
+  a {
+    margin-right: 0;
+  }
+
+  .chosen-container-single .chosen-single {
+    padding-top: 6px;
+    padding-bottom: 5px;
+  }
+}

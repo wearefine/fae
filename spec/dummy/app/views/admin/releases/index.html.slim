@@ -1,0 +1,40 @@
+= render 'fae/shared/index_header', title: @klass_humanized.pluralize, csv: true
+main.content
+  = fae_filter_form do
+    = fae_filter_select :wine
+    = fae_filter_select :acclaims,
+      label: 'Acclaim',
+      collection: Acclaim.for_release_filter,
+      label_method: :score,
+      placeholder: 'Select some stuff'
+    = fae_filter_select :test, options: [['one', 1], ['two', 2]]
+    = fae_filter_select :grouped_test, grouped_options: { 'Numbers' => [['one', 1], ['two', 2]], 'Letters' => [['The letter J', 'J'], ['The letter N', 'N']] }
+    = fae_filter_select :grouped_association, collection: Aroma.all, grouped_by: :release
+  table.js-sort-column
+    thead
+      tr
+        th Name
+        th Wine
+        th Slug
+        th Price
+        th.-action-wide Modified
+        th.-action-wide data-sorter="false" On Stage
+        th.-action-wide data-sorter="false" On Prod
+        th.-action data-sorter="false"
+        th.-action data-sorter="false"
+
+    tbody
+      - if @items.present?
+        - @items.each do |item|
+          tr id="#{@klass_singular}_#{item.id}"
+            td = link_to item.fae_display_field, edit_admin_release_path(item)
+            td = item.wine.name_en if item.wine.present?
+            td = item.slug
+            td = item.price
+            td = fae_date_format item.updated_at
+            td = fae_toggle item, :on_stage
+            td = fae_toggle item, :on_prod
+            td = fae_clone_button item
+            td = fae_delete_button item
+      - else
+        tr: td colspan="9" No items found

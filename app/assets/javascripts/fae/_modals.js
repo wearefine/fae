@@ -1,13 +1,11 @@
 /* global Fae, modal, FCH */
 
-'use strict';
-
 /**
  * Fae modals
  * @namespace
  */
 Fae.modals = {
-  init: function() {
+  ready: function() {
     this.imageModals();
     this.markdownModalListener();
   },

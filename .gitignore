@@ -22,3 +22,5 @@ spec/dummy/public/uploads/*
 .DS_Store
 
 .rubocop.yml
+
+*.gem

@@ -1,0 +1,3 @@
+exclude_paths:
+- "app/assets/javascripts/fae/vendor/*"
+- "app/assets/stylesheets/fae/vendor/*"

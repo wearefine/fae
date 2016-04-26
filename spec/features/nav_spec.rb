@@ -2,94 +2,86 @@ require 'spec_helper'
 
 feature 'Main Navigation' do
 
-  scenario 'should highlight first level index', js: true do
+  scenario 'should highlight first and second level in header', js: true do
     admin_login
     visit admin_releases_path
 
-    expect(page.find('a.current').text).to eq('Releases')
+    within('.main-header-nav > .-parent-current') do
+      expect(page).to have_content('Products')
+      page.find('a').hover
+      expect(page.find('.-current')).to have_content('Releases')
+    end
   end
 
-  scenario 'should highlight first level new page', js: true do
+  scenario 'should highlight third level in sidebar', js: true do
     admin_login
-    visit new_admin_release_path
+    visit admin_varietals_path
 
-    expect(page.find('a.current').text).to eq('Releases')
+    within('.main-header-nav > .-parent-current') do
+      expect(page).to have_content('Products')
+      page.find('a').hover
+      expect(page.find('.-current')).to have_content('Attributes')
+    end
+
+    expect(page.find('#js-sidenav .-parent-current')).to have_content('Varietals')
   end
 
-  scenario 'should highlight first level edit page', js: true do
-    admin_login
-    release = FactoryGirl.create(:release)
-    visit edit_admin_release_path(release)
-
-    expect(page.find('a.current').text).to eq('Releases')
-  end
-
-  scenario 'should highlight second level index', js: true do
-    super_admin_login
-    visit fae.users_path
-
-    expect(page.find('a.current').text).to eq('Users')
-  end
-
-  scenario 'should highlight second level new page', js: true do
-    super_admin_login
-    visit fae.new_user_path
-
-    expect(page.find('a.current').text).to eq('Users')
-  end
-
-  scenario 'should highlight second level edit page', js: true do
-    super_admin_login
-    user = FactoryGirl.create(:fae_user)
-    visit fae.edit_user_path(user)
-
-    expect(page.find('a.current').text).to eq('Users')
-  end
-
-  scenario 'should highlight third level index', js: true do
+  scenario 'should highlight fourth level in sidebar', js: true do
     admin_login
     team = FactoryGirl.create(:team)
     visit admin_team_coaches_path(team)
 
-    expect(page.find('a.current').text).to eq('Coaches')
+    within('.main-header-nav > .-parent-current') do
+      page.find('a').hover
+      expect(page.find('.-current')).to have_content(team.name)
+    end
+
+    expect(page.find('#js-sidenav > ul > .-parent-current')).to have_content( 'Personnel' )
+    expect(page.find('#js-sidenav .-current')).to have_content('Coaches')
   end
 
-  scenario 'should highlight third level new page', js: true do
+  scenario 'should not exist on a new page', js: true do
     admin_login
     team = FactoryGirl.create(:team)
     visit new_admin_team_coach_path(team)
 
-    expect(page.find('a.current').text).to eq('Coaches')
+    expect(page).to_not have_selector('#js-sidenav')
   end
 
-  scenario 'should highlight third level edit page', js: true do
+  scenario 'should not exist on an edit page', js: true do
     admin_login
     coach = FactoryGirl.create(:coach)
     visit edit_admin_team_coach_path(coach.team, coach)
 
-    expect(page.find('a.current').text).to eq('Coaches')
+    expect(page).to_not have_selector('#js-sidenav')
   end
 
-  scenario 'should expand first level accordion', js: true do
+  scenario 'accordions should expand and collapse siblings when they are clicked', js: true do
     admin_login
-    visit admin_releases_path
+    team = FactoryGirl.create(:team)
+    team2 = FactoryGirl.create(:team)
+    visit admin_team_coaches_path(team)
 
-    expect(page).to_not have_selector('.main_nav a', text: 'Except Open To Another Drawer')
+    # Ensure only one accordion is open on load
+    expect(page).to have_selector('#js-sidenav .js-accordion.-parent-current > a', text: 'Personnel')
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
 
-    page.find('.main_nav-accordion a', text: 'Look This Drawer Does Nothing').click
+    page.find('#js-sidenav .js-accordion > a', text: 'Equipment').click
 
-    # Link is now visible
-    expect(page).to have_selector('.main_nav a', text: 'Except Open To Another Drawer')
+    # Ensure only one accordion is open after click
+    expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Personnel')
+    expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
   end
 
-  scenario 'should expand second level accordion', js: true do
+  scenario 'should include custom CSS classes' do
     admin_login
-    visit admin_releases_path
+    team = FactoryGirl.create(:team)
+    visit admin_team_coaches_path(team)
 
-    page.find('.main_nav a', text: 'Look This Drawer Does Nothing').click
-    page.find('.main_nav a', text: 'Except Open To Another Drawer').click
-
-    expect(page).to have_selector('.main_nav a', text: 'To A Link That Goes Nowhere')
+    expect(page).to have_selector('.css-one-level-deep', text: 'Events')
+    expect(page).to have_selector('.css-two-levels-deep', text: 'Event Hosts', visible: false)
+    expect(page).to have_selector('.css-three-levels-deep', text: 'Personnel', visible: false)
+    expect(page).to have_selector('.css-four-levels-deep', text: 'Coaches', visible: false)
   end
 
 end

@@ -1,0 +1,149 @@
+.main-header {
+  @include transition($mobilenav-transition);
+  @include stack($fae-nav-stack);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: $c-header-bg;
+  border-bottom: $header-border-width solid $c-custom-highlight;
+
+  @include bp(large) {
+    padding: 0 $content-buffer;
+    position: relative;
+  }
+
+  a {
+    display: block;
+    padding: 15px 0;
+    color: $c-darker-grey;
+
+    @include bp(large) {
+      padding-top: 27px;
+      padding-bottom: 27px;
+    }
+
+    &:hover,
+    &.-current,
+    &.-parent-current {
+      color: $c-white;
+    }
+  }
+
+  li {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+  }
+
+  h1 {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 0.8;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    a {
+      color: $c-white;
+
+      @include bp(medium-down) {
+        text-align: left;
+      }
+
+      @include bp(large) {
+        line-height: 1;
+      }
+    }
+  }
+
+  ul {
+    ul {
+      overflow: auto;
+      max-height: 320px;
+      scrollbar-track-color: $c-header-bg;
+      scrollbar-face-color: $c-dark-grey;
+
+      &::-webkit-scrollbar-thumb {
+        background: none;
+        border: 1px solid $c-mid-dark-grey;
+        border-radius: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: none;
+      }
+    }
+  }
+
+  nav {
+    display: none;
+    vertical-align: middle;
+    margin-left: $content-buffer;
+
+    @include bp(large) {
+      display: inline-block;
+    }
+  }
+}
+
+.main-header-nav {
+  @include transition(opacity .2s ease-in-out);
+
+  a {
+    // @include transition(color 0s);
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  > li {
+    &:hover,
+    &.-current,
+    &.-parent-current {
+      > a {
+        color: $c-white;
+      }
+    }
+
+    &.-parent-current {
+      > a {
+        background: $c-custom-highlight;
+      }
+    }
+
+    &:hover {
+      ul {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+
+  ul {
+    background: $c-header-bg;
+    border-top: 1px solid $c-dark-grey;
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    min-width: 160px;
+    padding: 10px 10px 13px;
+    line-height: 1.2;
+    font-size: 15px;
+    white-space: nowrap;
+
+    li {
+      display: block;
+    }
+
+    a {
+      background: none;
+      padding-top: 6px;
+      padding-bottom: 6px;
+
+      &:hover {
+        background: none;
+      }
+    }
+  }
+}

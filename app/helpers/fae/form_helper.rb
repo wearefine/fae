@@ -38,7 +38,6 @@ module Fae
       fae_input f, attribute, options
     end
 
-
     def fae_radio(f, attribute, options={})
       options[:alignment] = 'radio_collection--horizontal' if options[:type] == 'inline'
       options[:alignment] = 'radio_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
@@ -47,9 +46,8 @@ module Fae
     end
 
     def fae_checkbox(f, attribute, options={})
-      options[:alignment] = 'checkbox_collection--horizontal' if options[:type] == 'inline'
-      options[:alignment] = 'checkbox_collection--vertical' if options[:type] == 'stacked' || options[:type].blank?
-      options.update(as: :check_boxes, wrapper_class: "#{options[:wrapper_class]} #{options[:alignment]}", no_label_div: true)
+      options[:type] ||= 'stacked'
+      options.update(as: :check_boxes, wrapper_class: "checkbox-wrapper js-checkbox-wrapper #{options[:wrapper_class]} -#{options[:type]}", no_label_div: true)
       association_or_input f, attribute, options
     end
 
@@ -96,7 +94,7 @@ module Fae
 
     def fae_video_url(f, attribute, options={})
       options[:helper_text] ||= "Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long."
-      options[:hint] ||= "#{image_tag('fae/youtube_helper.jpg')}"
+      options[:hint] ||= '<div class="youtube-hint"></div>'
       options[:input_class] = "#{options[:input_class]} youtube-api"
       fae_input f, attribute, options
     end
@@ -112,7 +110,8 @@ module Fae
     end
 
     def label_and_hint(attribute, options)
-      raise "Fae::ConflictingOptions: the `hint` and `dark_hint` options must not be used at the same time." if options[:hint].present? && options[:dark_hint].present?
+      # @depreciation - remove dark_hint option in v2.0
+      hint = options[:hint] || options[:dark_hint]
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || attribute_name
@@ -124,8 +123,7 @@ module Fae
       end
       options[:label] = label.html_safe if label.present?
 
-      options[:hint] = "#{options[:hint]}".html_safe if options[:hint].present?
-      options[:hint] = "<div class='dark'>#{options[:dark_hint]}</div>".html_safe if options[:dark_hint].present?
+      options[:hint] = hint.html_safe if hint.present?
     end
 
     def is_attribute_or_association?(f, attribute)

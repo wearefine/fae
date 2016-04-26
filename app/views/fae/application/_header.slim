@@ -1,0 +1,50 @@
+header.main-header#js-main-header
+  span.mobilenav-toggle.icon-menu#js-mobilenav-toggle
+  h1: a href=root_path = @option.title
+
+  - if @fae_topnav_items.present?
+    nav
+      ul.main-header-nav
+        - @fae_topnav_items.each_with_index do |item, idx|
+          li class=nav_active_class(item[:class_name], 0, idx)
+            a href=item[:path] = item[:text]
+            - if item[:subitems]
+              ul
+                - item[:subitems].each_with_index do |subitem, sub_idx|
+                  li: a href=subitem[:nested_path] class=nav_active_class(subitem[:class_name], 1, sub_idx, idx) = subitem[:text]
+
+  - if user_signed_in?
+    ul.utility-nav#js-utility-nav
+      li.utility-dropdown.js-utility-dropdown
+        a.grabatar-link href="#"
+          img.grabatar src=fae_avatar alt=current_user.full_name
+        ul
+          li: a href=fae.destroy_user_session_path Log Out
+          li: a href=fae.settings_path Your Settings
+
+      li.utility-dropdown.js-utility-dropdown
+        a href="#"
+          i.icon-settings
+        ul
+          - if current_user.super_admin_or_admin?
+            li: a href=fae.users_path Users
+            li: a href=fae.activity_log_path Activity Log
+          - if current_user.super_admin?
+            li: a href=fae.option_path Root Settings
+          - if @option.live_url.present?
+            li: a href=@option.live_url target="_blank" Live Site
+          - if @option.stage_url.present?
+            li: a href=@option.stage_url target="_blank" Stage Site
+
+      li
+        a href=fae.help_path
+          i.icon-support
+
+      li.utility-dropdown.utility-search#js-utility-search
+        a href="#": i.icon-search
+
+        .utility-search-hit-area#js-utility-search-wrapper
+          .utility-search-wrapper
+            input#js-global-search type="text" placeholder="Jump to..."
+
+            == render 'global_search_results', show_nav: true

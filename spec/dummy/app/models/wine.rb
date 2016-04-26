@@ -19,7 +19,7 @@ class Wine < ActiveRecord::Base
   end
 
   def self.for_fae_index
-    order(:name_en)
+    order(:position)
   end
 
 end

@@ -1,117 +1,82 @@
 // Checkboxes
 .input.boolean,
-.checkbox_collection--vertical,
-.checkbox_collection--horizontal {
+.checkbox-wrapper {
   display: block;
 
   input[type=checkbox] {
     position: absolute;
     left: -9999px;
-    visibility: hidden;
   }
 
-  .checkbox {
-    position: relative;
-    padding: 0 20px 0 35px;
-    margin: 0;
-    cursor: pointer;
-    display: inline-block;
-
-    h6 {
-      display: inline-block;
-      padding-top: 0;
-      padding-left: 6px;
+  .active {
+    &:after {
+      @extend .icon-check:before;
+      @include icon-stuff;
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      font-size: 12px;
+      color: $c-darkest-grey;
+      cursor: pointer;
     }
   }
+}
 
-  label.checkbox:before,
-  .checkbox label:before {
-    content: "";
+.checkbox {
+  position: relative;
+  padding: 0 20px 0 35px;
+  margin: 0;
+  cursor: pointer;
+  display: inline-block;
+
+  h6 {
+    display: inline-block;
+    padding-top: 0;
+    padding-left: 6px;
+  }
+}
+
+label.checkbox,
+.checkbox label {
+  padding-top: 6px; // Vertical align hack
+
+  &:before {
+    content: '';
     position: absolute;
-    top: -6px;
+    top: 0;
     left: 0;
     height: 25px;
     width: 25px;
     border: 1px solid $c-border;
-    background: $c-form-checkbox-bg;
+    background: $c-white;
     cursor: pointer;
-
-    @include border-radius(2px);
-  }
-
-  .js-active {
-    &:before {
-      border-color: $c-custom-highlight;
-    }
-
-    &:after {
-      @extend .icon-check:before;
-      position: absolute;
-      top: -1px;
-      left: 3px;
-      font-size: 18px;
-      color: $c-custom-highlight;
-      cursor: pointer;
-
-      @include icon-stuff();
-    }
+    border-radius: 2px;
   }
 }
 
-.checkbox_styled {
-  display: inline-block;
-
-  input[type=checkbox] {
-    position: absolute;
-    left: -9999px;
-    top: -9999px;
-    visibility: hidden;
-  }
-
-  .checkbox {
-    display: inline-block;
-    height: 20px;
-    width: 20px;
-    padding: 2px 0 0 2px;
-    border: 1px solid $c-border;
-    margin-bottom: 0;
-    font-size: 13px;
-    color: $c-text-heavy;
-    background: $c-form-checkbox-bg;
-    cursor: pointer;
-
-    @include border-radius(2px);
-
-    &:before {
-      visibility: hidden;
-    }
-
-    &.js-active:before {
-      visibility: visible;
-    }
-  }
-}
-
-.checkbox_collection--vertical {
-  &.checkbox_collection--vertical {
+.checkbox-wrapper {
+  &.-stacked {
     label {
       display: block;
       margin-bottom: 25px;
     }
+
+    .checkbox {
+      display: block;
+    }
   }
 
-  .checkbox {
-    display: block;
-  }
-}
-
-.checkbox_collection--horizontal {
-  &.checkbox_collection--horizontal {
+  &.-inline {
     label {
+      padding-top: 0;
       vertical-align: top;
       width: 190px;
       margin-bottom: 25px;
       margin-right: 10px;
+    }
+
+    .checkbox {
+      vertical-align: top;
     }
   }
 }

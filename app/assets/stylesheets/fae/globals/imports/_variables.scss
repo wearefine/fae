@@ -2,131 +2,122 @@
 // Project Specific Variables
 //////////////////////////////
 
-// Project Specific breakpoints
-$breakpoints: (
-  'desktop':                ( min-width:  1100px ),
-  'mobile':                 ( max-width:  520px ),
+// Empty variable for user-defined breakpoints
+$custom-breakpoints: () !default;
+
+// Fae-specific breakpoints
+$fae-breakpoints: (
+  // @depreciation - remove page_header_save_block in v2.0
   'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
   'login_submit':           ( min-width: 475px ),
 );
 
-// Merge $fine_breakpoints and $breakpoints to use with bp() mixin
-$breakpoints: map-merge($fine-breakpoints, $breakpoints);
+// Merge $custom-breakpoints, $fae-breakpoints, and Frob Core's $fine-breakpoints to one variable to use with bp() mixin
+$fae-breakpoints: map-merge($fae-breakpoints, $custom-breakpoints);
+$breakpoints: map-merge($fine-breakpoints, $fae-breakpoints);
 
-$f-headline: $f-sans;
-$f-content: $f-serif;
+// Widths, padding, margins, and the like
+$content-buffer: 30px !default;
+$sidenav-width: 250px !default;
+$sidenav-padding-one-level: 10px !default;
+$sidenav-padding-base-level: $content-buffer !default;
+$sidenav-active-border-width: 7px !default;
 
-/* widths, padding, margins, and the like */
-$main_nav_width: 210px;
+$header-border-width: 4px !default;
 
-/* TYPOGRAPHY */
-$f-lato: "Lato", serif;
+// Typography
+$f-content: 'Lato', $f-sans !default;
 
-/* Colors */
-$c-black: #261c16;
-$c-dark_grey: #303030;
-$c-grey: #595959;
-$c-light_grey: #999;
-$c-lighter_grey: #ccc;
-$c-lightest_grey: #eee;
-$c-almost_white: #f7f7f7;
+// Apps should declare $c-custom-highlight in their fae.scss file
+$c-custom-highlight: #9aa142 !default;
 
+// In order from dark to light
+// These are stacked in 10s so new colors can be easily inserted between if/when this list changes
+$grays: (
+  10: #1e1e1e,
+  20: #3b3b3b,
+  30: #595959,
+  40: #999,
+  50: #ccc,
+  60: #dfdfdf,
+  70: #ebebeb,
+  80: #efefef,
+  90: #f7f7f7,
+) !default;
 
-/*
-**  Functional name for colors
-*/
-$c-body-bg: $c-almost_white;
-$c-text: $c-grey;
-$c-text-sub: $c-light_grey;
-$c-text-sub-hover: $c-lighter_grey;
-$c-text-heavy: #2b2b2b;
-$c-box_shadow: $c-lighter_grey;
-$c-border: $c-lighter_grey;
+// Functional name for colors
+$c-darkest-grey: gray(10) !default;
+$c-dark-grey: gray(20) !default;
+$c-mid-dark-grey: gray(30) !default;
+$c-darker-grey: gray(40) !default;
+$c-mid-grey: gray(50) !default;
+$c-grey: gray(60) !default;
+$c-light-grey: gray(70) !default;
+$c-lightest-grey: gray(80) !default;
+$c-near-white: gray(90) !default;
 
-/* header area */
-$c-header-bg: $c-black;
-$c-header-logo: $c-white;
+// Text
+$c-body-bg: $c-near-white !default;
+$c-text: $c-mid-dark-grey !default;
+$c-text-sub: $c-darker-grey !default;
+$c-text-sub-hover: $c-mid-grey !default;
+$c-text-heavy: $c-darkest-grey !default;
+$c-box_shadow: $c-mid-grey !default;
+$c-border: $c-mid-grey !default;
 
-/* utility nav area */
-$c-utility-sub-nav-bg: $c-white;
-$c-utility-sub-nav-link-bg: $c-white;
-$c-utility-sub-nav-link-bg-hover: $c-lightest_grey;
-$c-utility-sub-nav-link-color: $c-dark_grey;
+// Nav
+$c-header-bg: $c-darkest-grey !default;
 
-/* nav area */
-$c-nav-link: $c-dark_grey;
-$c-nav-bg-hover: #d6d6d6;
-$c-nav-sub-bg-active: #dedede;
-$c-nav-sub-bg-active-highlight: #d6d6d6;
-$c-nav-icons: #999;
-$c-nav-icons-hover: #777;
+// Content Headers
+$c-content-header-bg: $c-white !default;
+$c-content-section-title: $c-lightest-grey !default;
 
-/* main_content areas */
-$c-content-shadow: $c-lighter_grey;
-$c-content-header-bg: #fdfdfd;
-$c-content-section-title: $c-lightest_grey;
+// Tables
+$c-table-th: $c-grey !default;
+$c-table-tr-even: $c-lightest-grey !default;
+$c-table-td: $c-near-white !default;
+$c-table-tr-hover: $c-white !default;
+$c-table-filter-header: $c-darkest-grey !default;
 
-/* tables */
-$c-table-th: #dfdfdf;
-$c-table-th-highlight: #e7e7e7;
-$c-table-tr-even: #f2f2f2;
-$c-table-td: #f9f9f9;
-$c-table-tr-hover: #fefefe;
-$c-table-action_menu-bg: $c-white;
-$c-table-action_menu-link-bg: $c-white;
-$c-tablesorter-icon: $c-light_grey;
-$c-table-filter-header: #222;
-$c-table-filter-input: #333;
+// Forms
+$c-dark-button: $c-white !default;
+$c-dark-button-gradient-start: $c-dark-grey !default;
+$c-dark-button-gradient-end: $c-darkest-grey !default;
+$c-light-button: $c-dark-grey !default;
+$c-light-button-gradient-start: $c-near-white !default;
+$c-light-button-gradient-end: $c-light-grey !default;
+$c-form-file-link-bg: $c-grey !default;
+$c-form-file-link-bg-hover: $c-grey !default;
+$c-form-table-bg: $c-light-grey !default;
+$c-chosen-gradient-start: $c-near-white !default;
+$c-chosen-gradient-end: $c-light-grey !default;
+$c-chosen-multi-bg: $c-lightest-grey !default;
+$c-chosen-multi-text: $c-dark-grey !default;
+$c-chosen-multi-delete: $c-darker-grey !default;
 
-/* forms */
-$c-form-submit: $c-white;
-$c-form-submit-gradient-start: #454545;
-$c-form-submit-gradient-end: #252525;
-$c-form-submit-gradient-hover: #252525;
-$c-form-button: #555;
-$c-form-button-gradient-start: #eee;
-$c-form-button-gradient-end: #e1e1e1;
-$c-form-button-gradient-hover: #e1e1e1;
-$c-form-checkbox-bg: $c-white;
-$c-form-file-bg: $c-almost_white;
-$c-form-file-bg-active: $c-white;
-$c-form-file-link-bg: #f7f7f7;
-$c-form-file-link-bg-hover: #ddd;
-$c-form-file-link-text: $c-custom-highlight;
-$c-form-table-bg: #ebebeb;
-$c-chosen-bg: $c-white;
-$c-chosen-gradient-start: #eee;
-$c-chosen-gradient-end: #e1e1e1;
-$c-chosen-gradient-hover:  #e1e1e1;
-$c-chosen-multi-bg: $c-lightest_grey;
-$c-chosen-multi-text: #555;
-$c-chosen-multi-delete: $c-light_grey;
+// Yes / No Sliders
+$c-slider-no-color: $c-light-grey !default;
+$c-slider-no-bg: $c-darker-grey !default;
 
-/* Yes / No Sliders */
-$c-slider-option-selector: $c-white;
-$c-slider-yes-color: $c-white;
-$c-slider-yes-bg: $c-custom-highlight;
-$c-slider-no-color: $c-lighter_grey;
-$c-slider-no-bg: $c-light_grey;
-$c-slider-border: #dedede;
+// Modal
+$c-modal-overlay-bg: $c-mid-grey !default;
+$c-modal-bg: $c-dark-grey !default;
+$c-modal-text: $c-darker-grey !default;
 
-/* Notices and Errors */
-$c-notice-bg: #d8f0d0;
-$c-notice-content: #4c884e;
-$c-warning-bg: #f7f2c8;
-$c-warning-content: #ca953a;
-$c-error-bg: #f6cfcf;
-$c-error-content: #b75553;
+// Notices and Errors
+$c-notice-bg: #d8f0d0 !default;
+$c-notice-content: #4c884e !default;
+$c-warning-bg: #f7f2c8 !default;
+$c-warning-content: #ca953a !default;
+$c-error-bg: #f6cfcf !default;
+$c-error-content: #b75553 !default;
 
-/* Modal */
-$c-modal-overlay-bg: $c-lighter_grey;
-$c-modal-bg: #333;
-$c-modal-light-bg: #fff;
-$c-modal-text: #999;
-$c-modal-header: $c-white;
+$mobilenav-transition: margin-left .3s cubic-bezier(0.250, 0.460, 0.450, 0.940) !default;
 
-/* login page */
-$c-login-bg: $c-white;
-$c-login-footer-all: #aaa;
-$c-login-box_shadow: $c-lighter_grey;
+$fae-nav-stack: (
+  '.sidenav',
+  '.content-header',
+  '.sticky-table-header',
+  '.main-header'
+);

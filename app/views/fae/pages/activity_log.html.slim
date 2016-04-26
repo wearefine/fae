@@ -1,32 +1,30 @@
 == render 'fae/shared/index_header', title: 'Activity Log', new_button: false
 
-.main_content-sections
-  section.main_content-section
-    .main_content-section-area
+main.content
 
-      == fae_filter_form title: 'Seach Changes', action: fae.activity_log_filter_path do
-        == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }
-        == fae_filter_select :model, options: @items.unique_changeable_types
-        == fae_filter_select :type, options: ['created', 'updated', 'deleted']
-        == fae_filter_select :date, options: ['Last Hour', 'Last Day', 'Last Week', 'Last Month'], placeholder: 'All Time'
+  == fae_filter_form title: 'Search Changes', action: fae.activity_log_filter_path do
+    == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }
+    == fae_filter_select :model, options: @items.unique_changeable_types
+    == fae_filter_select :type, options: ['created', 'updated', 'deleted']
+    == fae_filter_select :date, options: ['Last Hour', 'Last Day', 'Last Week', 'Last Month'], placeholder: 'All Time'
 
-      table.index_table.main_table-sort_columns
-        thead
+  table.js-sort-column
+    thead
+      tr
+        th User
+        th Item
+        th Type
+        th Attribute(s) Updated
+        th Updated At
+    tbody
+      - if @items.present?
+        - @items.each do |change|
           tr
-            th User
-            th Item
-            th Type
-            th Attribute(s) Updated
-            th Updated At
-        tbody
-          - if @items.present?
-            - @items.each do |change|
-              tr
-                td = change.user.full_name if change.user.present?
-                td = change_item_link(change)
-                td = change.change_type
-                td = change.updated_attributes.join(', ') if change.updated_attributes.present?
-                td = fae_datetime_format(change.updated_at)
-          - else
-            tr
-              td colspan=5 == "No changes recorded"
+            td = change.user.full_name if change.user.present?
+            td = change_item_link(change)
+            td = change.change_type
+            td = change.updated_attributes.join(', ') if change.updated_attributes.present?
+            td = fae_datetime_format(change.updated_at)
+      - else
+        tr
+          td colspan=5 No changes recorded

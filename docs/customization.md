@@ -7,6 +7,7 @@
 * [CSS Classes](#css-classes)
 * [Cloning](#cloning)
 * [Conditional Validation](#conditional-validation)
+* [Disabling Environments](#disabling-environments)
 
 ---
 
@@ -161,18 +162,16 @@ Using Fae's generators let's quickly scaffold a model that supports multiple lan
 $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
 ```
 
-## Language Nav Partial
+## Displaying the Language Nav
 
-Then finally, you'll need to add the `fae/shared/language_nav` partial to the form, as the first child of `section.main_content-header`:
+Finally, to display the language select menu, you'll need to add `language: true` to your [`form_header`](helpers.md#form_header-1) partial:
 
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  section.main_content-header
+  header.content-header.js-content-header
+    = render 'fae/shared/form_header', header: @klass_name, language: true
 
-    == render 'fae/shared/language_nav'
-
-    .main_content-header-wrapper
     // ...
 ```
 
@@ -199,18 +198,18 @@ end
 
 ## View Helpers
 
-Next we'll add the form to our view as the first child of `.main_content-section-area`:
+Next we'll add the form to our view as the first child of `.content`:
 
 `app/views/admin/people/index.html.slim`
 ```slim
 // ...
-.main_content-section-area
+.content
 
   == fae_filter_form do
     == fae_filter_select :company
     == fae_filter_select :groups
 
-  table.index_table.main_table-sort_columns
+  table.js-sort-column
   // ...
 ```
 
@@ -224,7 +223,7 @@ Finally we need to define our class methods to scope the `Person` class. This da
 
 ### filter(params)
 
-`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the seach field.
+`ModelName#filter(params)` will be the scope when data is filtered. The `params` passed in will be the data directly from the `fae_filter_select` helpers we defined, plus `params['search']` from the search field.
 
 From the form above we can assume our params look like this:
 
@@ -246,7 +245,7 @@ def self.filter(params)
   conditions[:company_id] = params['company'] if params['company'].present?
   conditions['groups.id'] = params['groups'] if params['groups'].present?
 
-  # use good 'ol MySQL to seach if search param is present
+  # use good 'ol MySQL to search if search param is present
   search = []
   if params['search'].present?
     search = ["people.name LIKE ? OR companies.name LIKE ?", "%#{params['search']}%", "%#{params['search']}%"]
@@ -365,30 +364,28 @@ Fae provides a partial to display tracked changes in an object's form. Read more
 
 # CSS Classes
 
-## Fixed position table headers
-
-For extra long tables, add the class `sticky-table-header` to a `table` and scroll away. Multiple sticky tables can appear on one page.
-
 ## Collapsible tables
+
+![Collapsible](images/collapsible.gif)
 
 Some pages have multiple tables that are easier to navigate if tables can be shown or hidden. Wrap each table in a `.collapsible` div and prepend an `h3` with the item's name and count. Example below and on the dummy app's `events/index` page.
 
 ```slim
-.main_content-section-area
+.content
   .collapsible
     h3 All Wine (#{@all_wine.length})
-    table.index_table
+    table
       ....
   .collapsible
     h3 White & Sparkling Wine (#{@white_sparkling_wine.length})
-    table.index_table
+    table
       ....
 ```
 
 For best results, include an Open/Close All toggle.
 
 ```slim
-.main_content-section-area
+.content
   .collapsible-toggle Open All
   .collapsible
     ....
@@ -415,7 +412,7 @@ You may add the clone button to the index, edit form, or both.
 Add the following to your `thead`, usually after 'Delete':
 
 ```slim
-  th class="main_table-header-clone" data-sorter="false" Clone
+  th.-action data-sorter="false" Clone
 ```
 
 And to your `tbody`:
@@ -426,10 +423,10 @@ td = fae_clone_button item
 
 #### For Form
 
-Simply pass `cloneable: true` into your form_buttons partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
+Simply pass `cloneable: true` into your form_header partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
 
 ```ruby
-  render 'fae/shared/form_buttons', cloneable: true, clone_button_text: 'Duplicate Me!'
+  render 'fae/shared/form_header', cloneable: true, clone_button_text: 'Duplicate Me!'
 ```
 
 That's all for basic set-up.
@@ -505,13 +502,11 @@ In your form view nest the optional fields, and add some classes for js and sass
 = simple_form_for(['admin', @item]) do |f|
   ...
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :name
-        = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
-        .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")
-          = fae_input f, :slug, label_html: { class: 'is_required_and_hidden'}
+  .content
+    = fae_input f, :name
+    = fae_input f, :detail_page, helper_text: "This project has a detail page and should display on the Work category page(s)"
+    .js-optional-fields class=("#{ 'hidden' unless (params[:action] == 'edit' && @item.detail_page?) }")
+      = fae_input f, :slug, label_html: { class: 'is_required_and_hidden'}
 ```
 
 Update Judge so that judge loads your custom `EachValidtor` on the FE.
@@ -589,3 +584,22 @@ $(document).ready(function() {
   AcmeAdmin.init();
 });
 ```
+
+---
+
+# Disabling Environments
+
+Sometimes an application will have two environments that share a DB. This is helpful when you want to flag data in a production admin to be available for review on a staging admin.
+
+It can be confusing for the user to have an admin on the staging site and could potentially lead to unkowning affecting production data.
+
+If you want to disable Fae on any Rails environment, you can do so with this option in `config/initializers/fae.rb`:
+
+```ruby
+Fae.setup do |config|
+
+  config.disabled_environments = [ :preview, :staging ]
+
+end
+```
+

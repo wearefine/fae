@@ -9,35 +9,32 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require jquery.ui.sortable
 //= require jquery.ui.datepicker
-//  require jquery.ui.effect-highlight
-//= require chosen.jquery.min
-//= require jquery.tablesorter
-
-//= require jquery.simplemodal.1.4.4
-//= require jquery.multi-select
-//= require js.cookie
-//= require moment.min
-//= require jquery.daterangepicker
-//= require imagesloaded.pkgd.min
-//= require touch_punch
 //= require underscore
 //= require json2
 //= require judge
-//= require fryr
-//= require simplemde.min
 
-//= require fae/judge_path
-//= require fae/extensions
+//= require fae/vendor/chosen.jquery.min
+//= require fae/vendor/frob_core_helpers
+//= require fae/vendor/fryr
+//= require fae/vendor/moment.min
+//= require fae/vendor/jquery.daterangepicker
+//= require fae/vendor/jquery.multi-select
+//= require fae/vendor/jquery.simplemodal.1.4.4
+//= require fae/vendor/jquery.tablesorter
+//= require fae/vendor/js.cookie
+//= require fae/vendor/simplemde.min
+//= require fae/vendor/touch_punch
 
-//= require fae/frob_core_helpers
+
 //= require fae/admin
 
+//= require fae/form/hinter
 //= require fae/form/_form
 //= require fae/form/inputs/_dates
 //= require fae/form/inputs/_select
@@ -50,14 +47,15 @@
 //= require fae/form/fae_chosen
 //= require fae/form/fileinputer
 
+//= require fae/navigation/sticky
 //= require fae/navigation/_navigation
-//= require fae/navigation/_subnavHighlighter
+//= require fae/navigation/_subnav_highlighter
 //= require fae/navigation/_language
+//= require fae/navigation/_global_search
 
-//= require fae/hinter
 //= require fae/_modals
 //= require fae/_tables
-//= require fae/sticky
-//= require fae/fae_init
 
 //= require fae
+
+//= require fae/fae_init

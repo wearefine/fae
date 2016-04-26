@@ -56,8 +56,9 @@ feature 'Clone record' do
 
         # habtm duplicates the join records
         expect(cloned_release.events).to eq(release.events)
-        expect(page.find('.release_events')).to have_content(event_1.name)
-        expect(page.find('.release_events')).to have_content(event_2.name)
+        # Case insensitive matching in case labels become text-transform: uppercase
+        expect(page).to have_selector('.release_events', text: /#{event_1.name}/i)
+        expect(page).to have_selector('.release_events', text: /#{event_2.name}/i)
       }
     end
 
@@ -69,7 +70,7 @@ feature 'Clone record' do
       release = FactoryGirl.create(:release, name: 'Ima Release', vintage: '2012', price: 13, varietal_id: 2, show: Date.today)
       admin_login
       visit admin_releases_path
-      page.find('.main_table-clone').click
+      page.find('a.table-action[title="Clone"]').click
 
       # support/async_helper.rb
       eventually {
@@ -84,7 +85,7 @@ feature 'Clone record' do
       release = FactoryGirl.create(:release, name: 'Ima Release', vintage: '2012', on_prod: true, price: 13, varietal_id: 2, show: Date.today)
       admin_login
       visit admin_releases_path
-      page.find('.main_table-clone').click
+      page.find('a.table-action[title="Clone"]').click
 
       eventually {
         expect(find_field('release_on_prod_false').value).to eq('false')

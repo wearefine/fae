@@ -1,0 +1,88 @@
+.sidenav {
+  @include stack($fae-nav-stack);
+  position: absolute;
+
+  @include bp(large-down) {
+    display: none;
+  }
+
+  a {
+    padding: 10px $sidenav-padding-base-level;
+
+    &.-current {
+      font-weight: bold;
+      color: $c-black;
+      padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
+      border-left: $sidenav-active-border-width solid $c-custom-highlight;
+    }
+  }
+
+  .subnav {
+    padding-left: $sidenav-padding-base-level;
+  }
+
+  li {
+    &.-parent-current {
+      > a {
+        color: $c-black;
+        font-weight: bold;
+        padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
+        border-left: $sidenav-active-border-width solid $c-custom-highlight;
+      }
+
+      > ul {
+        display: block;
+      }
+    }
+  }
+
+  // Index pages
+  ~ .content,
+  // Edit pages
+  ~ .simple_form {
+    @include bp(large) {
+      padding-left: $sidenav-width + $content-buffer;
+    }
+  }
+}
+
+// The accordion. An <li> element.
+.sidenav-accordion {
+  &.-open {
+    > a {
+      &:after {
+        @extend .icon-arrow_up:before;
+        color: $c-black;
+      }
+    }
+  }
+
+  a {
+    &.-current {
+      border-left: 0;
+      padding-left: $sidenav-padding-one-level;
+    }
+  }
+
+  li {
+    a {
+      font-size: 13px;
+      padding-left: $sidenav-padding-one-level;
+    }
+  }
+
+  > a {
+    @extend %nav-icon;
+
+    &:after {
+      @extend .icon-arrow_down:before;
+      top: 14px;
+      font-size: 6px;
+    }
+  }
+
+  // Expand nested accordions when the main nav is -current
+  ul {
+    display: none;
+  }
+}

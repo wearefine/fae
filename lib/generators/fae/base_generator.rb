@@ -112,8 +112,8 @@ RUBY
     end
 
     def inject_nav_item
-      line = "{ text: '#{plural_file_name.humanize.titlecase}', path: main_app.#{options.namespace}_#{plural_file_name}_path },\n\s\s\s\s\s\s\s\s"
-      inject_into_file 'app/controllers/concerns/fae/nav_items.rb', line, before: '# scaffold inject marker'
+      line = "item('#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path),\n\s\s\s\s\s\s\s\s"
+      inject_into_file 'app/models/concerns/fae/navigation_concern.rb', line, before: '# scaffold inject marker'
     end
 
   end

@@ -23,12 +23,12 @@ Fae::Engine.routes.draw do
   # AJAX
   delete 'files/:id/delete_file' => 'files#delete_file', as: :delete_file
   delete 'images/:id/delete_image' => 'images#delete_image', as: :delete_image
-  get 'images/:id/crop_image' => 'images#crop_image', as: :crop_image
-  patch 'images/:id/crop_image' => 'images#crop_image', as: :commit_crop
 
   post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
   post 'sort/:object', to: 'utilities#sort', as: 'sort'
   post 'language_preference/:language', to: 'utilities#language_preference'
+  post 'search/:query', to: 'utilities#global_search'
+  post 'search', to: 'utilities#global_search'
 
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]

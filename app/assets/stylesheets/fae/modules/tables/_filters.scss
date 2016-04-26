@@ -1,0 +1,61 @@
+// Filters!
+.table-filter-area {
+  position: relative;
+  padding: 20px;
+  border: 1px solid $c-grey;
+  border-bottom: 0;
+  background: $c-form-table-bg;
+
+  input[type=submit],
+  .button {
+    display: none;
+  }
+
+  h4 {
+    margin-bottom: 20px;
+    color: $c-table-filter-header;
+    font-size: 16px;
+  }
+
+  label {
+    margin-bottom: 5px;
+    color: $c-table-filter-header;
+    font-size: 12px;
+  }
+
+  input[type=text] {
+    padding: 5px 30px 5px 10px;
+    font-size: 12px;
+    color: $c-dark-grey;
+    border-radius: 20px;
+  }
+}
+
+.table-filter-header {
+  @include clearfix;
+
+  h4 {
+    display: inline-block;
+  }
+}
+
+.table-filter-keyword-wrapper {
+  position: relative;
+  float: right;
+
+  i {
+    position: absolute;
+    top: 5px;
+    right: 12px;
+    cursor: pointer;
+  }
+}
+
+.table-filter-group-wrapper {
+  @include clearfix;
+}
+
+.table-filter-group {
+  display: inline-block;
+  margin: 0 30px 20px 0;
+}

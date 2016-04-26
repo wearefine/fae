@@ -28,7 +28,7 @@ module Fae
     def attr_toggle(item, column)
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
-      model_name = item.class.to_s.include?("Fae::") ? item.class.to_s.gsub('::','').underscore.pluralize : item.class.to_s.underscore.pluralize
+      model_name = item.class.to_s.gsub('::','__').underscore.pluralize
       url = fae.toggle_path(model_name, item.id.to_s, column)
 
       link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do
@@ -44,15 +44,31 @@ module Fae
 
     def fae_clone_button(item)
       return if item.blank?
-      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'main_table-action main_table-clone' do
-        concat content_tag :span, nil, class: 'icon-copy'
+      link_to "#{@index_path}?from_existing=#{item.id}", method: :post, title: 'Clone', class: 'js-tooltip table-action', data: { confirm: t('fae.clone_confirmation') } do
+        concat content_tag :i, nil, class: 'icon-copy'
       end
+    end
+
+    def fae_delete_button(item, delete_path = nil, *custom_attrs)
+      return if item.blank?
+      delete_path ||= polymorphic_path([main_app, fae_scope, item.try(:fae_parent), item])
+      attrs = { method: :delete, title: 'Delete', class: 'js-tooltip table-action', data: { confirm: t('fae.delete_confirmation') } }
+      attrs.deep_merge!(custom_attrs[0]) if custom_attrs.present?
+      link_to delete_path, attrs do
+        concat content_tag :i, nil, class: 'icon-trash'
+      end
+    end
+
+    def fae_sort_id(item)
+      return if item.blank?
+      klass = item.class.name.underscore.gsub('/','__')
+      "#{klass}_#{item.id}"
     end
 
     def fae_filter_form(options = {}, &block)
       options[:collection] ||= @items
       options[:action]     ||= "#{@index_path}/filter"
-      options[:title]      ||= "Search #{@klass_humanized.pluralize}"
+      options[:title]      ||= "Search #{@klass_humanized.pluralize.titleize}"
       options[:search]       = true if options[:search].nil?
       options[:cookie_key] ||= false
 
@@ -62,19 +78,23 @@ module Fae
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
       filter_header = content_tag(:div, class: 'table-filter-header') do
-        concat content_tag :h2, options[:title]
+        concat content_tag :h4, options[:title]
         concat filter_search_field if options[:search]
       end
 
       form_tag(options[:action], form_hash) do
         concat filter_header
 
-        filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
-          concat capture(&block)
-          concat filter_submit_btns
+        if block_given?
+          filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
+            concat capture(&block)
+            concat content_tag(:div, content_tag(:a, 'Reset Search', class: 'js-reset-btn button -small hidden', href: '#'), class: 'table-filter-group')
+          end
         end
 
         concat filter_group_wrapper
+        # I know this `unless !` looks like it should be an `if` but it's definitely supposed to be `unless !`
+        concat submit_tag 'Apply Filters', class: 'hidden' unless !options[:search]
       end
     end
 
@@ -97,32 +117,25 @@ module Fae
         select_options = options_for_select(options[:options]) if options[:options].present?
       end
 
+
       content_tag :div, class: 'table-filter-group' do
         concat label_tag "filter[#{attribute}]", options[:label]
         concat select_tag "filter[#{attribute}]", select_options, prompt: options[:placeholder]
       end
     end
 
-    # this isn't implemented yet, but saving the markup here
-    def fae_filter_input(attribute, options = {})
-      '<div class="table-filter-group">
-        <label for="filter_city">Input</label>
-        <input type="text" />
-      </div>'.html_safe
+    def fae_avatar(user = current_user)
+      hash = Digest::MD5.hexdigest(user.email.downcase)
+
+      "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
     end
 
     private
 
     def filter_search_field
       content_tag :div, class: 'table-filter-keyword-wrapper' do
-        text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword', class: 'table-filter-keyword-input'
-      end
-    end
-
-    def filter_submit_btns
-      content_tag :div, class: 'table-filter-controls' do
-        concat submit_tag 'Apply Filters'
-        concat submit_tag 'Reset Search', class: 'js-reset-btn table-filter-reset'
+        concat text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword'
+        concat content_tag(:i, '', class: 'icon-search')
       end
     end
 

@@ -1,7 +1,5 @@
 /* global Fae, FCH, Cookies */
 
-'use strict';
-
 /**
  * Fae tables
  * @namespace tables
@@ -18,31 +16,34 @@ Fae.tables = {
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
-  init: function() {
-    if (FCH.exists('.main_table-sort_columns')) {
+  ready: function() {
+    // @depreciation - remove `|| FCH.exists('.main_table-sort_columns')` and only use FCH.exists('.js-sort-column') in v2.0
+    if (FCH.exists('.js-sort-column') || FCH.exists('.main_table-sort_columns')) {
       this.dateColumnSorting();
       this.columnSorting();
       this.defaultSortCookie();
       this.sortColumnsFromCookies();
     }
 
-    if (FCH.exists('.main_content-sortable')) {
+    // @depreciation - remove || FCH.exists('.main_content-sortable-handle') and only use FCH.exists('.sortable-handle') in v2.0
+    if (FCH.exists('.sortable-handle') || FCH.exists('.main_content-sortable-handle')) {
       this.rowSorting();
     }
 
-    if (FCH.exists('.sticky-table-header')) {
-      this.stickyTableHeader();
-    }
+    this.stickyTableHeader();
 
     if (FCH.exists('.collapsible')) {
       this.collapsibleTable();
     }
 
-    if (FCH.exists('form .main_content-section-area')) {
-      this.endingSelectShim();
+    // @depreciation - remove conditional wrapping and call endingSelectShim like `this.endingSelectShim()` in v2.0
+    if (FCH.exists('form ' + Fae.content_selector)) {
+      this.endingSelectShim(Fae.content_selector);
     }
 
-    this.addToTable();
+    if (FCH.exists('.js-tooltip')) {
+      this.tooltip();
+    }
   },
 
   /**
@@ -53,7 +54,8 @@ Fae.tables = {
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
 
-    $('.main_table-sort_columns')
+    // @depreciation - remove `, .main_table-sort_columns` and only use '.js-sort-column' in v2.0
+    $('.js-sort-column, .main_table-sort_columns')
       .tablesorter()
       .on('sortEnd', function(e) {
         var $this = $(this);
@@ -125,16 +127,16 @@ Fae.tables = {
    * @has_test {requests/fae_table_sort_spec.rb}
    */
   sortColumnsFromCookies: function() {
-    var _this = this;
     var path = window.location.pathname;
-    var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
+    var cookie_value = Cookies.getJSON(this.sort_cookie_name);
 
     // Exit early if sort cookie is nothing or there's no cookie at the present path
     if (!cookie_value || $.isEmptyObject(cookie_value) || !cookie_value[path] || $.isEmptyObject(cookie_value[path])) {
       return;
     }
 
-    $('.main_table-sort_columns').each(function(idx) {
+    // @depreciation - remove `, .main_table-sort_columns` and only use '.js-sort-column' in v2.0
+    $('.js-sort-column, .main_table-sort_columns').each(function(idx) {
       // If this table exists in the cookie hash
       if (cookie_value[path].hasOwnProperty(idx)) {
         // Use array value within another array because of how tablesorter accepts this argument
@@ -147,12 +149,17 @@ Fae.tables = {
    * Make table rows draggable by user
    */
   rowSorting: function() {
-    $('.main_content-sortable').sortable({
+    // @depreciation - remove sort_selector var in v2.0
+    var sort_selector = FCH.exists('.sortable-handle') ? '.sortable-handle' : '.main_content-sortable-handle';
+
+    // @depreciation - remove `, .main_content-sortable` and only use '.js-sort-row' in v2.0
+    $('.js-sort-row, .main_content-sortable').sortable({
       items: 'tbody tr',
       opacity: 0.8,
-      handle: ('.main_content-sortable-handle'),
+      // @depreciation - replace sort_selector with '.sortable-handle' in v2.0
+      handle: (sort_selector),
 
-      //helper funciton to preserve the width of the table row
+      //helper function to preserve the width of the table row
       helper: function(e, $tr) {
         var $originals = $tr.children();
         var $helper = $tr.clone();
@@ -221,6 +228,8 @@ Fae.tables = {
 
       }
 
+      Fae.tables.sizeFixedHeader();
+
       $this.toggleClass('close-all');
     });
 
@@ -248,14 +257,18 @@ Fae.tables = {
           $toggle.removeClass('close-all');
         }
       }
+
+      Fae.tables.sizeFixedHeader();
     });
   },
 
   /**
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
+   * @param {String} selector - Last of type element to target
+   * @deprecation remove selector arg and replace selector variable with '.content' in v2.0
    */
-  endingSelectShim: function() {
-    $('form .main_content-section-area:last-of-type').each(function() {
+  endingSelectShim: function(selector) {
+    $('form ' + selector + ':last-of-type').each(function() {
       var $last_item = $(this).find('.input:last-of-type');
 
       if( $last_item.hasClass('select') ) {
@@ -268,106 +281,121 @@ Fae.tables = {
    * Fix a table header to the top of the view on scroll
    */
   stickyTableHeader: function() {
-    var $sticky_tables = $('.sticky-table-header');
-    var sticky_table_header_selector = '.sticky-table-header--hidden';
-    var $window = $(window);
+    var $sticky_tables = $('.content table:not(.stuck-table)');
 
     // Add sticky psuedo tables after our main table to hold the fixed header
     $sticky_tables.each(function() {
       var $this = $(this);
       var $header = $this.find('thead').clone();
-      var new_classes = $this.attr('class').replace('sticky-table-header', sticky_table_header_selector.substr(1));
 
-      var $fixedHeader = $('<table />', {
-        class: new_classes
+      var $fixed_header = $('<table />', {
+        class: 'sticky-table-header stuck-table'
       });
 
-      $fixedHeader.append( $header );
-      $this.after($fixedHeader);
+      $fixed_header.append( $header );
+      $this.after($fixed_header);
     });
 
     /**
      * FCH callback for scroll - If the table header is in range, show it, otherwise hide it
-     * @access private
+     * @private
      */
-    var stickyTableHeaderScroll = function() {
+    function stickyTableHeaderScroll() {
       var offset = FCH.$window.scrollTop();
 
-      $('.sticky-table-header--hidden').each(function() {
+      $('.sticky-table-header').each(function() {
         var $this = $(this);
-        var tableOffset = $this.data('table-offset');
+        var top_offset = $this.data('table-top');
         var tableBottom = $this.data('table-bottom');
 
-        if (offset >= tableOffset && offset <= tableBottom) {
+        if (offset >= top_offset && offset <= tableBottom) {
           $this.show();
         } else {
           $this.hide();
         }
       });
-    };
+    }
 
-    /**
-     * FCH callback for resize and load - Get all values squared away again if the viewport gets smaller
-     * @access private
-     */
-    var sizeTableHeader = function() {
-      $sticky_tables.each(function() {
-        Fae.tables.sizeFixedHeader($(this));
-      });
-    };
-
-    FCH.load.push(sizeTableHeader);
-    FCH.resize.push(sizeTableHeader);
+    FCH.load.push( Fae.tables.sizeFixedHeader );
+    FCH.resize.push( Fae.tables.sizeFixedHeader );
     FCH.scroll.push(stickyTableHeaderScroll);
   },
 
   /**
    * Cache offset and height values to spare expensive calculations on scroll
-   * @param {jQuery} $this
    */
-  sizeFixedHeader: function($this) {
-    var headerHeight = $('.main_content-header').outerHeight();
+  sizeFixedHeader: function() {
+    var $tables = $('.content table');
+    // @depreciation - change value from ternary to $('.js-content-header').outerHeight() in v2.0
+    var header_height = FCH.exists('.js-content-header') ? $('.js-content-header').outerHeight() : $('.main_content-header').outerHeight();
     if(FCH.large_down) {
-      headerHeight = $('#main_header').outerHeight();
+      header_height = $('#js-main-header').outerHeight();
     }
 
-    var tableOffset = $this.offset().top - headerHeight;
-    var theadHeight = $this.find('thead').outerHeight();
-    var bottomOffset = $this.height() + tableOffset - theadHeight;
-    var $fixedHeader = $this.next('.sticky-table-header--hidden');
+    /**
+     * Add offset and height values per each table
+     * @private
+     */
+    function applyOffset() {
+      var $this = $(this);
 
-    // For whatever reason IE9 does not pickup the .sticky plugin
-    if(!$('.js-will-be-sticky').length) {
-      tableOffset += headerHeight;
-      headerHeight = 0;
+      // If this is a collapsible item and the table is hidden, forget it
+      if($this.parent().hasClass('collapsible') && !$this.parent().hasClass('active')) {
+        return;
+      }
+
+      // Content header is not present on mobile but the main header is stuck
+      if (FCH.bp.large_down) {
+        header_height = $('#js-main-header').outerHeight();
+      }
+
+      var top_offset = $this.offset().top - header_height;
+      var thead_height = $this.find('thead').outerHeight();
+      var bottom_offset = $this.height() + top_offset - thead_height;
+      var $fixed_header = $this.next('.sticky-table-header');
+
+      // For whatever reason IE9 does not pickup the .sticky plugin
+      if(!FCH.exists('.js-will-be-sticky')) {
+        top_offset += header_height;
+        header_height = 0;
+      }
+
+      // Force offsets to be greater than the header_height
+      top_offset = Math.max(header_height, top_offset);
+      bottom_offset = Math.max(header_height, bottom_offset);
+
+      $fixed_header.data({
+        'table-top' : top_offset,
+        'table-bottom' : bottom_offset
+      });
+
+      $fixed_header.css({
+        width: $this.outerWidth(),
+        height: thead_height,
+        top: header_height,
+      });
     }
 
-    $fixedHeader.data({
-      'table-offset' : tableOffset,
-      'table-bottom' : bottomOffset
-    });
+    $tables.each( applyOffset );
 
-    $fixedHeader.css({
-      width: $this.outerWidth(),
-      height: theadHeight,
-      top: headerHeight,
-    });
-
-    $this.find('thead tr th').each(function(index){
-      var original_width = $(this).outerWidth()
-      // Using .width() as a setter is bunk
-      $($fixedHeader.find('tr > th')[index]).css('width', original_width);
-    });
+    Fae.navigation.lockFooter();
   },
 
   /**
-   * Scroll_to event for non-ajax'd table forms
+   * Generate a tooltip for all .js-tooltip elements using their title attribute
    */
-  addToTable: function() {
-    $('.table-add-link-visible').click('on', function(){
-      var $parent = $(this).closest('section');
+  tooltip: function() {
+    // Generate tooltip
+    $('.js-tooltip').each(function() {
+      var $this = $(this);
+      var $tooltip_element = $('<span />', {
+        class: 'tooltip',
+        text: $this.attr('title')
+      });
 
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
+      $this.addClass('tooltip-parent');
+
+      $this.prepend( $tooltip_element );
     });
   }
 };

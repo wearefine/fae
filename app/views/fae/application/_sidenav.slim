@@ -1,0 +1,25 @@
+- if user_signed_in? && @fae_sidenav_items.present?
+  nav.nav.sidenav.js-nav#js-sidenav
+    ul
+      - @fae_sidenav_items.each_with_index do |item, idx|
+        ruby:
+          item[:path] ||= '#'
+          main_class = item[:sublinks].present? ? [ 'sidenav-accordion js-accordion' ] : []
+          main_class << nav_active_class(item[:class_name], 2, idx)
+
+        li class=main_class.join(' ')
+          a href=item[:path] = item[:text]
+
+          - if item[:sublinks].present?
+            ul.subnav.js-subnav
+              - item[:sublinks].each_with_index do |subitem, sub_idx|
+                - subitem[:path] ||= '#'
+
+                li
+                  a class=nav_active_class(subitem[:class_name], 3, sub_idx, idx) href=subitem[:path] = subitem[:text]
+
+                  - if subitem[:sublinks].present?
+                    ul.subnav.js-subnav
+                      - subitem[:sublinks].each do |thirditem|
+                        - thirditem[:path] ||= '#'
+                        li: a href=thirditem[:path] = thirditem[:text]

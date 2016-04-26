@@ -1,16 +1,16 @@
 textarea {
+  @include transition(border-color .2s);
   padding: 10px 15px 0;
   border: 1px solid $c-border;
   font-size: 14px;
   min-height: 125px;
   width: 100%;
   min-width: 223px;
-  font-family: $f-lato;
+  font-family: $f-content;
   outline: none;
-  @include border-radius(2px);
-  @include transition(border-color, .2s);
+  border-radius: 2px;
 
   &:focus {
-      border-color: $c-custom-highlight;
-    }
+    border-color: $c-custom-highlight;
+  }
 }

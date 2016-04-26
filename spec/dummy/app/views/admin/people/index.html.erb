@@ -3,17 +3,17 @@
 
 <div class="main_content-sections">
   <section class="main_content-section">
-    <div class="main_content-section-area">
-      <table class="index_table main_content-sortable sticky-table-header">
+    <div class="content">
+      <table class="main_content-sortable">
         <thead>
           <tr>
             <th class="main_content-sortable-handle-col"></th>
-            <th class="main_content-header-name">Name</th>
-            <th class="main_content-thumb-col">Image</th>
-            <th class="main_table-header-modified">Modified</th>
-            <th class="main_table-header-live" data-sorter="false">On Stage</th>
-            <th class="main_table-header-live" data-sorter="false">On Prod</th>
-            <th class="main_table-header-delete" data-sorter="false">Delete</th>
+            <th>Name</th>
+            <th class="-thumb">Image</th>
+            <th class="-action-wide">Modified</th>
+            <th class="-action-wide" data-sorter="false">On Stage</th>
+            <th class="-action-wide" data-sorter="false">On Prod</th>
+            <th class="-action" data-sorter="false"></th>
           </tr>
         </thead>
         <tbody>
@@ -22,16 +22,12 @@
               <td class="main_content-sortable-handle">
                 <span class="icon-sort"></span>
               </td>
-              <td class="main_table-name"><%= link_to item.name, edit_admin_person_path(item.id) %></td>
-              <td class="main_table-image"><%= image_tag item.image.asset.thumb.url if item.image.present? %></td>
-              <td class="main_table-modified"><%= fae_date_format item.updated_at %></td>
+              <td><%= link_to item.name, edit_admin_person_path(item.id) %></td>
+              <td><%= image_tag item.image.asset.thumb.url if item.image.present? %></td>
+              <td><%= fae_date_format item.updated_at %></td>
               <td><%= fae_toggle item, :on_stage %></td>
               <td><%= fae_toggle item, :on_prod %></td>
-              <td class="main_table-delete">
-                <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
-                  <span class="icon-delete_x"></span>
-                <% end %>
-              </td>
+              <td><%= fae_delete_button item %></td>
             </tr>
           <% end %>
         </tbody>

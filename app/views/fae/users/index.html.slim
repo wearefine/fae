@@ -1,34 +1,23 @@
-section.main_content-header
-  .main_content-header-wrapper
-    h1 Users
-    .main_content-header-save
-      a.add-button href=new_user_path Add User
+- @new_path = new_user_path
+== render 'fae/shared/index_header', title: 'Users', new_button: true, button_text: 'Add User', breadcrumbs: false
 
-== render 'flash_messages'
+main.content
+  table.js-sort-column
+    thead
+      tr
+        th Name
+        th Email
+        th Role
+        th Last Logged In
+        th.-action data-sorter="false" Active
+        th.-action data-sorter="false"
 
-.main_content-sections
-  section.main_content-section
-    .main_content-section-area
-      table.main_table-sort_columns.index_table
-        thead
-          tr
-            th Name
-            th Email
-            th Role
-            th Last Logged In
-            th.main_table-header-live data-sorter="false" Active
-            th.main_table-header-delete data-sorter="false" Delete
-
-        tbody
-          - @users.each do |user|
-            tr id="fae_user_#{user.id}"
-              td.main_table-description-item
-                a href=edit_user_path(user) #{user.first_name} #{user.last_name}
-              td = user.email
-              td = user.role.name
-              td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
-              td = attr_toggle user, :active unless current_user == user
-              td.main_table-delete
-                - unless current_user == user
-                  = link_to user, method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action'
-                    span.icon-delete_x
+    tbody
+      - @users.each do |user|
+        tr id="fae_user_#{user.id}"
+          td: a href=edit_user_path(user) #{user.first_name} #{user.last_name}
+          td = user.email
+          td = user.role.name
+          td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
+          td = attr_toggle user, :active unless current_user == user
+          td = fae_delete_button user, user unless current_user == user

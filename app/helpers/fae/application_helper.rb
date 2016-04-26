@@ -8,52 +8,18 @@ module Fae
       content_tag :h1, form_title
     end
 
-    def markdown_helper(links: true, formatting: true, emphasis: true, headers: true, list: true, paragraph: true)
-      helper = "<h3>Markdown Options</h3>"
-      helper += "<h4>Links</h4>
-            <p>
-              To link text, place a [bracket] around the link title and use a (/url) to house the url.<br>
-              <br>
-              Internal Link: [link to about](/about)<br>
-              External link: [link to about](http://www.google.com/about)
-            </p>" if links
-      helper += "<h4>Formatting</h4>
-            <p>
-              Emphasize text in a variety of ways by placing **asterisks** to bold, _underscores_ to italicize.<br>
-              <br>
-              Bold  **bold**<br>
-              Italicize _italic_
-            </p>" if formatting || emphasis
-      helper += "<h4>Headers</h4>
-            <p>
-              Use up to six hashtags to identify the importance of the section header.<br>
-              <br>
-              Page Header: # Page Header<br>
-              Sub Header: ## Sub Header
-            </p>" if headers
-      helper += "<h4>List</h4>
-            <p>
-              Format lists by swapping out the characters that lead the list item.</br>
-              <br>
-              <span>Bulleted List:</span><br>
-              * bullet<br>
-              * bullet 2<br>
-              <br>
-              <span>Numbered List:</span><br>
-              1. line item<br>
-              2. line item
-            </p>" if list
-      helper += "<h4>Paragraph Break</h4>
-            <p>
-              Adding a blank line in between your paragraphs makes a paragraph break.
-            </p>" if paragraph
-      helper.html_safe
-    end
-
     def require_locals(local_array, local_assigns)
       local_array.each do |loc|
         raise "#{loc} is a required local, please define it when you render this partial" unless local_assigns[loc.to_sym].present?
       end
+    end
+
+    def nav_active_class(klass, level, idx, parent_idx = nil)
+      return klass unless @fae_navigation.coordinates[level] == idx
+      return klass unless parent_idx.blank? || @fae_navigation.coordinates[level-1] == parent_idx
+      new_klass = parent_idx.blank? ? '-parent-current' : '-current'
+      new_klass += " #{klass}" if klass.present?
+      new_klass
     end
 
     def col_name_or_image(item, attribute)

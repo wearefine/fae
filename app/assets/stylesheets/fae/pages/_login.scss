@@ -1,164 +1,143 @@
 .login-body {
-	height: auto;
-	padding: 0 20px;
-	background: image-url('fae/bg_tile.gif');
+  height: auto;
+  padding: 0 20px;
 
-	.alert {
-		margin: 0 -20px;
-	}
+  .alert {
+    width: 100%;
+  }
 }
 
 .login-content {
-	width: 100%;
-	max-width: 700px;
-	padding-top: 55px;
-	margin: 20px auto;
+  width: 100%;
+  max-width: 700px;
+  padding-top: 55px;
+  margin: 20px auto;
 }
 
 .login-area {
-	border-top: 10px solid $c-custom-highlight;
-	margin: auto;
-	@include border-radius(5px);
-	@include box-shadow(0, 3px, 8px, 0, $c-login-box_shadow);
-	background: $c-login-bg;
+  border-top: 10px solid $c-custom-highlight;
+  margin: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 $c-grey;
+  background: $c-white;
 
-	img, h1 {
-		display: block;
-		margin: 25px auto;
-		text-align: center;
-	}
+  img,
+  h1 {
+    display: block;
+    margin: 25px auto;
+    text-align: center;
+  }
 }
 
 .login-form {
-	width: 50%;
-	margin: auto;
+  width: 50%;
+  margin: auto;
 
-	input[type=text], input[type=password], input[type=email] {
-		width: 100%;
-		min-width: 100%;
-	}
+  @include bp(login_container) {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+    padding: 35px 23px;
+    border-left: 1px solid $c-border;
+    margin-left: -6px;
+  }
 
-	input[type=submit] {
-		margin-top: 20px;
+  input[type=text],
+  input[type=password],
+  input[type=email] {
+    width: 100%;
+    min-width: 100%;
+  }
 
-		@include bp(login_submit) {
-			float: right;
-			margin: 0;
-		}
-	}
+  input[type=submit] {
+    margin-top: 20px;
 
-	@include bp(login_container) {
-		display: inline-block;
-		vertical-align: middle;
-		width: 50%;
-		padding: 35px 23px;
-		border-left: 1px solid $c-border;
-		margin-left: -6px;
-	}
+    @include bp(login_submit) {
+      float: right;
+      margin: 0;
+    }
+  }
 }
 
 .login-logo {
-	@include bp(login_container) {
-		display: inline-block;
-		vertical-align: center;
-		width: 50%;
-	}
+  @include bp(login_container) {
+    display: inline-block;
+    vertical-align: center;
+    width: 50%;
+  }
 }
 
 .login-form-password {
-	@extend .login-form;
-	width: 75%;
-	padding: 75px 23px;
+  @extend .login-form;
+  width: 75%;
+  padding: 75px 23px;
 
-		@include bp(login_container) {
-			width: 50%;
-		}
+  @include bp(login_container) {
+    width: 50%;
+  }
 }
-
 .login-form-actions {
-	@include clearfix;
-	padding-bottom: 20px;
 
-	.boolean {
-		margin: 12px 0 0 0;
-	}
+  @include clearfix;
+  padding-bottom: 20px;
 
-	@include bp(login_container) {
-		padding: 0;
-	}
+  @include bp(login_container) {
+    padding: 0;
+  }
 
-	a {
-		display: inline-block;
-		padding-top: 15px;
-		font-size: 13px;
-	}
+  .boolean {
+    margin: 12px 0 0 0;
+  }
+
+  a {
+    display: inline-block;
+    padding-top: 15px;
+    font-size: 13px;
+  }
 }
 
-input.login-form-actions-submit[type="submit"] {
-	@include bp(login_submit) {
-		margin-top: -27px;
-	}
+input {
+  &.login-form-actions-submit[type="submit"] {
+    @include bp(login_submit) {
+      margin-top: -27px;
+    }
+  }
 }
 
-.login-helper-area {
-	margin-top: 10px;
-	font-size: 13px;
-	color: $c-login-footer-all;
-
-	li {
-		display: inline-block;
-		padding-left: 10px;
-		border-left: 1px solid $c-login-footer-all;
-		margin-left: 10px;
-
-		&:first-child {
-			border: 0;
-			padding: 0;
-			margin: 0;
-		}
-	}
+.login-helper {
+  font-size: 13px;
+  color: $c-darker-grey;
 }
 
-.login-fine, .login-fine:hover {
-	float: right;
-	color: $c-login-footer-all;
+.login-footer {
+  margin-top: 10px;
 
-	span {
-		display: inline-block;
-		width: 48px;
-		height: 16px;
-		background: image-url('fae/fine_footer.png');
-		text-indent: 100%;
-		white-space: nowrap;
-		overflow: hidden;
-	}
-}
-
-.login-label-extra {
-	margin-bottom: 10px;
-	font-weight: bold;
-	font-size: 15px;
-	color: $c-text-heavy;
+  .credit,
+  .login-helper {
+    display: inline-block;
+    width: 50%;
+    vertical-align: middle;
+  }
 }
 
 .login-form-password {
-	label {
-		margin-bottom: 10px;
-	}
+  label {
+    margin-bottom: 10px;
 
-	label + label {
-		margin-bottom: 15px;
-	}
+    & + label {
+      margin-bottom: 15px;
+    }
+  }
 }
 
 .first_user-form {
-	@extend .login-form;
+  @extend .login-form;
 
-	p {
-		margin-bottom: 30px;
-	}
+  p {
+    margin-bottom: 30px;
+  }
 
-	input[type=submit] {
-		float: none;
-	}
+  input[type=submit] {
+    float: none;
+  }
 }

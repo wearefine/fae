@@ -37,7 +37,7 @@ feature 'Nested Form cancel button' do
     page.find('.cancel-nested-button').click
 
     # save parent changes
-    click_button('Save Settings')
+    click_button('Save')
 
     expect(page).to_not have_content('Your changes were not saved.')
   end

@@ -5,6 +5,40 @@
 - enhancements
 - bugs
 
+## 1.3
+
+- enhancements
+    + \#50420: Nested forms now accept custom titles
+    + \#54683: Titleize names for forms
+    + \#55066: Major HTML and SCSS refactor
+    + \#55211: Change wording of "Replace Image" to be "Remove Image"
+    + \#49891: Increase list efficiency by decreasing table cell height
+    + \#55188: Add version and GitHub icon to footer on all pages
+    + \#55067: Standardize regular column widths
+    + \#46060: Tab no longer skips checkbox inputs
+    + Add `fae_delete_button` helper method
+    + \#54556: Add confirm dialogue before cloning
+    + \#55186: Add global search feature
+    + \#55864: Add gravatar
+    + \#56040: Add tooltips to index table icons (clone and delete)
+    + Add images and GIFs to documentation
+    + \#56439: Consolidate initial install migrations
+    + Rename sorting classes to be more clear and intuitive
+    + \#55244: Add support toggle and sort support for scoped models
+    + Add fae_sort_id view helper
+    + \#52457: Allow diabling admin on specific environments
+    + \#57073: Add options and documentation to generated initializer
+    + \#52775: Ignore unhelpful Judge errors
+    + \#56740: Allows fae_filter_form's block to be optional
+- bugs
+    + \#46537: Change root settings header to be 'Root Settings' and not 'Edit Option'
+    + \#46157: Logo in root setting is no longer marked required
+    + \#55752: YouTube helper image converted to display as a background image because of Sprockets compilation issue
+    + \#55977: Fix positioning of smooth scroll on new models from nested forms
+    + Rearrange assets to expose the Fae JS API and SCSS mixins/variables to parent apps
+    + \#57119: Table columns can now be sorted after the table has been filtered
+    + \#57071: Namespace vendor files within the Fae engine namespace
+
 ## 1.2.5
 
 - enhancements

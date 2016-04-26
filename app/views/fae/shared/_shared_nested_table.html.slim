@@ -2,49 +2,45 @@ ruby:
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb
-  table_class = ordered ? 'main_content-sortable index_table' : 'index_table'
+  table_class = ordered ? 'js-sort-row' : nil
+
+  options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
 
 table class=table_class
   thead
     tr
       - if ordered
-        th.main_content-sortable-handle-col
+        th.th-sortable-handle
       - if has_thumb
-        th.main_content-thumb-col
+        th.-thumb
       - cols.each do |col|
-        - th_class = [:on_production, :on_prod, :on_stage].include?(col) ? 'main_table-header-live' : ''
-        th class=th_class = col.to_s.humanize
+        = th_columns(col)
       - if edit_column
-        th.main_table-header-edit data-sorter="false" Edit
-      th.main_table-header-delete Delete
+        th.-action data-sorter="false"
+      th.-action
   tbody
     - records = index ? @items : parent_item.send(assoc)
     - if records.present?
       - records.each do |item|
-        tr id="#{ tr_id(item) }"
+        tr id=tr_id(item)
           - if ordered
-            td.main_content-sortable-handle
-              span.icon-sort
+            td.sortable-handle: i.icon-sort
           - if has_thumb
             td = image_tag(item.asset.thumb.url)
           - cols.each do |col|
-            - if col == cols.first && !edit_column
-              td.main_table-description-item
-                a.js-edit-link href=self.send(edit_path, item) = col_name_or_image(item, col)
-            - elsif item.class.columns_hash[col.to_s].present? && item.class.columns_hash[col.to_s].type == :boolean
-              td = attr_toggle item, col
-            - else
-              td = col_name_or_image(item, col)
+            - options_for_td[:col] = col
+            - options_for_td[:item] = item
+            = td_columns(options_for_td)
           - if edit_column
-            td.main_table-edit
-              a.js-edit-link href=self.send(edit_path, item)
-                span.icon-edit
-          td.main_table-delete
-            = link_to '', "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", method: :delete, defaults: { confirm: t('fae.delete_confirmation') }, class: 'js-delete-link icon-delete_x', remote: true
+            td
+              a.js-edit-link.js-tooltip.table-action title="Edit" href=self.send(edit_path, item)
+                i.icon-edit
+          td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
+
     - else
       tr
-        - td_link = link_to "add some", new_path, class: 'js-add-link'
+        - td_link = link_to 'add some', new_path, class: 'js-add-link'
 
-        td colspan=colspan.to_s == "No #{title} yet, #{td_link}."
+        td colspan=colspan.to_s No #{title} yet, #{td_link}.
 
 .js-addedit-form-wrapper

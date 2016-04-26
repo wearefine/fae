@@ -6,7 +6,8 @@
 * [Validation](#validation)
 * [Image and File Associations](#image-and-file-associations)
 * [Controllers](#controllers)
-* [Navigation Items](#navigation-items)
+* [Navigation](#navigation)
+* [Global Search](#global-search)
 * [Form Helpers](#form-helpers)
 * [Pages and Content Blocks](#pages-and-content-blocks)
 
@@ -83,14 +84,7 @@ rails g fae:page [PageName] [field:type] [field:type]
 |-----------|-------------|
 | PageName  | the name of the page |
 | field   | the name of the content block |
-| type    | the type of the content block (see table below) |
-
-| content block | associated object |
-|---------------|-------------------|
-| string    | Fae::TextField |
-| text      | Fae::TextArea |
-| image     | Fae::Image |
-| file      | Fae::File |
+| type    | the type of the content block (see [table below](#pages-vs-content-blocks)) |
 
 The page generator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
 
@@ -191,6 +185,8 @@ end
 ```
 
 ## Validation
+
+![Validation](images/length_validation.gif)
 
 Fae doesn't deal with any validation definitions in your application models, you'll have to add those. However, there are some pre-defined regex validation helpers to use in your models. See examples below.
 
@@ -353,79 +349,132 @@ This will affect the add button text and index/form page titles.
 
 ---
 
-# Navigation Items
+# Navigation
 
-When you use the generators, a link to the section appears in the main navigation of the admin. This is done by automatically adding to `app/controllers/concerns/fae/nav_items.rb`. However, this file is available for you to customize the nav however you'd like.
+When using Fae's installer and generators, navigation items to the objects you create will automatically get added to the side nav of the admin. Behind the scenes the generator is updating `app/models/concerns/fae/navigation_concern.rb`. However, this file is available for you to customize the nav however you like.
 
-The navigation is built of of the array set in the `nav_items` method. Each array item is a hash with these available keys:
+## Updating navigation_concern.rb
 
-| Key | Type | Description |
+To define your own navigation structure you just need to update the `structure` method within `app/models/concerns/fae/navigation_concern.rb`. Here's a look at an example:
+
+```ruby
+def structure
+  [
+    item('Products', subitems: [
+      item('Apparel', class: 'custom-class', path: admin_apparel_path),
+      item('Beverage', subitems: [
+        item('Wines', subitems: [
+          item('Releases', path: admin_releases_path)
+        ]),
+        item('Board Games', path: admin_board_games_path)
+      ]),
+    ]),
+    item('Pages', subitems: [
+      item('Home', path: fae.edit_content_block_path('home')),
+      item('About Us', path: fae.edit_content_block_path('about_us'))
+    ])
+  ]
+end
+```
+
+`structure` is an array of nav items which are defined with the `item` method. The `item` method takes a title as the first argument, followed by a hash of options. To nest subitems within an item, pass an array of items into the `subitems` option.
+
+```ruby
+item(title, options = {})
+```
+
+| Option | Type | Description |
 | --- | ---- | ----------- |
-| text | string | the link's text |
-| path | string or named route | the link's href (defaults to '#') |
-| class | string | an added class to the link |
-| sublinks | array of hashes | nested links to be displayed in a dropdown |
+| path | string or named route* | the link's href (defaults to '#') |
+| class | string | a custom class that gets added to the link |
+| subitems | array of items | nested links to be displayed in a dropdown |
 
-## Named Routes in nav_items.rb
-
-Since the `nav_items` concern hooks directly into Fae, named routes need context using the following prefixes:
+\* if you want to access a named route that exists in Fae, call the named route on the `fae` object.
 
 ```ruby
-def nav_items
+fae.pages_path
+```
+
+## Top Nav
+
+Fae has an alternative top navigation that's ideal if you have a lot of objects or want to nest them more than two levels.
+
+![Top Nav](images/navigation.png)
+
+To enable the top nav, add this option to `config/initializers/fae.rb`:
+
+```ruby
+config.has_top_nav = true
+```
+
+### Top/Side Nav Hierarchy
+
+When the top nav is enabled, the first and second level of `structure` defines the main nav and dropdown items respectively. When you click into a section that has third and/or fourth levels, a side nav will appear to display those items.
+
+```ruby
+def structure
   [
-    # use `main_app.` for application routes (even in your admin)
-    { text: 'Cities', path: main_app.admin_cities_path },
-    # use `fae.` for Fae routes
-    { text: 'Pages', path: fae.pages_path }
+    item('Top nav item', subitems: [
+      item('Top nav dropdown item', subitems: [
+        item('Side nav item', subitems: [
+          item('Side nav nested item', path: '#')
+        ])
+      ]),
+    ])
   ]
 end
 ```
 
-## Sublinks
+If the main nav dropdown doesn't have a defined `path`, it will search the `subitems` for the first available path to link to.
 
-When sublinks are present, the main nav item will trigger a drawer holding the sublinks to open/close. Add sublinks using the following format:
+Note: the side nav is hidden in forms by design, this removes clutter and allows the user to focus on the content of that object.
 
-```ruby
-def nav_items
-  [
-    {
-      text: 'Items with sublinks', sublinks: [
-        { text: 'Item Sublink 1', path: main_app.admin_some_path },
-        { text: 'Item Sublink 2', path: main_app.admin_someother_path }
-      ]
-    }
-  ]
-end
-```
+## Dynamic Content in the Navigation
 
-## Dynamic Content in Nav
-
-Dynamic content is allowed in the the `nav_items` concern. Here's an example:
+Dynamic content can be defined in `navigation_concern.rb`. Here's an example:
 
 ```ruby
 module Fae
-  module NavItems
+  module NavigationConcern
     extend ActiveSupport::Concern
 
-    def nav_items
+    def structure
       [
-        { text: 'Releases', path: main_app.admin_releases_path },
-        { text: 'Tiers', sublinks: tier_sublinks }
+        item('Teams', subitems: team_subitems)
+        # scaffold inject marker
       ]
     end
 
     private
 
-    def tier_sublinks
-      tiers_arr = [{ text: 'New Tier', path: main_app.new_admin_tier_path }]
-      Tier.each do |tier|
-        tiers_arr << { text: tier.name, path: main_app.edit_admin_tier_path(tier) }
+    def team_subitems
+      teams_arr = [ item('Team List', path: admin_teams_path) ]
+      Team.all.each do |team|
+        teams_arr << item(team.name, subitems: [
+          item('Coaches', path: admin_team_coaches_path(team)),
+          item('Players', path: admin_team_players_path(team))
+        ])
       end
-      tiers_arr
+      teams_arr
     end
-
   end
 end
+```
+
+---
+
+# Global Search
+
+Fae features a global search/navigation in the upper right. Clicking on this will automatically display the first two levels of navigation. Search results will be displayed from both navigation items and DB objects when three characters or more are entered in the search bar.
+
+Navigation items are matched by their defined titles, ignoring case. Objects are matched by their `fae_display_field`.
+
+## Omitting an Object
+
+To omit an object from global search, add it to the `dashboard_exclusions` array in `config/initializers/fae.rb`
+
+```ruby
+config.dashboard_exclusions = %w( Cat )
 ```
 
 ---
@@ -478,7 +527,18 @@ The system is just your basic inherited singleton with dynamic polymorphic assoc
 
 ## Pages vs Content Blocks
 
-**Pages** are groups of **content blocks** based on the actual pages they appear on the site. For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
+**Pages** are groups of **content blocks** based on the actual pages they appear on the site.
+
+Content blocks are defined in the model and called in the form view. The `type` refers to the generator API (more information available in [the following section](#generating-pages))
+
+| associated object | type | form helper |
+|-|-|-|
+| Fae::TextField | string | fae_content_form |
+| Fae::TextArea | text | fae_content_form |
+| Fae::Image | image | fae_image_form |
+| Fae::File | file | fae_file_form |
+
+For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
 
 ## Generating Pages
 
@@ -513,21 +573,17 @@ end
 `app/views/fae/pages/about_us.html.slim`
 ```ruby
 = simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
-  section.main_content-header
-    .main_content-header-wrapper
-      = render 'fae/shared/form_header', header: @item
-      = render 'fae/shared/form_buttons', f: f
+  header.content-header
+    = render 'fae/shared/form_header', header: @item, f: f
 
-  .main_content-sections
-    section.main_content-section
-      .main_content-section-area
-        = fae_input f, :title
+  .content
+    = fae_input f, :title
 
-        = fae_image_form f, :hero_image
-        = fae_content_form f, :hero_text
-        = fae_content_form f, :introduction
-        = fae_content_form f, :body
-        = fae_file_form f, :annual_report
+    = fae_image_form f, :hero_image
+    = fae_content_form f, :hero_text
+    = fae_content_form f, :introduction
+    = fae_content_form f, :body
+    = fae_file_form f, :annual_report
 ```
 
 Since this is the first page the generator will create `app/controllers/admin/content_blocks_controller.rb`, otherwise it would just add to the `fae_pages` array.
@@ -617,7 +673,7 @@ end
 * in the nested table arguments, instead of making the `parent_item` argument item virtual (which is just the instance of the `AboutUsPage`, which we don't have a column in the database for), you need to make the argument related to static pages more broadly.
 
 ```ruby
- section.main_content-section
+ section.content
   = render 'fae/shared/nested_table',
     assoc: :promos,
     parent_item: Fae::StaticPage.find_by_id(@item.id),
@@ -714,3 +770,23 @@ end
 ```
 
 Validations can only be applied to types `Fae::TextField` and `Fae::TextArea`.
+
+## Linking to Pages Within Fae
+
+Link to the edit screen of a page and its respective content blocks by adding an item to [the navigation items](#navigation-items).
+
+```ruby
+def nav_items 
+  [
+    ...
+    {
+      text: 'Pages', sublinks: [
+        { text: 'All', path: fae.pages_path },
+        # For example, if `@slug = 'home'`
+        { text: 'Home', path: fae.edit_content_block_path('home') }
+      ]
+    }
+    ...
+  ]
+end
+```

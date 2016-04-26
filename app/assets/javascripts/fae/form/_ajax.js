@@ -1,7 +1,5 @@
 /* global Fae, fae_chosen, fileinputer, FCH, Cookies */
 
-'use strict';
-
 /**
  * Fae AJAX
  * @namespace form.ajax
@@ -44,7 +42,7 @@ Fae.form.ajax = {
       var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
       // scroll to the last column of the tbody, where the form will start
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 100, 90);
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
 
       _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
     });
@@ -52,7 +50,7 @@ Fae.form.ajax = {
 
   /**
    * Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
-   * @access protected
+   * @protected
    * @param {String} remote_url - Remote page to load form from
    * @param {jQuery} $wrapper - Whole form container
    * @see addEditLinks
@@ -92,8 +90,6 @@ Fae.form.ajax = {
    * Click event listener for cancel links applied to both index and nested forms; clears form to prevent saving errors
    */
   addCancelLinks: function() {
-    var _this = this;
-
     this.$addedit_form.on('click', '.js-cancel-nested', function(ev) {
       ev.preventDefault();
       var $this = $(this);
@@ -128,26 +124,22 @@ Fae.form.ajax = {
           $html = $( $html.val() );
         }
 
-        if ($html && ($html.hasClass('main_content-section-area') || $html.hasClass('js-index-addedit-form'))) {
-          // we're returning the table, replace everything
-          var replacementHTML;
+        if ($html) {
+          if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
+            // we're returning the table, replace everything
+            _this._addEditReplaceAndReinit($this, $html.html(), $target);
+          } else if ($html.hasClass('nested-form') || $html.hasClass('form_content-wrapper')) {
 
-          // Response is different between the js-index-addedit-form and the nested association form
-          if ($html.hasClass('main_content-section-area')) {
-            replacementHTML = $html.find('.js-addedit-form').get(0).outerHTML;
-          } else {
-            replacementHTML = $html.html();
+            // @depreciation - remove `|| $html.hasClass('form_content_wrapper')` from above conditional as well as the following ternary (value should just be '.nested-form') in v2.0
+            var form_wrapper_selector = $html.hasClass('nested-form') ? '.nested-form' : '.form_content-wrapper';
+
+            // we're returning the form due to an error, just replace the form
+            $this.find( form_wrapper_selector ).replaceWith(data);
+            $this.find('.select select').fae_chosen();
+            $this.find('.input.file').fileinputer();
+
+            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
-
-          _this._addEditReplaceAndReinit($this, replacementHTML, $target);
-
-        } else if ($html.hasClass('form_content-wrapper')) {
-          // we're returning the form due to an error, just replace the form
-          $this.find('.form_content-wrapper').replaceWith(data);
-          $this.find('.select select').fae_chosen();
-          $this.find('.input.file').fileinputer();
-
-          FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
         }
 
         if (_this.$filter_form.length) {
@@ -157,7 +149,7 @@ Fae.form.ajax = {
 
         Fae.navigation.fadeNotices();
 
-      } else if ($target.hasClass('js-asset-delete-link')) {
+      } else if ($target.hasClass('js-asset-delete')) {
         // handle remove asset links on nested forms
         var $parent = $target.closest('.asset-actions');
 
@@ -165,12 +157,14 @@ Fae.form.ajax = {
           $parent.next('.asset-inputs').fadeIn();
         });
       }
+
+      Fae.navigation.lockFooter();
     });
   },
 
   /**
    * Replace AJAX'd form and add calls to all new HTML elements
-   * @access protected
+   * @protected
    * @param $el {jQuery} - Object to be replaced
    * @param html {String} - New HTML
    * @param $target {jQuery} - Original form wrapper
@@ -180,12 +174,17 @@ Fae.form.ajax = {
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
     // Private function replaces parent element with HTML and reinits select and sorting
-    var regenerateHTML = function() {
+    function regenerateHTML() {
       // .html() is not replacing it properly
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
-    };
+      Fae.navigation.fadeNotices();
+
+      if ($el.find('.js-content-header').length) {
+        Fae.navigation.stickyHeaders(true);
+      }
+    }
 
     // if there's a form wrap, slide it up before replacing content
     if ($form_wrapper.length) {
@@ -201,23 +200,47 @@ Fae.form.ajax = {
   },
 
   /**
-   * On filter change, update table data
+   * Attach filter listeners
    */
   filterSubmission: function() {
     var _this = this;
 
     _this.$filter_form
+      .on('submit', function() {
+        $('.js-reset-btn').show();
+      })
+
+      // On filter change, update table data
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
+
+        Fae.tables.columnSorting();
+        Fae.tables.rowSorting();
+        Fae.tables.sortColumnsFromCookies();
+        Fae.navigation.lockFooter();
       })
+
+      // Reset filter button
       .on('click', '.js-reset-btn', function(ev) {
+        ev.preventDefault();
+
         var $form = $(this).closest('form');
 
         $form.get(0).reset();
         $form.find('select').val('').trigger('chosen:updated');
         // reset hashies
         window.location.hash = '';
+
+        // Spoof form submission
+        $form.submit();
+
+        $(this).hide();
       })
+
+      .on('click', '.table-filter-keyword-wrapper i', function() {
+        _this.$filter_form.submit();
+      })
+
       .on('change', 'select', function() {
         _this.$filter_form.submit();
       });
@@ -269,7 +292,9 @@ Fae.form.ajax = {
 
   /**
    * Check for cookie or hash and set dropdowns/ url accordingly (callback for Fryr)
+   * @protected
    * @param {Object} params - hash params broken out from Fryr
+   * @see applyCookies
    */
   _setFilterDropdowns: function(params) {
     var cookie_name = $('.js-filter-form').attr('data-cookie-key');
@@ -302,7 +327,7 @@ Fae.form.ajax = {
    * Delete or replace file for non-AJAX'd fields
    */
   deleteNoForm: function() {
-    $('.js-asset-delete-link').on('ajax:success', function(){
+    $('.js-asset-delete').on('ajax:success', function(){
       var $this = $(this);
       if (!$this.closest('.js-addedit-form-wrapper').length) {
         // handle remove asset links
@@ -335,7 +360,7 @@ Fae.form.ajax = {
    * Attaching click handlers to #main_content to allow ajax replacement
    */
   htmlListeners: function() {
-    $('#main_content')
+    $('#js-main-content')
 
       // for the yes/no slider
       .on('click', '.slider-wrapper', function(e){
@@ -343,13 +368,13 @@ Fae.form.ajax = {
         $(this).toggleClass('slider-yes-selected');
       })
 
-      // The settings menu for tables and checkboxe
-      .on('click', '.main_table-action_menu-trigger, .boolean label, .checkbox_collection--vertical label, .checkbox_collection--horizontal label', function(e){
-        $(this).toggleClass('js-active');
+      // The settings menu for tables and checkboxes
+      .on('click', '.boolean label, .js-checkbox-wrapper label', function(e){
+        $(this).toggleClass('active');
       })
 
       // stop the event bubbling and running the above toggleClass twice
-      .on('click', '.boolean :checkbox, .checkbox_collection--vertical :checkbox, .checkbox_collection--horizontal :checkbox', function(e){
+      .on('click', '.boolean :checkbox, .js-checkbox-wrapper :checkbox', function(e){
         e.stopPropagation();
       });
   }

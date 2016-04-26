@@ -6,7 +6,7 @@ feature 'fae_image_form' do
     admin_login
     visit new_admin_release_path
 
-    expect(page).to have_css('.release_bottle_shot_asset button.file_input-button')
+    expect(page).to have_css('.release_bottle_shot_asset button.button')
     expect(page).to have_css('#release_bottle_shot_attributes_alt')
   end
 

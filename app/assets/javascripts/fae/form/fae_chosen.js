@@ -1,6 +1,6 @@
-'use strict';
-
 (function ( $ ) {
+  'use strict';
+
   /**
    * This plugin sets chosen defaults and massages options based on class names.
    * @function external:"jQuery.fn".fae_chosen

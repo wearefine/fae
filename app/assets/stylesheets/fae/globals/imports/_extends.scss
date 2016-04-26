@@ -1,0 +1,53 @@
+%table-reset {
+  table {
+    table-layout: initial;
+    border-collapse: inherit;
+    border: initial;
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  td {
+    border: initial;
+
+    &,
+    &:hover {
+      border-left: initial;
+    }
+  }
+
+  tbody {
+    tr {
+      &,
+      &:nth-child(even) {
+        &:hover {
+          td {
+            &:first-child {
+              border-left: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+%nav-icon {
+  &:after {
+    @include icon-stuff;
+    @include transition(color .2s);
+    position: absolute;
+    font-size: 15px;
+    color: $c-darker-grey;
+    right: 0;
+  }
+
+  &:hover {
+    &:after {
+      color: darken($c-darker-grey, 5%);
+    }
+  }
+}

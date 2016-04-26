@@ -4,7 +4,10 @@ module Fae
 
     def nav_items
       [
-        { text: 'Releases',       path: main_app.admin_releases_path },
+        { text: 'Releases', sublinks: [
+          { text: 'Current', path: main_app.admin_releases_path },
+          { text: 'Legacy Markup', path: main_app.admin_legacy_releases_path },
+        ]},
         { text: 'Wines',          sublinks: wine_sublinks },
         { text: 'Acclaim',        path: main_app.admin_acclaims_path },
         { text: 'Varietal',       path: main_app.admin_varietals_path },

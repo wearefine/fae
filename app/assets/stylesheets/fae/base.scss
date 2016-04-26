@@ -1,0 +1,83 @@
+// Globals (doesn't output CSS)
+@import
+  'globals/imports/finescss/fine',
+  'globals/imports/variables',
+  'globals/imports/mixins',
+  'globals/imports/extends'
+;
+
+// User defined stuff
+@import 'fae';
+
+// Fonts, vendor, and root HTML tag styles
+@import
+  'globals/fonts',
+  'globals/icons',
+  'globals/plugins',
+  'globals/tags'
+;
+
+// Layout
+@import
+  'globals/layout/base',
+  'globals/layout/content-header',
+  'globals/layout/breadcrumbs'
+;
+
+// Navigation
+@import
+  'globals/navigation/base',
+  'globals/navigation/header',
+  'globals/navigation/footer',
+  'globals/navigation/sidenav',
+  'globals/navigation/mobilenav',
+  'globals/navigation/utility',
+  'globals/navigation/search'
+;
+
+// Tables
+@import
+  'modules/tables/base',
+  'modules/tables/actions',
+  'modules/tables/sorting',
+  'modules/tables/filters',
+  'modules/tables/collapsible',
+  'modules/tables/sticky',
+  'modules/tables/tooltips'
+;
+
+// Modules
+@import
+  'modules/buttons',
+  'modules/modal',
+  'modules/toggles',
+  'modules/alerts'
+;
+
+// Forms
+@import
+  'modules/forms/base',
+  'modules/forms/label',
+  'modules/forms/textarea',
+  'modules/forms/text',
+  'modules/forms/checkbox',
+  'modules/forms/radio',
+  'modules/forms/asset-actions',
+  'modules/forms/select',
+  'modules/forms/date',
+  'modules/forms/hints',
+  'modules/forms/validation',
+  'modules/forms/simple-mde'
+;
+
+// Pages
+@import
+  'pages/error',
+  'pages/login',
+  'pages/help'
+;
+
+// Legacy styles
+@import
+  'globals/legacy/pre-1.3'
+;

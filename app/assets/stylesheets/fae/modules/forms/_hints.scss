@@ -2,14 +2,13 @@
   position: relative;
   display: inline-block;
   padding-left: 7px;
-  color: $c-custom-highlight;
-  text-decoration: underline;
   cursor: pointer;
+  color: $c-custom-highlight;
 
   &:after {
-    position: absolute;
-    @include icon_stuff();
     @extend .icon-support:before;
+    @include icon-stuff;
+    position: absolute;
     padding-left: 7px;
     text-decoration: none;
     top: 1px;
@@ -17,19 +16,21 @@
   }
 }
 
-.hint, .markdown-hint {
-  // hide it so the javascript can do its thing and retain it's size
-  display: inline-block;
-  position: absolute;
-  left: -9999px;
-  visibility: hidden;
+.hint,
+.markdown-hint {
+  display: none;
 
   img {
     max-width: 100%;
   }
-
-  &.simplemodal-data {
-    position: static;
-    visibility: visible;
-  }
 }
+
+.youtube-hint {
+  width: 530px;
+  height: 300px;
+  background-image: image-url('fae/youtube_helper.jpg');
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+

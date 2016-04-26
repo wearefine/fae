@@ -1,0 +1,70 @@
+.th-sortable-handle {
+  width: 25px;
+  padding: 0;
+}
+
+.sortable-handle {
+  padding-right: 5px;
+  color: $c-text-sub;
+  cursor: pointer;
+}
+
+// tablesorter classes
+.tablesorter-header {
+  &:not(.sorter-false) {
+    cursor: pointer;
+
+    .tablesorter-header-inner {
+      &:after {
+        display: inline-block;
+      }
+    }
+
+    &:hover {
+      .tablesorter-header-inner {
+        &:after {
+          color: $c-darkest-grey;
+        }
+      }
+    }
+  }
+
+  &.tablesorter-headerAsc,
+  &.tablesorter-headerDesc {
+    .tablesorter-header-inner {
+      &:after {
+        color: $c-darkest-grey;
+      }
+    }
+  }
+
+}
+
+.tablesorter-header-inner {
+  &:after {
+    @extend .icon-arrow_down:before;
+    @include icon-stuff;
+    display: none;
+    font-size: 4px;
+    position: relative;
+    top: -3px;
+    left: 6px;
+    color: $c-darker-grey;
+  }
+}
+
+.tablesorter-headerDesc {
+  .tablesorter-header-inner {
+    &:after {
+      @extend .icon-arrow_down:before;
+    }
+  }
+}
+
+.tablesorter-headerAsc {
+  .tablesorter-header-inner {
+    &:after {
+      @extend .icon-arrow_up:before;
+    }
+  }
+}

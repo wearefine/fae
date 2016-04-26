@@ -15,16 +15,16 @@
 
     &:before {
       @extend .icon-alert;
-      @include icon-stuff();
+      @include icon-stuff;
       padding-right: 10px;
     }
 
     &:after {
-      content: "";
+      @include right-triangle(10px, $c-error-bg);
+      content: '';
       position: absolute;
       bottom: -8px;
       left: 0;
-      @include right-triangle(10px, $c-error-bg);
     }
   }
 
@@ -39,33 +39,27 @@
 
 .input {
   .valid {
-    border: 1px solid $c-notice-content !important;
-  }
-  .invalid {
-    border: 1px solid $c-error-content !important;
+    border: 1px solid $c-notice-content;
   }
 
-  .editor-toolbar {
-    border-bottom: 0 !important;
-  }
-  .CodeMirror-wrap {
-    border-top-color: #ddd !important;
+  .invalid {
+    border: 1px solid $c-error-content;
   }
 }
 
 .counter {
+  + .editor-toolbar {
+    margin-top: 10px;
+  }
+
   p {
     padding-top: 10px;
     font-size: 13px;
+
     span {
-      color: $c-notice-content;
       &.overCount {
         color: $c-error-content;
       }
     }
-  }
-
-  + .editor-toolbar {
-    margin-top: 10px;
   }
 }
