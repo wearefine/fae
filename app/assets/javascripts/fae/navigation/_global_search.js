@@ -74,19 +74,21 @@ Fae.navigation.global_search = {
    */
   searchListener: function() {
     var _this = this;
+    // shift, ctrl, alt, caps
     var ignored_keycodes = [16, 17, 18, 20];
+    // left, up, right, down
     var arrow_keycodes = [37, 38, 39, 40];
 
     _this.$input.on('keyup', function(ev) {
       // handle arrow keys
-      if (arrow_keycodes.indexOf(ev.keyCode) >= 0) {
+      if (arrow_keycodes.indexOf(ev.keyCode) > -1) {
         _this.moveSelection(ev.keyCode);
         return;
       }
 
       // handle enter key
       if (ev.keyCode === 13) {
-        // if there's a highlighted result, redirect to it's href
+        // if there's a highlighted result, redirect to its href
         var $current_link = $('.js-search-results a.-current');
         if ($current_link.length) {
           window.location = $current_link.attr('href');
@@ -95,7 +97,7 @@ Fae.navigation.global_search = {
       }
 
       // ignore keys that won't change the result set
-      if (ignored_keycodes.indexOf(ev.keyCode) >= 0) {
+      if (ignored_keycodes.indexOf(ev.keyCode) > -1) {
         return;
       }
 
@@ -115,6 +117,17 @@ Fae.navigation.global_search = {
         data = data.replace(val_regex, '<b>$&</b>');
         _this.$wrapper.find('ul').replaceWith(data);
 
+        var $links = _this.$wrapper.find('a');
+        // Initial offset spoofs items' position relative to their parent (.js-search-results)
+        var initial_offset = $links.first().offset().top;
+
+        // Cache the offset for use later in moveSelection
+        $links.each(function() {
+          // Have to use offset because the element is hidden
+          // So .position() is ineffective
+          $(this).data('offset', $(this).offset().top - initial_offset);
+        });
+
         // If only one result, remove border from header nav item (set by the .search-nav-item class)
         if ($('.js-search-results li').length === 1) {
           $('.js-search-results .search-nav-item').removeClass('search-nav-item');
@@ -128,6 +141,7 @@ Fae.navigation.global_search = {
    * @param {Number} keyCode - the key pressed
    */
   moveSelection: function(keyCode) {
+    var $results = $('.js-search-results');
     var $result_links = $('.js-search-results a');
     var $current_link = $('.js-search-results a.-current');
     var current_index = $.inArray($current_link[0], $result_links);
@@ -152,7 +166,19 @@ Fae.navigation.global_search = {
 
     // move current class to new selection
     $current_link.removeClass('-current');
-    $result_links.eq(current_index).addClass('-current');
+    var $new_current = $result_links.eq(current_index);
+    $new_current.addClass('-current');
+
+    // Scroll to item
+    var offset = $new_current.data('offset');
+
+    // Reset to start if it's in the first "page of results"
+    // And subtract its height in case it's inbetween
+    if( offset < ($results.outerHeight() - $new_current.outerHeight()) ) {
+      offset = 0;
+    }
+
+    $results.scrollTop( offset );
   },
 
 };
