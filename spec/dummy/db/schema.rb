@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414221357) do
+ActiveRecord::Schema.define(version: 20160419164359) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -254,6 +254,13 @@ ActiveRecord::Schema.define(version: 20160414221357) do
 
   add_index "locations", ["contact_id"], name: "index_locations_on_contact_id", using: :btree
 
+  create_table "milestones", force: :cascade do |t|
+    t.integer  "year",        limit: 4
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "people", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.datetime "created_at"
@@ -355,11 +362,12 @@ ActiveRecord::Schema.define(version: 20160414221357) do
   end
 
   create_table "winemakers", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.integer  "position",   limit: 4
-    t.integer  "wine_id",    limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string   "name",        limit: 255
+    t.integer  "position",    limit: 4
+    t.integer  "wine_id",     limit: 4
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "region_type", limit: 4
   end
 
   add_index "winemakers", ["wine_id"], name: "index_winemakers_on_wine_id", using: :btree

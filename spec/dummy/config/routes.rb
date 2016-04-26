@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resources :milestones
     resources :validation_testers
     resources :winemakers
     resources :cats

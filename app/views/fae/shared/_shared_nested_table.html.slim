@@ -39,10 +39,7 @@ table class=table_class
 
     - else
       tr
-        - if index
-          - td_link = link_to 'add some', self.send(new_path), class: 'js-add-link'
-        - else
-          - td_link = link_to 'add some', self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s), class: 'js-add-link'
+        - td_link = link_to 'add some', new_path, class: 'js-add-link'
 
         td colspan=colspan.to_s No #{title} yet, #{td_link}.
 

@@ -14,6 +14,7 @@ Fae.form = {
     this.validator.init();
     this.cancel.init();
     this.ajax.init();
+    this.slugger.init();
 
     // input type=file customization
     // This doesn't work in IE. It's not worth figuring out why by this point. IE9 gets plain file uploader.

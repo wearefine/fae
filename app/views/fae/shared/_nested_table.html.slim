@@ -23,6 +23,17 @@ ruby:
   new_path            ||= "new_#{fae_path}_#{assoc_name_singular}_path"
   edit_path           ||= "edit_#{fae_path}_#{assoc_name_singular}_path"
 
+  begin
+    if index
+      new_path = self.send(new_path)
+    else
+      new_path = self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s)
+    end
+  rescue
+    new_path += new_path['?'] ? '&' : '?'
+    new_path += "item_id=#{parent_item.id}&=item_class=#{parent_item.class.to_s}"
+  end
+
   options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, header: header, add_button_text: add_button_text, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
   options_for_table[:parent_item] = parent_item unless index
 
@@ -32,7 +43,7 @@ section.addedit-form.js-addedit-form class="#{'content' if index}"
 
   - else
     h2 = header
-    a.js-add-link.table-add-link.button.-small href=self.send(new_path, item_id: parent_item.id, item_class: parent_item.class.to_s) = add_button_text
+    a.js-add-link.table-add-link.button.-small href=new_path = add_button_text
     h3 = title
     - if helper_text.present?
       h6.table-helper-text = helper_text

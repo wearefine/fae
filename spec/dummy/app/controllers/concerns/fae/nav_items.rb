@@ -28,6 +28,7 @@ module Fae
         { text: 'Pages',          path: fae.pages_path },
         { text: 'Cats', path: main_app.admin_cats_path },
         { text: 'Validation Testers', path: main_app.admin_validation_testers_path },
+        { text: 'Milestones', path: main_app.admin_milestones_path },
         # scaffold inject marker
       ]
     end
