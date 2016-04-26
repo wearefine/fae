@@ -3,12 +3,7 @@
 ## Unreleased
 
 - enhancements
-    + Added in the ability to pass a param to the new path in nested_table.
-    + \#56793: add `slug_separator` option
 - bugs
-    + Updated change_item_link method so that it works w fae_display_fields that are integers not just strings.
-    + Update hash-parsing library to Fryr and fix cookie/hash filtering on load
-    + \#55502: clear carrierwave cache when deleteing an image to allow an image of the same name to be immediately viewable
 
 ## 1.3
 
@@ -43,6 +38,16 @@
     + Rearrange assets to expose the Fae JS API and SCSS mixins/variables to parent apps
     + \#57119: Table columns can now be sorted after the table has been filtered
     + \#57071: Namespace vendor files within the Fae engine namespace
+
+## 1.2.5
+
+- enhancements
+    + Added in the ability to pass a param to the new path in nested_table.
+    + \#56793: add `slug_separator` option
+- bugs
+    + Updated change_item_link method so that it works w fae_display_fields that are integers not just strings.
+    + Update hash-parsing library to Fryr and fix cookie/hash filtering on load
+    + \#55502: clear carrierwave cache when deleteing an image to allow an image of the same name to be immediately viewable
 
 ## 1.2.4
 
