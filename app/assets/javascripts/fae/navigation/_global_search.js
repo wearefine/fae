@@ -172,9 +172,9 @@ Fae.navigation.global_search = {
     // Scroll to item
     var offset = $new_current.data('offset');
 
-    // Reset to start if it's in the first "page of results"
-    // And subtract its height in case it's inbetween
-    if( offset < ($results.outerHeight() - $new_current.outerHeight()) ) {
+    // Reset to start if it's in the first "page" of results
+    // Add height in case it's inbetween "pages"
+    if( (offset + $new_current.outerHeight()) < $results.outerHeight() ) {
       offset = 0;
     }
 
