@@ -1,3 +1,22 @@
+engines:
+  brakeman:
+    enabled: true
+  bundler-audit:
+    enabled: true
+  csslint:
+    enabled: true
+  rubocop:
+    enabled: true
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - ruby
+      - javascript
 exclude_paths:
 - "app/assets/javascripts/fae/vendor/*"
 - "app/assets/stylesheets/fae/vendor/*"
