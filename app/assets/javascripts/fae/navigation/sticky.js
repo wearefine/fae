@@ -4,6 +4,17 @@
   'use strict';
 
   /**
+   * Adjust offsets
+   * @private
+   * @param {jQuery} $el
+   * @see Sticky.windowListeners
+   */
+  function setDimensionsTopLeft($el) {
+    this.dimensions.top = $el.offset().top - this.options.offset;
+    this.dimensions.left = $el.offset().left;
+  }
+
+  /**
    * Private initialization of Sticky object.
    * @class
    */
@@ -130,13 +141,9 @@
 
     function debounceResizeCallback() {
       if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
-        _this.dimensions.top = _this.$placeholder.offset().top - _this.options.offset;
-        _this.dimensions.left = _this.$placeholder.offset().left;
-
+        setDimensionsTopLeft.call(_this, _this.$placeholder);
       } else {
-        _this.dimensions.top = _this.$el.offset().top - _this.options.offset;
-        _this.dimensions.left = _this.$el.offset().left;
-
+        setDimensionsTopLeft.call(_this, _this.$el);
       }
 
       _this.stickIt();

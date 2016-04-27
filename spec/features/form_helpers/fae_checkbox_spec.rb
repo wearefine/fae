@@ -28,4 +28,14 @@ feature 'fae_checkbox' do
     end
   end
 
+  scenario 'clicking disabled checkbox has no effect', js: true do
+    person = FactoryGirl.create(:person)
+    admin_login
+
+    visit edit_admin_person_path(person)
+
+    page.first('.boolean').find('label').click
+    expect(page).to_not have_selector('label.active')
+  end
+
 end

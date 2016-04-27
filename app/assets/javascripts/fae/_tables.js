@@ -372,7 +372,7 @@ Fae.tables = {
       $fixed_header.css({
         width: $this.outerWidth(),
         height: thead_height,
-        top: header_height,
+        top: header_height
       });
     }
 
