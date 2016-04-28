@@ -36,7 +36,8 @@ module Fae
       params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
     end
 
-    def check_roles 
+    def check_roles
+      puts 'Check roles'
       if Fae::Role.all.empty?
         raise "Role 'super admin' does not exist in Fae::Role, run rake fae:seed_db"
       end

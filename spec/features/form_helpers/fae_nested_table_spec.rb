@@ -65,18 +65,14 @@ feature 'fae_nested_table' do
     FactoryGirl.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
     FactoryGirl.create(:winemaker, name: 'First', wine: wine, region_type: 1)
 
-    user = admin_login
+    admin_login
     visit edit_admin_wine_path(wine)
 
     expect(page.body).to match(/First.*Middle.*Last/)
 
     within(:css, '#oregon_winemakers_section') do
       handle = all('tbody tr').last.find('.sortable-handle')
-      handle = all('tbody tr').last.find('.sortable-handle')
-      puts Fae::Role.all.count
       handle.drag_to(find('thead'))
-      puts user.full_name
-      puts user.role
     end
 
     expect(page.body).to match(/Last.*First.*Middle/)
