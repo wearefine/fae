@@ -7,11 +7,7 @@
  */
 Fae.form.select = {
 
-  availableItemsStr: ' Available Items',
-  addedItemsStr: ' Added Items',
-
   init: function() {
-    this.selectableText();
     this.multiselectOrChosen();
   },
 
@@ -20,6 +16,18 @@ Fae.form.select = {
    */
   multiselectOrChosen: function() {
     var _this = this;
+    var availableItemsStr = ' Available Items';
+    var addedItemsStr = ' Added Items';
+
+    /**
+     * On selection change, update items left and currently added
+     * @private
+     */
+    function updateMultiselectHeader() {
+      var $instance = $(this)[0];
+      $('.ms-selectable .custom-header').text( $instance.$selectableContainer.find($instance.elemsSelector).length + availableItemsStr);
+      $('.ms-selection .custom-header').text( $instance.$selectionContainer.find($instance.elemsSelector).length + addedItemsStr);
+    }
 
     $('select').each(function(index, elm){
       var $this = $(this);
@@ -27,40 +35,26 @@ Fae.form.select = {
       if ($this.hasClass('multiselect')) {
         $this.multiSelect({
           selectableHeader: '<div class="custom-header"></div>',
-          selectionHeader: '<div class="custom-header"></div>'
+          selectionHeader: '<div class="custom-header"></div>',
+          afterSelect: function(values) {
+            updateMultiselectHeader.call(this);
+          },
+          afterDeselect: function(values) {
+            updateMultiselectHeader.call(this);
+          }
         });
 
         var selectableCount = $this.next('.ms-container').find('.ms-selectable li').not('.ms-selected').length
         var selectedCount = $this.next('.ms-container').find('.ms-selection .ms-selected').length;
 
-        $('.ms-selectable .custom-header').text(selectableCount + _this.availableItemsStr);
-        $('.ms-selection .custom-header').text(selectedCount + _this.addedItemsStr);
+        $('.ms-selectable .custom-header').text(selectableCount + availableItemsStr);
+        $('.ms-selection .custom-header').text(selectedCount + addedItemsStr);
 
       } else {
         $this.fae_chosen();
 
       }
     });
-  },
-
-  /**
-   * On selection change, update items left and currently added
-   */
-  selectableText: function() {
-    var _this = this;
-    var $selectable = $('.ms-selectable .custom-header');
-    var $selection = $('.ms-selection .custom-header');
-
-    $('.ms-selectable li').on('click', function(){
-      $selectable.text( (parseInt($selectable.text()) - 1) + _this.availableItemsStr );
-      $selection.text( (parseInt($selection.text()) + 1) + _this.addedItemsStr );
-    });
-
-    $('.ms-selection li').on('click', function(){
-      $selectable.text( (parseInt($selectable.text()) + 1) + _this.availableItemsStr );
-      $selection.text( (parseInt($selection.text()) - 1) + _this.addedItemsStr );
-    });
-
   }
 
 };

@@ -370,7 +370,11 @@ Fae.form.ajax = {
 
       // The settings menu for tables and checkboxes
       .on('click', '.boolean label, .js-checkbox-wrapper label', function(e){
-        $(this).toggleClass('active');
+        var $this = $(this);
+
+        if(!$this.hasClass('disabled') && !$this.hasClass('readonly')) {
+          $this.toggleClass('active');
+        }
       })
 
       // stop the event bubbling and running the above toggleClass twice

@@ -70,9 +70,10 @@ feature 'fae_nested_table' do
 
     expect(page.body).to match(/First.*Middle.*Last/)
 
-    # handle = page.find('#oregon_winemakers_section tbody tr:last-child .sortable-handle')
-    # target = page.find('#oregon_winemakers_section thead')
-    # handle.drag_to(target)
+    # within(:css, '#oregon_winemakers_section') do
+    #   handle = all('tbody tr').last.find('.sortable-handle')
+    #   handle.drag_to(find('thead'))
+    # end
     #
     # TODO - drag_to is triggering the SetupController, which is in turn raising a no roles found
     # Not sure why, think it has something to do with Capybara's synchronize method

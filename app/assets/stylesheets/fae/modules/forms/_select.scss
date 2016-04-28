@@ -181,11 +181,16 @@
         font-size: 13px;
 
         &:after {
-          content: "Add";
           position: absolute;
           right: 15px;
           top: 9px;
           color: $c-custom-highlight;
+        }
+      }
+
+      &.ms-elem-selectable {
+        &:after {
+          content: "Add";
         }
       }
 
