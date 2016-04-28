@@ -4,6 +4,8 @@
 
 - enhancements
 - bugs
+    + Disabled checkboxes are now untouchable
+    + Multiselect headers update available/added items accurately
 
 ## 1.3
 
