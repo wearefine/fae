@@ -152,22 +152,6 @@ Fae.tables = {
     // @depreciation - remove sort_selector var in v2.0
     var sort_selector = FCH.exists('.sortable-handle') ? '.sortable-handle' : '.main_content-sortable-handle';
 
-    function sortUpdate() {
-      var $this = $(this);
-      var serial = $this.sortable('serialize');
-      var object = serial.substr(0, serial.indexOf('['));
-
-      $.ajax({
-        url: Fae.path+'/sort/'+object,
-        type: 'post',
-        data: serial,
-        dataType: 'script',
-        complete: function(request){
-          // sort complete messaging can go here
-        }
-      });
-    }
-
     // @depreciation - remove `, .main_content-sortable` and only use '.js-sort-row' in v2.0
     $('.js-sort-row, .main_content-sortable').sortable({
       items: 'tbody tr',
@@ -196,9 +180,22 @@ Fae.tables = {
         $(ui.item).closest('table').find('th').css('width', '');
       },
 
-      update: sortUpdate
-    })
-    .on('sortupdate', sortUpdate);
+      update: function() {
+        var $this = $(this);
+        var serial = $this.sortable('serialize');
+        var object = serial.substr(0, serial.indexOf('['));
+
+        $.ajax({
+          url: Fae.path+'/sort/'+object,
+          type: 'post',
+          data: serial,
+          dataType: 'script',
+          complete: function(request){
+            // sort complete messaging can go here
+          }
+        });
+      }
+    });
   },
 
   /**
