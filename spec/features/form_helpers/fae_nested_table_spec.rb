@@ -70,10 +70,9 @@ feature 'fae_nested_table' do
 
     expect(page.body).to match(/First.*Middle.*Last/)
 
-    within(:css, '#oregon_winemakers_section') do
-      handle = all('tbody tr').last.find('.sortable-handle')
-      # handle.drag_to(find('thead'))
-    end
+    handle = page.find('#oregon_winemakers_section tbody tr:last-child .sortable-handle')
+    target = page.find('#oregon_winemakers_section thead')
+    handle.drag_to(target)
 
     expect(page.body).to match(/Last.*First.*Middle/)
   end
