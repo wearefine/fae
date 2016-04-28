@@ -55,6 +55,6 @@ Fae.form.select = {
 
       }
     });
-  },
+  }
 
 };
