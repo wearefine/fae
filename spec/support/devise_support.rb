@@ -32,18 +32,21 @@ end
 
 module SignInControllerHelper
   def login(user)
+    puts 'Sign In Controller'
     sign_in user
   end
 end
 
 module SignInRequestHelper
   def login(user)
+    puts 'Sign In Request'
     post_via_redirect fae.user_session_path, 'user[email]' => user.email, 'user[password]' => user.password
   end
 end
 
 module SignInFeatureHelper
   def login(user)
+    puts 'Sign In Feature'
     visit fae.new_user_session_path
     fill_in 'user_email', with: user.email
     fill_in 'user_password', with: user.password
