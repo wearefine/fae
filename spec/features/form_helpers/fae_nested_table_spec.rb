@@ -65,8 +65,10 @@ feature 'fae_nested_table' do
     FactoryGirl.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
     FactoryGirl.create(:winemaker, name: 'First', wine: wine, region_type: 1)
 
-    admin_login
+    user = admin_login
     visit edit_admin_wine_path(wine)
+    puts user.full_name
+    puts user.role
 
     expect(page.body).to match(/First.*Middle.*Last/)
 
