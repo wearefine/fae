@@ -6,6 +6,7 @@
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
+    + \#57523: Remove errors after image is reuploaded
 
 ## 1.3
 

@@ -144,6 +144,9 @@
 
       return false;
     } else {
+      this.$input.next('.error').remove();
+      this.$el.removeClass('field_with_errors');
+
       return true;
     }
   };
