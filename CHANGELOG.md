@@ -6,6 +6,7 @@
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
+    + \#57288: Use real links (not anchors) in dummy app
 
 ## 1.3
 
