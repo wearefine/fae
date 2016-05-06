@@ -9,6 +9,15 @@ module Fae
       include Fae::Trackable if Fae.track_changes
     end
 
+    def fae_nested_parent
+      # override this method in your model
+    end
+
+    def fae_nested_foreign_key
+      return if fae_nested_parent.blank?
+      "#{fae_nested_parent.to_s}_id".to_sym
+    end
+
     module ClassMethods
       def fae_display_field
         # override this method in your model

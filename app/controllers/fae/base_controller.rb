@@ -78,12 +78,12 @@ module Fae
       @new_path = @index_path + '/new'                     # used in index_header partial
     end
 
-    # Use callbacks to share common setup or constraints between actions.
+    # use callbacks to share common setup or constraints between actions.
     def set_item
       @item = @klass.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
+    # only allow a trusted parameters, override to whitelist
     def item_params
       params.require(@klass_singular).permit!
     end
