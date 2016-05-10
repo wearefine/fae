@@ -10,6 +10,7 @@
 * [Global Search](#global-search)
 * [Form Helpers](#form-helpers)
 * [Pages and Content Blocks](#pages-and-content-blocks)
+* [Nested Forms](#nested-forms)
 
 ---
 
@@ -63,8 +64,10 @@ rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-mode
 | ------ | ----------- |
 | `[--parent-model=ParentModel]` | an optional flag that adds the association to the generated model.|
 
-The nested scaffold creates a model that will be nested in another object's form via the `nested_table_advanced` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
+The nested scaffold creates a model that is meant to be nested in another object's form via the `nested_table` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
 
+* [More information on nested forms](#nested-forms)
+* [More information on the nested_table partial](helpers.md#nested_table)
 
 ## fae:nested_index_scaffold
 
@@ -790,3 +793,41 @@ def nav_items
   ]
 end
 ```
+
+---
+
+# Nested Forms
+
+![Nested Table](images/nested_table.png)
+
+Fae provides an easy way to manage associated objects in one form via nested forms. A good use case for nested forms is when you have a `has_many` association where the child object is simple enough that an embedded table and form on the parent form will do. This makes managing the associated content much more convenient.
+
+Some good examples ideal for nested tables are: image galleries, tasting notes on a wine release and quotes on a person object.
+
+## Setting Up a Nested Form
+
+### Generate the child object
+
+Assuming the parent object already exists, generate the object to be nested with [Fae's nested scaffold command](#faenested_scaffold).
+
+### Update Models
+
+Add the `has_many` association to the parent model. On the child model make sure the `belongs_to` and `fae_nested_parent` have been defined. This will happen automatically if you use the `--parent-model` flag on the nested scaffold command.
+
+#### fae_nested_parent
+
+`fae_nested_parent` is an instance method on the child model that tells the controller how to access the parent. The method should return a symbol of the defined `belongs_to` association.
+
+```ruby
+def fae_nested_parent
+  :person
+end
+```
+
+### Update Child Form View
+
+Update the elements you wish to appear in the nested form.
+
+### Update Parent Form View
+
+Add the [nested table partial](helpers.md#nested_table) to the parent form. This partial should be below the actual form as you cannot nest form tags. This form should only appear on the edit page as you cannot associate content to an object that doesn't exist yet.
