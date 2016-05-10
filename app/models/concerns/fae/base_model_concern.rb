@@ -15,7 +15,7 @@ module Fae
 
     def fae_nested_foreign_key
       return if fae_nested_parent.blank?
-      "#{fae_nested_parent.to_s}_id".to_sym
+      "#{fae_nested_parent}_id"
     end
 
     module ClassMethods

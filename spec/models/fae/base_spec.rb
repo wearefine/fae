@@ -40,7 +40,7 @@ describe Fae::BaseModelConcern do
     context 'when #fae_nested_parent is defined in a model' do
       it 'should return a foreign key' do
         aroma = FactoryGirl.build(:aroma)
-        expect(aroma.fae_nested_foreign_key).to eq(:release_id)
+        expect(aroma.fae_nested_foreign_key).to eq('release_id')
       end
     end
 

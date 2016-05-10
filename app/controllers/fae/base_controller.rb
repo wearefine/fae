@@ -83,7 +83,7 @@ module Fae
       @item = @klass.find(params[:id])
     end
 
-    # only allow a trusted parameters, override to whitelist
+    # only allow trusted parameters, override to white-list
     def item_params
       params.require(@klass_singular).permit!
     end

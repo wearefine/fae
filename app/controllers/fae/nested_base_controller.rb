@@ -10,7 +10,9 @@ module Fae
     def new
       @item = @klass.new
       raise_undefined_parent if @item.fae_nested_foreign_key.blank?
-      @item.send("#{@item.fae_nested_foreign_key}=", params[:item_id])
+
+      item_id = params[:item_id].to_i || nil
+      @item.send("#{parent_foreign_key}=", item_id)
       build_assets
     end
 
@@ -23,7 +25,7 @@ module Fae
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
       if @item.save
-        @parent_item = @item.send(@item.fae_nested_parent)
+        @parent_item = @item.send(nested_parent)
         flash[:notice] = t('fae.save_notice')
         render template: table_template_path
       else
@@ -36,7 +38,7 @@ module Fae
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
       if @item.update(permitted_params)
-        @parent_item = @item.send(@item.fae_nested_parent)
+        @parent_item = @item.send(nested_parent)
         flash[:notice] = t('fae.save_notice')
         render template: table_template_path
       else
@@ -47,7 +49,7 @@ module Fae
 
     def destroy
       raise_undefined_parent if @item.fae_nested_parent.blank?
-      @parent_item = @item.send(@item.fae_nested_parent)
+      @parent_item = @item.send(nested_parent)
 
       if @item.destroy
         flash[:notice] = t('fae.delete_notice')
@@ -69,7 +71,7 @@ module Fae
       @item = @klass.find(params[:id])
     end
 
-    # only allow a trusted parameters, override to whitelist
+    # only allow trusted parameters, override to white-list
     def permitted_params
       params.require(@klass_singular).permit!
     end
@@ -84,6 +86,14 @@ module Fae
 
     def table_template_path
       "#{fae.root_path.gsub('/', '')}/#{@klass_name}/table"
+    end
+
+    def parent_foreign_key
+      @item.fae_nested_foreign_key
+    end
+
+    def nested_parent
+      @item.fae_nested_parent
     end
 
   end
