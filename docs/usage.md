@@ -802,7 +802,7 @@ end
 
 Fae provides an easy way to manage associated objects in one form via nested forms. A good use case for nested forms is when you have a `has_many` association where the child object is simple enough that an embedded table and form on the parent form will do. This makes managing the associated content much more convenient.
 
-Some good examples ideal for nested tables are: image galleries, tasting notes on a wine release and quotes on a person object.
+Some good examples ideal for nested tables are image galleries, tasting notes on a wine release and quotes on a person object.
 
 ## Setting Up a Nested Form
 
