@@ -20,4 +20,36 @@ describe Fae::BaseModelConcern do
     end
   end
 
+  describe '#fae_nested_parent' do
+    context 'when defined in a model' do
+      it 'should return a symbol' do
+        aroma = FactoryGirl.build(:aroma)
+        expect(aroma.fae_nested_parent).to eq(:release)
+      end
+    end
+
+    context 'when not defined in a model' do
+      it 'should return nil' do
+        release = FactoryGirl.build(:release)
+        expect(release.fae_nested_parent).to eq(nil)
+      end
+    end
+  end
+
+  describe '#fae_nested_foreign_key' do
+    context 'when #fae_nested_parent is defined in a model' do
+      it 'should return a foreign key' do
+        aroma = FactoryGirl.build(:aroma)
+        expect(aroma.fae_nested_foreign_key).to eq('release_id')
+      end
+    end
+
+    context 'when #fae_nested_parent is not defined in a model' do
+      it 'should return nil' do
+        release = FactoryGirl.build(:release)
+        expect(release.fae_nested_foreign_key).to eq(nil)
+      end
+    end
+  end
+
 end

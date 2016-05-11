@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
