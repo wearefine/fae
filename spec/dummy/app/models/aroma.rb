@@ -17,6 +17,10 @@ class Aroma < ActiveRecord::Base
     'all'
   end
 
+  def fae_nested_parent
+    :release
+  end
+
   def cat_size
     cats.size.to_s
   end
