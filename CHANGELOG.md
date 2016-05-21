@@ -4,6 +4,7 @@
 
 - enhancements
     + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
+    + \#57075: Add a flag to the install generator for internal usage
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
