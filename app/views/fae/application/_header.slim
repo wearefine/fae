@@ -6,12 +6,14 @@ header.main-header#js-main-header
     nav
       ul.main-header-nav
         - @fae_topnav_items.each_with_index do |item, idx|
-          li class=nav_active_class(item[:class_name], 0, idx)
-            a href=item[:path] = item[:text]
-            - if item[:subitems]
-              ul
-                - item[:subitems].each_with_index do |subitem, sub_idx|
-                  li: a href=subitem[:nested_path] class=nav_active_class(subitem[:class_name], 1, sub_idx, idx) = subitem[:text]
+          - if user_can_see_this?(item)
+            li class=nav_active_class(item[:class_name], 0, idx)
+              a href=item[:path] = item[:text]
+              - if item[:subitems]
+                ul
+                  - item[:subitems].each_with_index do |subitem, sub_idx|
+                    - if user_can_see_this?(item)
+                      li: a href=subitem[:nested_path] class=nav_active_class(subitem[:class_name], 1, sub_idx, idx) = subitem[:text]
 
   - if user_signed_in?
     ul.utility-nav#js-utility-nav

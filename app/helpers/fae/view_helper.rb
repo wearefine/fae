@@ -130,6 +130,11 @@ module Fae
       "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
     end
 
+    def user_can_see_this?(item)
+      return true if item[:roles].blank?
+      item[:roles].include?(current_user.role_id)
+    end
+
     private
 
     def filter_search_field
