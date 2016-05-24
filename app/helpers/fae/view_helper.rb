@@ -129,6 +129,10 @@ module Fae
       "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
     end
 
+    def fae_paginate(items)
+      paginate items, theme: 'fae'
+    end
+
     private
 
     def filter_search_field

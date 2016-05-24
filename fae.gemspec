@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_list', '~> 0.4.0'
   s.add_dependency 'browser', '~> 0.8.0'
   s.add_dependency 'slim'
+  s.add_dependency 'kaminari', '~> 0.16.3'
 
   s.add_development_dependency "thin"
   s.add_development_dependency "better_errors"

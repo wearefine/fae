@@ -13,6 +13,7 @@ module Fae
     require 'judge/simple_form'
     require 'acts_as_list'
     require 'slim'
+    require 'kaminari'
 
     config.autoload_paths += %W(#{config.root}/lib)
 

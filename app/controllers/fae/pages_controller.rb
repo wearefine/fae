@@ -13,7 +13,7 @@ module Fae
     end
 
     def activity_log
-      @items = Fae::Change.order(id: :desc)
+      @items = Fae::Change.order(id: :desc).page(params[:page])
     end
 
     def activity_log_filter
