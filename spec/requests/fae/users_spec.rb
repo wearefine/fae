@@ -12,6 +12,12 @@ describe 'users#index' do
 
       expect(response.status).to eq(200)
     end
+
+    it 'should be able to access resources restricted to super admin role type' do
+      get admin_teams_path
+
+      expect(response.status).to eq(200)
+    end
   end
 
   context 'when role is admin' do
@@ -21,6 +27,12 @@ describe 'users#index' do
 
     it 'should be able to access users' do
       get fae.users_path
+
+      expect(response.status).to eq(200)
+    end
+
+    it 'should be able to access resources restricted to admin role type' do
+      get admin_teams_path
 
       expect(response.status).to eq(200)
     end
@@ -36,6 +48,12 @@ describe 'users#index' do
 
       expect(response.status).to eq(302)
       expect(response).to redirect_to(fae.root_path)
+    end
+
+    it 'should not be able to access resources restricted for user role type' do
+      get admin_teams_path
+
+      expect(response.status).to eq(404)
     end
   end
 

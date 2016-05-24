@@ -1,11 +1,10 @@
 module Fae
-  module NannyAbilities
+  module AuthorizationAccessMap
     extend ActiveSupport::Concern
 
     def self.access_map
       {
-      #  'wines' => [2,3],
-      #  'asset_manager/tiers' => [1,2,3]
+        'teams' => ['super admin', 'admin']
       }
     end
 

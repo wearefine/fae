@@ -1,11 +1,11 @@
 module Fae
   class BaseController < ApplicationController
     include Fae::Cloneable
-    include Fae::Nanny
+    include Fae::Authorization
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
-    before_action :babysit
+    before_action :authorize_user
 
     helper FormHelper
 

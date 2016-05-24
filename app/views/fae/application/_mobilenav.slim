@@ -1,35 +1,38 @@
 nav.nav.mobilenav
   ul
     - @fae_navigation.structure.each do |item|
-      ruby:
-        item[:path] ||= '#'
-        main_class = item[:sublinks].present? ? 'mobilenav-accordion js-accordion' : ''
-        main_class << " #{item[:class_name]}" if item[:class_name].present?
+      - if user_can_see_this?(item)
+        ruby:
+          item[:path] ||= '#'
+          main_class = item[:sublinks].present? ? 'mobilenav-accordion js-accordion' : ''
+          main_class << " #{item[:class_name]}" if item[:class_name].present?
 
-      li class=main_class
-        a href=item[:path] = item[:text]
+        li class=main_class
+          a href=item[:path] = item[:text]
 
-        - if item[:sublinks].present?
-          ul.subnav.js-subnav.js-subnav.js-subnav
-            li
-              / <span>s are for the mobile titles
-              span.mobilenav-subheader.js-mobile-back = item[:text]
+          - if item[:sublinks].present?
+            ul.subnav.js-subnav.js-subnav.js-subnav
+              li
+                / <span>s are for the mobile titles
+                span.mobilenav-subheader.js-mobile-back = item[:text]
 
-            - item[:sublinks].each do |subitem|
-              ruby:
-                subitem[:path] ||= '#'
-                sub_class = 'mobilenav-accordion -sub js-accordion' if subitem[:sublinks].present?
-                link_class = subitem[:class_name] if subitem[:class_name].present?
+              - item[:sublinks].each do |subitem|
+                - if user_can_see_this?(subitem)
+                ruby:
+                  subitem[:path] ||= '#'
+                  sub_class = 'mobilenav-accordion -sub js-accordion' if subitem[:sublinks].present?
+                  link_class = subitem[:class_name] if subitem[:class_name].present?
 
-              li class=sub_class
-                a class=link_class href=subitem[:path] = subitem[:text]
+                li class=sub_class
+                  a class=link_class href=subitem[:path] = subitem[:text]
 
-                - if subitem[:sublinks].present?
-                  ul.subnav.js-subnav
-                    li: span.mobilenav-subheader.js-mobile-back = subitem[:text]
-                    - subitem[:sublinks].each do |thirditem|
-                      - thirditem[:path] ||= '#'
-                      li: a href=thirditem[:path] = thirditem[:text]
+                  - if subitem[:sublinks].present?
+                    ul.subnav.js-subnav
+                      li: span.mobilenav-subheader.js-mobile-back = subitem[:text]
+                      - subitem[:sublinks].each do |thirditem|
+                        - if user_can_see_this?(thirditem)
+                          - thirditem[:path] ||= '#'
+                          li: a href=thirditem[:path] = thirditem[:text]
 
     - if current_user.super_admin_or_admin?
       li.mobilenav-accordion.js-accordion

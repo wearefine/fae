@@ -132,7 +132,7 @@ module Fae
 
     def user_can_see_this?(item)
       return true if item[:roles].blank?
-      item[:roles].include?(current_user.role_id)
+      item[:roles].include?(current_user.role.name)
     end
 
     private

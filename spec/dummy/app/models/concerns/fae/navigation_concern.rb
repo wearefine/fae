@@ -14,7 +14,7 @@ module Fae
           ]),
           item('Cats', path: admin_cats_path)
         ]),
-        item('Teams', subitems: team_subitems),
+        item('Teams', subitems: team_subitems, roles: ['super admin', 'admin']),
         item('Events', class_name: 'css-one-level-deep', subitems: [
           item('Events', path: admin_events_path),
           item('Event Hosts', path: admin_people_path, class_name: 'css-two-levels-deep'),
