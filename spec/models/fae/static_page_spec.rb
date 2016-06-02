@@ -26,6 +26,9 @@ describe Fae::StaticPage do
     end
 
     it 'should attach language associations when present' do
+      # Manually change locale before instantiation - needed for _content test
+      allow(I18n).to receive(:locale) { :zh }
+
       ap = AboutUsPage.instance
 
       expect(ap.body_en).to be_nil
@@ -42,6 +45,8 @@ describe Fae::StaticPage do
       ap.create_body_en(content: 'test en')
       ap.create_body_zh(content: 'test zh')
 
+      # Sometimes this test flickers
+      # AboutUsPage.instance instantiations in other tests seem to override the I18n locale set here
       expect(ap.body_content).to eq('test zh')
     end
 
@@ -50,6 +55,9 @@ describe Fae::StaticPage do
   describe 'dynamic validations' do
 
     it 'should only attach once' do
+      # Manually change locale before instantiation - needed for _content test
+      allow(I18n).to receive(:locale) { :zh }
+
       # trigger multiple instances which add dynamic validations to associated objects
       AboutUsPage.instance
       HomePage.instance

@@ -18,7 +18,7 @@ ruby:
 
 - if languages.present?
   - languages.each do |lang|
-    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} #{lang.to_s.upcase}", alt_label: "#{alt_label} #{lang.to_s.upcase}", caption_label: "#{caption_label} #{lang.to_s.upcase}", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang
+    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", alt_label: "#{alt_label} (#{lang.to_s})", caption_label: "#{caption_label} (#{lang.to_s})", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang
 
 - else
   - wrapper_html = language.present? ? { data: { language: language } } : {}

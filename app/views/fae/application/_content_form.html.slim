@@ -37,7 +37,7 @@ ruby:
 
   - languages.each do |lang|
     - options.deep_merge! wrapper_html: { data: { language: lang } }
-    - options[:label] = orig_label.gsub(label, "#{label} #{lang.to_s.upcase}").html_safe
+    - options[:label] = orig_label.gsub(label, "#{label} (#{lang.to_s})").html_safe
 
     = f.simple_fields_for "#{attribute}_#{lang}".to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
       - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
