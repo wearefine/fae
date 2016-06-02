@@ -793,7 +793,7 @@ def self.fae_fields
 end
 ```
 
-Add `language: true` to the page's `fae/shared/form_header` partial to utilize [Fae's language switcher](helpers.md#form_header-1).
+Add `languages: true` to the page's `fae/shared/form_header` partial to utilize [Fae's language switcher](helpers.md#form_header-1).
 
 ## Linking to Pages Within Fae
 

@@ -30,18 +30,21 @@ module Fae
 
       fae_fields.each do |name, value|
         type = value.is_a?(Hash) ? value[:type] : value
-        language = value.try(:[], :language)
+        language = value.try(:[], :languages)
 
         if language.present?
           language.each do |lang|
-            define_association("#{name}_#{lang}", type) # Save with suffix for form fields
+            # Save with suffix for form fields
+            define_association("#{name}_#{lang}", type)
+            define_validations("#{name}_#{lang}", type, value[:validates]) if value.try(:[], :validates).present?
           end
-          define_association(name, type, "#{name}_#{I18n.locale}") # Save with lookup to have default language return in front-end use
+          # Save with lookup to have default language return in front-end use (don't need to worry about validations here)
+          define_association(name, type, "#{name}_#{I18n.locale}")
         else
-          define_association(name, type) # Everything else
+          # Normal content_blocks
+          define_association(name, type)
+          define_validations(name, type, value[:validates]) if value.try(:[], :validates).present?
         end
-
-        define_validations(name, type, value[:validates]) if value.is_a?(Hash) && value[:validates].present?
       end
 
       @singleton_is_setup = true

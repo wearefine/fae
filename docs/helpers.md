@@ -509,7 +509,7 @@ Displays breadcrumb links and form title.
 | option | type | default | description |
 |---|---|---|---|
 | header | ActiveRecord object or string | | **(required)** passed to form_header helper method |
-| language | boolean | false | display the [language changer](customization.md#multiple-language-support) |
+| languages | boolean | false | display the [language changer](customization.md#multiple-language-support) |
 | save_button_text (`v1.3 <=`)   | string | 'Save' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
 | 
