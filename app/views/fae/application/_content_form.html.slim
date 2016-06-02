@@ -29,7 +29,21 @@ ruby:
     options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
   end
 
-= f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
-  - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
-  = i.input :content, options
+  languages = f.object.class.fae_fields[attribute].try(:[], :languages)
 
+- if languages.present?
+  / Store original label for later gsub
+  - orig_label = options[:label]
+
+  - languages.each do |lang|
+    - options.deep_merge! wrapper_html: { data: { language: lang } }
+    - options[:label] = orig_label.gsub(label, "#{label} #{lang.to_s.upcase}").html_safe
+
+    = f.simple_fields_for "#{attribute}_#{lang}".to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
+      - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
+      = i.input :content, options
+
+- else
+  = f.simple_fields_for attribute.to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
+    - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
+    = i.input :content, options

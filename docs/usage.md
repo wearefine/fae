@@ -774,6 +774,27 @@ end
 
 Validations can only be applied to types `Fae::TextField` and `Fae::TextArea`.
 
+## Internalization of Content Blocks
+
+Multiple inputs will be generated for blocks that support for multiple languages. Add a `:languages` key to the field's definition.
+
+```ruby
+def self.fae_fields
+  {
+    body: { 
+      type: Fae::TextArea,
+      languages: [:en, :zh]
+    },
+    annual_report: { 
+      type: Fae::File,
+      languages: Fae.languages.keys # Set in config/initializers/fae.rb
+    }
+  }
+end
+```
+
+Add `language: true` to the page's `fae/shared/form_header` partial to utilize [Fae's language switcher](helpers.md#form_header-1).
+
 ## Linking to Pages Within Fae
 
 Link to the edit screen of a page and its respective content blocks by adding an item to [the navigation items](#navigation-items).

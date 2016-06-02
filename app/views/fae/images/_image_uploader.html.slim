@@ -13,45 +13,54 @@ ruby:
   show_caption        ||= false
   required            ||= false
   attached_as         ||= image_name.to_s
+  languages             = f.object.class.try(:fae_fields).try(:[], image_name).try(:[], :languages)
+  language            ||= nil
 
-= f.simple_fields_for image_name do |i|
-  .field.input
-    label class="#{'required' if required}"
-      - if required
-        abbr title="required" *
+- if languages.present?
+  - languages.each do |lang|
+    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} #{lang.to_s.upcase}", alt_label: "#{alt_label} #{lang.to_s.upcase}", caption_label: "#{caption_label} #{lang.to_s.upcase}", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang
 
-      = " #{label.html_safe}"
+- else
+  - wrapper_html = language.present? ? { data: { language: language } } : {}
+  = f.simple_fields_for image_name, defaults: { wrapper_html: wrapper_html } do |i|
+    .field.input*wrapper_html
+      label class="#{'required' if required}"
+        - if required
+          abbr title="required" *
 
-      - if helper_text.present?
-        h6.helper_text = helper_text
+        = " #{label.html_safe}"
 
-    - if the_image.asset.present?
-      .asset-actions
-        img.js-image-modal src=the_image.asset.url
-        .asset-title = the_image.asset.file.filename
+        - if helper_text.present?
+          h6.helper_text = helper_text
 
-        = link_to '', fae.delete_image_path(the_image.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present?
+      - if the_image.asset.present?
+        .asset-actions
+          img.js-image-modal src=the_image.asset.url
+          .asset-title = the_image.asset.file.filename
 
-    .asset-inputs style="#{'display:none;' if the_image.asset.present?}"
-      = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_image_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
-      = i.input :asset_cache, as: :hidden
-      - imageable_type = f.object.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : f.object.class.name
-      = i.input :imageable_type, as: :hidden, input_html: { value: imageable_type }
-      = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
+          = link_to '', fae.delete_image_path(the_image.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present?
 
-  - if show_caption
-    ruby:
-      options = { label: caption_label.html_safe }
-      options[:helper_text] = caption_helper_text if caption_helper_text.present?
+      .asset-inputs style="#{'display:none;' if the_image.asset.present?}"
+        = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_image_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
+        = i.input :asset_cache, as: :hidden
+        - imageable_type = f.object.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : f.object.class.name
+        = i.input :imageable_type, as: :hidden, input_html: { value: imageable_type }
+        = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
 
-    = fae_input i, :caption, options
+    - if show_caption
+      ruby:
+        options = { label: caption_label.html_safe }
+        options[:helper_text] = caption_helper_text if caption_helper_text.present?
+        options[:wrapper_html] = wrapper_html
 
-  - if show_alt
-    ruby:
-      options = { label: alt_label.html_safe }
-      options[:helper_text] = alt_helper_text if alt_helper_text.present?
+      = fae_input i, :caption, options
 
-    = fae_input i, :alt, options
+    - if show_alt
+      ruby:
+        options = { label: alt_label.html_safe }
+        options[:helper_text] = alt_helper_text if alt_helper_text.present?
+        options[:wrapper_html] = wrapper_html
 
-  = i.hidden_field :required, value: required
+      = fae_input i, :alt, options
 
+    = i.hidden_field :required, value: required
