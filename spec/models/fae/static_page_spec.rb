@@ -36,13 +36,15 @@ describe Fae::StaticPage do
 
     # TODO - AboutUsPage.instance instantiations in other tests seem to override the I18n locale set here, so using a one-off page. Not sure if rspec or Fae bug
     it 'should use _content to query the field with the desired I18n locale' do
-      allow(I18n).to receive(:locale) { :zh }
+      I18n.locale = :zh
 
       cp = ContactUsPage.instance
       cp.create_body_en(content: 'test en')
       cp.create_body_zh(content: 'test zh')
 
       expect(cp.body_content).to eq('test zh')
+
+      I18n.locale = :en
     end
 
   end

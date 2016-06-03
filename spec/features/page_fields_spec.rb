@@ -7,7 +7,7 @@ feature 'page fields' do
     visit fae.edit_content_block_path('about_us')
 
     expect(page).to have_selector('.about_us_page_body_zh_content')
-    expect(page).to have_selector('.about_us_page_hero_en_alt')
+    expect(page).to have_selector('.about_us_page_header_image_en_alt')
   end
 
   context 'on Fae::TextAreas' do
