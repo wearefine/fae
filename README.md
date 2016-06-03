@@ -8,22 +8,76 @@ Fae is CMS for Rails unlike any other. Like most Rails CMS engines, Fae provides
 
 Fae requires Rails >= 4.1.
 
+
+## Getting Started
+
+* [Installation](docs/installation/index.md)
+* [Quickstart Guide](docs/quickstart/index.md)
+
+
 ## Documentation
 
-* [Installation](docs/index.md)
-* [Usage](docs/usage.md)
-* [Customization](docs/customization.md)
-* [Form and View Helpers](docs/helpers.md)
-* [Upgrading Guide](docs/upgrading.md)
-* [Changelog](CHANGELOG.md)
-* [Contributing and Maintenance](CONTRIBUTING.md)
+### Topics
 
-## License
-
-[MIT](LICENSE)
-
-
+* [Generators](docs/topics/generators.md)
+* [Naviagtion Setup](docs/topics/naviation_setup.md)
+* [Fae Initializer](docs/topics/initializer.md)
+* [Fae Models and Concerns](docs/topics/models_and_concerns.md)
+* [Fae Controllers and Concerns](docs/topics/controllers_and_concerns.md)
+* [Pages and Content Blocks](docs/topics/pages.md)
+* [Custom JS/CSS and Custom Helpers](docs/topics/custom_js_css.md)
+* [Fae Concerns](docs/topics/concerns.md)
+* [Fae Standards](docs/topics/standards.md)
 
 
+### Features
 
+* [Global Search](docs/features/search.md)
+* [Filtering](docs/features/filtering.md)
+* [Multi-Language Support](docs/features/multi_language.md)
+* [Cloning](docs/features/cloning.md)
+* [Change Tracker](docs/features/change_tracker.md)
+* [Slugger](docs/features/slugger.md)
+
+
+### Configurations
+
+Fae is meant to allow some radically customization. You can stray completely from Fae's generators and helpers and build your own admin section. However, if you stray from Fae standards you lose the benefit of future bug fixes and feature Fae may provide.
+
+* [Initializer](docs/topics/initializer.md)
+* [Devise Action Mailer Configuration](docs/config/actionmailer.md)
+* [Slugger](docs/features/slugger.md)
+* [Global Search](docs/features/search.md)
+* [Disabling Environments](docs/config/disable_envs.md)
+* [Override Uploaders and Classes](docs/config/override_uploaders_and_classes.md)
+* [Admin Area](docs/config/admin.md)
+
+
+### Tutorials
+
+* [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
+* [Custom Image Processing](docs/tutorials/custom_images.md)
+* [Overriding The Landing Page](docs/tutorials/landing_page.md)
+
+
+### Helper/DSL Docs
+
+* [Fae Styles](docs/helpers/styles.md)
+* [Form Helpers](docs/helpers/form_helpers.md)
+* [Nested Form Helpers](docs/helpers/nested_form_helpers.md)
+* [View Helpers](docs/helpers/view_helpers.md)
+* [Fae Partials](docs/helpers/partials.md)
+
+
+
+## [Upgrading](docs/upgrading/index.md)
+
+
+## [Changelog](CHANGELOG.md)
+
+
+## [Contributing and Maintenance](CONTRIBUTING.md)
+
+
+## [MIT License](LICENSE)
 
