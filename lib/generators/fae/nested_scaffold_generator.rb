@@ -6,7 +6,6 @@ module Fae
 
     def go
       generate_nested_model_file
-      inject_display_field_to_model
       generate_nested_controller_file
       generate_view_files
       add_route
@@ -18,7 +17,8 @@ module Fae
         generate "model #{file_name} #{@@attributes_flat}"
         inject_concern
         inject_position_scope
-        inject_touch_option_into_model
+        inject_display_field_to_model
+        inject_parent_info if options.parent_model.present?
       end
 
       def generate_nested_controller_file
@@ -33,12 +33,14 @@ module Fae
         template "views/edit_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/edit.html.#{options.template}"
       end
 
-      def inject_touch_option_into_model
-        if options.parent_model.present?
-          inject_into_file "app/models/#{file_name}.rb", after: "belongs_to :#{options.parent_model.underscore}" do <<-RUBY
-, touch: true
+      def inject_parent_info
+        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
+\n  belongs_to :#{options.parent_model.underscore}, touch: true
+
+  def fae_nested_parent
+    :#{options.parent_model.underscore}
+  end
 RUBY
-          end
         end
       end
 

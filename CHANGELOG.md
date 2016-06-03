@@ -3,10 +3,13 @@
 ## Unreleased
 
 - enhancements
+    + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
+    + \#57075: Add a flag to the install generator for internal usage
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
     + \#57288: Use real links (not anchors) in dummy app
+    + \#57523: Remove errors after image is reuploaded
 
 ## 1.3
 
