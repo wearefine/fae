@@ -69,13 +69,13 @@ feature 'page validations' do
 
   scenario 'should validate international fields', js: true do
     admin_login
-    visit fae.edit_content_block_path('about_us')
+    visit fae.edit_content_block_path('contact_us')
 
-    within('.about_us_page_body_en_content') do
+    within('.contact_us_page_body_en_content') do
       expect(page).to have_content('Maximum Characters: 150')
     end
 
-    within('.about_us_page_body_zh_content') do
+    within('.contact_us_page_body_zh_content') do
       expect(page).to have_content('Maximum Characters: 150')
     end
   end

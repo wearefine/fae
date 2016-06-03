@@ -535,7 +535,7 @@ The system is just your basic inherited singleton with dynamic polymorphic assoc
 Content blocks are defined in the model and called in the form view. The `type` refers to the generator API (more information available in [the following section](#generating-pages))
 
 | associated object | type | form helper |
-|-|-|-|
+|---|---|---|
 | Fae::TextField | string | fae_content_form |
 | Fae::TextArea | text | fae_content_form |
 | Fae::Image | image | fae_image_form |

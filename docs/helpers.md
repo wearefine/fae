@@ -480,7 +480,7 @@ tr id=fae_sort_id(item)
 Displays page title, add button, and flash messages.
 
 | option | type | default | description |
-|-|-|-|-|
+|---|---|---|---|
 | nested | boolean | false | converts normal add button to nested add button
 | title | string | @klass_humanized.pluralize.titleize | the page's H1 |
 | new_button | boolean | true | displays the add button |
