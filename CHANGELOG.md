@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Reorganize docs for easier access
     + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
     + \#57075: Add a flag to the install generator for internal usage
 - bugs
