@@ -51,7 +51,7 @@ module Fae
       end
 
       def fae_search(query)
-        all.to_a.keep_if { |i| i.fae_display_field.present? && i.fae_display_field.downcase.include?(query.downcase) }
+        all.to_a.keep_if { |i| i.fae_display_field.present? && i.fae_display_field.to_s.downcase.include?(query.downcase) }
       end
 
       def to_csv

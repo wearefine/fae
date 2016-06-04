@@ -9,6 +9,7 @@
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
     + \#57523: Remove errors after image is reuploaded
+    + Force `fae_display_field` to be a string when using the front-end search
 
 ## 1.3
 
