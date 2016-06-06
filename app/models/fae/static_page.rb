@@ -30,10 +30,10 @@ module Fae
 
       fae_fields.each do |name, value|
         type = value.is_a?(Hash) ? value[:type] : value
-        language = value.try(:[], :languages)
+        languages = value.try(:[], :languages)
 
-        if language.present?
-          language.each do |lang|
+        if languages.present?
+          languages.each do |lang|
             # Save with suffix for form fields
             define_association("#{name}_#{lang}", type)
             define_validations("#{name}_#{lang}", type, value[:validates]) if value.try(:[], :validates).present?
