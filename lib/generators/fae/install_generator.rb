@@ -2,6 +2,7 @@ module Fae
   class InstallGenerator < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
+    class_option :fine, type: :boolean, default: false, desc: 'Sets FINE\'s defaults'
 
     def install
       run 'bundle install'
@@ -39,7 +40,8 @@ RUBY
     end
 
     def build_initializer
-      copy_file File.expand_path(File.join(__FILE__, "../templates/initializers/fae.rb")), "config/initializers/fae.rb"
+      init_source = options.fine ? "../templates/initializers/fae_fine.rb" : "../templates/initializers/fae.rb"
+      copy_file File.expand_path(File.join(__FILE__, init_source)), "config/initializers/fae.rb"
       inject_into_file "config/initializers/fae.rb", after: "Fae.setup do |config|\n" do <<-RUBY
 \n  config.devise_secret_key = '#{SecureRandom.hex(64)}'\n
 RUBY

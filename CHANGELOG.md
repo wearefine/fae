@@ -4,11 +4,13 @@
 
 - enhancements
     + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
+    + \#57075: Add a flag to the install generator for internal usage
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
     + \#57523: Remove errors after image is reuploaded
     + \#57772: Link admin logo to parent app root path
+    + Force `fae_display_field` to be a string when using the front-end search
 
 ## 1.3
 

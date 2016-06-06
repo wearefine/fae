@@ -52,5 +52,5 @@ Fae.setup do |config|
   ## disabled_environments
   # This option will disable Fae complete when the app is running
   # on one of the defined environments
-  # config.disabled_environments = [ :preview, :staging ]
+  config.disabled_environments = [ :stage ]
 end
