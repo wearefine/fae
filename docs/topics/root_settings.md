@@ -1,4 +1,4 @@
-# Admin Area
+# Root Settings
 
 After your Fae admin has been created, you may log in and configure your settings in the "Root Settings" area.
 

@@ -1,4 +1,4 @@
-# Custom JS/CSS and Custom Helpers
+# Custom JS, CSS and Helpers
 
 * [Fae JS](#fae-js)
 * [Fae SCSS](#fae-scss)

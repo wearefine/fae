@@ -1,6 +1,8 @@
-# Fae Concerns
+# Fae Model and Controller Concerns
 
-If you need to create custom classes, it's recommended you inherit from a Fae class and if you need to update a Fae class, look for a concern to inject into first.
+Each one of Fae's models and some controllers have a cooresponding concern. You can create that concern in your application to easily inject logic into built in classes, following Rails' concern pattern.
+
+You have the option to override the class altogether, but the concern model will allow your app to inherit future features and bugfixes while customizing your behavior.
 
 ## Available Fae Concerns
 
@@ -14,3 +16,41 @@ If you need to create custom classes, it's recommended you inherit from a Fae cl
 | Fae::TextArea              | app/models/concerns/text_area_concern.rb |
 | Fae::TextField             | app/models/concerns/text_field_concern.rb |
 | Fae::User                  | app/models/concerns/user_concern.rb |
+
+## Example: Adding OAuth2 logic to Fae::User
+
+Say we wanted to add a lookup class method to `Fae::User` to allow for Google OAuth2 authentication. We simply need to add the following to our application:
+
+`app/models/concerns/fae/user_concern.rb`
+```ruby
+module Fae
+  module UserConcern
+    extend ActiveSupport::Concern
+
+    included do
+      # overidde Fae::User devise settings
+      devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
+    end
+
+    module ClassMethods
+      # add new class method to Fae::User
+      def self.find_for_google_oauth2(access_token, signed_in_resource = nil)
+        data = access_token.info
+        user = Fae::User.find_by_email(data['email'])
+
+        unless user
+          user = Fae::User.create(
+            first_name: data['name'],
+            email: data['email'],
+            role_id: 3,
+            active: 1,
+            password: Devise.friendly_token[0, 20]
+          )
+        end
+        user
+      end
+    end
+
+  end
+end
+```

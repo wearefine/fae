@@ -6,28 +6,60 @@
 
 Fae is CMS for Rails unlike any other. Like most Rails CMS engines, Fae provides all the basics to get you up and running: authentication, a responsive UI, form element and workflows. But unlike other CMS engines, Fae's methodology is based around generators and a DSL over configuration. This allows you to get to a working CMS very quickly, but gives you the flexibility to customize any piece you need.
 
-Fae requires Rails >= 4.1.
+## Installation
 
+Add the gem to your Gemfile and run `bundle install`
 
-## Getting Started
+```ruby
+gem 'fae-rails'
+```
+Run the installer
 
-* [Installation](docs/installation/index.md)
-* [Quickstart Guide](docs/quickstart/index.md)
+```bash
+$ rails g fae:install
+```
 
+After the installer completes, visit `/admin` and setup your first user account. That should automatically log you in to your blank Fae instance.
+
+### Dependencies
+
+#### Rails
+
+Fae supports Rails >= 4.1.
+
+#### Sass and sass-rails
+
+Fae requires `sass >= 3.4` and `sass-rails >= 5`.
+
+If you're using Rails 4.1 you'll need to update the versions in the `Gemfile`:
+
+```ruby
+gem 'sass-rails', '~> 5.0.0'
+gem 'sass', '~> 3.4.0'
+```
+
+and run:
+
+```bash
+$ bundle update sass-rails
+$ bundle update sass
+```
 
 ## Documentation
 
 ### Topics
 
+* [Installation](docs/installation/index.md)
 * [Generators](docs/topics/generators.md)
-* [Naviagtion Setup](docs/topics/naviation_setup.md)
-* [Fae Initializer](docs/topics/initializer.md)
-* [Fae Models and Concerns](docs/topics/models_and_concerns.md)
-* [Fae Controllers and Concerns](docs/topics/controllers_and_concerns.md)
+* [Navigation Setup](docs/topics/navigation_setup.md)
+* [Initializer](docs/topics/initializer.md)
+* [Models](docs/topics/models.md)
+* [Controllers](docs/topics/controllers_and_concerns.md)
+* [Fae Model and Controller Concerns](docs/topics/concerns.md)
+* [Override Uploaders and Classes](docs/topics/override_uploaders_and_classes.md)
 * [Pages and Content Blocks](docs/topics/pages.md)
-* [Custom JS/CSS and Custom Helpers](docs/topics/custom_js_css.md)
-* [Fae Concerns](docs/topics/concerns.md)
-* [Fae Standards](docs/topics/standards.md)
+* [Custom JS, CSS and Helpers](docs/topics/custom_js_css.md)
+* [Root Settings](docs/topics/root_settings.md)
 
 
 ### Features
@@ -38,19 +70,7 @@ Fae requires Rails >= 4.1.
 * [Cloning](docs/features/cloning.md)
 * [Change Tracker](docs/features/change_tracker.md)
 * [Slugger](docs/features/slugger.md)
-
-
-### Configurations
-
-Fae is meant to allow some radically customization. You can stray completely from Fae's generators and helpers and build your own admin section. However, if you stray from Fae standards you lose the benefit of future bug fixes and feature Fae may provide.
-
-* [Initializer](docs/topics/initializer.md)
-* [Devise Action Mailer Configuration](docs/config/actionmailer.md)
-* [Slugger](docs/features/slugger.md)
-* [Global Search](docs/features/search.md)
-* [Disabling Environments](docs/config/disable_envs.md)
-* [Override Uploaders and Classes](docs/config/override_uploaders_and_classes.md)
-* [Admin Area](docs/config/admin.md)
+* [Disabling Environments](docs/features/disable_envs.md)
 
 
 ### Tutorials
@@ -58,6 +78,7 @@ Fae is meant to allow some radically customization. You can stray completely fro
 * [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
 * [Custom Image Processing](docs/tutorials/custom_images.md)
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
+* [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
 
 
 ### Helper/DSL Docs
@@ -68,16 +89,14 @@ Fae is meant to allow some radically customization. You can stray completely fro
 * [View Helpers](docs/helpers/view_helpers.md)
 * [Fae Partials](docs/helpers/partials.md)
 
+### Contributing
 
+* [Running Fae Locally](docs/contributing/local_setup.md)
+* [Fae Standards](docs/contributing/standards.md)
 
 ## [Upgrading](docs/upgrading/index.md)
 
-
 ## [Changelog](CHANGELOG.md)
-
-
-## [Contributing and Maintenance](CONTRIBUTING.md)
-
 
 ## [MIT License](LICENSE)
 

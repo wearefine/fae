@@ -1,10 +1,9 @@
-# Models and Concerns
+# Models
 
 * [Models](#models)
 * [Nested Resources](#nested-resources)
 * [Validation](#validation)
 * [Image and File Associations](#image-and-file-associations)
-* [Fae Model Concerns](#fae-model-concerns)
 
 ---
 
@@ -206,44 +205,3 @@ has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
 accepts_nested_attributes_for :image, allow_destroy: true
 ```
 
-## Fae Model Concerns
-
-Each one of Fae's models has a built in concern. You can create that concern in your application to easily inject logic into built in models, following Rails' concern pattern. E.g. adding methods to `app/models/concerns/fae/role_concern.rb` will make them accessible to `Fae::Role`.
-
-### Example: Adding OAuth2 logic to Fae::User
-
-Say we wanted to add a lookup class method to `Fae::User` to allow for Google OAuth2 authentication. We simply need to add the following to our application:
-
-`app/models/concerns/fae/user_concern.rb`
-```ruby
-module Fae
-  module UserConcern
-    extend ActiveSupport::Concern
-
-    included do
-      # overidde Fae::User devise settings
-      devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:google_oauth2]
-    end
-
-    module ClassMethods
-      # add new class method to Fae::User
-      def self.find_for_google_oauth2(access_token, signed_in_resource = nil)
-        data = access_token.info
-        user = Fae::User.find_by_email(data['email'])
-
-        unless user
-          user = Fae::User.create(
-            first_name: data['name'],
-            email: data['email'],
-            role_id: 3,
-            active: 1,
-            password: Devise.friendly_token[0, 20]
-          )
-        end
-        user
-      end
-    end
-
-  end
-end
-```

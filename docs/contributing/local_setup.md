@@ -1,4 +1,4 @@
-# Contributing and Maintenance
+# Running Fae Locally
 
 ## Dummy App
 
