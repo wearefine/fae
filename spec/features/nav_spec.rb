@@ -4,12 +4,12 @@ feature 'Main Navigation' do
 
   scenario 'should highlight first and second level in header', js: true do
     admin_login
-    visit admin_releases_path
+    visit admin_legacy_releases_path
 
     within('.main-header-nav > .-parent-current') do
       expect(page).to have_content('Products')
       page.find('a').hover
-      expect(page.find('.-current')).to have_content('Releases')
+      expect(page.find('.-current')).to have_content('Legacy Releases')
     end
   end
 
