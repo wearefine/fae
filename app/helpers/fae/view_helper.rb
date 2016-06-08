@@ -74,7 +74,7 @@ module Fae
 
       return if options[:collection].blank?
 
-      form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
+      form_hash = { class: 'js-filter-form table-filter-area' }
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
       filter_header = content_tag(:div, class: 'table-filter-header') do
@@ -130,7 +130,9 @@ module Fae
     end
 
     def fae_paginate(items)
-      paginate items, theme: 'fae'
+      content_tag :nav, class: 'pagination' do
+        paginate items, theme: 'fae'
+      end
     end
 
     private

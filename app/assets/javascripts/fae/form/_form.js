@@ -14,6 +14,7 @@ Fae.form = {
     this.validator.init();
     this.cancel.init();
     this.ajax.init();
+    this.filtering.init();
     this.slugger.init();
 
     // input type=file customization
