@@ -1,12 +1,12 @@
-class AboutUsPage < Fae::StaticPage
+class ContactUsPage < Fae::StaticPage
 
-  @slug = 'about_us'
+  @slug = 'contact_us'
 
   # required to set the has_one associations, Fae::StaticPage will build these associations dynamically
   def self.fae_fields
     {
-      header: { type: Fae::TextField, validates: { presence: true } },
-      introduction: { type: Fae::TextArea },
+      hero: { type: Fae::Image, languages: Fae.languages.keys },
+      email: { type: Fae::TextField },
       body: {
         type: Fae::TextArea,
         languages: [:en, :zh],
@@ -15,8 +15,7 @@ class AboutUsPage < Fae::StaticPage
             maximum: 150
           }
         }
-      },
-      header_image: { type: Fae::Image, languages: Fae.languages.keys }
+      }
     }
   end
 

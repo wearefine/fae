@@ -67,6 +67,19 @@ feature 'page validations' do
 
   end
 
+  scenario 'should validate international fields', js: true do
+    admin_login
+    visit fae.edit_content_block_path('about_us')
+
+    within('.about_us_page_body_en_content') do
+      expect(page).to have_content('Maximum Characters: 150')
+    end
+
+    within('.about_us_page_body_zh_content') do
+      expect(page).to have_content('Maximum Characters: 150')
+    end
+  end
+
   context 'on Fae::TextAreas' do
 
     scenario 'should add an asterik to required fields' do
@@ -113,25 +126,6 @@ feature 'page validations' do
         expect(page.find(:css, 'span.characters-left').text).to eq('Characters Left: 80')
         fill_in 'home_page_introduction_attributes_content', with: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar euismod nisl, in pellentesque sapien ornare ac. Ut mattis vel elit id gravida. Nulla interdum rhoncus ante, eget congue nisi congue laoreet. Mauris finibus sagittis lacus, id condimentum metus dictum id. Aenean vel libero vel nibh ultrices pretium in non felis. Nullam eu mattis sem. Phasellus vehicula quam leo, a malesuada ex lobortis nec. Sed ac augue venenatis, vestibulum eros quis, venenatis tellus. Duis semper erat vel tempus accumsan. Nulla convallis justo aliquet aliquet sagittis. Aliquam eleifend arcu magna, ac convallis massa pulvinar nec.'
         expect(page.find(:css, 'span.characters-left').text).to include('Characters Over')
-      end
-    end
-
-
-    scenario 'should display markdown WYSIWYG when markdown: true', js: true do
-      admin_login
-      visit fae.edit_content_block_path('about_us')
-
-      within('.about_us_page_introduction_content') do
-        expect(page).to have_selector('.CodeMirror')
-      end
-    end
-
-    scenario 'should display markdown helper when markdown_supported: true', js: true do
-      admin_login
-      visit fae.edit_content_block_path('about_us')
-
-      within('.about_us_page_body_content') do
-        expect(page).to have_selector('label .helper_text .markdown-support')
       end
     end
   end

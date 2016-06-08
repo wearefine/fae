@@ -51,3 +51,24 @@ Finally, to display the language select menu, you'll need to add `language: true
 
     // ...
 ```
+
+## Internalization of Pages and Content Blocks
+
+Multiple inputs will be generated for blocks that support for multiple languages. Add a `:languages` key to the field's definition.
+
+```ruby
+def self.fae_fields
+  {
+    body: {
+      type: Fae::TextArea,
+      languages: [:en, :zh]
+    },
+    annual_report: {
+      type: Fae::File,
+      languages: Fae.languages.keys # Set in config/initializers/fae.rb
+    }
+  }
+end
+```
+
+Add `languages: true` to the page's `fae/shared/form_header` partial to utilize [Fae's language switcher](helpers.md#form_header-1).
