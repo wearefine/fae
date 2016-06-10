@@ -9,13 +9,13 @@ ul.search-results.js-search-results
 
     - @fae_topnav_items.each do |item|
       - if user_can_see_this?(item)
-      li.search-topnav
-        a href=item[:nested_path] = item[:text]
-        - if item[:subitems]
-          ul
-            - item[:subitems].each do |subitem|
-              - if user_can_see_this?(subitem)
-                li: a href=subitem[:nested_path] = subitem[:text]
+        li.search-topnav
+          a href=item[:nested_path] = item[:text]
+          - if item[:subitems]
+            ul
+              - item[:subitems].each do |subitem|
+                - if user_can_see_this?(subitem)
+                  li: a href=subitem[:nested_path] = subitem[:text]
 
   - elsif navigation_items.present? || records.present?
 
