@@ -2,12 +2,9 @@
   header.content-header.js-content-header
     == render 'fae/shared/form_header', header: @item, f: f, languages: true
 
-  section.content
+  main.content
     = fae_input f, :title
 
-    = fae_content_form f, :header, input_options: { wrapper_html: { class: 'hidden' } }
-    = fae_content_form f, :introduction, markdown: true, input_options: { input_html: { class: 'js-intro-field' } }
+    = fae_image_form f, :hero
+    = fae_content_form f, :email
     = fae_content_form f, :body, markdown_supported: true
-    = fae_image_form f, :header_image
-
-== render 'fae/shared/recent_changes'

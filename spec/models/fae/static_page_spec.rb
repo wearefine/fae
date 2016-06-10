@@ -25,6 +25,28 @@ describe Fae::StaticPage do
       expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :introduction, :body, :hero_image, :welcome_pdf])
     end
 
+    it 'should attach language associations when present' do
+      ap = AboutUsPage.instance
+
+      expect(ap.body_en).to be_nil
+      expect(ap.body_zh).to be_nil
+
+      expect(ap.header_image_zh).to be_nil
+    end
+
+    # TODO - This test fails occaisionally, and those failures appear to be related to test order (likely related to changing I18n.locale). Temporarily commented out.
+    # it 'should use _content to query the field with the desired I18n locale' do
+    #   I18n.locale = :zh
+
+    #   cp = ContactUsPage.instance
+    #   cp.create_body_en(content: 'test en')
+    #   cp.create_body_zh(content: 'test zh')
+
+    #   expect(cp.body_content).to eq('test zh')
+
+    #   I18n.locale = :en
+    # end
+
   end
 
   describe 'dynamic validations' do
