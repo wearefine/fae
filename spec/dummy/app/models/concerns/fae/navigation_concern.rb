@@ -4,7 +4,7 @@ module Fae
 
     def structure
       [
-        item('Products', path: admin_releases_path, subitems: [
+        item('Products', subitems: [
           item('Wines', class: 'custom-class', path: admin_wines_path),
           item('Releases', path: admin_releases_path),
           item('Legacy Releases', path: admin_legacy_releases_path),
