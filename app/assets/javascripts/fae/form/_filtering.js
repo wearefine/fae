@@ -13,9 +13,10 @@ Fae.form.filtering = {
 
     // init only on pages with filering, sorting or paging
     if (this.$filter_form.length || this.$pagination.length || $('.js-sort-column').length) {
-      // this.setFilterDropDowns();
       // this.applyCookies();
-      this.fry = new Fryr(this._refresh_table);
+      var has_hash_on_load = window.location.hash.length > 2;
+      this.fry = new Fryr(this._refresh_table, {}, has_hash_on_load);
+      this.setFilterDropDowns();
 
       this.filterFormListeners();
     }
@@ -86,15 +87,15 @@ Fae.form.filtering = {
 
   setFilterDropDowns: function() {
     var cookie_name = this.$filter_form.attr('data-cookie-key');
-    Cookies.set(cookie_name, params);
+    Cookies.set(cookie_name, this.fry.params);
 
-    // Exit early if params is blank
-    if ($.isEmptyObject(params)) {
+    // Exit early if this.fry.params is blank
+    if ($.isEmptyObject(this.fry.params)) {
       return;
     }
 
-    // Loop through all available params to find the select menu and the proper option
-    $.each(params, function(key, value) {
+    // Loop through all available this.fry.params to find the select menu and the proper option
+    $.each(this.fry.params, function(key, value) {
       var $select = $('.js-filter-form .table-filter-group #filter_' + key);
 
       if($select.length) {
