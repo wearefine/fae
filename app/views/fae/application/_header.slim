@@ -7,7 +7,7 @@ header.main-header#js-main-header
       ul.main-header-nav
         - @fae_topnav_items.each_with_index do |item, idx|
           li class=nav_active_class(item[:class_name], 0, idx)
-            a href=item[:path] = item[:text]
+            a href=item[:nested_path] = item[:text]
             - if item[:subitems]
               ul
                 - item[:subitems].each_with_index do |subitem, sub_idx|
