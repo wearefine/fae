@@ -52,7 +52,7 @@ In your form view nest the optional fields, and add some classes for js and sass
 
 ### Update Judge
 
-Update Judge so that judge loads your custom `EachValidtor` on the FE.
+Update Judge so that judge loads your custom `EachValidtor` on the FE in a file name like 'validator.js'
 
 ```javascript
 var Validator = {
@@ -69,6 +69,11 @@ var Validator = {
       };
     }
 };
+```
+
+and in FAE.js require the file above at the top
+```javascript
+//= require validator
 ```
 
 ## Fae SCSS
