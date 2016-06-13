@@ -52,4 +52,21 @@ describe Fae::BaseModelConcern do
     end
   end
 
+  describe '#translate' do
+    it 'should translate specified attributes' do
+      wine = FactoryGirl.build(:wine)
+
+      expect(wine.name).to eq( wine.send("name_#{I18n.locale}") )
+
+      # Description is not explicitly translated even though it has international attributes
+      expect( wine.try(:description) ).to eq(nil)
+    end
+
+    it 'should find_by translated attribute' do
+      wine = FactoryGirl.create(:wine, name_en: 'Funky', name_zh: 'Funky', name_ja: 'Funky')
+
+      expect( Wine.find_by_name('Funky') ).to be_present
+    end
+  end
+
 end

@@ -8,6 +8,7 @@
     + \#57075: Add a flag to the install generator for internal usage
     + Support multiple languages on static page fields
     + \#57288: main nav items will display the paths of the first drop down item by default
+    + Add `translate` class method for easy attribute lookup/retrieval
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
