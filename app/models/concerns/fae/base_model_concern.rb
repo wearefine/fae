@@ -63,6 +63,18 @@ module Fae
         end
       end
 
+      def translate(*attributes)
+        attributes.each do |attribute|
+          define_method attribute.to_s do
+            self.send "#{attribute}_#{I18n.locale}"
+          end
+
+          define_singleton_method "find_by_#{attribute}" do |val|
+            self.send("find_by_#{attribute}_#{I18n.locale}", val)
+          end
+        end
+      end
+
     end
   end
 end
