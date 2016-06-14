@@ -4,7 +4,7 @@ module Fae
 
     def structure
       [
-        item('Products', path: admin_releases_path, subitems: [
+        item('Products', subitems: [
           item('Wines', class: 'custom-class', path: admin_wines_path),
           item('Releases', path: admin_releases_path),
           item('Legacy Releases', path: admin_legacy_releases_path),
@@ -14,8 +14,8 @@ module Fae
           ]),
           item('Cats', path: admin_cats_path)
         ]),
-        item('Teams', subitems: team_subitems, roles: ['super admin', 'admin']),
-        item('Events', path: admin_events_path, class_name: 'css-one-level-deep', subitems: [
+        item('Teams', subitems: team_subitems),
+        item('Events', class_name: 'css-one-level-deep', subitems: [
           item('Event Hosts', path: admin_people_path, class_name: 'css-two-levels-deep'),
           item('Locations', path: admin_locations_path),
           item('Validation Testers', path: admin_validation_testers_path),

@@ -3,17 +3,23 @@ module Fae
     include Rails.application.routes.url_helpers
     include Fae::NavigationConcern
 
-    attr_accessor :current_path, :coordinates
+    attr_accessor :current_path, :coordinates, :current_user
 
-    def initialize(current_path)
+    def initialize(current_path, current_user)
       @current_path = current_path
+      @current_user = current_user
       @coordinates = []
       # set the coors based on current path
       find_current_hash(structure)
     end
 
+    def top_nav
+      filtered_nav(structure.dup)
+    end
+
     def side_nav
-      structure[@coordinates.first][:subitems][@coordinates.second][:subitems] if @coordinates.length > 2
+      return unless @coordinates.length > 2
+      filtered_nav(structure[@coordinates.first][:subitems][@coordinates.second][:subitems])
     end
 
     def search(query)
@@ -69,7 +75,26 @@ module Fae
       # prefer `subitems` over `sublinks` for new DSL but still need to support old structure in v1
       hash[:sublinks] = hash[:subitems] if hash[:subitems].present?
 
+      # authorize link with current user
+      unless can_view_path(hash[:nested_path])
+        hash[:path] = '#'
+        hash[:nested_path] = '#'
+      end
+
       hash
+    end
+
+    def can_view_path(path)
+      return true if path.blank?
+
+      can_view = true
+      item_controllers = path.split(/\/\d+\//)
+      item_controllers.each do |item_controller|
+        item_controller = item_controller.gsub(/#{fae.root_path}|\/new$|edit$/, '')
+        can_view = !Fae::AuthorizationAccessMap::access_map[item_controller] || Fae::AuthorizationAccessMap::access_map[item_controller].include?(@current_user.role.name)
+      end
+
+      can_view
     end
 
     def fae
@@ -83,7 +108,7 @@ module Fae
     end
 
     def path_from_subitems(hash)
-      return unless hash[:subitems] && hash[:subitems].is_a?(Array)
+      return '#' unless hash[:subitems] && hash[:subitems].is_a?(Array)
 
       first_subitem = hash[:subitems].first
 
@@ -92,6 +117,17 @@ module Fae
 
         path_from_subitems hash[:subitems].first
       end
+    end
+
+    def filtered_nav(items)
+      items.each_with_index do |item, i|
+        # remove subtitems that aren't actively linked
+        item[:subitems].delete_if { |subitem| subitem[:nested_path] == '#' } if item[:subitems].present?
+        # remove main item if there isn't active links in the item or subitems
+        items.delete_at(i) if item[:nested_path] == '#' && item[:subitems].blank?
+      end
+
+      items
     end
 
   end

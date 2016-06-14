@@ -47,11 +47,11 @@ module Fae
       @fae_topnav_items = []
       @fae_sidenav_items = []
 
-      @fae_navigation = Fae::Navigation.new(request.path)
+      @fae_navigation = Fae::Navigation.new(request.path, current_user)
       raise_define_structure_error unless @fae_navigation.respond_to? :structure
 
       if Fae.has_top_nav
-        @fae_topnav_items = @fae_navigation.structure
+        @fae_topnav_items = @fae_navigation.top_nav
         @fae_sidenav_items = @fae_navigation.side_nav
       elsif defined?(nav_items) && nav_items.present?
         # deprecate in v2.0
