@@ -3,27 +3,24 @@ module Fae
     include Rails.application.routes.url_helpers
     include Fae::NavigationConcern
 
-    attr_accessor :current_path, :coordinates, :current_user
+    attr_accessor :current_path, :coordinates, :current_user, :items
 
     def initialize(current_path, current_user)
       @current_path = current_path
       @current_user = current_user
       @coordinates = []
-      # set the coors based on current path
-      find_current_hash(structure)
-    end
+      @items = recursive_authorization(structure)
 
-    def top_nav
-      filtered_nav(structure.dup)
+      # set the coors based on current path
+      find_current_hash(@items)
     end
 
     def side_nav
-      return unless @coordinates.length > 2
-      filtered_nav(structure[@coordinates.first][:subitems][@coordinates.second][:subitems])
+      @items[@coordinates.first][:subitems][@coordinates.second][:subitems] if @coordinates.length > 2
     end
 
     def search(query)
-      find_items_by_text(structure, query, [])
+      find_items_by_text(@items, query, [])
     end
 
     def current_section
@@ -50,6 +47,11 @@ module Fae
       nil
     end
 
+    def increment_coordinates
+      last_item = @coordinates.pop
+      @coordinates.push(last_item + 1)
+    end
+
     def find_items_by_text(items, query, results)
       items.each do |item|
         if item[:text].present? && item[:text].downcase.include?(query.downcase)
@@ -60,11 +62,6 @@ module Fae
         end
       end
       results
-    end
-
-    def increment_coordinates
-      last_item = @coordinates.pop
-      @coordinates.push(last_item + 1)
     end
 
     def item(text, options={})
@@ -119,15 +116,16 @@ module Fae
       end
     end
 
-    def filtered_nav(items)
+    def recursive_authorization(items)
+      rejected_indexes = []
       items.each_with_index do |item, i|
-        # remove subtitems that aren't actively linked
-        item[:subitems].delete_if { |subitem| subitem[:nested_path] == '#' } if item[:subitems].present?
-        # remove main item if there isn't active links in the item or subitems
-        items.delete_at(i) if item[:nested_path] == '#' && item[:subitems].blank?
+        recursive_authorization(item[:subitems]) if item[:subitems].present?
+        # flag for removal if there isn't active links in the item or subitems
+        rejected_indexes << i if item[:nested_path] == '#' && item[:subitems].blank?
       end
-
-      items
+      # remove flagged items in separate loop
+      # removing them inline will skip the next item in the loop
+      items.delete_if.with_index { |_, index| rejected_indexes.include? index }
     end
 
   end

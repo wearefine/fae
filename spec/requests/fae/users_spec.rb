@@ -51,7 +51,7 @@ describe 'users#index' do
     end
 
     it 'should not be able to access resources restricted for user role type' do
-      get admin_teams_path
+      get admin_selling_points_path
 
       expect(response.status).to eq(404)
     end

@@ -12,11 +12,11 @@ describe 'Global nav' do
       expect(response.body).to include('<a href="/admin/root">Root Settings</a>')
     end
 
-    it 'should display teams top nav item' do
+    it 'should display events top nav item' do
       super_admin_login
       get fae_path
 
-      expect(response.body).to include('<a href="#">Teams</a>')
+      expect(response.body).to include('<a href="#">Events</a>')
     end
   end
 
@@ -36,11 +36,11 @@ describe 'Global nav' do
       expect(response.body).to_not include('<a href="/admin/root">Root Settings</a>')
     end
 
-    it 'should display teams top nav item' do
+    it 'should display events top nav item' do
       admin_login
       get fae_path
 
-      expect(response.body).to include('<a href="#">Teams</a>')
+      expect(response.body).to include('<a href="#">Events</a>')
     end
   end
 
@@ -54,11 +54,11 @@ describe 'Global nav' do
       expect(response.body).to_not include('<a href="/admin/root">Root Settings</a>')
     end
 
-    it 'should not display teams top nav item' do
+    it 'should not display events top nav item' do
       user_login
       get fae_path
 
-      expect(response.body).to_not include('<a href="#">Teams</a>')
+      expect(response.body).to_not include('<a href="#">Events</a>')
     end
   end
 
