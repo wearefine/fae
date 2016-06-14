@@ -14,6 +14,7 @@
     + \#57523: Remove errors after image is reuploaded
     + \#57772: Link admin logo to parent app root path
     + Force `fae_display_field` to be a string when using the front-end search
+    + \#57772: Revert admin logo linking (now links to admin root path)
 
 ## 1.3
 
