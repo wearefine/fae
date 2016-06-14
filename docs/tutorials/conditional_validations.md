@@ -98,7 +98,7 @@ label.is_required_and_hidden {
 
 ## Fae JS
 
-In `fae.js` add in code for the toggling of the button detail page button to show and hide your conditionally required fields. Be sure to require validator js at the top.
+In `fae.js` add in code for the toggling of the button detail page button to show and hide your conditionally required fields. Be sure to require validator js at the top, and init the Validator from the above js in the init or ready function.
 
 ```javascript
 //= require validator
