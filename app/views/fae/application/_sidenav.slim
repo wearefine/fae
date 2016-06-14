@@ -19,6 +19,5 @@
                   / - if subitem[:sublinks].present?
                   /   ul.subnav.js-subnav
                   /     - subitem[:sublinks].each do |thirditem|
-                  /       - if user_can_see_this?(thirditem)
-                  /         - thirditem[:path] ||= '#'
-                  /         li: a href=thirditem[:path] = thirditem[:text]
+                  /       - thirditem[:path] ||= '#'
+                  /       li: a href=thirditem[:path] = thirditem[:text]

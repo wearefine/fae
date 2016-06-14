@@ -8,21 +8,18 @@ ul.search-results.js-search-results
   - if show_nav && @fae_topnav_items.present?
 
     - @fae_topnav_items.each do |item|
-      - if user_can_see_this?(item)
-        li.search-topnav
-          a href=item[:nested_path] = item[:text]
-          - if item[:subitems]
-            ul
-              - item[:subitems].each do |subitem|
-                - if user_can_see_this?(subitem)
-                  li: a href=subitem[:nested_path] = subitem[:text]
+      li.search-topnav
+        a href=item[:nested_path] = item[:text]
+        - if item[:subitems]
+          ul
+            - item[:subitems].each do |subitem|
+              li: a href=subitem[:nested_path] = subitem[:text]
 
   - elsif navigation_items.present? || records.present?
 
     - if navigation_items.present?
       - navigation_items.each do |item|
-        - if user_can_see_this?(item)
-          li: a.search-nav-item href=item[:nested_path] = item[:text]
+        li: a.search-nav-item href=item[:nested_path] = item[:text]
 
     - if records.present?
       - records.each do |item|
