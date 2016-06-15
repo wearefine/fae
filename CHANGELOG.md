@@ -16,6 +16,7 @@
     + \#57772: Link admin logo to parent app root path
     + Force `fae_display_field` to be a string when using the front-end search
     + \#57772: Revert admin logo linking (now links to admin root path)
+    + \#58411: Remove "Add Page" from pages#index
 
 ## 1.3
 
