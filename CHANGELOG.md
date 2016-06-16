@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.3.1
+
+- enhancements
     + Titleize rather than Capitalize for generated TH labels
     + Reorganize docs for easier access
     + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
