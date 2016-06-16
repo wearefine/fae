@@ -39,6 +39,28 @@ Using Fae's generators let's quickly scaffold a model that supports multiple lan
 $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
 ```
 
+To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `translate` class method.
+
+```ruby
+class Person < ActiveRecord::Base
+  include Fae::Concerns::Models::Base
+
+  translate :name, :title, :intro
+end
+
+# i.e. if English is the locale, @person.name == @person.name_en
+```
+
+International records can also be retrieved using `find_by_#{attribute}`:
+
+```ruby
+class PeopleController < ApplicationController
+  def index
+    @person = Person.find_by_name(params[:name])
+  end
+end
+```
+
 ## Displaying the Language Nav
 
 Finally, to display the language select menu, you'll need to add `language: true` to your `form_header` partial:

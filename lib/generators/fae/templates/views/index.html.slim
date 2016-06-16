@@ -10,7 +10,7 @@ main.content
         th.th-sortable-handle
 <% num_columns += 1 -%>
 <% end -%>
-        th <%= @display_field.present? ? @display_field.capitalize : 'Name' %>
+        th <%= @display_field.present? ? @display_field.titleize : 'Name' %>
         th.-action-wide Modified
 <% @toggle_attrs.each do |attr| -%>
         th.-action-wide data-sorter="false" <%= attr.humanize %>

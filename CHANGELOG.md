@@ -3,16 +3,26 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.3.1
+
+- enhancements
+    + Titleize rather than Capitalize for generated TH labels
     + Reorganize docs for easier access
     + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
     + \#57075: Add a flag to the install generator for internal usage
     + Support multiple languages on static page fields
+    + \#57288: main nav items will display the paths of the first drop down item by default
+    + Add `translate` class method for easy attribute lookup/retrieval
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
     + \#57523: Remove errors after image is reuploaded
     + \#57772: Link admin logo to parent app root path
     + Force `fae_display_field` to be a string when using the front-end search
+    + \#57772: Revert admin logo linking (now links to admin root path)
+    + \#58411: Remove "Add Page" from pages#index
 
 ## 1.3
 

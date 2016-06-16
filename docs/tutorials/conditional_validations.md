@@ -52,7 +52,7 @@ In your form view nest the optional fields, and add some classes for js and sass
 
 ### Update Judge
 
-Update Judge so that judge loads your custom `EachValidtor` on the FE.
+Update Judge so that judge loads your custom `EachValidtor` on the FE in a file name like 'validator.js'
 
 ```javascript
 var Validator = {
@@ -69,6 +69,11 @@ var Validator = {
       };
     }
 };
+```
+
+and in FAE.js require the file above at the top
+```javascript
+//= require validator
 ```
 
 ## Fae SCSS
@@ -93,7 +98,7 @@ label.is_required_and_hidden {
 
 ## Fae JS
 
-In `fae.js` add in code for the toggling of the button detail page button to show and hide your conditionally required fields. Be sure to require validator js at the top.
+In `fae.js` add in code for the toggling of the button detail page button to show and hide your conditionally required fields. Be sure to require validator js at the top, and init the Validator from the above js in the init or ready function.
 
 ```javascript
 //= require validator

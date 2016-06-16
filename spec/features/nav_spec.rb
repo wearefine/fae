@@ -84,4 +84,13 @@ feature 'Main Navigation' do
     expect(page).to have_selector('.css-four-levels-deep', text: 'Coaches', visible: false)
   end
 
+  scenario 'main nav items should link to first items in dropdown by default' do
+    admin_login
+    visit admin_releases_path
+
+    within('.main-header-nav') do
+      expect(page.find_link('Products')[:href]).to eq('/admin/wines')
+    end
+  end
+
 end
