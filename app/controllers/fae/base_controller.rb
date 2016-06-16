@@ -1,7 +1,6 @@
 module Fae
   class BaseController < ApplicationController
     include Fae::Cloneable
-    include Fae::Authorization
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
@@ -92,6 +91,12 @@ module Fae
 
     # if model has images or files, build them here for nesting
     def build_assets
+    end
+
+    def authorize_user
+      roles_for_controller = Fae::Authorization.access_map[params[:controller].gsub('admin/','')]
+      return if current_user.super_admin? || roles_for_controller.blank?
+      return show_404 unless roles_for_controller.include?(current_user.role.name)
     end
 
   end

@@ -88,7 +88,7 @@ module Fae
       item_controllers = path.split(/\/\d+\//)
       item_controllers.each do |item_controller|
         item_controller = item_controller.gsub(/#{fae.root_path}|\/new$|edit$/, '')
-        can_view = !Fae::AuthorizationAccessMap::access_map[item_controller] || Fae::AuthorizationAccessMap::access_map[item_controller].include?(@current_user.role.name)
+        can_view = !Fae::Authorization.access_map[item_controller] || Fae::Authorization.access_map[item_controller].include?(@current_user.role.name)
       end
 
       can_view

@@ -11,7 +11,7 @@ module Fae
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       add_fae_assets
       add_navigation_concern
-      add_authorization_access_map_concern
+      add_authorization_concern
       build_initializer
       build_judge_initializer
       rake 'fae:install:migrations'
@@ -40,8 +40,8 @@ RUBY
       copy_file File.expand_path(File.join(__FILE__, '../templates/models/concerns/navigation_concern.rb')), 'app/models/concerns/fae/navigation_concern.rb'
     end
 
-    def add_authorization_access_map_concern
-      copy_file File.expand_path(File.join(__FILE__, '../templates/controllers/concerns/fae/authorization_access_map.rb')), 'app/controllers/concerns/fae/authorization_access_map.rb'
+    def add_authorization_concern
+      copy_file File.expand_path(File.join(__FILE__, '../templates/models/concerns/authorization_concern.rb')), 'app/models/concerns/fae/authorization_concern.rb'
     end
 
     def build_initializer
