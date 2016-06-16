@@ -66,6 +66,7 @@ $ bundle update sass
 
 * [Global Search](docs/features/search.md)
 * [Filtering](docs/features/filtering.md)
+* [Authorization](docs/features/authorization.md)
 * [Multi-Language Support](docs/features/multi_language.md)
 * [Cloning](docs/features/cloning.md)
 * [Change Tracker](docs/features/change_tracker.md)
