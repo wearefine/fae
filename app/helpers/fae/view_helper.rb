@@ -126,7 +126,6 @@ module Fae
 
     def fae_avatar(user = current_user)
       hash = Digest::MD5.hexdigest(user.email.downcase)
-
       "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
     end
 

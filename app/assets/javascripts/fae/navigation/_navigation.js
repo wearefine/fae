@@ -208,6 +208,6 @@ Fae.navigation = {
 
       $footer.addClass('active');
     }
-  },
+  }
 
 };

@@ -1,6 +1,6 @@
 nav.nav.mobilenav
   ul
-    - @fae_navigation.structure.each do |item|
+    - @fae_navigation.items.each do |item|
       ruby:
         item[:path] ||= '#'
         main_class = item[:sublinks].present? ? 'mobilenav-accordion js-accordion' : ''

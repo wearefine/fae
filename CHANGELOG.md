@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Add custom authorization levels
 - bugs
 
 ## 1.3.1

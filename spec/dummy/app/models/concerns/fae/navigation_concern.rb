@@ -14,8 +14,8 @@ module Fae
           ]),
           item('Cats', path: admin_cats_path)
         ]),
-        item('Teams', path: admin_teams_path, subitems: team_subitems),
-        item('Events', path: admin_events_path, class_name: 'css-one-level-deep', subitems: [
+        item('Teams', subitems: team_subitems),
+        item('Events', class_name: 'css-one-level-deep', subitems: [
           item('Event Hosts', path: admin_people_path, class_name: 'css-two-levels-deep'),
           item('Locations', path: admin_locations_path),
           item('Validation Testers', path: admin_validation_testers_path),
