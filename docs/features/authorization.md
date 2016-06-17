@@ -25,6 +25,8 @@ plural_controller_name => array_of_roles
 | `plural_controller_name` | a string of the plural controller name referencing the object |
 | `array_of_roles` | an array of stringed role names with access to object |
 
+The `access_map` will only be able to manage authorization on objects created in the parent app.
+
 #### Authorizing Content Blocks
 
 To limit content blocks (or pages), use `"content_blocks/#{page_name}"` as the format for the `plural_controller_name`.
@@ -59,5 +61,7 @@ You can define a new `Fae::Role` by creating it in the console:
 Fae::Role.create(name: 'asset manager')
 ```
 
-Once the new role has been created, you'll be able to define the role in the `access_map` and assign admin users to that role.
+Custom roles will have the same permissions as Fae's user role and they won't be able to inherit any higher access levels.
+
+Once the new role has been created, you'll be able to define the role in the `access_map` and assign the role to admin users.
 

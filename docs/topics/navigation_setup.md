@@ -76,6 +76,8 @@ end
 
 If the main nav dropdown doesn't have a defined `path`, it will search the `subitems` for the first available path to link to.
 
+Items with no subitems or active path will be removed from the navigation altogether.
+
 Note: the side nav is hidden in forms by design, this removes clutter and allows the user to focus on the content of that object.
 
 ## Dynamic Content in the Navigation
