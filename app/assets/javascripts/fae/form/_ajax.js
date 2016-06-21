@@ -140,8 +140,6 @@ Fae.form.ajax = {
           if ( $html.length > 1 ) {
             var textarea = isTextarea($html);
 
-            // $textarea just contains a string, this will parse it as HTML and turn it into a jQuery object
-            // http://stackoverflow.com/a/16859718/2347675
             if ( textarea ) {
               $html = $( textarea.text() );
             }
