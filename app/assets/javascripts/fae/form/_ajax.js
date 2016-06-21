@@ -110,6 +110,20 @@ Fae.form.ajax = {
   addEditSubmission: function() {
     var _this = this;
 
+    function isTextarea(items) {
+      for (var i = 0; i < items.length; i++ ) {
+        var $item = $( items[i] );
+
+        if ( $.isArray($item) ) {
+          isTextarea($item); // recursively checks for textarea
+        } else if ( $item.is('textarea') ) {
+          return $item; // Returns first textarea
+        }
+      }
+
+      return false; // No textarea found
+    }
+
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 
       var $target = $(evt.target);
@@ -121,7 +135,17 @@ Fae.form.ajax = {
 
         // remotipart returns data inside textarea, let's grab it from there
         if ($html.is('textarea')) {
-          $html = $( $html.val() );
+
+          // Check if $html is an array, parse differently if so
+          if ( $html.length > 1 ) {
+            var textarea = isTextarea($html);
+
+            if ( textarea ) {
+              $html = $( textarea.text() );
+            }
+          } else {
+            $html = $( $html.val() ); // Original handling
+          }
         }
 
         if ($html) {
