@@ -124,7 +124,7 @@ Fae.form.ajax = {
           if ( $html.length > 1 ) {
             var textarea;
 
-            function isTextarea(items) {
+            var isTextarea = function(items) {
               for (var i = 0; i < items.length; i++ ) {
                 var $item = $( items[i] );
 
