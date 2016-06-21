@@ -121,7 +121,21 @@ Fae.form.ajax = {
 
         // remotipart returns data inside textarea, let's grab it from there
         if ($html.is('textarea')) {
-          $html = $( $html.val() );
+          if ( $html.length > 1 ) {
+            var $textarea;
+
+            for (var i = 0; i < $html.length; i++ ) {
+              if ( $($html[i]).is('textarea') ) {
+                $textarea = $($html[i]);
+              }
+            }
+
+            // $textarea just contains a string, this will parse it as HTML and turn it into a jQuery object
+            // http://stackoverflow.com/a/16859718/2347675
+            $html = $( $.parseHTML($textarea.text()) );
+          } else {
+            $html = $( $html.val() );
+          }
         }
 
         if ($html) {
