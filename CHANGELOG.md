@@ -5,6 +5,7 @@
 - enhancements
     + Add custom authorization levels
 - bugs
+  + Conditionally parse remotipart responses
 
 ## 1.3.1
 

@@ -110,6 +110,20 @@ Fae.form.ajax = {
   addEditSubmission: function() {
     var _this = this;
 
+    function isTextarea(items) {
+      for (var i = 0; i < items.length; i++ ) {
+        var $item = $( items[i] );
+
+        if ( $.isArray($item) ) {
+          isTextarea($item); // recursively checks for textarea
+        } else if ( $item.is('textarea') ) {
+          return $item; // Returns first textarea
+        }
+      }
+
+      return false; // No textarea found
+    }
+
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 
       var $target = $(evt.target);
@@ -121,32 +135,18 @@ Fae.form.ajax = {
 
         // remotipart returns data inside textarea, let's grab it from there
         if ($html.is('textarea')) {
+
+          // Check if $html is an array, parse differently if so
           if ( $html.length > 1 ) {
-            var textarea;
-
-            var isTextarea = function(items) {
-              for (var i = 0; i < items.length; i++ ) {
-                var $item = $( items[i] );
-
-                if ( $.isArray($item) ) {
-                  isTextarea($item); // recursively checks for text area
-                } else if ( $item.is('textarea') ) {
-                  return $item; // Returns first textarea
-                }
-              }
-
-              return false; // No textarea found
-            }
-
-            textarea = isTextarea($html);
+            var textarea = isTextarea($html);
 
             // $textarea just contains a string, this will parse it as HTML and turn it into a jQuery object
             // http://stackoverflow.com/a/16859718/2347675
             if ( textarea ) {
-              $html = $( $.parseHTML( textarea.text()) );
+              $html = $( $.parseHTML(textarea.text()) );
             }
           } else {
-            $html = $( $html.val() );
+            $html = $( $html.val() ); // Original handling
           }
         }
 
