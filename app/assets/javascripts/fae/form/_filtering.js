@@ -20,6 +20,7 @@ Fae.form.filtering = {
 
       this.filterFormListeners();
       this.paginationListeners();
+      this.sortingSetup();
     }
   },
 
@@ -36,6 +37,7 @@ Fae.form.filtering = {
       Fae.tables.rowSorting();
       Fae.tables.sortColumnsFromCookies();
       Fae.navigation.lockFooter();
+      Fae.form.filtering.sortingSetup();
     });
   },
 
@@ -111,6 +113,45 @@ Fae.form.filtering = {
       ev.preventDefault();
       _this.fry.merge({ page: $(this).data('page') });
     })
+  },
+
+  sortingSetup: function() {
+    this._add_sorting_classes();
+    this._add_sorting_listeners();
+  },
+
+  _add_sorting_classes: function() {
+    var sort_by = this.fry.params.sort_by;
+    var sort_direction = this.fry.params.sort_direction;
+    if (!sort_direction) {
+      sort_direction = 'asc';
+    }
+
+    $('th[data-sort]')
+      .addClass('th-sortable')
+      .filter('[data-sort="'+sort_by+'"]').addClass('-'+sort_direction);
+  },
+
+  _add_sorting_listeners: function() {
+    var _this = this;
+
+    $('th[data-sort]').on('click', function() {
+      var $this = $(this);
+      var new_direction = 'asc';
+
+      if ($(this).hasClass('-asc')) {
+        new_direction = 'desc';
+        $this.addClass('-desc').removeClass('-asc');
+      } else {
+        $this.addClass('-asc').removeClass('-desc');
+      }
+
+      _this.fry.merge({
+        sort_by: $(this).data('sort'),
+        sort_direction: new_direction,
+        page: ''
+      });
+    });
   },
 
   /**
