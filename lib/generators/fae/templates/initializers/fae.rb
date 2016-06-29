@@ -53,4 +53,9 @@ Fae.setup do |config|
   # This option will disable Fae complete when the app is running
   # on one of the defined environments
   # config.disabled_environments = [ :preview, :staging ]
+
+  ## per_page
+  # Sets the default number of items shown in paginated lists
+  # Defaults to 25
+  # config.per_page = 25
 end
