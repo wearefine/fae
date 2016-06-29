@@ -9,7 +9,7 @@ module Fae
     helper FormHelper
 
     def index
-      @items = @klass.for_fae_index
+      @items = @klass.for_fae_index.page(params[:page])
       respond_to do |format|
         format.html
         format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_s(:filename) + '.csv'  }
@@ -59,9 +59,9 @@ module Fae
 
     def filter
       if params[:commit] == "Reset Search"
-        @items = @klass.filter_all
+        @items = @klass.filter_all.page(params[:page])
       else
-        @items = @klass.filter(params[:filter])
+        @items = @klass.filter(params).fae_sort(params).page(params[:page])
       end
 
       render :index, layout: false
