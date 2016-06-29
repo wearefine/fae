@@ -19,6 +19,7 @@ Fae.form.filtering = {
       this.setFilterDropDowns();
 
       this.filterFormListeners();
+      this.paginationListeners();
     }
   },
 
@@ -27,17 +28,15 @@ Fae.form.filtering = {
     var _this = Fae.form.filtering;
     var post_url = _this.$filter_form.attr('action');
 
-    // if (!$.isEmptyObject(this.params)) {
-      $.post(post_url, this.params, function(data){
-        _this.$filter_form.next('table').replaceWith( $(data).find('table').first() );
-        _this.$pagination.html( $(data).find('.pagination').first().html() );
+    $.post(post_url, this.params, function(data){
+      _this.$filter_form.next('table').replaceWith( $(data).find('table').first() );
+      _this.$pagination.html( $(data).find('.pagination').first().html() );
 
-        Fae.tables.columnSorting();
-        Fae.tables.rowSorting();
-        Fae.tables.sortColumnsFromCookies();
-        Fae.navigation.lockFooter();
-      });
-    // }
+      Fae.tables.columnSorting();
+      Fae.tables.rowSorting();
+      Fae.tables.sortColumnsFromCookies();
+      Fae.navigation.lockFooter();
+    });
   },
 
   filterFormListeners: function() {
@@ -46,7 +45,7 @@ Fae.form.filtering = {
     this.$filter_form
       .on('submit', function(ev) {
         ev.preventDefault();
-        _this.fry.update('search', $('#filter_search').val());
+        _this.updateFryrAndResetPaging('search', $('#filter_search').val());
       })
       // Reset filter button
       .on('click', '.js-reset-btn', function(ev) {
@@ -67,23 +66,20 @@ Fae.form.filtering = {
       })
 
       .on('click', '.table-filter-keyword-wrapper i', function() {
-        _this.fry.update('search', $('#filter_search').val());
+        _this.updateFryrAndResetPaging('search', $('#filter_search').val());
       })
 
       .on('change', 'select', function() {
         // Update hash when filter dropdowns changed
         var key = $(this).attr('id').split('filter_')[1];
         var value = $(this).val();
-        _this.fry.update(key, value);
+
+        _this.updateFryrAndResetPaging(key, value);
 
         // TODO: reset button logic
         // $('.js-reset-btn').show();
       });
   },
-
-
-
-
 
   setFilterDropDowns: function() {
     var cookie_name = this.$filter_form.attr('data-cookie-key');
@@ -108,6 +104,20 @@ Fae.form.filtering = {
         }
       }
     });
+  },
+
+  updateFryrAndResetPaging: function(key, value) {
+    var values_obj = { page: '' };
+    values_obj[key] = value;
+    this.fry.merge(values_obj);
+  },
+
+  paginationListeners: function() {
+    var _this = this;
+    $('.pagination').on('click', 'a', function(ev) {
+      ev.preventDefault();
+      _this.fry.update('page', $(this).data('page'));
+    })
   },
 
   /**

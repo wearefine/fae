@@ -6,4 +6,4 @@
 /   per_page:      number of items to fetch per page
 /   remote:        data-remote
 span.prev
-  a href=url rel="prev" remote=remote = t('views.pagination.previous').html_safe
+  a href=url rel="prev" remote=remote  data-page=(current_page - 1) = t('views.pagination.previous').html_safe

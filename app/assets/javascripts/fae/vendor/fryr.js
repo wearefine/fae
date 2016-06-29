@@ -332,6 +332,10 @@
         var key = keys[i];
         var value = obj[ key ];
 
+        if (value === '') {
+          continue;
+        }
+
         if( value.constructor === Array ) {
           value = value.join(',');
         }
@@ -343,6 +347,10 @@
 
         // Append key/value to new_hash
         new_hash += key + '=' + value;
+      }
+
+      if (new_hash === '?') {
+        new_hash = '';
       }
 
       return new_hash;
