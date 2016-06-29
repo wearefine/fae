@@ -49,20 +49,12 @@ Fae.form.filtering = {
       })
       // Reset filter button
       .on('click', '.js-reset-btn', function(ev) {
-        // TODO: reset button logic
-        // ev.preventDefault();
+        var $this = $(this);
+        ev.preventDefault();
 
-        // var $form = $(this).closest('form');
-
-        // $form.get(0).reset();
-        // $form.find('select').val('').trigger('chosen:updated');
-        // // reset hashies
-        // window.location.hash = '';
-
-        // // Spoof form submission
-        // $form.submit();
-
-        // $(this).hide();
+        _this.fry.merge({ page: '' }, true);
+        $this.closest('form').find('select').val('').trigger('chosen:updated');
+        $this.hide();
       })
 
       .on('click', '.table-filter-keyword-wrapper i', function() {
@@ -76,8 +68,7 @@ Fae.form.filtering = {
 
         _this.updateFryrAndResetPaging(key, value);
 
-        // TODO: reset button logic
-        // $('.js-reset-btn').show();
+        $('.js-reset-btn').show();
       });
   },
 
@@ -104,6 +95,8 @@ Fae.form.filtering = {
         }
       }
     });
+
+    $('.js-reset-btn').show();
   },
 
   updateFryrAndResetPaging: function(key, value) {
@@ -116,7 +109,7 @@ Fae.form.filtering = {
     var _this = this;
     $('.pagination').on('click', 'a', function(ev) {
       ev.preventDefault();
-      _this.fry.update('page', $(this).data('page'));
+      _this.fry.merge({ page: $(this).data('page') });
     })
   },
 
