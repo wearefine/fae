@@ -4,8 +4,9 @@ Filtering, pagination and column sorting all work through the same mechanism in 
 
 To use any one of these, you'll need to add a route to access the built in `filter` action.
 
-`config/routes.rb`
 ```ruby
+# config/routes.rb
+
 resources :people do
   post 'filter', on: :collection
 end
@@ -33,9 +34,10 @@ Let's walk through an example. Using the `Person` model from above, let's say a 
 
 Next we'll add the form to our view as the first child of `.content`:
 
-`app/views/admin/people/index.html.slim`
 ```slim
-// ...
+/ app/views/admin/people/index.html.slim
+
+/ ...
 .content
 
   == fae_filter_form do
@@ -43,7 +45,7 @@ Next we'll add the form to our view as the first child of `.content`:
     == fae_filter_select :groups
 
   table.js-sort-column
-  // ...
+    / ...
 ```
 
 The search field is built into `fae_filter_form`, but we'll need to provide a `fae_filter_select` for each select element in our filter bar.
@@ -68,8 +70,9 @@ From the form above we can assume our params look like this:
 
 So let's use that data to craft our class method.
 
-`app/models/person.rb`
 ```ruby
+# app/models/person.rb
+
 def self.filter(params)
   # build conditions if specific params are present
   conditions = {}
@@ -162,8 +165,9 @@ If your index tables are stacked with items and it's taking a while to load, you
 
 Verify the object resources has the filter route:
 
-`config/routes.rb`
 ```ruby
+# config/routes.rb
+
 resources :people do
   post 'filter', on: :collection
 end
@@ -173,7 +177,8 @@ Then call the `fae_paginate` helper under the table:
 
 `app/views/admin/people/index.html.slim`
 ```slim
-/ ...
+/ app/views/admin/people/index.html.slim
+
 table
   / table stuff here
 
@@ -186,8 +191,9 @@ The `fae_paginate` helper can be called anywhere and will return correct links t
 
 Pagination in Fae defaults to 25 items per page, but that can be customize in Fae's initializer:
 
-`config/initializers/fae.rb`
 ```ruby
+# config/initializers/fae.rb
+
 Fae.setup do |config|
   ## per_page
   # Sets the default number of items shown in paginated lists
@@ -215,8 +221,9 @@ This method relies on the data already in the table, so if you are paginating yo
 
 Again, verify the object resources has the filter route:
 
-`config/routes.rb`
 ```ruby
+# config/routes.rb
+
 resources :people do
   post 'filter', on: :collection
 end
@@ -224,10 +231,27 @@ end
 
 Then remove the old `js-sort-column` class from the table.
 
-For each table header you want enable, add a `data-sort` attr with a value of the attribute name you wish to sort by. If you need to sort by an associations attribute you need to follow this convention: `data-sort="association_name.associations_attr"`. Here's an example:
+For each column you want enable, add a `data-sort` attr to the `<th>` following these conventions.
 
-`app/views/admin/people/index.html.slim`
+For an attribute on the current object:
+
+```
+data-sort="attribute_name"
+```
+
+To sort by an association's attribute:
+
+```
+data-sort="association_name.attribute_name"
+```
+
+`association_name` must be an existing column and `association_name` must be a defined association on the current object.
+
+Here's an example:
+
 ```slim
+/ app/views/admin/people/index.html.slim
+
 table
   thead
     tr
@@ -239,3 +263,14 @@ table
       th.-action-wide On Stage
       th.-action-wide On Prod
 ```
+
+```ruby
+# app/models/person.rb
+
+class Person < ActiveRecord::Base
+  include Fae::BaseModelConcern
+
+  belongs_to :office
+end
+```
+
