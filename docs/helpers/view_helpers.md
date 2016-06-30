@@ -163,6 +163,6 @@ tr id=fae_sort_id(item)
 fae_paginate @items
 ```
 
-![Fae paginate](../images/fae_paginate.)
+![Fae paginate](../images/fae_paginate.png)
 
 Adds pagination links for `@items`, given `@items` is an ActiveRecord collection.

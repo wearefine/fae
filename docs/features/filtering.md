@@ -156,6 +156,8 @@ Dislays a select tag to be used within a `fae_filter_form`.
 
 ## Pagination
 
+![Fae paginate](../images/fae_paginate.png)
+
 If your index tables are stacked with items and it's taking a while to load, you may consider adding pagination to them. To do this, just follow these steps.
 
 Verify the object resources has the filter route:
