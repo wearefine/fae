@@ -4,6 +4,7 @@
 
 - enhancements
     + Add custom authorization levels
+    + \#55333: Add pagination 📖
 - bugs
 
 ## 1.3.1
