@@ -19,14 +19,6 @@ Fae.form.ajax = {
     this.htmlListeners();
 
     this.deleteNoForm();
-
-    // if (this.$filter_form.length) {
-      // this.fry = new Fryr(this._setFilterDropdowns);
-      // this.applyCookies();
-
-      // These are also re-applied once AJAX form is loaded in
-      // this.filterSubmission();
-    // }
   },
 
   /**
@@ -248,66 +240,6 @@ Fae.form.ajax = {
         _this.fry.update(key, value);
       });
   },
-
-  /**
-   * Check for cookie or hash and set dropdowns/ url accordingly (callback for Fryr)
-   * @protected
-   * @param {Object} params - hash params broken out from Fryr
-   * @see applyCookies
-   */
-  // _setFilterDropdowns: function(params) {
-  //   var cookie_name = $('.js-filter-form').attr('data-cookie-key');
-  //   Cookies.set(cookie_name, params);
-
-  //   // Exit early if params is blank
-  //   if ($.isEmptyObject(params)) {
-  //     return;
-  //   }
-
-  //   // Loop through all available params to find the select menu and the proper option
-  //   $.each(params, function(key, value) {
-  //     var $select = $('.js-filter-form .table-filter-group #filter_' + key);
-
-  //     if($select.length) {
-  //       var $option = $select.find('option[value="' + value + '"]');
-
-  //       // Ensure we find the option and that it isn't already chosen
-  //       if($option.length && $option.prop('selected') !== 'selected') {
-  //         $option.prop('selected', 'selected');
-  //         $select.trigger('chosen:updated');
-  //       }
-  //     }
-  //   });
-
-  //   $('.js-filter-form').submit();
-  // },
-
-  /**
-   * If cookies are available, load them into the hash
-   */
-  // applyCookies: function() {
-  //   var cookie_key = $('.js-filter-form').attr('data-cookie-key');
-
-  //   if (cookie_key) {
-  //     var cookie = Cookies.getJSON(cookie_key);
-
-  //     if (!$.isEmptyObject(cookie)) {
-  //       var keys = Object.keys(cookie)
-  //       var hash = '?';
-
-  //       for(var i = 0; i < keys.length; i++) {
-  //         if (hash !== '?') {
-  //           hash += '&';
-  //         }
-  //         hash += keys[i] + '=' + cookie[keys[i]];
-  //       }
-
-  //       if (hash !== '?') {
-  //         window.location.hash = hash;
-  //       }
-  //     }
-  //   }
-  // },
 
   /**
    * Delete or replace file for non-AJAX'd fields

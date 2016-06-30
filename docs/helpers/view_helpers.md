@@ -11,6 +11,7 @@ Fae provides a number of built in view helpers.
 * [Require Locals](#require-locals)
 * [Fae Avatar](#fae-avatar)
 * [Fae Sort ID](#fae-sort-id)
+* [Fae Paginate](#fae-paginate)
 
 ---
 
@@ -155,3 +156,13 @@ The parsed string is formatted as `"#{class_name}_#{item_id}"`, which the sort m
 ```slim
 tr id=fae_sort_id(item)
 ```
+
+## Fae Paginate
+
+```slim
+fae_paginate @items
+```
+
+![Fae paginate](../images/fae_paginate.)
+
+Adds pagination links for `@items`, given `@items` is an ActiveRecord collection.
