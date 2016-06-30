@@ -128,7 +128,7 @@ Fae.form.filtering = {
     }
 
     $('th[data-sort]')
-      .addClass('th-sortable')
+      .wrapInner('<div class="th-sortable-title"></div>')
       .filter('[data-sort="'+sort_by+'"]').addClass('-'+sort_direction);
   },
 
@@ -139,7 +139,7 @@ Fae.form.filtering = {
       var $this = $(this);
       var new_direction = 'asc';
 
-      if ($(this).hasClass('-asc')) {
+      if ($this.hasClass('-asc')) {
         new_direction = 'desc';
         $this.addClass('-desc').removeClass('-asc');
       } else {
@@ -147,7 +147,7 @@ Fae.form.filtering = {
       }
 
       _this.fry.merge({
-        sort_by: $(this).data('sort'),
+        sort_by: $this.data('sort'),
         sort_direction: new_direction,
         page: ''
       });
