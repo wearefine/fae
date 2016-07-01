@@ -13,7 +13,7 @@ Fae.form.filtering = {
 
     // init only on pages with filering, sorting or paging
     if (this.$filter_form.length || this.$pagination.length || $('.js-sort-column').length) {
-      // this.applyCookies();
+      this.applyCookies();
       var has_hash_on_load = window.location.hash.length > 2;
       this.fry = new Fryr(this._refresh_table, {}, has_hash_on_load);
       this.setFilterDropDowns();
@@ -37,7 +37,6 @@ Fae.form.filtering = {
       Fae.tables.rowSorting();
       Fae.tables.sortColumnsFromCookies();
       Fae.navigation.lockFooter();
-      Fae.form.filtering.sortingSetup();
     });
   },
 

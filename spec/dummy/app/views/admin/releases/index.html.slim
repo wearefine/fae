@@ -1,6 +1,6 @@
 = render 'fae/shared/index_header', title: @klass_humanized.pluralize, csv: true
 main.content
-  = fae_filter_form do
+  = fae_filter_form cookie_key: 'release-filter' do
     = fae_filter_select :wine
     = fae_filter_select :acclaims,
       label: 'Acclaim',
