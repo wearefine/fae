@@ -30,13 +30,21 @@ Fae.form.filtering = {
     var post_url = _this.$filter_form.attr('action');
 
     $.post(post_url, this.params, function(data){
-      _this.$filter_form.next('table').replaceWith( $(data).find('table').first() );
-      _this.$pagination.html( $(data).find('.pagination').first().html() );
+      var $data = $(data);
+      var $table_from_data = $data.find('table').first();
+      // replace table
+      _this.$filter_form.next('table').replaceWith($table_from_data);
+      // replace sticky header
+      $('.sticky-table-header thead').html($table_from_data.find('thead').html());
+      // replace pagination
+      _this.$pagination.html($data.find('.pagination').first().html());
 
       Fae.tables.columnSorting();
       Fae.tables.rowSorting();
-      Fae.tables.sortColumnsFromCookies();
       Fae.navigation.lockFooter();
+
+      _this.sortingSetup();
+      _this.setCookie();
     });
   },
 
@@ -74,9 +82,6 @@ Fae.form.filtering = {
   },
 
   setFilterDropDowns: function() {
-    var cookie_name = this.$filter_form.attr('data-cookie-key');
-    Cookies.set(cookie_name, this.fry.params);
-
     // Exit early if this.fry.params is blank
     if ($.isEmptyObject(this.fry.params)) {
       return;
@@ -115,23 +120,23 @@ Fae.form.filtering = {
   },
 
   sortingSetup: function() {
-    this._add_sorting_classes();
-    this._add_sorting_listeners();
+    this._addSortingClasses();
+    this._addSortingListeners();
   },
 
-  _add_sorting_classes: function() {
+  _addSortingClasses: function() {
     var sort_by = this.fry.params.sort_by;
     var sort_direction = this.fry.params.sort_direction;
     if (!sort_direction) {
       sort_direction = 'asc';
     }
 
-    $('th[data-sort]')
-      .wrapInner('<div class="th-sortable-title"></div>')
-      .filter('[data-sort="'+sort_by+'"]').addClass('-'+sort_direction);
+    var $sortable_th = $('th[data-sort]');
+    $sortable_th.filter('[data-sort="'+sort_by+'"]').addClass('-'+sort_direction);
+    $sortable_th.not(':has(.th-sortable-title)').wrapInner('<div class="th-sortable-title"></div>');
   },
 
-  _add_sorting_listeners: function() {
+  _addSortingListeners: function() {
     var _this = this;
 
     $('th[data-sort]').on('click', function() {
@@ -151,6 +156,11 @@ Fae.form.filtering = {
         page: ''
       });
     });
+  },
+
+  setCookie: function() {
+    var cookie_name = this.$filter_form.attr('data-cookie-key');
+    Cookies.set(cookie_name, this.fry.params);
   },
 
   /**
