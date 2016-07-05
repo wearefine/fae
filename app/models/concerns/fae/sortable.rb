@@ -10,23 +10,28 @@ module Fae
         attr_parts = params[:sort_by].split('.')
 
         if attr_parts.length == 1
-          order_table = table_name
-          order_attr = attr_parts.first
+          order_by_model_attr(attr_parts.first, sort_direction(params[:sort_direction]))
         else
-          assoc_sym = attr_parts.first.to_sym
-          assoc_index = reflect_on_all_associations.map(&:name).index(assoc_sym)
-          return all unless assoc_index
-          order_klass = reflect_on_all_associations[assoc_index].klass
-          order_table = order_klass.table_name
-          order_attr = attr_parts.second
+          order_by_association_attr(attr_parts.first.to_sym, attr_parts.second, sort_direction(params[:sort_direction]))
         end
-
-        return all unless attribute_exists(order_klass || self, order_attr)
-
-        includes(assoc_sym).unscope(:order).order("#{order_table}.#{order_attr} #{sort_direction(params[:sort_direction])}")
       end
 
       private
+
+      def order_by_model_attr(sort_by, direction)
+        return all unless attribute_exists(self, sort_by)
+        unscope(:order).order("#{table_name}.#{sort_by} #{direction}")
+      end
+
+      def order_by_association_attr(association, sort_by, direction)
+        assoc_index = reflect_on_all_associations.map(&:name).index(association)
+        return all unless assoc_index
+        order_klass = reflect_on_all_associations[assoc_index].klass
+
+        return all unless attribute_exists(order_klass, sort_by)
+
+        includes(association).unscope(:order).order("#{order_klass.table_name}.#{sort_by} #{direction}")
+      end
 
       def sort_direction(direction_from_params)
         return 'asc' if direction_from_params.blank?

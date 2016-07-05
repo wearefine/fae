@@ -232,6 +232,6 @@ Fae.form.filtering = {
         }
       }
     }
-  },
+  }
 
 };
