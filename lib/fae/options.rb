@@ -5,7 +5,7 @@ require_relative 'validation_helper_collection'
 module Fae
   # configurable defaults
   class << self
-    mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :has_top_nav, :disabled_environments
+    mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :has_top_nav, :disabled_environments, :per_page
 
     self.devise_secret_key      = ''
     self.devise_mailer_sender   = 'change-me@example.com'
@@ -20,6 +20,7 @@ module Fae
     self.slug_separator         = '-'
     self.has_top_nav            = false
     self.disabled_environments  = []
+    self.per_page               = 25
   end
 
   # this function maps the vars from your app into your engine

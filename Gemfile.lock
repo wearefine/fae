@@ -18,6 +18,7 @@ PATH
       jquery-ui-rails (~> 4.2.1)
       judge (~> 2.1.1)
       judge-simple_form (~> 1.0.0)
+      kaminari (~> 0.16.3)
       rails (~> 4.1)
       remotipart
       rmagick (~> 2.13.3)
@@ -188,6 +189,9 @@ GEM
     judge-simple_form (1.0.0)
       judge (~> 2.0)
       simple_form (>= 2.0)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.4.2)
       addressable (~> 2.3)
     listen (2.7.9)

@@ -550,50 +550,6 @@ tbody {
   }
 }
 
-// pagination
-.pagination {
-  font-size: 12px;
-  font-weight: bold;
-
-  li {
-    display: inline-block;
-    margin-left: -4px;
-
-    &:first-child {
-      margin-left: 0;
-    }
-  }
-
-  a {
-    @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
-    display: block;
-    padding: 10px;
-    min-height: 30px;
-    min-width: 35px;
-    border: 1px solid $c-border;
-    text-align: center;
-    color: $c-mid-dark-grey;
-
-    &:hover {
-      color: $c-white;
-      background: $c-custom-highlight;
-    }
-  }
-}
-
-.pagination-ellipsis {
-  span {
-    display: block;
-    padding: 10px;
-    min-height: 30px;
-    min-width: 35px;
-    border: 1px solid $c-border;
-    text-align: center;
-    color: $c-mid-dark-grey;
-    background: $c-lightest-grey;
-  }
-}
-
 .sidenav-third-link {
   @include bp(large) {
     padding: 10px 10px 10px 30px;

@@ -9,7 +9,6 @@ Fae.form.ajax = {
 
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
-    this.$filter_form = $('.js-filter-form');
 
     this.addEditLinks();
     this.addEditSubmission();
@@ -20,14 +19,6 @@ Fae.form.ajax = {
     this.htmlListeners();
 
     this.deleteNoForm();
-
-    if (this.$filter_form.length) {
-      this.applyCookies();
-
-      // These are also re-applied once AJAX form is loaded in
-      this.filterSelect();
-      this.filterSubmission();
-    }
   },
 
   /**
@@ -143,7 +134,6 @@ Fae.form.ajax = {
         }
 
         if (_this.$filter_form.length) {
-          _this.filterSelect();
           _this.filterSubmission();
         }
 
@@ -213,6 +203,7 @@ Fae.form.ajax = {
       // On filter change, update table data
       .on('ajax:success', function(evt, data, status, xhr){
         $(this).next('table').replaceWith( $(data).find('table').first() );
+        $('.pagination').replaceWith( $(data).find('.pagination').first() );
 
         Fae.tables.columnSorting();
         Fae.tables.rowSorting();
@@ -243,84 +234,11 @@ Fae.form.ajax = {
 
       .on('change', 'select', function() {
         _this.$filter_form.submit();
-      });
-  },
-
-  /**
-   * If cookies are available, load them into the hash
-   */
-  applyCookies: function() {
-    var cookie_key = $('.js-filter-form').attr('data-cookie-key');
-
-    this.fry = new Fryr(this._setFilterDropdowns);
-
-    if (cookie_key) {
-      var cookie = Cookies.getJSON(cookie_key);
-
-      if (!$.isEmptyObject(cookie)) {
-        var keys = Object.keys(cookie)
-        var hash = '?';
-
-        for(var i = 0; i < keys.length; i++) {
-          if (hash !== '?') {
-            hash += '&';
-          }
-          hash += keys[i] + '=' + cookie[keys[i]];
-        }
-
-        if (hash !== '?') {
-          window.location.hash = hash;
-        }
-      }
-    }
-  },
-
-  /**
-   * Update hash when filter dropdowns changed
-   */
-  filterSelect: function(){
-    var _this = this;
-    $('.js-filter-form .table-filter-group').on('change', function(){
-      if ($('.js-filter-form').attr('data-cookie-key')) {
-        var key = $(this).find('select').attr('id').split('filter_')[1];
-        var value = $(this).find('option:selected').val();
-
+        // Update hash when filter dropdowns changed
+        var key = $(this).attr('id').split('filter_')[1];
+        var value = $(this).val();
         _this.fry.update(key, value);
-      }
-    });
-  },
-
-  /**
-   * Check for cookie or hash and set dropdowns/ url accordingly (callback for Fryr)
-   * @protected
-   * @param {Object} params - hash params broken out from Fryr
-   * @see applyCookies
-   */
-  _setFilterDropdowns: function(params) {
-    var cookie_name = $('.js-filter-form').attr('data-cookie-key');
-    Cookies.set(cookie_name, params);
-
-    // Exit early if params is blank
-    if ($.isEmptyObject(params)) {
-      return;
-    }
-
-    // Loop through all available params to find the select menu and the proper option
-    $.each(params, function(key, value) {
-      var $select = $('.js-filter-form .table-filter-group #filter_' + key);
-
-      if($select.length) {
-        var $option = $select.find('option[value="' + value + '"]');
-
-        // Ensure we find the option and that it isn't already chosen
-        if($option.length && $option.prop('selected') !== 'selected') {
-          $option.prop('selected', 'selected');
-          $select.trigger('chosen:updated');
-        }
-      }
-    });
-
-    $('.js-filter-form').submit();
+      });
   },
 
   /**

@@ -34,21 +34,15 @@
    */
   function removeHashIfBlank(hash) {
     if(hash === '#') {
-      // Modern browsers
-      if ('pushState' in history) {
-        history.pushState('', document.title, window.location.pathname + window.location.search);
+      // Prevent scrolling by storing the page's current scroll offset
+      var scrollV = document.body.scrollTop;
+      var scrollH = document.body.scrollLeft;
 
-      } else {
-        // Prevent scrolling by storing the page's current scroll offset
-        var scrollV = document.body.scrollTop;
-        var scrollH = document.body.scrollLeft;
+      window.location.hash = '';
 
-        window.location.hash = '';
-
-        // Restore the scroll offset
-        document.body.scrollTop = scrollV;
-        document.body.scrollLeft = scrollH;
-      }
+      // Restore the scroll offset
+      document.body.scrollTop = scrollV;
+      document.body.scrollLeft = scrollH;
 
     } else {
       // If the hash isn't blank, fire onhashchange
@@ -171,46 +165,40 @@
     if(hash.indexOf(key) !== -1) {
       var key_value = param(key);
 
-      var regex_for_value = new RegExp(value, 'g');
+      // If the key is require or
+      // value isn't blank and is not in key_value
+      var value_not_in_key_value = key_value.split(',').indexOf(value) === -1;
+      if (key_is_required || (value_not_in_key_value && value !== '')) {
 
-      // If key_value contains the new value
-      if(regex_for_value.test(key_value)) {
+        // add the value, replacing it if necessary
+        addValue(key, value, should_replace_value);
 
-        // If key is required, swap it out
-        if(key_is_required) {
-          addValue(key, value, should_replace_value);
+      } else {
 
+        // If the value is blank, remove the original value from the key
+        if(value === '') {
+          removeValue(key, key_value);
+
+        // Otherwise remove the vanilla value if it's different than the original value
+        // or value should not be replaced (appended)
         } else {
-
-          // If the value is blank, remove the original value from the key
-          if(value === '') {
-            removeValue(key, key_value);
-
-          // Otherwise remove the vanilla value
-          } else {
-            if(key_value !== value) {
-              removeValue(key, value);
-            }
-
-          }
-
-          // If key's value is blank, remove it from hash
-          if(param(key) === '') {
-            removeKey(key);
+          if(key_value !== value || !should_replace_value) {
+            removeValue(key, value);
           }
 
         }
 
-      // key_value does not contain the new value
-      } else {
-        addValue(key, value, should_replace_value);
+        // If key's value is blank, remove it from hash
+        if(param(key) === '') {
+          removeKey(key);
+        }
 
       }
 
     // Add key if it doesn't exist
     } else {
 
-      if(window.location.hash) {
+      if(window.location.hash && window.location.hash !== '#') {
         window.location.hash += '&' + key + '=' + value;
       } else {
         // Use a question mark if first key
@@ -344,6 +332,10 @@
         var key = keys[i];
         var value = obj[ key ];
 
+        if (value === '') {
+          continue;
+        }
+
         if( value.constructor === Array ) {
           value = value.join(',');
         }
@@ -355,6 +347,10 @@
 
         // Append key/value to new_hash
         new_hash += key + '=' + value;
+      }
+
+      if (new_hash === '?') {
+        new_hash = '';
       }
 
       return new_hash;

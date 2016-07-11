@@ -7,6 +7,7 @@ module Fae
 
     included do
       include Fae::Trackable if Fae.track_changes
+      include Fae::Sortable
     end
 
     def fae_nested_parent
