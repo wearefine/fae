@@ -9,8 +9,8 @@ ruby:
 
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
-  title               ||= assoc_name.humanize             # 'Restaurant Bars'
-  header              ||= title
+  header              ||= assoc_name.humanize             # 'Restaurant Bars'
+  title               ||= header
   add_button_text     ||= "Add #{title.singularize}"
   ordered             ||= false
   has_thumb           ||= false
@@ -44,7 +44,8 @@ section.addedit-form.js-addedit-form class="#{'content' if index}"
   - else
     h2 = header
     a.js-add-link.table-add-link.button.-small href=new_path = add_button_text
-    h3 = title
+    - unless title == header
+      h3 = title
     - if helper_text.present?
       h6.table-helper-text = helper_text
     == render 'fae/application/flash_messages'
