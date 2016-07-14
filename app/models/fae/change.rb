@@ -1,6 +1,7 @@
 module Fae
   class Change < ActiveRecord::Base
     include Fae::Sortable
+    include Fae::ChangeConcern
 
     belongs_to :user
     belongs_to :changeable, polymorphic: true

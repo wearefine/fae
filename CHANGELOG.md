@@ -5,8 +5,9 @@
 - enhancements
     + Add custom authorization levels
     + \#55333: Add pagination 📖
+    + Add concern extension capability to `Fae::Change`
 - bugs
-    + \#59273: Remove title if it’s the same as the header on nested tables
+    + \#59273: Remove header on nested tables
 
 ## 1.3.1
 
