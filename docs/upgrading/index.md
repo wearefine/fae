@@ -9,10 +9,6 @@
 
 Fae v1.3 has a new layout featuring a horizontal navigation across the top of the app. After updating, you may chose to enable the top nav or not.
 
-```bash
-$ rake db:migrate
-```
-
 If you choose to enable top nav, you need to do the following:
 
 In `config/initializers/fae.rb`, uncomment
@@ -60,6 +56,14 @@ module Fae
 end
 ```
 
+If you want the top level item for nav items with nested links to go to a specific path, pass in `path: some_named_route_path` to the top level after the name string, otherwise it will default to the first item in the list.
+
+```ruby
+# def structure
+#   [
+#     item('Top Nav Item 1', path: some_named_route_path, subitems: [
+#       ...
+```
 
 # From v1.1 to v1.2
 
