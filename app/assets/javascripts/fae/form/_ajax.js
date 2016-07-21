@@ -9,6 +9,7 @@ Fae.form.ajax = {
 
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
+    this.$filter_form = $('.js-filter-form');
 
     this.addEditLinks();
     this.addEditSubmission();
