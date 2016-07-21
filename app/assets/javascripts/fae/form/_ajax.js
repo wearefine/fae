@@ -130,6 +130,12 @@ Fae.form.ajax = {
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
 
+            Fae.form.dates.initDatepicker();
+            Fae.form.dates.initDateRangePicker();
+            Fae.form.validator.length_counter.init();
+            Fae.form.checkbox.setCheckboxAsActive();
+            Fae.form.text.initMarkdown();
+
             FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
         }
