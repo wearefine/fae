@@ -9,6 +9,7 @@ Fae.form.ajax = {
 
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
+    this.$filter_form = $('.js-filter-form');
 
     this.addEditLinks();
     this.addEditSubmission();
@@ -128,6 +129,12 @@ Fae.form.ajax = {
             $this.find( form_wrapper_selector ).replaceWith(data);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
+
+            Fae.form.dates.initDatepicker();
+            Fae.form.dates.initDateRangePicker();
+            Fae.form.validator.length_counter.init();
+            Fae.form.checkbox.setCheckboxAsActive();
+            Fae.form.text.initMarkdown();
 
             FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }

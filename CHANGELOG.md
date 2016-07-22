@@ -8,6 +8,7 @@
     + Add concern extension capability to `Fae::Change`
 - bugs
     + \#59273: Remove header on nested tables
+    + \#59473: Reinitialize form elements on redrawing of nested forms
 
 ## 1.3.1
 

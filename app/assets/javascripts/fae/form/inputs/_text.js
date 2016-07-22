@@ -41,34 +41,33 @@ Fae.form.text = {
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   initMarkdown: function() {
-    $('.js-markdown-editor').each(function() {
+    $('.js-markdown-editor:not(.mde-enabled)').each(function() {
       var $this = $(this);
-      if (!$this.hasClass('mde-enabled')) {
-        var editor = new SimpleMDE({
-          element: this,
-          autoDownloadFontAwesome: false,
-          status: false,
-          spellChecker: false,
-          hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
-        });
-        $this.addClass('mde-enabled');
 
-        // code mirror events to hook into current form element functions
-        editor.codemirror.on('change', function(){
-          // updates the original textarea's value for JS validations
-          $this.val(editor.value());
-          // update length counter
-          Fae.form.validator.length_counter.updateCounter($this);
-        });
-        editor.codemirror.on('focus', function(){
-          $this.parent().addClass('mde-focus');
-        });
-        editor.codemirror.on('blur', function(){
-          // trigger blur on the original textarea to trigger JS validations
-          $this.blur();
-          $this.parent().removeClass('mde-focus');
-        });
-      }
+      var editor = new SimpleMDE({
+        element: this,
+        autoDownloadFontAwesome: false,
+        status: false,
+        spellChecker: false,
+        hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
+      });
+      $this.addClass('mde-enabled');
+
+      // code mirror events to hook into current form element functions
+      editor.codemirror.on('change', function(){
+        // updates the original textarea's value for JS validations
+        $this.val(editor.value());
+        // update length counter
+        Fae.form.validator.length_counter.updateCounter($this);
+      });
+      editor.codemirror.on('focus', function(){
+        $this.parent().addClass('mde-focus');
+      });
+      editor.codemirror.on('blur', function(){
+        // trigger blur on the original textarea to trigger JS validations
+        $this.blur();
+        $this.parent().removeClass('mde-focus');
+      });
     });
   }
 

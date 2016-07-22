@@ -16,7 +16,7 @@ Fae.form.dates = {
    * Initialize date picker
    */
   initDatepicker: function() {
-    $('.datepicker input').datepicker({
+    $('.datepicker input:not(.hasDatepicker)').datepicker({
       dateFormat: 'M dd, yy',
       inline: true,
       showOtherMonths: true,
