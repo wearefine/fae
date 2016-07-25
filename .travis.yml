@@ -25,3 +25,4 @@ script:
 gemfile:
   - gemfiles/rails_4_1.gemfile
   - gemfiles/rails_4_2.gemfile
+  - gemfiles/rails_5_0.gemfile

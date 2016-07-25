@@ -8,7 +8,6 @@ module Fae
     require 'simple_form'
     require 'jquery-rails'
     require 'jquery-ui-rails'
-    require 'remotipart'
     require 'judge'
     require 'judge/simple_form'
     require 'acts_as_list'

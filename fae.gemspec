@@ -41,6 +41,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "binding_of_caller"
   s.add_development_dependency "rails-perftest"
   s.add_development_dependency "ruby-prof"
-  s.add_development_dependency "maximus"
   s.add_development_dependency 'appraisal'
 end

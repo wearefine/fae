@@ -61,7 +61,7 @@ module Fae
     def change_item_link(change)
       text = "#{change.changeable_type}: "
 
-      if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && (!ActiveRecord::Base.connection.table_exists? change.changeable_type.tableize)
+      if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && (!ActiveRecord::Base.connection.data_source_exists? change.changeable_type.tableize)
         return "#{change.changeable_type}: model destroyed"
       else
         display_text = change.try(:changeable).try(:fae_display_field)
