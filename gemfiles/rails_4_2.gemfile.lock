@@ -13,17 +13,18 @@ PATH
       acts_as_list (~> 0.4.0)
       browser (~> 0.8.0)
       carrierwave (~> 0.10.0)
-      devise (~> 3.4.1)
+      devise (>= 3.4.1)
       jquery-rails (>= 3.1.1)
-      jquery-ui-rails (~> 4.2.1)
+      jquery-ui-rails (>= 4.2.1)
       judge (~> 2.1.1)
       judge-simple_form (~> 1.0.0)
-      rails (~> 4.1)
+      kaminari (~> 0.16.3)
+      rails (>= 4.1)
       remotipart
       rmagick (~> 2.13.3)
       sass (>= 3.4.0)
       sass-rails (>= 5.0.3)
-      simple_form (~> 3.1.0)
+      simple_form (>= 3.1.0)
       slim
       uglifier
 
@@ -191,6 +192,9 @@ GEM
     judge-simple_form (1.0.0)
       judge (~> 2.0)
       simple_form (>= 2.0)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     listen (2.10.0)
@@ -237,8 +241,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -414,7 +416,6 @@ DEPENDENCIES
   maximus
   mysql2
   pry
-  quiet_assets
   rails (~> 4.2.0)
   rails-perftest
   remotipart
