@@ -20,6 +20,7 @@ PATH
       judge-simple_form (~> 1.0.0)
       kaminari (~> 0.16.3)
       rails (>= 4.1)
+      remotipart
       rmagick (~> 2.13.3)
       sass (>= 3.4.0)
       sass-rails (>= 5.0.3)
@@ -184,6 +185,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.5.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -207,6 +210,7 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    remotipart (1.2.1)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rmagick (2.13.4)
@@ -245,8 +249,8 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
     shellany (0.0.1)
-    shoulda-matchers (2.8.0)
-      activesupport (>= 3.0.0)
+    shoulda-matchers (3.1.1)
+      activesupport (>= 4.0.0)
     simple_form (3.2.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -309,8 +313,10 @@ DEPENDENCIES
   jquery-ui-rails (~> 4.2.1)
   mysql2
   pry
+  quiet_assets
   rails (~> 4.1.0)
   rails-perftest
+  remotipart
   rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.2)
   ruby-prof

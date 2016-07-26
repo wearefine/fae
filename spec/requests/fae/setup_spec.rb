@@ -54,16 +54,19 @@ describe 'setup#create_first_user' do
 
   it 'should redirect you to the dashboard after submission' do
     FactoryGirl.create(:fae_role, name: 'super admin')
-
-    post fae.first_user_path, params: {
-      user: {
-        first_name: 'Super',
-        last_name: 'Admin',
-        email: 'super@admin.com',
-        password: 'password',
-        password_confirmation: 'password'
-      }
+    user_params = {
+      first_name: 'Super',
+      last_name: 'Admin',
+      email: 'super@admin.com',
+      password: 'password',
+      password_confirmation: 'password'
     }
+
+    if Rails::VERSION::MAJOR > 4
+      post fae.first_user_path, params: { user: user_params }
+    else
+      post fae.first_user_path, user: user_params
+    end
 
     expect(response).to redirect_to(fae.root_path)
   end

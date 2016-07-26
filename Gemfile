@@ -16,26 +16,20 @@ gemspec
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'sass', require: 'sass'
-# gem 'remotipart'
 gem 'carrierwave', '~> 0.10.0'
 gem 'rmagick', '~> 2.13.3', require: false
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.0.2'
   gem 'pry'
-  # gem 'quiet_assets'
 end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'capybara', github: 'jnicklas/capybara'
-  gem 'capybara-webkit'
   gem 'capybara-screenshot'
   gem 'guard-rspec', '~> 4.3.1'
-  gem 'database_cleaner', '~> 1.3.0'
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
-  gem 'rails-controller-testing'
   gem 'yarjuf'
 end
 
