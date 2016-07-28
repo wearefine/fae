@@ -65,8 +65,6 @@ Fae.navigation.language = {
   _toggleLanguageFields: function(lang, speed) {
     var _this = this;
 
-    console.log(lang)
-
     _this.el.$lang_divs
       .fadeOut(speed)
       .promise()
