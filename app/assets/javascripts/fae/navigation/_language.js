@@ -24,7 +24,7 @@ Fae.navigation.language = {
    * Reads the language of the active toggle on load and shows the corresponding fields
    */
   setInitialState: function() {
-    var lang = this.el.$select.find('.active').data('language');
+    var lang = this.el.$select.find('option[selected]').val();
     this._toggleLanguageFields(lang, 0);
   },
 
