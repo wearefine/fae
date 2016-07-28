@@ -9,6 +9,7 @@
 - bugs
     + \#59273: Remove header on nested tables
     + \#59473: Reinitialize form elements on redrawing of nested forms
+    + \#59386: Show sub page indicator as "open" when landing on an active view
 
 ## 1.3.1
 
