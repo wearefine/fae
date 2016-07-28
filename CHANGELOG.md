@@ -9,6 +9,7 @@
 - bugs
     + \#59273: Remove header on nested tables
     + \#59473: Reinitialize form elements on redrawing of nested forms
+    + \#58752: Languages should load from previously selected preference
 
 ## 1.3.1
 
