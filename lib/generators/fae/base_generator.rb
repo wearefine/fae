@@ -79,7 +79,7 @@ RUBY
     end
 
     def inject_concern
-      inject_into_file "app/models/#{file_name}.rb", after: "ActiveRecord::Base\n" do <<-RUBY
+      inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do <<-RUBY
   include Fae::BaseModelConcern\n
 RUBY
       end
