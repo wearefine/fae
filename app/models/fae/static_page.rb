@@ -39,7 +39,8 @@ module Fae
             define_validations("#{name}_#{lang}", type, value[:validates]) if value.try(:[], :validates).present?
           end
           # Save with lookup to have default language return in front-end use (don't need to worry about validations here)
-          define_association(name, type, "#{name}_#{I18n.locale}")
+          default_language = Rails.application.config.i18n.default_locale || languages.first
+          define_association(name, type, "#{name}_#{default_language}")
         else
           # Normal content_blocks
           define_association(name, type)
