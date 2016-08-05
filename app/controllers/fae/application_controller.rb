@@ -12,8 +12,13 @@ module Fae
     before_filter :set_option
     before_filter :detect_cancellation
     before_filter :set_change_user
+    before_filter :set_locale
 
     private
+
+    def set_locale
+      I18n.locale = :en
+    end
 
     def check_disabled_environment
       disabled_envs = Fae.disabled_environments.map { |e| e.to_s }
