@@ -13,8 +13,14 @@ class Aroma < ActiveRecord::Base
     name
   end
 
-  def fae_tracker_blacklist
-    'all'
+  ## might want another use case object because this one is testing the blacklist
+  # def fae_tracker_blacklist
+  #   'all'
+  # end
+
+  def fae_tracker_parent
+    # has to be an AR object
+    release
   end
 
   def fae_nested_parent
