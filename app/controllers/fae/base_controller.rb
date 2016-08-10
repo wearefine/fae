@@ -9,7 +9,11 @@ module Fae
     helper FormHelper
 
     def index
-      @items = @klass.for_fae_index.page(params[:page])
+      if Fae.use_pagination
+        @items = @klass.for_fae_index.page(params[:page])
+      else
+        @items = @klass.for_fae_index.all
+      end
       respond_to do |format|
         format.html
         format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_s(:filename) + '.csv'  }
