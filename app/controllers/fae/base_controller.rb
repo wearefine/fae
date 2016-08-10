@@ -105,7 +105,7 @@ module Fae
 
     # allows this controller to use pagination
     def use_pagination
-      true
+      false
     end
 
   end
