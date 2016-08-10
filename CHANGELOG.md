@@ -7,7 +7,7 @@
     + \#55333: Add pagination 📖
     + Add concern extension capability to `Fae::Change`
 - bugs
-    + Added in setting to disable pagination, as all index pages w/o pagination markup, using the latest version, would only display 25 results.
+    + Added in a base controller method to enable/disable pagination
     + \#59273: Remove header on nested tables
     + \#59473: Reinitialize form elements on redrawing of nested forms
     + \#59386: Show sub page indicator as "open" when landing on an active view
