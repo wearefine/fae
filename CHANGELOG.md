@@ -11,6 +11,7 @@
     + \#59473: Reinitialize form elements on redrawing of nested forms
     + \#59386: Show sub page indicator as "open" when landing on an active view
     + \#58752: Languages should load from previously selected preference
+    + Restrict markdown helper to modal content
 
 ## 1.3.1
 
