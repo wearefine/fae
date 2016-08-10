@@ -14,6 +14,4 @@ Fae.setup do |config|
 
   config.has_top_nav = true
 
-  config.use_pagination = true
-
 end

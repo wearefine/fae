@@ -54,11 +54,6 @@ Fae.setup do |config|
   # on one of the defined environments
   # config.disabled_environments = [ :preview, :staging ]
 
-  ## use_pagination
-  # This allows the applications to use pagination in the base controller
-  # Defaults to false
-  # config.use_pagination = false
-
   ## per_page
   # Sets the default number of items shown in paginated lists
   # Defaults to 25

@@ -9,7 +9,7 @@ module Fae
     helper FormHelper
 
     def index
-      if Fae.use_pagination
+      if use_pagination
         @items = @klass.for_fae_index.page(params[:page])
       else
         @items = @klass.for_fae_index.all
@@ -101,6 +101,11 @@ module Fae
       roles_for_controller = Fae::Authorization.access_map[params[:controller].gsub('admin/','')]
       return if current_user.super_admin? || roles_for_controller.blank?
       return show_404 unless roles_for_controller.include?(current_user.role.name)
+    end
+
+    # allows this controller to use pagination
+    def use_pagination
+      true
     end
 
   end

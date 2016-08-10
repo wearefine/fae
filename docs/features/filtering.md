@@ -187,9 +187,9 @@ table
 
 The `fae_paginate` helper can be called anywhere and will return correct links to paginate `@items`, given `@items` is an ActiveRecord collection. However, directly under the table is where our CSS supports it. Other places may need additional CSS.
 
-### Enable Pagination and Customize items per page
+### Customize items per page
 
-Pagination is disabled by default. Pagination in Fae defaults to 25 items per page, but that can be customize in Fae's initializer:
+Pagination in Fae defaults to 25 items per page, but that can be customize in Fae's initializer:
 
 ```ruby
 # config/initializers/fae.rb
@@ -198,7 +198,6 @@ Fae.setup do |config|
   ## per_page
   # Sets the default number of items shown in paginated lists
   # Defaults to 25
-  config.use_pagiantion = true
   config.per_page = 50
 end
 ```
@@ -209,6 +208,27 @@ Under the hood Fae uses [Kaminari](https://github.com/amatsuda/kaminari) to powe
 * overriding Fae's Kaminari initializer with your own
 * ignore `fae_paginate` and use Kaminari's `paginate` directly
 * etc...
+
+### Enable Pagination in the Controller
+
+Pagination is disabled in the Fad:BaseController by default. This can be customized with a private use_pagination method in controllers inheriting from Fae::BaseController.
+
+```ruby
+# app/controllers/admin/example_controller.rb
+
+module Admin
+  class ExamplesController < Fae::BaseController
+
+      private
+
+      def use_pagination
+        true
+      end
+
+  end
+end
+
+```
 
 ---
 

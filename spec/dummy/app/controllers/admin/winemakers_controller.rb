@@ -65,5 +65,9 @@ module Admin
       @item.build_winemaker_image if @item.winemaker_image.blank?
     end
 
+    def use_pagination
+      true
+    end
+
   end
 end
