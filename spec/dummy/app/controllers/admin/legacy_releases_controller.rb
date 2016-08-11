@@ -34,5 +34,9 @@ module Admin
       @new_path = @index_path + '/new'                     # used in index_header partial
     end
 
+    def use_pagination
+      true
+    end
+
   end
 end

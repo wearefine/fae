@@ -32,5 +32,9 @@ module Admin
       @item = @klass.where(team_id: params[:team_id]).find(params[:id])
     end
 
+    def use_pagination
+      true
+    end
+
   end
 end

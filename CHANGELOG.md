@@ -7,6 +7,7 @@
     + \#55333: Add pagination 📖
     + Add concern extension capability to `Fae::Change`
 - bugs
+    + Added in a base controller method to enable/disable pagination per controller.
     + \#59273: Remove header on nested tables
     + \#59473: Reinitialize form elements on redrawing of nested forms
     + \#59386: Show sub page indicator as "open" when landing on an active view
