@@ -211,7 +211,7 @@ Under the hood Fae uses [Kaminari](https://github.com/amatsuda/kaminari) to powe
 
 ### Enable Pagination in the Controller
 
-Pagination is disabled in the Fad:BaseController by default. This can be customized with a private use_pagination method in controllers inheriting from Fae::BaseController.
+Pagination is disabled in the Fae:BaseController by default. This can be customized with a private use_pagination method in controllers inheriting from Fae::BaseController.
 
 ```ruby
 # app/controllers/admin/example_controller.rb
