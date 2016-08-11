@@ -13,6 +13,7 @@
     + \#58752: Languages should load from previously selected preference
     + Default language on static pages should be the first defined
     + Set language to English for Admin side to prevent translation attempt when locale other than English has been set on the frontend
+    + Restrict markdown helper to modal content
 
 ## 1.3.1
 
