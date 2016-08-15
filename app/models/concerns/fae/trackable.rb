@@ -24,12 +24,14 @@ module Fae
 
     def add_create_change
       return if has_parent?
-      Fae::Change.create({
+      attrs = {
         changeable_id: id,
         changeable_type: self_or_super_class_name,
         user_id: Fae::Change.current_user,
         change_type: 'created'
-      })
+      }
+      attrs = adjust_attrs_if_fae_tracker_parent(attrs,'created')
+      Fae::Change.create(attrs)
     end
 
     def add_update_change
@@ -37,25 +39,29 @@ module Fae
         update_parent
       else
         return if legit_updated_attributes.blank?
-        Fae::Change.create({
+        attrs = {
           changeable_id: id,
           changeable_type: self_or_super_class_name,
           user_id: Fae::Change.current_user,
           change_type: 'updated',
           updated_attributes: legit_updated_attributes
-        })
+        }
+        attrs = adjust_attrs_if_fae_tracker_parent(attrs,'updated')
+        Fae::Change.create(attrs)
         clean_history
       end
     end
 
     def add_delete_change
       return if has_parent?
-      Fae::Change.create({
+      attrs = {
         changeable_id: id,
         changeable_type: self_or_super_class_name,
         user_id: Fae::Change.current_user,
         change_type: 'deleted'
-      })
+      }
+      attrs = adjust_attrs_if_fae_tracker_parent(attrs,'deleted')
+      Fae::Change.create(attrs)
       clean_history
     end
 
@@ -88,7 +94,7 @@ module Fae
     end
 
     def update_parent
-      parent = self.try(:fae_tracker_parent) || self.try(:imageable) || self.try(:fileable) || self.try(:contentable)
+      parent = self.try(:imageable) || self.try(:fileable) || self.try(:contentable)
       if parent.present?
         latest_change = parent.try(:tracked_changes).try(:first)
         if latest_change.present? && latest_change.change_type == 'updated' && latest_change.updated_at > 2.seconds.ago
@@ -104,6 +110,15 @@ module Fae
           })
         end
       end
+    end
+
+    def adjust_attrs_if_fae_tracker_parent(attrs, change_type)
+      if fae_tracker_parent
+        attrs[:changeable_id] = fae_tracker_parent.id
+        attrs[:changeable_type] = fae_tracker_parent.class.name
+        attrs[:change_type] = "#{self.class.name.titleize} #{fae_display_field} #{change_type}"
+      end
+      attrs
     end
 
   end
