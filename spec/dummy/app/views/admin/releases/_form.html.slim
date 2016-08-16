@@ -77,4 +77,12 @@
       ordered: true,
       header: 'Aromas (nested table)'
 
+  section.content#nested_table
+    = render 'fae/shared/nested_table',
+      assoc: :release_notes,
+      parent_item: @item,
+      cols: [:title, :body],
+      ordered: true,
+      header: 'Release Notes'
+
 = render 'fae/shared/recent_changes'
