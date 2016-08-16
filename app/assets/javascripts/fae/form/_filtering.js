@@ -31,6 +31,7 @@ Fae.form.filtering = {
     // hardcode _this because this === Fryr object
     var _this = Fae.form.filtering;
     var post_url = _this.$filter_form.attr('action');
+    $('.js-sort-row').css({opacity: 0.5});
 
     $.post(post_url, this.params, function(data){
       var $data = $(data);
