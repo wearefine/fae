@@ -30,7 +30,7 @@ module Fae
         user_id: Fae::Change.current_user,
         change_type: 'created'
       }
-      attrs = adjust_attrs_if_fae_tracker_parent(attrs,'created')
+      attrs.merge(tracker_parent_attrs) if fae_tracker_parent.present?
       Fae::Change.create(attrs)
     end
 
@@ -46,7 +46,7 @@ module Fae
           change_type: 'updated',
           updated_attributes: legit_updated_attributes
         }
-        attrs = adjust_attrs_if_fae_tracker_parent(attrs,'updated')
+        attrs.merge(tracker_parent_attrs) if fae_tracker_parent.present?
         Fae::Change.create(attrs)
         clean_history
       end
@@ -60,7 +60,7 @@ module Fae
         user_id: Fae::Change.current_user,
         change_type: 'deleted'
       }
-      attrs = adjust_attrs_if_fae_tracker_parent(attrs,'deleted')
+      attrs.merge(tracker_parent_attrs) if fae_tracker_parent.present?
       Fae::Change.create(attrs)
       clean_history
     end
@@ -112,13 +112,12 @@ module Fae
       end
     end
 
-    def adjust_attrs_if_fae_tracker_parent(attrs, change_type)
-      if fae_tracker_parent
-        attrs[:changeable_id] = fae_tracker_parent.id
-        attrs[:changeable_type] = fae_tracker_parent.class.name
-        attrs[:change_type] = "#{self.class.name.titleize} #{fae_display_field} #{change_type}"
-      end
-      attrs
+    def tracker_parent_attrs
+      {
+        changeable_id: fae_tracker_parent.id,
+        changeable_type: fae_tracker_parent.class.name,
+        change_type: "#{self.class.name.titleize} #{fae_display_field} #{change_type}"
+      }
     end
 
   end
