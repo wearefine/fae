@@ -30,7 +30,7 @@ module Fae
         user_id: Fae::Change.current_user,
         change_type: 'created'
       }
-      attrs.merge(tracker_parent_attrs) if fae_tracker_parent.present?
+      attrs.merge!(tracker_parent_attrs(attrs[:change_type])) if fae_tracker_parent
       Fae::Change.create(attrs)
     end
 
@@ -46,7 +46,7 @@ module Fae
           change_type: 'updated',
           updated_attributes: legit_updated_attributes
         }
-        attrs.merge(tracker_parent_attrs) if fae_tracker_parent.present?
+        attrs.merge!(tracker_parent_attrs(attrs[:change_type])) if fae_tracker_parent
         Fae::Change.create(attrs)
         clean_history
       end
@@ -60,7 +60,7 @@ module Fae
         user_id: Fae::Change.current_user,
         change_type: 'deleted'
       }
-      attrs.merge(tracker_parent_attrs) if fae_tracker_parent.present?
+      attrs.merge!(tracker_parent_attrs(attrs[:change_type])) if fae_tracker_parent
       Fae::Change.create(attrs)
       clean_history
     end
@@ -112,7 +112,7 @@ module Fae
       end
     end
 
-    def tracker_parent_attrs
+    def tracker_parent_attrs(change_type)
       {
         changeable_id: fae_tracker_parent.id,
         changeable_type: fae_tracker_parent.class.name,

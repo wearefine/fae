@@ -6,6 +6,7 @@
     + Add custom authorization levels
     + \#55333: Add pagination 📖
     + Add concern extension capability to `Fae::Change`
+    + Add fae_tracker_parent to track child model changes in parent tracked changes list
 - bugs
     + \#59273: Remove header on nested tables
     + \#59473: Reinitialize form elements on redrawing of nested forms
