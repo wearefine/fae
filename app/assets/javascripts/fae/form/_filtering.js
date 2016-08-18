@@ -31,6 +31,7 @@ Fae.form.filtering = {
     // hardcode _this because this === Fryr object
     var _this = Fae.form.filtering;
     var post_url = _this.$filter_form.attr('action');
+    _this.$filter_form.next('table').addClass('loading-fade');
 
     $.post(post_url, this.params, function(data){
       var $data = $(data);
