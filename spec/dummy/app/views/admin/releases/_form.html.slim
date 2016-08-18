@@ -69,12 +69,20 @@
     = fae_checkbox f, :events, helper_text: 'checkboxes vertical', type: 'inline'
 
 - if params[:action] == 'edit'
-  section.content#nested_table
+  section.content#aromas
     = render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,
       cols: [{ attr: :name, title: 'Pew Pew' }, :live, :image, { attr: :cat_size, title: 'Kitten Count' }],
       ordered: true,
       header: 'Aromas (nested table)'
+
+  section.content#release_notes
+    = render 'fae/shared/nested_table',
+      assoc: :release_notes,
+      parent_item: @item,
+      cols: [:title, :body],
+      ordered: true,
+      header: 'Release Notes'
 
 = render 'fae/shared/recent_changes'

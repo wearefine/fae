@@ -110,3 +110,17 @@ Optionally, you can add a link to it in the form nav:
 ```slim
 = render 'fae/shared/form_header', ..., subnav: [...,  'Recent Changes']
 ```
+
+## Tracking Changes to Nested Resources
+
+This will display a nested resource's changes in it's parent's tracked changes table.
+
+For example, say `Release has_many ReleaseNotes`, in `release_note.rb` you would define the instance method:
+
+```ruby
+def fae_tracker_parent
+  release
+end
+```
+
+Now any CRUD operations on a ReleaseNote will be reflected in the tracked changes table for it's parent Release.

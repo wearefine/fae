@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419164359) do
+ActiveRecord::Schema.define(version: 20160815163139) do
 
   create_table "acclaims", force: :cascade do |t|
     t.string   "score",            limit: 255
@@ -282,6 +282,17 @@ ActiveRecord::Schema.define(version: 20160419164359) do
   end
 
   add_index "players", ["team_id"], name: "index_players_on_team_id", using: :btree
+
+  create_table "release_notes", force: :cascade do |t|
+    t.string   "title",      limit: 255
+    t.text     "body",       limit: 65535
+    t.integer  "position",   limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "release_id", limit: 4
+  end
+
+  add_index "release_notes", ["release_id"], name: "index_release_notes_on_release_id", using: :btree
 
   create_table "release_selling_points", force: :cascade do |t|
     t.integer  "release_id",       limit: 4
