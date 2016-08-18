@@ -14,6 +14,10 @@ module Fae
       # override this method in your model
     end
 
+    def fae_tracker_parent
+      # override this method in your model
+    end
+
     def fae_nested_foreign_key
       return if fae_nested_parent.blank?
       "#{fae_nested_parent}_id"

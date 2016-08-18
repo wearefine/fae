@@ -7,6 +7,7 @@
     + \#55333: Add pagination 📖
     + Add concern extension capability to `Fae::Change`
     + Tables now indicate to user something is happening when filtering
+    + Add fae_tracker_parent to track child model changes in parent tracked changes list
 - bugs
     + Added in a base controller method to enable/disable pagination per controller.
     + \#59273: Remove header on nested tables
