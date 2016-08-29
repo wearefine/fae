@@ -1,6 +1,7 @@
 # Fae Changelog
 
 ## Unreleased
+
 - enhancements
 - bugs
 
