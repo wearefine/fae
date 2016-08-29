@@ -1,6 +1,10 @@
 # Fae Changelog
 
 ## Unreleased
+- enhancements
+- bugs
+
+## 1.4
 
 - enhancements
     + Add custom authorization levels
