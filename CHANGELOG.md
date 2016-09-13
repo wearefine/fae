@@ -9,6 +9,7 @@
 
 - enhancements
 - bugs
+    + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified'
 
 ## 1.4
 

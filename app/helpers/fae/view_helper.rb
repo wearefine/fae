@@ -163,7 +163,7 @@ module Fae
     end
 
     def is_date_or_time?(datetime)
-      datetime.present? && ( datetime.kind_of?(Date) || datetime.kind_of?(Time) )
+      datetime.present? && ( datetime.kind_of?(Date) || datetime.kind_of?(Time) || datetime.kind_of?(ActiveSupport::TimeWithZone) )
     end
 
   end
