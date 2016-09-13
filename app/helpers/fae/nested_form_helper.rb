@@ -5,11 +5,7 @@ module Fae
       if (attribute.is_a?(Hash) && attribute[:title])
         attribute = attribute[:title]
       else
-        if ['updated_at', 'modified_at'].include? attribute.to_s
-          attribute = :modified
-        else
-          attribute
-        end
+        attribute = :modified if ['updated_at', 'modified_at'].include? attribute.to_s
       end
 
       th_class = '-action-wide' if [:on_production, :on_prod, :on_stage, :updated_at, :created_at, :modified].include?(attribute)
