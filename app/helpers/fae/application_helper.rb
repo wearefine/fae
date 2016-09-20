@@ -32,7 +32,7 @@ module Fae
       elsif item.class.reflections.include?(attribute)
         value.try(:fae_display_field)
       # if item is a date or a time adjust to timezone
-      elsif value.is_a?(Date)
+      elsif value.is_a?(Date) || value.is_a?(ActiveSupport::TimeWithZone)
         fae_date_format(value)
       elsif value.is_a?(Time)
         fae_datetime_format(value)

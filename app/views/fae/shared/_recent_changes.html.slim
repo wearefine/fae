@@ -8,7 +8,7 @@
             th User
             th Type
             th Attribute(s) Updated
-            th Updated At
+            th.-action-wide Modified
         tbody
           - if @item.try(:tracked_changes).present?
             - @item.tracked_changes.each do |change|
