@@ -75,6 +75,7 @@ $ bundle update sass
 
 ### Tutorials
 
+* [Setting Up Images and Files](docs/tutorials/image_and_files.md)
 * [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
 * [Custom Image Processing](docs/tutorials/custom_images.md)
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
