@@ -24,5 +24,3 @@ spec/dummy/public/uploads/*
 .rubocop.yml
 
 *.gem
-
-vendor/

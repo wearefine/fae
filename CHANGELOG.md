@@ -8,7 +8,7 @@
 ## 1.5
 
 - enhancements
-    + \#57081: Change relevant instances of .humanize to .titlize
+    + \#57081: Change relevant instances of .humanize to .titleize
 - bugs
 
 ## 1.4
