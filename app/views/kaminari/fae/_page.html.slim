@@ -8,8 +8,8 @@
 /   remote:        data-remote
 - if page.current?
   span.page.current
-    == page
+    == page.number
 - else
   - rel = page.next? ? 'next' : page.prev? ? 'prev' : nil
   span.page
-    a href=url rel=rel remote=remote data-page=page = page
+    a href=url rel=rel remote=remote data-page=page.number = page.number
