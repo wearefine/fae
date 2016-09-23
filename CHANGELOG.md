@@ -8,6 +8,7 @@
 ## 1.5
 
 - enhancements
+    + \#57081: Change relevant instances of .humanize to .titleize
 - bugs
     + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 
