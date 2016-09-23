@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
 
 ## 1.4
 
