@@ -10,8 +10,9 @@
 - enhancements
 - bugs
     + \#59343: Add drop-up support for select boxes at bottom of viewport. Increase default height of drop menus
-    + Ensure max-height of asset preview within image uploader
     + \#61163: Resolve issue with sortable theads not reacting to user input
+    + \#60184: Tighten default padding of form inputs and sections
+    + \#61045: Ensure max-height of asset preview within image uploader
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
 
 ## 1.4
