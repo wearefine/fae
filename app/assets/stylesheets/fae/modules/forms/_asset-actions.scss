@@ -22,7 +22,8 @@
   }
 
   > img {
-    width: 20%;
+    max-width: 20%;
+    max-height: 150px;
     margin-right: 20px;
     cursor: pointer;
     float: left;
