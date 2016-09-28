@@ -27,11 +27,12 @@ input[type=email] {
 }
 
 .addedit-form {
+  padding-bottom: 20px;
+
   h3 {
     @extend label;
     margin-bottom: 20px;
   }
-
 
   .flash-message {
     width: 100%;
