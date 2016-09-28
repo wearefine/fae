@@ -43,7 +43,7 @@ module Fae
     end
 
     def detect_cancellation
-      flash.now[:error] = 'Your changes were not saved.' if params[:cancelled].present? && params[:cancelled]== "true"
+      flash.now[:warning] = 'Your changes were not saved.' if params[:cancelled].present? && params[:cancelled]== "true"
     end
 
     def build_nav
