@@ -9,8 +9,9 @@
 
 - enhancements
 - bugs
+    + \#60184: Min-height is no longer added to last form section referenced in form subnav
     + \#60184: Tighten default padding of form inputs and sections
-    + \#61045: Ensure max-height of asset preview within image uploader
+    + Ensure max-height of asset preview within image uploader
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
 
 ## 1.4
