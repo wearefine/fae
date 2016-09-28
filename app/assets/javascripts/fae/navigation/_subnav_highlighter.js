@@ -69,21 +69,10 @@ Fae.navigation.subnav_highlighter = {
 
       $('.js-highligher').last().addClass('-active').removeClass('js-highligher');
     }
-    FCH.scroll.push(scrollCallback);
 
-    //highlight the first one on page load
+    // highlight the first one on page load
     scrollCallback();
-
-    /**
-     * On resize, ensure last section is the same as the window height so when we skip to it the label is at the top
-     * @private
-     */
-    function lastSectionBuffer() {
-      var last_selector = $( subnav_class + ' li:last-child a').attr('href');
-      $(last_selector).css('min-height', FCH.$window.height());
-    }
-    lastSectionBuffer();
-    FCH.resize.push(lastSectionBuffer);
+    FCH.scroll.push(scrollCallback);
   },
 
   /**
