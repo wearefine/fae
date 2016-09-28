@@ -152,7 +152,11 @@ Fae.form.filtering = {
    */
   sortingSetup: function() {
     this._addSortingClasses();
-    this._addSortingListeners();
+
+    if (!this._are_sorting_listeners_setup) {
+      this._addSortingListeners();
+      this._are_sorting_listeners_setup = true;
+    }
   },
 
   /**
@@ -179,7 +183,7 @@ Fae.form.filtering = {
   _addSortingListeners: function() {
     var _this = this;
 
-    $('th[data-sort]').on('click', function() {
+    $('body').on('click', 'th[data-sort]', function() {
       var $this = $(this);
       var new_direction = 'asc';
 

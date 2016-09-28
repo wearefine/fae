@@ -10,6 +10,7 @@
 - enhancements
 - bugs
     + Ensure max-height of asset preview within image uploader
+    + \#61163: Resolve issue with sortable theads not reacting to user input
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
 
 ## 1.4
