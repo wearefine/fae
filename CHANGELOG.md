@@ -6,6 +6,7 @@
 - bugs
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
     + \#60923: Widen hint model for video url helper
+    + \#60433 - Adds flash messages to dashboard
 
 ## 1.4
 
