@@ -343,7 +343,6 @@ Fae.tables = {
    *
    */
   replaceStickyTableHeader: function($fixed_header, $sticky_table) {
-    // console.log('Replacing sticky header with table source', $fixed_header, $sticky_table);
     $fixed_header.find('thead').html($sticky_table.find('thead').html());
   },
 
