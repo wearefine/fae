@@ -8,6 +8,7 @@
     + \#60923: Widen hint model for video url helper
     + \#60433: Adds flash messages to dashboard
     + \#61096: Adds warning notification style, apply to cancel message
+    + Fix for_fae_index issue, since it's an override-able method
 
 ## 1.4
 
