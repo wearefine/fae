@@ -19,13 +19,23 @@
   font-size: 14px;
 
   .chosen-results {
-    max-height: 140px;
+    max-height: 200px;
 
     li {
       &.highlighted {
         background: $c-lightest-grey;
       }
     }
+  }
+
+  &.chosen-drop-up .chosen-drop {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: -1px;
+    border-top: 1px solid $c-mid-grey;
+    border-bottom: none;
+    box-shadow: none;
+    border-radius: 0;
   }
 }
 
