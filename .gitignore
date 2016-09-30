@@ -24,4 +24,3 @@ spec/dummy/public/uploads/*
 .rubocop.yml
 
 *.gem
-*.gemfile.lock
