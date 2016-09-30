@@ -12,7 +12,7 @@ module Fae
       if use_pagination
         @items = @klass.for_fae_index.page(params[:page])
       else
-        @items = @klass.for_fae_index.all
+        @items = @klass.for_fae_index
       end
       respond_to do |format|
         format.html
