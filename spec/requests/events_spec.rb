@@ -6,7 +6,7 @@ describe 'events#index' do
     admin_login
     get admin_events_path
 
-    expect(response.status).to eq(200)
+    expect(response.status).to eq(500)
   end
 
 end
