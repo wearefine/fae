@@ -326,13 +326,22 @@
      * @param {Number} [offset=0] - Additional offset to add to the scrollTop
      */
     smoothScroll: function($target, duration, delay, offset){
+      var _this = this;
+
       duration = this.setDefault(duration, 2000);
       delay = this.setDefault(delay, 100);
       offset = this.setDefault(offset, 0);
 
       setTimeout(function(){
+        var targetOffset = $target.offset().top + offset;
+
+        // Ensure we scroll to bottom of page if target doesn't have enough space below for viewing
+        if (_this.$document.outerHeight() < targetOffset + _this.dimensions.wh) {
+          targetOffset = _this.$document.outerHeight() - _this.dimensions.wh;
+        }
+
         $('html, body').animate({
-          scrollTop: $target.offset().top + offset
+          scrollTop: targetOffset
         }, duration);
       }, delay);
     },
