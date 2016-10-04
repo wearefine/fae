@@ -17,7 +17,8 @@
 }
 
 .content {
-  padding: 30px $content-buffer 60px;
+  padding: 30px $content-buffer;
+  padding-bottom: 0;
   display: block; // IE, Safari don't treat <main> as a block element
 
   &.-bottom-shim {
