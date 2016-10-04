@@ -179,7 +179,10 @@ Fae.form.filtering = {
   _addSortingListeners: function() {
     var _this = this;
 
-    $('th[data-sort]').on('click', function() {
+    // Fizzle if listeneres have already been attached
+    if (this._are_sorting_listeners_setup === true) { return; }
+
+    $('body').on('click', 'th[data-sort]', function() {
       var $this = $(this);
       var new_direction = 'asc';
 
@@ -198,6 +201,9 @@ Fae.form.filtering = {
         page: ''
       });
     });
+
+    // To ensure listeners are only attached once
+    this._are_sorting_listeners_setup = true;
   },
 
   /**
