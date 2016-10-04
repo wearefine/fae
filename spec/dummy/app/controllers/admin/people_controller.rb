@@ -6,4 +6,8 @@ class Admin::PeopleController < Fae::BaseController
     @item.build_image if @item.respond_to?(:image) && @item.image.blank?
   end
 
+  def use_pagination
+    true
+  end
+
 end

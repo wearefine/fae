@@ -17,7 +17,7 @@ module Fae
     def nav_active_class(klass, level, idx, parent_idx = nil)
       return klass unless @fae_navigation.coordinates[level] == idx
       return klass unless parent_idx.blank? || @fae_navigation.coordinates[level-1] == parent_idx
-      new_klass = parent_idx.blank? ? '-parent-current' : '-current'
+      new_klass = parent_idx.blank? ? '-parent-current -open' : '-current'
       new_klass += " #{klass}" if klass.present?
       new_klass
     end

@@ -7,8 +7,16 @@ class AboutUsPage < Fae::StaticPage
     {
       header: { type: Fae::TextField, validates: { presence: true } },
       introduction: { type: Fae::TextArea },
-      body: { type: Fae::TextArea },
-      header_image: { type: Fae::Image }
+      body: {
+        type: Fae::TextArea,
+        languages: [:en, :zh],
+        validates: {
+          length: {
+            maximum: 150
+          }
+        }
+      },
+      header_image: { type: Fae::Image, languages: Fae.languages.keys }
     }
   end
 

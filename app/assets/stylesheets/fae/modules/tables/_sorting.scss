@@ -10,37 +10,34 @@
 }
 
 // tablesorter classes
-.tablesorter-header {
+th {
   &:not(.sorter-false) {
     cursor: pointer;
 
-    .tablesorter-header-inner {
+    .tablesorter-header-inner,
+    .th-sortable-title {
       &:after {
         display: inline-block;
       }
     }
 
-    &:hover {
-      .tablesorter-header-inner {
+    &:hover,
+    &.tablesorter-headerAsc,
+    &.tablesorter-headerDesc,
+    &.-desc,
+    &.-asc {
+      .tablesorter-header-inner,
+      .th-sortable-title {
         &:after {
           color: $c-darkest-grey;
         }
       }
     }
   }
-
-  &.tablesorter-headerAsc,
-  &.tablesorter-headerDesc {
-    .tablesorter-header-inner {
-      &:after {
-        color: $c-darkest-grey;
-      }
-    }
-  }
-
 }
 
-.tablesorter-header-inner {
+.tablesorter-header-inner,
+.th-sortable-title {
   &:after {
     @extend .icon-arrow_down:before;
     @include icon-stuff;
@@ -53,18 +50,9 @@
   }
 }
 
-.tablesorter-headerDesc {
-  .tablesorter-header-inner {
-    &:after {
-      @extend .icon-arrow_down:before;
-    }
-  }
-}
-
-.tablesorter-headerAsc {
-  .tablesorter-header-inner {
-    &:after {
-      @extend .icon-arrow_up:before;
-    }
+th.-asc .th-sortable-title,
+.tablesorter-headerAsc .tablesorter-header-inner {
+  &:after {
+    @extend .icon-arrow_up:before;
   }
 }

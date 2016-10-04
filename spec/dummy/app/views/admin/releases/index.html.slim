@@ -1,6 +1,6 @@
 = render 'fae/shared/index_header', title: @klass_humanized.pluralize, csv: true
 main.content
-  = fae_filter_form do
+  = fae_filter_form cookie_key: 'release-filter' do
     = fae_filter_select :wine
     = fae_filter_select :acclaims,
       label: 'Acclaim',
@@ -10,18 +10,19 @@ main.content
     = fae_filter_select :test, options: [['one', 1], ['two', 2]]
     = fae_filter_select :grouped_test, grouped_options: { 'Numbers' => [['one', 1], ['two', 2]], 'Letters' => [['The letter J', 'J'], ['The letter N', 'N']] }
     = fae_filter_select :grouped_association, collection: Aroma.all, grouped_by: :release
-  table.js-sort-column
+
+  table
     thead
       tr
-        th Name
-        th Wine
-        th Slug
-        th Price
-        th.-action-wide Modified
-        th.-action-wide data-sorter="false" On Stage
-        th.-action-wide data-sorter="false" On Prod
-        th.-action data-sorter="false"
-        th.-action data-sorter="false"
+        th data-sort="name" Name
+        th data-sort="wine.name_en" Wine
+        th data-sort="slug" Slug
+        th data-sort="price" Price
+        th.-action-wide data-sort="updated_at" Modified
+        th.-action-wide On Stage
+        th.-action-wide On Prod
+        th.-action
+        th.-action
 
     tbody
       - if @items.present?
@@ -38,3 +39,5 @@ main.content
             td = fae_delete_button item
       - else
         tr: td colspan="9" No items found
+
+  == fae_paginate @items

@@ -52,6 +52,18 @@ describe Fae::Trackable do
         expect(release.label_pdf.tracked_changes).to eq([])
       end
     end
+
+    context 'on an arbitrary non-FAE:: child model' do
+      it 'should create a change item created for the parent with the child info' do
+        release = FactoryGirl.build(:release)
+        release_note = FactoryGirl.build(:release_note, release: release)
+        release_note.save
+        release_note_change = Fae::Change.last
+
+        expect(release_note_change.change_type).to include('Release Note')
+        expect(release_note_change.change_type).to include('created')
+      end
+    end
   end
 
   describe 'before_update' do
@@ -196,6 +208,21 @@ describe Fae::Trackable do
       end
     end
 
+    context 'on an arbitrary non-FAE:: child model' do
+      it 'should create a change item updated record for the parent with the child info' do
+        release = FactoryGirl.build(:release)
+        release_note = FactoryGirl.build(:release_note, release: release)
+        release_note.save
+
+        release_note.update({
+          title: 'a title',
+          body: 'some text'
+        })
+        release_note_change = Fae::Change.last
+        expect(release_note_change.updated_attributes).to include('title')
+        expect(release_note_change.updated_attributes).to include('body')
+      end
+    end
   end
 
   describe 'before_destroy' do
@@ -230,6 +257,19 @@ describe Fae::Trackable do
         file = FactoryGirl.create(:fae_file)
         file.destroy
         expect(Fae::Change.all.length).to eq(0)
+      end
+    end
+
+    context 'on an arbitrary non-FAE:: child model' do
+      it 'should create a change item deleted record for the parent with the child info' do
+        release = FactoryGirl.build(:release)
+        release_note = FactoryGirl.build(:release_note, release: release)
+        release_note.save
+        release_note.destroy
+        release_note_change = Fae::Change.last
+
+        expect(release_note_change.change_type).to include('Release Note')
+        expect(release_note_change.change_type).to include('deleted')
       end
     end
   end

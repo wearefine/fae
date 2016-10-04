@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
   s.description = "A flexible CMS for Rails"
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib,vendor}/**/*", "Rakefile", "README.md"]
+  s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.md"]
   s.test_files = Dir["spec/**/*"]
 
   # Rails dependencies
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_list', '~> 0.4.0'
   s.add_dependency 'browser', '~> 0.8.0'
   s.add_dependency 'slim'
+  s.add_dependency 'kaminari', '~> 0.16.3'
 
   s.add_development_dependency "thin"
   s.add_development_dependency "better_errors"

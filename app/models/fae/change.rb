@@ -1,13 +1,15 @@
 module Fae
   class Change < ActiveRecord::Base
+    include Fae::Sortable
+    include Fae::ChangeConcern
 
     belongs_to :user
     belongs_to :changeable, polymorphic: true
 
     serialize :updated_attributes
 
-    # writing current_user to thread for thread safety
     class << self
+      # writing current_user to thread for thread safety
       def current_user=(user)
         Thread.current[:current_user] = user
       end
@@ -45,6 +47,7 @@ module Fae
           .includes(:user).references(:user)
           .where(date_scope).where(conditions).where(search)
       end
+
     end
   end
 end

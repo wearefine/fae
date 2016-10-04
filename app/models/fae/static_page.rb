@@ -30,16 +30,31 @@ module Fae
 
       fae_fields.each do |name, value|
         type = value.is_a?(Hash) ? value[:type] : value
+        languages = value.try(:[], :languages)
 
-        define_association(name, type)
-        define_validations(name, type, value[:validates]) if value.is_a?(Hash) && value[:validates].present?
+        if languages.present?
+          languages.each do |lang|
+            # Save with suffix for form fields
+            define_association("#{name}_#{lang}", type)
+            define_validations("#{name}_#{lang}", type, value[:validates]) if value.try(:[], :validates).present?
+          end
+          # Save with lookup to have default language return in front-end use (don't need to worry about validations here)
+          default_language = Rails.application.config.i18n.default_locale || languages.first
+          define_association(name, type, "#{name}_#{default_language}")
+        else
+          # Normal content_blocks
+          define_association(name, type)
+          define_validations(name, type, value[:validates]) if value.try(:[], :validates).present?
+        end
       end
 
       @singleton_is_setup = true
     end
 
-    def self.define_association(name, type)
-      send :has_one, name.to_sym, -> { where(attached_as: name.to_s)}, as: poly_sym(type), class_name: type.to_s, dependent: :destroy
+    def self.define_association(name, type, locale_name = nil)
+      locale_name ||= name
+
+      send :has_one, name.to_sym, -> { where(attached_as: locale_name.to_s)}, as: poly_sym(type), class_name: type.to_s, dependent: :destroy
       send :accepts_nested_attributes_for, name, allow_destroy: true
       send :define_method, :"#{name}_content", -> { send(name.to_sym).try(:content) }
     end

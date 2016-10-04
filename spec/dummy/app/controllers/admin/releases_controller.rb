@@ -16,4 +16,8 @@ class Admin::ReleasesController < Fae::BaseController
     [:aromas, :events]
   end
 
+  def use_pagination
+    true
+  end
+
 end

@@ -74,7 +74,7 @@ module Fae
 
       return if options[:collection].blank?
 
-      form_hash = { remote: true, class: 'js-filter-form table-filter-area' }
+      form_hash = { class: 'js-filter-form table-filter-area' }
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
       filter_header = content_tag(:div, class: 'table-filter-header') do
@@ -126,8 +126,13 @@ module Fae
 
     def fae_avatar(user = current_user)
       hash = Digest::MD5.hexdigest(user.email.downcase)
-
       "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
+    end
+
+    def fae_paginate(items)
+      content_tag :nav, class: 'pagination' do
+        paginate items, theme: 'fae'
+      end
     end
 
     private

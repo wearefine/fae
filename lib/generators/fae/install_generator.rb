@@ -2,6 +2,7 @@ module Fae
   class InstallGenerator < Rails::Generators::Base
     source_root File.expand_path('../templates', __FILE__)
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
+    class_option :fine, type: :boolean, default: false, desc: 'Sets FINE\'s defaults'
 
     def install
       run 'bundle install'
@@ -10,6 +11,7 @@ module Fae
       copy_file File.expand_path(File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       add_fae_assets
       add_navigation_concern
+      add_authorization_concern
       build_initializer
       build_judge_initializer
       rake 'fae:install:migrations'
@@ -38,8 +40,13 @@ RUBY
       copy_file File.expand_path(File.join(__FILE__, '../templates/models/concerns/navigation_concern.rb')), 'app/models/concerns/fae/navigation_concern.rb'
     end
 
+    def add_authorization_concern
+      copy_file File.expand_path(File.join(__FILE__, '../templates/models/concerns/authorization_concern.rb')), 'app/models/concerns/fae/authorization_concern.rb'
+    end
+
     def build_initializer
-      copy_file File.expand_path(File.join(__FILE__, "../templates/initializers/fae.rb")), "config/initializers/fae.rb"
+      init_source = options.fine ? "../templates/initializers/fae_fine.rb" : "../templates/initializers/fae.rb"
+      copy_file File.expand_path(File.join(__FILE__, init_source)), "config/initializers/fae.rb"
       inject_into_file "config/initializers/fae.rb", after: "Fae.setup do |config|\n" do <<-RUBY
 \n  config.devise_secret_key = '#{SecureRandom.hex(64)}'\n
 RUBY

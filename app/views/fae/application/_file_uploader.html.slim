@@ -6,23 +6,31 @@ ruby:
   label       ||= file_name.to_s.humanize
   helper_text ||= ""
   required    ||= false
+  languages     = f.object.class.try(:fae_fields).try(:[], file_name).try(:[], :languages)
+  language    ||= nil
 
-= f.simple_fields_for file_name do |i|
-  .input.field
-    = content_tag :label, class: ('required' if required) do
-      - if required
-        abbr title="required" *
-      = label.html_safe
-      - if helper_text.present?
-        h6.helper_text = helper_text
+- if languages.present?
+  - languages.each do |lang|
+    = render 'fae/application/file_uploader', f: f, item: item, file_name: "#{file_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", helper_text: helper_text, required: required, language: lang
 
-    - if the_file.asset.present?
-      .asset-actions.-files
-        a.asset-title href=the_file.asset.url target="_blank" = the_file.asset.file.filename
+- else
+  - wrapper_html = language.present? ? { data: { language: language } } : {}
+  = f.simple_fields_for file_name, defaults: { wrapper_html: wrapper_html } do |i|
+    .input.field
+      = content_tag :label, class: ('required' if required) do
+        - if required
+          abbr title="required" *
+        = label.html_safe
+        - if helper_text.present?
+          h6.helper_text = helper_text
 
-        = link_to '', fae.delete_file_path(the_file.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+      - if the_file.asset.present?
+        .asset-actions.-files
+          a.asset-title href=the_file.asset.url target="_blank" = the_file.asset.file.filename
 
-    .asset-inputs style="#{'display: none;' unless the_file.asset.blank?}"
-      = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_file_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
-      = i.input :asset_cache, as: :hidden
-      = i.hidden_field :required, value: required
+          = link_to '', fae.delete_file_path(the_file.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+
+      .asset-inputs style="#{'display: none;' unless the_file.asset.blank?}"
+        = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_file_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
+        = i.input :asset_cache, as: :hidden
+        = i.hidden_field :required, value: required

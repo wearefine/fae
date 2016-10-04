@@ -3,13 +3,56 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.4.1
+
+- enhancements
+- bugs
+    + \#60184: Min-height is no longer added to last form section referenced in form subnav
+    + \#60184: Tighten default padding of form inputs and sections
+    + Ensure max-height of asset preview within image uploader
+    + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
+
+## 1.4
+
+- enhancements
+    + Add custom authorization levels
+    + \#55333: Add pagination 📖
+    + Add concern extension capability to `Fae::Change`
+    + Tables now indicate to user something is happening when filtering
+    + Add fae_tracker_parent to track child model changes in parent tracked changes list
+- bugs
+    + Added in a base controller method to enable/disable pagination per controller.
+    + \#59273: Remove header on nested tables
+    + \#59473: Reinitialize form elements on redrawing of nested forms
+    + \#59386: Show sub page indicator as "open" when landing on an active view
+    + \#58752: Languages should load from previously selected preference
+    + Default language on static pages should be the first defined
+    + Set language to English for Admin side to prevent translation attempt when locale other than English has been set on the frontend
+    + Restrict markdown helper to modal content
+
+## 1.3.1
+
+- enhancements
+    + Titleize rather than Capitalize for generated TH labels
+    + Reorganize docs for easier access
     + Generated nested table controllers are now empty and inherit from `Fae::NestedBaseController`
+    + \#57075: Add a flag to the install generator for internal usage
+    + Support multiple languages on static page fields
+    + \#57288: main nav items will display the paths of the first drop down item by default
+    + Add `translate` class method for easy attribute lookup/retrieval
 - bugs
     + Disabled checkboxes are now untouchable
     + Multiselect headers update available/added items accurately
     + \#57288: Use real links (not anchors) in dummy app
     + \#57523: Remove errors after image is reuploaded
     + \#57772: Link admin logo to parent app root path
+    + \#57523: Remove errors after image is reuploaded
+    + \#57772: Link admin logo to parent app root path
+    + Force `fae_display_field` to be a string when using the front-end search
+    + \#57772: Revert admin logo linking (now links to admin root path)
+    + \#58411: Remove "Add Page" from pages#index
 
 ## 1.3
 

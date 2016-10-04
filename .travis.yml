@@ -6,6 +6,9 @@ services:
 rvm:
   - 2.1
 
+notifications:
+  email: false
+
 before_install:
   - gem install bundler
 
