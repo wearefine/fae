@@ -152,11 +152,7 @@ Fae.form.filtering = {
    */
   sortingSetup: function() {
     this._addSortingClasses();
-
-    if (!this._are_sorting_listeners_setup) {
-      this._addSortingListeners();
-      this._are_sorting_listeners_setup = true;
-    }
+    this._addSortingListeners();
   },
 
   /**
@@ -183,6 +179,9 @@ Fae.form.filtering = {
   _addSortingListeners: function() {
     var _this = this;
 
+    // Fizzle if listeneres have already been attached
+    if (this._are_sorting_listeners_setup === true) { return; }
+
     $('body').on('click', 'th[data-sort]', function() {
       var $this = $(this);
       var new_direction = 'asc';
@@ -202,6 +201,9 @@ Fae.form.filtering = {
         page: ''
       });
     });
+
+    // To ensure listeners are only attached once
+    this._are_sorting_listeners_setup = true;
   },
 
   /**
