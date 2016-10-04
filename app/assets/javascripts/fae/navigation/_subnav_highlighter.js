@@ -60,14 +60,15 @@ Fae.navigation.subnav_highlighter = {
         var $this = $(this);
         var position = $this.position().top - scroll_top - legacy_buffer;
         var $link = $('a[href="#' + $this.attr('id') + '"]').parent();
+        var is_scrolled_to_bottom = scroll_top - legacy_buffer >= (FCH.$document.outerHeight() - FCH.dimensions.wh);
 
         $link.removeClass('-active');
-        if (position <= 0 || index === 0) {
-          $link.addClass('js-highligher');
+        if (position <= 0 || index === 0 || is_scrolled_to_bottom) {
+          $link.addClass('js-highlighter');
         }
       });
 
-      $('.js-highligher').last().addClass('-active').removeClass('js-highligher');
+      $('.js-highlighter').last().addClass('-active').removeClass('js-highlighter');
     }
 
     // highlight the first one on page load
@@ -96,6 +97,7 @@ Fae.navigation.subnav_highlighter = {
       if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') && location.hostname === this.hostname) {
         var $target = $(this.hash);
         $target = $target.length ? $target : $('[name=' + this.hash.slice(1) + ']');
+
         // @depreciation - remove conditional wrapping (keep $target = ... and scroll_offset -= ...) in v2.0
         if(should_find_h2 && $target.find('h2').length) {
           $target = $target.find('h2');
