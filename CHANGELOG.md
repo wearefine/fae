@@ -9,6 +9,7 @@
 
 - enhancements
 - bugs
+    + \#60547: Tighten vertical padding of list view rows
     + \#59343: Add drop-up support for select boxes at bottom of viewport. Increase default height of drop menus
     + \#61163: Resolve issue with sortable theads not reacting to user input
     + \#60184: Min-height is no longer added to last form section referenced in form subnav
