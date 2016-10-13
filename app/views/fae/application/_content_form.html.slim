@@ -24,7 +24,7 @@ ruby:
 
   if options[:input_html].present? && options[:input_html][:class].present? && markdown.present?
     options[:input_html][:class] = options[:input_html][:class] + ' js-markdown-editor'
-  else
+  elsif options[:input_html].blank?
     options.merge! input_html: {}
     options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
   end
