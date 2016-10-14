@@ -28,6 +28,13 @@ class HomePage < Fae::StaticPage
           length: { maximum: 100 }
           }
         },
+      introduction_2: {
+        type: Fae::TextArea,
+        validates: {
+          presence: true,
+          length: { maximum: 100 }
+          }
+        },
       body: Fae::TextArea,
       hero_image: Fae::Image,
       welcome_pdf: Fae::File
