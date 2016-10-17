@@ -9,6 +9,7 @@
     + \#60433: Adds flash messages to dashboard
     + \#61096: Adds warning notification style, apply to cancel message
     + Fix for_fae_index issue, since it's an override-able method
+    + Fix bug in content_form that prevented custom input_classes
 
 ## 1.4
 
