@@ -80,6 +80,7 @@ $ bundle update sass
 * [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
 * [Custom Image Processing](docs/tutorials/custom_images.md)
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
+* [Overriding The Markdown Helper](docs/tutorials/markdown_helper.md)
 * [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
 
 
