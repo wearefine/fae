@@ -78,12 +78,12 @@ module Fae
       form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
 
       filter_header = content_tag(:div, class: 'table-filter-header') do
-        concat content_tag :h4, options[:title]
-        concat filter_search_field if options[:search]
+        concat content_tag(:a, content_tag(:span,'Filters'), class: 'table-filter-drawer_trigger', href: '') 
       end
 
+      concat filter_header
+
       form_tag(options[:action], form_hash) do
-        concat filter_header
 
         if block_given?
           filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do

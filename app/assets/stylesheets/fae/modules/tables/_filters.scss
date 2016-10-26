@@ -1,4 +1,42 @@
 // Filters!
+
+.table-filter-drawer_trigger {
+  color: $c-text-heavy;
+  background: $c-table-th;
+  padding: 12px 20px;
+  display: block;
+  span {
+    padding-right: .9em;
+    position: relative;
+    &:after {
+      position: absolute;
+      top: 7px;
+      right: 0;
+      font-size: 5px;
+      @extend .icon-arrow_down:before;
+      @include icon-stuff;
+      @include transition(transform 0.2s);
+      transition-timing-function: linear;
+      .js-show_filters & {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+}
+
+.js-filter-form {
+  overflow: hidden;
+  @include transition(all, 0.2s);
+  transition-timing-function: linear;
+  max-height: 1000px;
+  .js-show_filters & {
+    max-height: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+    margin-bottom: $content-buffer;
+  }
+}
+
 .table-filter-area {
   position: relative;
   padding: 20px;

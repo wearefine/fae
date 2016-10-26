@@ -21,6 +21,10 @@ Fae.form.filtering = {
       this.filterFormListeners();
       this.paginationListeners();
       this.sortingSetup();
+      $(".table-filter-drawer_trigger").on("click",function(ev) {
+        $(".content").toggleClass("js-show_filters");
+        ev.preventDefault();
+      });
     }
   },
 
