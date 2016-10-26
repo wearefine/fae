@@ -35,9 +35,6 @@ Fae.form = {
     $('.input label').each(function() {
       var $element = $(this);
 
-      // Reject any matches found within a checkbox
-      // if ($element.parents('.checkbox').length || $element.hasClass('checkbox')) { return; }
-
       // Otherwise, check for presence of helper_text
       if ($element.find('.helper_text').length) {
 
