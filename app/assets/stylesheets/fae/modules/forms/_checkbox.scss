@@ -37,15 +37,17 @@
 }
 
 label.checkbox {
-  padding-top: 0px !important;
+  padding-top: 2px;
   font-size: 26px;
   display: inline;
 }
 
-label.checkbox,
 .checkbox label {
   padding-top: 6px; // Vertical align hack
+}
 
+label.checkbox,
+.checkbox label {
   &:before {
     content: '';
     position: absolute;
