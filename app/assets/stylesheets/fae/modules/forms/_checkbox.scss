@@ -36,6 +36,12 @@
   }
 }
 
+label.checkbox {
+  padding-top: 0px !important;
+  font-size: 26px;
+  display: inline;
+}
+
 label.checkbox,
 .checkbox label {
   padding-top: 6px; // Vertical align hack
@@ -56,7 +62,7 @@ label.checkbox,
 
 .checkbox-wrapper {
   &.-stacked {
-    label {
+    label:not(.control-label) {
       display: block;
       margin-bottom: 25px;
     }
@@ -67,7 +73,7 @@ label.checkbox,
   }
 
   &.-inline {
-    label {
+    label:not(.control-label) {
       padding-top: 0;
       vertical-align: top;
       width: 190px;
