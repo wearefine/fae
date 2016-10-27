@@ -57,3 +57,19 @@
     @return #00f;
   }
 }
+
+/// Choose from a light or dark contrasting foreground color given a background
+@function pickForegroundColor($background, $c-light, $c-dark) {
+  $r: red($background);
+  $g: green($background);
+  $b: blue($background);
+
+  $yiq: (($r*299)+($g*587)+($b*114))/1000;
+
+  @if ($yiq >= 170) {
+    @return $c-dark; // Dark foreground
+  }
+  @else {
+    @return $c-light; // Light foreground
+  }
+}
