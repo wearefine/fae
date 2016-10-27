@@ -11,7 +11,7 @@
   function showModal($el) {
     var top = $el.offset().top - FCH.$window.scrollTop();
     var left = $el.offset().left + 20;
-    var $hint = $el.closest('label_inner').siblings('.hint');
+    var $hint = $el.closest('label').siblings('.hint');
     var new_height = $hint.height() + 80;
 
     $hint.modal({
