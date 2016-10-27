@@ -1,0 +1,19 @@
+th {
+  &.-image {
+    width: 120px;
+  }
+}
+
+td {
+  .image-mat {
+    width: 100px;
+    background-color: white;
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: auto;
+    }
+  }
+}
