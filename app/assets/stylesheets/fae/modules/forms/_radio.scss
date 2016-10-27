@@ -7,14 +7,16 @@
 }
 
 .radio_collection--vertical {
-  .radio label {
-    display: inline;
-    cursor: pointer;
-    line-height: 1.75;
+  .radio {
+    label {
+      display: inline;
+      cursor: pointer;
+      line-height: 1.75;
 
-    &:after {
-      content: '\a';
-      white-space: pre;
+      &:after {
+        content: '\a';
+        white-space: pre;
+      }
     }
   }
 }
