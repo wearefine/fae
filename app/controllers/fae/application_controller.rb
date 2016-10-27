@@ -12,8 +12,13 @@ module Fae
     before_action :set_option
     before_action :detect_cancellation
     before_action :set_change_user
+    before_action :set_locale
 
     private
+
+    def set_locale
+      I18n.locale = :en
+    end
 
     def check_disabled_environment
       disabled_envs = Fae.disabled_environments.map { |e| e.to_s }
@@ -38,7 +43,7 @@ module Fae
     end
 
     def detect_cancellation
-      flash.now[:error] = 'Your changes were not saved.' if params[:cancelled].present? && params[:cancelled]== "true"
+      flash.now[:warning] = 'Your changes were not saved.' if params[:cancelled].present? && params[:cancelled]== "true"
     end
 
     def build_nav

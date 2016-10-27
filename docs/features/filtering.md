@@ -209,6 +209,27 @@ Under the hood Fae uses [Kaminari](https://github.com/amatsuda/kaminari) to powe
 * ignore `fae_paginate` and use Kaminari's `paginate` directly
 * etc...
 
+### Enable Pagination in the Controller
+
+Pagination is disabled in the Fae:BaseController by default. This can be customized with a private `use_pagination`method in controllers inheriting from Fae::BaseController.
+
+```ruby
+# app/controllers/admin/example_controller.rb
+
+module Admin
+  class ExamplesController < Fae::BaseController
+
+      private
+
+      def use_pagination
+        true
+      end
+
+  end
+end
+
+```
+
 ---
 
 ## Column Sorting

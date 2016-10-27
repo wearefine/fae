@@ -28,6 +28,16 @@
   }
 }
 
+.warning {
+  border-color: $c-warning-content;
+  background: $c-warning-bg;
+  color: $c-warning-content;
+
+  &:before {
+    @extend .icon-alert:before;
+  }
+}
+
 .alert {
   border-color: $c-error-content;
   background: $c-error-bg;

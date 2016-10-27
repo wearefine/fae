@@ -7,5 +7,10 @@ module Admin
       @item.build_image if @item.image.blank?
     end
 
+    def use_pagination
+      true
+    end
+
+
   end
 end

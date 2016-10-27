@@ -70,5 +70,9 @@ module Admin
       params.require(:cat).permit!
     end
 
+    def use_pagination
+      true
+    end
+
   end
 end
