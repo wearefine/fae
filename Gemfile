@@ -26,11 +26,14 @@ end
 
 group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'capybara-webkit', '~> 1.11.1'
   gem 'capybara-screenshot'
   gem 'guard-rspec', '~> 4.3.1'
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
+  gem 'database_cleaner'
+  gem 'rails-controller-testing'
 end
 
 gem 'capistrano',  '~> 3.1'
