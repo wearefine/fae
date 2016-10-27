@@ -24,13 +24,13 @@ Fae.form = {
     }
 
     // Mutate DOM to support two column labels for all standard inputs
-    this.make_two_column_labels();
+    this.makeTwoColumnLabels();
 
     // make all the hint areas
     $('.hint').hinter();
   },
 
-  make_two_column_labels: function() {
+  makeTwoColumnLabels: function() {
     $('.input label').each(function() {
       var $element = $(this);
 
