@@ -5,6 +5,7 @@
 * [Installer](#faeinstall)
 * [Seeding](#db-seed)
 * [Versioning](#version-management)
+* [Heroku](#heroku)
 
 ---
 
@@ -74,3 +75,19 @@ If you ran the installer, the task will be run automatically. But if you are set
 ## Version management
 
 Fae follows semantic versioning, so you can expect the following format: `major.minor.patch`. Patch versions add bugfixes, minor versions add backwards compilable features and major versions add non-backward compatible features.
+
+## Heroku
+
+Easily deploy Fae to Heroku by following Heroku's [Rails 4](https://devcenter.heroku.com/articles/getting-started-with-rails4) or [Rails 5](https://devcenter.heroku.com/articles/getting-started-with-rails5) install guides. After Rails is successfully configured, [install Fae as usual](#installation).
+
+The Fae roles will need to be seeded in the remote ENV. Using the [Heroku CLI](https://toolbelt.heroku.com/), run the [following](https://devcenter.heroku.com/articles/rake) from your app directory:
+
+```bash
+heroku run rake fae:seed_db
+```
+
+If this returns a `ActiveRecord::StatementInvalid: PG::UndefinedTable: ERROR:  relation "fae_roles" does not exist` error, make sure your tables exist:
+
+```bash
+heroku run rake db:migrate
+```
