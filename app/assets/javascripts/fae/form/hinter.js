@@ -45,21 +45,14 @@
    * @protected
    */
   Hinter.prototype._drawElements = function($el) {
-    var $label = $el.parent().find('label');
-    var $h6 = $label.find('h6');
+    var $label = $el.parent().find('.label_inner');
 
     //create the icon
     this.$icon = $('<span />', {
       class: this.options.icon_class + ' ' + this.options.style_class
     });
 
-    // so if there's an h6 description then insert it before
-    // if not, then append to the end of the label
-    if ($h6.length) {
-      this.$icon.insertBefore($h6);
-    } else {
-      this.$icon.appendTo($label);
-    }
+    this.$icon.appendTo($label);
   };
 
   /**

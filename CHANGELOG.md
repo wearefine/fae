@@ -10,6 +10,7 @@
 - enhancements
 - bugs
     + \#61164: Colorize form section headings per $c-custom-highlight
+    + \#60581: Tighten input display by displaying helper text to the right of labels
     + \#60547: Tighten vertical padding of list view rows
     + \#59915: Tighten default column widths on list views
     + \#59343: Add drop-up support for select boxes at bottom of viewport. Increase default height of drop menus
