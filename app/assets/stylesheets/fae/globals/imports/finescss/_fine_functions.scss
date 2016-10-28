@@ -46,9 +46,9 @@
   @return false;
 }
 
-/// Grabs a color from $grays map
-/// @param {key} $key - Key to get value from $grays map
-/// @return - Color value
+// Grabs a color from $grays map
+// @param {key} $key - Key to get value from $grays map
+// @return - Color value
 @function gray($key: 30) {
   @if map-has-key($grays, $key) {
     @return map-get($grays, $key);
@@ -58,7 +58,8 @@
   }
 }
 
-/// Choose from a light or dark contrasting foreground color given a background
+// Choose from a light or dark contrasting foreground color given a background
+// Original function: https://medium.com/@mkel23/calculating-color-contrast-with-sass-eff39ef23f96
 @function pickForegroundColor($background, $c-light, $c-dark) {
   $r: red($background);
   $g: green($background);
