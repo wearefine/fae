@@ -267,6 +267,8 @@ Fae.tables = {
 
       Fae.tables.sizeFixedHeader();
     });
+
+    $toggle.trigger('click');
   },
 
   /**

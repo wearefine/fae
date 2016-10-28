@@ -9,6 +9,7 @@
 
 - enhancements
 - bugs
+    + \#60104: Default to expanded collapsible tables on page load
     + \#61164: Colorize form section headings per $c-custom-highlight
     + \#60581: Tighten input display by displaying helper text to the right of labels
     + \#60547: Tighten vertical padding of list view rows
