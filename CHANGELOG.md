@@ -9,6 +9,7 @@
 
 - enhancements
 - bugs
+    + \#60596: Add helper + CSS for displaying images in list views
     + \#61164: Colorize form section headings per $c-custom-highlight
     + \#60581: Tighten input display by displaying helper text to the right of labels
     + \#60547: Tighten vertical padding of list view rows
