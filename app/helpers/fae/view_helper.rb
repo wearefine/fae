@@ -27,13 +27,9 @@ module Fae
 
     def fae_index_image(image, path = nil)
       return if image.blank? || image.asset.blank? || image.asset.thumb.blank?
-      output = nil
-      if path
-        output = link_to path do image_tag(image.asset.thumb.url) end
-      else
-        output = image_tag(image.asset.thumb.url)
+      content_tag :div, class: 'image-mat' do
+        link_to_if path.present?, image_tag(image.asset.thumb.url), path
       end
-      "<div class='image-mat'>#{output}</div>".html_safe
     end
 
     def attr_toggle(item, column)
