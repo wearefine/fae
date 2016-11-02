@@ -172,13 +172,13 @@ This method returns a thumbnail image for display within table rows on index vie
 | path (optional) | String | A URL to be used to create a linked version of the image thumbnail |
 
 ```slim
-# With link
+/ With link
 fae_index_image item.bottle_shot, edit_admin_release_path(item)
-#=> <div class='image-mat'><a href="..."><img src="..." /></a></div>
+/#=> <div class='image-mat'><a href="..."><img src="..." /></a></div>
 
-# Without link
+/ Without link
 fae_index_image item.bottle_shot
-#=> <div class='image-mat'><img src="..." /></div>
+/#=> <div class='image-mat'><img src="..." /></div>
 ```
 
 ## Fae Paginate
