@@ -21,6 +21,7 @@
     + \#60184: Tighten default padding of form inputs and sections
     + \#61045: Ensure max-height of asset preview within image uploader
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
+    + \#60183: Resolive issue with smaller images in popup rendering microscopic due to padding.
 
 ## 1.4
 
