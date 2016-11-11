@@ -8,6 +8,7 @@
 ## 1.4.1
 
 - enhancements
+    + Adds support for "js-results-table" utility class for filtered results AJAX targeting
 - bugs
     + \#60596: Add helper + CSS for displaying images in list views
     + \#61975: Add bottom border to table rows
