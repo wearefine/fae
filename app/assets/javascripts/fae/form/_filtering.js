@@ -37,7 +37,12 @@ Fae.form.filtering = {
       var $data = $(data);
       var $table_from_data = $data.find('table').first();
       // replace table
-      _this.$filter_form.next('table').replaceWith($table_from_data);
+      if ($(".standard_table").length > 0) {
+        $(".standard_table").replaceWith($table_from_data);
+      } else {
+        _this.$filter_form.find('table').replaceWith($table_from_data);
+      }
+      
       // replace sticky header
       $('.sticky-table-header thead').html($table_from_data.find('thead').html());
       // replace pagination
