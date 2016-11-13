@@ -36,8 +36,11 @@ Fae.form.filtering = {
     $.post(post_url, this.params, function(data){
       var $data = $(data);
       var $table_from_data = $data.find('table').first();
+      
       // replace table
-      _this.$filter_form.next('table').replaceWith($table_from_data);
+      var replaced = ($(".js-results-table").length > 0) ? $(".js-results-table").first() : _this.$filter_form.find('table');
+      replaced.replaceWith($table_from_data);
+      
       // replace sticky header
       $('.sticky-table-header thead').html($table_from_data.find('thead').html());
       // replace pagination
