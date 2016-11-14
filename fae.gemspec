@@ -4,7 +4,7 @@ require "fae/version"
 
 Gem::Specification.new do |s|
   s.name        = "fae-rails"
-  s.version     = Fae::VERSION
+  s.version     = Fae::Version.number
   s.authors     = ["FINE"]
   s.email       = ["fae@wearefine.com"]
   s.homepage    = "https://github.com/wearefine/fae"
