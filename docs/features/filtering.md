@@ -50,6 +50,8 @@ Next we'll add the form to our view as the first child of `.content`:
 
 The search field is built into `fae_filter_form`, but we'll need to provide a `fae_filter_select` for each select element in our filter bar.
 
+Heavy customization of views can confuse the AJAX function that injects results into the table.  This can be solved by adding the class `js-results-table` to the results table.
+
 ### Class Methods
 
 Finally we need to define our class methods to scope the `Person` class. This data will be assigned to `@items` and injected into the table via AJAX.
