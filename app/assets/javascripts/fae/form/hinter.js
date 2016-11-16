@@ -13,11 +13,17 @@
     var left = $el.offset().left + 20;
     var $hint = $el.closest('label').siblings('.hint');
     var new_height = $hint.height() + 80;
+    var width = 250;
+
+    if ($hint.find('.youtube-hint').length) {
+      width = 570;
+      new_height -= 40;
+    }
 
     $hint.modal({
       minHeight: new_height,
-      minWidth: 250,
-      maxWidth: 250,
+      minWidth: width,
+      maxWidth: width,
       position: [top, left],
       overlayClose: true,
       opacity: 0,

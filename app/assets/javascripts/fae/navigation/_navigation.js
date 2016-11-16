@@ -157,7 +157,7 @@ Fae.navigation = {
    * Hide main-page alerts after 3 seconds
    */
   fadeNotices: function() {
-    $('.notice, .alert, .error').not('.input .error, .form_alert').delay(3000).slideUp('fast');
+    $('.notice, .alert, .error, .warning').not('.input .error, .form_alert').delay(3000).slideUp('fast');
   },
 
   /**

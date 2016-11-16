@@ -1,6 +1,6 @@
 set :stage, :prod
 
-set :ruby_version, "ruby-2.1.2"
+set :ruby_version, "ruby-2.3.1"
 set :gemset, "dev.fae.afinedevelopment.com"
 set :deploy_to, "/var/www/rails/fae.afinedevelopment.com/dev"
 

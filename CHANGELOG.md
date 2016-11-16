@@ -23,6 +23,11 @@
     + \#61045: Ensure max-height of asset preview within image uploader
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
     + \#60183: Resolive issue with smaller images in popup rendering microscopic due to padding.
+    + \#60923: Widen hint model for video url helper
+    + \#60433: Adds flash messages to dashboard
+    + \#61096: Adds warning notification style, apply to cancel message
+    + Fix for_fae_index issue, since it's an override-able method
+    + Fix bug in content_form that prevented custom input_classes
 
 ## 1.4
 
