@@ -19,4 +19,11 @@
   .CodeMirror-scroll {
     z-index: 0;
   }
+
+  &.mde-focus {
+    .CodeMirror-wrap,
+    .editor-toolbar {
+      border-color: $c-darker-grey;
+    }
+  }
 }

@@ -37,4 +37,5 @@ Fae.form.checkbox = {
       }
     });
   }
+
 };

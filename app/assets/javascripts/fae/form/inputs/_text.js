@@ -51,6 +51,11 @@ Fae.form.text = {
         spellChecker: false,
         hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
       });
+
+      // Disable tabbing within editor
+      editor.codemirror.options.extraKeys['Tab'] = false;
+      editor.codemirror.options.extraKeys['Shift-Tab'] = false;
+
       $this.addClass('mde-enabled');
 
       // code mirror events to hook into current form element functions

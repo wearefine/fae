@@ -221,10 +221,12 @@
               tabindex = (e.shiftKey) ? tabindex-1 : tabindex+1;
               $('[tabindex="'+(tabindex)+'"]').focus();
               return;
-            }else{
-              if(e.shiftKey){
-                that.$element.trigger('focus');
-              }
+            } else {
+              // @hack Disable key capture on shift+tab
+              // @author Aaron Ransley, 12/12/16
+              // if(e.shiftKey){
+              //   that.$element.trigger('focus');
+              // }
             }
         }
         if($.inArray(e.which, that.options.keySelect) > -1){
@@ -286,7 +288,7 @@
       }
       if ($nextElem.length > 0){
         $nextElem.addClass('ms-hover');
-        var scrollTo = $list.scrollTop() + $nextElem.position().top - 
+        var scrollTo = $list.scrollTop() + $nextElem.position().top -
                        containerHeight / 2 + elemHeight / 2;
 
         $list.scrollTop(scrollTo);

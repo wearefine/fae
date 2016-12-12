@@ -28,25 +28,37 @@
       helper_text: 'textarea',
       markdown_supported: true
 
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
+
     = fae_input f, :description, helper_text: 'texterea', markdown: true
 
     = fae_prefix f, :price, helper_text: 'prefix', prefix: '$', placeholder: '50.00'
 
     = fae_suffix f, :weight, helper_text: 'suffix', suffix: 'lbs'
 
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
+
     = fae_video_url f, :video_url, helper_text: "video url (default helper: Please enter your YouTube video ID. The video ID is between v= and & of the video's url. This is typically 11 characters long.)"
 
     = fae_input f, :featured, helper_text: 'checkbox'
+
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
 
     = fae_radio f, :on_stage, helper_text: 'radio vertical'
 
     = fae_radio f, :on_prod, type: 'inline', input_class: 'something', helper_text: 'radio Horizontal'
 
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
+
     = fae_datepicker f, :release_date, helper_text: 'datepicker'
 
     = fae_daterange f, [:show, :hide], label: 'Show/Hide', helper_text: 'daterange'
 
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
+
     = fae_input f, :created_at, as: :hidden
+
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
 
   section.content#assets
     h2 Assets
@@ -56,11 +68,17 @@
 
     = fae_file_form f, :label_pdf, helper_text: 'file form'
 
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
+
   section.content#associations
     h2 Associations
     = fae_association f, :varietal, helper_text: 'pulldown', input_class: 'slugger'
 
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
+
     = fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name_en), label_method: :name_en
+
+    = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
 
     = fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'mutliselect'
 
