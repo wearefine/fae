@@ -62,11 +62,12 @@ module Fae
     end
 
     def filter
-      if params[:commit] == "Reset Search"
-        @items = @klass.filter_all.page(params[:page])
-      else
-        @items = @klass.filter(params).fae_sort(params).page(params[:page])
-      end
+      return_items = []
+      return_items << [:page, params[:page]] if use_pagination
+      return_items << [:filter_all] if params[:commit] == 'Reset Search'
+      return_items << [:filter, params] if params[:commit] != 'Reset Search'
+
+      @items = return_items.inject(@klass) { |a, e| a.send(*e) }
 
       render :index, layout: false
     end
