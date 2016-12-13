@@ -4,6 +4,7 @@
 
 - enhancements
 - bugs
+    + Fixes filter form variable
 
 ## 1.4.1
 
