@@ -67,7 +67,7 @@ module Fae
       return_items << [:filter_all] if params[:commit] == 'Reset Search'
       return_items << [:filter, params] if params[:commit] != 'Reset Search'
 
-      @items = return_items.inject(@klass) { |a, e| a.send(*e) }
+      @items = return_items.inject(@klass) { |obj, method_and_args| obj.send(*method_and_args) }
 
       render :index, layout: false
     end
