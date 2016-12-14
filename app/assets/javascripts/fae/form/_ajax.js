@@ -318,14 +318,18 @@ Fae.form.ajax = {
        * Support for a focus state on radio collections
        */
       .on('focus blur', '.radio_collection :radio', function(e) {
-        $(this).closest('.input.radio_collection').toggleClass('focused', $(this).has(':focus'));
+        $(this)
+          .closest('.input.radio_collection')
+          .toggleClass('focused', $(this).has(':focus'));
       })
 
       /**
        * Support for a focus state on checkboxes
        */
       .on('focus blur', '.boolean :checkbox, .js-checkbox-wrapper :checkbox', function(e) {
-        $(this).closest('label.boolean, span.checkbox').toggleClass('focused', $(this).has(':focus'));
+        $(this)
+          .closest('label.boolean, span.checkbox')
+          .toggleClass('focused', $(this).has(':focus'));
       })
 
       /**
@@ -343,7 +347,7 @@ Fae.form.ajax = {
       /**
        * Support for shift+tab off of ms-list element.
        * By default, $.multiSelect() plugin captures shift+tab and disgards it
-       * @todo This entire method feels very brittle. Possibile alternative:
+       * @todo This entire method feels very brittle. Possible alternative:
        * - Create an index of all focusable form elements on page load / DOM mutation
        * - Use this index to navigate upwards from .ms-list element
       */
