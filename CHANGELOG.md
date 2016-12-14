@@ -3,6 +3,8 @@
 ## Unreleased
 
 - enhancements
+    + \#62472: Add keyboard support to form checkboxes
+    + \#62473: Ensure focus styles exist for all form elements
 - bugs
 
 ## 1.4.1
