@@ -52,12 +52,15 @@ module Fae
       @fae_topnav_items = []
       @fae_sidenav_items = []
 
-      @fae_navigation = Fae::Navigation.new(request.path, current_user)
+      @fae_navigation = Rails.cache.fetch("fae_navigation_#{current_user.role.id}") do
+        Fae::Navigation.new(current_user)
+      end
+      # @fae_navigation = Fae::Navigation.new(current_user)
       raise_define_structure_error unless @fae_navigation.respond_to? :structure
 
       if Fae.has_top_nav
         @fae_topnav_items = @fae_navigation.items
-        @fae_sidenav_items = @fae_navigation.side_nav
+        @fae_sidenav_items = @fae_navigation.side_nav(request.path)
       elsif defined?(nav_items) && nav_items.present?
         # deprecate in v2.0
         # support nav_items defined from legacy Fae::NavItems concern
@@ -94,9 +97,11 @@ module Fae
     end
 
     def all_models
-      # load of all models since Rails caches activerecord queries.
-      Rails.application.eager_load!
-      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
+      Rails.cache.fetch('fae_all_models') do
+        # load of all models since Rails caches activerecord queries.
+        Rails.application.eager_load!
+        ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
+      end
     end
 
   end
