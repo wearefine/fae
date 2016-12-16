@@ -45,6 +45,7 @@ module Fae
         end
       end
 
+      # @depreciation - deprecate in v2.0
       def filter_all
         # override this method in your model
         for_fae_index
