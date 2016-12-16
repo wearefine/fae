@@ -336,7 +336,7 @@ Fae.form.ajax = {
        * Support spacebar toggling for checkboxes
        */
       .on('keydown', '.boolean, .js-checkbox-wrapper :checkbox', function(e) {
-        if (e.which == 32) {
+        if (e.which === 32) {
           e.preventDefault();
           $(':checkbox:focus')
             .closest('label')
@@ -352,7 +352,7 @@ Fae.form.ajax = {
        * - Use this index to navigate upwards from .ms-list element
       */
       .on('keydown', '.ms-list', function(e) {
-        if (e.which == 9 && e.shiftKey) {
+        if (e.which === 9 && e.shiftKey) {
           e.preventDefault();
 
           // Sniff out the previous focusable element
