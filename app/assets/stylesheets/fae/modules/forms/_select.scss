@@ -115,6 +115,14 @@
   }
 }
 
+.chosen-container-single.chosen-container-active,
+.chosen-container-multi.chosen-container-active {
+  .chosen-single,
+  .chosen-choices {
+    border-color: $c-darker-grey;
+  }
+}
+
 // special for time
 .time select {
   min-width: 75px;
@@ -271,6 +279,7 @@
 
     &.ms-focus {
       outline: 0;
+      border-bottom: 4px solid $c-darker-grey;
     }
   }
 

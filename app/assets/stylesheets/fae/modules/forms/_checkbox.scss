@@ -54,6 +54,11 @@ label.checkbox,
   }
 }
 
+label.checkbox.focused:before,
+.checkbox.focused label:before {
+  border-color: $c-darker-grey;
+}
+
 .checkbox-wrapper {
   &.-stacked {
     label:not(.control-label) {

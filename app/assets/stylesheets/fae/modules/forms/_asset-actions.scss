@@ -44,6 +44,11 @@
     display: inline-block;
     margin-right: 10px;
 
+    &:focus {
+      border-color: $c-darker-grey;
+      outline: 0;
+    }
+
     span {
       padding-right: 30px;
     }
