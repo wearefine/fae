@@ -52,10 +52,17 @@ module Fae
       @fae_topnav_items = []
       @fae_sidenav_items = []
 
-      @fae_navigation = Rails.cache.fetch("fae_navigation_#{current_user.role.id}") do
-        Fae::Navigation.new(current_user)
+      # shameless green: if we continue to cache specific parts of Fae we should either:
+      # - create support methods to DRY this conditional logic
+      # - explore using `expires_in: 0` as a way to ignore caching
+      if Fae.use_cache
+        @fae_navigation = Rails.cache.fetch("fae_navigation_#{current_user.role.id}") do
+          Fae::Navigation.new(current_user)
+        end
+      else
+        @fae_navigation = Fae::Navigation.new(current_user)
       end
-      # @fae_navigation = Fae::Navigation.new(current_user)
+
       raise_define_structure_error unless @fae_navigation.respond_to? :structure
 
       if Fae.has_top_nav
@@ -97,11 +104,19 @@ module Fae
     end
 
     def all_models
-      Rails.cache.fetch('fae_all_models') do
-        # load of all models since Rails caches activerecord queries.
-        Rails.application.eager_load!
-        ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
+      if Fae.use_cache
+        Rails.cache.fetch('fae_all_models') do
+          load_and_filter_models
+        end
+      else
+        load_and_filter_models
       end
+    end
+
+    def load_and_filter_models
+      # load of all models since Rails caches activerecord queries.
+      Rails.application.eager_load!
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
     end
 
   end

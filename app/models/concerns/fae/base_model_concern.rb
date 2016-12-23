@@ -81,6 +81,14 @@ module Fae
         end
       end
 
+      private
+
+      def fae_bust_navigation_caches
+        Fae::Role.all.each do |role|
+          Rails.cache.delete("fae_navigation_#{role.id}")
+        end
+      end
+
     end
   end
 end
