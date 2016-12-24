@@ -60,6 +60,7 @@ $ bundle update sass
 * [Pages and Content Blocks](docs/topics/pages.md)
 * [Custom JS, CSS and Helpers](docs/topics/custom_js_css.md)
 * [Root Settings](docs/topics/root_settings.md)
+* [Caching](docs/topics/caching.md)
 
 
 ### Features
