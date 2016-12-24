@@ -23,11 +23,11 @@ module Fae
       find_items_by_text(@items, query, [])
     end
 
+    private
+
     def current_section
       @current_path.gsub(/\/new$|\/\d+\/edit/, '')
     end
-
-    private
 
     def find_current_hash(array_of_items)
       @coordinates.push(0)
