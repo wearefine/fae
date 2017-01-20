@@ -1,6 +1,5 @@
 appraise 'rails_4_1' do
   gem 'rails', '~> 4.1.0'
-  gem 'remotipart'
 
   group :test, :development do
     gem 'quiet_assets'
@@ -15,7 +14,6 @@ end
 
 appraise 'rails_4_2' do
   gem 'rails', '~> 4.2.0'
-  gem 'remotipart'
 
   group :test, :development do
     gem 'quiet_assets'
@@ -30,7 +28,6 @@ end
 
 appraise 'rails_5_0' do
   gem 'rails', '~> 5.0'
-  gem 'remotipart', github: 'mshibuya/remotipart'
 
   group :test do
     gem 'rails-controller-testing'
