@@ -110,22 +110,12 @@ Fae.form.ajax = {
       if (data !== ' ' && $(data)[0]) {
         var $this = $(this);
 
-        // if its the old remotipart return format.
-        if ( $(data).length == 1 ) {
-          var $html = $(data);
+        // if its the new or old remotipart, return the html
+        var $html = $(data).length == 1 ? $(data) : $(data)[2];
 
-          // remotipart returns data inside textarea
-          if ( $html.is('textarea') ) {
-            $html = $( $html.val() );
-          }
-        } else {
-          // if its the new remotipart return format.
-          var html = $(data)[2];
-
-          // remotipart returns data inside textarea
-          if ( $(html).is('textarea') ) {
-            $html = $($(html).val());
-          }
+        // if it returns data inside textarea, strip that out
+        if ( $($html).is('textarea') ) {
+          var $html = $( $($html).val() );
         }
 
         if ($html) {
