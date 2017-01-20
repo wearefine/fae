@@ -347,6 +347,7 @@ DEPENDENCIES
   pry
   rails-controller-testing
   rails-perftest
+  remotipart
   rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.2)
   ruby-prof
@@ -357,4 +358,4 @@ DEPENDENCIES
   yarjuf
 
 BUNDLED WITH
-   1.13.0
+   1.13.7
