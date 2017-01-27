@@ -286,7 +286,7 @@ Fae.form.ajax = {
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
-    $('#js-main-content')
+    $('#js-main-content, .login-form > form')
 
       /**
        * For the yes/no slider
