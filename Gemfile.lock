@@ -150,7 +150,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
-    eventmachine (1.0.3)
+    eventmachine (1.2.1)
     execjs (2.7.0)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)
@@ -421,3 +421,6 @@ DEPENDENCIES
   shoulda-matchers
   thin
   yarjuf
+
+BUNDLED WITH
+   1.14.3
