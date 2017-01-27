@@ -123,6 +123,24 @@
   }
 }
 
+.multiselect-action_wrap {
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.3;
+
+  .multiselect-action {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    padding-right: 13px;
+    border-right: 1px solid $c-mid-grey;
+
+    &:last-of-type {
+      padding-right: 0;
+      border-right: none;
+    }
+  }
+}
+
 // special for time
 .time select {
   min-width: 75px;
