@@ -1,4 +1,4 @@
 - Installation: docs/installation/index.md
 - Topics:
-	- Models: docs/topics/models.md
-	- Controllers: docs/topics/controllers_and_concerns.md
+    - Models: docs/topics/models.md
+    - Controllers: docs/topics/controllers_and_concerns.md
