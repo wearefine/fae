@@ -1,6 +1,5 @@
 # Meet Fae
 
-[![Build Status](https://jenkins.afinedevelopment.com/buildStatus/icon?job=Fae/Prod)](https://jenkins.afinedevelopment.com/job/Fae/job/Prod/)
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
 
 
@@ -102,4 +101,3 @@ $ bundle update sass
 ## [Changelog](CHANGELOG.md)
 
 ## [MIT License](LICENSE)
-
