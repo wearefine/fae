@@ -1,8 +1,8 @@
 Installation:
-	path: docs/installation/index.md
+    path: docs/installation/index.md
 Topics:
-	subpages:
-		- Models:
-			path: docs/topics/models.md
-		- Controllers:
-			path: docs/topics/controllers_and_concerns.md
+    subpages:
+        - Models:
+            path: docs/topics/models.md
+        - Controllers:
+            path: docs/topics/controllers_and_concerns.md
