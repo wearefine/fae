@@ -7,3 +7,6 @@
       path: docs/topics/models.md
     - name: Controllers
       path: docs/topics/controllers_and_concerns.md
+
+- name: James
+  path: docs/installation/index.md
