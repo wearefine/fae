@@ -67,8 +67,6 @@ module Fae
         @fae_sidenav_items = @fae_navigation.items
       end
 
-      # hide sidenav on form pages
-      @fae_sidenav_items = [] if params[:action] == 'new' || params[:action] == 'edit'
     end
 
     # redirect to login after sign out
