@@ -16,6 +16,7 @@
 - enhancements
     + \#57081: Change relevant instances of .humanize to .titleize
     + \#60892: Add Fae::BaseModelConcern class methods has_image and has_file for shorthand image/file attachment definitions
+    + \#60891: Add generator support for :image and :file attachments
 - bugs
     + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 

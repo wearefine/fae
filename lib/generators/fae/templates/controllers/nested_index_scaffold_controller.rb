@@ -69,5 +69,13 @@ module <%= options.namespace.capitalize %>
       params.require(:<%= singular_table_name %>).permit!
     end
 
+<% if @attachments.present? -%>
+    def build_assets
+<% @attachments.each do |attachment| -%>
+      @item.build_<%= attachment.name %> if @item.<%= attachment.name %>.blank?
+<% end -%>
+    end
+<% end -%>
+
   end
 end

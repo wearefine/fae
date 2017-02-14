@@ -17,16 +17,19 @@ module Fae
         generate "model #{file_name} #{@@attributes_flat}"
         inject_concern
         inject_position_scope
+        inject_model_attachments
         inject_display_field_to_model
         inject_parent_info if options.parent_model.present?
       end
 
       def generate_nested_controller_file
+        @attachments = @@attachments
         template "controllers/nested_scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
       end
 
       def generate_view_files
         @form_attrs = set_form_attrs
+        @attachments = @@attachments
         template "views/table_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/table.html.#{options.template}"
         template "views/_form_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
         template "views/new_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
