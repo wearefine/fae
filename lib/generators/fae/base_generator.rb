@@ -129,13 +129,13 @@ RUBY
         if attachment.type == :image
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
             <<-RUBY
-  has_image :#{attachment.name}\n
+  has_fae_image :#{attachment.name}\n
 RUBY
           end
         elsif attachment.type == :file
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
             <<-RUBY
-  has_file :#{attachment.name}\n
+  has_fae_file :#{attachment.name}\n
 RUBY
           end
         end
