@@ -80,7 +80,7 @@ module Fae
         end
       end
 
-      def has_image(image_name_symbol)
+      def has_fae_image(image_name_symbol)
         has_one image_name_symbol, -> { where(attached_as: image_name_symbol.to_s) },
           as: :imageable,
           class_name: '::Fae::Image',
@@ -88,7 +88,7 @@ module Fae
         accepts_nested_attributes_for image_name_symbol, allow_destroy: true
       end
 
-      def has_file(file_name_symbol)
+      def has_fae_file(file_name_symbol)
         has_one file_name_symbol, -> { where(attached_as: file_name_symbol.to_s) },
           as: :fileable,
           class_name: '::Fae::File',

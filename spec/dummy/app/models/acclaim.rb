@@ -1,7 +1,7 @@
 class Acclaim < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
-  has_file :pdf
+  has_fae_file :pdf
 
   def fae_display_field
     publication
