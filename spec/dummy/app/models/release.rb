@@ -28,13 +28,9 @@ class Release < ActiveRecord::Base
   has_many :event_releases
   has_many :events, through: :event_releases
 
-  has_one :bottle_shot, -> { where(attached_as: 'bottle_shot') },
-  as: :imageable, class_name: '::Fae::Image', dependent: :destroy
-  accepts_nested_attributes_for :bottle_shot, allow_destroy: true
+  has_image :bottle_shot
 
-  has_one :hero_image, -> { where(attached_as: 'hero_image') },
-  as: :imageable, class_name: '::Fae::Image', dependent: :destroy
-  accepts_nested_attributes_for :hero_image, allow_destroy: true
+  has_image :hero_image
 
   has_one :label_pdf, as: :fileable, class_name: '::Fae::File', dependent: :destroy
   accepts_nested_attributes_for :label_pdf, allow_destroy: true
