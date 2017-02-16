@@ -15,6 +15,7 @@
 
 - enhancements
     + \#57081: Change relevant instances of .humanize to .titleize
+    + \#64649: Change handling of saved filter state to allow deep links to override saved cookie filter settings on load, but not overwrite them in the cookie.
 - bugs
     + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 
