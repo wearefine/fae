@@ -54,9 +54,14 @@ label.checkbox,
   }
 }
 
+label.checkbox.focused:before,
+.checkbox.focused label:before {
+  border-color: $c-darker-grey;
+}
+
 .checkbox-wrapper {
   &.-stacked {
-    label {
+    label:not(.control-label) {
       display: block;
       margin-bottom: 25px;
     }
@@ -67,7 +72,7 @@ label.checkbox,
   }
 
   &.-inline {
-    label {
+    label:not(.control-label) {
       padding-top: 0;
       vertical-align: top;
       width: 190px;

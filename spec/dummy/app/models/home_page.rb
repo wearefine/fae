@@ -20,7 +20,15 @@ class HomePage < Fae::StaticPage
           allow_blank: true
           }
         },
+      phone: { type: Fae::TextField },
       introduction: {
+        type: Fae::TextArea,
+        validates: {
+          presence: true,
+          length: { maximum: 100 }
+          }
+        },
+      introduction_2: {
         type: Fae::TextArea,
         validates: {
           presence: true,

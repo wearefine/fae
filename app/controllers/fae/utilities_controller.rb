@@ -5,9 +5,9 @@ module Fae
       klass = params[:object].gsub('__', '/').classify.constantize
       if can_toggle(klass)
         klass.find(params[:id]).toggle(params[:attr]).save(validate: false)
-        render nothing: true
+        render body: nil
       else
-        render nothing: true, status: :unauthorized
+        render body: nil, status: :unauthorized
       end
     end
 
@@ -21,14 +21,14 @@ module Fae
           item.update_attribute(:position, position)
         end
       end
-      render nothing: true
+      render body: nil
     end
 
     def language_preference
       if params[:language].present? && (params[:language] == 'all' || Fae.languages.has_key?(params[:language].to_sym))
         current_user.update_column(:language, params[:language])
       end
-      render nothing: true
+      render body: nil
     end
 
     def global_search

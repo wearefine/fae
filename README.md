@@ -1,6 +1,5 @@
 # Meet Fae
 
-[![Build Status](https://jenkins.afinedevelopment.com/buildStatus/icon?job=Fae/Prod)](https://jenkins.afinedevelopment.com/job/Fae/job/Prod/)
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
 
 
@@ -60,6 +59,7 @@ $ bundle update sass
 * [Pages and Content Blocks](docs/topics/pages.md)
 * [Custom JS, CSS and Helpers](docs/topics/custom_js_css.md)
 * [Root Settings](docs/topics/root_settings.md)
+* [Caching](docs/topics/caching.md)
 
 
 ### Features
@@ -102,4 +102,3 @@ $ bundle update sass
 ## [Changelog](CHANGELOG.md)
 
 ## [MIT License](LICENSE)
-

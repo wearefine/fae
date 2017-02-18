@@ -27,7 +27,7 @@ module Fae
       return if value.blank?
       # if item is an image
       if value.class.name == 'Fae::Image'
-        image_tag(value.asset.thumb.url)
+        image_tag(value.asset.thumb.url) if value.asset.thumb.url.present?
       # if item's attribute is an association
       elsif item.class.reflections.include?(attribute)
         value.try(:fae_display_field)
@@ -60,8 +60,9 @@ module Fae
 
     def change_item_link(change)
       text = "#{change.changeable_type}: "
+      test_source_method = Rails::VERSION::MAJOR > 4 ? :data_source_exists? : :table_exists?
 
-      if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && (!ActiveRecord::Base.connection.table_exists? change.changeable_type.tableize)
+      if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && !ActiveRecord::Base.connection.send(test_source_method, change.changeable_type.tableize)
         return "#{change.changeable_type}: model destroyed"
       else
         display_text = change.try(:changeable).try(:fae_display_field)

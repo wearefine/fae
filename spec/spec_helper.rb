@@ -63,8 +63,23 @@ RSpec.configure do |config|
   # config.fail_fast = true
   # config.allow_url('gravatar.com')
 
+  # https://github.com/rails/rails-controller-testing#rspec
+  if Rails::VERSION::MAJOR > 4
+    [:controller, :view, :request].each do |type|
+      config.include ::Rails::Controller::Testing::TestProcess, :type => type
+      config.include ::Rails::Controller::Testing::TemplateAssertions, :type => type
+      config.include ::Rails::Controller::Testing::Integration, :type => type
+    end
+  end
 end
 
 Capybara::Webkit.configure do |config|
   config.allow_url("secure.gravatar.com")
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
 end

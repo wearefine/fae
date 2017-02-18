@@ -72,6 +72,13 @@ Fae.tables = {
 
         // Save it to the cookie as a string
         Cookies.set(_this.sort_cookie_name, cookie_value);
+
+        // Replace sticky table headers w/ newly sorted headers
+        $this.siblings('.sticky-table-header')
+          .find('thead')
+          .html(
+            $this.find('thead').html()
+          );
       });
   },
 
@@ -294,6 +301,15 @@ Fae.tables = {
 
       $fixed_header.append( $header );
       $this.after($fixed_header);
+
+      // Proxy clicks from .sticky-table-header to underlying tablesorter instance
+      if ($this.hasClass('tablesorter')) {
+        $fixed_header.on('click', 'th', function(e) {
+          $this
+            .find("th[data-column='" + $(e.currentTarget).data('column') + "']")
+            .trigger('sort');
+        });
+      }
     });
 
     /**

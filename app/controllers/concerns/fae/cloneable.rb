@@ -108,7 +108,7 @@ module Fae
 
     def unique_name(item, attribute, value, suffix)
       item.class.validators_on(attribute.to_sym).each do |validator|
-        if validator.class.name == 'ActiveModel::Validations::LengthValidator' && validator.options[:maximum].present?
+        if validator.class.name.include?('LengthValidator') && validator.options[:maximum].present?
           max_length = validator.options[:maximum] - (suffix.length + 1)
           value = value[0...max_length]
           break

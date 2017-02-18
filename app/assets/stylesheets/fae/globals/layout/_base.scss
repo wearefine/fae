@@ -17,7 +17,8 @@
 }
 
 .content {
-  padding: 30px $content-buffer 60px;
+  padding: 30px $content-buffer;
+  padding-bottom: 0;
   display: block; // IE, Safari don't treat <main> as a block element
 
   &.-bottom-shim {
@@ -26,8 +27,8 @@
 
   h2 {
     padding: 17px $content-buffer;
-    color: $c-text-heavy;
-    background: $c-content-section-title;
+    color: pickForegroundColor($c-custom-highlight, $c-white, $c-black);
+    background: $c-custom-highlight;
     border-top: 1px solid $c-border;
     text-transform: uppercase;
     font-size: 14px;
