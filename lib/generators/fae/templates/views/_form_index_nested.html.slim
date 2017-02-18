@@ -2,5 +2,12 @@
 <% @form_attrs.each do |attr| -%>
   = fae_input f, :<%= attr %>
 <% end -%>
+<% @attachments.each do |attachment| %>
+<% if attachment.type == :image -%>
+  = fae_image_form f, :<%= attachment.name -%>
+<% elsif attachment.type == :file -%>
+  = fae_file_form f, :<%= attachment.name -%>
+<% end -%>
+<% end -%>
 
   = f.submit

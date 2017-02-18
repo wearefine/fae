@@ -37,10 +37,12 @@ This is Fae's main generator. It will create the following:
 
 **_id**/**:references** will automatically be setup as an association in the form.
 
+**:image or :file** will automatically create image/file attachment associations in the model, asset builders in the controller, and file uploaders in the form.
+
 ### Example
 
 ```bash
-rails g fae:scaffold Person first_name last_name title body:text date_of_birth:date position:integer on_stage:boolean on_prod:boolean group:references
+rails g fae:scaffold Person first_name last_name title body:text date_of_birth:date position:integer on_stage:boolean on_prod:boolean head_shot:image bio_pdf:file group:references
 ```
 
 
