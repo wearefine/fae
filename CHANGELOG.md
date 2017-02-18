@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Rails 5 support
     + \#62472: Add keyboard support to form checkboxes
     + \#62473: Ensure focus styles exist for all form elements
     + \#52299: Adds caching system

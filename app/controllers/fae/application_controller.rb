@@ -5,14 +5,14 @@ module Fae
 
     helper Fae::ViewHelper
 
-    before_filter :check_disabled_environment
-    before_filter :first_user_redirect
-    before_filter :authenticate_user!
-    before_filter :build_nav
-    before_filter :set_option
-    before_filter :detect_cancellation
-    before_filter :set_change_user
-    before_filter :set_locale
+    before_action :check_disabled_environment
+    before_action :first_user_redirect
+    before_action :authenticate_user!
+    before_action :build_nav
+    before_action :set_option
+    before_action :detect_cancellation
+    before_action :set_change_user
+    before_action :set_locale
 
     private
 
