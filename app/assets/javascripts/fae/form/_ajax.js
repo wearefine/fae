@@ -285,17 +285,22 @@ Fae.form.ajax = {
 
   /**
    * Attaching click handlers to #main_content to allow ajax replacement
+   * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
     $('#js-main-content')
 
-      // for the yes/no slider
+      /**
+       * For the yes/no slider
+       */
       .on('click', '.slider-wrapper', function(e){
         e.preventDefault();
         $(this).toggleClass('slider-yes-selected');
       })
 
-      // The settings menu for tables and checkboxes
+      /**
+       * The settings menu for tables and checkboxes
+       */
       .on('click', '.boolean label, .js-checkbox-wrapper label', function(e){
         var $this = $(this);
 
@@ -304,9 +309,69 @@ Fae.form.ajax = {
         }
       })
 
-      // stop the event bubbling and running the above toggleClass twice
+      /**
+       * Stop event bubbling and running the above toggleClass twice
+       */
       .on('click', '.boolean :checkbox, .js-checkbox-wrapper :checkbox', function(e){
         e.stopPropagation();
+      })
+
+      /**
+       * Support for a focus state on radio collections
+       */
+      .on('focus blur', '.radio_collection :radio', function(e) {
+        $(this)
+          .closest('.input.radio_collection')
+          .toggleClass('focused', $(this).has(':focus'));
+      })
+
+      /**
+       * Support for a focus state on checkboxes
+       */
+      .on('focus blur', '.boolean :checkbox, .js-checkbox-wrapper :checkbox', function(e) {
+        $(this)
+          .closest('label.boolean, span.checkbox')
+          .toggleClass('focused', $(this).has(':focus'));
+      })
+
+      /**
+       * Support spacebar toggling for checkboxes
+       */
+      .on('keydown', '.boolean, .js-checkbox-wrapper :checkbox', function(e) {
+        if (e.which === 32) {
+          e.preventDefault();
+          $(':checkbox:focus')
+            .closest('label')
+            .trigger('click');
+        }
+      })
+
+      /**
+       * Support for shift+tab off of ms-list element.
+       * By default, $.multiSelect() plugin captures shift+tab and disgards it
+       * @todo This entire method feels very brittle. Possible alternative:
+       * - Create an index of all focusable form elements on page load / DOM mutation
+       * - Use this index to navigate upwards from .ms-list element
+      */
+      .on('keydown', '.ms-list', function(e) {
+        if (e.which === 9 && e.shiftKey) {
+          e.preventDefault();
+
+          // Sniff out the previous focusable element
+          var $prevFocusable = $(this)
+            .closest('.input')
+            .prevAll('.input:not(.hidden):first') // Ugh X(
+            .find('input[type!=hidden][type!=file], select, button, textarea') // Yuck :(
+            .first();
+
+          // Trigger focus
+          $prevFocusable.focus();
+
+          // Check for select instance and further trigger focus via Chosen API
+          if ($prevFocusable.is('select')) {
+            $prevFocusable.trigger('chosen:activate');
+          }
+        }
       });
   }
 

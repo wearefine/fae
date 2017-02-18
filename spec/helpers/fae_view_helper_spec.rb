@@ -129,4 +129,24 @@ describe Fae::ViewHelper do
     end
   end
 
+  describe '#fae_index_image' do
+    it 'should return nothing if an asset is not present' do
+      expect(fae_index_image(nil)).to eq(nil)
+    end
+
+    it 'should return an image tag without a link if an item but no path is provided' do
+      @release = FactoryGirl.create(:release)
+      FactoryGirl.create(:fae_image, imageable_type: 'Release', imageable_id: @release.id, attached_as: 'bottle_shot')
+      expect(fae_index_image(@release.bottle_shot)).to include('<img')
+      expect(fae_index_image(@release.bottle_shot)).to_not include('<a href')
+    end
+
+    it 'should return an image tag wrapped in a link when an item and a path are provided' do
+      @release = FactoryGirl.create(:release)
+      FactoryGirl.create(:fae_image, imageable_type: 'Release', imageable_id: @release.id, attached_as: 'bottle_shot')
+      expect(fae_index_image(@release.bottle_shot, '/admin/custom/route')).to include('<img')
+      expect(fae_index_image(@release.bottle_shot, '/admin/custom/route')).to include('<a href')
+    end
+  end
+
 end

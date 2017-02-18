@@ -45,6 +45,7 @@ module Fae
         end
       end
 
+      # @depreciation - deprecate in v2.0
       def filter_all
         # override this method in your model
         for_fae_index
@@ -81,5 +82,14 @@ module Fae
       end
 
     end
+
+    private
+
+    def fae_bust_navigation_caches
+      Fae::Role.all.each do |role|
+        Rails.cache.delete("fae_navigation_#{role.id}")
+      end
+    end
+
   end
 end

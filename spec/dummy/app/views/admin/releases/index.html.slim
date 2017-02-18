@@ -14,6 +14,7 @@ main.content
   table
     thead
       tr
+        th.-image
         th data-sort="name" Name
         th data-sort="wine.name_en" Wine
         th data-sort="slug" Slug
@@ -28,6 +29,7 @@ main.content
       - if @items.present?
         - @items.each do |item|
           tr id="#{@klass_singular}_#{item.id}"
+            td = fae_index_image item.bottle_shot, edit_admin_release_path(item)
             td = link_to item.fae_display_field, edit_admin_release_path(item)
             td = item.wine.name_en if item.wine.present?
             td = item.slug

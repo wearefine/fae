@@ -58,4 +58,11 @@ Fae.setup do |config|
   # Sets the default number of items shown in paginated lists
   # Defaults to 25
   # config.per_page = 25
+
+  ## use_cache
+  # Determines whether or not Fae will utilize cache internally.
+  # Note: you still need to enable `perform_caching` and set a `cache_store`
+  # on the parent app
+  # Defaults to false
+  # config.use_cache = true
 end
