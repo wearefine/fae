@@ -10,6 +10,7 @@
     + \#61096: Adds warning notification style, apply to cancel message
     + Fix for_fae_index issue, since it's an override-able method
     + Fix bug in content_form that prevented custom input_classes
+    + Fix bug related to Rails 5 and Remotipart update. This fix allows the upload of items with images in nested forms.
 
 ## 1.4
 

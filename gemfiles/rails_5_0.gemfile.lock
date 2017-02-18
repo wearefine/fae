@@ -11,12 +11,6 @@ GIT
       xpath (~> 2.0)
 
 GIT
-  remote: git://github.com/mshibuya/remotipart.git
-  revision: 88d9a7d55bde66acb6cf3a3c6036a5a1fc991d5e
-  specs:
-    remotipart (1.2.1)
-
-GIT
   remote: https://github.com/wearefine/rails
   revision: 8250e29e4622ff60f8093dba92d52dbae9d26460
   specs:
@@ -38,7 +32,7 @@ PATH
       judge-simple_form (~> 1.0.0)
       kaminari (~> 0.16.3)
       rails (>= 4.1)
-      remotipart
+      remotipart (~> 1.3.1)
       rmagick (~> 2.13.3)
       sass (>= 3.4.0)
       sass-rails (>= 5.0.3)
@@ -254,6 +248,7 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    remotipart (1.3.1)
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rmagick (2.13.4)
@@ -295,7 +290,7 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simple_form (3.3.1)
+    simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
     slim (3.0.7)
@@ -322,7 +317,7 @@ GEM
     tilt (2.0.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.0.3)
+    uglifier (3.0.4)
       execjs (>= 0.3.0, < 3)
     warden (1.2.6)
       rack (>= 1.0)
@@ -361,7 +356,7 @@ DEPENDENCIES
   rails (~> 5.0)
   rails-controller-testing
   rails-perftest
-  remotipart!
+  remotipart (~> 1.3.1)
   rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.2)
   ruby-prof
