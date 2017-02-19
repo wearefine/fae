@@ -1,9 +1,11 @@
 # First item will be the default content on https://faecoms.com/documentation/
-- name: Installation
-  path: docs/installation/index.md
-  
+- name: Quick Start
+  path: docs/quickstart-guide.md
+
 - name: Topics
   children:
+    - name: Installation
+      path: docs/installation/index.md
     - name: Generators
       path: docs/topics/generators.md
     - name: Navigation Setup
