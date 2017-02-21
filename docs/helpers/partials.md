@@ -51,7 +51,7 @@ Displays breadcrumb links and form title.
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
 | header | ActiveRecord object or string | | **(required)** passed to form_header helper method |
-| languages | boolean | false | display the [language changer](../features/multi_language.md) |
+| languages | boolean | false | display the [language changer](https://github.com/wearefine/fae/blob/master/docs/features/multi_language.md) |
 | save_button_text (`v1.3 <=`)   | string | 'Save' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
 | cloneable | boolean | false | includes Clone button |
@@ -181,7 +181,7 @@ Some good examples ideal for nested tables are image galleries, tasting notes on
 
 ### Generate the child object
 
-Assuming the parent object already exists, generate the object to be nested with [Fae's nested scaffold command](../topics/generators.md).
+Assuming the parent object already exists, generate the object to be nested with [Fae's nested scaffold command](https://github.com/wearefine/fae/blob/master/docs/topics/generators.md).
 
 ### Update Models
 
