@@ -11,6 +11,8 @@ table {
 
 tbody {
   td {
+    border-bottom: 1px solid $c-grey;
+
     &:first-child {
       border-left: 3px solid transparent; // this blends it in to the background
     }
@@ -20,7 +22,7 @@ tbody {
     &:hover {
       td {
         &:first-child {
-          border-color: $c-custom-highlight;
+          border-left-color: $c-custom-highlight;
         }
       }
     }
@@ -28,6 +30,12 @@ tbody {
     &:nth-of-type(even) {
       td {
         background-color: $c-table-tr-even;
+      }
+    }
+
+    &:last-child {
+      td {
+        border-bottom: 0;
       }
     }
   }
@@ -38,10 +46,11 @@ td {
   vertical-align: middle;
   font-size: 13px;
   text-align: left;
+  line-height: 1.2;
 }
 
 th {
-  padding: 15px 10px;
+  padding: 12px 10px;
   vertical-align: middle;
   font-weight: bold;
   color: $c-text-heavy;
@@ -49,6 +58,6 @@ th {
 }
 
 td {
-  padding: 12px 10px;
+  padding: 8px 10px;
   background-color: $c-table-td;
 }

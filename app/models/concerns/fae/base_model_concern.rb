@@ -45,6 +45,7 @@ module Fae
         end
       end
 
+      # @depreciation - deprecate in v2.0
       def filter_all
         # override this method in your model
         for_fae_index
@@ -80,6 +81,31 @@ module Fae
         end
       end
 
+      def has_fae_image(image_name_symbol)
+        has_one image_name_symbol, -> { where(attached_as: image_name_symbol.to_s) },
+          as: :imageable,
+          class_name: '::Fae::Image',
+          dependent: :destroy
+        accepts_nested_attributes_for image_name_symbol, allow_destroy: true
+      end
+
+      def has_fae_file(file_name_symbol)
+        has_one file_name_symbol, -> { where(attached_as: file_name_symbol.to_s) },
+          as: :fileable,
+          class_name: '::Fae::File',
+          dependent: :destroy
+        accepts_nested_attributes_for file_name_symbol, allow_destroy: true
+      end
+
     end
+
+    private
+
+    def fae_bust_navigation_caches
+      Fae::Role.all.each do |role|
+        Rails.cache.delete("fae_navigation_#{role.id}")
+      end
+    end
+
   end
 end

@@ -7,14 +7,16 @@
 }
 
 .radio_collection--vertical {
-  label {
-    display: inline;
-    cursor: pointer;
-    line-height: 1.75;
+  .radio {
+    label {
+      display: inline;
+      cursor: pointer;
+      line-height: 1.75;
 
-    &:after {
-      content: '\a';
-      white-space: pre;
+      &:after {
+        content: '\a';
+        white-space: pre;
+      }
     }
   }
 }
@@ -57,5 +59,11 @@
     &:before {
       display: block;
     }
+  }
+}
+
+.radio_collection.focused {
+  .radio_collection-bullet {
+    border-color: $c-darker-grey;
   }
 }

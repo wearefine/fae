@@ -1,6 +1,6 @@
 .main-footer {
   @include transition(opacity 0.4s);
-  padding: 10px $content-buffer $content-buffer;
+  padding: 20px $content-buffer $content-buffer;
   opacity: 0;
 
   &.active {

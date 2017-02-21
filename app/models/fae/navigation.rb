@@ -5,17 +5,17 @@ module Fae
 
     attr_accessor :current_path, :coordinates, :current_user, :items
 
-    def initialize(current_path, current_user)
-      @current_path = current_path
+    def initialize(current_user)
       @current_user = current_user
-      @coordinates = []
       @items = recursive_authorization(structure)
-
-      # set the coors based on current path
-      find_current_hash(@items)
     end
 
-    def side_nav
+    def side_nav(current_path)
+      @current_path = current_path
+      # set the coors based on current path
+      @coordinates = []
+      find_current_hash(@items)
+
       @items[@coordinates.first][:subitems][@coordinates.second][:subitems] if @coordinates.length > 2
     end
 
@@ -23,11 +23,11 @@ module Fae
       find_items_by_text(@items, query, [])
     end
 
+    private
+
     def current_section
       @current_path.gsub(/\/new$|\/\d+\/edit/, '')
     end
-
-    private
 
     def find_current_hash(array_of_items)
       @coordinates.push(0)

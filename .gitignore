@@ -14,8 +14,6 @@ spec/dummy/public/uploads/*
 
 /tmp
 
-.ruby-gemset
-.ruby-version
 .rvmrc
 .ruby-gemset
 .ruby-version
