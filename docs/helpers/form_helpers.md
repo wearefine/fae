@@ -97,7 +97,7 @@ fae_association f, :people, collection: Person.active
 fae_checkbox
 ```
 
-![Checkbox](../images/checkbox.png)
+![Checkbox](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/checkbox.png)
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
@@ -121,7 +121,7 @@ fae_checkbox f, :promos, type: 'inline', collection: Promo.live
 fae_radio
 ```
 
-![Radio](../images/radio.png)
+![Radio](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/radio.png)
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
@@ -145,7 +145,7 @@ fae_radio f, :wine
 fae_pulldown
 ```
 
-![Pulldown](../images/pulldown.gif)
+![Pulldown](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/pulldown.gif)
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
@@ -162,7 +162,7 @@ fae_pulldown f, :wine, size: 'short', collection: Wine.order(:name)
 
 With search:
 
-![Pulldown with search](../images/pulldown_search.gif)
+![Pulldown with search](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/pulldown_search.gif)
 
 ## Fae Multiselect
 
@@ -170,7 +170,7 @@ With search:
 fae_multiselect
 ```
 
-![Multiselect](../images/multiselect.gif)
+![Multiselect](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/multiselect.gif)
 
 *associations only*
 
@@ -190,7 +190,7 @@ A two pane style multiselect
 fae_multiselect f, :selling_points, two_pane: true
 ```
 
-![Multiselect](../images/two_pane_multiselect.gif)
+![Multiselect](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/two_pane_multiselect.gif)
 
 ## Fae Grouped Select
 
@@ -210,7 +210,7 @@ fae_grouped_select
 fae_datepicker
 ```
 
-![Datepicker](../images/datepicker.gif)
+![Datepicker](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/datepicker.gif)
 
 *attributes only*
 
@@ -226,7 +226,7 @@ fae_datepicker f, :release_date
 fae_daterangepicker
 ```
 
-![Daterange picker](../images/daterange_picker.gif)
+![Daterange picker](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/daterange_picker.gif)
 
 *attributes only*
 
@@ -244,7 +244,7 @@ fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 fae_prefix
 ```
 
-![Prefix](../images/prefix.png)
+![Prefix](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/prefix.png)
 
 *attributes only*
 
@@ -265,7 +265,7 @@ fae_prefix f, :price, prefix: '$', placeholder: '50.00'
 fae_suffix
 ```
 
-![Suffix](../images/suffix.png)
+![Suffix](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/suffix.png)
 
 *attributes only*
 
@@ -286,7 +286,7 @@ fae_suffix f, :weight, suffix: 'lbs'
 fae_video_url
 ```
 
-![Video URL](../images/video_url.gif)
+![Video URL](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/video_url.gif)
 
 *attributes only*
 
