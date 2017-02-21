@@ -1,7 +1,5 @@
 # Quickstart Guide
 
-_This Quickstart Guide is written with Rails 5 in mind._
-
 ## Installation
 
 1) Add the gem to your `Gemfile` and run `bundle install`.
@@ -26,7 +24,7 @@ To give you an idea of where to go from there, here is a brief walkthrough of an
 
 ## Fae's Scaffold Generator
 
-To add an object to manage in Fae you can use Fae's built in generators to create all necessary files. They are built on the Rails generators and work very similarly.
+To add an object to manage in Fae, you can use Fae's built in generators to create all necessary files. They are built on the Rails generators and work very similarly.
 
 **First let's scaffold our `ArticleCategory` object:**
 
@@ -46,7 +44,7 @@ _[Learn more about managing images and files](https://www.faecms.com/documentati
 
 ## Fae's Page Generator
 
-Fae has a built in pages module that let's you define content blocks on a page as attributes on a model. This allows you to get content for an about page via `AboutUsPage.instance` instead of dealing with hard-coded IDs.
+Fae has a built-in pages module that let's you define content blocks on a page as attributes on a model. This allows you to get content for an about page via `AboutUsPage.instance` instead of dealing with hard-coded IDs.
 
 To use this module, you'll have to follow Fae's convention, but we have a custom genereator to get you started.
 
@@ -58,7 +56,7 @@ rails g fae:page AboutUs hero_image:image headline:string body:text
 
 _[Learn more about content blocks and pages](https://www.faecms.com/documentation/topics-pages)_
 
-**Finally let's add the scaffolded objects to the database:**
+**Finally, let's add the scaffolded objects to the database:**
 
 ```bash
 rails db:migrate
@@ -76,7 +74,7 @@ Go to http://localhost:3000/admin/article_categories and add/update a couple cat
 
 ### Articles
 
-Now let's go to create a new article at http://localhost:3000/admin/articles/new. This form already does the job, but let's make it better. Fae's generators create files in your application so you can customize this form as we please.
+Now let's go to create a new article at http://localhost:3000/admin/articles/new. This form already does the job, but let's make it better. Fae's generators create files in your application so you can customize this form as you please.
 
 Open `app/views/admin/articles/_form.html.slim` and focus on the `main.content` section where the form fields are:
 
@@ -93,7 +91,6 @@ main.content
   = fae_image_form f, :hero_image
   = fae_file_form f, :pdf
 ```
-
 
 **Automatically generate the `slug` from content in the `title`.**
 
@@ -125,14 +122,14 @@ _[See documentation on all form helpers](https://www.faecms.com/documentation/he
 
 Fae's forms will honor any standard validation rules defined in the model. Fae even has some [helpers for common validation scenerios](https://www.faecms.com/documentation/topics-models#validation).
 
-To add form validations to our articles, we just need to define them in `app/models/article.rb`
+To add form validations to our articles, we just need to define them in `app/models/article.rb`:
 
 ```ruby
 validates :title, presence: true
 validated :slug, Fae.validation_helpers.slug
 ```
 
-Fae uses [Judge](https://github.com/joecorcoran/judge) for client side validations. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
+Fae uses [Judge](https://github.com/joecorcoran/judge) for client side validations. Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
 
 ```ruby
 Judge.configure do
@@ -164,6 +161,6 @@ _[Learn more about setting up your navigation](https://www.faecms.com/documentat
 
 Now that we are up and running with our CMS we can continue to scale it. When you run into a use case that Fae's can't handle, don't fret, Fae is built to be overridden.
 
-Use Rails helpers in place of Fae form helpers, override views, methods and whole classes. Fae even provides concerns to inject custom logic into it's base classes.
+Use Rails helpers in place of Fae form helpers, override views, methods and whole classes. Fae even provides concerns to inject custom logic into its base classes.
 
 We want Fae to get you off the ground quickly but be able to scale with your project and all the customized use cases you don't know you need yet.
