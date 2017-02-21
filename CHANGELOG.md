@@ -3,18 +3,45 @@
 ## Unreleased
 
 - enhancements
+    + Rails 5 support
+    + \#62472: Add keyboard support to form checkboxes
+    + \#62473: Ensure focus styles exist for all form elements
+    + \#52299: Adds caching system
     + \#61840: Document markdown overriding process
 - bugs
+    + Checks for use_pagination method on filter action
+    + Fixes filter form variable
+
+## 1.4.1
+
+- enhancements
+    + Adds support for "js-results-table" utility class for filtered results AJAX targeting
+- bugs
+    + \#60596: Add helper + CSS for displaying images in list views
+    + \#61975: Add bottom border to table rows
+    + \#61164: Colorize form section headings per $c-custom-highlight
+    + \#60581: Tighten input display by displaying helper text to the right of labels
+    + \#60547: Tighten vertical padding of list view rows
+    + \#59915: Tighten default column widths on list views
+    + \#59343: Add drop-up support for select boxes at bottom of viewport. Increase default height of drop menus
+    + \#61163: Resolve issue with sortable theads not reacting to user input
+    + \#60184: Min-height is no longer added to last form section referenced in form subnav
+    + \#60184: Tighten default padding of form inputs and sections
+    + \#61045: Ensure max-height of asset preview within image uploader
     + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
+    + \#60183: Resolive issue with smaller images in popup rendering microscopic due to padding.
     + \#60923: Widen hint model for video url helper
     + \#60433: Adds flash messages to dashboard
     + \#61096: Adds warning notification style, apply to cancel message
     + Fix for_fae_index issue, since it's an override-able method
+    + Fix bug in content_form that prevented custom input_classes
 
 ## 1.5
 
 - enhancements
     + \#57081: Change relevant instances of .humanize to .titleize
+    + \#60891: Add generator support for :image and :file attachments
+    + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
 - bugs
     + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 
