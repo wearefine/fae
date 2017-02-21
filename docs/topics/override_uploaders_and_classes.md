@@ -17,7 +17,7 @@ If you need to override the uploaders `Fae::Image` and `Fae::File` use, you can 
 
 This is handy when you need to update the `extension_white_list` or set your own resizing logic.
 
-Note: If you just need to increase the file upload limit, see the options in [Initializer](docs/topics/initializer.md), no need to override the whole file.
+Note: If you just need to increase the file upload limit, see the options in [Initializer](https://github.com/wearefine/fae/blob/master/docs/topics/initializer.md), no need to override the whole file.
 
 
 In `config/initializers/fae.rb`:

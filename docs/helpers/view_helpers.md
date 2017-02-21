@@ -47,7 +47,7 @@ fae_datetime_format item.updated_at
 fae_toggle
 ```
 
-![Fae toggle](../images/toggles.gif)
+![Fae toggle](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/toggles.gif)
 
 The fae_toggle helper method takes an AR object and attribute. It then creates the HTML necessary for a working Fae on/off toggle switch.
 
@@ -187,6 +187,6 @@ fae_index_image item.bottle_shot
 fae_paginate @items
 ```
 
-![Fae paginate](../images/fae_paginate.png)
+![Fae paginate](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/fae_paginate.png)
 
 Adds pagination links for `@items`, given `@items` is an ActiveRecord collection.

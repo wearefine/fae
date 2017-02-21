@@ -56,9 +56,6 @@ rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-mode
 
 The nested scaffold creates a model that is meant to be nested in another object's form via the `nested_table` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
 
-* [More information on nested forms](#nested-forms)
-* [More information on the nested_table partial](helpers.md#nested_table)
-
 ## fae:nested_index_scaffold
 
 ```bash
@@ -77,7 +74,7 @@ rails g fae:page [PageName] [field:type] [field:type]
 |---------|-------------|
 | PageName | the name of the page |
 | field   | the name of the content block |
-| type    | the type of the content block (see [table below](#pages-vs-content-blocks)) |
+| type    | the type of the content block |
 
 The page generator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
 

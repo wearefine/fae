@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   # other dependencies
   s.add_dependency "devise", ">= 3.4.1"
   s.add_dependency "simple_form", '>= 3.1.0'
-  s.add_dependency "jquery-ui-rails", '>= 4.2.1'
+  s.add_dependency "jquery-ui-rails", '~> 4.2.1'
   s.add_dependency "remotipart", '~> 1.3.1'
   s.add_dependency "carrierwave", '~> 0.10.0'
   s.add_dependency "rmagick", '~> 2.13.3'
