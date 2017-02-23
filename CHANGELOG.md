@@ -10,6 +10,7 @@
 - bugs
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
+    + Add .js-results-table class back so activity log page's table can be properly targeted
 
 ## 1.4.1
 
