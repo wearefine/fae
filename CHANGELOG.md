@@ -43,6 +43,7 @@
     + \#60891: Add generator support for :image and :file attachments
     + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
     + \#64645: Restore display of left navigation on form pages
+    + \#61113: Improved helper text for Fae settings logo image
 - bugs
     + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 
