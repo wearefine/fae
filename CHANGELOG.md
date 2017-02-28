@@ -11,6 +11,7 @@
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
     + Add .js-results-table class back so activity log page's table can be properly targeted
+    + Bump acts_as_list to ~> 0.9.0 to avoid rails 5 deprecation errors
 
 ## 1.4.1
 
