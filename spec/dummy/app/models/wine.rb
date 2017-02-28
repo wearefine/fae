@@ -1,6 +1,8 @@
 class Wine < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
+  acts_as_list add_new_at: :top
+
   has_many :releases
   has_many :winemakers
 
