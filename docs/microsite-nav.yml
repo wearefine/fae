@@ -29,7 +29,7 @@
     - name: Caching
       path: docs/topics/caching.md
 
-- name: Features
+- name: Faetures
   children:
     - name: Global Search
       path: docs/features/search.md
