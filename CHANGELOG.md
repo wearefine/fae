@@ -8,6 +8,7 @@
     + \#62473: Ensure focus styles exist for all form elements
     + \#52299: Adds caching system
 - bugs
+    + \#65689: Adds CSRF protection
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
     + Add .js-results-table class back so activity log page's table can be properly targeted
