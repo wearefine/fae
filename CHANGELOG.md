@@ -3,9 +3,11 @@
 ## Unreleased
 
 - enhancements
+    + Rails 5 support
     + \#62472: Add keyboard support to form checkboxes
     + \#62473: Ensure focus styles exist for all form elements
     + \#52299: Adds caching system
+    + \#61840: Document markdown overriding process
 - bugs
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
@@ -33,6 +35,18 @@
     + \#61096: Adds warning notification style, apply to cancel message
     + Fix for_fae_index issue, since it's an override-able method
     + Fix bug in content_form that prevented custom input_classes
+
+## 1.5
+
+- enhancements
+    + \#57081: Change relevant instances of .humanize to .titleize
+    + \#60891: Add generator support for :image and :file attachments
+    + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
+    + \#64645: Restore display of left navigation on form pages
+    + \#61113: Improved helper text for Fae settings logo image
+    + \#65595: Add standard image alt helper text that can be overridden
+- bugs
+    + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 
 ## 1.4
 

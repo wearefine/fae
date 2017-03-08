@@ -1,6 +1,5 @@
 # Meet Fae
 
-[![Build Status](https://jenkins.afinedevelopment.com/buildStatus/icon?job=Fae/Prod)](https://jenkins.afinedevelopment.com/job/Fae/job/Prod/)
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
 
 
@@ -81,6 +80,7 @@ $ bundle update sass
 * [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
 * [Custom Image Processing](docs/tutorials/custom_images.md)
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
+* [Overriding The Markdown Helper](docs/tutorials/markdown_helper.md)
 * [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
 
 
@@ -102,4 +102,3 @@ $ bundle update sass
 ## [Changelog](CHANGELOG.md)
 
 ## [MIT License](LICENSE)
-

@@ -6,14 +6,15 @@ module Fae
 
     # include libraries
     require 'simple_form'
+    require 'remotipart'
     require 'jquery-rails'
     require 'jquery-ui-rails'
-    require 'remotipart'
     require 'judge'
     require 'judge/simple_form'
     require 'acts_as_list'
     require 'slim'
     require 'kaminari'
+    require 'fae/version'
 
     config.autoload_paths += %W(#{config.root}/lib)
 

@@ -3,7 +3,7 @@ ruby:
   item        ||= f.object
   file_name   ||= :file
   the_file      = item.send(file_name)
-  label       ||= file_name.to_s.humanize
+  label       ||= file_name.to_s.titleize
   helper_text ||= ""
   required    ||= false
   languages     = f.object.class.try(:fae_fields).try(:[], file_name).try(:[], :languages)

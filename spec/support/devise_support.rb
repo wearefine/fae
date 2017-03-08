@@ -38,7 +38,13 @@ end
 
 module SignInRequestHelper
   def login(user)
-    post_via_redirect fae.user_session_path, 'user[email]' => user.email, 'user[password]' => user.password
+    if Rails::VERSION::MAJOR > 4
+      post fae.user_session_path, params: { user: { 'email' => user.email, 'password' => user.password } }
+
+      follow_redirect!
+    else
+      post_via_redirect fae.user_session_path, 'user[email]' => user.email, 'user[password]' => user.password
+    end
   end
 end
 
