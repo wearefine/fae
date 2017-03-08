@@ -1,4 +1,4 @@
-# First item will be the default content on https://faecms.com/documentation/
+## First item will be the default content on https://faecms.com/documentation/
 - name: Quickstart Guide
   path: docs/quickstart-guide.md
 
