@@ -68,8 +68,9 @@
 .chosen-container-multi {
   max-width: 515px;
   min-width: 223px;
+
   // overriding the inline js chosen makes
-  width: 90% !important;
+  width: 100% !important;
 
   &.chosen-container-active {
     .chosen-choices {

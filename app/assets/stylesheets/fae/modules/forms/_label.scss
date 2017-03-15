@@ -33,4 +33,21 @@ label {
       padding-top: 1px;
     }
   }
+
+  &.has-multiselect-actions {
+    .multiselect-action {
+      a {
+        font-weight: normal;
+      }
+    }
+
+    // Ensure helper text fills space between primary label & multiselect actions
+    h6 {
+      flex-grow: 1;
+    }
+  }
+
+  &.has_no_helper_text {
+    justify-content: space-between;
+  }
 }
