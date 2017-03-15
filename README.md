@@ -1,7 +1,7 @@
 # Meet Fae
 
-[![Build Status](https://travis-ci.org/wearefine/fae.svg?branch=master)](https://travis-ci.org/wearefine/fae)
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
+
 
 Fae is CMS for Rails unlike any other. Like most Rails CMS engines, Fae provides all the basics to get you up and running: authentication, a responsive UI, form element and workflows. But unlike other CMS engines, Fae's methodology is based around generators and a DSL over configuration. This allows you to get to a working CMS very quickly, but gives you the flexibility to customize any piece you need.
 
@@ -59,6 +59,7 @@ $ bundle update sass
 * [Pages and Content Blocks](docs/topics/pages.md)
 * [Custom JS, CSS and Helpers](docs/topics/custom_js_css.md)
 * [Root Settings](docs/topics/root_settings.md)
+* [Caching](docs/topics/caching.md)
 
 
 ### Features
@@ -79,6 +80,7 @@ $ bundle update sass
 * [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
 * [Custom Image Processing](docs/tutorials/custom_images.md)
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
+* [Overriding The Markdown Helper](docs/tutorials/markdown_helper.md)
 * [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
 
 
@@ -100,4 +102,3 @@ $ bundle update sass
 ## [Changelog](CHANGELOG.md)
 
 ## [MIT License](LICENSE)
-

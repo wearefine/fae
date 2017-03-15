@@ -25,6 +25,13 @@ module Fae
       render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options
     end
 
+    def fae_index_image(image, path = nil)
+      return if image.blank? || image.asset.blank? || image.asset.thumb.blank?
+      content_tag :div, class: 'image-mat' do
+        link_to_if path.present?, image_tag(image.asset.thumb.url), path
+      end
+    end
+
     def attr_toggle(item, column)
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
@@ -163,7 +170,7 @@ module Fae
     end
 
     def is_date_or_time?(datetime)
-      datetime.present? && ( datetime.kind_of?(Date) || datetime.kind_of?(Time) )
+      datetime.present? && ( datetime.kind_of?(Date) || datetime.kind_of?(Time) || datetime.kind_of?(ActiveSupport::TimeWithZone) )
     end
 
   end

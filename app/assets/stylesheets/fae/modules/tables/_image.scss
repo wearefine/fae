@@ -1,0 +1,21 @@
+th {
+  &.-image {
+    width: 120px;
+  }
+
+  &.-thumb {
+    width: 150px;
+  }
+}
+
+.image-mat {
+  width: 100px;
+  background-color: white;
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: auto;
+  }
+}

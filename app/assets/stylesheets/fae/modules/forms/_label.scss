@@ -18,4 +18,36 @@ label {
     font-style: italic;
     line-height: 1.3;
   }
+
+  &.label--two_col {
+    display: flex;
+
+    .label_inner {
+      flex-shrink: 0;
+      max-width: 50%;
+    }
+
+    h6 {
+      flex-shrink: 1;
+      padding-left: 25px;
+      padding-top: 1px;
+    }
+  }
+
+  &.has-multiselect-actions {
+    .multiselect-action {
+      a {
+        font-weight: normal;
+      }
+    }
+
+    // Ensure helper text fills space between primary label & multiselect actions
+    h6 {
+      flex-grow: 1;
+    }
+  }
+
+  &.has_no_helper_text {
+    justify-content: space-between;
+  }
 }

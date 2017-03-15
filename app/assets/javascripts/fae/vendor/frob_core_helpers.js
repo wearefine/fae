@@ -341,7 +341,7 @@
         }
 
         $('html, body').animate({
-          scrollTop: targetOffset
+          scrollTop: target_offset
         }, duration);
       }, delay);
     },

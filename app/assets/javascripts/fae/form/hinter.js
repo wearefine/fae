@@ -13,11 +13,17 @@
     var left = $el.offset().left + 20;
     var $hint = $el.closest('label').siblings('.hint');
     var new_height = $hint.height() + 80;
+    var width = 250;
+
+    if ($hint.find('.youtube-hint').length) {
+      width = 570;
+      new_height -= 40;
+    }
 
     $hint.modal({
       minHeight: new_height,
-      minWidth: 250,
-      maxWidth: 250,
+      minWidth: width,
+      maxWidth: width,
       position: [top, left],
       overlayClose: true,
       opacity: 0,
@@ -45,21 +51,14 @@
    * @protected
    */
   Hinter.prototype._drawElements = function($el) {
-    var $label = $el.parent().find('label');
-    var $h6 = $label.find('h6');
+    var $label = $el.parent().find('.label_inner');
 
     //create the icon
     this.$icon = $('<span />', {
       class: this.options.icon_class + ' ' + this.options.style_class
     });
 
-    // so if there's an h6 description then insert it before
-    // if not, then append to the end of the label
-    if ($h6.length) {
-      this.$icon.insertBefore($h6);
-    } else {
-      this.$icon.appendTo($label);
-    }
+    this.$icon.appendTo($label);
   };
 
   /**

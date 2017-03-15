@@ -19,13 +19,23 @@
   font-size: 14px;
 
   .chosen-results {
-    max-height: 140px;
+    max-height: 200px;
 
     li {
       &.highlighted {
         background: $c-lightest-grey;
       }
     }
+  }
+
+  &.chosen-drop-up .chosen-drop {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: -1px;
+    border-top: 1px solid $c-mid-grey;
+    border-bottom: none;
+    box-shadow: none;
+    border-radius: 0;
   }
 }
 
@@ -58,8 +68,9 @@
 .chosen-container-multi {
   max-width: 515px;
   min-width: 223px;
+
   // overriding the inline js chosen makes
-  width: 90% !important;
+  width: 100% !important;
 
   &.chosen-container-active {
     .chosen-choices {
@@ -101,6 +112,32 @@
       input[type="text"] {
         height: 100%;
       }
+    }
+  }
+}
+
+.chosen-container-single.chosen-container-active,
+.chosen-container-multi.chosen-container-active {
+  .chosen-single,
+  .chosen-choices {
+    border-color: $c-darker-grey;
+  }
+}
+
+.multiselect-action_wrap {
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.3;
+
+  .multiselect-action {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    padding-right: 13px;
+    border-right: 1px solid $c-mid-grey;
+
+    &:last-of-type {
+      padding-right: 0;
+      border-right: none;
     }
   }
 }
@@ -255,12 +292,13 @@
   .ms-list {
     position: relative;
     height: 100%;
-    height: calc(100% - 25px);
+    height: calc(100% - 34px);
     background: $c-white;
     overflow-y: auto;
 
     &.ms-focus {
       outline: 0;
+      border-bottom: 4px solid $c-darker-grey;
     }
   }
 

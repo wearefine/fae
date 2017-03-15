@@ -1,5 +1,16 @@
 # Running Fae Locally
 
+## Dependencies
+
+Before you fire this up locally, you'll need some dependencies installed.
+
+- Ruby 2.3.1 via your version manager of choice
+- MySQL
+- ImageMagick
+    + the easiest way to install ImageMagick is with Homebrew
+    `brew install imagemagick`
+- [QT for capybara-webkit](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#os-x-el-capitan-1011-and-yosemite-1010)
+
 ## Dummy App
 
 There is a dummy app included in the Engine source. To get it running, follow these steps.

@@ -9,7 +9,7 @@ module Fae
       file = Fae::File.find_by_id(params[:id])
       file.remove_asset = true
       file.save
-      render nothing: true
+      render body: nil
     end
 
     private

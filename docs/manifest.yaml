@@ -1,0 +1,80 @@
+# First item will be the default content on https://faecoms.com/documentation/
+- name: Installation
+  path: docs/installation/index.md
+  
+- name: Topics
+  children:
+    - name: Generators
+      path: docs/topics/generators.md
+    - name: Navigation Setup
+      path: docs/topics/navigation_setup.md
+    - name: Initializer
+      path: docs/topics/initializer.md
+    - name: Models
+      path: docs/topics/models.md
+    - name: Controllers
+      path: docs/topics/controllers_and_concerns.md
+    - name: Fae Model and Controller Concerns
+      path: docs/topics/concerns.md
+    - name: Override Uploaders and Classes
+      path: docs/topics/override_uploaders_and_classes.md
+    - name: Pages and Content Blocks
+      path: docs/topics/pages.md
+    - name: Custom JS, CSS and Helpers
+      path: docs/topics/custom_js_css.md
+    - name: Root Settings
+      path: docs/topics/root_settings.md
+    - name: Caching
+      path: docs/topics/caching.md
+
+- name: Features
+  children:
+    - name: Global Search
+      path: docs/features/search.md
+    - name: Filtering, Pagination and Sorting
+      path: docs/features/filtering.md
+    - name: Authorization
+      path: docs/features/authorization.md
+    - name: Multi-Language Support
+      path: docs/features/multi_language.md
+    - name: Cloning
+      path: docs/features/cloning.md
+    - name: Change Tracker
+      path: docs/features/change_tracker.md
+    - name: Slugger
+      path: docs/features/slugger.md
+    - name: Disabling Environments
+      path: docs/features/disable_envs.md
+    
+- name: Tutorials
+  children:
+    - name: Seting up Images and Files
+      path: docs/tutorials/image_and_files.md
+    - name: Adding Conditional Validations
+      path: docs/tutorials/conditional_validations.md
+    - name: Custom Image Processing
+      path: docs/tutorials/custom_images.md
+    - name: Overriding the Landing Page
+      path: docs/tutorials/landing_page.md
+    - name: Devise Action Mailer Configuration
+      path: docs/tutorials/actionmailer.md
+    
+- name: Helper/DSL Docs
+  children:
+    - name: Fae Styles
+      path: docs/helpers/styles.md
+    - name: Form Helpers
+      path: docs/helpers/form_helpers.md
+    - name: Nested Form Helpers
+      path: docs/helpers/nested_form_helpers.md
+    - name: View Helpers
+      path: docs/helpers/view_helpers.md
+    - name: Fae Partials
+      path: docs/helpers/partials.md
+    
+- name: Contributing
+  children:
+    - name: Running Fae Locally
+      path: docs/contributing/local_setup.md
+    - name: Fae Standards
+      path: docs/contributing/standards.md

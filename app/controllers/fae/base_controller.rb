@@ -12,7 +12,7 @@ module Fae
       if use_pagination
         @items = @klass.for_fae_index.page(params[:page])
       else
-        @items = @klass.for_fae_index.all
+        @items = @klass.for_fae_index
       end
       respond_to do |format|
         format.html
@@ -62,10 +62,10 @@ module Fae
     end
 
     def filter
-      if params[:commit] == "Reset Search"
-        @items = @klass.filter_all.page(params[:page])
-      else
+      if use_pagination
         @items = @klass.filter(params).fae_sort(params).page(params[:page])
+      else
+        @items = @klass.filter(params).fae_sort(params)
       end
 
       render :index, layout: false

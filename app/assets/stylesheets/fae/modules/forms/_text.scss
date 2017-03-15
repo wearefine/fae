@@ -8,7 +8,9 @@
   &.email,
   &.string,
   &.tel,
-  &.text {
+  &.text,
+  &.select,
+  > .label {
     max-width: 515px;
 
     input {
