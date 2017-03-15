@@ -16,6 +16,7 @@ module Fae
     private
 
       def generate_nested_index_controller_file
+        @attachments = @@attachments
         template "controllers/nested_index_scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
       end
 
@@ -23,6 +24,7 @@ module Fae
         @toggle_attrs = set_toggle_attrs
         @form_attrs = set_form_attrs
         @association_names = @@association_names
+        @attachments = @@attachments
         @has_position = @@has_position
         @display_field = @@display_field
         template "views/index_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"

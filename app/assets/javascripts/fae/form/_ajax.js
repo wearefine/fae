@@ -109,11 +109,13 @@ Fae.form.ajax = {
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
         var $this = $(this);
-        var $html = $(data);
 
-        // remotipart returns data inside textarea, let's grab it from there
-        if ($html.is('textarea')) {
-          $html = $( $html.val() );
+        // if its the new or old remotipart, return the html
+        var $html = $(data).length === 1 ? $(data) : $(data)[2];
+
+        // if it returns data inside textarea, strip that out
+        if ( $($html).is('textarea') ) {
+          $html = $( $($html).val() );
         }
 
         if ($html) {

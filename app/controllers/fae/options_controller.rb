@@ -1,7 +1,7 @@
 module Fae
   class OptionsController < ApplicationController
 
-    before_filter :super_admin_only
+    before_action :super_admin_only
 
     def edit
       @option = Option.first || Option.instance

@@ -13,7 +13,7 @@ main.content
         th <%= @display_field.present? ? @display_field.titleize : 'Name' %>
         th.-action-wide Modified
 <% @toggle_attrs.each do |attr| -%>
-        th.-action-wide data-sorter="false" <%= attr.humanize %>
+        th.-action-wide data-sorter="false" <%= attr.titleize %>
 <% num_columns += 1 -%>
 <% end -%>
         th.-action data-sorter="false"

@@ -13,8 +13,15 @@ Rails.application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_files  = true
-  config.static_cache_control = 'public, max-age=3600'
+  if Rails::VERSION::MAJOR <= 4
+    # The following settings are depreciated in Rails 5
+    config.serve_static_files  = true
+    config.static_cache_control = 'public, max-age=3600'
+  else
+    config.public_file_server.enabled  = true
+    config.public_file_server.headers = 'public, max-age=3600'
+    config.action_mailer.default_url_options = { host: '127.0.0.1'  }
+  end
 
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
