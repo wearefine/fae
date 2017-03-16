@@ -20,9 +20,6 @@ $breakpoints: map-merge($fine-breakpoints, $fae-breakpoints);
 // Widths, padding, margins, and the like
 $content-buffer: 30px !default;
 $sidenav-width: 250px !default;
-$sidenav-padding-one-level: 10px !default;
-$sidenav-padding-base-level: $content-buffer !default;
-$sidenav-active-border-width: 7px !default;
 
 $header-border-width: 4px !default;
 
