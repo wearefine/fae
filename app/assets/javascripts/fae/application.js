@@ -51,6 +51,7 @@
 //= require fae/navigation/sticky
 //= require fae/navigation/_navigation
 //= require fae/navigation/_subnav_highlighter
+//= require fae/navigation/_peek
 //= require fae/navigation/_language
 //= require fae/navigation/_global_search
 

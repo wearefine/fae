@@ -101,6 +101,7 @@
       this.$el
         .addClass(this.options.class_name)
         .css({
+          top: Fae.navigation.peek.getPeekHeight(),
           left: this.dimensions.left,
           position: 'fixed'
         });
@@ -116,6 +117,7 @@
     this.$el
       .removeClass(this.options.class_name)
       .css({
+        top: '',
         left: '',
         position: ''
       });
