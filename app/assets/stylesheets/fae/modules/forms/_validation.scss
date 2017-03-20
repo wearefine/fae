@@ -38,10 +38,6 @@
 }
 
 .input {
-  .valid {
-    border: 1px solid $c-notice-content;
-  }
-
   .invalid {
     border: 1px solid $c-error-content;
   }
