@@ -95,17 +95,20 @@ Fae.form.select = {
 
       // Mark label wrapper as having multiselect actions for styling
       $label.addClass('has-multiselect-actions');
+
+      // Enable or disable multiselect actions based on select state
+      setAbilities($element);
     });
 
     // Watch select for changes and add, remove, or carry out Select All option as needed
     $('#js-main-content').on('change', query_eligible_multiselects, function(e) {
       var $element = $(e.currentTarget);
 
-      // Fizzle on empty values
-      if (!$element.val()) { return; }
+      // Set state of possible actions
+      setAbilities($element);
 
       // Intercept selections of the Select All option and select all other options.
-      var requesting_select_all = $element.val().indexOf(select_all_value) != -1;
+      var requesting_select_all = $element.val() && $element.val().indexOf(select_all_value) != -1;
       if (requesting_select_all) {
         setAllOptionsSelected($element, true);
       }
@@ -117,6 +120,18 @@ Fae.form.select = {
       setAllOptionsSelected(this, false);
     });
 
+    // Enable or disable actions based on state
+    function setAbilities($element) {
+      var $deselect_all = $('.js-multiselect-action-deselect_all');
+
+      // Only allow deselects when options are selected
+      if ($element.find('option:selected').length) {
+        $deselect_all.show();
+      } else {
+        $deselect_all.hide();
+      }
+    }
+
     // Add special "Select All" option
     function addSelectAllOption($element) {
       var $select_all_option = $('<option />', {
@@ -127,11 +142,6 @@ Fae.form.select = {
       $element.trigger('chosen:updated');
     }
 
-    // Remove "Select All" option
-    function ignoreSelectAllOption($element) {
-      $element.find('option[value="' + select_all_value + '"]').prop('selected', false);
-    }
-
     // Mark all options as selected or not
     function setAllOptionsSelected(select, state) {
       var $select = $(select).closest(query_input_select).find('select');
@@ -140,6 +150,7 @@ Fae.form.select = {
       // Always ignore magic Select All btn
       $select.find('option[value="' + select_all_value + '"]').prop('selected', false);
       $select.trigger('chosen:updated');
+      $select.trigger('change');
     }
   }
 
