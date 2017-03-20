@@ -12,7 +12,7 @@ If you want to use these roles to limit access to certain objects you can by upd
 
 The Authorization Concern is generated when you install Fae and can be found at `app/models/concerns/fae/authorization_concern.rb`.
 
-If you don' t have this file, you probably installed Fae before the feature was added. Update Fae and copy [this file](../../blob/master/lib/generators/fae/templates/models/concerns/authorization_concern.rb) to the location above to get started.
+If you don' t have this file, you probably installed Fae before the feature was added. Update Fae and copy [this file](https://github.com/wearefine/fae/blob/master/lib/generators/fae/templates/models/concerns/authorization_concern.rb) to the location above to get started.
 
 ### Access Map
 

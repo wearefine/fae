@@ -48,7 +48,7 @@ fae.pages_path
 
 Fae has an alternative top navigation that's ideal if you have a lot of objects or want to nest them more than two levels.
 
-![Top Nav](../images/navigation.png)
+![Top Nav](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/navigation.png)
 
 To enable the top nav, add this option to `config/initializers/fae.rb`:
 

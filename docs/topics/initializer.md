@@ -16,4 +16,4 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 | tracker_history_length | integer | 15 | This defines how many changes per object are kept in the DB. |
 | disabled_environments | array | [] | This option will disable Fae complete when the app is running on one of the defined environments |
 | per_page | integer | 25 | Sets the default number of items shown in paginated lists |
-| use_cache | boolean | false | Determines whether or not Fae will utilize cache internally. See [docs](caching.md) |
+| use_cache | boolean | false | Determines whether or not Fae will utilize cache internally. See [docs](https://github.com/wearefine/fae/blob/master/docs/topics/caching.md) |
