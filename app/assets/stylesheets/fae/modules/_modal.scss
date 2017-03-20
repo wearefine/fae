@@ -22,6 +22,7 @@
   position: relative;
   background: $c-modal-bg;
   color: $c-darker-grey;
+  padding: 20px;
   line-height: 1.5;
   font-size: 13px;
   box-shadow: 0 3px 8px 0 $c-box-shadow;
@@ -62,7 +63,7 @@
 
 .simplemodal-close {
   display: block;
-  height: 30px;
+  height: 10px;
   &:before {
     @include icon-stuff;
     @extend .icon-delete_x:before;

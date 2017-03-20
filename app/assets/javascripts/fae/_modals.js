@@ -14,7 +14,7 @@ Fae.modals = {
    * Click event to open modal with only an image
    */
   imageModals: function() {
-    $('.js-image-modal').click(function(e){
+    $('#js-main-content').on('click', '.js-image-modal', function(e) {
       e.preventDefault();
       var $this = $(this);
 
