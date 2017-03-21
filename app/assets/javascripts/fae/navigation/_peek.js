@@ -34,7 +34,7 @@ Fae.navigation.peek = {
     if (!FCH.bp.large) { this._disablePeek(true); return; }
 
     // Fizzle & reset if we aren't low enough on page
-    const scrollTop = $(window).scrollTop();
+    var scrollTop = $(window).scrollTop();
     if (scrollTop <= this.$mainHeader.outerHeight()) {
       this._disablePeek(true);
       this._trackPeekPos(scrollTop);
@@ -108,12 +108,10 @@ Fae.navigation.peek = {
   },
 
   _isNearBottom: function(scrollTop) {
-    const pageHeight = $(document).height();
-    const windowHeight = $(window).height();
-    const nearThreshold = 100;
+    var nearThreshold = 100;
+    var isNear = false;
 
-    let isNear = false;
-    if (scrollTop >= (pageHeight - windowHeight - nearThreshold)) {
+    if (scrollTop >= ($(document).height() - $(window).height() - nearThreshold)) {
       isNear = true;
     }
 
