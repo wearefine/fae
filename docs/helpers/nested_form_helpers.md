@@ -13,7 +13,7 @@
 fae_image_form
 ```
 
-![Image upload](../images/image.png)
+![Image upload](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/image.png)
 
 *Fae::Image association only*
 
@@ -42,7 +42,7 @@ fae_image_form f, :logo, label: 'Corporate Logo', required: true
 fae_file_form
 ```
 
-![File upload](../images/file.png)
+![File upload](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/file.png)
 
 *Fae::File association only*
 
@@ -96,7 +96,7 @@ fae_content_form f, :ad, input_options: { collection: ['Header', 'Footer'], inpu
 fae_filter_form
 ```
 
-![Filter form](../images/filter_form.png)
+![Filter form](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/filter_form.png)
 
 Displays the filter form, which includes the search field, submit, and reset buttons. It accepts options, followed by an optional block.
 
@@ -121,7 +121,7 @@ Displays the filter form, which includes the search field, submit, and reset but
 fae_filter_select(attribute, options)
 ```
 
-![Filter select](../images/filter_select.png)
+![Filter select](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/filter_select.png)
 
 Dislays a select tag to be used within a `fae_filter_form`.
 
