@@ -37,6 +37,22 @@
     }
   }
 
+  > ul > li:not(.sidenav-accordian) {
+    border: 1px solid $c-grey;
+    border-bottom: none;
+    background-color: $c-white;
+
+    &:last-of-type {
+      border-bottom: 1px solid $c-grey;
+    }
+
+    a {
+      padding: 13px 15px;
+      font-size: 15px;
+    }
+  }
+
+
   // Index pages
   ~ .content,
   // Edit pages
