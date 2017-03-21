@@ -71,7 +71,9 @@ Fae.navigation.peek = {
   },
 
   _trackPeekPos: function(scrollTop) {
-    this.prevScrollTop = scrollTop;
+    if (Math.abs(this.prevScrollTop - scrollTop) >= 150) {
+      this.prevScrollTop = scrollTop;
+    };
   },
 
   _disablePeek: function(fullDisable) {

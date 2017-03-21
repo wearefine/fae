@@ -110,7 +110,7 @@ end
 fae_filter_form
 ```
 
-![Filter form](../images/filter_form.png)
+![Filter form](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/filter_form.png)
 
 Displays the filter form, which includes the search field, submit, and reset buttons. It accepts options, followed by an optional block.
 
@@ -135,7 +135,7 @@ Displays the filter form, which includes the search field, submit, and reset but
 fae_filter_select(attribute, options)
 ```
 
-![Filter select](../images/filter_select.png)
+![Filter select](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/filter_select.png)
 
 Dislays a select tag to be used within a `fae_filter_form`.
 
@@ -161,7 +161,7 @@ Dislays a select tag to be used within a `fae_filter_form`.
 
 ## Pagination
 
-![Fae paginate](../images/fae_paginate.png)
+![Fae paginate](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/fae_paginate.png)
 
 If your index tables are stacked with items and it's taking a while to load, you may consider adding pagination to them. To do this, just follow these steps.
 

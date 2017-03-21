@@ -9,7 +9,7 @@ module Admin
   end
 end
 ```
-For a standard Fae section you can pretty much leave your controller empty. Most of the magic happens in [Fae::BaseController](../../app/controllers/fae/base_controller.rb). But there are a few things you should know about.
+For a standard Fae section you can pretty much leave your controller empty. Most of the magic happens in [Fae::BaseController](https://github.com/wearefine/fae/blob/master/app/controllers/fae/base_controller.rb). But there are a few things you should know about.
 
 ## Building Assets
 
