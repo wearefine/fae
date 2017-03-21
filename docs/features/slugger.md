@@ -7,7 +7,7 @@
 
 ## Slug Generation
 
-![Slugger](../images/slugger.gif)
+![Slugger](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/slugger.gif)
 
 Auto-generate a slug from a field. Only populates if the `slug` input is blank.
 

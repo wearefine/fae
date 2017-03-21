@@ -4,13 +4,17 @@
 
 - enhancements
     + Rails 5 support
+    + \#52299: Adds caching system
     + \#62472: Add keyboard support to form checkboxes
     + \#62473: Ensure focus styles exist for all form elements
-    + \#52299: Adds caching system
+    + \#64544: Update focus and success form field borders
     + \#61840: Document markdown overriding process
 - bugs
+    + \#65689: Adds CSRF protection
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
+    + Add .js-results-table class back so activity log page's table can be properly targeted
+    + Bump acts_as_list to ~> 0.9.0 to avoid rails 5 deprecation errors
 
 ## 1.4.1
 

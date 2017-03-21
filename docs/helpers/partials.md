@@ -44,14 +44,14 @@ render 'fae/shared/index_header', title: 'Something Entirely Different', new_but
 form_header
 ```
 
-![Form header](../images/form_header.png)
+![Form header](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/form_header.png)
 
 Displays breadcrumb links and form title.
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
 | header | ActiveRecord object or string | | **(required)** passed to form_header helper method |
-| languages | boolean | false | display the [language changer](../features/multi_language.md) |
+| languages | boolean | false | display the [language changer](https://github.com/wearefine/fae/blob/master/docs/features/multi_language.md) |
 | save_button_text (`v1.3 <=`)   | string | 'Save' | save button text |
 | cancel_button_text (`v1.3 <=`) | string | 'Cancel' | cancel button text  |
 | cloneable | boolean | false | includes Clone button |
@@ -171,7 +171,7 @@ Full Slim implementation with section wrapper and edit page conditional
 
 ## Nested Forms
 
-![Nested Table](../images/nested_table.png)
+![Nested Table](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/nested_table.png)
 
 Fae provides an easy way to manage associated objects in one form via nested forms. A good use case for nested forms is when you have a `has_many` association where the child object is simple enough that an embedded table and form on the parent form will do. This makes managing the associated content much more convenient.
 
@@ -181,7 +181,7 @@ Some good examples ideal for nested tables are image galleries, tasting notes on
 
 ### Generate the child object
 
-Assuming the parent object already exists, generate the object to be nested with [Fae's nested scaffold command](../topics/generators.md).
+Assuming the parent object already exists, generate the object to be nested with [Fae's nested scaffold command](https://github.com/wearefine/fae/blob/master/docs/topics/generators.md).
 
 ### Update Models
 
@@ -211,7 +211,7 @@ Add the [nested table partial](helpers.md#nested_table) to the parent form. This
 recent_changes
 ```
 
-![Recent changes](../images/recent_changes.png)
+![Recent changes](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/recent_changes.png)
 
 Displays recent changes to an object as logged by the change tracker in a table. Columns include the user, type, updated attributes, and datetime of the change.
 

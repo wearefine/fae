@@ -22,6 +22,17 @@ describe 'wines#new' do
 
 end
 
+describe 'wines#create' do
+
+  it 'acts_as_list should create wines with proper position attrs' do
+    wine1 = FactoryGirl.create(:wine)
+    wine2 = FactoryGirl.create(:wine)
+    expect(wine1.reload.position).to eq(2)
+    expect(wine2.reload.position).to eq(1)
+  end
+
+end
+
 describe 'wines#edit' do
 
   it 'should return found' do
