@@ -44,21 +44,9 @@ item(title, options = {})
 fae.pages_path
 ```
 
-## Top Nav
-
-Fae has an alternative top navigation that's ideal if you have a lot of objects or want to nest them more than two levels.
-
-![Top Nav](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/navigation.png)
-
-To enable the top nav, add this option to `config/initializers/fae.rb`:
-
-```ruby
-config.has_top_nav = true
-```
-
 ### Top/Side Nav Hierarchy
 
-When the top nav is enabled, the first and second level of `structure` defines the main nav and dropdown items respectively. When you click into a section that has third and/or fourth levels, a side nav will appear to display those items.
+The first and second level of `structure` defines the main nav and dropdown items respectively. When you click into a section that has third and/or fourth levels, a side nav will appear to display those items.
 
 ```ruby
 def structure
