@@ -11,6 +11,8 @@
   top: 0;
   box-shadow: 0 0 10px $c-grey;
 
+  transition: top 0.4s ease;
+
   &:after {
     content: '';
     display: block;
@@ -43,7 +45,8 @@
 
 .content-header-subnav {
   position: absolute;
-  left: $content-buffer;
+  padding-left: $content-buffer;
+  left: 0;
   bottom: 0;
   width: 100%;
 
