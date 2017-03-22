@@ -10,12 +10,16 @@
     + \#64544: Update focus and success form field borders
     + \#61840: Document markdown overriding process
     + \#64653: Refresh sidebar navigation styles
+    + \#65539: deprecate has_top_nav, top navigation is the standard
+
 - bugs
     + \#65689: Adds CSRF protection
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
     + Add .js-results-table class back so activity log page's table can be properly targeted
     + Bump acts_as_list to ~> 0.9.0 to avoid rails 5 deprecation errors
+    + Kaminari/Rails 5 compatibility [#184](https://github.com/wearefine/fae/issues/184)
+    + Sets StaticPage associations to not be readonly [#138](https://github.com/wearefine/fae/issues/138)
 
 ## 1.4.1
 
