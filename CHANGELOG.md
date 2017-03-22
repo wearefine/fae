@@ -16,7 +16,8 @@
     + Fixes filter form variable
     + Add .js-results-table class back so activity log page's table can be properly targeted
     + Bump acts_as_list to ~> 0.9.0 to avoid rails 5 deprecation errors
-    + #184: Kaminari/Rails 5 compatibility
+    + Kaminari/Rails 5 compatibility [#184](https://github.com/wearefine/fae/issues/184)
+    + Sets StaticPage associations to not be readonly [#138](https://github.com/wearefine/fae/issues/138)
 
 ## 1.4.1
 
