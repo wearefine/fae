@@ -16,5 +16,9 @@ module Fae
 
     belongs_to :fileable, polymorphic: true, touch: true
 
+    def readonly?
+      false
+    end
+
   end
 end

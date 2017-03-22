@@ -10,7 +10,7 @@ module Fae
 
     def self.instance
       setup_dynamic_singleton
-      row = left_joins(fae_fields.keys).readonly(false).references(fae_fields.keys).find_by_slug(@slug)
+      row = includes(fae_fields.keys).references(fae_fields.keys).find_by_slug(@slug)
       row = create(title: @slug.titleize, slug: @slug) if row.blank?
       row
     end
