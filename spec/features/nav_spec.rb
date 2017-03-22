@@ -13,7 +13,31 @@ feature 'Main Navigation' do
     end
   end
 
-  scenario 'should highlight third level in sidebar', js: true do
+  scenario 'should include custom CSS classes' do
+    admin_login
+    team = FactoryGirl.create(:team)
+    visit admin_team_coaches_path(team)
+
+    expect(page).to have_selector('.css-one-level-deep', text: 'Events')
+    expect(page).to have_selector('.css-two-levels-deep', text: 'Event Hosts', visible: false)
+    expect(page).to have_selector('.css-three-levels-deep', text: 'Personnel', visible: false)
+    expect(page).to have_selector('.css-four-levels-deep', text: 'Coaches', visible: false)
+  end
+
+  scenario 'items should link to first items in dropdown by default' do
+    admin_login
+    visit admin_releases_path
+
+    within('.main-header-nav') do
+      expect(page.find_link('Products')[:href]).to eq('/admin/wines')
+    end
+  end
+
+end
+
+feature 'Side Navigation' do
+
+  scenario 'should highlight third level', js: true do
     admin_login
     visit admin_varietals_path
 
@@ -40,18 +64,33 @@ feature 'Main Navigation' do
     expect(page.find('#js-sidenav .-current')).to have_content('Coaches')
   end
 
-  scenario 'should not exist on a new page', js: true do
+  scenario 'should exist on a new page in a 3+ tier section', js: true do
     admin_login
     team = FactoryGirl.create(:team)
     visit new_admin_team_coach_path(team)
 
-    expect(page).to_not have_selector('#js-sidenav')
+    expect(page).to have_selector('#js-sidenav')
   end
 
-  scenario 'should not exist on an edit page', js: true do
+  scenario 'should exist on an edit page in a 3+ tier section', js: true do
     admin_login
     coach = FactoryGirl.create(:coach)
     visit edit_admin_team_coach_path(coach.team, coach)
+
+    expect(page).to have_selector('#js-sidenav')
+  end
+
+  scenario 'should not exist on a new page in a <3 tier section', js: true do
+    admin_login
+    visit new_admin_wine_path
+
+    expect(page).to_not have_selector('#js-sidenav')
+  end
+
+  scenario 'should not exist on an edit page in a <3 tier section', js: true do
+    admin_login
+    wine = FactoryGirl.create(:wine)
+    visit edit_admin_wine_path(wine)
 
     expect(page).to_not have_selector('#js-sidenav')
   end
@@ -71,26 +110,6 @@ feature 'Main Navigation' do
     # Ensure only one accordion is open after click
     expect(page).to_not have_selector('#js-sidenav .js-accordion.-open > a', text: 'Personnel')
     expect(page).to have_selector('#js-sidenav .js-accordion.-open > a', text: 'Equipment')
-  end
-
-  scenario 'should include custom CSS classes' do
-    admin_login
-    team = FactoryGirl.create(:team)
-    visit admin_team_coaches_path(team)
-
-    expect(page).to have_selector('.css-one-level-deep', text: 'Events')
-    expect(page).to have_selector('.css-two-levels-deep', text: 'Event Hosts', visible: false)
-    expect(page).to have_selector('.css-three-levels-deep', text: 'Personnel', visible: false)
-    expect(page).to have_selector('.css-four-levels-deep', text: 'Coaches', visible: false)
-  end
-
-  scenario 'main nav items should link to first items in dropdown by default' do
-    admin_login
-    visit admin_releases_path
-
-    within('.main-header-nav') do
-      expect(page.find_link('Products')[:href]).to eq('/admin/wines')
-    end
   end
 
 end

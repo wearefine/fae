@@ -1,9 +1,14 @@
 # Upgrading Fae
 
+* [To v1.5](#to-v15)
 * [From v1.2 to v1.3](#from-v10-to-v11)
 * [From v1.1 to v1.2](#from-v11-to-v12)
 
 ---
+
+# To v1.5
+
+`has_top_nav` has been deprecated. Any admin still using side nav only will convert to using the top nav upon upgrade without any changes necessary.
 
 # From v1.2 to v1.3
 
