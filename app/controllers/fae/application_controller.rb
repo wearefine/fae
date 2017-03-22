@@ -2,7 +2,6 @@ module Fae
   class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
 
-    include Fae::NavItems # deprecate in Fae v2.0
     include Fae::ApplicationControllerConcern
 
     helper Fae::ViewHelper
