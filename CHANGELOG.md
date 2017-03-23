@@ -3,6 +3,11 @@
 ## Unreleased
 
 - enhancements
+- bugs
+
+## 1.5
+
+- enhancements
     + Rails 5 support
     + \#52299: Adds caching system
     + \#62472: Add keyboard support to form checkboxes
@@ -11,7 +16,6 @@
     + \#61840: Document markdown overriding process
     + \#64653: Refresh sidebar navigation styles
     + \#65539: deprecate has_top_nav, top navigation is the standard
-
 - bugs
     + \#65689: Adds CSRF protection
     + Checks for use_pagination method on filter action
