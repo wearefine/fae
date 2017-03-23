@@ -5,7 +5,7 @@
 .nav {
   top: 0;
   left: 0;
-  width: $sidenav-width;
+  width: $sidenav-width - 30px;
   height: 100%;
   font-size: 15px;
   overflow: auto;

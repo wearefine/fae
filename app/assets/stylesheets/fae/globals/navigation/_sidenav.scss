@@ -1,38 +1,51 @@
 .sidenav {
   @include stack($fae-nav-stack);
   position: absolute;
+  left: $content-buffer;
 
   @include bp(large-down) {
     display: none;
   }
 
   a {
-    padding: 10px $sidenav-padding-base-level;
+    padding: 3px 0;
 
     &.-current {
       font-weight: bold;
       color: $c-black;
-      padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
-      border-left: $sidenav-active-border-width solid $c-custom-highlight;
     }
   }
 
   .subnav {
-    padding-left: $sidenav-padding-base-level;
+    padding: 10px 10px 10px 0;
+    background-color: $c-light-grey;
   }
 
   li {
     &.-parent-current {
       > a {
-        color: $c-black;
-        font-weight: bold;
-        padding-left: $sidenav-padding-base-level - $sidenav-active-border-width;
-        border-left: $sidenav-active-border-width solid $c-custom-highlight;
+        color: $c-white;
+        background-color: $c-custom-highlight;
       }
 
       > ul {
         display: block;
       }
+    }
+  }
+
+  > ul > li:not(.sidenav-accordian) {
+    border: 1px solid $c-grey;
+    border-bottom: none;
+    background-color: $c-white;
+
+    &:last-of-type {
+      border-bottom: 1px solid $c-grey;
+    }
+
+    > a {
+      padding: 13px 15px;
+      font-size: 15px;
     }
   }
 
@@ -48,36 +61,77 @@
 
 // The accordion. An <li> element.
 .sidenav-accordion {
+  font-size: 13px;
+  line-height: 1.38em;
+
   &.-open {
     > a {
       &:after {
-        @extend .icon-arrow_up:before;
-        color: $c-black;
+        @extend .icon-arrow_down:before;
+        top: 19px;
+        transform: rotate(0);
+        opacity: 1;
+      }
+    }
+  }
+
+  &.-parent-current {
+    > a:hover:after {
+      color: $c-white;
+    }
+
+    &.-open {
+      > a {
+        &:after {
+          color: $c-white;
+        }
       }
     }
   }
 
   a {
+    padding-left: $content-buffer;
+    padding-right: $content-buffer;
+    margin-top: 7px;
+
     &.-current {
-      border-left: 0;
-      padding-left: $sidenav-padding-one-level;
+      border-left: 5px solid $c-custom-highlight;
+      padding-left: 25px;
     }
   }
 
-  li {
-    a {
-      font-size: 13px;
-      padding-left: $sidenav-padding-one-level;
-    }
+  > ul:first-of-type > li:first-child a {
+    margin-top: 0;
+  }
+
+  &:not(:first-of-type) > a {
+    border-top: 0;
   }
 
   > a {
     @extend %nav-icon;
 
+    margin-top: 0;
+    padding: 13px $content-buffer 13px 15px;
+    font-size: 15px;
+    background-color: $c-white;
+
     &:after {
-      @extend .icon-arrow_down:before;
-      top: 14px;
+      @extend .icon-arrow_up:before;
+
+      top: 18px;
+      right: 13px;
+      color: $c-black;
       font-size: 6px;
+
+      transition: opacity 0.4s ease,
+                  color 0.4s ease;
+      transform: rotate(90deg);
+      opacity: 0;
+    }
+
+    &:hover:after {
+      opacity: 1;
     }
   }
 

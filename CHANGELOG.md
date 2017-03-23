@@ -9,7 +9,9 @@
     + \#62473: Ensure focus styles exist for all form elements
     + \#64544: Update focus and success form field borders
     + \#61840: Document markdown overriding process
+    + \#64653: Refresh sidebar navigation styles
     + \#65539: deprecate has_top_nav, top navigation is the standard
+
 - bugs
     + \#65689: Adds CSRF protection
     + Checks for use_pagination method on filter action
