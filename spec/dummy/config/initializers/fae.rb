@@ -12,6 +12,7 @@ Fae.setup do |config|
     ja: 'Japanese'
   }
 
+  # has_top_nav has been deprecated, but keeping in to ensure definition doesn't rasie exceptions
   config.has_top_nav = true
 
 end

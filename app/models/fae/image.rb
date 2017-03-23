@@ -19,6 +19,10 @@ module Fae
 
     belongs_to :imageable, polymorphic: true, touch: true
 
+    def readonly?
+      false
+    end
+
     private
 
     def recreate_versions

@@ -4,7 +4,6 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 
 | key | type | default | description |
 | --- | ---- | ------- | ----------- |
-| has_top_nav | boolean | false | This determines if the main nav items are on the top or the side. |
 | devise_secret_key | string | | unique Devise hash, generated on `rails g fae:install` |
 | devise_mailer_sender | string | "change-me@example.com" | This email address will get passed to Devise and used as the from address in the password reset emails. |
 | dashboard_exclusions | array | [] | The dashboard will show all objects with recent activity. |

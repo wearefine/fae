@@ -16,6 +16,12 @@ Fae provides models for images and files: `Fae::Image` and `Fae::File` respectiv
 Here's a basic example:
 
 ```ruby
+has_fae_image :bottle_shot
+```
+
+which is a shorthand convenience method for
+
+```ruby
 has_one :bottle_shot, -> { where(attached_as: 'bottle_shot') },
   as: :imageable,
   class_name: '::Fae::Image',
@@ -48,6 +54,12 @@ accepts_nested_attributes_for :gallery_images, allow_destroy: true
 ```
 
 A file example:
+
+```ruby
+has_fae_file :tasting_notes_pdf
+```
+
+which is a shorthand convenience method for
 
 ```ruby
 has_one :tasting_notes_pdf, -> { where(attached_as: 'tasting_notes_pdf') },

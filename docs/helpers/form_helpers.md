@@ -38,7 +38,7 @@ fae_method_name(f, attribute, options)
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| label | string | attribute.humanize | the form label |
+| label | string | attribute.titleize | the form label |
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal |
 | dark_hint | string | | **warning: this option will be depreciated in v2.0** text that appears in a dark color scheme (`hint` will override `dark_hint` if simultaneously supplied) |

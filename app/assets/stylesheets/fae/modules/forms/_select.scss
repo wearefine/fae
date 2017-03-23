@@ -32,7 +32,7 @@
     top: auto;
     bottom: 100%;
     margin-bottom: -1px;
-    border-top: 1px solid $c-mid-grey;
+    border-top: 1px solid $c-notice-content;
     border-bottom: none;
     box-shadow: none;
     border-radius: 0;
@@ -41,7 +41,7 @@
 
 .chosen-container-active {
   .chosen-single {
-    border-color: $c-mid-grey;
+    border-color: $c-notice-content;
     background: $c-chosen-gradient-end;
   }
 }
@@ -119,7 +119,13 @@
 .chosen-container-multi.chosen-container-active {
   .chosen-single,
   .chosen-choices {
-    border-color: $c-darker-grey;
+    border-color: $c-notice-content;
+  }
+}
+
+.chosen-container-multi.chosen-with-drop:not(.chosen-drop-up) {
+  .chosen-choices {
+    border-bottom: none;
   }
 }
 
@@ -160,7 +166,7 @@
 
 .chosen-container {
   .chosen-drop {
-    border-color: $c-mid-grey;
+    border-color: $c-notice-content;
   }
 }
 
@@ -279,7 +285,7 @@
 
     &.ms-focus {
       outline: 0;
-      border-bottom: 4px solid $c-darker-grey;
+      border-bottom: 4px solid $c-notice-content;
     }
   }
 

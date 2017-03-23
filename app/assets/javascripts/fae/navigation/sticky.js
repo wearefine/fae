@@ -69,6 +69,7 @@
     });
 
     $placeholder.insertAfter(this.$el);
+
     // save for reference later
     this.$placeholder = $placeholder;
   };
@@ -140,7 +141,7 @@
     }
 
     function debounceResizeCallback() {
-      if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
+      if ( _this.$placeholder && !_this.options.ignore_placeholder_offsets && _this.$placeholder.is(':visible')) {
         setDimensionsTopLeft.call(_this, _this.$placeholder);
       } else {
         setDimensionsTopLeft.call(_this, _this.$el);
@@ -168,6 +169,7 @@
       class_name: 'js-sticky',
       placeholder_class: 'js-sticky-placeholder',
       placeholder: false,
+      ignore_placeholder_offsets: false,
       offset: 0,
       perpetual_placeholder: false
     };

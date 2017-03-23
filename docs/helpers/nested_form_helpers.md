@@ -19,7 +19,7 @@ fae_image_form
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| label         | string | image_name.to_s.humanize | the uploader's label |
+| label         | string | image_name.to_s.titleize | the uploader's label |
 | helper_text         | string | | the uploader's helper text|
 | alt_label           | string | "#{image_label} alt text" | the alt field's label |
 | alt_helper_text     | string | | the alt field's helper text |
@@ -48,7 +48,7 @@ fae_file_form
 
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
-| label         | string | file_name.to_s.humanize | the uploader's label |
+| label         | string | file_name.to_s.titleize | the uploader's label |
 | helper_text   | string | | the uploader's helper text|
 | required      | boolean | false | adds required validation to the uploader |
 

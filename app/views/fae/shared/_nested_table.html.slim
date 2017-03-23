@@ -10,7 +10,7 @@ ruby:
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
   # @depreciation - remove header option in v2.0
-  header              ||= assoc_name.humanize             # 'Restaurant Bars'
+  header              ||= assoc_name.titleize             # 'Restaurant Bars'
   title               ||= header
   add_button_text     ||= "Add #{title.singularize}"
   ordered             ||= false
