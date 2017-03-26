@@ -4,6 +4,7 @@
 
 - enhancements
     + Update dynamic relationships docs for pages and split out to make easier to find.
+    + Resolve Rails 5 depreciation warnings [#167](https://github.com/wearefine/fae/issues/167)
 - bugs
 
 ## 1.5
