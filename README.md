@@ -22,7 +22,7 @@ gem 'fae-rails'
 $ rails g fae:install
 ```
 
-3) Visit `/admin` and setup your super admin account.
+3) Visit `/admin` and setup your super admin account
 
 ## Documentation
 
@@ -31,7 +31,7 @@ https://www.faecms.com/documentation
 
 ### Topics
 
-* [Quickstart Guide](docs/quiickstart-guide.md)
+* [Quickstart Guide](docs/quickstart-guide.md)
 * [Installation](docs/installation/index.md)
 * [Generators](docs/topics/generators.md)
 * [Navigation Setup](docs/topics/navigation_setup.md)
