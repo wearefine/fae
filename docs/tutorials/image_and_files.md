@@ -16,6 +16,12 @@ Fae provides models for images and files: `Fae::Image` and `Fae::File` respectiv
 Here's a basic example:
 
 ```ruby
+has_fae_image :bottle_shot
+```
+
+which is a shorthand convenience method for
+
+```ruby
 has_one :bottle_shot, -> { where(attached_as: 'bottle_shot') },
   as: :imageable,
   class_name: '::Fae::Image',
@@ -50,6 +56,12 @@ accepts_nested_attributes_for :gallery_images, allow_destroy: true
 A file example:
 
 ```ruby
+has_fae_file :tasting_notes_pdf
+```
+
+which is a shorthand convenience method for
+
+```ruby
 has_one :tasting_notes_pdf, -> { where(attached_as: 'tasting_notes_pdf') },
   as: :fileable,
   class_name: '::Fae::File',
@@ -66,7 +78,7 @@ accepts_nested_attributes_for :image, allow_destroy: true
 
 ## In the Controller
 
-For a standard Fae section you can pretty much leave your controller empty. Most of the magic happens in [Fae::BaseController](../../app/controllers/fae/base_controller.rb). But there are a few things you should know about.
+For a standard Fae section you can pretty much leave your controller empty. Most of the magic happens in [Fae::BaseController](https://github.com/wearefine/fae/blob/master/app/controllers/fae/base_controller.rb). But there are a few things you should know about.
 
 ## Building Assets
 
@@ -94,7 +106,7 @@ end
 fae_image_form
 ```
 
-![Image upload](../images/image.png)
+![Image upload](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/image.png)
 
 *Fae::Image association only*
 
@@ -123,7 +135,7 @@ fae_image_form f, :logo, label: 'Corporate Logo', required: true
 fae_file_form
 ```
 
-![File upload](../images/file.png)
+![File upload](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/file.png)
 
 *Fae::File association only*
 

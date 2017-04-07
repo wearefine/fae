@@ -1,54 +1,37 @@
-# Meet Fae
+# Fae
 
-[![Build Status](https://jenkins.afinedevelopment.com/buildStatus/icon?job=Fae/Prod)](https://jenkins.afinedevelopment.com/job/Fae/job/Prod/)
+### CMS for Rails. For Reals.
+
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
 
+Like many Rails CMS engines, Fae delivers all the basics to get you up and running quickly: authentication, authorization, a sleek UI, form helpers, image processing and workflows. But unlike other engines, Fae's generated models, controllers, and views are built to customize and scale.
 
-Fae is CMS for Rails unlike any other. Like most Rails CMS engines, Fae provides all the basics to get you up and running: authentication, a responsive UI, form element and workflows. But unlike other CMS engines, Fae's methodology is based around generators and a DSL over configuration. This allows you to get to a working CMS very quickly, but gives you the flexibility to customize any piece you need.
+Fae supports Rails 4.1+.
 
 ## Installation
 
-Add the gem to your Gemfile and run `bundle install`
+1) Add the gem to your Gemfile and run `bundle install`
 
 ```ruby
 gem 'fae-rails'
 ```
-Run the installer
+
+2) Run the installer
 
 ```bash
 $ rails g fae:install
 ```
 
-After the installer completes, visit `/admin` and setup your first user account. That should automatically log you in to your blank Fae instance.
-
-### Dependencies
-
-#### Rails
-
-Fae supports Rails >= 4.1.
-
-#### Sass and sass-rails
-
-Fae requires `sass >= 3.4` and `sass-rails >= 5`.
-
-If you're using Rails 4.1 you'll need to update the versions in the `Gemfile`:
-
-```ruby
-gem 'sass-rails', '~> 5.0.0'
-gem 'sass', '~> 3.4.0'
-```
-
-and run:
-
-```bash
-$ bundle update sass-rails
-$ bundle update sass
-```
+3) Visit `/admin` and setup your super admin account
 
 ## Documentation
 
+For full documentation visit:  
+https://www.faecms.com/documentation
+
 ### Topics
 
+* [Quickstart Guide](docs/quickstart-guide.md)
 * [Installation](docs/installation/index.md)
 * [Generators](docs/topics/generators.md)
 * [Navigation Setup](docs/topics/navigation_setup.md)
@@ -60,6 +43,7 @@ $ bundle update sass
 * [Pages and Content Blocks](docs/topics/pages.md)
 * [Custom JS, CSS and Helpers](docs/topics/custom_js_css.md)
 * [Root Settings](docs/topics/root_settings.md)
+* [Caching](docs/topics/caching.md)
 
 
 ### Features

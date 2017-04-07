@@ -3,12 +3,7 @@ module Fae
     extend ActiveSupport::Concern
 
     # define the navigation structure in this file
-    # navigation will default to the sidenav,
-    # unless you set the following in the Fae initializer:
-    #
-    #   config.has_top_nav = true
-
-    # example  structure with top nav:
+    # example structure:
     #
     # def structure
     #   [

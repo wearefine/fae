@@ -65,8 +65,8 @@
 
 .main_content-section-title {
   padding: 17px 40px;
-  color: $c-text-heavy;
-  background: $c-content-section-title;
+  color: pickForegroundColor($c-custom-highlight, $c-white, $c-black);
+  background: $c-custom-highlight;;
   border-top: 1px solid $c-border;
   text-transform: uppercase;
   font-size: 14px;
@@ -172,7 +172,7 @@ tbody {
 
 .form_content-wrapper {
   padding: 30px 30px 30px 40px;
-  border: 1px solid $c-border;
+  border: 1px solid $c-grey;
   border-top: 0;
   background: $c-form-table-bg;
 
@@ -204,9 +204,11 @@ tbody {
 .main_content-section {
   .js-addedit-form {
     @extend .content;
+    padding-bottom: 20px;
 
     .form_content-wrapper {
       h2 {
+        color: $c-text-heavy;
         letter-spacing: 0;
         text-transform: none;
         border: 0;

@@ -3,21 +3,60 @@
 ## Unreleased
 
 - enhancements
-    + \#61840: Document markdown overriding process
 - bugs
-    + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
-    + \#60923: Widen hint model for video url helper
-    + \#60433: Adds flash messages to dashboard
-    + \#61096: Adds warning notification style, apply to cancel message
-    + Fix for_fae_index issue, since it's an override-able method
 
 ## 1.5
 
 - enhancements
+    + Rails 5 support
+    + \#52299: Adds caching system
+    + \#62472: Add keyboard support to form checkboxes
+    + \#62473: Ensure focus styles exist for all form elements
+    + \#64544: Update focus and success form field borders
+    + \#61840: Document markdown overriding process
+    + \#64653: Refresh sidebar navigation styles
     + \#57081: Change relevant instances of .humanize to .titleize
     + \#64649: Change handling of saved filter state to allow deep links to override saved cookie filter settings on load, but not overwrite them in the cookie.
+    + \#60891: Add generator support for :image and :file attachments
+    + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
+    + \#64645: Restore display of left navigation on form pages
+    + \#61113: Improved helper text for Fae settings logo image
+    + \#65595: Add standard image alt helper text that can be overridden
 - bugs
+    + \#65689: Adds CSRF protection
+    + Checks for use_pagination method on filter action
+    + Fixes filter form variable
+    + Add .js-results-table class back so activity log page's table can be properly targeted
+    + Bump acts_as_list to ~> 0.9.0 to avoid rails 5 deprecation errors
     + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
+    + Kaminari/Rails 5 compatibility [#184](https://github.com/wearefine/fae/issues/184)
+    + Sets StaticPage associations to not be readonly [#138](https://github.com/wearefine/fae/issues/138)
+- deprecations
+    + \#65539: gracefully deprecate `has_top_nav`, top navigation is the standard
+
+## 1.4.1
+
+- enhancements
+    + Adds support for "js-results-table" utility class for filtered results AJAX targeting
+- bugs
+    + \#60596: Add helper + CSS for displaying images in list views
+    + \#61975: Add bottom border to table rows
+    + \#61164: Colorize form section headings per $c-custom-highlight
+    + \#60581: Tighten input display by displaying helper text to the right of labels
+    + \#60547: Tighten vertical padding of list view rows
+    + \#59915: Tighten default column widths on list views
+    + \#59343: Add drop-up support for select boxes at bottom of viewport. Increase default height of drop menus
+    + \#61163: Resolve issue with sortable theads not reacting to user input
+    + \#60184: Min-height is no longer added to last form section referenced in form subnav
+    + \#60184: Tighten default padding of form inputs and sections
+    + \#61045: Ensure max-height of asset preview within image uploader
+    + Fix bug in activity log paging where certain cases or Kaminari's page object won't convert to a page number
+    + \#60183: Resolive issue with smaller images in popup rendering microscopic due to padding.
+    + \#60923: Widen hint model for video url helper
+    + \#60433: Adds flash messages to dashboard
+    + \#61096: Adds warning notification style, apply to cancel message
+    + Fix for_fae_index issue, since it's an override-able method
+    + Fix bug in content_form that prevented custom input_classes
 
 ## 1.4
 

@@ -1,18 +1,19 @@
 module Fae
   class ApplicationController < ActionController::Base
-    include Fae::NavItems # deprecate in Fae v2.0
+    protect_from_forgery with: :exception
+
     include Fae::ApplicationControllerConcern
 
     helper Fae::ViewHelper
 
-    before_filter :check_disabled_environment
-    before_filter :first_user_redirect
-    before_filter :authenticate_user!
-    before_filter :build_nav
-    before_filter :set_option
-    before_filter :detect_cancellation
-    before_filter :set_change_user
-    before_filter :set_locale
+    before_action :check_disabled_environment
+    before_action :first_user_redirect
+    before_action :authenticate_user!
+    before_action :build_nav
+    before_action :set_option
+    before_action :detect_cancellation
+    before_action :set_change_user
+    before_action :set_locale
 
     private
 
@@ -49,26 +50,21 @@ module Fae
     def build_nav
       return unless current_user
 
-      @fae_topnav_items = []
-      @fae_sidenav_items = []
-
-      @fae_navigation = Fae::Navigation.new(request.path, current_user)
-      raise_define_structure_error unless @fae_navigation.respond_to? :structure
-
-      if Fae.has_top_nav
-        @fae_topnav_items = @fae_navigation.items
-        @fae_sidenav_items = @fae_navigation.side_nav
-      elsif defined?(nav_items) && nav_items.present?
-        # deprecate in v2.0
-        # support nav_items defined from legacy Fae::NavItems concern
-        @fae_sidenav_items = nav_items
+      # shameless green: if we continue to cache specific parts of Fae we should either:
+      # - create support methods to DRY this conditional logic
+      # - explore using `expires_in: 0` as a way to ignore caching
+      if Fae.use_cache
+        @fae_navigation = Rails.cache.fetch("fae_navigation_#{current_user.role.id}") do
+          Fae::Navigation.new(current_user)
+        end
       else
-        # otherwise use Fae::Navigation to define the sidenav
-        @fae_sidenav_items = @fae_navigation.items
+        @fae_navigation = Fae::Navigation.new(current_user)
       end
 
-      # hide sidenav on form pages
-      @fae_sidenav_items = [] if params[:action] == 'new' || params[:action] == 'edit'
+      raise_define_structure_error unless @fae_navigation.respond_to? :structure
+
+      @fae_topnav_items = @fae_navigation.items
+      @fae_sidenav_items = @fae_navigation.side_nav(request.path)
     end
 
     # redirect to login after sign out
@@ -94,6 +90,16 @@ module Fae
     end
 
     def all_models
+      if Fae.use_cache
+        Rails.cache.fetch('fae_all_models') do
+          load_and_filter_models
+        end
+      else
+        load_and_filter_models
+      end
+    end
+
+    def load_and_filter_models
       # load of all models since Rails caches activerecord queries.
       Rails.application.eager_load!
       ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }

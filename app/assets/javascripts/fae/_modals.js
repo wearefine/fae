@@ -14,15 +14,15 @@ Fae.modals = {
    * Click event to open modal with only an image
    */
   imageModals: function() {
-    $('.js-image-modal').click(function(e){
+    $('#js-main-content').on('click', '.js-image-modal', function(e) {
       e.preventDefault();
       var $this = $(this);
 
       // create invisi-image to get natural width/height
       var image = new Image();
       image.src = $this.attr('src');
-      var image_width = image.width;
-      var image_height = image.height;
+      var image_width = image.width + 55;
+      var image_height = image.height + 55;
 
       $this.modal({
         minHeight: image_height,

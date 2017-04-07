@@ -10,6 +10,7 @@ Fae provides a number of built in view helpers.
 * [Form Header](#form-header)
 * [Require Locals](#require-locals)
 * [Fae Avatar](#fae-avatar)
+* [Fae Index Image](#fae-index-image)
 * [Fae Sort ID](#fae-sort-id)
 * [Fae Paginate](#fae-paginate)
 
@@ -46,7 +47,7 @@ fae_datetime_format item.updated_at
 fae_toggle
 ```
 
-![Fae toggle](../images/toggles.gif)
+![Fae toggle](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/toggles.gif)
 
 The fae_toggle helper method takes an AR object and attribute. It then creates the HTML necessary for a working Fae on/off toggle switch.
 
@@ -157,12 +158,35 @@ The parsed string is formatted as `"#{class_name}_#{item_id}"`, which the sort m
 tr id=fae_sort_id(item)
 ```
 
+## Fae Index Image
+
+```ruby
+fae_index_image
+```
+
+This method returns a thumbnail image for display within table rows on index views. The image is wrapped by an `.image-mat` div, which is styled to ensure consistent widths & alignments of varied image sizes. If a `path` is provided, the image becomes a link to that location.
+
+| option | type | description |
+|---|---|---|
+| image | Fae::Image | Fae image object to be displayed |
+| path (optional) | String | A URL to be used to create a linked version of the image thumbnail |
+
+```slim
+/ With link
+fae_index_image item.bottle_shot, edit_admin_release_path(item)
+/#=> <div class='image-mat'><a href="..."><img src="..." /></a></div>
+
+/ Without link
+fae_index_image item.bottle_shot
+/#=> <div class='image-mat'><img src="..." /></div>
+```
+
 ## Fae Paginate
 
 ```slim
 fae_paginate @items
 ```
 
-![Fae paginate](../images/fae_paginate.png)
+![Fae paginate](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/fae_paginate.png)
 
 Adds pagination links for `@items`, given `@items` is an ActiveRecord collection.

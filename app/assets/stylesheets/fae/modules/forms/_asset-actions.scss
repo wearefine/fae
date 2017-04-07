@@ -22,7 +22,8 @@
   }
 
   > img {
-    width: 20%;
+    max-width: 20%;
+    max-height: 150px;
     margin-right: 20px;
     cursor: pointer;
     float: left;
@@ -42,6 +43,11 @@
   .button {
     display: inline-block;
     margin-right: 10px;
+
+    &:focus {
+      border-color: $c-notice-content;
+      outline: 0;
+    }
 
     span {
       padding-right: 30px;

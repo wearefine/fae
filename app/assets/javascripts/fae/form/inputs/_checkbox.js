@@ -8,21 +8,7 @@
 Fae.form.checkbox = {
 
   init: function() {
-    this.loginCheckbox();
     this.setCheckboxAsActive();
-  },
-
-  /**
-   * Login page checkbox listeners to add active class on click
-   */
-  loginCheckbox: function() {
-    $('.login-body')
-      .on('click', 'label.boolean', function(e){
-        $(this).toggleClass('active');
-      })
-      .on('click', '.input.boolean :checkbox', function(e){
-        e.stopPropagation();
-      });
   },
 
   /**
@@ -37,4 +23,5 @@ Fae.form.checkbox = {
       }
     });
   }
+
 };

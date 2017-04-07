@@ -1,6 +1,6 @@
 module Fae
   class UsersController < ApplicationController
-    before_filter :admin_only, except: [:settings, :update]
+    before_action :admin_only, except: [:settings, :update]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :set_role_collection, except: [:index, :destroy]
 

@@ -1,10 +1,5 @@
 Fae.setup do |config|
 
-  ## has_top_nav
-  # This determines if the main nav items are on the top or the side.
-  # Defaults to false
-  # config.has_top_nav = true
-
   ## devise_mailer_sender
   # This email address will get passed to Devise and
   # used as the from address in the password reset emails.
@@ -58,4 +53,11 @@ Fae.setup do |config|
   # Sets the default number of items shown in paginated lists
   # Defaults to 25
   # config.per_page = 25
+
+  ## use_cache
+  # Determines whether or not Fae will utilize cache internally.
+  # Note: you still need to enable `perform_caching` and set a `cache_store`
+  # on the parent app
+  # Defaults to false
+  # config.use_cache = true
 end

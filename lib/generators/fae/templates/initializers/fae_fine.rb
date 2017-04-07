@@ -1,10 +1,5 @@
 Fae.setup do |config|
 
-  ## has_top_nav
-  # This determines if the main nav items are on the top or the side.
-  # Defaults to false
-  # config.has_top_nav = true
-
   ## devise_mailer_sender
   # This email address will get passed to Devise and
   # used as the from address in the password reset emails.
