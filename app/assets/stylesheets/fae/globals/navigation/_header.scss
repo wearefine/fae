@@ -11,6 +11,16 @@
   @include bp(large) {
     padding: 0 $content-buffer;
     position: relative;
+
+    &--scrolled_past {
+      position: fixed;
+      top: -74px;
+    }
+
+    &--peek {
+      position: fixed;
+      top: 0;
+    }
   }
 
   a {

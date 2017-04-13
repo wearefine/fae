@@ -62,7 +62,7 @@
 
     = fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name_en), label_method: :name_en
 
-    = fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'mutliselect'
+    = fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'multiselect with a long helper description to ensure that the multiselect actions can coexist peacefully'
 
     = fae_multiselect f, :selling_points, two_pane: true, helper_text: 'two-pane mutliselect'
 
