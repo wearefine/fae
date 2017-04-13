@@ -1,5 +1,6 @@
 appraise 'rails_4_1' do
   gem 'rails', '~> 4.1.0'
+  gem 'mysql2', '~> 0.3.21'
 end
 
 appraise 'rails_4_2' do

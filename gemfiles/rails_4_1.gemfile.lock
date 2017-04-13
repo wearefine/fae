@@ -175,7 +175,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.10.1)
     multi_json (1.12.1)
-    mysql2 (0.4.5)
+    mysql2 (0.3.21)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -314,7 +314,7 @@ DEPENDENCIES
   guard-rspec (~> 4.7, >= 4.7.3)
   jquery-rails
   jquery-ui-rails (~> 4.2.1)
-  mysql2
+  mysql2 (~> 0.3.21)
   pry
   rails (~> 4.1.0)
   rails-perftest
