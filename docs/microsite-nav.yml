@@ -52,6 +52,8 @@
   children:
     - name: Seting up Images and Files
       path: docs/tutorials/image_and_files.md
+    - name: Adding Dynamic Relationships to Pages
+      path: docs/tutorials/dynamic_relationships_to_pages.md
     - name: Adding Conditional Validations
       path: docs/tutorials/conditional_validations.md
     - name: Custom Image Processing
