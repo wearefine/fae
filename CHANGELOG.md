@@ -3,6 +3,7 @@
 ## Unreleased
 
 - enhancements
+    + Update dynamic relationships docs for pages and split out to make easier to find.
 - bugs
 
 ## 1.5
