@@ -62,15 +62,6 @@ RSpec.configure do |config|
   # Stop running tests on first caught fail, this is best used with config.order = "defined"
   # config.fail_fast = true
   # config.allow_url('gravatar.com')
-
-  # https://github.com/rails/rails-controller-testing#rspec
-  if Rails::VERSION::MAJOR > 4
-    [:controller, :view, :request].each do |type|
-      config.include ::Rails::Controller::Testing::TestProcess, :type => type
-      config.include ::Rails::Controller::Testing::TemplateAssertions, :type => type
-      config.include ::Rails::Controller::Testing::Integration, :type => type
-    end
-  end
 end
 
 Capybara::Webkit.configure do |config|
