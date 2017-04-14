@@ -21,7 +21,7 @@ Cd to the dummy app:
 $ cd spec/dummy
 ```
 
-Create the DB if you haven't already and migrate:
+Create the DB if you haven't already and migrate (for Rails 5 >= substitute `rails` for `rake`):
 
 ```
 $ rake db:create:all
