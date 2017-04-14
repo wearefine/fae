@@ -2,8 +2,7 @@
 module Fae
   class FileUploader < CarrierWave::Uploader::Base
 
-    # Include RMagick support:
-    # include CarrierWave::RMagick
+    include CarrierWave::MiniMagick
     include CarrierWave::MimeTypes
 
     process :set_content_type

@@ -17,7 +17,6 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'sass', require: 'sass'
 gem 'carrierwave', '~> 0.10.0'
-gem 'rmagick', '~> 2.13.3', require: false
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
