@@ -20,7 +20,6 @@ gem 'rails', '~> 5.1.0'
 gem 'rake', '< 12.0.0'
 
 gem 'sass', require: 'sass'
-gem 'rmagick', require: false
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.6.0'

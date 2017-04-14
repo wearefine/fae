@@ -27,11 +27,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'carrierwave', '~> 1.2.2'
   s.add_dependency 'devise', '~> 4.4.3'
   s.add_dependency 'jquery-ui-rails', '~> 6.0.1'
+  s.add_dependency 'mini_magick'
   s.add_dependency 'judge', '~> 2.1.1'
   s.add_dependency 'judge-simple_form', '~> 1.0.0'
   s.add_dependency 'kaminari', '~> 1.1.1'
   s.add_dependency 'remotipart', '~> 1.4.0'
-  s.add_dependency 'rmagick', '~> 2.16.0'
   s.add_dependency 'simple_form', '~> 3.5.1'
   s.add_dependency 'slim'
 

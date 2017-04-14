@@ -2,6 +2,8 @@
 module Fae
   class FileUploader < CarrierWave::Uploader::Base
 
+    include CarrierWave::MiniMagick
+
     process :save_file_size_in_model
 
     def save_file_size_in_model
