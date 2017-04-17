@@ -30,7 +30,7 @@
 //= require fae/vendor/js.cookie
 //= require fae/vendor/simplemde.min
 //= require fae/vendor/touch_punch
-
+//= require fae/vendor/trumbowyg
 
 //= require fae/admin
 

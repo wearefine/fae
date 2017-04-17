@@ -4,8 +4,7 @@
 
 - enhancements
     + Update dynamic relationships docs for pages and split out to make easier to find.
-    + Resolve Rails 5 depreciation warnings [#167](https://github.com/wearefine/fae/issues/167)
-    + Support `config.action_controller.include_all_helpers = false` [#227](https://github.com/wearefine/fae/issues/227)
+    + Add support for HTML wysiwyg editor with images upload.
 - bugs
 
 ## 1.5
