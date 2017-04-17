@@ -178,7 +178,7 @@ Here's the breakdown:
 
 ### Other Examples
 
-An onject with many gallery images:
+An object with many gallery images:
 
 ```ruby
 has_many :gallery_images, -> { where(attached_as: 'gallery_images') },
@@ -204,4 +204,3 @@ If the object only has one image association, you can get away with omitting the
 has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
 accepts_nested_attributes_for :image, allow_destroy: true
 ```
-

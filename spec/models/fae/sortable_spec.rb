@@ -37,7 +37,7 @@ describe Fae::Sortable do
         expect(Cat.fae_sort({ sort_by: 'aroma.pasta' })).to eq(@default_order)
       end
 
-      it "should ignore onjects that aren't present" do
+      it "should ignore objects that aren't present" do
         expect(Cat.fae_sort({ sort_by: 'pasta.name' })).to eq(@default_order)
       end
     end
