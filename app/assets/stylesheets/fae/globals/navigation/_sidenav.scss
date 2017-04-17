@@ -1,7 +1,7 @@
 .sidenav {
   @include stack($fae-nav-stack);
   position: absolute;
-  left: 30px;
+  left: $content-buffer;
 
   @include bp(large-down) {
     display: none;
@@ -19,9 +19,6 @@
   .subnav {
     padding: 10px 10px 10px 0;
     background-color: $c-light-grey;
-    border: 1px solid $c-grey;
-    border-top: 0;
-    border-bottom: 0;
   }
 
   li {
@@ -46,12 +43,11 @@
       border-bottom: 1px solid $c-grey;
     }
 
-    a {
+    > a {
       padding: 13px 15px;
       font-size: 15px;
     }
   }
-
 
   // Index pages
   ~ .content,
@@ -78,23 +74,24 @@
       }
     }
   }
-  &.-open.-parent-current {
-    > a {
-      &:after {
-        color: $c-white;
-      }
-    }
-  }
 
   &.-parent-current {
     > a:hover:after {
       color: $c-white;
     }
+
+    &.-open {
+      > a {
+        &:after {
+          color: $c-white;
+        }
+      }
+    }
   }
 
   a {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: $content-buffer;
+    padding-right: $content-buffer;
     margin-top: 7px;
 
     &.-current {
@@ -113,12 +110,11 @@
 
   > a {
     @extend %nav-icon;
-    padding: 13px 30px 13px 15px;
-    margin-top: 0;
 
+    margin-top: 0;
+    padding: 13px $content-buffer 13px 15px;
     font-size: 15px;
     background-color: $c-white;
-    border: 1px solid $c-grey;
 
     &:after {
       @extend .icon-arrow_up:before;
