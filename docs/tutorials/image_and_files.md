@@ -43,7 +43,7 @@ Here's the breakdown:
 
 ### Other Examples
 
-An onject with many gallery images:
+An object with many gallery images:
 
 ```ruby
 has_many :gallery_images, -> { where(attached_as: 'gallery_images') },
