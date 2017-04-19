@@ -112,7 +112,7 @@ Fae.navigation.peek = {
     const windowHeight = $(window).height();
     const nearThreshold = 100;
 
-    let isNear = false;
+    var isNear = false;
     if (scrollTop >= (pageHeight - windowHeight - nearThreshold)) {
       isNear = true;
     }
