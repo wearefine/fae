@@ -28,9 +28,8 @@
 //= require fae/vendor/jquery.simplemodal.1.4.4
 //= require fae/vendor/jquery.tablesorter
 //= require fae/vendor/js.cookie
-//= require fae/vendor/simplemde.min
 //= require fae/vendor/touch_punch
-//= require fae/vendor/trumbowyg
+//= require fae/vendor/simplemde.min
 
 //= require fae/admin
 
