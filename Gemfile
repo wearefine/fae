@@ -13,6 +13,12 @@ gemspec
 # To use debugger
 # gem 'debugger'
 
+# Set the version of Rails for the dummy app
+gem 'rails', '~> 5.0.0'
+
+# Lock in Rake to a version compatible with rspec-rails 3.0
+gem 'rake', '< 12.0.0'
+
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'sass', require: 'sass'
@@ -33,7 +39,6 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
   gem 'database_cleaner'
-  gem 'rails-controller-testing'
 end
 
 gem 'capistrano',  '~> 3.1'
