@@ -58,7 +58,7 @@ module SignInFeatureHelper
 end
 
 RSpec.configure do |config|
-  config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include SignInControllerHelper, type: :controller
   config.include SignInRequestHelper, type: :request
   config.include SignInFeatureHelper, type: :feature

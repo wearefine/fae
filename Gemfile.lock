@@ -110,8 +110,8 @@ GEM
     capybara-screenshot (1.0.14)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.11.1)
-      capybara (>= 2.3.0, < 2.8.0)
+    capybara-webkit (1.14.0)
+      capybara (>= 2.3.0, < 2.14.0)
       json
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
@@ -131,7 +131,7 @@ GEM
       railties (>= 4.1.0, < 5.1)
       responders
       warden (~> 1.2.3)
-    diff-lcs (1.2.5)
+    diff-lcs (1.3)
     erubis (2.7.0)
     eventmachine (1.2.0.1)
     execjs (2.7.0)
@@ -230,7 +230,7 @@ GEM
       nokogiri (~> 1.6.0)
     rails-html-sanitizer (1.0.3)
       loofah (~> 2.0)
-    rails-perftest (0.0.6)
+    rails-perftest (0.0.7)
     railties (5.0.0.1)
       actionpack (= 5.0.0.1)
       activesupport (= 5.0.0.1)
@@ -245,26 +245,27 @@ GEM
     responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rmagick (2.13.4)
-    rspec (3.0.0)
-      rspec-core (~> 3.0.0)
-      rspec-expectations (~> 3.0.0)
-      rspec-mocks (~> 3.0.0)
-    rspec-core (3.0.4)
-      rspec-support (~> 3.0.0)
-    rspec-expectations (3.0.4)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.0.0)
-    rspec-mocks (3.0.4)
-      rspec-support (~> 3.0.0)
-    rspec-rails (3.0.2)
+      rspec-support (~> 3.5.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-rails (3.5.2)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 3.0.0)
-      rspec-expectations (~> 3.0.0)
-      rspec-mocks (~> 3.0.0)
-      rspec-support (~> 3.0.0)
-    rspec-support (3.0.4)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
     ruby-prof (0.16.2)
     ruby_dep (1.5.0)
     rubyzip (1.2.0)
@@ -335,7 +336,7 @@ DEPENDENCIES
   capistrano-rails!
   capistrano-rvm
   capybara-screenshot
-  capybara-webkit (~> 1.11.1)
+  capybara-webkit (~> 1.14.0)
   carrierwave (~> 0.10.0)
   database_cleaner
   factory_girl_rails (~> 4.4.1)
@@ -346,9 +347,9 @@ DEPENDENCIES
   mysql2
   pry
   rails-controller-testing
-  rails-perftest
+  rails-perftest (~> 0.0.7)
   rmagick (~> 2.13.3)
-  rspec-rails (~> 3.0.2)
+  rspec-rails (~> 3.5.2)
   ruby-prof
   sass
   selenium-webdriver (~> 2.42.0)
@@ -357,4 +358,4 @@ DEPENDENCIES
   yarjuf
 
 BUNDLED WITH
-   1.14.5
+   1.14.6
