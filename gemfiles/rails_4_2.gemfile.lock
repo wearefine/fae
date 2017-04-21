@@ -28,6 +28,11 @@ PATH
       slim
       uglifier
 
+PATH
+  remote: ../spec/support/rails-controller-testing-mock
+  specs:
+    rails-controller-testing (0.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -334,6 +339,7 @@ DEPENDENCIES
   mysql2
   pry
   rails (~> 4.2.0)
+  rails-controller-testing!
   rails-perftest
   rake (< 12.0.0)
   rmagick (~> 2.13.3)

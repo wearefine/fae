@@ -39,6 +39,7 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
   gem 'database_cleaner'
+  gem 'rails-controller-testing'
 end
 
 gem 'capistrano',  '~> 3.1'
