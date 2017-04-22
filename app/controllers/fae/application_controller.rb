@@ -5,6 +5,9 @@ module Fae
     include Fae::ApplicationControllerConcern
 
     helper Fae::ViewHelper
+    helper Fae::FormHelper
+    helper Fae::NestedFormHelper
+    helper Fae::FaeHelper
 
     before_action :check_disabled_environment
     before_action :first_user_redirect

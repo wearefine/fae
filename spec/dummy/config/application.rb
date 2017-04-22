@@ -20,6 +20,8 @@ module Dummy
     # config.i18n.default_locale = :de
     config.i18n.available_locales = [:en, :zh]
     config.active_record.raise_in_transactional_callbacks = true if Rails::VERSION::MAJOR >= 4 && Rails::VERSION::MINOR >= 2
+
+    config.action_controller.include_all_helpers = false
   end
 end
 

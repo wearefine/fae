@@ -1,7 +1,10 @@
 module Fae
   class SetupController < ActionController::Base
 
+    helper Fae::FormHelper
+
     before_action :check_roles
+
     layout 'devise'
 
     def first_user
