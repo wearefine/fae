@@ -6,5 +6,9 @@ module Fae
     include Fae::PageValidatable
 
     belongs_to :contentable, polymorphic: true, touch: true
+
+    def readonly?
+      false
+    end
   end
 end

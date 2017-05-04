@@ -3,14 +3,38 @@
 ## Unreleased
 
 - enhancements
+    + Update dynamic relationships docs for pages and split out to make easier to find.
+    + Resolve Rails 5 depreciation warnings [#167](https://github.com/wearefine/fae/issues/167)
+    + Support `config.action_controller.include_all_helpers = false` [#227](https://github.com/wearefine/fae/issues/227)
+- bugs
+
+## 1.5
+
+- enhancements
     + Rails 5 support
+    + \#52299: Adds caching system
     + \#62472: Add keyboard support to form checkboxes
     + \#62473: Ensure focus styles exist for all form elements
-    + \#52299: Adds caching system
+    + \#64544: Update focus and success form field borders
     + \#61840: Document markdown overriding process
+    + \#64653: Refresh sidebar navigation styles
+    + \#57081: Change relevant instances of .humanize to .titleize
+    + \#60891: Add generator support for :image and :file attachments
+    + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
+    + \#64645: Restore display of left navigation on form pages
+    + \#61113: Improved helper text for Fae settings logo image
+    + \#65595: Add standard image alt helper text that can be overridden
 - bugs
+    + \#65689: Adds CSRF protection
     + Checks for use_pagination method on filter action
     + Fixes filter form variable
+    + Add .js-results-table class back so activity log page's table can be properly targeted
+    + Bump acts_as_list to ~> 0.9.0 to avoid rails 5 deprecation errors
+    + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
+    + Kaminari/Rails 5 compatibility [#184](https://github.com/wearefine/fae/issues/184)
+    + Sets StaticPage associations to not be readonly [#138](https://github.com/wearefine/fae/issues/138)
+- deprecations
+    + \#65539: gracefully deprecate `has_top_nav`, top navigation is the standard
 
 ## 1.4.1
 
@@ -35,18 +59,6 @@
     + \#61096: Adds warning notification style, apply to cancel message
     + Fix for_fae_index issue, since it's an override-able method
     + Fix bug in content_form that prevented custom input_classes
-
-## 1.5
-
-- enhancements
-    + \#57081: Change relevant instances of .humanize to .titleize
-    + \#60891: Add generator support for :image and :file attachments
-    + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
-    + \#64645: Restore display of left navigation on form pages
-    + \#61113: Improved helper text for Fae settings logo image
-    + \#65595: Add standard image alt helper text that can be overridden
-- bugs
-    + \#60176: Format strange ActiveSupport::TimeWithZone datatypes as 00/00/00, default classes, change 'Updated At' to 'Modified', add -action-narrow for date time formatting on two lines.
 
 ## 1.4
 

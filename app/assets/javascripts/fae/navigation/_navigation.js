@@ -169,12 +169,13 @@ Fae.navigation = {
 
     if(FCH.exists('.js-content-header')) {
       var $header = $('.js-content-header');
-      var sidebar_top_offset = (parseInt( $header.outerHeight(), 10) + 20) + 'px';
-      $('#js-sidenav').css('padding-top',  sidebar_top_offset );
+      var sidebar_top_offset = (parseInt( $header.outerHeight(), 10) + 30) + 'px';
+      $('#js-sidenav').css('padding-top', sidebar_top_offset );
 
       $header.sticky({
         placeholder: true,
-        perpetual_placeholder: true
+        perpetual_placeholder: true,
+        ignore_placeholder_offsets: true
       });
 
     } else {

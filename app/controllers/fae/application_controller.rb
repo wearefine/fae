@@ -1,9 +1,13 @@
 module Fae
   class ApplicationController < ActionController::Base
-    include Fae::NavItems # deprecate in Fae v2.0
+    protect_from_forgery with: :exception
+
     include Fae::ApplicationControllerConcern
 
     helper Fae::ViewHelper
+    helper Fae::FormHelper
+    helper Fae::NestedFormHelper
+    helper Fae::FaeHelper
 
     before_action :check_disabled_environment
     before_action :first_user_redirect
@@ -49,9 +53,6 @@ module Fae
     def build_nav
       return unless current_user
 
-      @fae_topnav_items = []
-      @fae_sidenav_items = []
-
       # shameless green: if we continue to cache specific parts of Fae we should either:
       # - create support methods to DRY this conditional logic
       # - explore using `expires_in: 0` as a way to ignore caching
@@ -65,18 +66,8 @@ module Fae
 
       raise_define_structure_error unless @fae_navigation.respond_to? :structure
 
-      if Fae.has_top_nav
-        @fae_topnav_items = @fae_navigation.items
-        @fae_sidenav_items = @fae_navigation.side_nav(request.path)
-      elsif defined?(nav_items) && nav_items.present?
-        # deprecate in v2.0
-        # support nav_items defined from legacy Fae::NavItems concern
-        @fae_sidenav_items = nav_items
-      else
-        # otherwise use Fae::Navigation to define the sidenav
-        @fae_sidenav_items = @fae_navigation.items
-      end
-
+      @fae_topnav_items = @fae_navigation.items
+      @fae_sidenav_items = @fae_navigation.side_nav(request.path)
     end
 
     # redirect to login after sign out

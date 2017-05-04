@@ -18,7 +18,6 @@ module Fae
     self.track_changes          = true
     self.tracker_history_length = 15
     self.slug_separator         = '-'
-    self.has_top_nav            = false
     self.disabled_environments  = []
     self.per_page               = 25
     self.use_cache              = false

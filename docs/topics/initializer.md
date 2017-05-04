@@ -4,7 +4,6 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 
 | key | type | default | description |
 | --- | ---- | ------- | ----------- |
-| has_top_nav | boolean | false | This determines if the main nav items are on the top or the side. |
 | devise_secret_key | string | | unique Devise hash, generated on `rails g fae:install` |
 | devise_mailer_sender | string | "change-me@example.com" | This email address will get passed to Devise and used as the from address in the password reset emails. |
 | dashboard_exclusions | array | [] | The dashboard will show all objects with recent activity. |
@@ -16,4 +15,4 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 | tracker_history_length | integer | 15 | This defines how many changes per object are kept in the DB. |
 | disabled_environments | array | [] | This option will disable Fae complete when the app is running on one of the defined environments |
 | per_page | integer | 25 | Sets the default number of items shown in paginated lists |
-| use_cache | boolean | false | Determines whether or not Fae will utilize cache internally. See [docs](caching.md) |
+| use_cache | boolean | false | Determines whether or not Fae will utilize cache internally. See [docs](https://github.com/wearefine/fae/blob/master/docs/topics/caching.md) |

@@ -93,7 +93,7 @@ end
 
 Fae provides a partial to display tracked changes in an object's form. Read more about `render 'fae/shared/recent_changes'`
 
-![Recent changes](../images/recent_changes.png)
+![Recent changes](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/recent_changes.png)
 
 Displays recent changes to an object as logged by change tracker in a table. Columns include the user, type, updated attributes, and datetime of the change.
 

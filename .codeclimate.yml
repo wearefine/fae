@@ -28,3 +28,4 @@ exclude_paths:
 - app/assets/stylesheets/fae/vendor/*
 - spec/**
 - config/deploy/**
+- lib/generators/fae/templates/*

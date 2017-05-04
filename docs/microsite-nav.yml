@@ -1,9 +1,11 @@
-# First item will be the default content on https://faecoms.com/documentation/
-- name: Installation
-  path: docs/installation/index.md
-  
+## First item will be the default content on https://faecms.com/documentation/
+- name: Quickstart Guide
+  path: docs/quickstart-guide.md
+
 - name: Topics
   children:
+    - name: Installation
+      path: docs/installation/index.md
     - name: Generators
       path: docs/topics/generators.md
     - name: Navigation Setup
@@ -27,7 +29,7 @@
     - name: Caching
       path: docs/topics/caching.md
 
-- name: Features
+- name: Faetures
   children:
     - name: Global Search
       path: docs/features/search.md
@@ -50,6 +52,8 @@
   children:
     - name: Seting up Images and Files
       path: docs/tutorials/image_and_files.md
+    - name: Adding Dynamic Relationships to Pages
+      path: docs/tutorials/dynamic_relationships_to_pages.md
     - name: Adding Conditional Validations
       path: docs/tutorials/conditional_validations.md
     - name: Custom Image Processing
