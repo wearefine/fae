@@ -85,8 +85,8 @@ Fae.form.text = {
       btnsDef: {
         image: {
           dropdown: ['insertImage', 'upload', 'base64', 'noEmbed'],
-          ico: 'insertImage',
-        },
+          ico: 'insertImage'
+        }
       },
       btns: [
         ['viewHTML'],
@@ -100,15 +100,15 @@ Fae.form.text = {
         ['foreColor', 'backColor'],
         ['preformatted'],
         ['horizontalRule'],
-        ['fullscreen'],
+        ['fullscreen']
       ],
       plugins: {
         upload: {
           serverPath: '/admin/html_embedded_image',
-          fileFieldName: 'image',
-        },
+          fileFieldName: 'image'
+        }
       },
-      resetCss: true,
+      resetCss: true
     });
-  },
+  }
 };
