@@ -4,7 +4,7 @@ module <%= options.namespace.capitalize %>
     private
 
     def fae_pages
-      [<%= "#{class_name.singularize}Page" %>]
+      [<%= "#{class_name}Page" %>]
     end
   end
 end

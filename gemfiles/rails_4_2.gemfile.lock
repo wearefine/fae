@@ -28,6 +28,11 @@ PATH
       slim
       uglifier
 
+PATH
+  remote: ../spec/support/rails-controller-testing-mock
+  specs:
+    rails-controller-testing (0.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -103,8 +108,8 @@ GEM
     capybara-screenshot (1.0.9)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.8.0)
-      capybara (>= 2.3.0, < 2.7.0)
+    capybara-webkit (1.11.1)
+      capybara (>= 2.3.0, < 2.8.0)
       json
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
@@ -199,8 +204,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -324,11 +327,10 @@ DEPENDENCIES
   capistrano (~> 3.1)
   capistrano-rails!
   capistrano-rvm
-  capybara (~> 2.4.1)
   capybara-screenshot
-  capybara-webkit (~> 1.8)
+  capybara-webkit (~> 1.11.1)
   carrierwave (~> 0.10.0)
-  database_cleaner (~> 1.3.0)
+  database_cleaner
   factory_girl_rails (~> 4.4.1)
   fae-rails!
   guard-rspec (~> 4.3.1)
@@ -336,10 +338,10 @@ DEPENDENCIES
   jquery-ui-rails (~> 4.2.1)
   mysql2
   pry
-  quiet_assets
   rails (~> 4.2.0)
+  rails-controller-testing!
   rails-perftest
-  remotipart (~> 1.3.1)
+  rake (< 12.0.0)
   rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.2)
   ruby-prof
