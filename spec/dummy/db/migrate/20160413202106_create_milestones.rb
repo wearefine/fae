@@ -1,4 +1,4 @@
-class CreateMilestones < ActiveRecord::Migration
+class CreateMilestones < ActiveRecord::Migration[4.2]
   def change
     create_table :milestones do |t|
       t.integer :year

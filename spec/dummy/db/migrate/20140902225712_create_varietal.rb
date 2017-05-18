@@ -1,4 +1,4 @@
-class CreateVarietal < ActiveRecord::Migration
+class CreateVarietal < ActiveRecord::Migration[4.2]
   def change
     create_table :varietals do |t|
       t.string :name
