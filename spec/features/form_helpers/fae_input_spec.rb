@@ -84,6 +84,15 @@ feature 'fae_input' do
     end
   end
 
+  scenario 'should display HTML WYSIWYG when html: true', js: true do
+    admin_login
+    visit new_admin_release_path
+
+    within('.release_content') do
+      expect(page).to have_selector('.js-html-editor')
+    end
+  end
+
   scenario 'should display markdown guide when support is clicked', js: true do
     admin_login
     visit new_admin_release_path
