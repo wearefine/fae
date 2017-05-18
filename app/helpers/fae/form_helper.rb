@@ -9,6 +9,7 @@ module Fae
       set_prompt f, attribute, options
 
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
+      add_input_class(options, 'js-html-editor') if options[:html].present?
 
       set_maxlength(f, attribute, options)
 

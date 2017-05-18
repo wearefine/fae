@@ -29,6 +29,7 @@ Fae::Engine.routes.draw do
   post 'language_preference/:language', to: 'utilities#language_preference'
   post 'search/:query', to: 'utilities#global_search'
   post 'search', to: 'utilities#global_search'
+  post 'html_embedded_image', to: 'images#create_html_embedded'
 
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]

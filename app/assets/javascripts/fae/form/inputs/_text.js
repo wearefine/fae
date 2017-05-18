@@ -6,10 +6,10 @@
  * @memberof form
  */
 Fae.form.text = {
-
   init: function() {
     this.overrideMarkdownDefaults();
     this.initMarkdown();
+    this.initHTML();
   },
 
   /**
@@ -74,6 +74,41 @@ Fae.form.text = {
         $this.parent().removeClass('mde-focus');
       });
     });
-  }
+  },
 
+  /**
+   * Find all HTML fields and initialize them with a wysiwyg GUI
+   * @has_test {features/form_helpers/fae_input_spec.rb}
+   */
+  initHTML: function() {
+    $('.js-html-editor').trumbowyg({
+      btnsDef: {
+        image: {
+          dropdown: ['insertImage', 'upload', 'base64', 'noEmbed'],
+          ico: 'insertImage'
+        }
+      },
+      btns: [
+        ['viewHTML'],
+        ['undo', 'redo'],
+        ['formatting'],
+        'btnGrp-design',
+        ['link'],
+        ['image'],
+        'btnGrp-justify',
+        'btnGrp-lists',
+        ['foreColor', 'backColor'],
+        ['preformatted'],
+        ['horizontalRule'],
+        ['fullscreen']
+      ],
+      plugins: {
+        upload: {
+          serverPath: '/admin/html_embedded_image',
+          fileFieldName: 'image'
+        }
+      },
+      resetCss: true
+    });
+  }
 };
