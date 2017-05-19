@@ -1,7 +1,7 @@
-# encoding: utf-8
+# frozen_string_literal: true
+
 module Fae
   class ImageUploader < CarrierWave::Uploader::Base
-    include CarrierWave::MimeTypes
     include CarrierWave::RMagick
 
     # saves file size to DB
@@ -11,18 +11,17 @@ module Fae
     end
 
     def extension_white_list
-      %w(jpg jpeg gif png ico)
+      %w[jpg jpeg gif png ico]
     end
 
     # Override the directory where uploaded files will be stored.
     # This is a sensible default for uploaders that are meant to be mounted:
     def store_dir
-      "system/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
 
     version :thumb do
-      process :resize_to_fill => [150,100]
+      process resize_to_fill: [150, 100]
     end
-
   end
 end
