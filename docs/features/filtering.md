@@ -19,6 +19,7 @@ end
   - [Fae Filter Select](#fae-filter-select)
 * [Pagination](#pagination)
 * [Column Sorting](#column-sorting)
+* [Row Sorting](#row-sorting)
 
 ---
 
@@ -297,3 +298,40 @@ class Person < ActiveRecord::Base
 end
 ```
 
+---
+
+## Row Sorting
+
+Fae uses [jQuery Sortable](https://jqueryui.com/sortable/) to make your tables
+rows drag-and-drop sortable.
+
+To make this work, you need 2 things:
+
+1) an integer `position` column on your active record model. Please see how to hook up your models in the
+[act_as_list gem documentation](https://github.com/swanandp/acts_as_list#example)
+
+2) in your HTML, you must add the `js-sort-row` class to your `<table>`, and the
+`sortable-handle` class on the `<td>` you want to make draggable. Here is an example in slim:
+```slim
+table.js-sort-row -# <---- here
+  thead
+    tr
+      th.-action data-sorter='false'
+      th Name
+  tbody
+    - @items.each do |item|
+      tr id=fae_sort_id(item)
+        td.sortable-handle -# <---- here
+          i.icon-sort
+        td = item.name
+```
+
+### How does this work?
+
+When you release the table row, an AJAX request is fired to the `Fae::UtilitiesController`'s `#sort` action.
+
+```shell
+bundle exec rake routes | grep fae/utilities#sort
+```
+
+You can see the [implementation details here]: (https://github.com/wearefine/fae/blob/master/app/controllers/fae/utilities_controller.rb#L14)
