@@ -25,7 +25,7 @@ feature 'fae_input' do
     visit new_admin_release_path
 
     expect(page).to_not have_content('Normal Hint')
-    page.find('.release_name .hinter-clicker').click
+    page.find('.release_name .hinter-clicker').trigger('click')
     expect(page).to have_content('Normal Hint')
   end
 
@@ -34,7 +34,7 @@ feature 'fae_input' do
     visit new_admin_release_path
 
     expect(page).to_not have_content('Dark Hint')
-    page.find('.release_vintage .hinter-clicker').click
+    page.find('.release_vintage .hinter-clicker').trigger('click')
     expect(page).to have_content('Dark Hint')
   end
 

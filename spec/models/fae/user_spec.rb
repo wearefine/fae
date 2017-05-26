@@ -22,15 +22,15 @@ describe Fae::User do
 
   describe '.super_admin?' do
     it 'should return true when user is a super admin' do
-      super_admin = FactoryGirl.create(:fae_role, name: 'super admin')
-      super_user = FactoryGirl.build(:fae_user, role: super_admin)
+      super_admin = Fae::Role.new(name: 'super admin')
+      super_user = Fae::User.new(role: super_admin)
 
       expect(super_user.super_admin?).to eq(true)
     end
 
     it 'should return false when user is not a super admin' do
-      admin = FactoryGirl.create(:fae_role, name: 'admin')
-      user = FactoryGirl.build(:fae_user, role: admin)
+      admin = Fae::Role.new(name: 'admin')
+      user = Fae::User.new(role: admin)
 
       expect(user.super_admin?).to eq(false)
     end
@@ -38,15 +38,15 @@ describe Fae::User do
 
   describe '.admin?' do
     it 'should return true when user is a super admin' do
-      super_admin = FactoryGirl.create(:fae_role, name: 'super admin')
-      super_user = FactoryGirl.build(:fae_user, role: super_admin)
+      super_admin = Fae::Role.new(name: 'super admin')
+      super_user = Fae::User.new(role: super_admin)
 
       expect(super_user.admin?).to eq(false)
     end
 
     it 'should return false when user is not a super admin' do
-      admin = FactoryGirl.create(:fae_role, name: 'admin')
-      user = FactoryGirl.build(:fae_user, role: admin)
+      admin = Fae::Role.new(name: 'admin')
+      user = Fae::User.new(role: admin)
 
       expect(user.admin?).to eq(true)
     end
@@ -54,15 +54,15 @@ describe Fae::User do
 
   describe '.user?' do
     it 'should return true when user is a user' do
-      user_role = FactoryGirl.create(:fae_role, name: 'user')
-      user = FactoryGirl.build(:fae_user, role: user_role)
+      user_role = Fae::Role.new(name: 'user')
+      user = Fae::User.new(role: user_role)
 
       expect(user.user?).to eq(true)
     end
 
     it 'should return false when user is not a user' do
-      admin_role = FactoryGirl.create(:fae_role, name: 'admin')
-      user = FactoryGirl.build(:fae_user, role: admin_role)
+      admin_role = Fae::Role.new(name: 'admin')
+      user = Fae::User.new(role: admin_role)
 
       expect(user.user?).to eq(false)
     end
@@ -70,22 +70,21 @@ describe Fae::User do
 
   describe '.super_admin_or_admin?' do
     it 'should return true when user is a super admin' do
-      user_role = FactoryGirl.create(:fae_role, name: 'super admin')
-      user = FactoryGirl.build(:fae_user, role: user_role)
-
+      user_role = Fae::Role.new(name: 'super admin')
+      user = Fae::User.new(role: user_role)
       expect(user.super_admin_or_admin?).to eq(true)
     end
 
     it 'should return true when user is a admin' do
-      user_role = FactoryGirl.create(:fae_role, name: 'admin')
-      user = FactoryGirl.build(:fae_user, role: user_role)
+      user_role = Fae::Role.new(name: 'admin')
+      user = Fae::User.new(role: user_role)
 
       expect(user.super_admin_or_admin?).to eq(true)
     end
 
     it 'should return false when user is a user' do
-      admin_role = FactoryGirl.create(:fae_role, name: 'user')
-      user = FactoryGirl.build(:fae_user, role: admin_role)
+      admin_role = Fae::Role.new(name: 'user')
+      user = Fae::User.new(role: admin_role)
 
       expect(user.super_admin_or_admin?).to eq(false)
     end
@@ -93,7 +92,7 @@ describe Fae::User do
 
   describe '.full_name' do
     it 'should return full name' do
-      user = FactoryGirl.build(:fae_user, first_name: 'John', last_name: 'Doe')
+      user = Fae::User.new(first_name: 'John', last_name: 'Doe')
 
       expect(user.full_name).to eq('John Doe')
     end
@@ -101,7 +100,7 @@ describe Fae::User do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::UserConcern' do
-      user = FactoryGirl.create(:fae_user)
+      user = Fae::User.new
 
       expect(user.instance_says_what).to eq('Fae::User instance: what?')
     end
