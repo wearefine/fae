@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'uglifier'
 
   # other dependencies
-  s.add_dependency 'devise', '>= 3.4.1'
+  s.add_dependency 'devise', '~> 4.3.0'
   s.add_dependency 'simple_form', '>= 3.1.0'
   s.add_dependency 'jquery-ui-rails', '~> 4.2.1'
   s.add_dependency 'remotipart', '~> 1.3.1'
