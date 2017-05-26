@@ -2,8 +2,11 @@ require 'rails_helper'
 
 feature 'fae_table_collapse' do
 
-  scenario 'should open collapsed table when the header is clicked', js: true do
+  before(:each) do
     admin_login
+  end
+
+  scenario 'should open collapsed table when the header is clicked', js: true do
     visit admin_events_path
 
     # Ensure collapsed table is collapsed
@@ -16,7 +19,6 @@ feature 'fae_table_collapse' do
   end
 
   scenario 'should open or close all tables when all toggle is clicked', js: true do
-    admin_login
     visit admin_events_path
 
     # Ensure collapsed tables are collapsed
@@ -33,7 +35,6 @@ feature 'fae_table_collapse' do
   end
 
   scenario 'should not have collapsible options when there is only one collapsible table', js: true do
-    admin_login
     visit admin_selling_points_path
 
     # Ensure collapsed tables are collapsed
