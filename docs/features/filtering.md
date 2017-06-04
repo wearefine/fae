@@ -302,18 +302,28 @@ end
 
 ## Row Sorting
 
-Fae uses [jQuery Sortable](https://jqueryui.com/sortable/) to make your tables
-rows drag-and-drop sortable.
+Fae uses [jQuery UI Sortable](https://jqueryui.com/sortable/) to make your tables rows drag-and-drop sortable. To take advantage of this add a `position` attribute to your object when you scaffold it:
 
-To make this work, you need 2 things:
+```
+rails g fae:scaffold Person first_name last_name position:integer
+```
 
-1) an integer `position` column on your active record model. Please see how to hook up your models in the
-[act_as_list gem documentation](https://github.com/swanandp/acts_as_list#example)
+If your object has already been created you'll have to do a couple steps to make it sortable.
 
-2) in your HTML, you must add the `js-sort-row` class to your `<table>`, and the
+1) Add an integer `position` column on your object with a type of `integer`.
+
+2) Add a default scope to the object model to always order by position. Optionally you can config `acts_as_list`
+```ruby
+class Person < ApplicationRecord
+  acts_as_list add_new_at: :top
+  default_scope { order(:position) }
+  # ...
+```
+
+3) In your HTML you must add the `js-sort-row` class to your `<table>`, and the
 `sortable-handle` class on the `<td>` you want to make draggable. Here is an example in slim:
 ```slim
-table.js-sort-row -# <---- here
+table.js-sort-row / <---- here
   thead
     tr
       th.-action data-sorter='false'
@@ -321,17 +331,8 @@ table.js-sort-row -# <---- here
   tbody
     - @items.each do |item|
       tr id=fae_sort_id(item)
-        td.sortable-handle -# <---- here
+        td.sortable-handle / <---- here
           i.icon-sort
         td = item.name
 ```
 
-### How does this work?
-
-When you release the table row, an AJAX request is fired to the `Fae::UtilitiesController`'s `#sort` action.
-
-```shell
-bundle exec rake routes | grep fae/utilities#sort
-```
-
-You can see the [implementation details here]: (https://github.com/wearefine/fae/blob/master/app/controllers/fae/utilities_controller.rb#L14)
