@@ -54,7 +54,7 @@ feature 'fae_nested_table' do
 
     expect(page.find('#nested_table table')).to have_content('Roses')
 
-    page.find("tr#nested_table_#{aroma.id} .js-delete-link").click
+    page.find("tr#aromas_#{aroma.id} .js-delete-link").click
 
     expect(page.find('#nested_table table')).to_not have_content('Roses')
   end
