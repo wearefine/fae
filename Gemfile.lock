@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    fae-rails (1.5.0)
+    fae-rails (1.5.1)
       acts_as_list (~> 0.9.0)
       browser (~> 0.8.0)
       carrierwave (~> 0.10.0)
@@ -68,7 +68,7 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    acts_as_list (0.9.4)
+    acts_as_list (0.9.5)
       activerecord (>= 3.0)
     addressable (2.4.0)
     airbrussh (1.1.1)
@@ -310,7 +310,7 @@ GEM
     tilt (2.0.7)
     tzinfo (1.2.3)
       thread_safe (~> 0.1)
-    uglifier (3.1.9)
+    uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)

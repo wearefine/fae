@@ -39,7 +39,6 @@
     width: 50%;
     padding: 35px 23px;
     border-left: 1px solid $c-border;
-    margin-left: -6px;
   }
 
   input[type=text],
@@ -62,7 +61,8 @@
 .login-logo {
   @include bp(login_container) {
     display: inline-block;
-    vertical-align: center;
+    vertical-align: middle;
+    padding: 0 25px;
     width: 50%;
   }
 

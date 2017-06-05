@@ -70,6 +70,20 @@ A text area with Fae's built-in markdown hint:
 fae_input f, :description, markdown_supported: true
 ```
 
+### (Optional) HTML Input
+
+Fae includes the [Trumbowyg](https://alex-d.github.io/Trumbowyg/) HTML WYSIWYG editor. In order to reduce the size of the generated JavaScript, this libary is opt-in and needs to be loaded by including this line in the `fae.js` file:
+```javascript
+// app/assets/javascripts/fae.js
+
+//= require fae/vendor/trumbowyg
+```
+
+Then, the editor can be activated:
+```ruby
+fae_input f, :description, html: true
+```
+
 ## Fae Association
 
 ```ruby
