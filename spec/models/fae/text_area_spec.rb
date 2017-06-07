@@ -4,7 +4,7 @@ describe Fae::TextArea do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::TextAreaConcern' do
-      text_area = FactoryGirl.create(:fae_text_area)
+      text_area = Fae::TextArea.new
 
       expect(text_area.instance_says_what).to eq('Fae::TextArea instance: what?')
     end

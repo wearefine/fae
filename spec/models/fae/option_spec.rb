@@ -21,7 +21,7 @@ describe Fae::Option do
 
     context 'when an option object is present' do
       it 'should return the instance' do
-        options = FactoryGirl.create(:fae_option, title: 'Test Title')
+        options = Fae::Option.new(title: 'Test Title')
 
         expect(options).to be_a Fae::Option
         expect(options.title).to eq('Test Title')
@@ -31,8 +31,7 @@ describe Fae::Option do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::OptionConcern' do
-      option = FactoryGirl.create(:fae_option)
-
+      option = Fae::Option.new
       expect(option.instance_says_what).to eq('Fae::Option instance: what?')
     end
 

@@ -4,8 +4,7 @@ describe Fae::File do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::FileConcern' do
-      file = FactoryGirl.create(:fae_file)
-
+      file = Fae::File.new
       expect(file.instance_says_what).to eq('Fae::File instance: what?')
     end
 

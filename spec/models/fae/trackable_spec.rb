@@ -55,8 +55,8 @@ describe Fae::Trackable do
 
     context 'on an arbitrary non-FAE:: child model' do
       it 'should create a change item created for the parent with the child info' do
-        release = FactoryGirl.build(:release)
-        release_note = FactoryGirl.build(:release_note, release: release)
+        release = Release.new
+        release_note = ReleaseNote.new(release: release)
         release_note.save
         release_note_change = Fae::Change.last
 
