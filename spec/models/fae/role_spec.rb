@@ -4,9 +4,13 @@ describe Fae::Role do
 
   describe 'default_scope' do
     it 'should order by position' do
-      role3 = FactoryGirl.create(:fae_role, position: 2)
-      role1 = FactoryGirl.create(:fae_role, position: 0)
-      role2 = FactoryGirl.create(:fae_role, position: 1)
+      role3 = FactoryGirl.create(:fae_role)
+      role1 = FactoryGirl.create(:fae_role)
+      role2 = FactoryGirl.create(:fae_role)
+
+      role3.update_attribute(:position, 2)
+      role1.update_attribute(:position, 0)
+      role2.update_attribute(:position, 1)
 
       expect(Fae::Role.all).to eq([role1, role2, role3])
     end
@@ -31,6 +35,14 @@ describe Fae::Role do
 
     it 'should allow class methods through Fae::RoleConcern' do
       expect(Fae::Role.class_says_what).to eq('Fae::Role class: what?')
+    end
+  end
+
+  describe 'roles#create' do
+    it 'acts_as_list should automatically add new roles to the bottom' do
+      role1 = FactoryGirl.create(:fae_role, position: 3)
+      role2 = FactoryGirl.create(:fae_role)
+      expect(role2.reload.position).to eq(4)
     end
   end
 
