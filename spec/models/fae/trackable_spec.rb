@@ -14,14 +14,14 @@ describe Fae::Trackable do
 
     context 'when fae_tracker_blacklist == all' do
       it 'should not create change item' do
-        aroma = FactoryGirl.create(:aroma)
+        aroma = FactoryGirl.build_stubbed(:aroma)
         expect(aroma.tracked_changes).to eq([])
       end
     end
 
     context 'on a Fae::Image' do
       it 'should not create a change item' do
-        image = FactoryGirl.create(:fae_image)
+        image = FactoryGirl.build_stubbed(:fae_image)
         expect(image.tracked_changes).to eq([])
         expect(Fae::Change.all.length).to eq(0)
       end

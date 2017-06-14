@@ -4,7 +4,7 @@ describe Fae::StaticPage do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::StaticPageConcern' do
-      static_page = FactoryGirl.create(:fae_static_page)
+      static_page = FactoryGirl.build_stubbed(:fae_static_page)
 
       expect(static_page.instance_says_what).to eq('Fae::StaticPage instance: what?')
     end

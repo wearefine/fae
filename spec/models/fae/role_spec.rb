@@ -28,7 +28,7 @@ describe Fae::Role do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::RoleConcern' do
-      role = FactoryGirl.create(:fae_role)
+      role = FactoryGirl.build_stubbed(:fae_role)
 
       expect(role.instance_says_what).to eq('Fae::Role instance: what?')
     end
