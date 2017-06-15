@@ -11,12 +11,12 @@ describe Fae::ApplicationHelper do
 
     it 'should display an image tag for an image field' do
       expect(col_name_or_image(@winemaker, :winemaker_image)).to include("<img")
-      expect(col_name_or_image(@winemaker, :winemaker_image)).to include("/system/uploads/fae/image/asset/#{@winemaker_image.id}/thumb_test.jpeg")
+      expect(col_name_or_image(@winemaker, :winemaker_image)).to include("/system/uploads/fae/image/asset/#{@winemaker_image.id}/thumb_test.jpg")
     end
 
     it 'should display an image tag for an image field from a custom method' do
       expect(col_name_or_image(@winemaker, :winemaker_image)).to include("<img")
-      expect(col_name_or_image(@winemaker, :winemaker_image)).to include("/system/uploads/fae/image/asset/#{@winemaker_image.id}/thumb_test.jpeg")
+      expect(col_name_or_image(@winemaker, :winemaker_image)).to include("/system/uploads/fae/image/asset/#{@winemaker_image.id}/thumb_test.jpg")
     end
   end
 
