@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# encoding: utf-8
 
 module Fae
   class ImageUploader < CarrierWave::Uploader::Base
@@ -11,7 +11,7 @@ module Fae
     end
 
     def extension_white_list
-      %w[jpg jpeg gif png ico]
+      %w(jpg jpeg gif png ico)
     end
 
     # Override the directory where uploaded files will be stored.
@@ -21,7 +21,7 @@ module Fae
     end
 
     version :thumb do
-      process resize_to_fill: [150, 100]
+      process :resize_to_fill => [150,100]
     end
   end
 end
