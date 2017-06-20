@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 module Fae
   class ImageUploader < CarrierWave::Uploader::Base
     include CarrierWave::RMagick
@@ -23,5 +22,6 @@ module Fae
     version :thumb do
       process :resize_to_fill => [150,100]
     end
+
   end
 end
