@@ -19,6 +19,5 @@ module Fae
     def extension_white_list
       %w(jpg jpeg gif png pdf)
     end
-
   end
 end
