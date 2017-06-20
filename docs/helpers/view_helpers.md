@@ -87,7 +87,7 @@ fae_delete_button item
 ```
 
 ```ruby
-fae_delete_button item, "/#{fae_path}/delete", 'Destroy this item COMPLETELY' remote: true, data: { delete: 'true' }
+fae_delete_button item, "/#{fae_path}/delete", 'Destroy this item COMPLETELY', remote: true, data: { delete: 'true' }
 ```
 
 ## Form Header
