@@ -15,6 +15,9 @@ ruby:
   attached_as         ||= image_name.to_s
   languages             = f.object.class.try(:fae_fields).try(:[], image_name).try(:[], :languages)
   language            ||= nil
+  error_class           = SimpleForm.wrappers['default'].defaults[:error_class]
+  image_errors          = item.errors.messages["#{image_name}.asset".to_sym]
+  image_error_class     = image_errors.any? ? error_class : nil
 
 - if languages.present?
   - languages.each do |lang|
@@ -41,7 +44,11 @@ ruby:
           = link_to '', fae.delete_image_path(the_image.id), class: 'asset-delete js-asset-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if the_image.id.present?
 
       .asset-inputs style="#{'display:none;' if the_image.asset.present?}"
-        = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_image_upload_size, exceeded: t('fae.exceeded_upload_limit') } }
+        div class="#{image_error_class}"
+          = i.input :asset, as: :file, label: false, input_html: { data: { limit: Fae.max_image_upload_size, exceeded: t('fae.exceeded_upload_limit') } } do
+          - if image_error_class
+            span.error
+              = image_errors.join(' // ')
         = i.input :asset_cache, as: :hidden
         - imageable_type = f.object.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : f.object.class.name
         = i.input :imageable_type, as: :hidden, input_html: { value: imageable_type }
