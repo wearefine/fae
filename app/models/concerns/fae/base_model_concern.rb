@@ -81,22 +81,31 @@ module Fae
         end
       end
 
+      attr_reader :fae_image_name
       def has_fae_image(image_name_symbol)
+        @fae_image_name = image_name_symbol
         has_one image_name_symbol, -> { where(attached_as: image_name_symbol.to_s) },
           as: :imageable,
           class_name: '::Fae::Image',
           dependent: :destroy
         accepts_nested_attributes_for image_name_symbol, allow_destroy: true
+        define_fae_image_instance_methods
       end
 
-      def has_fae_file(file_name_symbol)
-        has_one file_name_symbol, -> { where(attached_as: file_name_symbol.to_s) },
-          as: :fileable,
-          class_name: '::Fae::File',
-          dependent: :destroy
-        accepts_nested_attributes_for file_name_symbol, allow_destroy: true
-      end
+      def define_fae_image_instance_methods
+        class_eval do
+          define_method "rebuild_#{fae_image_name}" do
+            __send__ "build_#{self.class.fae_image_name}" if (__send__ self.class.fae_image_name).blank? || !persisted_with_asset?
+          end
 
+          private
+
+          def persisted_with_asset?
+            image = __send__ self.class.fae_image_name
+            image.try(:persisted?) && image.try(:reload).try(:asset?)
+          end
+        end
+      end
     end
 
     private
