@@ -5,5 +5,5 @@ class Location < ActiveRecord::Base
     name
   end
 
-  belongs_to :contact, class_name: Person
+  belongs_to :contact, class_name: 'Person'
 end
