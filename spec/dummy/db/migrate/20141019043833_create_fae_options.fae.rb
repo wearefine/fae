@@ -1,5 +1,5 @@
 # This migration comes from fae (originally 20141017194616)
-class CreateFaeOptions < ActiveRecord::Migration
+class CreateFaeOptions < ActiveRecord::Migration[4.2]
   def change
     create_table :fae_options do |t|
       t.string :title

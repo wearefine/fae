@@ -1,4 +1,4 @@
-class CreateAromas < ActiveRecord::Migration
+class CreateAromas < ActiveRecord::Migration[4.2]
   def change
     create_table :aromas do |t|
       t.string :name

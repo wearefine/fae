@@ -1,0 +1,10 @@
+ja:
+  fae:
+    save_notice: '保存しました。'
+    save_error: '入力にエラーがあります。'
+    delete_notice: '削除が完了しました。'
+    delete_error: 'アソシエーションがあるレコードがあるため削除できませんでした。'
+    delete_confirmation: '削除してよろしいですか？'
+    clone_confirmation: "複製してよろしいですか？"
+    unauthorized_error: 'このページにアクセスする権限がありません。'
+    exceeded_upload_limit: "選択されたファイルのサイズが　### MB　を超えています。ファイルを再選択しますか？"

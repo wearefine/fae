@@ -1,12 +1,12 @@
 module Fae
   module  ViewHelper
 
-    def fae_date_format(datetime, timezone = @option.time_zone)
-      datetime.in_time_zone(timezone).strftime('%m/%d/%y') if is_date_or_time?(datetime)
+    def fae_date_format(datetime, timezone = @option.time_zone, format: :default)
+      l(datetime.in_time_zone(timezone), format: format) if is_date_or_time?(datetime)
     end
 
-    def fae_datetime_format(datetime, timezone = @option.time_zone)
-      datetime.in_time_zone(timezone).strftime("%b %-d, %Y %l:%M%P %Z") if is_date_or_time?(datetime)
+    def fae_datetime_format(datetime, timezone = @option.time_zone, format: :default)
+      l(datetime.in_time_zone(timezone), format: format) if is_date_or_time?(datetime)
     end
 
     def fae_path
