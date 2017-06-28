@@ -81,13 +81,41 @@ module Fae
         end
       end
 
+      attr_reader :fae_image_name
       def has_fae_image(image_name_symbol)
+        @fae_image_name = image_name_symbol
         has_one image_name_symbol, -> { where(attached_as: image_name_symbol.to_s) },
           as: :imageable,
           class_name: '::Fae::Image',
           dependent: :destroy
         accepts_nested_attributes_for image_name_symbol, allow_destroy: true
+
+        define_after_save_class_method
       end
+
+      # This fixes a bug where the fae_image
+      # would not be saved after a failed validation.
+      # It generates the following code which is evaluated
+      # inside the class:
+      #
+      # after_save :save_foobar_image
+
+      # def save_foobar_image
+      #   return unless foobar_image.asset?
+      #   foobar_image.save!
+      # end
+
+      def define_after_save_class_method
+        class_eval do
+          after_save "save_#{fae_image_name}"
+
+          define_method "save_#{fae_image_name}" do
+            return unless (__send__ self.class.fae_image_name).asset?
+            (__send__ self.class.fae_image_name).save!
+          end
+        end
+      end
+      private :define_after_save_class_method
 
       def has_fae_file(file_name_symbol)
         has_one file_name_symbol, -> { where(attached_as: file_name_symbol.to_s) },
