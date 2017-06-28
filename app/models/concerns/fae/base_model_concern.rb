@@ -110,7 +110,7 @@ module Fae
           after_save "save_#{fae_image_name}"
 
           define_method "save_#{fae_image_name}" do
-            return unless (__send__ self.class.fae_image_name).asset?
+            return unless (__send__ self.class.fae_image_name).try(:asset?)
             (__send__ self.class.fae_image_name).save!
           end
         end
