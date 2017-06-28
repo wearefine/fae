@@ -1,3 +1,3 @@
 module Fae
-  VERSION = '1.5.1.8-buysell-technologies'
+  VERSION = '1.5.1.7-buysell-technologies'
 end
