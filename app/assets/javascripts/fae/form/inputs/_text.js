@@ -41,6 +41,18 @@ Fae.form.text = {
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   initMarkdown: function() {
+    var inlineAttachmentConfig = {
+      uploadUrl: '/admin/html_embedded_image',
+      uploadFieldName: 'image',
+      jsonFieldName: 'file',
+      progressText: '![Uploading file...]()',
+      urlText: "![file]({filename})",
+      errorText: "Error uploading file",
+      extraHeaders: {
+        'X-CSRF-Token': $.rails.csrfToken()
+      }
+    }
+
     $('.js-markdown-editor:not(.mde-enabled)').each(function() {
       var $this = $(this);
 
@@ -49,8 +61,10 @@ Fae.form.text = {
         autoDownloadFontAwesome: false,
         status: false,
         spellChecker: false,
-        hideIcons: ['image', 'side-by-side', 'fullscreen', 'preview']
+        hideIcons: ['image', 'side-by-side', 'preview']
       });
+
+      inlineAttachment.editors.codemirror4.attach(editor.codemirror, inlineAttachmentConfig);
 
       // Disable tabbing within editor
       editor.codemirror.options.extraKeys['Tab'] = false;

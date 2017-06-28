@@ -21,7 +21,7 @@ module Fae
     private
 
     def set_locale
-      I18n.locale = :en
+      I18n.locale = Rails.configuration.i18n.default_locale || :en
     end
 
     def check_disabled_environment
