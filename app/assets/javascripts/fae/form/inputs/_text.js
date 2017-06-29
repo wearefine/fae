@@ -61,7 +61,7 @@ Fae.form.text = {
         autoDownloadFontAwesome: false,
         status: false,
         spellChecker: false,
-        hideIcons: ['image', 'side-by-side', 'preview']
+        hideIcons: ['image']
       });
 
       inlineAttachment.editors.codemirror4.attach(editor.codemirror, inlineAttachmentConfig);
