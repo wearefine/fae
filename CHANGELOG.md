@@ -6,6 +6,11 @@
     + Add support for HTML wysiwyg editor with images upload
 - bugs
 
+## 1.6
+
+- enhancements
+- bugs
+
 ## 1.5.1
 
 - enhancements
