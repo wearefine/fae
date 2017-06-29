@@ -1,4 +1,4 @@
-class CreateFaeChanges < ActiveRecord::Migration
+class CreateFaeChanges < ActiveRecord::Migration[4.2]
   def change
     create_table :fae_changes do |t|
       t.integer :changeable_id

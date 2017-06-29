@@ -7,7 +7,7 @@ gem "rake", "< 12.0.0"
 gem "jquery-rails"
 gem "jquery-ui-rails", "~> 4.2.1"
 gem "sass", :require => "sass"
-gem "carrierwave", "~> 0.10.0"
+gem "carrierwave", "~> 1"
 gem "rmagick", "~> 2.13.3", :require => false
 gem "capistrano", "~> 3.1"
 gem "capistrano-rails", :git => "https://github.com/wearefine/rails"
