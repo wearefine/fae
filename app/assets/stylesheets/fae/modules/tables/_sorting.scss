@@ -56,3 +56,33 @@ th.-asc .th-sortable-title,
     @extend .icon-arrow_up:before;
   }
 }
+
+// default css for nested tree list
+.tree-list.vertical li {
+  background: 0;
+  border: 1px solid $c-dark-grey;
+  color: $c-text-heavy;
+  display: block;
+  margin: 10px 0;
+  padding: 10px 25px;
+
+  .sortable-handle {
+    margin-left: 15px;
+  }
+
+  span {
+    margin: 0 20px;
+  }
+
+  .float-right {
+    float: right;
+    margin-right: 15px;
+  }
+
+  &:hover {
+    background-color: $c-light-grey;
+    border: 1px solid $c-darkest-grey;
+
+    ol { background-color: $c-white; }
+  }
+}
