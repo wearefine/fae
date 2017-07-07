@@ -95,7 +95,11 @@ Fae.form.text = {
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   initHTML: function() {
-    $('.js-html-editor').trumbowyg({
+    var $html_editors = $('.js-html-editor');
+    if(!$html_editors.length) {
+      return;
+    }
+    $html_editors.trumbowyg({
       btnsDef: {
         image: {
           dropdown: ['insertImage', 'upload', 'base64', 'noEmbed'],
