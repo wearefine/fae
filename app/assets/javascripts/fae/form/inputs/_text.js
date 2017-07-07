@@ -47,7 +47,7 @@ Fae.form.text = {
       jsonFieldName: 'file',
       progressText: '![Uploading file...]()',
       urlText: "![file]({filename})",
-      errorText: "Error uploading file",
+      errorText: "Error uploading file, file may be too large",
       extraHeaders: {
         'X-CSRF-Token': $.rails.csrfToken()
       }
