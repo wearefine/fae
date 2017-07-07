@@ -46,12 +46,12 @@ Fae.form.text = {
       uploadFieldName: 'image',
       jsonFieldName: 'file',
       progressText: '![Uploading file...]()',
-      urlText: '![file]({filename})',
+      urlText: "![file]({filename})",
       errorText: 'Error uploading file, file may be too large',
       extraHeaders: {
-        'X-CSRF-Token': $.rails.csrfToken(),
-      },
-    };
+        'X-CSRF-Token': $.rails.csrfToken()
+      }
+    }
 
     $('.js-markdown-editor:not(.mde-enabled)').each(function() {
       var $this = $(this);

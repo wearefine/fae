@@ -7,26 +7,27 @@
  *
  * Call inlineAttachment.attach(editor) to attach to a codemirror instance
  */
-(function () {
+(function() {
   'use strict';
 
-  var codeMirrorEditor = function (instance) {
+  var codeMirrorEditor = function(instance) {
+
     if (!instance.getWrapperElement) {
-      throw 'Invalid CodeMirror object given';
+      throw "Invalid CodeMirror object given";
     }
 
     this.codeMirror = instance;
   };
 
-  codeMirrorEditor.prototype.getValue = function () {
+  codeMirrorEditor.prototype.getValue = function() {
     return this.codeMirror.getValue();
   };
 
-  codeMirrorEditor.prototype.insertValue = function (val) {
+  codeMirrorEditor.prototype.insertValue = function(val) {
     this.codeMirror.replaceSelection(val);
   };
 
-  codeMirrorEditor.prototype.setValue = function (val) {
+  codeMirrorEditor.prototype.setValue = function(val) {
     var cursor = this.codeMirror.getCursor();
     this.codeMirror.setValue(val);
     this.codeMirror.setCursor(cursor);
@@ -37,7 +38,8 @@
    *
    * @param {CodeMirror} codeMirror
    */
-  codeMirrorEditor.attach = function (codeMirror, options) {
+  codeMirrorEditor.attach = function(codeMirror, options) {
+
     options = options || {};
 
     var editor = new codeMirrorEditor(codeMirror),
@@ -45,15 +47,15 @@
       el = codeMirror.getWrapperElement();
 
     el.addEventListener(
-      'paste',
+      'paste', 
       function (e) {
         inlineattach.onPaste(e);
-      },
+      }, 
       false
     );
 
-    codeMirror.setOption('onDragEvent', function (data, e) {
-      if (e.type === 'drop') {
+    codeMirror.setOption('onDragEvent', function(data, e) {
+      if (e.type === "drop") {
         e.stopPropagation();
         e.preventDefault();
         return inlineattach.onDrop(e);
@@ -65,7 +67,7 @@
     codeMirrorEditor.call(this, instance);
   };
 
-  codeMirrorEditor4.attach = function (codeMirror, options) {
+  codeMirrorEditor4.attach = function(codeMirror, options) {
     options = options || {};
 
     var editor = new codeMirrorEditor(codeMirror),
@@ -73,14 +75,14 @@
       el = codeMirror.getWrapperElement();
 
     el.addEventListener(
-      'paste',
+      'paste', 
       function (e) {
         inlineattach.onPaste(e);
-      },
+      }, 
       false
     );
 
-    codeMirror.on('drop', function (data, e) {
+    codeMirror.on('drop', function(data, e) {
       if (inlineattach.onDrop(e)) {
         e.stopPropagation();
         e.preventDefault();

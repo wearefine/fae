@@ -7,12 +7,12 @@
  * Author: Roy van Kaathoven
  * Contact: ik@royvankaathoven.nl
  */
-(function (document, window) {
+(function(document, window) {
   'use strict';
 
-  var inlineAttachment = function (options, instance) {
+  var inlineAttachment = function(options, instance) {
     this.settings = inlineAttachment.util.merge(
-      options,
+      options, 
       inlineAttachment.defaults
     );
     this.editor = instance;
@@ -57,8 +57,8 @@
      * @param {String} previous Value which should be appended after the current content
      */
     appendInItsOwnLine: function (previous, appended) {
-      return (previous + '\n\n[[D]]' + appended)
-        .replace(/(\n{2,})\[\[D\]\]/, '\n\n')
+      return (previous + "\n\n[[D]]" + appended)
+        .replace(/(\n{2,})\[\[D\]\]/, "\n\n")
         .replace(/^(\n*)/, '');
     },
 
@@ -89,8 +89,8 @@
         strPos = el.selectionStart;
       }
 
-      var front = el.value.substring(0, strPos);
-      var back = el.value.substring(strPos, el.value.length);
+      var front = (el.value).substring(0, strPos);
+      var back = (el.value).substring(strPos, el.value.length);
       el.value = front + text + back;
       strPos = strPos + text.length;
       if (browser === 'ie') {
@@ -144,7 +144,12 @@
     /**
      * Allowed MIME types
      */
-    allowedTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'],
+    allowedTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/jpg',
+      'image/gif'
+    ],
 
     /**
      * Text which will be inserted when dropping or pasting a file.
@@ -208,7 +213,7 @@
     /**
      * When a file has succesfully been uploaded
      */
-    onFileUploaded: function () {},
+    onFileUploaded: function () {}
   };
 
   /**
@@ -257,14 +262,14 @@
 
     // Add any available extra headers
     if (typeof settings.extraHeaders === 'object') {
-      for (var header in settings.extraHeaders) {
-        if (settings.extraHeaders.hasOwnProperty(header)) {
-          xhr.setRequestHeader(header, settings.extraHeaders[header]);
+        for (var header in settings.extraHeaders) {
+            if (settings.extraHeaders.hasOwnProperty(header)) {
+                xhr.setRequestHeader(header, settings.extraHeaders[header]);
+            }
         }
-      }
     }
 
-    xhr.onload = function () {
+    xhr.onload = function() {
       // If HTTP status is OK or Created
       if (xhr.status === 200 || xhr.status === 201) {
         me.onFileUploadResponse(xhr);
@@ -283,9 +288,9 @@
    *
    * @param {File} clipboard data file
    */
-  inlineAttachment.prototype.isFileAllowed = function (file) {
-    if (file.kind === 'string') {
-      return false;
+  inlineAttachment.prototype.isFileAllowed = function(file) {
+    if (file.kind === 'string') { 
+      return false; 
     }
     if (this.settings.allowedTypes.indexOf('*') === 0) {
       return true;
@@ -370,8 +375,8 @@
       }
     }
 
-    if (result) {
-      e.preventDefault();
+    if (result) { 
+      e.preventDefault(); 
     }
 
     return result;
