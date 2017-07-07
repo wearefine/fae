@@ -4,6 +4,7 @@
  *= require fae/vendor/daterangepicker
  *= require fae/vendor/simplemde.min
  *= require fae/vendor/trumbowyg
+ *= require fae/vendor/jquery-sortable
  *= require fae/base
  *= require fae/simplemde_override
  */
