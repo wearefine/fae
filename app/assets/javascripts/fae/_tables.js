@@ -30,6 +30,10 @@ Fae.tables = {
       this.rowSorting();
     }
 
+    if (FCH.exists('.tree-list')) {
+      this.treeSorting();
+    }
+
     this.stickyTableHeader();
 
     if (FCH.exists('.collapsible')) {
@@ -149,6 +153,63 @@ Fae.tables = {
         // Use array value within another array because of how tablesorter accepts this argument
         $(this).trigger('sorton', [ cookie_value[path][idx] ]);
       }
+    });
+  },
+
+  /**
+  * Nested row sorting
+  */
+  treeSorting: function() {
+    var oldContainer;
+    $list = $('ol.tree-list');
+    group = $list.sortable({
+      group: 'nested',
+      afterMove: function(placeholder, container) {
+        if (oldContainer !== container) {
+          if (oldContainer) {
+            oldContainer.el.removeClass('active');
+          }
+          container.el.addClass('active');
+          oldContainer = container;
+        }
+      },
+      onDrop: function($item, container, _super) {
+        var index
+        var parent = $item.parents('li')[0]
+        if(parent) {
+          // when dropped inside a container, there will be a parent
+          // '> ol > li' means to only the direct decendents (excluding the children)
+          index = $(parent).find('> ol > li').index($item);
+        } else {
+          // when dropped at the root level, there are no parents
+          // '> li' means to only the root list items
+          index = $list.find('> li').index($item);
+        }
+
+        var data = {
+          item: $item.data('sortId'),
+          parent: $(container.el.context).parent('li').data('sortId') || null,
+          sort_order: index === -1 ? null : index
+        };
+
+        if (data.item === data.parent) {
+          // if for any reason, the drop location
+          // is the item's own location, just abort process.
+          return;
+        }
+
+        $.ajax({
+          url: Fae.path + '/sort_tree',
+          type: 'post',
+          data: { data: data },
+          dataType: 'script',
+          complete: function(request) {
+            // sort complete messaging can go here
+          }
+        });
+        container.el.removeClass('active');
+        _super($item, container);
+      },
     });
   },
 
