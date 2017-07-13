@@ -1,0 +1,36 @@
+language: 'ruby'
+dist: 'trusty'
+sudo: false
+cache: bundler
+notifications:
+  email: false
+  slack:
+    on_success: 'always'
+    on_failure: 'always'
+    rooms:
+      secure: BvxKBW223g/HPLFg5TMcc0T6iU2RoseCtuentB7BYQ4ia6ufRPr+ywNB6pw0CR76I6eTtFx0uHgdQ6/xd0hJLI2nCB8F7yiJmNJUXO6HmS2AttRhpfmmKObfDCm5+7uDdwm2aReYriQyew3WZ8T47SLs1XWK7p+Yv/AsZwdaSHU=
+branches:
+  only:
+    - 'test-fixes'
+before_install:
+  - 'mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"'
+before_script:
+  - 'bundle exec rake db:schema:load'
+script: 'bundle exec rake test'
+services:
+  - 'mysql'
+rvm:
+  - '2.1'
+  - '2.3'
+gemfile:
+  - 'gemfiles/rails_4_1.gemfile'
+  - 'gemfiles/rails_4_2.gemfile'
+  - 'gemfiles/rails_5_0.gemfile'
+env:
+  - 'RAILS_ENV=test; MYSQL_DATABASE=fae; MYSQL_USER=root; MYSQL_PASSWORD='
+matrix:
+  exclude:
+    - rvm: '2.1'
+      gemfile: 'gemfiles/rails_5_0.gemfile'
+    - rvm: '2.3'
+      gemfile: 'gemfiles/rails_4_1.gemfile'
