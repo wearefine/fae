@@ -25,7 +25,7 @@ describe InputLabeler do
       expect(label).to eq(", label: 'SEO Title', helper_text: 'Company Name | Keyword-driven description of the page section. Approx 65 characters.'")
 
       label = InputLabeler.label('seo_description')
-      expect(label).to eq(", label: 'Displayed in search engine results. Under 150 characters.'")
+      expect(label).to eq(", label: 'SEO Description', helper_text: 'Displayed in search engine results. Under 150 characters.'")
 
     end
 
