@@ -27,7 +27,7 @@ class InputLabeler
       label + helper_text(field)
     end
 
-    # split under_scored_string and capitalize acronym parts: seo_description -> SEO Description
+    # split underscored_string and capitalize acronym parts: seo_description -> SEO Description
     def titleize_string(underscored_string)
       return '' if underscored_string.blank?
 
