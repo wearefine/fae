@@ -1,12 +1,12 @@
 = simple_form_for(['<%= options.namespace %>', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
 <% @form_attrs.each do |attr| -%>
-  = fae_input f, :<%= attr %>
+  = fae_input f, :<%= attr %><%= InputLabeler.label(attr) %>
 <% end -%>
 <% @attachments.each do |attachment| %>
 <% if attachment.type == :image -%>
-  = fae_image_form f, :<%= attachment.name -%>
+  = fae_image_form f, :<%= attachment.name -%><%= InputLabeler.label(attr) %>
 <% elsif attachment.type == :file -%>
-  = fae_file_form f, :<%= attachment.name -%>
+  = fae_file_form f, :<%= attachment.name -%><%= InputLabeler.label(attr) %>
 <% end -%>
 <% end -%>
 <% if options.parent_model.present? %>

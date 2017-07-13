@@ -1,6 +1,7 @@
 require 'devise'
 require 'judge'
 require_relative 'validation_helper_collection'
+require_relative 'input_labeler'
 
 module Fae
   # configurable defaults
