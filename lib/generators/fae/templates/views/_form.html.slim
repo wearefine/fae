@@ -5,16 +5,16 @@
 
   main.content
 <% @form_attrs.each do |attr| -%>
-    = fae_input f, :<%= attr %>
+    = fae_input f, :<%= attr %><%= InputLabeler.label(attr) %>
 <% end -%>
 
 <% @association_names.each do |attr| -%>
-    = fae_association f, :<%= attr %>
+    = fae_association f, :<%= attr %><%= InputLabeler.label(attr) %>
 <% end -%>
 <% @attachments.each do |attachment| %>
 <% if attachment.type == :image -%>
-    = fae_image_form f, :<%= attachment.name -%>
+    = fae_image_form f, :<%= attachment.name -%><%= InputLabeler.label(attachment.name) -%>
 <% elsif attachment.type == :file -%>
-    = fae_file_form f, :<%= attachment.name -%>
+    = fae_file_form f, :<%= attachment.name -%><%= InputLabeler.label(attachment.name) -%>
 <% end -%>
 <% end -%>
