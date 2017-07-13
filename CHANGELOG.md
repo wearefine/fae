@@ -4,6 +4,8 @@
 
 - enhancements
     + Add support for HTML wysiwyg editor with images upload
+    + Common acronymns are turned into an input label with proper capitalization
+    + Common redundant input helper texts are automatically placed in forms
 - bugs
 
 ## 1.5.1
