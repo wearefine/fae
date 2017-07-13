@@ -96,7 +96,6 @@ Fae.form.validator = {
         messages = _this._removeIgnoredErrors(messages);
         if (messages.length) {
           _this.is_valid = false;
-          _this._labelNamedMessage($input, messages);
           _this._createOrReplaceError($input, messages);
         }
       }
@@ -129,31 +128,6 @@ Fae.form.validator = {
     }
 
     return messages;
-  },
-
-  /**
-   * Print label text before its relevent error message
-   * @protected
-   * @param  {jQuery} $el      Field
-   * @param  {Array<String>} messages  Existing error messages
-   */
-  _labelNamedMessage: function ($el, messages) {
-    var $label;
-    var index = 0;
-
-    if ($el.is(':radio')) {
-      $label = $el.parent().closest('span').siblings('label');
-    } else {
-      $label = $el.siblings('label');
-    }
-
-    if ($label.get(0).childNodes[0].nodeName === "ABBR") {
-      index = 1;
-    }
-
-    for (var i = messages.length - 1; i >= 0; i--) {
-      messages[i] = $label.get(0).childNodes[index].nodeValue + " " + messages[i];
-    }
   },
 
   /**
@@ -277,7 +251,6 @@ Fae.form.validator = {
         } else {
           var message = ['must match Password'];
           validator.is_valid = false;
-          validator._labelNamedMessage(_this.$password_confirmation_field, message);
           validator._createOrReplaceError(_this.$password_confirmation_field, message);
         }
       }
