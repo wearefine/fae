@@ -1,7 +1,7 @@
 = simple_form_for(['admin', @item]) do |f|
   header.content-header.js-content-header
     - subnav_array = ['Attributes', 'Assets', 'Associations']
-    - subnav_array.concat ['Nested Table', 'Release Notes', 'Recent Changes'] if params[:action] == 'edit'
+    - subnav_array.concat ['Aromas', 'Release Notes', 'Recent Changes'] if params[:action] == 'edit'
     = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true, subnav: subnav_array, languages: true
 
   = render 'fae/shared/errors'
@@ -71,7 +71,7 @@
     = fae_checkbox f, :events, helper_text: 'checkboxes vertical', type: 'inline'
 
 - if params[:action] == 'edit'
-  section.content#nested_table
+  section.content#aromas
     = render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,

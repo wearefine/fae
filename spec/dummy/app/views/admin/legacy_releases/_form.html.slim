@@ -8,7 +8,7 @@
           li: a href="#asset_section" Assets
           li: a href="#associations_section" Associations
           - if params[:action] == 'edit'
-            li: a href="#aromas_section" Nested Table
+            li: a href="#aromas" Nested Table
             li: a href="#recent_changes" Recent Changes
       = render 'fae/shared/form_buttons', f: f, item: @item, cloneable: true
 
@@ -82,7 +82,7 @@
         = fae_checkbox f, :events, helper_text: 'checkboxes vertical'
 
 - if params[:action] == 'edit'
-  section#aromas_section.main_content-section
+  section#aromas.main_content-section
     = render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,
