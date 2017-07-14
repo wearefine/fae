@@ -1,7 +1,6 @@
 require 'devise'
 require 'judge'
 require_relative 'validation_helper_collection'
-require_relative 'helper_texter'
 
 module Fae
   # configurable defaults

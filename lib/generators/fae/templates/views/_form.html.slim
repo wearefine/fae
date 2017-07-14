@@ -5,7 +5,7 @@
 
   main.content
 <% @form_attrs.each do |attr| -%>
-    = fae_input f, :<%= attr %><%= HelperTexter.helper_text(attr) %>
+    = fae_input f, :<%= attr %>
 <% end -%>
 
 <% @association_names.each do |attr| -%>

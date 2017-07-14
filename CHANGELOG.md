@@ -9,8 +9,6 @@
 ## 1.6
 
 - enhancements
-    + Add acronym inflections
-    + Add mechanism to place common recurring helper texts in projects
 - bugs
 
 ## 1.5.1

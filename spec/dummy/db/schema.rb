@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170503080624) do
+ActiveRecord::Schema.define(version: 20170714185443) do
 
   create_table "acclaims", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "score"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 20170503080624) do
     t.integer  "release_id"
     t.string   "slug"
     t.index ["release_id"], name: "index_aromas_on_release_id", using: :btree
+  end
+
+  create_table "beers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "seo_title"
+    t.string   "seo_description"
+    t.boolean  "on_stage"
+    t.boolean  "on_prod"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "cats", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -94,8 +104,8 @@ ActiveRecord::Schema.define(version: 20170503080624) do
   create_table "fae_files", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "asset"
-    t.string   "fileable_type"
     t.integer  "fileable_id"
+    t.string   "fileable_type"
     t.integer  "file_size"
     t.integer  "position",      default: 0
     t.string   "attached_as"
@@ -111,8 +121,8 @@ ActiveRecord::Schema.define(version: 20170503080624) do
   create_table "fae_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.string   "asset"
-    t.string   "imageable_type"
     t.integer  "imageable_id"
+    t.string   "imageable_type"
     t.string   "alt"
     t.string   "caption"
     t.integer  "position",       default: 0
@@ -177,8 +187,8 @@ ActiveRecord::Schema.define(version: 20170503080624) do
   end
 
   create_table "fae_text_fields", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "contentable_type"
     t.integer  "contentable_id"
+    t.string   "contentable_type"
     t.string   "attached_as"
     t.string   "label"
     t.string   "content"
@@ -310,6 +320,8 @@ ActiveRecord::Schema.define(version: 20170503080624) do
     t.date     "hide"
     t.text     "description",       limit: 65535
     t.text     "content",           limit: 65535
+    t.string   "seo_title"
+    t.string   "seo_description"
   end
 
   create_table "selling_points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
