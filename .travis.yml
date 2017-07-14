@@ -2,6 +2,7 @@ language: 'ruby'
 dist: 'trusty'
 sudo: false
 cache: bundler
+
 notifications:
   email: false
   slack:
@@ -9,34 +10,44 @@ notifications:
     on_failure: 'always'
     rooms:
       secure: BvxKBW223g/HPLFg5TMcc0T6iU2RoseCtuentB7BYQ4ia6ufRPr+ywNB6pw0CR76I6eTtFx0uHgdQ6/xd0hJLI2nCB8F7yiJmNJUXO6HmS2AttRhpfmmKObfDCm5+7uDdwm2aReYriQyew3WZ8T47SLs1XWK7p+Yv/AsZwdaSHU=
+
 branches:
   only:
     - 'test-fixes'
-before_install:
-  - 'mysql -e "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"'
+
+before_script:
+  - 'mysql -e "CREATE DATABASE IF NOT EXISTS fae_dummy_test CHARACTER SET utf8 COLLATE utf8_general_ci;"'
+  - 'cd spec/dummy'
+  - 'rake db:schema:load'
+  - 'cd ../../'
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
   - 'sleep 3'
-before_script:
-  - 'cd spec/dummy && bundle exec rake db:schema:load && cd ../../'
-script: 'bundle exec rake test'
+
+script: 'rake rspec'
+
 services:
   - 'mysql'
+
+env:
+  - 'RAILS_ENV=test'
+
 rvm:
   # - '2.1.10'
   - '2.3.1'
+
 gemfile:
-  - 'gemfiles/rails_4_1.gemfile'
+  # - 'gemfiles/rails_4_1.gemfile'
   - 'gemfiles/rails_4_2.gemfile'
   - 'gemfiles/rails_5_0.gemfile'
-env:
-  - 'RAILS_ENV=test; MYSQL_DATABASE=fae;'
+
 # matrix:
 #   exclude:
 #     - rvm: '2.1'
 #       gemfile: 'gemfiles/rails_5_0.gemfile'
 #     - rvm: '2.3'
 #       gemfile: 'gemfiles/rails_4_1.gemfile'
+
 jobs:
   include:
     - stage: 'Deploy'
