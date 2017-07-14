@@ -18,13 +18,13 @@ before_install:
   - 'sh -e /etc/init.d/xvfb start'
   - 'sleep 3'
 before_script:
-  - 'cd spec/dummy && bundle exec rake db:schema:load && cd $PWD'
+  - 'cd spec/dummy && bundle exec rake db:schema:load && cd ../../'
 script: 'bundle exec rake test'
 services:
   - 'mysql'
 rvm:
-  # - '2.1'
-  - '2.3'
+  # - '2.1.10'
+  - '2.3.1'
 gemfile:
   - 'gemfiles/rails_4_1.gemfile'
   - 'gemfiles/rails_4_2.gemfile'
