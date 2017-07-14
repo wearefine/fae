@@ -62,7 +62,7 @@ module Fae
 
     def clone_has_many_relationships(association)
       if @item.send(association).present?
-        @item.send(association).each do |record|
+        @item.send(association).reverse.each do |record|
           new_record = association.to_s.classify.constantize.find_by_id(record.id).dup
           new_record.send("#{@klass_singular}_id" + '=', @cloned_item.id) if new_record.send("#{@klass_singular}_id").present?
           # check if associations have unique attributes
@@ -77,7 +77,7 @@ module Fae
 
     def clone_join_relationships(object)
       if @item.send(object.to_sym).present?
-        @item.send(object.to_sym).each do |record|
+        @item.send(object.to_sym).reverse.each do |record|
           copied_join = object.classify.constantize.find_by_id(record.id).dup
           copied_join.send("#{@klass_singular}_id" + '=', @cloned_item.id)
           @cloned_item.send(object.to_sym) << copied_join
