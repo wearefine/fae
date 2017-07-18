@@ -19,20 +19,20 @@ header.main-header#js-main-header
         a.grabatar-link href="#"
           img.grabatar src=fae_avatar alt=current_user.full_name
         ul
-          li: a href=fae.destroy_user_session_path Log Out
-          li: a href=fae.settings_path Your Settings
+          li: a href=fae.destroy_user_session_path = t('fae.logout')
+          li: a href=fae.settings_path = t('fae.your_settings')
 
       li.utility-dropdown.js-utility-dropdown
         a href="#"
           i.icon-settings
         ul
           - if current_user.super_admin_or_admin?
-            li: a href=fae.users_path Users
-            li: a href=fae.activity_log_path Activity Log
+            li: a href=fae.users_path = t('fae.users')
+            li: a href=fae.activity_log_path = t('fae.activity_log')
           - if current_user.super_admin?
-            li: a href=fae.option_path Root Settings
+            li: a href=fae.option_path = t('fae.root_settings')
           - if @option.live_url.present?
-            li: a href=@option.live_url target="_blank" Live Site
+            li: a href=@option.live_url target="_blank" = t('fae.live_site')
           - if @option.stage_url.present?
             li: a href=@option.stage_url target="_blank" Stage Site
 

@@ -8,3 +8,15 @@ en:
     clone_confirmation: "Once you clone, you'll need to delete if you later change your mind. Still want to?"
     unauthorized_error: 'You are not authorized to view that page.'
     exceeded_upload_limit: "Let's aim for smaller. This asset is larger than the ### MB limit. Got another?"
+    users: 'Users'
+    activity_log: 'Activity Log'
+    root_settings: 'Root Settings'
+    live_site: 'Live Site'
+    logout: 'Logout'
+    your_settings: 'Your Settings'
+    first_name: 'First Name'
+    last_name: 'Last Name'
+    email: 'Email'
+    password: 'Password'
+    password_confirmation: 'Password Confirmation'
+    role: 'Role'
