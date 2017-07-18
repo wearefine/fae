@@ -8,3 +8,15 @@ ja:
     clone_confirmation: "複製してよろしいですか？"
     unauthorized_error: 'このページにアクセスする権限がありません。'
     exceeded_upload_limit: "選択されたファイルのサイズが　### MB　を超えています。ファイルを再選択しますか？"
+    users: '管理者'
+    activity_log: '操作ログ'
+    root_settings: '管理設定'
+    live_site: '本番サイト'
+    logout: 'ログアウト'
+    your_settings: '設定'
+    first_name: '名'
+    last_name: '姓'
+    email: 'メール'
+    password: 'パスワード'
+    password_confirmation: 'パスワード（確認）'
+    role: '権限'
