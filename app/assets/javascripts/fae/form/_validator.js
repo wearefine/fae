@@ -26,6 +26,7 @@ Fae.form.validator = {
   formValidate: function () {
     var _this = this;
     FCH.$document.on('submit', 'form', function (e) {
+      console.log(1);
       _this.is_valid = true;
 
       // Scope the data-validation only to the form submitted
@@ -35,13 +36,20 @@ Fae.form.validator = {
         }
       });
 
+      // Catch visible errors for image/file inputs hitting the fae config file size limiter
+      $('.input.file', $(this)).each(function () {
+        if ($(this).hasClass('field_with_errors')) {
+          _this.is_valid = false
+        }
+      });
+
       if (_this.is_valid === false) {
         Fae.navigation.language.checkForHiddenErrors();
         FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
         e.preventDefault();
       }
 
-      if ($(".field_with_errors").length){
+      if ($(".field_with_errors").length) {
         $('.alert').slideDown('fast').removeClass('hide').delay(3000).slideUp('fast');
       }
     });
