@@ -26,7 +26,6 @@ Fae.form.validator = {
   formValidate: function () {
     var _this = this;
     FCH.$document.on('submit', 'form', function (e) {
-      console.log(1);
       _this.is_valid = true;
 
       // Scope the data-validation only to the form submitted
