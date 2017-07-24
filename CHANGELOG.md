@@ -4,6 +4,7 @@
 
 - enhancements
     + Add support for HTML wysiwyg editor with images upload
+    + \#66263 Nested table H3s have been promoted to H2s to increase their visiblity on long detail pages
 - bugs
 
 ## 1.6
@@ -17,8 +18,8 @@
     + Update dynamic relationships docs for pages and split out to make easier to find
     + Resolve Rails 5 depreciation warnings [#167](https://github.com/wearefine/fae/issues/167)
     + Support `config.action_controller.include_all_helpers = false` [#227](https://github.com/wearefine/fae/issues/227)
-- bugs
     + Should not singularize page class name [#210](https://github.com/wearefine/fae/pulls/210)
+- bugs
 
 ## 1.5
 
