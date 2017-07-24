@@ -21,9 +21,7 @@ feature 'fae_input' do
     end
   end
 
-  scenario 'should capitalize acronyms in fields, and display common helper texts' do
-    expect(page).to have_content('SEO Title')
-    expect(page).to have_content('SEO Description')
+  scenario 'should display common helper texts' do
     expect(page).to have_content('Company Name | Keyword-driven description of the page section. Approx 65 characters.')
     expect(page).to have_content('Displayed in search engine results. Under 150 characters.')
   end
