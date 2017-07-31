@@ -59,7 +59,7 @@ module Fae
     end
 
     def change_item_link(change)
-      text = "#{change.changeable_type}: "
+      text = "#{change.changeable_type.gsub('Fae::','')}: "
       test_source_method = Rails::VERSION::MAJOR > 4 ? :data_source_exists? : :table_exists?
 
       if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && !ActiveRecord::Base.connection.send(test_source_method, change.changeable_type.tableize)
