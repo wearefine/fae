@@ -54,7 +54,25 @@ module Fae
       all_models.each do |m|
         records += m.fae_search(query)
       end
-      records
+      authorize_records(records)
+    end
+
+    def authorize_records(records)
+      users_role = current_user.role.name.downcase
+      authorized_records = []
+
+      records.each do |record|
+        tableized_model = record.class.name.tableize
+        role_group_for_model = Fae::Authorization.access_map[tableized_model]
+
+        if role_group_for_model.present?
+          authorized_records << record if role_group_for_model.include?(users_role)
+        else
+          authorized_records << record
+        end
+      end
+
+      authorized_records
     end
 
   end

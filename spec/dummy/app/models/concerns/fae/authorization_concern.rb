@@ -20,7 +20,7 @@ module Fae
       # }
       def access_map
         {
-          'people' => ['super admin', 'admin'],
+          'people' => ['super admin', 'admin', 'user'],
           'locations' => ['super admin', 'admin'],
           'validation_testers' => ['super admin', 'admin'],
           'releases' => ['super admin', 'admin'],
