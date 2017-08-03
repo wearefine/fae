@@ -46,6 +46,7 @@ module Fae
       associations_for_cloning.each do |association|
         type = @klass.reflect_on_association(association)
         through_record = type.through_reflection
+
         if through_record.present?
           clone_join_relationships(through_record.plural_name)
         else
