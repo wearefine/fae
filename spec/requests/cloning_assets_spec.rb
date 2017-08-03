@@ -9,7 +9,7 @@ describe 'cloning assets' do
     label_pdf = FactoryGirl.create(:fae_file, fileable_type: 'Release', fileable_id: release.id, attached_as: 'label_pdf')
 
     admin_login
-    post admin_releases_path(from_existing: 1)
+    post admin_releases_path(from_existing: release.id)
 
     cloned_release = Release.find_by_name('Ima Release-2')
 
