@@ -24,7 +24,7 @@ before_script:
   - 'sh -e /etc/init.d/xvfb start'
   - 'sleep 3'
 
-script: 'bundle exec rake rspec'
+script: 'xvfb-run rspec'
 
 services:
   - 'mysql'
@@ -33,7 +33,6 @@ env:
   - 'RAILS_ENV=test'
 
 rvm:
-  - '2.1'
   - '2.3'
 
 gemfile:
