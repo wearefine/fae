@@ -1,6 +1,6 @@
 header.content-header.js-content-header.-dashboard
   i.icon-home>
-  | &nbsp;&nbsp;Welcome,
+  | &nbsp;&nbsp;こんにちは、
   strong< = current_user.full_name
 
 == render 'flash_messages'
@@ -9,9 +9,9 @@ main.content
   table.js-sort-column
     thead
       tr
-        th Name
-        th Type
-        th.-action-wide Modified
+        th タイトル
+        th タイプ
+        th.-action-wide 最終更新
     tbody
       - @list.each do |item|
         - begin

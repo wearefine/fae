@@ -4,10 +4,10 @@ ruby:
   image_name          ||= :image
   the_image             = item.send(image_name)
   label               ||= image_name.to_s.titleize
-  alt_label           ||= "#{label} alt text"
+  alt_label           ||= "#{label} alt 要素"
   caption_label       ||= "#{label} caption"
   helper_text         ||= ""
-  alt_helper_text     ||= 'Brief description of image contents, read by search engines and visually impaired readers.'
+  alt_helper_text     ||= 'サーチエンジンと目の不自由な方のために画像ファイルの簡単な説明を登録してください。'
   caption_helper_text ||= ""
   show_alt              = true if show_alt.nil?
   show_caption        ||= false

@@ -160,8 +160,8 @@
     var defaults = {
       wrapper_class: 'asset-actions',
       button_class: 'button',
-      choose_text: 'Choose File',
-      file_text: 'No File Chosen',
+      choose_text: 'ファイル選択',
+      file_text: 'ファイルが選択されていません',
       active_class: 'active',
       delete_class: 'asset-delete'
     };

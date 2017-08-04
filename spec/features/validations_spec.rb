@@ -50,7 +50,7 @@ feature 'validations' do
 
     within('.release_wine') do
       page.find('.chosen-single').click
-      page.find('li', text: 'Select One').click
+      page.find('li', text: '選択してください').click
     end
 
     expect(page).to have_selector('div.release_wine.field_with_errors')
