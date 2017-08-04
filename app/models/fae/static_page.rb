@@ -23,6 +23,12 @@ module Fae
       title
     end
 
+    def as_json(options={})
+      self.class.fae_fields.keys.map do |field|
+        [field, field_json(field)]
+      end.to_h
+    end
+
   private
 
     def self.setup_dynamic_singleton
@@ -77,6 +83,16 @@ module Fae
         return :imageable
       when 'Fae::File'
         return :fileable
+      end
+    end
+
+    def field_json(assoc)
+      assoc_obj = self.send(assoc)
+      case assoc_obj.class.name
+      when 'Fae::TextField', 'Fae::TextArea'
+        return assoc_obj.content
+      else
+        return assoc_obj.as_json
       end
     end
 
