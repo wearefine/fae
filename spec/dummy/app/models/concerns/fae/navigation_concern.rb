@@ -20,6 +20,7 @@ module Fae
           item('Locations', path: admin_locations_path),
           item('Validation Testers', path: admin_validation_testers_path),
         ]),
+        item('Beers', path: admin_beers_path),
         item('Pages', path: fae.pages_path, subitems: [
           item('Home', path: fae.edit_content_block_path('home')),
           item('Contact Us', path: fae.edit_content_block_path('contact_us')),
