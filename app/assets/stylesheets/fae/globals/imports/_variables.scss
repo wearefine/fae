@@ -10,7 +10,7 @@ $fae-breakpoints: (
   // @depreciation - remove page_header_save_block in v2.0
   'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
-  'login_submit':           ( min-width: 475px ),
+  'login_submit':           ( min-width: 500px ),
 );
 
 // Merge $custom-breakpoints, $fae-breakpoints, and Frob Core's $fine-breakpoints to one variable to use with bp() mixin

@@ -47,15 +47,6 @@
     width: 100%;
     min-width: 100%;
   }
-
-  input[type=submit] {
-    margin-top: 20px;
-
-    @include bp(login_submit) {
-      float: right;
-      margin: 0;
-    }
-  }
 }
 
 .login-logo {
@@ -76,31 +67,30 @@
     width: 50%;
   }
 }
-.login-form-actions {
 
+.login-form-actions {
   @include clearfix;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   padding-bottom: 20px;
+  padding-top: 20px;
 
   @include bp(login_container) {
     padding: 0;
   }
 
-  .boolean {
-    margin: 12px 0 0 0;
+  @include bp(login_submit) {
+    padding-top: 0;
   }
 
-  a {
-    display: inline-block;
-    padding-top: 15px;
-    font-size: 13px;
+  > * {
+    margin-bottom: 20px;
   }
-}
 
-input {
-  &.login-form-actions-submit[type="submit"] {
-    @include bp(login_submit) {
-      margin-top: -27px;
-    }
+  > .input.boolean {
+    flex-grow: 1;
   }
 }
 
