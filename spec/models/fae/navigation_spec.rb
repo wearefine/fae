@@ -3,8 +3,8 @@ require 'rails_helper'
 describe Fae::Navigation do
 
   let(:current_user) do
-    role = FactoryGirl.create(:fae_role, name: 'super admin')
-    FactoryGirl.create(:fae_user, first_name: 'SuperAdmin', role: role)
+    role = FactoryGirl.build_stubbed(:fae_role, name: 'super admin')
+    FactoryGirl.build_stubbed(:fae_user, first_name: 'SuperAdmin', role: role)
   end
 
   describe '.side_nav' do

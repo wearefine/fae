@@ -2,10 +2,12 @@ require 'spec_helper'
 
 feature 'Form cancel button' do
 
-  scenario 'when clicked before changes', js: true do
+  before(:each) do
     admin_login
     visit new_admin_release_path
+  end
 
+  scenario 'when clicked before changes', js: true do
     click_link 'Cancel'
 
     expect(page.current_path).to eq(admin_releases_path)
@@ -13,9 +15,6 @@ feature 'Form cancel button' do
   end
 
   scenario 'when clicked after changes', js: true do
-    admin_login
-    visit new_admin_release_path
-
     fill_in('Name', with: 'something')
     click_link 'Cancel'
 

@@ -1,5 +1,13 @@
 # Quickstart Guide
 
+This installation guide is for a Rails 5.0 application. We are currently working on support for Rails 5.1.
+
+If you are starting from scratch, install Rails via:
+
+```bash
+gem install rails -v '~> 5.0.0'
+```
+
 ## Installation
 
 1) Add the gem to your `Gemfile` and run `bundle install`.
@@ -126,7 +134,7 @@ To add form validations to our articles, we just need to define them in `app/mod
 
 ```ruby
 validates :title, presence: true
-validated :slug, Fae.validation_helpers.slug
+validates :slug, Fae.validation_helpers.slug
 ```
 
 Fae uses [Judge](https://github.com/joecorcoran/judge) for client side validations. Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
