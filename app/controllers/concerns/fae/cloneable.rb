@@ -50,19 +50,34 @@ module Fae
         if through_record.present?
           clone_join_relationships(through_record.plural_name)
         else
-          clone_has_one_relationship(association) if type.macro == :has_one
+          clone_has_one_relationship(association,type) if type.macro == :has_one
           clone_has_many_relationships(association) if type.macro == :has_many
         end
       end
     end
 
-    def clone_has_one_relationship(association)
-      @cloned_item.send(association) << @item.send(association).dup if @item.send(association).present?
+    def clone_has_one_relationship(association,type)
+      old_record = @item.send(association)
+
+      if old_record.present?
+        new_record = old_record.dup
+        if ['::Fae::Image','::Fae::File'].include?(type.options[:class_name])
+          new_record.send("#{type.options[:as]}_id" + '=', @cloned_item.id) if new_record.send("#{type.options[:as]}_id").present?
+          new_record.send("#{type.options[:as]}_type" + '=', @cloned_item.class.name) if new_record.send("#{type.options[:as]}_type").present?
+          Fae::AssetCloner.new(old_record, new_record, :asset).set_file if old_record.asset.present? && old_record.asset.url.present?
+          new_record.save
+        else
+          new_record.send("#{@klass_singular}_id" + '=', @cloned_item.id) if new_record.send("#{@klass_singular}_id").present?
+        end
+        new_record.attributes.each do |attribute, value|
+          rename_unique_attribute(new_record, attribute, value) if attr_is_unique?(new_record, attribute.first)
+        end
+      end
     end
 
     def clone_has_many_relationships(association)
       if @item.send(association).present?
-        @item.send(association).each do |record|
+        @item.send(association).reverse.each do |record|
           new_record = association.to_s.classify.constantize.find_by_id(record.id).dup
           new_record.send("#{@klass_singular}_id" + '=', @cloned_item.id) if new_record.send("#{@klass_singular}_id").present?
           # check if associations have unique attributes
@@ -77,7 +92,7 @@ module Fae
 
     def clone_join_relationships(object)
       if @item.send(object.to_sym).present?
-        @item.send(object.to_sym).each do |record|
+        @item.send(object.to_sym).reverse.each do |record|
           copied_join = object.classify.constantize.find_by_id(record.id).dup
           copied_join.send("#{@klass_singular}_id" + '=', @cloned_item.id)
           @cloned_item.send(object.to_sym) << copied_join

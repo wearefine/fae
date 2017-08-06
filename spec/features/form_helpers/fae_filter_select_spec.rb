@@ -16,21 +16,15 @@ feature 'fae_filter_select' do
     expect(page).to have_select('filter[wine]', with_options: ['Another Wine', 'Some Wine'])
   end
 
-  scenario 'collection options are assignable' do
+  scenario 'options and collection options are assignable' do
     FactoryGirl.create(:acclaim, score: 'Show Me')
     FactoryGirl.create(:acclaim, score: '')
 
     admin_login
     visit admin_releases_path
 
-    expect(page).to have_select('filter[acclaims]', with_options: ['Show Me'])
-  end
-
-  scenario 'options are assignable' do
-    admin_login
-    visit admin_releases_path
-
     expect(page).to have_select('filter[test]', with_options: ['one', 'two'])
+    expect(page).to have_select('filter[acclaims]', with_options: ['Show Me'])
   end
 
 end

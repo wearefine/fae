@@ -9,7 +9,7 @@ GIT
 PATH
   remote: ../
   specs:
-    fae-rails (1.5.0)
+    fae-rails (1.6.0)
       acts_as_list (~> 0.9.0)
       browser (~> 0.8.0)
       carrierwave (~> 0.10.0)
@@ -27,6 +27,11 @@ PATH
       simple_form (>= 3.1.0)
       slim
       uglifier
+
+PATH
+  remote: ../spec/support/rails-controller-testing-mock
+  specs:
+    rails-controller-testing (0.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -66,7 +71,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    acts_as_list (0.9.4)
+    acts_as_list (0.9.5)
       activerecord (>= 3.0)
     addressable (2.3.8)
     appraisal (2.0.1)
@@ -103,8 +108,8 @@ GEM
     capybara-screenshot (1.0.9)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.8.0)
-      capybara (>= 2.3.0, < 2.7.0)
+    capybara-webkit (1.11.1)
+      capybara (>= 2.3.0, < 2.8.0)
       json
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
@@ -120,10 +125,10 @@ GEM
     daemons (1.2.2)
     database_cleaner (1.3.0)
     debug_inspector (0.0.2)
-    devise (4.2.1)
+    devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 4.1.0, < 5.1)
+      railties (>= 4.1.0, < 5.2)
       responders
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
@@ -199,8 +204,6 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
-    quiet_assets (1.1.0)
-      railties (>= 3.1, < 5.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -234,8 +237,9 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     remotipart (1.3.1)
-    responders (2.3.0)
-      railties (>= 4.2.0, < 5.1)
+    responders (2.4.0)
+      actionpack (>= 4.2.0, < 5.3)
+      railties (>= 4.2.0, < 5.3)
     rmagick (2.13.4)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
@@ -274,11 +278,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
-    simple_form (3.4.0)
-      actionpack (> 4, < 5.1)
-      activemodel (> 4, < 5.1)
-    slim (3.0.7)
-      temple (~> 0.7.6)
+    simple_form (3.5.0)
+      actionpack (> 4, < 5.2)
+      activemodel (> 4, < 5.2)
+    slim (3.0.8)
+      temple (>= 0.7.6, < 0.9)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
     sprockets (3.0.3)
@@ -291,7 +295,7 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    temple (0.7.7)
+    temple (0.8.0)
     thin (1.6.3)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0)
@@ -303,7 +307,7 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (3.1.9)
+    uglifier (3.2.0)
       execjs (>= 0.3.0, < 3)
     warden (1.2.7)
       rack (>= 1.0)
@@ -324,11 +328,10 @@ DEPENDENCIES
   capistrano (~> 3.1)
   capistrano-rails!
   capistrano-rvm
-  capybara (~> 2.4.1)
   capybara-screenshot
-  capybara-webkit (~> 1.8)
+  capybara-webkit (~> 1.11.1)
   carrierwave (~> 0.10.0)
-  database_cleaner (~> 1.3.0)
+  database_cleaner
   factory_girl_rails (~> 4.4.1)
   fae-rails!
   guard-rspec (~> 4.3.1)
@@ -336,10 +339,10 @@ DEPENDENCIES
   jquery-ui-rails (~> 4.2.1)
   mysql2
   pry
-  quiet_assets
   rails (~> 4.2.0)
+  rails-controller-testing!
   rails-perftest
-  remotipart (~> 1.3.1)
+  rake (< 12.0.0)
   rmagick (~> 2.13.3)
   rspec-rails (~> 3.0.2)
   ruby-prof

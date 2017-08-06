@@ -34,4 +34,34 @@ feature 'Global search' do
     end
   end
 
+  # see dummy app's authorization concern for auth mapping used here
+  scenario "search results get authorized", js: true do
+    FactoryGirl.create(:release, name: '2012 Chardonnay')
+    FactoryGirl.create(:person, name: 'Rupert')
+
+    user_login
+    visit fae_path
+
+    within('#js-utility-search') do
+      # user hovers on the search icon
+      first('a').hover
+
+      # doesn't see unauthorized stuff
+      # object
+      fill_in('js-global-search', with: 'char')
+      expect(page).to_not have_content('2012 Chardonnay')
+      # page
+      fill_in('js-global-search', with: 'abou')
+      expect(page).to_not have_content('About Us')
+
+      # sees authorized stuff
+      # object
+      fill_in('js-global-search', with: 'rup')
+      expect(page).to have_content('Rupert')
+      # page
+      fill_in('js-global-search', with: 'home')
+      expect(page).to have_content('Home')
+    end
+  end
+
 end

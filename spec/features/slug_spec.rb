@@ -7,7 +7,7 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "!St. John's @#!*  What?"
+      fill_in 'release_name', with: "!St. John's @#!*  What?"
       expect(find_field('Slug').value).to eq('st-johns')
     end
   end
@@ -17,7 +17,7 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "So what'cho what'cho"
+      fill_in 'release_name', with: "So what'cho what'cho"
       fill_in 'Vintage', with: "What'cho want?!"
       expect(find_field('Slug').value).to eq('so-whatcho-wha-whatcho-want')
     end
@@ -29,7 +29,7 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "George"
+      fill_in 'release_name', with: "George"
       page.find('#release_varietal_id_chosen').click
       page.find('#release_varietal_id_chosen .active-result', text: varietal.name).click
       expect(find_field('Slug').value).to eq('george-monkey')
@@ -48,7 +48,7 @@ feature 'slug' do
   #     click_link 'Add Aroma'
 
   #     within(:css, 'form#new_aroma') do
-  #       fill_in 'Name', with: 'My Brand New Smell!'
+  #       fill_in 'release_name', with: 'My Brand New Smell!'
   #       expect(page.find('form#new_aroma .slug').value).to eq('my-brand-new-smell')
   #       click_button('Create Aroma')
   #     end
@@ -62,7 +62,7 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "Á förêígn dîÂlëçt ìs gôòd fór thè söül"
+      fill_in 'release_name', with: "Á förêígn dîÂlëçt ìs gôòd fór thè söül"
       # Character count limits, sadly
       expect(find_field('Slug').value).to eq('a-foreign-diale')
     end

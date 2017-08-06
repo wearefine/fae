@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ['FINE']
   s.email       = ['fae@wearefine.com']
   s.homepage    = 'https://github.com/wearefine/fae'
-  s.summary     = 'A CMS for Rails. For Reals.'
-  s.description = 'Fae is a flexible CMS for Rails that gets off the ground quickly and scales effectively.'
+  s.summary     = 'CMS for Rails. For Reals.'
+  s.description = 'CMS for Rails. For Reals.'
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']

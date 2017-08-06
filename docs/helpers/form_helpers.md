@@ -2,7 +2,7 @@
 
 Generated forms start you off on a good place to manage the object's content, but chances are you'll want to customize them and add more fields as you data model evolves. Fae provides a number of form helpers to help you leverage Fae's built in features will allowing customization when needed.
 
-Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers it to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
+Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simple_form) gem as it's base. In most cases options that simple_form accepts can be passed into these helpers directly. The reason why we've established these helpers is to allow for customized options. They also provide a method to directly hook into Fae, so we can push out features and bugfixes.
 
 * [Format](#format)
 * [Fae Input](#fae-input)
@@ -68,6 +68,20 @@ fae_input f, :first_name, wrapper_class: 'special_wrapper', helper_text: 'No mor
 A text area with Fae's built-in markdown hint:
 ```ruby
 fae_input f, :description, markdown_supported: true
+```
+
+### (Optional) HTML Input
+
+Fae includes the [Trumbowyg](https://alex-d.github.io/Trumbowyg/) HTML WYSIWYG editor. In order to reduce the size of the generated JavaScript, this libary is opt-in and needs to be loaded by including this line in the `fae.js` file:
+```javascript
+// app/assets/javascripts/fae.js
+
+//= require fae/vendor/trumbowyg
+```
+
+Then, the editor can be activated:
+```ruby
+fae_input f, :description, html: true
 ```
 
 ## Fae Association

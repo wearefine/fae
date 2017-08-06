@@ -14,6 +14,15 @@ module Fae
       render :nothing => true
     end
 
+    # ajax action
+    #
+    # Called from the Trumbowyg JS wysiwyg editor when embedding images to a
+    # HTML field.
+    def create_html_embedded
+      image = Image.create! asset: params[:image]
+      render json: { success: true, file: image.asset.url }
+    end
+
   private
 
     #allow mass assignment
@@ -24,6 +33,5 @@ module Fae
         nil
       end
     end
-
   end
 end
