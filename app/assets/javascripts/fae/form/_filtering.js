@@ -67,8 +67,9 @@ Fae.form.filtering = {
     this.$filter_form
       // update search param when form submits
       .on('submit', function(ev) {
-        ev.preventDefault();
+        $('.js-reset-btn').show();
         _this.updateFryrAndResetPaging('search', $('#filter_search').val());
+        return false;
       })
 
       // update search param when search btn is clicked
@@ -83,6 +84,7 @@ Fae.form.filtering = {
 
         // reset params and form selects
         _this.fry.merge({ page: '' }, true);
+        $('#filter_search').val('');
         $this.closest('form').find('select').val('').trigger('chosen:updated');
         $this.hide();
       })

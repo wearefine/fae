@@ -9,7 +9,7 @@ module Fae
 
       has_many :tracked_changes, -> { order(id: :desc) },
         as: :changeable,
-        class_name: Fae::Change
+        class_name: 'Fae::Change'
     end
 
     def fae_tracker_blacklist
