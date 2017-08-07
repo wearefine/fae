@@ -78,7 +78,8 @@ You can use `fae_delete_button` in your list view tables to provide easy access 
 | option | type | description |
 |---|---|---|
 | item | ActiveRecord object | item to be deleted |
-| delete_path (optional) | String|Route helper | delete endpoint |
+| delete_path (optional) | String | Route helper | delete endpoint |
+| message (optional) | String | Custom alert message on delete
 | attributes (optional) | symbol => value | pass custom attributes to the `link_to` helper |
 
 ```ruby
@@ -86,7 +87,7 @@ fae_delete_button item
 ```
 
 ```ruby
-fae_delete_button item, "/#{fae_path}/delete", remote: true, data: { delete: 'true' }
+fae_delete_button item, "/#{fae_path}/delete", 'Destroy this item COMPLETELY', remote: true, data: { delete: 'true' }
 ```
 
 ## Form Header
