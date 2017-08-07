@@ -68,8 +68,9 @@
 .chosen-container-multi {
   max-width: 515px;
   min-width: 223px;
+
   // overriding the inline js chosen makes
-  width: 90% !important;
+  width: 100% !important;
 
   &.chosen-container-active {
     .chosen-choices {
@@ -126,6 +127,24 @@
 .chosen-container-multi.chosen-with-drop:not(.chosen-drop-up) {
   .chosen-choices {
     border-bottom: none;
+  }
+}
+
+.multiselect-action_wrap {
+  font-size: 13px;
+  line-height: 1.3;
+  margin-top: 10px;
+
+  .multiselect-action {
+    display: inline-block;
+    margin: 0 10px 10px 0;
+    padding-right: 13px;
+    border-right: 1px solid $c-mid-grey;
+
+    &:last-of-type {
+      padding-right: 0;
+      border-right: none;
+    }
   }
 }
 

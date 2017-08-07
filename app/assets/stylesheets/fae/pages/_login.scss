@@ -35,7 +35,7 @@
 
   @include bp(login_container) {
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
     width: 50%;
     padding: 35px 23px;
     border-left: 1px solid $c-border;
@@ -55,6 +55,10 @@
     vertical-align: middle;
     padding: 0 25px;
     width: 50%;
+  }
+
+  img {
+    max-height: 235px;
   }
 }
 
