@@ -7,6 +7,8 @@ class Coach < ActiveRecord::Base
   validates :last_name, presence: true
   validates :team_id, presence: true
 
+  has_fae_image :image
+
   def fae_display_field
     full_name
   end
