@@ -7,6 +7,11 @@
     + \#66263 Nested table H3s have been promoted to H2s to increase their visiblity on long detail pages
 - bugs
 
+## 1.6
+
+- enhancements
+- bugs
+
 ## 1.5.1
 
 - enhancements
@@ -27,6 +32,7 @@
     + \#61840: Document markdown overriding process
     + \#64653: Refresh sidebar navigation styles
     + \#57081: Change relevant instances of .humanize to .titleize
+    + \#64649: Change handling of saved filter state to allow deep links to override saved cookie filter settings on load, but not overwrite them in the cookie.
     + \#60891: Add generator support for :image and :file attachments
     + \#60892: Add Fae::BaseModelConcern class methods has_fae_image and has_fae_file for shorthand image/file attachment definitions
     + \#64645: Restore display of left navigation on form pages

@@ -15,7 +15,7 @@ feature 'Clone record' do
         cloned_release = Release.find_by_name('Ima Release-2')
         expect(cloned_release).to_not be_nil
         expect(current_path).to eq(edit_admin_release_path(cloned_release))
-        expect(find_field('Name').value).to eq(cloned_release.name)
+        expect(find_field('release_name').value).to eq(cloned_release.name)
 
         # only whiteliested attributes should be cloned
         expect(cloned_release.slug).to          eq(release.slug)
@@ -77,7 +77,7 @@ feature 'Clone record' do
         cloned_release = Release.find_by_name('Ima Release-2')
         expect(cloned_release).to_not be_nil
         expect(current_path).to eq(edit_admin_release_path(cloned_release))
-        expect(find_field('Name').value).to eq(cloned_release.name)
+        expect(find_field('release_name').value).to eq(cloned_release.name)
       }
     end
 
