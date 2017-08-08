@@ -1,6 +1,6 @@
 module Fae
   class BaseGenerator < Rails::Generators::NamedBase
-    source_root File.expand_path('../templates', __FILE__)
+    source_root ::File.expand_path('../templates', __FILE__)
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'

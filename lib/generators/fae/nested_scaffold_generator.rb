@@ -1,7 +1,7 @@
 require_relative 'base_generator'
 module Fae
   class NestedScaffoldGenerator < Fae::BaseGenerator
-    source_root File.expand_path('../templates', __FILE__)
+    source_root ::File.expand_path('../templates', __FILE__)
     class_option :parent_model, type: :string, desc: 'Sets the parent model this scaffold belongs_to.'
 
     def go
