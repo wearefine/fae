@@ -33,10 +33,11 @@ Fae.form = {
   makeTwoColumnLabels: function() {
     $('.input label').each(function() {
       var $element = $(this);
-      var has_no_helper_text = false;
 
       // Bail if we cannot find any helper_text
-      if (!$element.find('.helper_text').length) { has_no_helper_text = true; }
+      if (!$element.find('.helper_text').length) {
+        $element.addClass('has_no_helper_text');
+      }
 
       // If present, get all DOM nodes w/ contents(), but ignore the .helper_text
       var label_inner = $element.contents().filter(function() {
@@ -53,10 +54,6 @@ Fae.form = {
 
       // Ensure that we mark this input as having two column label support
       $element.addClass('label--two_col');
-
-      if (has_no_helper_text) {
-        $element.addClass('has_no_helper_text');
-      }
     });
   }
 };
