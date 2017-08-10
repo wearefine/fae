@@ -67,6 +67,7 @@ https://www.faecms.com/documentation
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
 * [Overriding The Markdown Helper](docs/tutorials/markdown_helper.md)
 * [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
+* [Setting Up Parent/Child Objects](docs/tutorials/parent_child_objects.md)
 
 
 ### Helper/DSL Docs

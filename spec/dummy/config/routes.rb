@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resources :article_categories
+    resources :articles
     resources :release_notes
     resources :milestones
     resources :validation_testers
