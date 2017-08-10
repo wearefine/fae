@@ -178,7 +178,7 @@ Fae.navigation = {
         ignore_placeholder_offsets: true
       });
 
-    // Can be removed @ v2.0
+    // @depreciation - remove else block in 2.0
     } else {
       var $header = $('.main_content-header');
       var sidebar_top_offset = (parseInt( $header.outerHeight(), 10) + 30) + 'px';
