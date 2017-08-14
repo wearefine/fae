@@ -11,10 +11,6 @@ notifications:
     rooms:
       secure: BvxKBW223g/HPLFg5TMcc0T6iU2RoseCtuentB7BYQ4ia6ufRPr+ywNB6pw0CR76I6eTtFx0uHgdQ6/xd0hJLI2nCB8F7yiJmNJUXO6HmS2AttRhpfmmKObfDCm5+7uDdwm2aReYriQyew3WZ8T47SLs1XWK7p+Yv/AsZwdaSHU=
 
-branches:
-  only:
-    - 'test-fixes'
-
 before_script:
   - 'mysql -e "CREATE DATABASE IF NOT EXISTS fae_dummy_test CHARACTER SET utf8 COLLATE utf8_general_ci;"'
   - 'cd spec/dummy'
@@ -23,7 +19,9 @@ before_script:
   - 'export DISPLAY=:99.0'
   - 'sh -e /etc/init.d/xvfb start'
 
-script: 'bundle exec rake'
+env:
+  global:
+    - 'RAILS_ENV=test'
 
 services:
   - 'mysql'
@@ -36,37 +34,7 @@ gemfile:
   - 'gemfiles/rails_4_2.gemfile'
   - 'gemfiles/rails_5_0.gemfile'
 
-<<<<<<< HEAD
 matrix:
   exclude:
-    - rvm: '2.1'
-      gemfile: 'gemfiles/rails_5_0.gemfile'
     - rvm: '2.3'
       gemfile: 'gemfiles/rails_4_1.gemfile'
-
-jobs:
-  include:
-    - stage: 'Deploy'
-      script: 'curl --request POST --url $URL --header $AUTH --header $CRUMB'
-      rvm: '2.3'
-      env:
-        - secure: "J2unuHUoTUd8fUuUGtlvE1vg5+9vASrpcigJcrdQf/w7tL9iqUA3o7r9cCS7J9H5oma4fWM+f2fsdhY4T4G3oPcLg7e3sSo6xpUYGCYtnmAkqL1lUEMCdzkKOt2Uv2WGOvtVsG9fOW06pUiHLwaieDKglD66KvyhfTISj08j810="
-        - secure: "eNgDzZdPF6goeBNEdTk7FTErzJlbVCaq2Teq+PoEfOJPaSAm3aw4UTlKdnboABWWBNcENLDALHGCeaZ+e02w/kkOCwEvCvtPSmgTFXcGWKFdpCq7ByckRptH8vz3bI4MWlRhe5ykYL/Qmwfd/efsRxtJRLfH8wcOQLfmaYuKr3M="
-        - secure: "UyvruNkB8AeWoQmf6fXhTl7Zrpre1MhVCzDw6T+sUmApL/9eHntmK75Zn7hp/re+maadS+2fGsqIXOAVOLIRHqyAY/JVJEeMD1fypEMYVeHU9RPuaNzuhEdPiTR4Tb85P+4QZxTOLQTiDLw8jC1k8UMQpMhBNYFeoybF6Zc+bRE="
-=======
-# matrix:
-#   exclude:
-#     - rvm: '2.1'
-#       gemfile: 'gemfiles/rails_5_0.gemfile'
-#     - rvm: '2.3'
-#       gemfile: 'gemfiles/rails_4_1.gemfile'
-
-# jobs:
-#   include:
-#     - stage: 'Deploy'
-#       env:
-#         - secure: "J2unuHUoTUd8fUuUGtlvE1vg5+9vASrpcigJcrdQf/w7tL9iqUA3o7r9cCS7J9H5oma4fWM+f2fsdhY4T4G3oPcLg7e3sSo6xpUYGCYtnmAkqL1lUEMCdzkKOt2Uv2WGOvtVsG9fOW06pUiHLwaieDKglD66KvyhfTISj08j810="
-#         - secure: "eNgDzZdPF6goeBNEdTk7FTErzJlbVCaq2Teq+PoEfOJPaSAm3aw4UTlKdnboABWWBNcENLDALHGCeaZ+e02w/kkOCwEvCvtPSmgTFXcGWKFdpCq7ByckRptH8vz3bI4MWlRhe5ykYL/Qmwfd/efsRxtJRLfH8wcOQLfmaYuKr3M="
-#         - secure: "UyvruNkB8AeWoQmf6fXhTl7Zrpre1MhVCzDw6T+sUmApL/9eHntmK75Zn7hp/re+maadS+2fGsqIXOAVOLIRHqyAY/JVJEeMD1fypEMYVeHU9RPuaNzuhEdPiTR4Tb85P+4QZxTOLQTiDLw8jC1k8UMQpMhBNYFeoybF6Zc+bRE="
-#       script: 'curl --request POST --url $URL --header $AUTH --header $CRUMB'
->>>>>>> 22a186c3bec5feba595d686e61f681e27ec643d5
