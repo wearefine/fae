@@ -33,8 +33,3 @@ gemfile:
   - 'gemfiles/rails_4_1.gemfile'
   - 'gemfiles/rails_4_2.gemfile'
   - 'gemfiles/rails_5_0.gemfile'
-
-matrix:
-  exclude:
-    - rvm: '2.3'
-      gemfile: 'gemfiles/rails_4_1.gemfile'
