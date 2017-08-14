@@ -3,5 +3,6 @@
  *= require fae/vendor/chosen
  *= require fae/vendor/daterangepicker
  *= require fae/vendor/simplemde.min
+ *= require fae/vendor/trumbowyg
  *= require fae/base
  */

@@ -4,7 +4,7 @@ describe Fae::StaticPage do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::StaticPageConcern' do
-      static_page = FactoryGirl.create(:fae_static_page)
+      static_page = FactoryGirl.build_stubbed(:fae_static_page)
 
       expect(static_page.instance_says_what).to eq('Fae::StaticPage instance: what?')
     end
@@ -34,19 +34,6 @@ describe Fae::StaticPage do
       expect(ap.header_image_zh).to be_nil
     end
 
-    # TODO - This test fails occaisionally, and those failures appear to be related to test order (likely related to changing I18n.locale). Temporarily commented out.
-    # it 'should use _content to query the field with the desired I18n locale' do
-    #   I18n.locale = :zh
-
-    #   cp = ContactUsPage.instance
-    #   cp.create_body_en(content: 'test en')
-    #   cp.create_body_zh(content: 'test zh')
-
-    #   expect(cp.body_content).to eq('test zh')
-
-    #   I18n.locale = :en
-    # end
-
   end
 
   describe 'dynamic validations' do
@@ -61,6 +48,45 @@ describe Fae::StaticPage do
         v.options[:if].to_s['is_home_page']
       end
       expect(home_page_validations.map { |v| v.class.name }).to eq(['ActiveRecord::Validations::PresenceValidator', 'ActiveModel::Validations::FormatValidator'])
+    end
+
+  end
+
+  describe 'as_json' do
+
+    before(:each) do
+      @home_page = HomePage.instance
+    end
+
+    it 'should return associated attributes' do
+      expect(@home_page.as_json).to have_key(:header)
+      expect(@home_page.as_json).to have_key(:hero)
+      expect(@home_page.as_json).to have_key(:email)
+      expect(@home_page.as_json).to have_key(:phone)
+      expect(@home_page.as_json).to have_key(:introduction)
+      expect(@home_page.as_json).to have_key(:introduction_2)
+      expect(@home_page.as_json).to have_key(:body)
+      expect(@home_page.as_json).to have_key(:hero_image)
+      expect(@home_page.as_json).to have_key(:welcome_pdf)
+    end
+
+    it 'should return Fae::TextField and Fae::TextArea associtaions as content' do
+      @home_page.create_header(attached_as: 'header', content: 'Some real good Fae::TextField content')
+      @home_page.create_introduction(attached_as: 'introduction', content: 'Some real good Fae::TextArea content')
+
+      expect(@home_page.as_json[:header]).to eq('Some real good Fae::TextField content')
+      expect(@home_page.as_json[:introduction]).to eq('Some real good Fae::TextArea content')
+    end
+
+    it 'should return Fae::Image and Fae::File association as a hash' do
+      home_page_image = FactoryGirl.create(:fae_image, caption: 'look, a mountain', imageable_type: 'Fae::StaticPage', imageable_id: @home_page.id, attached_as: 'hero_image')
+      home_page_file = FactoryGirl.create(:fae_file, fileable_type: 'Fae::StaticPage', fileable_id: @home_page.id, attached_as: 'welcome_pdf')
+
+      expect(@home_page.as_json[:hero_image]).to have_key('asset')
+      expect(@home_page.as_json[:hero_image]['asset']['url']).to include('test.jpg')
+      expect(@home_page.as_json[:hero_image]['caption']).to eq('look, a mountain')
+      expect(@home_page.as_json[:welcome_pdf]).to have_key('asset')
+      expect(@home_page.as_json[:welcome_pdf]['asset']['url']).to include('test.pdf')
     end
 
   end

@@ -4,6 +4,7 @@ class Aroma < ActiveRecord::Base
   belongs_to :release
   has_many :cats
 
+  acts_as_list add_new_at: :top, scope: :release
   default_scope { order(:position) }
 
   has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy

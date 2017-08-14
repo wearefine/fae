@@ -15,30 +15,36 @@ Before you fire this up locally, you'll need some dependencies installed.
 
 There is a dummy app included in the Engine source. To get it running, follow these steps.
 
+After cloning the repo, cd into Fae and install gems into a gemset on Ruby 2.3.1:
+
+```bash
+cd path/to/fae
+bundle install
+```
+
 Cd to the dummy app:
 
-```
-$ cd spec/dummy
-```
-
-Create the DB if you haven't already and migrate:
-
-```
-$ rake db:create:all
-$ rake db:migrate
-$ rake db:test:prepare
+```bash
+cd spec/dummy
 ```
 
-Seed the DB if you haven't already:
+Create the DB and migrate:
 
+```bash
+rake db:create
+rake db:migrate && rake db:migrate RAILS_ENV=test
 ```
-$ rake fae:seed_db
+
+Seed the DB:
+
+```bash
+rake fae:seed_db
 ```
 
 Fire up the server:
 
-```
-$ rails s
+```bash
+rails server
 ```
 
 ## Testing
@@ -47,23 +53,29 @@ The dummy app should stay up-to-date with the latest Rails version we support. R
 
 Use [guard](https://github.com/guard/guard-rspec) to have specs autorunning as you change files
 
-```
-$ guard
+```bash
+guard
 ```
 
 ### Appraisal
 
 [Appraisal](https://github.com/thoughtbot/appraisal) is an amazing gem that allows us to run the specs against multiple versions of Rails. You can find all support versions in the `Appraisals` file.
 
-To run all appraisals:
+To run all appraisals, first install all of the gems of the different appraisal versions with:
 
+```bash
+appraisal
 ```
-$ appraisal rspec
+
+To run tests in all appraisal versions:
+
+```bash
+appraisal rspec
 ```
 
 Or you can run a specific version using the name defined in `Appraisals`:
 
-```
-$ appraisal rails_4_2 rspec
+```bash
+appraisal rails_4_2 rspec
 ```
 
