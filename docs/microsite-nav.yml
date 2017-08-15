@@ -64,6 +64,8 @@
       path: docs/tutorials/actionmailer.md
     - name: Setting Up Parent/Child Objects
       path: docs/tutorials/parent_child_objects.md
+    - name: Configuring With Existing Devise Setup
+      path: docs/tutorials/existing_devise.md
     
 - name: Helper/DSL Docs
   children:
