@@ -1,5 +1,6 @@
 # Fae
 
+
 ### CMS for Rails. For Reals.
 
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
