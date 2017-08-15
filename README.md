@@ -1,5 +1,6 @@
 # Fae
 
+
 ### CMS for Rails. For Reals.
 
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
@@ -68,6 +69,7 @@ https://www.faecms.com/documentation
 * [Overriding The Markdown Helper](docs/tutorials/markdown_helper.md)
 * [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
 * [Setting Up Parent/Child Objects](docs/tutorials/parent_child_objects.md)
+* [Configuring With Existing Devise Setup](docs/tutorials/existing_devise.md)
 
 
 ### Helper/DSL Docs

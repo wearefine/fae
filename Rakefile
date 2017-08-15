@@ -25,6 +25,8 @@ require 'rspec/core/rake_task'
 desc "Run all specs in spec directory (excluding plugin specs)"
 RSpec::Core::RakeTask.new(:spec => 'app:db:test:prepare')
 
+# @deprecation - remove require when we drop Rails 4 support
+require 'sub_test_task_patch'
 
 require 'rake/testtask'
 Rake::TestTask.new(:test) do |t|
