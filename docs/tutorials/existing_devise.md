@@ -1,4 +1,4 @@
-# Configuring with existing Devise setup
+# Configuring With Existing Devise Setup
 
 * [Controllers](#controllers)
 * [Views](#views)
