@@ -26,5 +26,9 @@ module Fae
   # this function maps the vars from your app into your engine
   def self.setup(&block)
     yield self
+
+    # assign Devise settings after initializers
+    Devise.secret_key = Fae.devise_secret_key
+    Devise.mailer_sender = Fae.devise_mailer_sender
   end
 end
