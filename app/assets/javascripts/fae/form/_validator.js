@@ -26,7 +26,7 @@ Fae.form.validator = {
   formValidate: function () {
     var _this = this;
     FCH.$document.on('submit', 'form', function (e) {
-      _this.is_valid = true;
+      e.preventDefault();
 
       // Scope the data-validation only to the form submitted
       $('[data-validate]', $(this)).each(function () {
@@ -50,6 +50,13 @@ Fae.form.validator = {
 
       if ($(".field_with_errors").length) {
         $('.alert').slideDown('fast').removeClass('hide').delay(3000).slideUp('fast');
+      }
+
+      if ($('.invalid').length) {
+        _this.is_valid = false;
+      } else {
+        _this.is_valid = true
+        this.submit();
       }
     });
   },
