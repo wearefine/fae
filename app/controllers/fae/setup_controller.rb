@@ -15,6 +15,8 @@ module Fae
     end
 
     def create_first_user
+      return show_401 if Fae::User.live_super_admins.present?
+
       @user         = Fae::User.new(user_params)
       super_admin   = Fae::Role.find_by_name('super admin')
       @user.role    = super_admin
@@ -33,6 +35,10 @@ module Fae
 
     def show_404
       render template: 'fae/pages/error404.html.slim', layout: 'fae/error.html.slim', status: :not_found
+    end
+
+    def show_401
+      render template: 'fae/pages/error404.html.slim', layout: 'fae/error.html.slim', status: :unauthorized
     end
 
     def user_params
