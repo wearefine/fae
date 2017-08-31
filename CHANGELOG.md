@@ -5,6 +5,7 @@
 - enhancements
     + Add support for HTML wysiwyg editor with images upload
     + \#66263 Nested table H3s have been promoted to H2s to increase their visiblity on long detail pages
+    + \#60171 Add "Select All" and "Deselect All" options to multiselect dropdowns
 - bugs
 
 ## 1.6

@@ -46,6 +46,22 @@ describe 'setup#first_user' do
 
       expect(response.status).to eq(404)
     end
+
+    it "shouldn't allow POSTs to first user" do
+      # super_admin_login creates the first super admin
+      super_admin_login
+
+      # attempt to create a second super admin
+      post fae.first_user_path, params: { user: {
+        'first_name' => 'John',
+        'email' => 'test2@test.com',
+        'password' => 'password123',
+        'password_confirmation' => 'password123'
+      }}
+
+      expect(response.status).to eq(401)
+      expect(Fae::User.all.length).to eq(1)
+    end
   end
 
 end
