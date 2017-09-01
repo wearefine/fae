@@ -111,6 +111,8 @@ module Fae
       # @depreciation - remove dark_hint option in v2.0
       hint = options[:hint] || options[:dark_hint]
 
+      options[:helper_text] = attempt_common_helper_text(attribute) if options[:helper_text].blank?
+
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || attribute_name
       if options[:markdown_supported].present? || options[:helper_text].present?
@@ -212,6 +214,17 @@ module Fae
           options[:input_html] ||= {}
           options[:input_html][:maxlength] ||= limit
         end
+      end
+    end
+
+    def attempt_common_helper_text(attribute)
+      case attribute
+      when :seo_title
+       return 'Company Name | Keyword-driven description of the page section. Approx 65 characters.'
+      when :seo_description
+       return 'Displayed in search engine results. Under 150 characters.'
+      else
+       ''
       end
     end
 

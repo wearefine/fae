@@ -15,7 +15,7 @@ feature 'Form cancel button' do
   end
 
   scenario 'when clicked after changes', js: true do
-    fill_in('Name', with: 'something')
+    fill_in('release_name', with: 'something')
     click_link 'Cancel'
 
     expect(page.current_path).to eq(admin_releases_path)

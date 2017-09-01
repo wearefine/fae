@@ -13,7 +13,7 @@ class Admin::ReleasesController < Fae::BaseController
   end
 
   def associations_for_cloning
-    [:aromas, :events]
+    [:aromas, :events, :bottle_shot, :label_pdf]
   end
 
   def use_pagination
