@@ -6,7 +6,7 @@ describe 'kaminari settings' do
     super_admin_login
     get fae_path
 
-    expect(Kaminari.config.default_per_page).to eq(20)
+    expect(Kaminari.config.default_per_page).to eq(5)
   end
 
 end
