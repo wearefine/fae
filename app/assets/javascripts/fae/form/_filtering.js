@@ -37,8 +37,8 @@ Fae.form.filtering = {
   _refreshTable: function() {
     // hardcode _this because this === Fryr object
     var _this = Fae.form.filtering;
-    var post_url = _this.$filter_form.attr('action');
-    var $results_table = ($(".js-results-table").length) ? $(".js-results-table").first() : _this.$filter_form.next('table');
+    var post_url = _this.$pagination.data('filter-path');
+    var $results_table = ($(".js-results-table").length) ? $(".js-results-table").first() : $('table.paginated');
 
     $results_table.addClass('loading-fade');
 
