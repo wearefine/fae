@@ -3,7 +3,7 @@ nav.nav.mobilenav
     - @fae_navigation.items.each do |item|
       ruby:
         item[:path] ||= '#'
-        main_class = item[:sublinks].present? ? 'mobilenav-accordion js-accordion' : ''
+        main_class = item[:sublinks].present? ? 'mobilenav-accordion js-accordion js-top-level' : ''
         main_class << " #{item[:class_name]}" if item[:class_name].present?
 
       li class=main_class
@@ -11,9 +11,9 @@ nav.nav.mobilenav
 
         - if item[:sublinks].present?
           ul.subnav.js-subnav.js-subnav.js-subnav
-            li
-              / <span>s are for the mobile titles
-              span.mobilenav-subheader.js-mobile-back = item[:text]
+            li.js-mobile-back.mobilenav-subheader
+              span.icon-chevron_left
+              span = item[:text]
 
             - item[:sublinks].each do |subitem|
               ruby:
@@ -26,7 +26,9 @@ nav.nav.mobilenav
 
                 - if subitem[:sublinks].present?
                   ul.subnav.js-subnav
-                    li: span.mobilenav-subheader.js-mobile-back = subitem[:text]
+                    li: span.mobilenav-subheader.js-mobile-back
+                      span.icon-chevron_left
+                      span = item[:text]
                     - subitem[:sublinks].each do |thirditem|
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]
@@ -35,32 +37,26 @@ nav.nav.mobilenav
       li.mobilenav-accordion.js-accordion
         a href="#" Admin
         ul.subnav.js-subnav.js-subnav.js-subnav
-          li
-            span.mobilenav-subheader.js-mobile-back Admin
-            ul
-              li: a href=fae.users_path Users
-              li: a href=fae.activity_log_path Activity Log
-              - if current_user.super_admin?
-                li: a href=fae.option_path Root Settings
+          li.mobilenav-subheader.js-mobile-back
+            span.icon-chevron_left
+            span Admin
+
+            li: a href=fae.users_path Users
+            li: a href=fae.activity_log_path Activity Log
+            - if current_user.super_admin?
+              li: a href=fae.option_path Root Settings
 
     - if user_signed_in?
       li.mobilenav-user
-        span.mobilenav-user-header = current_user.full_name
         ul
-          li: a.-logout href=fae.destroy_user_session_path Log Out
-          li: a.-settings href=fae.settings_path Your Settings
-          li: a.-support href=fae.help_path Support
+          li
+            span.icon-logout
+            a.-logout href=fae.destroy_user_session_path Log Out
+          li
+            span.icon-settings
+            a.-settings href=fae.settings_path Your Settings
+          li
+            span.icon-support
+            a.-support href=fae.help_path Support
     - site_urls_are_present = @option.stage_url.present? && @option.live_url.present?
     - view_site_class = site_urls_are_present ? 'mobilenav-accordion js-accordion' : nil
-    - if @option.stage_url.present? || @option.live_url.present?
-      li class=view_site_class
-        - if site_urls_are_present
-          a href="#" View Site
-          ul.subnav.js-subnav
-            li: span.mobilenav-subheader.js-mobile-back View Site
-            li: a.-viewsite href=@option.stage_url target="_blank" Preview Site
-            li: a.-viewsite href=@option.live_url target="_blank" Live Site
-        - elsif @option.stage_url.present?
-          a.-viewsite href=@option.stage_url target="_blank" Preview Site
-        - elsif @option.live_url.present?
-          a.-viewsite href=@option.live_url target="_blank" Live Site

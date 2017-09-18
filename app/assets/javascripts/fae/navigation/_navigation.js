@@ -12,6 +12,7 @@ Fae.navigation = {
     this.openDrawer();
     this.clickBack();
     this.accordionClickEventListener();
+    this.highlightActive();
 
     this.language.init();
     this.subnav_highlighter.init();
@@ -26,6 +27,16 @@ Fae.navigation = {
   resize: function() {
     this.closeAll(false);
     this.lockFooter();
+  },
+
+  highlightActive: function() {
+    var path = window.location.pathname;
+    var activeLink = $('a[href="'+ path +'"]');
+
+    if (activeLink.length > 0) {
+      activeLink.parents('.js-top-level').addClass('active')
+      activeLink.parent().addClass('active')
+    }
   },
 
   /**
