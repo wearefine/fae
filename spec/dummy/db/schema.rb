@@ -47,6 +47,23 @@ ActiveRecord::Schema.define(version: 20170714185443) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "article_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.integer  "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "title"
+    t.text     "body",                limit: 65535
+    t.integer  "position"
+    t.integer  "article_category_id"
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+    t.index ["article_category_id"], name: "index_articles_on_article_category_id", using: :btree
+  end
+
   create_table "cats", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.boolean  "friendly"

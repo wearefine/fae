@@ -26,14 +26,12 @@ module Fae
     end
 
     def fae_prefix(f, attribute, options={})
-      raise "Fae::undefined method '#{attribute}' for #{f.object}" if is_attribute_or_association?(f, attribute) == false
       raise "Fae::MissingRequiredOption: fae_prefix helper method requires the 'prefix' option." if options[:prefix].blank?
       symbol 'prefix', options[:prefix], options
       fae_input f, attribute, options
     end
 
     def fae_suffix(f, attribute, options={})
-      raise "Fae::undefined method '#{attribute}' for #{f.object}" if is_attribute_or_association?(f, attribute) == false
       raise "Fae::MissingRequiredOption: fae_suffix helper method requires the 'suffix' option." if options[:suffix].blank?
       symbol 'suffix', options[:suffix], options
       fae_input f, attribute, options

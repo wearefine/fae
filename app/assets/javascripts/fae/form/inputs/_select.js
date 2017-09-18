@@ -113,7 +113,7 @@ Fae.form.select = {
       setAbilities($element);
 
       // Intercept selections of the Select All option and select all other options.
-      var requesting_select_all = $element.val() && $element.val().indexOf(select_all_value) != -1;
+      var requesting_select_all = $element.val() && $element.val().indexOf(select_all_value) !== -1;
       if (requesting_select_all) {
         setAllOptionsSelected($element, true);
       }

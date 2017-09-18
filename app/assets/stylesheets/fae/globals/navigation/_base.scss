@@ -5,10 +5,11 @@
 .nav {
   top: 0;
   left: 0;
-  width: $sidenav-width - 30px;
+  width: $sidenav-width;
   height: 100%;
   font-size: 15px;
   overflow: auto;
+  z-index: 3;
 
   a {
     display: block;

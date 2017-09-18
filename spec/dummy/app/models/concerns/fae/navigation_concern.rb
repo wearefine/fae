@@ -14,13 +14,17 @@ module Fae
           ]),
           item('Cats', path: admin_cats_path)
         ]),
-        item('Teams', subitems: team_subitems),
+        item('Teams', path: admin_teams_path, subitems: team_subitems),
         item('Events', class_name: 'css-one-level-deep', subitems: [
           item('Event Hosts', path: admin_people_path, class_name: 'css-two-levels-deep'),
           item('Locations', path: admin_locations_path),
           item('Validation Testers', path: admin_validation_testers_path),
         ]),
         item('Beers', path: admin_beers_path),
+        item('Press', subitems: [
+          item('Articles', path: admin_articles_path),
+          item('Article Categories', path: admin_article_categories_path),
+        ]),
         item('Pages', path: fae.pages_path, subitems: [
           item('Home', path: fae.edit_content_block_path('home')),
           item('Contact Us', path: fae.edit_content_block_path('contact_us')),

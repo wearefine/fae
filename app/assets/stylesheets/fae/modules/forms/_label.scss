@@ -25,6 +25,10 @@ label {
     .label_inner {
       flex-shrink: 0;
       max-width: 50%;
+
+      .login-form & {
+        max-width: none;
+      }
     }
 
     h6 {
