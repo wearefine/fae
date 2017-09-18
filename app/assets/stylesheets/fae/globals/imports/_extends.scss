@@ -41,13 +41,7 @@
     @include transition(color .2s);
     position: absolute;
     font-size: 15px;
-    color: $c-darker-grey;
+    color: $c-white;
     right: 0;
-  }
-
-  &:hover {
-    &:after {
-      color: darken($c-darker-grey, 5%);
-    }
   }
 }
