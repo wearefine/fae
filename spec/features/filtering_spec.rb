@@ -8,10 +8,9 @@ feature 'filtering' do
 
     admin_login
     visit admin_teams_path
-
-    expect(page).to have_css("table.paginated tr", count: 6)
+    expect(page).to have_css("table tr", count: 6)
     visit admin_teams_path + '?page=2'
-    expect(page).to have_css("table.paginated tr", count: 2)
+    expect(page).to have_css("table tr", count: 2)
   end
 
   scenario 'filtering', js: true do

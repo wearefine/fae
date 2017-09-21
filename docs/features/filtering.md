@@ -175,13 +175,14 @@ resources :people do
   post 'filter', on: :collection
 end
 ```
-Add a `paginated` class to the items table, then call the `fae_paginate` helper under the table:
+
+Then call the `fae_paginate` helper under the table:
 
 `app/views/admin/people/index.html.slim`
 ```slim
 / app/views/admin/people/index.html.slim
 
-table.paginated
+table
   / table stuff here
 
 == fae_paginate @items
