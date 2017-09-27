@@ -8,7 +8,7 @@ module Fae
       @item = @klass.find(id)
       @cloned_item = @item.dup
       update_cloned_attributes(@cloned_item)
-      @cloned_item.on_prod = false
+      @cloned_item.on_prod = false if @item.respond_to?(:on_prod)
 
       if @cloned_item.save
         update_cloneable_associations
