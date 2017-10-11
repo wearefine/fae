@@ -91,3 +91,7 @@ If this returns a `ActiveRecord::StatementInvalid: PG::UndefinedTable: ERROR:  r
 ```bash
 heroku run rake db:migrate
 ```
+
+**Assets**
+
+Heroku [does not store assets](https://devcenter.heroku.com/articles/dynos#ephemeral-filesystem). Although this is not officially supported by Fae, it is possible to [https://github.com/wearefine/fae/issues/324#issuecomment-334578748](store assets uploaded to Fae with S3).
