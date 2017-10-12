@@ -8,7 +8,7 @@ feature 'validations' do
     FactoryGirl.create(:release, name: 'Release 2', updated_at: 10.days.ago)
     FactoryGirl.create(:release, name: 'Release 3', updated_at: 1.day.ago)
 
-    visit admin_legacy_releases_path
+    visit admin_releases_path
 
     expect(page.find('tbody').text).to match(/Release 1.*Release 2.*Release 3/)
     page.find('div', text: /\AModified\z/).click

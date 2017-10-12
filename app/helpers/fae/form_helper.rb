@@ -108,8 +108,7 @@ module Fae
     end
 
     def label_and_hint(attribute, options)
-      # @depreciation - remove dark_hint option in v2.0
-      hint = options[:hint] || options[:dark_hint]
+      hint = options[:hint]
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || attribute_name

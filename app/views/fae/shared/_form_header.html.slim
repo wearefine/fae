@@ -9,8 +9,7 @@ ruby:
   header_as_string     = header_as_string.singularize
   title              ||= "#{params[:action]} #{header_as_string}".titleize
   breadcrumb           = !local_assigns[:breadcrumbs].eql?(false)
-  language           ||= false # @depreciation - remove in favor of `languages` in v2.0
-  languages          ||= language
+  languages          ||= false
 
 - if breadcrumb
   == render 'breadcrumb', title: title
