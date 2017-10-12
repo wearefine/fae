@@ -1,5 +1,10 @@
 # Fae Changelog
 
+## Unreleased
+
+- enhancements
+    + Style flash message errors appropriately
+
 ## 1.6
 
 - enhancements
