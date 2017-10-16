@@ -54,11 +54,11 @@ describe 'Global nav' do
       expect(response.body).to_not include('<a href="/admin/root">Root Settings</a>')
     end
 
-    it 'should not display events top nav item' do
+    it 'should not display beers top nav item' do
       user_login
       get fae_path
 
-      expect(response.body).to_not include('<a href="#">Events</a>')
+      expect(response.body).to_not include('<a href="#">Beers</a>')
     end
   end
 
