@@ -7,6 +7,7 @@
     + \#66263 Nested table H3s have been promoted to H2s to increase their visiblity on long detail pages
     + \#60171 Add "Select All" and "Deselect All" options to multiselect dropdowns
 - bugs
+    + Remove all FE deprecations (only admins generated before v1.3 are affected)
 
 ## 1.5.1
 
