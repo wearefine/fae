@@ -42,9 +42,7 @@
                   = link_to edit_admin_release_path(item), class: "main_table-action" do
                     span.icon-edit
                 td = fae_clone_button item
-                td.main_table-delete
-                  = link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do
-                    span.icon-delete_x
+                td = fae_delete_button item
           - else
             tr
               td colspan="9" No items found

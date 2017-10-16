@@ -1,88 +1,124 @@
 ## First item will be the default content on https://faecms.com/documentation/
 - name: Quickstart Guide
   path: docs/quickstart-guide.md
+  title: Fae Documentation | The Best Rails CMS Ever
 
 - name: Topics
   children:
     - name: Installation
       path: docs/installation/index.md
+      page_title: Fae Installation Guidelines | A New Rails CMS Gem
     - name: Generators
       path: docs/topics/generators.md
+      page_title: Generating your Fae Data Model | A New Rails CMS Engine
     - name: Navigation Setup
       path: docs/topics/navigation_setup.md
+      page_title: Navigation Setup in Fae | A Ruby on Rails CMS
     - name: Initializer
       path: docs/topics/initializer.md
+      page_title: Fae Initializer | A Ruby on Rails Content Management System
     - name: Models
       path: docs/topics/models.md
+      page_title: Fae Models & Nested Resources | A CMS for Ruby on Rails
     - name: Controllers
       path: docs/topics/controllers_and_concerns.md
+      page_title: Fae Controllers and Concerns | A Simple Ruby on Rails CMS
     - name: Fae Model and Controller Concerns
       path: docs/topics/concerns.md
+      page_title: Fae Model and Controller Concerns | A New, Easy Rails CMS
     - name: Override Uploaders and Classes
       path: docs/topics/override_uploaders_and_classes.md
+      page_title: Override Uploaders and Classes in Fae | An Open-Source Rails CMS
     - name: Pages and Content Blocks
       path: docs/topics/pages.md
+      page_title: Fae Pages and Content Blocks | Build a CMS with Rails
     - name: Custom JS, CSS and Helpers
       path: docs/topics/custom_js_css.md
+      page_title: Custom JS, CSS and Helpers in Fae | A Ruby-Based CMS Gem
     - name: Root Settings
       path: docs/topics/root_settings.md
+      page_title: Customize Your Root Settings in Fae | A Ruby on Rails CMS
     - name: Caching
       path: docs/topics/caching.md
+      page_title: Caching within Fae | A Simple CMS for Ruby on Rails
 
 - name: Faetures
   children:
     - name: Global Search
       path: docs/features/search.md
+      page_title: Global Search with Fae | A Ruby On Rails Content Management System
     - name: Filtering, Pagination and Sorting
       path: docs/features/filtering.md
+      page_title: Filtering, Pagination, and Sorting with Fae | A Lightweight Rails CMS
     - name: Authorization
       path: docs/features/authorization.md
+      page_title: User Roles & Authorization in Fae | A CMS for Ruby on Rails
     - name: Multi-Language Support
       path: docs/features/multi_language.md
+      page_title: Multi-Language CMS Support with Fae | An Open-Source Rails CMS
     - name: Cloning
       path: docs/features/cloning.md
+      page_title: Records Cloning in Fae | An Open-Source, Ruby on Rails CMS
     - name: Change Tracker
       path: docs/features/change_tracker.md
+      page_title: Change Tracker / Changelog in Fae | A Rails CMS Engine
     - name: Slugger
       path: docs/features/slugger.md
+      page_title: Slug Generation & Separation in Fae | Rails CMS Gem Documentation
     - name: Disabling Environments
       path: docs/features/disable_envs.md
-    
+      page_title: Disabling Environments in Fae | A Lightweight CMS for Rails
+
 - name: Tutorials
   children:
     - name: Setting up Images and Files
       path: docs/tutorials/image_and_files.md
+      page_title: Setting Up Images and Files in Fae | Ruby on Rails CMS Tutorial
     - name: Adding Dynamic Relationships to Pages
       path: docs/tutorials/dynamic_relationships_to_pages.md
+      page_title: Adding Dynamic Relationships to Static Pages | Rails CMS Tutorial
     - name: Adding Conditional Validations
       path: docs/tutorials/conditional_validations.md
+      page_title: How To Add Conditional Validations in Fae | Rails CMS Tutorials
     - name: Custom Image Processing
       path: docs/tutorials/custom_images.md
+      page_title: Custom Image Processing in Fae | Ruby on Rails CMS Tutorial
     - name: Overriding the Landing Page
       path: docs/tutorials/landing_page.md
+      page_title: Overriding the Landing Page in Fae | Simple Rails CMS Tutorial
     - name: Devise Action Mailer Configuration
       path: docs/tutorials/actionmailer.md
+      page_title: Devise Action Mailer Configuration in Fae | Rails CMS Tutorial
     - name: Setting Up Parent/Child Objects
       path: docs/tutorials/parent_child_objects.md
+      page_title: Setting up Parent/Child Objects in Fae | Rails CMS Tutorial
     - name: Configuring With Existing Devise Setup
       path: docs/tutorials/existing_devise.md
-    
+      page_title: Configuring With Existing Devise Setup in Fae | Rails CMS Tutorial
+
 - name: Helper/DSL Docs
   children:
     - name: Fae Styles
       path: docs/helpers/styles.md
+      page_title: Fae Styles & Collapsible Tables | A Flexible Ruby on Rails CMS
     - name: Form Helpers
       path: docs/helpers/form_helpers.md
+      page_title: Form Helpers in Fae | A Ruby on Rails Content Management System
     - name: Nested Form Helpers
       path: docs/helpers/nested_form_helpers.md
+      page_title: Nested Form Helpers in Fae | A Simple Rails CMS
     - name: View Helpers
       path: docs/helpers/view_helpers.md
+      page_title: View Helpers in Fae | An Easy Rails CMS Engine
     - name: Fae Partials
       path: docs/helpers/partials.md
-    
+      page_title: Fae Partials | A New, Rails-Based CMS Engine
+
 - name: Contributing
   children:
     - name: Running Fae Locally
       path: docs/contributing/local_setup.md
+      page_title: Running Fae On A Local Environment | Fae Ruby on Rails CMS
     - name: Fae Standards
       path: docs/contributing/standards.md
+      page_title: Contributing Standards for Fae | A Rails-Based CMS
