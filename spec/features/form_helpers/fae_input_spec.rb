@@ -23,7 +23,7 @@ feature 'fae_input' do
 
   scenario 'should display hint when clicked', js: true do
     expect(page).to_not have_content('Normal Hint')
-    page.find('.release_name .hinter-clicker').trigger('click')
+    page.find('.release_vintage .hinter-clicker').trigger('click')
     expect(page).to have_content('Normal Hint')
   end
 
