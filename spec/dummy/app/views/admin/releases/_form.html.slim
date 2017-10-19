@@ -14,7 +14,8 @@
 
     = fae_input f, :vintage,
       input_class: 'slugger',
-      helper_text: 'text input'
+      helper_text: 'text input',
+      hint: '<h4>Normal Hint</h4><p>Yes, HTML is allowed</p>'.html_safe
 
     = fae_input f, :slug, helper_text: 'text input (populated from name and vintage)'
 
