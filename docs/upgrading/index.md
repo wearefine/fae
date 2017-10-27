@@ -6,6 +6,16 @@
 
 ---
 
+# To v2.0
+
+`form_buttons` has been deprecated. Any admin still using this partial should remove `fae/shared/form_buttons` and only use [fae/shared/form_header](docs/helpers/partials.md#form-header). `form_header` still supports `save_button_text`, `cancel_button_text`, `cloneable`, and `cloneable_text` options.
+
+The `dark_hint` input option has been deprecated. The dark hint style was removed in v1.3, but now [the option](docs/helpers/form_helpers.md#global-options) has been removed. Please convert all `dark_hint` calls to `hint`.
+
+# From v1.2 to v2.0
+
+Many CSS classes produced by v1.2 generators have been removed. It's easiest to re-scaffold your admin views entirely (chiefly `index.html.slim` and `_form.html.slim`, but also affecting `edit.html.slim` and `new.html.slim`). This CSS refactor also affects JavaScript; some features may break for admins that do not adopt the new CSS classes. Admins generated at or after v1.3 are unaffected.
+
 # To v1.5
 
 `has_top_nav` has been deprecated. Any admin still using side nav only will convert to using the top nav upon upgrade without any changes necessary.
