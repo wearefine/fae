@@ -38,15 +38,11 @@ end
 
 module SignInRequestHelper
   def login(user)
-    if Rails::VERSION::MAJOR > 4
-      post fae.user_session_path, params: { user: { 'email' => user.email, 'password' => user.password } }
+    post fae.user_session_path, params: { user: { 'email' => user.email, 'password' => user.password } }
 
-      # this should work, but it's effecting the route variables, possible related to
-      # https://github.com/plataformatec/devise/issues/4127
-      # follow_redirect!
-    else
-      post_via_redirect fae.user_session_path, 'user[email]' => user.email, 'user[password]' => user.password
-    end
+    # this should work, but it's effecting the route variables, possible related to
+    # https://github.com/plataformatec/devise/issues/4127
+    # follow_redirect!
   end
 end
 

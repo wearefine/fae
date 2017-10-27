@@ -60,7 +60,7 @@ module Fae
 
     def change_item_link(change)
       text = "#{change.changeable_type}: "
-      test_source_method = Rails::VERSION::MAJOR > 4 ? :data_source_exists? : :table_exists?
+      test_source_method = :data_source_exists?
 
       if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && !ActiveRecord::Base.connection.send(test_source_method, change.changeable_type.tableize)
         return "#{change.changeable_type}: model destroyed"
