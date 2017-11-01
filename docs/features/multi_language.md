@@ -68,10 +68,9 @@ Finally, to display the language select menu, you'll need to add `language: true
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: @klass_name, language: true
+  = render 'fae/shared/form_header', header: @klass_name, language: true
 
-    // ...
+  // ...
 ```
 
 ## Internalization of Pages and Content Blocks

@@ -10,30 +10,35 @@ ruby:
   title              ||= "#{params[:action]} #{header_as_string}".titleize
   breadcrumb           = !local_assigns[:breadcrumbs].eql?(false)
   languages          ||= false
+  hide_flash         ||= false
 
-- if breadcrumb
-  == render 'breadcrumb', title: title
-- else
-  = form_header header
+header.content-header.js-content-header
+  - if breadcrumb
+    == render 'breadcrumb', title: title
+  - else
+    = form_header header
 
-.content-header-buttons
-  - if languages
-    - selected = current_user.language || ''
+  .content-header-buttons
+    - if languages
+      - selected = current_user.language || ''
 
-    .content-header-select
-      = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown', prompt: 'All Languages'
+      .content-header-select
+        = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown', prompt: 'All Languages'
 
-  a.button#js-header-cancel href=@index_path = cancel_button_text
-  - if cloneable.present? && params[:id].present?
-    a.button data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
-  input name="commit" type="submit" value=save_button_text
+    a.button#js-header-cancel href=@index_path = cancel_button_text
+    - if cloneable.present? && params[:id].present?
+      a.button data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
+    input name="commit" type="submit" value=save_button_text
 
-- if subnav.present?
-  ul.content-header-subnav#js-content-header-subnav
-    ruby:
-      # @depreciation - remove conditional when Rails 4 support is dropped, below becomes:
-      # link.parameterize(separator: '_')
-      parameterize_argument = Rails::VERSION::MAJOR == 4 ? '_' : { separator: '_' }
-    - subnav.each do |link, id_selector|
-      - subnav_item = link.is_a?(Array) ? link : [link, link.parameterize(parameterize_argument)]
-      li: a href="##{subnav_item[1]}" = subnav_item[0]
+  - if subnav.present?
+    ul.content-header-subnav#js-content-header-subnav
+      ruby:
+        # @depreciation - remove conditional when Rails 4 support is dropped, below becomes:
+        # link.parameterize(separator: '_')
+        parameterize_argument = Rails::VERSION::MAJOR == 4 ? '_' : { separator: '_' }
+      - subnav.each do |link, id_selector|
+        - subnav_item = link.is_a?(Array) ? link : [link, link.parameterize(parameterize_argument)]
+        li: a href="##{subnav_item[1]}" = subnav_item[0]
+
+- unless hide_flash
+  == render 'fae/shared/errors'

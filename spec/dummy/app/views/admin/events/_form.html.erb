@@ -1,7 +1,5 @@
 <%= simple_form_for(['admin', @item]) do |f| %>
-  <header class="content-header js-content-header">
-    <%= render 'fae/shared/form_header', header: @klass_name, f: f %>
-  </header>
+  <%= render 'fae/shared/form_header', header: @klass_name, f: f, hide_flash: true %>
 
   <section class="content">
     <%= fae_input f, :name %>

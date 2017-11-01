@@ -1,10 +1,7 @@
 <%= simple_form_for(['admin', @item]) do |f| %>
-  <header class="content-header js-content-header">
-    <% subnav_array = ['Attributes', 'Assets', 'Associations']
-       subnav_array.concat ['Aromas', 'Recent Changes'] if params[:action] == 'edit' %>
-    <%= render 'fae/shared/form_header', header: @klass_name, cloneable: true, subnav: subnav_array  %>
-  </header>
-  <%= render 'fae/shared/errors' %>
+  <% subnav_array = ['Attributes', 'Assets', 'Associations']
+     subnav_array.concat ['Aromas', 'Recent Changes'] if params[:action] == 'edit' %>
+  <%= render 'fae/shared/form_header', header: @klass_name, cloneable: true, subnav: subnav_array  %>
 
   <section class="content" id="attributes">
 
