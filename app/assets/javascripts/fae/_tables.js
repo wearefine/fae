@@ -149,7 +149,7 @@ Fae.tables = {
    * Make table rows draggable by user
    */
   rowSorting: function() {
-    $('.js-sort-row, .main_content-sortable').sortable({
+    $('.js-sort-row').sortable({
       items: 'tbody tr',
       opacity: 0.8,
       handle: ('.sortable-handle'),
