@@ -252,6 +252,11 @@ The daterangepicker is a little different: instead of a single attribute, it acc
 fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 ```
 
+## Fae Color Picker
+```ruby
+fae_color_picker f, :color
+```
+
 ## Fae Prefix
 
 ```ruby
