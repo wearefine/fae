@@ -9,23 +9,11 @@ Fae.navigation.subnav_highlighter = {
   init: function() {
     //only run everything if there is a subnav area
     if (FCH.exists('.content-header-subnav')) {
-      this.addBuffer();
-
       this.FCHListeners();
 
       //makes the subnav clicks
       this.anchorClickListener();
     }
-  },
-
-  /**
-   * Add space above subnav links if they're present
-   * @depreciation - Remove this function in favor of a better HTML solution in form_header in a v2.0 refactor.
-   */
-  addBuffer: function() {
-    var $subnav = $( '#js-content-header-subnav' );
-    var height = $subnav.css('height');
-    $subnav.parent().css('padding-bottom', height);
   },
 
   /**

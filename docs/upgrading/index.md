@@ -12,6 +12,18 @@
 
 The `dark_hint` input option has been deprecated. The dark hint style was removed in v1.3, but now [the option](docs/helpers/form_helpers.md#global-options) has been removed. Please convert all `dark_hint` calls to `hint`.
 
+The `form_header` partial includes the errors previously rendered as a separate partial as well as the parent node markup (`header.content-header.js-content-header`). Please consolidate existing markup to use only the partial:
+
+```slim
+header.content-header.js-content-header
+  = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
+  = render 'fae/shared/errors'
+
+/ to
+
+= render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
+```
+
 # From v1.2 to v2.0
 
 Many CSS classes produced by v1.2 generators have been removed. It's easiest to re-scaffold your admin views entirely (chiefly `index.html.slim` and `_form.html.slim`, but also affecting `edit.html.slim` and `new.html.slim`). This CSS refactor also affects JavaScript; some features may break for admins that do not adopt the new CSS classes. Admins generated at or after v1.3 are unaffected.
