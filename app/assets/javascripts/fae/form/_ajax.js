@@ -281,7 +281,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * Attaching click handlers to #main_content to allow ajax replacement
+   * Attaching click handlers to #js-main-content to allow ajax replacement
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {

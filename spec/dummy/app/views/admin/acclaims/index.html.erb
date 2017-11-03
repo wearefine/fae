@@ -1,35 +1,31 @@
 <%= render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}" %>
 
-<div class="main_content-sections">
-  <section class="main_content-section">
-    <div class="content">
-      <table class="main_content-sortable">
-        <thead>
-          <tr>
-            <th class="th-sortable-handle"></th>
-            <th>Name</th>
-            <th>Modified</th>
-            <th class="-action-wide" data-sorter="false">On Stage</th>
-            <th class="-action-wide" data-sorter="false">On Prod</th>
-            <th class="-action" data-sorter="false"></th>
-          </tr>
-        </thead>
+<main class="content">
+  <table class="js-sort-row">
+    <thead>
+      <tr>
+        <th class="th-sortable-handle"></th>
+        <th>Name</th>
+        <th>Modified</th>
+        <th class="-action-wide" data-sorter="false">On Stage</th>
+        <th class="-action-wide" data-sorter="false">On Prod</th>
+        <th class="-action" data-sorter="false"></th>
+      </tr>
+    </thead>
 
-        <tbody>
-          <% @items.each do |item| %>
-            <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-              <td class="sortable-handle">
-                <span class="icon-sort"></span>
-              </td>
-              <td><%= link_to item.fae_display_field, edit_admin_acclaim_path(item) %></td>
-              <td><%= fae_date_format item.updated_at %></td>
-              <td><%= fae_toggle item, :on_stage %></td>
-              <td><%= fae_toggle item, :on_prod %></td>
-              <td><%= fae_delete_button item %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </section>
-</div>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
+          <td class="sortable-handle">
+            <span class="icon-sort"></span>
+          </td>
+          <td><%= link_to item.fae_display_field, edit_admin_acclaim_path(item) %></td>
+          <td><%= fae_date_format item.updated_at %></td>
+          <td><%= fae_toggle item, :on_stage %></td>
+          <td><%= fae_toggle item, :on_prod %></td>
+          <td><%= fae_delete_button item %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</main>
