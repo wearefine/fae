@@ -1,5 +1,5 @@
 = simple_form_for(['admin', @item]) do |f|
-  = render 'fae/shared/form_header', header: @klass_name, languages: true, hide_flash: true
+  == render 'fae/shared/form_header', header: @klass_name, languages: true
 
   main.content
     = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'

@@ -1,5 +1,5 @@
 = simple_form_for(['admin', @item]) do |f|
-  = render 'fae/shared/form_header', header: @klass_name, hide_flash: true
+  == render 'fae/shared/form_header', header: @klass_name
 
   section.content
     = fae_input f, :name

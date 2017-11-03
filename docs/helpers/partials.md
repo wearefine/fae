@@ -57,7 +57,7 @@ Displays breadcrumb links and form title.
 | cloneable | boolean | false | includes Clone button |
 | clone_button_text | string | 'Clone' | clone button text |
 | subnav | Array<String> | [] | generates "jump to" anchor links for long forms |
-| hide_flash | boolean | false | hide flash messages rendered by form
+| show_flash_messages | boolean | true | display flash messages rendered by form
 
 If `subnav` is supplied, sections within the form must include IDs matching the [parameterized](http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize) items. Note that `parameterize` will use `_` as a separator.
 

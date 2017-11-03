@@ -1,5 +1,5 @@
 = simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
-  == render 'fae/shared/form_header', header: @item, f: f, languages: true, hide_flash: true
+  == render 'fae/shared/form_header', header: @item, f: f, languages: true
 
   section.content
     = fae_input f, :title
