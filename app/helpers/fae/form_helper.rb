@@ -74,6 +74,11 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def fae_color_picker(f, attribute, options={})
+      options.update(as: :string, input_class: 'js-color-picker')
+      fae_input f, attribute, options
+    end
+
     def fae_daterange(f, attr_array, options={})
       raise "Fae::MissingRequiredOption: fae_daterange requires the 'label' option." if options[:label].blank?
       raise "Fae::MalformedArgument: fae_daterange requires an array of two attributes as it's second argument." unless attr_array.present? && attr_array.is_a?(Array) && attr_array.length == 2
