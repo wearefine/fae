@@ -20,7 +20,7 @@ module Fae
       custom_options attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
-      set_prompt f, attribute, options
+      set_prompt f, attribute, options if !options[:include_blank].is_a?(String)
 
       f.association attribute, options
     end
@@ -71,6 +71,11 @@ module Fae
 
     def fae_datepicker(f, attribute, options={})
       options.update(as: :string, wrapper_class: 'datepicker')
+      fae_input f, attribute, options
+    end
+
+    def fae_color_picker(f, attribute, options={})
+      options.update(as: :string, input_class: 'js-color-picker')
       fae_input f, attribute, options
     end
 

@@ -145,9 +145,6 @@ fae_file_form
 | helper_text   | string | | the uploader's helper text|
 | required      | boolean | false | adds required validation to the uploader |
 
-image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
-
-
 **Examples**
 
 ```ruby

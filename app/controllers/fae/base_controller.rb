@@ -71,6 +71,11 @@ module Fae
       render :index, layout: false
     end
 
+    def show
+      # show action is hidden by default, override as needed
+      show_404
+    end
+
   private
 
     def set_class_variables(class_name = nil)
