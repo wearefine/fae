@@ -257,6 +257,8 @@ fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 fae_color_picker f, :color
 ```
 
+![Suffix](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/colorpicker.gif)
+
 ## Fae Prefix
 
 ```ruby
