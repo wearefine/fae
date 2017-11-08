@@ -75,7 +75,7 @@ module Fae
     end
 
     def fae_color_picker(f, attribute, options={})
-      options.update(as: :string, input_class: 'color')
+      options.update(as: :string, input_class: 'js-color-picker')
       fae_input f, attribute, options
     end
 
