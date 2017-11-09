@@ -7,7 +7,7 @@
 
   &:after {
     @include icon-stuff;
-    content: fae-icon(icon-arrow_down);
+    content: fae-icon(arrow_down);
     position: relative;
     font-size: 4px;
     top: -4px;
