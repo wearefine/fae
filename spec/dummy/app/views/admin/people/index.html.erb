@@ -1,32 +1,9 @@
 <%= render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}" %>
 
 <main class="content">
-  <table class="js-sort-row">
-    <thead>
-      <tr>
-        <th class="th-sortable-handle"></th>
-        <th>Name</th>
-        <th class="-thumb">Image</th>
-        <th class="-action-wide">Modified</th>
-        <th class="-action-wide" data-sorter="false">On Stage</th>
-        <th class="-action-wide" data-sorter="false">On Prod</th>
-        <th class="-action" data-sorter="false"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @items.each do |item| %>
-        <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-          <td class="sortable-handle">
-            <span class="icon-sort"></span>
-          </td>
-          <td><%= link_to item.name, edit_admin_person_path(item.id) %></td>
-          <td><%= image_tag item.image.asset.thumb.url if item.image.present? && item.image.asset.present? %></td>
-          <td><%= fae_date_format item.updated_at %></td>
-          <td><%= fae_toggle item, :on_stage %></td>
-          <td><%= fae_toggle item, :on_prod %></td>
-          <td><%= fae_delete_button item %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <%= render 'fae/shared/index_table',
+    sort_rows: true,
+    edit_path: :edit_admin_person_path,
+    image: :image,
+    cols: [:on_stage, :on_prod] %>
 </main>

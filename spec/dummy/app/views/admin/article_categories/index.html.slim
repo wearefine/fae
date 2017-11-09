@@ -1,21 +1,5 @@
 == render 'fae/shared/index_header', title: @klass_humanized.pluralize.titleize
 
 main.content
-  table.js-sort-row
-    thead
-      tr
-        th.th-sortable-handle
-        th Name
-        th.-action-wide Modified
-        th.-action data-sorter="false"
-
-    tbody
-      - if @items.present?
-        - @items.each do |item|
-          tr id=fae_sort_id(item)
-            td.sortable-handle: i.icon-sort
-            td = link_to item.fae_display_field, edit_admin_article_category_path(item)
-            td = fae_date_format item.updated_at
-            td = fae_delete_button item
-      - else
-        tr: td colspan="4" No items found
+  == render 'fae/shared/index_table',
+    edit_path: :edit_admin_article_category_path

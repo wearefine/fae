@@ -1,23 +1,9 @@
 == render 'fae/shared/index_header', title: @klass_humanized.pluralize.titleize
 
 main.content
-  .collapsible-toggle.close-all Close All
-  - if @article_categories.present?
-    - @article_categories.each do |category|
-      .collapsible.active
-        h3 = category.name
-        table.js-sort-row
-          thead
-            tr
-              th.th-sortable-handle
-              th Title
-              th.-action-wide Modified
-              th.-action data-sorter="false"
-
-          tbody
-            - category.articles.each do |item|
-              tr id=fae_sort_id(item)
-                td.sortable-handle: i.icon-sort
-                td = link_to item.fae_display_field, edit_admin_article_path(item)
-                td = fae_date_format item.updated_at
-                td = fae_delete_button item
+  == render 'fae/shared/index_table',
+    sort_rows: true,
+    edit_label: 'Title',
+    edit_path: :edit_admin_article_path,
+    items: @article_categories,
+    collapsible: { default_all_open: false, name: :name, items: :articles }

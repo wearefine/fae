@@ -1,0 +1,74 @@
+ruby:
+  require_locals ['edit_path'], local_assigns
+  items         ||= @items || []
+  cols          ||= []
+  sort_columns  ||= true
+  sort_rows       = local_assigns[:sort_rows].eql?(true)
+  table_class   ||= ''
+  image         ||= nil
+  edit_label    ||= 'Name'
+  modified      ||= true
+  cloneable       = local_assigns[:cloneable].eql?(true)
+  delete        ||= true
+  collapsible   ||= nil # Hash when provided
+
+  count = 1 + cols.count # include the edit_label header
+  count += 1 if image
+  count += 1 if sort_rows
+  count += 1 if modified
+  count += 1 if cloneable
+  count += 1 if delete
+
+  computed_class = ['js-sort-column'] if sort_columns
+  computed_class = ['js-sort-row'] if sort_rows
+  computed_class << table_class if table_class.present?
+
+  options_for_td = { cols: cols, edit_path: edit_path, edit_column: true }
+
+- if collapsible.present?
+  .collapsible-toggle class="#{'close-all' if collapsible[:default_all_open].present?}" = collapsible[:default_all_open] ? 'Close All' : 'Open All'
+  - if items.present?
+    - items.each do |table|
+      .collapsible class="#{'active' if collapsible[:default_all_open]}"
+        - if collapsible[:name].present?
+          h3 = table.try(collapsible[:name])
+        == render 'fae/shared/index_table', sort_columns: sort_columns, sort_rows: sort_rows, items: table.try(collapsible[:items]), modified: modified, delete: delete, cloneable: cloneable, cols: cols, table_class: table_class, edit_label: edit_label, image: image, edit_path: edit_path
+
+- else
+
+  table class="#{computed_class.join(' ')}"
+    thead
+      tr
+        - if sort_rows
+          th.th-sortable-handle
+        - if image
+          th.-image
+        th = edit_label
+        - cols.each do |col|
+          = th_columns(col)
+        - if modified
+          th.-action-wide data-sorter="updated_at" Modified
+        - if cloneable
+          th.-action data-sorter="false"
+        - if delete
+          th.-action data-sorter="false"
+
+    tbody
+      - if items.present?
+        - items.each do |item|
+          tr id=fae_sort_id(item)
+            - if sort_rows
+              td.sortable-handle: i.icon-sort
+            - if image
+              td = fae_index_image item.send(image), Rails.application.routes.url_helpers.send(edit_path, item)
+            td = link_to item.fae_display_field, Rails.application.routes.url_helpers.send(edit_path, item)
+            - cols.each do |col|
+              = td_columns({ cols: cols, col: col, item: item, edit_column: true })
+            - if modified
+              td = fae_date_format item.updated_at
+            - if cloneable
+              td = fae_clone_button item
+            - if delete
+              td = fae_delete_button item
+      - else
+        tr: td colspan=count No items found

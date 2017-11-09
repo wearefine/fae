@@ -3,15 +3,19 @@ module Fae
 
     def th_columns(attribute)
       if (attribute.is_a?(Hash) && attribute[:title])
+        attribute_sort = attribute[:sort_by]
         attribute = attribute[:title]
         attribute_title = attribute
       else
         attribute = :modified if ['updated_at', 'modified_at'].include? attribute.to_s
         attribute_title = attribute.to_s.titleize
+        attribute_sort = nil
       end
 
       th_class = '-action-wide' if [:on_production, :on_prod, :on_stage, :updated_at, :created_at, :modified].include?(attribute)
-      content_tag(:th, class: th_class) do attribute_title end
+      th_sort = attribute_sort
+      th_sort = attribute.to_s if [:updated_at, :created_at, :modified].include?(attribute)
+      content_tag(:th, class: th_class, data: { sorter: th_sort }) do attribute_title end
     end
 
     def td_columns(params)

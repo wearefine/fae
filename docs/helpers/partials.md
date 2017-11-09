@@ -38,6 +38,71 @@ Custom header
 render 'fae/shared/index_header', title: 'Something Entirely Different', new_button: false, csv: true
 ```
 
+## Index Table
+
+```ruby
+index_table
+```
+
+Displays an overview of all items for a model.
+
+| option | type | default | description |
+| ------ | ---- | ------- | ----------- |
+| edit_path | sym | | **required** Route helper to edit the instance's properties (e.g. `:edit_releases_path`) |
+| items | array | @items || [] | instances of the model to render in the table; when `collapsible` is passed, `items` represents all tables at the top level  |
+| cols | Array<attribute (sym) | {:attr, :title, :sort_by}> | columns with each instance's attribute's value |
+| sort_columns | boolean | true | sort by the table header; overriden if `sort_rows` is true |
+| sort_rows | boolean | false | manipulate a model's `position` with drag and drop |
+| table_class | string | '' | optional table class |
+| image | attribute | nil | if each instance has an image, render the image from its attribute |
+| edit_label | string | 'Name' | Edit field header |
+| modified | boolean | true | displays a "Modified" header that pulls from `updated_at` |
+| cloneable | boolean | false | includes Clone button |
+| delete | boolean | true | displays a delete action for each instance |
+| collapsible | Hash | nil | render multiple, collapsible tables |
+| collapsible[:default_all_open] | boolean | false | all tables are expanded on page render |
+| collapsible[:name] | attribute (sym) | references the instance of current `table` |
+| collapsible[:items] | attribute (sym) | nil | sub collection of instances |
+
+This partial will cover nearly every case and should be used as a first option. It will fall short in specific edge cases - for example linking to a parent model's name in each row. In such cases, regular table markup with minimal Fae helper CSS classes can be used. However, not using this partial will make up upgrading major versions more tedious as the markup will have to be translated to the update while the partial will inherit it immediately.
+
+### Examples
+
+#### With an image
+
+```slim
+== render 'fae/shared/index_table',
+  edit_path: :edit_admin_gallery_image_path,
+  image: :featured,
+  modified: false,
+  cols: [ :alt_text ]
+```
+
+#### With attributes of an attached model
+
+```slim
+== render 'fae/shared/index_table',
+  edit_path: :edit_admin_article_path,
+  cols: [ { attr: 'category.name', sort_by: 'category.updated_at', title: 'Category' }, :published_date, :on_stage, :on_prod ]
+```
+
+#### With attributes of the class
+
+```slim
+== render 'fae/shared/index_table',
+  edit_path: :edit_admin_article_path,
+  cols: [ { attr: :teaser, title: 'Teaser' } :author, :active, :on_stage ]
+```
+
+#### Collapsible
+
+```slim
+== render 'fae/shared/index_table',
+  edit_path: :edit_admin_article_path,
+  items: @article_categories,
+  collapsible: { default_all_open: false, name: :name, items: :articles }
+```
+
 ## Form Header
 
 ```ruby
