@@ -39,8 +39,8 @@ th {
 .tablesorter-header-inner,
 .th-sortable-title {
   &:after {
-    @extend .icon-arrow_down:before;
     @include icon-stuff;
+    content: fae-icon(arrow_down);
     display: none;
     font-size: 4px;
     position: relative;
@@ -53,6 +53,6 @@ th {
 th.-asc .th-sortable-title,
 .tablesorter-headerAsc .tablesorter-header-inner {
   &:after {
-    @extend .icon-arrow_up:before;
+    content: fae-icon(arrow_up);
   }
 }

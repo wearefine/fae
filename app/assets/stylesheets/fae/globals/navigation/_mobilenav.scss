@@ -28,7 +28,7 @@
     @extend %nav-icon;
 
     &:after {
-      @extend .icon-chevron_right:before;
+      content: fae-icon(chevron_right);
       right: 18px;
       top: 14px;
       font-size: 11px;
@@ -56,8 +56,8 @@
   color: $c-white;
 
   &:before {
-    @extend .icon-chevron_left:before;
     @include icon-stuff;
+    content: fae-icon(chevron_left);
     border-radius: 50%;
     padding: 5px 9px 5px 7px;
     border: 2px solid $c-white;
@@ -115,25 +115,25 @@
 
     &.-logout {
       &:after {
-        @extend .icon-logout:before;
+        content: fae-icon(logout);
       }
     }
 
     &.-settings {
       &:after {
-        @extend .icon-settings:before;
+        content: fae-icon(settings);
       }
     }
 
     &.-support {
       &:after {
-        @extend .icon-support:before;
+        content: fae-icon(support);
       }
     }
 
     &.-viewsite {
       &:after {
-        @extend .icon-offlink:before;
+        content: fae-icon(offlink);
       }
     }
   }
