@@ -17,6 +17,12 @@ module Fae
         maximum: Fae.max_image_upload_size.megabytes.to_i
       }
 
+    validates :caption,
+      length: { maximum: 125 }
+
+    validates :alt,
+      length: { maximum: 125 }
+
     belongs_to :imageable, polymorphic: true, touch: true
 
     def readonly?
