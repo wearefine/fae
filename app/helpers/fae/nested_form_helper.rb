@@ -29,7 +29,7 @@ module Fae
           end
         end
       elsif item.class.columns_hash[attribute.to_s].present? && item.class.columns_hash[attribute.to_s].type == :boolean
-        content_tag(:td) do attr_toggle(item, attribute) end
+        content_tag(:td) do fae_toggle(item, attribute) end
       else
         content_tag(:td) do col_name_or_image(item, attribute) end
       end
