@@ -1,5 +1,6 @@
 # Upgrading Fae
 
+* [To v2.0](#to-v20)
 * [To v1.5](#to-v15)
 * [From v1.2 to v1.3](#from-v10-to-v11)
 * [From v1.1 to v1.2](#from-v11-to-v12)
@@ -24,7 +25,7 @@ header.content-header.js-content-header
 = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
 ```
 
-# From v1.2 to v2.0
+`attr_toggle` has been deprecated. Use `fae_toggle` in it's place.
 
 Many CSS classes produced by v1.2 generators have been removed. It's easiest to re-scaffold your admin views entirely (chiefly `index.html.slim` and `_form.html.slim`, but also affecting `edit.html.slim` and `new.html.slim`). This CSS refactor also affects JavaScript; some features may break for admins that do not adopt the new CSS classes. Admins generated at or after v1.3 are unaffected.
 

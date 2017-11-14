@@ -19,5 +19,5 @@ main.content
           td = user.email
           td = user.role.name
           td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
-          td = attr_toggle user, :active unless current_user == user
+          td = fae_toggle user, :active unless current_user == user
           td = fae_delete_button user, user unless current_user == user
