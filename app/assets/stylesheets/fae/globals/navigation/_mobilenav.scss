@@ -7,7 +7,7 @@
 
   a {
     color: $c-white;
-    padding: 17px 35px 17px 20px;
+    padding: 17px 35px 17px 35px;
 
     &:hover {
       color: $c-white;
@@ -15,7 +15,7 @@
   }
 
   li {
-    border-bottom: 1px solid #595959;
+    border-bottom: 1px solid $c-next-darkest-grey;
     letter-spacing: 0.03em;
 
     &.mobilenav-user {
@@ -51,6 +51,28 @@
       top: 18px;
       font-size: 11px;
     }
+
+  }
+
+  &.sub {
+    a {
+      &:after {
+        transition: all 0.5s;
+        transform: rotate(90deg);
+      }
+    }
+
+    &.-open {
+      .second-sub-nav {
+        max-height: 700px;
+      }
+
+      a {
+        &:after {
+          transform: rotate(270deg);
+        }
+      }
+    }
   }
 
   &.-open {
@@ -69,18 +91,38 @@
   }
 }
 
+.second-sub-nav {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+
+  a {
+    padding-left: 50px;
+  }
+
+  li {
+    border: none;
+  }
+}
+
 .mobilenav-subheader {
   margin-bottom: 0;
   display: block;
-  padding: 15px 20px;
+  padding: 17px 35px;
   cursor: pointer;
   background: $c-custom-highlight;
   color: $c-white;
-  display: flex;
+  text-transform: uppercase;
+  position: relative;
+
+  &.grey {
+    background: $c-next-darkest-grey;
+  }
 
   span {
-    &:first-of-type {
-      width: 30%;
+    &.icon-chevron_left {
+      position: absolute;
+      left: 12px;
     }
 
     &:nth-of-type(2) {

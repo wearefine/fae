@@ -52,12 +52,6 @@ Fae.navigation = {
       var $parent = $(this).closest('.js-accordion');
       var was_open = $parent.hasClass('-open');
 
-      // close all first
-      // only get the first class name and add a leading period
-      $parent.siblings().each(function() {
-        _this.close($(this));
-      });
-
       if (was_open) {
         var $sub_accordions = $parent.find('.js-accordion');
 
