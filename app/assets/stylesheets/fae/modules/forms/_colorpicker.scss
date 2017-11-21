@@ -1,9 +1,9 @@
-input.string.js-color-picker {
-  width: 180px;
+.js-color-picker {
+  width: 180px !important; // overrides input.string input
 }
 
 div.cp-color-picker {
-  border: 1px solid #999;
+  border: 1px solid $c-darker-grey;
   padding: 10px 10px 0;
   background: #eee;
   overflow: visible;
@@ -14,44 +14,44 @@ div.cp-color-picker {
     height: 6px;
     border-radius: 6px;
     overflow: visible;
-    border: 1px solid #999;
+    border: 1px solid $c-darker-grey;
     box-sizing: border-box;
     background: linear-gradient(to right, rgba(238, 238, 238, 1) 0%, rgba(238, 238, 238, 0) 100%);
   }
-}
 
-div.cp-xy-slider {
-  border: 1px solid #999;
-  margin-bottom: 10px;
+  .cp-xy-slider {
+    border: 1px solid $c-darker-grey;
+    margin-bottom: 10px;
 
-  &:active {
-    cursor: none;
+    &:active {
+      cursor: none;
+    }
   }
-}
 
-div.cp-xy-cursor {
-  width: 12px;
-  height: 12px;
-  margin: -6px
-}
+  .cp-xy-cursor {
+    width: 12px;
+    height: 12px;
+    margin: -6px
+  }
 
-div.cp-z-slider {
-  margin-left: 10px;
-  border: 1px solid #999;
-}
+  .cp-z-slider {
+    margin-left: 10px;
+    border: 1px solid $c-darker-grey;
+  }
 
-div.cp-z-cursor {
-  border-width: 5px;
-  margin-top: -5px;
-}
+  .cp-z-cursor {
+    border-width: 5px;
+    margin-top: -5px;
+  }
 
-div.cp-alpha-cursor {
-  background: #eee;
-  border-radius: 100%;
-  width: 14px;
-  height: 14px;
-  margin: -5px -7px;
-  border: 1px solid #666!important;
-  box-shadow: inset -2px -4px 3px #ccc;
+  .cp-alpha-cursor {
+    background: #eee;
+    border-radius: 100%;
+    width: 14px;
+    height: 14px;
+    margin: -5px -7px;
+    border: 1px solid $c-mid-dark-grey !important; // overrides default border
+    box-shadow: inset -2px -4px 3px $c-mid-grey;
+  }
 }
 
