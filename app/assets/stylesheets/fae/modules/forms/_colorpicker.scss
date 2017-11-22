@@ -1,11 +1,11 @@
-.js-color-picker {
-  width: 180px !important; // overrides input.string input
+.input.string .color-picker {
+  width: 180px;
 }
 
 div.cp-color-picker {
   border: 1px solid $c-darker-grey;
   padding: 10px 10px 0;
-  background: #eee;
+  background: $c-lightest-grey;
   overflow: visible;
   border-radius: 3px;
 
@@ -16,7 +16,7 @@ div.cp-color-picker {
     overflow: visible;
     border: 1px solid $c-darker-grey;
     box-sizing: border-box;
-    background: linear-gradient(to right, rgba(238, 238, 238, 1) 0%, rgba(238, 238, 238, 0) 100%);
+    background: linear-gradient(to right, rgba($c-lightest-grey, 1) 0%, rgba($c-lightest-grey, 0) 100%);
   }
 
   .cp-xy-slider {
@@ -45,7 +45,7 @@ div.cp-color-picker {
   }
 
   .cp-alpha-cursor {
-    background: #eee;
+    background: $c-lightest-grey;
     border-radius: 100%;
     width: 14px;
     height: 14px;
