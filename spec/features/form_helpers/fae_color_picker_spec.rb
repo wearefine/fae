@@ -8,7 +8,7 @@ feature 'fae_color_picker' do
     expect(page).to_not have_selector('.cp-color-picker')
     page.find('#release_color').click
     expect(page).to have_selector('.cp-color-picker', visible: true)
-    page.find('.content').click
+    page.find('#attributes').click
     expect(page).to have_selector('.cp-color-picker', visible: false)
   end
 end
