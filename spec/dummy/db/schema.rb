@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171102203717) do
+ActiveRecord::Schema.define(version: 20171121212302) do
 
   create_table "acclaims", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "score"
@@ -339,6 +339,7 @@ ActiveRecord::Schema.define(version: 20171102203717) do
     t.text     "content",           limit: 65535
     t.string   "seo_title"
     t.string   "seo_description"
+    t.string   "color"
   end
 
   create_table "selling_points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -348,6 +349,7 @@ ActiveRecord::Schema.define(version: 20171102203717) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "color"
   end
 
   create_table "teams", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -356,7 +358,6 @@ ActiveRecord::Schema.define(version: 20171102203717) do
     t.text     "history",    limit: 65535
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "color"
   end
 
   create_table "validation_testers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

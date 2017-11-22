@@ -14,8 +14,11 @@ Fae.form.color = {
   /**
    * Initialize colorpicker
    */
-  initColorpicker: function() {
+  initColorpicker: function(e) {
+    var includeAlphaSlider = $('.alpha-slider').length > 0
+
     var settings = {
+      opacity: includeAlphaSlider,
       positionCallback: function($elm) {
         var inputOffset = $elm.offset().top;
         var distanceToBottom = $(document).height() - inputOffset;
