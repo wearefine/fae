@@ -36,6 +36,6 @@ Fae.form.color = {
       }
     }
 
-    $('.color-picker').colorPicker(settings);
+    $('.js-color-picker').colorPicker(settings);
   }
 };

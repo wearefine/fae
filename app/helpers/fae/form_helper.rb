@@ -77,7 +77,7 @@ module Fae
     def fae_color_picker(f, attribute, options={})
       options.update(
         as: :string,
-        input_class: "color-picker color-picker #{'alpha-slider' unless options[:alpha] == false}",
+        input_class: "js-color-picker color-picker #{'alpha-slider' unless options[:alpha] == false}",
         input_html: { value: f.object.send(attribute).to_s } # value needs to be set to clear color picker
       )
       fae_input f, attribute, options
