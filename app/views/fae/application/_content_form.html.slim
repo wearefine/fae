@@ -1,5 +1,6 @@
 ruby:
   require_locals     ['attribute', 'f'], local_assigns
+  blank_label          = !label || label == '' unless label.nil?
   label              ||= attribute.to_s.titleize
   required           ||= f.object.send(attribute).is_required?(f.object.class)
   helper_text        ||= attempt_common_helper_text(attribute)
@@ -29,6 +30,7 @@ ruby:
     options[:input_html].merge! class: 'js-markdown-editor' if markdown.present?
   end
 
+  options[:label] = false if blank_label
   languages = f.object.class.fae_fields[attribute].try(:[], :languages)
 
 - if languages.present?
