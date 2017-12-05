@@ -30,7 +30,7 @@ end
 ```ruby
 class Promo < ActiveRecord::Base
 
-  belongs_to :static_page, class_name: 'Fae::StaticPage'
+  belongs_to :static_page, class_name: 'Fae::StaticPage', optional: true
 
 end
 
