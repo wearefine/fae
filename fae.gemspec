@@ -13,7 +13,6 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
-  s.test_files = Dir['spec/**/*']
 
   # Rails dependencies
   s.add_dependency 'rails', '>= 4.1'
