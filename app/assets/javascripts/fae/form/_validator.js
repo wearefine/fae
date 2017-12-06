@@ -13,7 +13,8 @@ Fae.form.validator = {
   validation_test_count: 0,
 
   init: function () {
-    if (FCH.exists('form')) {
+    // validate all forms except the login form
+    if ($('form').not('#login_form').length) {
       this.password_confirmation_validation.init();
       this.passwordPresenceConditional();
       this.bindValidationEvents();
@@ -59,7 +60,7 @@ Fae.form.validator = {
 
         _this.testValidation($this);
 
-      };
+      }
 
     });
   },
