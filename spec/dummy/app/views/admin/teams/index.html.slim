@@ -1,7 +1,7 @@
 = render 'fae/shared/index_header', title: "#{@klass_humanized.pluralize}"
 
 main.content
-  table.js-sort-column
+  table
     thead
       tr
         th Name
@@ -18,3 +18,5 @@ main.content
       - else
         tr
           td colspan="3" No items found
+
+  == fae_paginate @items
