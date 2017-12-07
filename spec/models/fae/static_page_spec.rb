@@ -91,4 +91,13 @@ describe Fae::StaticPage do
 
   end
 
+  describe 'when decorated' do
+    it 'should respond to decorator method' do
+      static_page = FactoryGirl.build_stubbed(:fae_static_page)
+
+      expect(static_page.respond_to?('instance_is_decorated')).to eq true
+      expect(static_page.instance_is_decorated).to eq('Fae::StaticPage instance is decorated')
+    end
+  end
+
 end
