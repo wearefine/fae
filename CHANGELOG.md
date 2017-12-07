@@ -1,9 +1,23 @@
 # Fae Changelog
 
-## Unreleased
+## 1.7
 
 - enhancements
-    + Style flash message errors appropriately
+    + Add color picker form helper [#345](https://github.com/wearefine/fae/pull/345)
+    + Decouple pagination from filters [#328](https://github.com/wearefine/fae/pull/328)
+    + Allow blank labels for fae_content_form [#360](https://github.com/wearefine/fae/pull/360)
+    + Resolve Sass warnings about extending compound selectors [#349](https://github.com/wearefine/fae/pull/349)
+    + Add support for decorator pattern [#361](https://github.com/wearefine/fae/pull/361)
+    + Documentation for language, Heroku, and files [#331](https://github.com/wearefine/fae/pull/331)
+    + Document specify static_page association as optional [#356](https://github.com/wearefine/fae/pull/356)
+    + Remove test_files from gemspec [#357](https://github.com/wearefine/fae/pull/357)
+- bug fixes
+    + Wait for all validation checks to complete before submitting form [#335](https://github.com/wearefine/fae/pull/335)
+    + Don't assume objects for cloning have on_prod attr [#330](https://github.com/wearefine/fae/pull/330)
+    + Remove include_blank duplicate [#346](https://github.com/wearefine/fae/pull/346)
+    + Show action returns a 404 by default [#339](https://github.com/wearefine/fae/pull/339)
+    + Style flash message errors appropriately [#333](https://github.com/wearefine/fae/pull/333)
+    + Documentation formatting & vulnerability update [#358](https://github.com/wearefine/fae/pull/358)
 
 ## 1.6
 
