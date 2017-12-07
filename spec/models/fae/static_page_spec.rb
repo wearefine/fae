@@ -18,11 +18,11 @@ describe Fae::StaticPage do
 
     it 'should attach only once' do
       hp = HomePage.instance
-      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
+      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :cell_phone, :work_phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
 
       # trigger instance twice
       hp = HomePage.instance
-      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
+      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :cell_phone, :work_phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
     end
 
     it 'should attach language associations when present' do

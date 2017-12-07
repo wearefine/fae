@@ -74,6 +74,15 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def fae_color_picker(f, attribute, options={})
+      options.update(
+        as: :string,
+        input_class: "js-color-picker color-picker #{'alpha-slider' unless options[:alpha] == false}",
+        input_html: { value: f.object.send(attribute).to_s } # value needs to be set to clear color picker
+      )
+      fae_input f, attribute, options
+    end
+
     def fae_daterange(f, attr_array, options={})
       raise "Fae::MissingRequiredOption: fae_daterange requires the 'label' option." if options[:label].blank?
       raise "Fae::MalformedArgument: fae_daterange requires an array of two attributes as it's second argument." unless attr_array.present? && attr_array.is_a?(Array) && attr_array.length == 2
@@ -165,7 +174,7 @@ module Fae
 
     def add_input_class(options, class_name)
       if options.key?(:input_html)
-        options[:input_html] = { class: "#{options[:input_html][:class]} #{class_name}" }
+        options[:input_html].merge!({class: "#{options[:input_html][:class]} #{class_name}"})
       else
         options[:input_html] = { class: class_name }
       end

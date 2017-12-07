@@ -69,6 +69,7 @@ Fae.form.ajax = {
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
       Fae.form.dates.initDateRangePicker();
+      Fae.form.color.initColorpicker();
       Fae.form.slugger.addListener();
       Fae.form.validator.length_counter.init();
       Fae.form.text.initMarkdown();
@@ -134,6 +135,7 @@ Fae.form.ajax = {
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();
+            Fae.form.color.initColorpicker();
             Fae.form.validator.length_counter.init();
             Fae.form.checkbox.setCheckboxAsActive();
             Fae.form.text.initMarkdown();
