@@ -67,7 +67,7 @@
   &.-open {
     > a {
       &:after {
-        @extend .icon-arrow_down:before;
+        content: fae-icon(arrow_down);
         top: 19px;
         transform: rotate(0);
         opacity: 1;
@@ -117,7 +117,7 @@
     background-color: $c-white;
 
     &:after {
-      @extend .icon-arrow_up:before;
+      content: fae-icon(arrow_up);
 
       top: 18px;
       right: 13px;

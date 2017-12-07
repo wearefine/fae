@@ -7,7 +7,7 @@
 
   &:after {
     @include icon-stuff;
-    @extend .icon-arrow_down:before;
+    content: fae-icon(arrow_down);
     position: relative;
     font-size: 4px;
     top: -4px;
@@ -26,14 +26,14 @@
 
 .chosen-container-active.chosen-with-drop .chosen-single div b {
   &:after {
-    @extend .icon-arrow_up:before;
+    content: fae-icon(arrow_up);
     color: $c-darkest-grey;
   }
 }
 
 .chosen-rtl .chosen-search, .chosen-container-single .chosen-search {
   &:after {
-    @extend .icon-search:before;
+    content: fae-icon(search);
     font-size: 12px;
     left: auto;
     right: 17px;

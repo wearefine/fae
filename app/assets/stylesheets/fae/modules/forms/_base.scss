@@ -83,8 +83,8 @@ input[type=email] {
   float: right;
 
   &:before {
-    @extend .icon-plus:before;
     @include icon-stuff;
+    content: fae-icon(plus);
     font-size: 7px;
     position: relative;
     bottom: 2px;

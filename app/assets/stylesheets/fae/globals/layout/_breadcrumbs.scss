@@ -7,8 +7,8 @@
     display: inline-block;
 
     &:after {
-      @extend .icon-chevron_right:before;
       @include icon-stuff;
+      content: fae-icon(chevron_right);
       font-size: 8px;
       display: inline-block;
       padding: 0 10px;

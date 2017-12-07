@@ -29,8 +29,8 @@ input[type=submit],
 
 .add-button {
   &:before {
-    @extend .icon-heavy_plus:before;
     @include icon-stuff;
+    content: fae-icon(heavy_plus);
     font-size: 12px;
     margin-right: 7px;
   }
