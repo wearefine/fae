@@ -44,7 +44,7 @@ Fae.form.validator = {
         _this.validation_test_count = 0;
 
         // Scope the data-validation only to the form submitted
-        $('[data-validate]', $(this)).each(function () {
+        $('[data-validate]', $this).each(function () {
           if ($(this).data('validate').length) {
             _this.validations_called++;
             _this._judgeIt($(this));
@@ -52,7 +52,7 @@ Fae.form.validator = {
         });
 
         // Catch visible errors for image/file inputs hitting the fae config file size limiter
-        $('.input.file', $(this)).each(function () {
+        $('.input.file', $this).each(function () {
           if ($(this).hasClass('field_with_errors')) {
             _this.is_valid = false;
           }
