@@ -11,12 +11,15 @@ feature 'fae_content_form' do
     expect(page).to have_css('#home_page_header_attributes_content')
     expect(page).to have_css('#home_page_introduction_attributes_content')
 
-    # # input_class
+    # # input_class/wrapper_class
     expect(page).to have_css('.phone-mask')
+    expect(page).to have_selector('.phone-wrapper')
+    expect(page).to have_selector('#phone-id')
 
-    # input_class + markdown
+    # input_class + markdown + helper_text
     within('.home_page_introduction_2_content') do
       expect(page).to have_selector('.js-markdown-editor')
+      expect(page).to have_content('helper text')
     end
 
     # just markdown
