@@ -49,7 +49,7 @@ zh-CN:
       unlocked: "你的帐户已被成功解锁，请重新登录。"
   errors:
     messages:
-     already_confirmed: "已确认，请尝试登录"
+      already_confirmed: "已确认，请尝试登录"
       confirmation_period_expired: "需要在 %{period} 内确认，请重新申请"
       expired: "已过期，请重新申请"
       not_found: "未找到"
