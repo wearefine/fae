@@ -1,0 +1,10 @@
+zh-CN:
+  fae:
+    save_notice: '保存成功。'
+    save_error: '请检查你的表单错误。'
+    delete_notice: '记录被成功删除。'
+    delete_error: '和这条记录相关的对象使得它不能被删除。'
+    delete_confirmation: '你确定要永久删除这条记录？'
+    clone_confirmation: "一旦克隆，如果随后改变主意，你需要删除它。继续吗？"
+    unauthorized_error: '你未被授权访问这个页面。'
+    exceeded_upload_limit: "这个资源超过文件大小限制，试试另外一个？"
