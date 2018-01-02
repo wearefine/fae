@@ -39,13 +39,13 @@ Using Fae's generators let's quickly scaffold a model that supports multiple lan
 $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
 ```
 
-To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `translate` class method.
+To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `fae_translate` class method.
 
 ```ruby
 class Person < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
-  translate :name, :title, :intro
+  fae_translate :name, :title, :intro
 end
 
 # i.e. if English is the locale, @person.name == @person.name_en

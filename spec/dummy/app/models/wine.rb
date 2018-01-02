@@ -16,7 +16,7 @@ class Wine < ActiveRecord::Base
 
   validates :name_en, :name_zh, :name_ja, presence: true
 
-  translate :name
+  fae_translate :name
 
   def fae_display_field
     name_en
