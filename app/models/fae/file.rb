@@ -9,10 +9,18 @@ module Fae
 
     mount_uploader :asset, Fae::FileUploader
 
-    validates :asset,
+    if defined?(FileValidators)
+      validates :asset,
+      file_size: {
+        less_than_or_equal_to: Fae.max_file_upload_size.megabytes.to_i
+      }
+    else
+      validates :asset,
       file_size: {
         maximum: Fae.max_file_upload_size.megabytes.to_i
       }
+    end
+
 
     belongs_to :fileable, polymorphic: true, touch: true
 
