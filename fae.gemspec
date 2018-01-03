@@ -31,7 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'judge', '~> 2.1.1'
   s.add_dependency 'judge-simple_form', '~> 1.0.0'
   s.add_dependency 'acts_as_list', '~> 0.9.0'
-  s.add_dependency 'browser', '~> 0.8.0'
+  s.add_dependency 'browser', '~> 2.0'
   s.add_dependency 'slim'
   s.add_dependency 'kaminari', '~> 0.17.0'
 
