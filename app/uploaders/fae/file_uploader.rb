@@ -4,9 +4,7 @@ module Fae
 
     # Include RMagick support:
     # include CarrierWave::RMagick
-    include CarrierWave::MimeTypes
 
-    process :set_content_type
     process :save_file_size_in_model
 
     def save_file_size_in_model

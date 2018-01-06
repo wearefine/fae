@@ -2,7 +2,6 @@ require 'file_size_validator'
 
 module Fae
   class Image < ActiveRecord::Base
-
     include Fae::BaseModelConcern
     include Fae::ImageConcern
     include Fae::AssetsValidatable
@@ -12,10 +11,17 @@ module Fae
 
     after_save :recreate_versions
 
-    validates :asset,
-      file_size: {
-        maximum: Fae.max_image_upload_size.megabytes.to_i
-      }
+    if defined?(FileValidators)
+      validates :asset,
+                file_size: {
+                  less_than_or_equal_to: Fae.max_file_upload_size.megabytes.to_i
+                }
+    else
+      validates :asset,
+                file_size: {
+                  maximum: Fae.max_file_upload_size.megabytes.to_i
+                }
+    end
 
     belongs_to :imageable, polymorphic: true, touch: true
 
@@ -28,6 +34,5 @@ module Fae
     def recreate_versions
       asset.recreate_versions! if Fae.recreate_versions && asset.present?
     end
-
   end
 end
