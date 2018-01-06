@@ -10,6 +10,10 @@ module Fae
       include Fae::Sortable
     end
 
+    def fae_display_field
+      # override this method in your model
+    end
+
     def fae_nested_parent
       # override this method in your model
     end
@@ -24,10 +28,6 @@ module Fae
     end
 
     module ClassMethods
-      def fae_display_field
-        # override this method in your model
-      end
-
       def for_fae_index
         order(order_method)
       end
