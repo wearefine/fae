@@ -9,12 +9,9 @@
 
 # To v2.0
 
-`form_buttons` has been deprecated. Any admin still using this partial should remove `fae/shared/form_buttons` and only use [fae/shared/form_header](docs/helpers/partials.md#form-header). `form_header` still supports `save_button_text`, `cancel_button_text`, `cloneable`, and `cloneable_text` options.
-
-The `dark_hint` input option has been deprecated. The dark hint style was removed in v1.3, but now [the option](docs/helpers/form_helpers.md#global-options) has been removed. Please convert all `dark_hint` calls to `hint`.
-
-The `form_header` partial includes the errors previously rendered as a separate partial as well as the parent node markup (`header.content-header.js-content-header`). Please consolidate existing markup to use only the partial:
-
+* `form_buttons` has been deprecated. Any admin still using this partial should remove `fae/shared/form_buttons` and only use [fae/shared/form_header](docs/helpers/partials.md#form-header). `form_header` still supports `save_button_text`, `cancel_button_text`, `cloneable`, and `cloneable_text` options.
+* The `dark_hint` input option has been deprecated. The dark hint style was removed in v1.3, but now [the option](docs/helpers/form_helpers.md#global-options) has been removed. Please convert all `dark_hint` calls to `hint`.
+* The `form_header` partial includes the errors previously rendered as a separate partial as well as the parent node markup (`header.content-header.js-content-header`). Please consolidate existing markup to use only the partial:
 ```slim
 header.content-header.js-content-header
   = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
@@ -24,10 +21,9 @@ header.content-header.js-content-header
 
 = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
 ```
-
-`attr_toggle` has been deprecated. Use `fae_toggle` in it's place.
-
-Many CSS classes produced by v1.2 generators have been removed. It's easiest to re-scaffold your admin views entirely (chiefly `index.html.slim` and `_form.html.slim`, but also affecting `edit.html.slim` and `new.html.slim`). This CSS refactor also affects JavaScript; some features may break for admins that do not adopt the new CSS classes. Admins generated at or after v1.3 are unaffected.
+* `attr_toggle` has been deprecated. Use `fae_toggle` in its place.
+* Many CSS classes produced by v1.2 generators have been removed. It's easiest to re-scaffold your admin views entirely (chiefly `index.html.slim` and `_form.html.slim`, but also affecting `edit.html.slim` and `new.html.slim`). This CSS refactor also affects JavaScript; some features may break for admins that do not adopt the new CSS classes. Admins generated at or after v1.3 are unaffected.
+* `translate` has been renamed to `fae_translate`. Please refer to [the language documentation](docs/features/multi-language.md).
 
 # To v1.5
 

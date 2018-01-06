@@ -69,7 +69,7 @@ module Fae
         end
       end
 
-      def translate(*attributes)
+      def fae_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
             self.send "#{attribute}_#{I18n.locale}"
