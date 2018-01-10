@@ -1,25 +1,53 @@
 header.content-header.js-content-header.-dashboard
-  i.icon-home>
-  | &nbsp;&nbsp;Welcome,
-  strong< = current_user.full_name
+ i.icon-home>
+ | &nbsp;&nbsp;Welcome,
+ strong< = current_user.full_name
 
 == render 'flash_messages'
 
 main.content
-  table.js-sort-column
-    thead
-      tr
-        th Name
-        th Type
-        th.-action-wide Modified
-    tbody
-      - @list.each do |item|
-        - begin
-          - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
-          - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
-          - index_path = polymorphic_path([main_app, fae_scope, parent, item.class.to_s.pluralize.underscore])
-          tr
-            td: a href=edit_path = item.fae_display_field
-            td: a href=index_path = item.class.to_s
-            td = fae_date_format item.updated_at
-        - rescue
+- if @list.empty?
+   section.content.tutorial
+     h2
+       | Let's get started!
+     p
+       | Using the Fae CMS, we can generate objects quickly leveraging the rails generator commands. Creating an object is easy!
+       pre
+         | rails g fae:scaffold ArticleCategory name:string position:integer
+     p
+       | We can also generate pages using Fae's custom module. This module requires specific syntax that you can learn more about
+       '
+       a href='https://www.faecms.com/documentation/topics-pages' here.
+       '
+       | Below is an example:
+       pre
+         | rails g fae:page AboutUs hero_image:image headline:string body:text
+     p
+       | Migrate your model to the database
+       pre
+         | rails db:migrate (or rake db:migrate in Rails < 5)
+     p
+       | After you create an object using the example above, refresh the page and the model will appear in the top bar. Click on this link to generate your first object!
+     p
+       | After you create an object, this tutorial will be finished. To continue learning about Fae, follow this
+       '
+       a href='https://github.com/accua/fae/blob/accua-application/docs/quickstart-guide.md#an-example-cms' link!
+
+- else
+ table.js-sort-column
+   thead
+     tr
+       th Name
+       th Type
+       th.-action-wide Modified
+   tbody
+       - @list.each do |item|
+         - begin
+           - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
+           - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
+           - index_path = polymorphic_path([main_app, fae_scope, parent, item.class.to_s.pluralize.underscore])
+           tr
+             td: a href=edit_path = item.fae_display_field
+             td: a href=index_path = item.class.to_s
+             td = fae_date_format item.updated_at
+         - rescue
