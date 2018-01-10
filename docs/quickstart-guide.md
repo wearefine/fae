@@ -54,7 +54,7 @@ _[Learn more about managing images and files](https://www.faecms.com/documentati
 
 Fae has a built-in pages module that let's you define content blocks on a page as attributes on a model. This allows you to get content for an about page via `AboutUsPage.instance` instead of dealing with hard-coded IDs.
 
-To use this module, you'll have to follow Fae's convention, but we have a custom genereator to get you started.
+To use this module, you'll have to follow Fae's convention, but we have a custom generator to get you started.
 
 **To generate content blocks for an `AboutUsPage`:**
 
