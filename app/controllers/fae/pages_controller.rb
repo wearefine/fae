@@ -5,6 +5,7 @@ module Fae
 
     def home
       @list = recently_updated
+      @models = all_models
     end
 
     def help

@@ -6,8 +6,8 @@ feature 'Sign In' do
     create_super_user
   end
 
-  def no_objects_exist?
-    ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) || m.name.include?("Page")}[0].any?
+  def no_models_exist?
+    ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
   end
 
   scenario 'when user leaves out email' do
@@ -80,7 +80,7 @@ feature 'Sign In' do
     fill_in 'user_email', with: 'test@test.com'
     fill_in 'user_password', with: 'passord1'
     click_button 'Submit'
-    if no_objects_exist?
+    if no_models_exist?
       expect(page).to have_content("Let's get started!")
     end
   end

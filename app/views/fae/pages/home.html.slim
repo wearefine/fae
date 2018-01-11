@@ -6,32 +6,24 @@ header.content-header.js-content-header.-dashboard
 == render 'flash_messages'
 
 main.content
-- if @list.empty?
+- if !@models.any?
    section.content.tutorial
      h2
        | Let's get started!
      p
-       | Using the Fae CMS, we can generate objects quickly leveraging the rails generator commands. Creating an object is easy!
-       pre
-         | rails g fae:scaffold ArticleCategory name:string position:integer
-     p
-       | We can also generate pages using Fae's custom module. This module requires specific syntax that you can learn more about
+       | Using the Fae CMS, we can generate models and page views quickly leveraging the rails generator commands. Take a look at the
        '
-       a href='https://www.faecms.com/documentation/topics-pages' here.
+       a href='https://github.com/wearefine/fae/blob/master/docs/quickstart-guide.md' quick-start guide
        '
-       | Below is an example:
-       pre
-         | rails g fae:page AboutUs hero_image:image headline:string body:text
+       | to generate your first model.
      p
-       | Migrate your model to the database
-       pre
-         | rails db:migrate (or rake db:migrate in Rails < 5)
+       | Once a model is created, refresh the page and it will appear in the top bar. Click on this link to generate your first object.
+     div
      p
-       | Once an object is created using the example above, refresh the page and the model will appear in the top bar. Click on this link to generate your first object!
-     p
-       | After you create an object, this tutorial will be finished. To continue learning about Fae, follow this
+       | After you create your first model, this tutorial will be finished. To continue learning about Fae, follow this
        '
-       a href='https://github.com/accua/fae/blob/accua-application/docs/quickstart-guide.md#an-example-cms' link!
+       a href='https://www.faecms.com/documentation' link!
+
 
 - else
  table.js-sort-column
