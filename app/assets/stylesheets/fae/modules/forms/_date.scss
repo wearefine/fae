@@ -128,7 +128,7 @@
 
   &:before {
     @include icon-stuff;
-    @extend .icon-chevron_left:before;
+    content: fae-icon(chevron_left);
   }
 }
 
@@ -136,8 +136,8 @@
   float: right;
 
   &:before {
-    @extend .icon-chevron_right:before;
     @include icon-stuff;
+    content: fae-icon(chevron_right);
   }
 }
 
@@ -199,8 +199,8 @@
   }
 
   label:before {
-    @extend .icon-calendar:before;
     @include icon-stuff;
+    content: fae-icon(calendar);
     position: absolute;
     right: 5px;
     bottom: 0;
@@ -266,14 +266,14 @@
 
         .next {
           &:before {
-            @extend .icon-chevron_right:before;
+            content: fae-icon(chevron_right);
             color: $c-white;
           }
         }
 
         .prev {
           &:before {
-            @extend .icon-chevron_left:before;
+            content: fae-icon(chevron_left);
             color: $c-white;
           }
         }

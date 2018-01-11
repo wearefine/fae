@@ -44,4 +44,23 @@ feature 'fae_pulldown' do
     expect( wines.last ).to have_content('Wine C')
   end
 
+  scenario 'should not have duplicate "Select One" option' do
+    FactoryGirl.create(:person, name: 'Mike')
+
+    admin_login
+    visit new_admin_location_path
+    expect_correct_contact_options
+
+    fill_in 'location_name', with: 'Mike'
+    click_button('Save')
+
+    visit edit_admin_location_path(Location.last)
+    expect_correct_contact_options
+  end
+
+  def expect_correct_contact_options
+    dropdown_options = all("option")
+    expect(dropdown_options[0].text).to eq 'Select One'
+    expect(dropdown_options[1].text).to eq 'Mike'
+  end
 end

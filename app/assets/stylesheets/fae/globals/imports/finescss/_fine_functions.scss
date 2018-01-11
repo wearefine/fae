@@ -46,16 +46,28 @@
   @return false;
 }
 
-// Grabs a color from $grays map
-// @param {key} $key - Key to get value from $grays map
-// @return - Color value
-@function gray($key: 30) {
-  @if map-has-key($grays, $key) {
-    @return map-get($grays, $key);
+// Grabs a key from $list
+// @param {key} $key - Key to get value from $list map
+// @return - Value of key
+@function mapperize($list, $key) {
+  @if map-has-key($list, $key) {
+    @return map-get($list, $key);
   } @else {
-    // Obvious off brand color for error detection
-    @return #00f;
+    @warn "#{$key} was not found";
+    @return null;
   }
+}
+
+@function gray($key: 30) {
+  @return mapperize($grays, $key);
+}
+
+@function fae-icon($key: 'home') {
+  $icon-code: mapperize($fae-required-icons, $key);
+  // Unicode chars are escaped; instead of using a slash in the map,
+  //   we add the slash here
+  // https://github.com/sass/sass/issues/659#issuecomment-64818741
+  @return unquote("\"\\#{$icon-code}\"");
 }
 
 // Choose from a light or dark contrasting foreground color given a background

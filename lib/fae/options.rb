@@ -26,5 +26,10 @@ module Fae
   # this function maps the vars from your app into your engine
   def self.setup(&block)
     yield self
+
+    # assign initializer configs
+    Devise.secret_key = Fae.devise_secret_key
+    Devise.mailer_sender = Fae.devise_mailer_sender
+    Kaminari.config.default_per_page = Fae.per_page
   end
 end

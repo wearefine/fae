@@ -6,8 +6,8 @@
   color: $c-custom-highlight;
 
   &:after {
-    @extend .icon-support:before;
     @include icon-stuff;
+    content: fae-icon(support);
     position: absolute;
     padding-left: 7px;
     text-decoration: none;

@@ -11,8 +11,8 @@
 
 ## Index Header
 
-```ruby
-index_header
+```slim
+== render 'fae/shared/index_header'
 ```
 
 Displays page title, add button, and flash messages.
@@ -26,22 +26,18 @@ Displays page title, add button, and flash messages.
 | csv | boolean | false | adds export to csv button |
 | breadcrumbs | boolean | true | display breadcrumb navigation before title |
 
-**Examples**
+### Examples
 
-Standard implementation
-```ruby
-render 'fae/shared/index_header'
-```
+#### Custom header
 
-Custom header
-```ruby
-render 'fae/shared/index_header', title: 'Something Entirely Different', new_button: false, csv: true
+```slim
+== render 'fae/shared/index_header', title: 'Something Entirely Different', new_button: false, csv: true
 ```
 
 ## Form Header
 
 ```ruby
-form_header
+== render 'fae/shared/form_header', header: @klass_name
 ```
 
 ![Form header](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/form_header.png)
@@ -58,6 +54,8 @@ Displays breadcrumb links and form title.
 | clone_button_text | string | 'Clone' | clone button text |
 | subnav | Array<String> | [] | generates "jump to" anchor links for long forms |
 | show_flash_messages | boolean | true | display flash messages rendered by form
+
+### With subnav
 
 If `subnav` is supplied, sections within the form must include IDs matching the [parameterized](http://api.rubyonrails.org/classes/ActiveSupport/Inflector.html#method-i-parameterize) items. Note that `parameterize` will use `_` as a separator.
 
@@ -76,7 +74,7 @@ section.content#recent_changes
 
 To separate name and ID selector, pass an Array instead of a String.
 
-```ruby
+```slim
 - subnav_array = ['SEO', 'Attributes', ['Images', 'images_table']]
 ```
 
@@ -90,7 +88,7 @@ render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery',
 ## Nested Table
 
 ```ruby
-nested_table
+== render 'fae/shared/nested_table'
 ```
 
 The nested table works in tandem with a nested model, typically created by the nested scaffold generator, to display a nested ajax form for creating associated items in the edit form.
@@ -112,16 +110,16 @@ The nested_table should go after the main form ends and should only be placed on
 | helper_text | string | '' | the h6 directly above the nested table and below the tite, which is used to provide the user with some helper_text to describe the context |
 | new_path | string | "new_#{fae_path}_#{assoc_name_singular}_path" | the path that the application will hit when creating a new object inside the nested table, which is used to provide the user with the ability to pass in some params |
 
-***Example**
+### Examples
 
-* cols option now accepts hashes for custom titles, using attr: and title:
+#### Custom titles in `cols`
+
 ```ruby
 cols: [{ attr: :name, title: 'What did you call me?' }, :image, :title]
 ```
 
 You may also pass in custom columns, like an association's count by first defining a method on the model, then passing it in to the cols option.
 
-**Example**
 ```ruby
 def cat_size
   cats.size.to_s
@@ -130,7 +128,7 @@ end
 cols: [{ attr: :cat_size, title: 'Kitten Count' }]
 ```
 
-**Examples**
+#### All options on an `edit` page
 
 Full Slim implementation with section wrapper and edit page conditional
 ```slim
@@ -182,8 +180,8 @@ Add the [nested table partial](helpers.md#nested_table) to the parent form. This
 
 ## Recent Changes
 
-```ruby
-recent_changes
+```slim
+== render 'fae/shared/recent_changes'
 ```
 
 ![Recent changes](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/recent_changes.png)
@@ -192,14 +190,10 @@ Displays recent changes to an object as logged by the change tracker in a table.
 
 This partial is best placed at the bottom of the form and will automatically hide itself in create forms, where there wouldn't be changes to display.
 
-**Examples**
+### Examples
 
-Standard implementation
-```ruby
-= render 'fae/shared/recent_changes'
-```
+#### Add it to the form nav
 
-Optionally, you can add a link to it in the form nav:
 ```slim
 = render 'fae/shared/form_header', ..., subnav: [...,  'Recent Changes']
 ```

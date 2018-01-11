@@ -93,3 +93,40 @@ end
 ```
 
 Add `languages: true` to the page's `fae/shared/form_header` partial to utilize Fae's language switcher.
+
+## In the Application
+
+To display the right translation, Rails needs to interpret the requested locale. This can be done with a simple ApplicationController method:
+
+```ruby
+# app/controllers/application_controller
+class ApplicationController < ActionController::Base
+  before_action :set_locale
+
+  private
+    def set_locale
+      I18n.locale = params[:locale] || request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first.presence || I18n.default_locale
+    end
+end
+```
+
+The above assumes that your routes support a `locale` parameter:
+
+```ruby
+# config/routes.rb
+scope '(:locale)', locale: /en|zh/ do
+  get '/' => 'pages#home', as: 'home' # / or /zh
+  get '/about' => 'pages#about', as: 'about' # /about or /zh/about
+end
+```
+
+For URL schemes that require a language locale to always be present, a separate method can be added beneath `private` in the ApplicationController:
+
+```ruby
+# Forces locale to appear in the URL, even if the request locale matches the default locale
+def default_url_options(options={})
+  {locale: I18n.locale }
+end
+```
+
+The attribute can then be retrieved normally (i.e. `@item.name` will render `@item.name_en` if `I18n.locale` is `:en`).

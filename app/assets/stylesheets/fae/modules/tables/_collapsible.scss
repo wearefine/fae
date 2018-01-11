@@ -6,7 +6,7 @@
       border-bottom: none;
 
       &:after {
-        @extend .icon-arrow_up:before;
+        content: fae-icon(arrow_up);
       }
     }
 
@@ -28,8 +28,8 @@
     margin-bottom: 0;
 
     &:after {
-      @extend .icon-arrow_down:before;
       @include icon-stuff;
+      content: fae-icon(arrow_down);
       color: $c-text-sub;
       position: absolute;
       right: 25px;
@@ -52,8 +52,8 @@
   padding-right: 25px;
 
   &:after {
-    @extend .icon-arrow_down:before;
     @include icon-stuff;
+    content: fae-icon(arrow_down);
     color: $c-text-sub;
     font-size: 4px;
     display: inline-block;
@@ -70,7 +70,7 @@
 
   &.close-all {
     &:after {
-      @extend .icon-arrow_up:before;
+      content: fae-icon(arrow_up);
     }
   }
 }

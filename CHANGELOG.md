@@ -1,11 +1,60 @@
 # Fae Changelog
 
-## Unreleased
+## 1.7
 
 - enhancements
-    + Add support for HTML wysiwyg editor with images upload
-    + \#66263 Nested table H3s have been promoted to H2s to increase their visiblity on long detail pages
-    + \#60171 Add "Select All" and "Deselect All" options to multiselect dropdowns
+    + Add color picker form helper [#345](https://github.com/wearefine/fae/pull/345)
+    + Decouple pagination from filters [#328](https://github.com/wearefine/fae/pull/328)
+    + Allow blank labels for fae_content_form [#360](https://github.com/wearefine/fae/pull/360)
+    + Resolve Sass warnings about extending compound selectors [#349](https://github.com/wearefine/fae/pull/349)
+    + Add support for decorator pattern [#361](https://github.com/wearefine/fae/pull/361)
+    + Documentation for language, Heroku, and files [#331](https://github.com/wearefine/fae/pull/331)
+    + Document specify static_page association as optional [#356](https://github.com/wearefine/fae/pull/356)
+    + Remove test_files from gemspec [#357](https://github.com/wearefine/fae/pull/357)
+- bug fixes
+    + Wait for all validation checks to complete before submitting form [#335](https://github.com/wearefine/fae/pull/335)
+    + Don't assume objects for cloning have on_prod attr [#330](https://github.com/wearefine/fae/pull/330)
+    + Remove include_blank duplicate [#346](https://github.com/wearefine/fae/pull/346)
+    + Show action returns a 404 by default [#339](https://github.com/wearefine/fae/pull/339)
+    + Style flash message errors appropriately [#333](https://github.com/wearefine/fae/pull/333)
+    + Documentation formatting & vulnerability update [#358](https://github.com/wearefine/fae/pull/358)
+
+## 1.6
+
+- enhancements
+    + Add HTML wysiwyg editor with image upload [#224](https://github.com/wearefine/fae/issues/224)
+    + Add JSON support for Fae::StaticPage [#249](https://github.com/wearefine/fae/issues/249)
+    + Left-nav refresh & compatibility w/ legacy admin markup [#300](https://github.com/wearefine/fae/issues/300)
+    + Add "Select All" and "Deselect All" options to multiselect [#299](https://github.com/wearefine/fae/issues/299)
+    + Small style updates [#236](https://github.com/wearefine/fae/issues/236)
+    + Add documentation for row sorting feature [#239](https://github.com/wearefine/fae/issues/239)
+    + Update local setup docs [#242](https://github.com/wearefine/fae/issues/242)
+    + Test suite improvements [#247](https://github.com/wearefine/fae/issues/247)
+    + Change handling of saved filter state to allow deep links to override saved cookie filter settings on load, but not overwrite them in the cookie [#263](https://github.com/wearefine/fae/issues/263)
+    + Nested table H3s have been promoted to H2s to increase their visiblity on long detail pages [#268](https://github.com/wearefine/fae/issues/268)
+    + Update default alt helper text [#277](https://github.com/wearefine/fae/issues/277)
+    + Don't show the Fae namespace in activity log model names [#284](https://github.com/wearefine/fae/issues/284)
+    + Remove "Fae" in activity log [#297](https://github.com/wearefine/fae/issues/297)
+    + Allow assets to be cloneable [#286](https://github.com/wearefine/fae/issues/286)
+    + Ruby 2.4 compatibility [#282](https://github.com/wearefine/fae/issues/282)
+    + Clean up login form CSS [#291](https://github.com/wearefine/fae/issues/291)
+    + Remove attribute or association requirement on fae_suffix/prefix [#301](https://github.com/wearefine/fae/issues/301)
+    + Add Travis CI integration [#306](https://github.com/wearefine/fae/issues/306)
+    + Add tutorial for integrating Devise and Fae [#307](https://github.com/wearefine/fae/issues/307)
+- bugs
+    + Fix typo in Tutorials navigation [#237](https://github.com/wearefine/fae/issues/237)
+    + Do not assume there are html editors present for trumbowyg to act upon [#248](https://github.com/wearefine/fae/issues/248)
+    + Automatically set role position for new roles [#244](https://github.com/wearefine/fae/issues/244)
+    + Remove appended input label from validation errors [#251](https://github.com/wearefine/fae/issues/251)
+    + Fix titleization of nested form headings [#264](https://github.com/wearefine/fae/issues/264)
+    + Fix search form clearing [#267](https://github.com/wearefine/fae/issues/267)
+    + Fix Rails 5.1 deprecation warnings [#273](https://github.com/wearefine/fae/issues/273)
+    + Call unique_changeable_types on class not item set [#279](https://github.com/wearefine/fae/issues/279)
+    + Authorize global search results [#285](https://github.com/wearefine/fae/issues/285)
+    + Fix file size validator bug [#278](https://github.com/wearefine/fae/issues/278)
+    + Use head instead of render in delete_image [#310](https://github.com/wearefine/fae/issues/310)
+    + Assign initializer settings from Fae after initialization [#313](https://github.com/wearefine/fae/issues/313)
+    + Block POSTs to first_user if a super admin already exists [#320](https://github.com/wearefine/fae/issues/320)
 
 ## 1.5.1
 

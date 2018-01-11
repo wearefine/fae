@@ -19,6 +19,7 @@ module Fae
           item('Locations', path: admin_locations_path),
           item('Validation Testers', path: admin_validation_testers_path),
         ]),
+        item('Beers', path: admin_beers_path),
         item('Press', subitems: [
           item('Articles', path: admin_articles_path),
           item('Article Categories', path: admin_article_categories_path),

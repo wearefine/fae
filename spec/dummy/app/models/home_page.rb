@@ -8,7 +8,7 @@ class HomePage < Fae::StaticPage
       header: {
         type: Fae::TextField,
         validates: { presence: true }
-        },
+      },
       hero: Fae::TextField,
       email: {
         type: Fae::TextField,
@@ -21,6 +21,8 @@ class HomePage < Fae::StaticPage
           }
         },
       phone: { type: Fae::TextField },
+      cell_phone: { type: Fae::TextField },
+      work_phone: { type: Fae::TextField },
       introduction: {
         type: Fae::TextArea,
         validates: {

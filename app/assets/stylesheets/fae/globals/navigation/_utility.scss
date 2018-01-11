@@ -78,8 +78,8 @@
 
 .grabatar-link {
   &:after {
-    @extend .icon-arrow_down:before;
     @include icon-stuff;
+    content: fae-icon(arrow_down);
     font-size: 5px;
     color: $c-text-sub;
     display: inline-block;
