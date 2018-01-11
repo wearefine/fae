@@ -11,7 +11,7 @@ module Fae
       image.remove_asset = true
       image.save
       CarrierWave.clean_cached_files!
-      render :nothing => true
+      head :ok
     end
 
     # ajax action

@@ -21,6 +21,11 @@ feature 'fae_input' do
     end
   end
 
+  scenario 'should display common helper texts' do
+    expect(page).to have_content('Company Name | Keyword-driven description of the page section. Approx 65 characters.')
+    expect(page).to have_content('Displayed in search engine results. Under 150 characters.')
+  end
+
   scenario 'should display hint when clicked', js: true do
     expect(page).to_not have_content('Normal Hint')
     page.find('.release_vintage .hinter-clicker').trigger('click')

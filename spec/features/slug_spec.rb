@@ -7,7 +7,7 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "!St. John's @#!*  What?"
+      fill_in 'release_name', with: "!St. John's @#!*  What?"
       expect(find_field('Slug').value).to eq('st-johns')
     end
   end
@@ -50,7 +50,7 @@ feature 'slug' do
   #     click_link 'Add Aroma'
 
   #     within(:css, 'form#new_aroma') do
-  #       fill_in 'Name', with: 'My Brand New Smell!'
+  #       fill_in 'release_name', with: 'My Brand New Smell!'
   #       expect(page.find('form#new_aroma .slug').value).to eq('my-brand-new-smell')
   #       click_button('Create Aroma')
   #     end
@@ -64,7 +64,7 @@ feature 'slug' do
       admin_login
       visit new_admin_release_path
 
-      fill_in 'Name', with: "Á förêígn dîÂlëçt ìs gôòd fór thè söül"
+      fill_in 'release_name', with: "Á förêígn dîÂlëçt ìs gôòd fór thè söül"
       # Character count limits, sadly
       expect(find_field('Slug').value).to eq('a-foreign-diale')
     end

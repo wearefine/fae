@@ -6,6 +6,9 @@
     = fae_content_form f, :header
     = fae_content_form f, :hero
     = fae_content_form f, :email
+    = fae_content_form f, :phone
+    = fae_content_form f, :cell_phone, label: false
+    = fae_content_form f, :work_phone, label: ''
     = fae_content_form f, :introduction
     = fae_content_form f, :introduction_2, markdown: true
     = fae_content_form f, :phone, input_options: { input_html: { class: 'phone-mask' } }, helper_text: 'Numbers only, do not format', label: 'Phone #'

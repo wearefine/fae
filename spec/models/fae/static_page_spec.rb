@@ -18,11 +18,11 @@ describe Fae::StaticPage do
 
     it 'should attach only once' do
       hp = HomePage.instance
-      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
+      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :cell_phone, :work_phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
 
       # trigger instance twice
       hp = HomePage.instance
-      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
+      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :cell_phone, :work_phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
     end
 
     it 'should attach language associations when present' do
@@ -89,6 +89,15 @@ describe Fae::StaticPage do
       expect(@home_page.as_json[:welcome_pdf]['asset']['url']).to include('test.pdf')
     end
 
+  end
+
+  describe 'when decorated' do
+    it 'should respond to decorator method' do
+      static_page = FactoryGirl.build_stubbed(:fae_static_page)
+
+      expect(static_page.respond_to?('instance_is_decorated')).to eq true
+      expect(static_page.instance_is_decorated).to eq('Fae::StaticPage instance is decorated')
+    end
   end
 
 end

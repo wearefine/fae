@@ -13,6 +13,7 @@ Once you have Fae installed, you're ready to start generating your data model. F
 ```bash
 rails g fae:scaffold [ModelName] [field:type] [field:type]
 ```
+
 | option | description |
 |------- | ----------- |
 | ModelName | singular camel-cased model name |

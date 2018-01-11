@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resources :beers
     resources :article_categories
     resources :articles
     resources :release_notes
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
     resources :people
     resources :aromas
     resources :teams do
+      post 'filter', on: :collection
       resources :coaches
       resources :players
       resources :jerseys

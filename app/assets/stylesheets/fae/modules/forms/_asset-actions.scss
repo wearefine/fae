@@ -63,7 +63,7 @@
 
   &:before {
     @include icon-stuff;
-    @extend .icon-trash:before;
+    content: fae-icon(trash);
   }
 
   &:hover {

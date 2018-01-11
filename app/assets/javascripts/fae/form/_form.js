@@ -11,6 +11,7 @@ Fae.form = {
     this.makeTwoColumnLabels();
 
     this.dates.init();
+    this.color.init();
     this.text.init();
     this.select.init();
     this.checkbox.init();

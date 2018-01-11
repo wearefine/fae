@@ -1,0 +1,59 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+zh-CN:
+  devise:
+    confirmations:
+      confirmed: "你的电子邮件地址以被成功确认。"
+      send_instructions: "你在几分钟后会收到一封电子邮件告诉你如何确认你的电子邮件地址。"
+      send_paranoid_instructions: "如果我们的数据库中保存有你的电子邮件地址，你会在几分钟内收到一封邮件告诉你如何确认的电子邮件。"
+    failure:
+      already_authenticated: "你已经登录。"
+      inactive: "你的帐户还未激活。"
+      invalid: "你需要合法的用户名和密码。"
+      locked: "你的帐号已被锁定。"
+      last_attempt: "你还有最后一次尝试机会，如果再次失败你的帐号将被锁定。"
+      not_found_in_database: "你需要合法的用户名和密码。"
+      timeout: "你的登录超时，请重新登录。"
+      unauthenticated: "你需要登录才能继续操作。"
+      unconfirmed: "你需要确认你的帐户才能继续。"
+    mailer:
+      confirmation_instructions:
+        subject: "帐户确认指南"
+      reset_password_instructions:
+        subject: "重置密码指南"
+      unlock_instructions:
+        subject: "Pivorak: 解锁指南"
+    omniauth_callbacks:
+      failure: "由于%{reason}，无法从%{kind} 认证。"
+      success: "成功从 %{kind} 认证帐户。"
+    passwords:
+      no_token: "如果没有密码重置邮件无法访问这个页面。如果你是从密码重置邮件访问过来的，请确认输入的网址完整。"
+      send_instructions: "在几分钟内你会收到一封密码重置邮件。"
+      send_paranoid_instructions: "如果我们的数据库中保存有你的电子邮件地址，你会在几分钟内收到一封如何恢复密码的邮件。"
+      updated: "你的密码已被成功更改，你现在已经登录。"
+      updated_not_active: "你的密码已被成功更改。"
+    registrations:
+      destroyed: "再见！你的帐户已被成功取消。希望能再次见到你。"
+      signed_up: "欢迎！你已经成功注册。"
+      signed_up_but_inactive: "你已经成功注册。但是由于你的帐户未激活，你仍无法登录。"
+      signed_up_but_locked: "你已经成功注册。但是由于你的帐户被锁定，你仍无法登录。"
+      signed_up_but_unconfirmed: "我们已向你的邮箱发送了一封确认邮件。请单击邮件中的链接激活你的帐户。"
+      update_needs_confirmation: "你已经成功更新帐户，但我们需要验证你的电子邮件地址。请检查你的邮件并确认你的子邮件地址。"
+      updated: "你的帐户已被成功更新。"
+    sessions:
+      signed_in: "你已登录成功。"
+      signed_out: "再见。"
+    unlocks:
+      send_instructions: "在几分钟内你会收到一封如何解锁帐户的邮件。"
+      send_paranoid_instructions: "如果你的帐户存在，在几分钟内你会收到一封如何解锁帐户的邮件。"
+      unlocked: "你的帐户已被成功解锁，请重新登录。"
+  errors:
+    messages:
+      already_confirmed: "已确认，请尝试登录"
+      confirmation_period_expired: "需要在 %{period} 内确认，请重新申请"
+      expired: "已过期，请重新申请"
+      not_found: "未找到"
+      not_locked: "未被锁定"
+      not_saved:
+        one: "出现一个错误导致 %{resource} 不能被保存："
+        other: "出现 %{count} 个错误导致 %{resource} 不能被保存："

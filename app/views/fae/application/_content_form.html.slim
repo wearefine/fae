@@ -1,24 +1,30 @@
 ruby:
   require_locals     ['attribute', 'f'], local_assigns
+  has_label            = ![false, ''].include?(local_assigns[:label])
   label              ||= attribute.to_s.titleize
   required           ||= f.object.send(attribute).is_required?(f.object.class)
-  helper_text        ||= ''
+  helper_text        ||= attempt_common_helper_text(attribute)
   markdown           ||= false
   markdown_supported ||= false
   hint               ||= nil
   options            ||= {}
   input_options      ||= {}
 
-  label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
-  label_adjusted += label
-  if markdown_supported.present? || helper_text.present?
-    label_adjusted += content_tag :h6, class: 'helper_text' do
-      concat(helper_text) if helper_text.present?
-      concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown_supported.present?
+  if has_label
+    label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
+    label_adjusted += label
+    if markdown_supported.present? || helper_text.present?
+      label_adjusted += content_tag :h6, class: 'helper_text' do
+        concat(helper_text) if helper_text.present?
+        concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown_supported.present?
+      end
     end
+  else
+    options[:label] = false
   end
 
-  options.merge! label: label_adjusted.html_safe, hint: hint
+  options.merge! label: label_adjusted.html_safe if label_adjusted.present?
+  options.merge! hint: hint
   options.merge! input_options if (input_options.keys).any?
   options.merge! wrapper_html: {} if input_options[:wrapper_html].blank?
 

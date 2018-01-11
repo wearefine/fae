@@ -30,10 +30,19 @@ end
 ```ruby
 class Promo < ActiveRecord::Base
 
-  belongs_to :static_page, class_name: 'Fae::StaticPage'
+  belongs_to :static_page, class_name: 'Fae::StaticPage', optional: true
 
 end
 
+```
+
+* in the objects controller you need to inherit from `Fae::NestedBaseController` instead of `Fae::BaseController`
+
+```ruby
+module Admin
+  class PromosController < Fae::NestedBaseController
+  end
+end
 ```
 
 * in the Promo model you need to set the fae_nested_parent to `:static_page`.
@@ -53,6 +62,14 @@ end
     parent_item: Fae::StaticPage.find_by_id(@item.id),
     cols: [:headline, :body, :link],
     ordered: true
+```
+
+* The nested form can be wrapped in a class `.nested-form` for a more inline look.
+
+```ruby
+  .nested-form
+    h2 New Promo
+    == render 'form
 ```
 
 Lastly, in the object form be sure to add the `static_page_id` as a hidden field in the promo objects form.

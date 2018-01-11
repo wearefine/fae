@@ -14,8 +14,8 @@
     overflow: visible;
 
     &:before {
-      @extend .icon-alert;
       @include icon-stuff;
+      content: fae-icon(alert);
       padding-right: 10px;
     }
 

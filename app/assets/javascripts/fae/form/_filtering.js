@@ -10,14 +10,21 @@ Fae.form.filtering = {
   init: function() {
     this.$filter_form = $('.js-filter-form');
     this.$pagination = $('.pagination');
+    this.has_hash_on_load_and_cookie = false;
 
     // init only on pages with filering, sorting or paging
     if (this.$filter_form.length || this.$pagination.length || $('.js-sort-column').length) {
       this.applyCookies();
-      var has_hash_on_load = window.location.hash.length > 2;
+      var window_hash = window.location.hash;
+      var has_hash_on_load = window_hash.length > 2;
       this.fry = new Fryr(this._refreshTable, {}, has_hash_on_load);
-      this.setFilterDropDowns();
 
+      // this.fry.params needs to be set to the "deep link" passed params
+      if(has_hash_on_load) {
+        this.fry.parse(window_hash);
+      }
+
+      this.setFilterDropDowns();
       this.filterFormListeners();
       this.paginationListeners();
       this.sortingSetup();
@@ -30,8 +37,16 @@ Fae.form.filtering = {
   _refreshTable: function() {
     // hardcode _this because this === Fryr object
     var _this = Fae.form.filtering;
-    var post_url = _this.$filter_form.attr('action');
-    var $results_table = ($(".js-results-table").length) ? $(".js-results-table").first() : _this.$filter_form.next('table');
+
+    if (_this.$filter_form.length) {
+      post_url = _this.$filter_form.attr('action');
+      $current_table = _this.$filter_form.next('table');
+    } else {
+      post_url = _this.$pagination.data('filter-path');
+      $current_table = _this.$pagination.prevAll(":visible:first");
+    }
+
+    var $results_table = ($(".js-results-table").length) ? $(".js-results-table").first() : $current_table;
 
     $results_table.addClass('loading-fade');
 
@@ -53,7 +68,11 @@ Fae.form.filtering = {
       Fae.navigation.lockFooter();
 
       _this.sortingSetup();
-      _this.setCookie();
+
+      // dont set the cookie if it's a "deep link" and they have an existing cookie - leave that intact with their old saved filter
+      if (!_this.has_hash_on_load_and_cookie) {
+        _this.setCookie();
+      }
     });
   },
 
@@ -230,7 +249,14 @@ Fae.form.filtering = {
       var cookie = Cookies.getJSON(cookie_key);
 
       if (!$.isEmptyObject(cookie)) {
-        var keys = Object.keys(cookie)
+
+        // exit now if it's a "deep link" so the passed params get used instead of saved cookie params
+        if (window.location.hash.length > 2) {
+          this.has_hash_on_load_and_cookie = true;
+          return false;
+        }
+
+        var keys = Object.keys(cookie);
         var hash = '?';
 
         for(var i = 0; i < keys.length; i++) {
