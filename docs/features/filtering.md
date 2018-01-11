@@ -95,16 +95,6 @@ def self.filter(params)
 end
 ```
 
-#### filter_all
-
-There's also a `ModelName#filter_all` which is called when you reset the filter form. This defaults to the `for_fae_index` scope, but you can override it if you need to.
-
-```ruby
-def self.filter_all
-  where.not(name: 'John').order(:position)
-end
-```
-
 ### Fae Filter Form
 
 ```ruby
