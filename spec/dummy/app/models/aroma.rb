@@ -10,6 +10,8 @@ class Aroma < ActiveRecord::Base
   has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy
   accepts_nested_attributes_for :image, allow_destroy: true
 
+  validates :name, presence: true
+
   def fae_display_field
     name
   end

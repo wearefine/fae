@@ -22,7 +22,10 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: 'My Brand New Smell!'
       click_button('Create Aroma')
     end
+
+    # form should add item and only one item
     expect(page.find('#aromas table')).to have_content('My Brand New Smell!')
+    expect(Aroma.all.count).to eq(1)
   end
 
   scenario 'should allow editing existing item', js: true do
