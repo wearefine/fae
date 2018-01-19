@@ -20,7 +20,7 @@ gem 'rails', '~> 5.0.0'
 gem 'rake', '< 12.0.0'
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails', '~> 4.2.1'
+gem 'jquery-ui-rails', '~> 5.0.5'
 gem 'sass', require: 'sass'
 gem 'rmagick', require: false
 

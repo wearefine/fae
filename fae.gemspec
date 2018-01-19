@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'browser', '~> 0.8.0'
   s.add_dependency 'carrierwave', '~> 0.11.0'
   s.add_dependency 'devise', '>= 3.4.1'
-  s.add_dependency 'jquery-ui-rails', '~> 4.2.1'
+  s.add_dependency 'jquery-ui-rails', '~> 5.0.5'
   s.add_dependency 'judge', '~> 2.1.1'
   s.add_dependency 'judge-simple_form', '~> 1.0.0'
   s.add_dependency 'kaminari', '~> 1.1.1'
