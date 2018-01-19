@@ -1,5 +1,15 @@
 # Fae Changelog
 
+## 1.7.1
+
+- enhancements
+    + Add Simplified Chinese translations [#359](https://github.com/wearefine/fae/pull/359)
+    + Update carrierwave, rmagick and kaminari dependencies [#380](https://github.com/wearefine/fae/pull/380)
+    + Better documentation for dynamic relationships on static pages [#363](https://github.com/wearefine/fae/pull/363)
+- bug fixes
+    + Prevent duplicate submissions on nested forms [#383](https://github.com/wearefine/fae/pull/383)
+    + `fae_display_field` is supposed to be scoped to the instance not the class [#374](https://github.com/wearefine/fae/pull/374)
+
 ## 1.7
 
 - enhancements
