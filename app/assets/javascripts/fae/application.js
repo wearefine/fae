@@ -13,8 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
-//= require jquery.ui.sortable
-//= require jquery.ui.datepicker
+//= require jquery-ui
 //= require underscore
 //= require json2
 //= require judge
