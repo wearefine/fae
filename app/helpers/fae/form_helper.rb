@@ -231,7 +231,7 @@ module Fae
       when :seo_title
        return 'Company Name | Keyword-driven description of the page section. Approx 65 characters.'
       when :seo_description
-       return 'Displayed in search engine results. Under 150 characters.'
+       return 'Displayed in search engine results.'
       else
        ''
       end
