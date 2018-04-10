@@ -1,12 +1,13 @@
 # Fae
 
+
 ### CMS for Rails. For Reals.
 
 [![Code Climate](https://codeclimate.com/github/wearefine/fae/badges/gpa.svg)](https://codeclimate.com/github/wearefine/fae)
 
 Like many Rails CMS engines, Fae delivers all the basics to get you up and running quickly: authentication, authorization, a sleek UI, form helpers, image processing and workflows. But unlike other engines, Fae's generated models, controllers, and views are built to customize and scale.
 
-Fae supports Rails 4.1+.
+Fae supports Rails 4.1 to 5.0. We are currently working on Rails 5.1 support.
 
 ## Installation
 
@@ -67,6 +68,8 @@ https://www.faecms.com/documentation
 * [Overriding The Landing Page](docs/tutorials/landing_page.md)
 * [Overriding The Markdown Helper](docs/tutorials/markdown_helper.md)
 * [Devise Action Mailer Configuration](docs/tutorials/actionmailer.md)
+* [Setting Up Parent/Child Objects](docs/tutorials/parent_child_objects.md)
+* [Configuring With Existing Devise Setup](docs/tutorials/existing_devise.md)
 
 
 ### Helper/DSL Docs

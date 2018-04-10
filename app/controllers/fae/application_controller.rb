@@ -5,6 +5,9 @@ module Fae
     include Fae::ApplicationControllerConcern
 
     helper Fae::ViewHelper
+    helper Fae::FormHelper
+    helper Fae::NestedFormHelper
+    helper Fae::FaeHelper
 
     before_action :check_disabled_environment
     before_action :first_user_redirect
@@ -102,7 +105,18 @@ module Fae
     def load_and_filter_models
       # load of all models since Rails caches activerecord queries.
       Rails.application.eager_load!
-      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
+      ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) || !authorize_model(m) }
+    end
+
+    def authorize_model(model)
+      return false if current_user.blank? || current_user.role.blank? || current_user.role.name.blank?
+
+      users_role           = current_user.role.name.downcase
+      tableized_model      = model.name.tableize
+      role_group_for_model = Fae::Authorization.access_map[tableized_model]
+
+      return true if role_group_for_model.blank? || (role_group_for_model.present? && role_group_for_model.include?(users_role))
+      false
     end
 
   end

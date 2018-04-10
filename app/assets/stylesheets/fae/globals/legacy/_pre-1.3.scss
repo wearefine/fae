@@ -43,6 +43,20 @@
 // content secitons
 
 .sidenav {
+  ~ .simple_form {
+      .main_content-header {
+        @include bp(large) {
+          width: 100vw;
+          margin-left: -($sidenav-width + $content-buffer);
+
+          // If sticky, remove extra margin
+          // Note: this will break if nav is stuck at page load
+          &.js-sticky {
+            margin-left: 0;
+          }
+        }
+      }
+  }
   ~ .main_content-sections {
     @include bp(large) {
       // .content adds a 30px buffer in 1.3 <=
@@ -194,7 +208,6 @@ tbody {
 //   Hacks to fix updates    //
 ///////////////////////////////
 
-
 .content {
   .main_content-section-area {
     padding: 0;
@@ -224,6 +237,7 @@ tbody {
 .main_content-header {
   @include stack($fae-nav-stack, '.content-header');
   @include clearfix;
+
   width: 100%;
   padding: 15px $content-buffer;
   background: $c-content-header-bg;
@@ -462,8 +476,8 @@ tbody {
   z-index: 1;
 
   &:after {
-    @extend .icon-arrow_down:before;
     @include icon-stuff;
+    content: fae-icon(arrow_down);
     vertical-align: middle;
     font-size: 5px;
     color: $c-text-sub;
@@ -536,8 +550,8 @@ tbody {
     color: $c-warning-content;
 
     &:before {
-      @extend .icon-alert:before;
       @include icon-stuff;
+      content: fae-icon(alert);
       margin-right: 10px;
     }
 
@@ -599,7 +613,7 @@ tbody {
 
   &:before {
     @include icon-stuff;
-    @extend .icon-delete_x:before;
+    content: fae-icon(delete_x);
     font-size: 12px;
     margin-right: 6px;
   }

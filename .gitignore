@@ -23,4 +23,4 @@ spec/dummy/public/uploads/*
 
 *.gem
 
-vendor/
+/vendor

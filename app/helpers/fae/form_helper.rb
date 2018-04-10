@@ -9,6 +9,7 @@ module Fae
       set_prompt f, attribute, options
 
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
+      add_input_class(options, 'js-html-editor') if options[:html].present?
 
       set_maxlength(f, attribute, options)
 
@@ -19,20 +20,18 @@ module Fae
       custom_options attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
-      set_prompt f, attribute, options
+      set_prompt f, attribute, options if !options[:include_blank].is_a?(String)
 
       f.association attribute, options
     end
 
     def fae_prefix(f, attribute, options={})
-      raise "Fae::undefined method '#{attribute}' for #{f.object}" if is_attribute_or_association?(f, attribute) == false
       raise "Fae::MissingRequiredOption: fae_prefix helper method requires the 'prefix' option." if options[:prefix].blank?
       symbol 'prefix', options[:prefix], options
       fae_input f, attribute, options
     end
 
     def fae_suffix(f, attribute, options={})
-      raise "Fae::undefined method '#{attribute}' for #{f.object}" if is_attribute_or_association?(f, attribute) == false
       raise "Fae::MissingRequiredOption: fae_suffix helper method requires the 'suffix' option." if options[:suffix].blank?
       symbol 'suffix', options[:suffix], options
       fae_input f, attribute, options
@@ -75,6 +74,15 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def fae_color_picker(f, attribute, options={})
+      options.update(
+        as: :string,
+        input_class: "js-color-picker color-picker #{'alpha-slider' unless options[:alpha] == false}",
+        input_html: { value: f.object.send(attribute).to_s } # value needs to be set to clear color picker
+      )
+      fae_input f, attribute, options
+    end
+
     def fae_daterange(f, attr_array, options={})
       raise "Fae::MissingRequiredOption: fae_daterange requires the 'label' option." if options[:label].blank?
       raise "Fae::MalformedArgument: fae_daterange requires an array of two attributes as it's second argument." unless attr_array.present? && attr_array.is_a?(Array) && attr_array.length == 2
@@ -111,6 +119,8 @@ module Fae
     def label_and_hint(attribute, options)
       # @depreciation - remove dark_hint option in v2.0
       hint = options[:hint] || options[:dark_hint]
+
+      options[:helper_text] = attempt_common_helper_text(attribute) if options[:helper_text].blank?
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || attribute_name
@@ -164,7 +174,7 @@ module Fae
 
     def add_input_class(options, class_name)
       if options.key?(:input_html)
-        options[:input_html] = { class: "#{options[:input_html][:class]} #{class_name}" }
+        options[:input_html].merge!({class: "#{options[:input_html][:class]} #{class_name}"})
       else
         options[:input_html] = { class: class_name }
       end
@@ -213,6 +223,17 @@ module Fae
           options[:input_html] ||= {}
           options[:input_html][:maxlength] ||= limit
         end
+      end
+    end
+
+    def attempt_common_helper_text(attribute)
+      case attribute
+      when :seo_title
+       return 'Company Name | Keyword-driven description of the page section. Approx 65 characters.'
+      when :seo_description
+       return 'Displayed in search engine results. Under 150 characters.'
+      else
+       ''
       end
     end
 

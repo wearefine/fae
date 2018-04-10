@@ -10,8 +10,8 @@
 
   .active {
     &:after {
-      @extend .icon-check:before;
       @include icon-stuff;
+      content: fae-icon(check);
       position: absolute;
       top: 6px;
       left: 6px;

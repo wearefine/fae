@@ -19,7 +19,7 @@ module Fae
       end
 
       def unique_changeable_types
-        pluck(:changeable_type).uniq.sort
+        pluck(:changeable_type).uniq.sort.map{ |changeable_type| [changeable_type.gsub('Fae::',''), changeable_type] }
       end
 
       def filter(params)

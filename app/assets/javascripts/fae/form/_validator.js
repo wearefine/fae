@@ -8,9 +8,13 @@
 Fae.form.validator = {
 
   is_valid: '',
+  validations_called: 0,
+  validations_returned: 0,
+  validation_test_count: 0,
 
   init: function () {
-    if (FCH.exists('form')) {
+    // validate all forms except the login form
+    if ($('form').not('#login_form').length) {
       this.password_confirmation_validation.init();
       this.passwordPresenceConditional();
       this.bindValidationEvents();
@@ -21,30 +25,84 @@ Fae.form.validator = {
 
   /**
    * Validate the entire form on submit and stop it if the form is invalid
-   * @fires {@link navigation.language.checkForHiddenErrors}
    */
   formValidate: function () {
     var _this = this;
-    FCH.$document.on('submit', 'form', function (e) {
-      _this.is_valid = true;
 
-      // Scope the data-validation only to the form submitted
-      $('[data-validate]', $(this)).each(function () {
-        if ($(this).data('validate').length) {
-          _this._judgeIt($(this));
-        }
-      });
+    FCH.$document.on('submit', 'form:not([data-remote=true])', function (e) {
+      var $this = $(this);
 
-      if (_this.is_valid === false) {
-        Fae.navigation.language.checkForHiddenErrors();
-        FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
+      if ($this.data('passed_validation') !== 'true') {
+
+        // pause form submission
         e.preventDefault();
+
+        // set defaults
+        _this.is_valid = true;
+        _this.validations_called = 0;
+        _this.validations_returned = 0;
+        _this.validation_test_count = 0;
+
+        // Scope the data-validation only to the form submitted
+        $('[data-validate]', $this).each(function () {
+          if ($(this).data('validate').length) {
+            _this.validations_called++;
+            _this._judgeIt($(this));
+          }
+        });
+
+        // Catch visible errors for image/file inputs hitting the fae config file size limiter
+        $('.input.file', $this).each(function () {
+          if ($(this).hasClass('field_with_errors')) {
+            _this.is_valid = false;
+          }
+        });
+
+        _this.testValidation($this);
+
       }
 
-      if ($(".field_with_errors").length){
-        $('.alert').slideDown('fast').removeClass('hide').delay(3000).slideUp('fast');
-      }
     });
+  },
+
+  /**
+   * Tests a forms validation after all validation checks have responded
+   * Polls validations responses every 50ms to allow uniqueness AJAX calls to complete
+   */
+  testValidation: function($this) {
+    var _this = this;
+    _this.validation_test_count++;
+
+    setTimeout(function(){
+
+      // if all the validation checks have returned a response
+      if (_this.validations_called === _this.validations_returned) {
+
+        if (_this.is_valid) {
+          // if form is valid, submit it
+          $this.data('passed_validation', 'true');
+
+          $this.submit();
+        } else {
+          // otherwise scroll to the top to display alerts
+          Fae.navigation.language.checkForHiddenErrors();
+          FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
+
+          if ($(".field_with_errors").length) {
+            $('.alert').slideDown('fast').delay(3000).slideUp('fast');
+          }
+        }
+
+      } else {
+        // check again if it hasn't run more than 50 times
+        // (to prevent against infinite loop)
+        if (_this.validation_test_count < 50) {
+          _this.testValidation($this);
+        }
+      }
+
+    }, 50);
+
   },
 
   /**
@@ -90,13 +148,14 @@ Fae.form.validator = {
 
     judge.validate($input[0], {
       valid: function () {
+        _this.validations_returned++;
         _this._createSuccessClass($input);
       },
       invalid: function (input, messages) {
+        _this.validations_returned++;
         messages = _this._removeIgnoredErrors(messages);
         if (messages.length) {
           _this.is_valid = false;
-          _this._labelNamedMessage($input, messages);
           _this._createOrReplaceError($input, messages);
         }
       }
@@ -129,31 +188,6 @@ Fae.form.validator = {
     }
 
     return messages;
-  },
-
-  /**
-   * Print label text before its relevent error message
-   * @protected
-   * @param  {jQuery} $el      Field
-   * @param  {Array<String>} messages  Existing error messages
-   */
-  _labelNamedMessage: function ($el, messages) {
-    var $label;
-    var index = 0;
-
-    if ($el.is(':radio')) {
-      $label = $el.parent().closest('span').siblings('label');
-    } else {
-      $label = $el.siblings('label');
-    }
-
-    if ($label.get(0).childNodes[0].nodeName === "ABBR") {
-      index = 1;
-    }
-
-    for (var i = messages.length - 1; i >= 0; i--) {
-      messages[i] = $label.get(0).childNodes[index].nodeValue + " " + messages[i];
-    }
   },
 
   /**
@@ -277,7 +311,6 @@ Fae.form.validator = {
         } else {
           var message = ['must match Password'];
           validator.is_valid = false;
-          validator._labelNamedMessage(_this.$password_confirmation_field, message);
           validator._createOrReplaceError(_this.$password_confirmation_field, message);
         }
       }

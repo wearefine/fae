@@ -63,6 +63,7 @@ Fae.form.select = {
    */
   multiselectChosenActions: function() {
     var query_input_select = '.input.select';
+    // Ignore select elements with .multiselect classes, because these are used for a different widget
     var query_eligible_multiselects = query_input_select + ' select[multiple]:not(.multiselect)';
     var select_all_value = 'multiselect_action-select_all';
 
@@ -70,6 +71,7 @@ Fae.form.select = {
     $eligible_multiselects.each(function(index, element) {
       var $element = $(element);
       var $options = $element.find('option');
+      var $chosen = $('#' + $element.attr('id') + '_chosen');
 
       // Ignore if select doesn't have enough options to warrant additional actions
       if ($options.length < 2) {
@@ -79,16 +81,19 @@ Fae.form.select = {
       // Insert Select All btn above select
       var $label = $element.closest(query_input_select).find('label:first');
       var $deselect_all_action = $('<div/>', {
-        class: 'js-multiselect-action-deselect_all multiselect-action-deselect_all multiselect-action',
-        html: $('<a/>', {
-          href: '#',
-          tabindex: '-1',
-          html: 'Deselect&nbsp;All'
+        class: 'multiselect-action_wrap',
+        html: $('<div/>', {
+          class: 'js-multiselect-action-deselect_all multiselect-action-deselect_all multiselect-action',
+          html: $('<a/>', {
+            href: '#',
+            tabindex: '-1',
+            html: 'Deselect&nbsp;All'
+          })
         })
       });
 
       // Add actions to wraper
-      $deselect_all_action.appendTo($label);
+      $deselect_all_action.insertAfter($chosen);
 
       // Add special "Select All" option and notify Chosen of new option
       addSelectAllOption($element)
@@ -108,7 +113,7 @@ Fae.form.select = {
       setAbilities($element);
 
       // Intercept selections of the Select All option and select all other options.
-      var requesting_select_all = $element.val() && $element.val().indexOf(select_all_value) != -1;
+      var requesting_select_all = $element.val() && $element.val().indexOf(select_all_value) !== -1;
       if (requesting_select_all) {
         setAllOptionsSelected($element, true);
       }
@@ -136,7 +141,7 @@ Fae.form.select = {
     function addSelectAllOption($element) {
       var $select_all_option = $('<option />', {
         value: select_all_value,
-        text: 'Select All'
+        text: 'SELECT ALL'
       });
       $select_all_option.prependTo($element);
       $element.trigger('chosen:updated');

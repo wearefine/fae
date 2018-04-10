@@ -83,8 +83,8 @@ input[type=email] {
   float: right;
 
   &:before {
-    @extend .icon-plus:before;
     @include icon-stuff;
+    content: fae-icon(plus);
     font-size: 7px;
     position: relative;
     bottom: 2px;
@@ -94,6 +94,7 @@ input[type=email] {
 
   // Specificity hack
   &.table-add-link {
+    margin-top: 13px;
     margin-bottom: 10px;
   }
 }

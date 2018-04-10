@@ -67,6 +67,7 @@
   'modules/forms/asset-actions',
   'modules/forms/select',
   'modules/forms/date',
+  'modules/forms/colorpicker',
   'modules/forms/hints',
   'modules/forms/validation',
   'modules/forms/simple-mde'
@@ -76,7 +77,8 @@
 @import
   'pages/error',
   'pages/login',
-  'pages/help'
+  'pages/help',
+  'pages/home'
 ;
 
 // Legacy styles

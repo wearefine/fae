@@ -137,7 +137,7 @@ module Fae
     end
 
     def fae_paginate(items)
-      content_tag :nav, class: 'pagination' do
+      content_tag :nav, class: 'pagination', data: { filter_path: "#{@index_path}/filter" } do
         paginate items, theme: 'fae'
       end
     end

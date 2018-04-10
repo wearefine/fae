@@ -24,19 +24,20 @@
 //= require fae/vendor/fryr
 //= require fae/vendor/moment.min
 //= require fae/vendor/jquery.daterangepicker
+//= require fae/vendor/jqColorPicker.min
 //= require fae/vendor/jquery.multi-select
 //= require fae/vendor/jquery.simplemodal.1.4.4
 //= require fae/vendor/jquery.tablesorter
 //= require fae/vendor/js.cookie
-//= require fae/vendor/simplemde.min
 //= require fae/vendor/touch_punch
-
+//= require fae/vendor/simplemde.min
 
 //= require fae/admin
 
 //= require fae/form/hinter
 //= require fae/form/_form
 //= require fae/form/inputs/_dates
+//= require fae/form/inputs/_color
 //= require fae/form/inputs/_select
 //= require fae/form/inputs/_text
 //= require fae/form/inputs/_checkbox

@@ -179,11 +179,15 @@ Fae.navigation = {
         ignore_placeholder_offsets: true
       });
 
+    // @depreciation - remove else block in 2.0
     } else {
+      var $header = $('.main_content-header');
+      var sidebar_top_offset = (parseInt( $header.outerHeight(), 10) + 30) + 'px';
+      $('#js-sidenav').css('padding-top', sidebar_top_offset );
+
       $('.main_content-header').sticky({
         placeholder: true
       });
-
     }
 
     if (!just_headers) {

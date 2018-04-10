@@ -43,7 +43,7 @@ Here's the breakdown:
 
 ### Other Examples
 
-An onject with many gallery images:
+An object with many gallery images:
 
 ```ruby
 has_many :gallery_images, -> { where(attached_as: 'gallery_images') },
@@ -144,9 +144,6 @@ fae_file_form
 | label         | string | file_name.to_s.humanize | the uploader's label |
 | helper_text   | string | | the uploader's helper text|
 | required      | boolean | false | adds required validation to the uploader |
-
-image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil, required: nil, helper_text: nil, alt_helper_text: nil, caption_helper_text: nil
-
 
 **Examples**
 

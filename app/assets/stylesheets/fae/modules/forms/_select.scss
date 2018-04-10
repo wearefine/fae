@@ -102,8 +102,8 @@
         color: $c-chosen-multi-delete;
 
         &:after {
-          @extend .icon-delete_x:before;
           @include icon-stuff;
+          content: fae-icon(delete_x);
         }
       }
     }
@@ -132,8 +132,8 @@
 
 .multiselect-action_wrap {
   font-size: 13px;
-  font-style: italic;
   line-height: 1.3;
+  margin-top: 10px;
 
   .multiselect-action {
     display: inline-block;
@@ -274,15 +274,18 @@
         padding-right: 30px;
         padding-left: 35px;
 
+        &:before,
         &:after {
-          @extend .icon-delete_x:before;
           @include icon-stuff;
+        }
+
+        &:after {
+          content: fae-icon(delete_x);
           color: $c-text-sub;
         }
 
         &:before {
-          @extend .icon-check:before;
-          @include icon-stuff;
+          content: fae-icon(check);
           padding-right: 5px;
           margin-left: -19px;
           color: $c-custom-highlight;

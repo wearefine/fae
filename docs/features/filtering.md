@@ -19,6 +19,7 @@ end
   - [Fae Filter Select](#fae-filter-select)
 * [Pagination](#pagination)
 * [Column Sorting](#column-sorting)
+* [Row Sorting](#row-sorting)
 
 ---
 
@@ -295,5 +296,43 @@ class Person < ActiveRecord::Base
 
   belongs_to :office
 end
+```
+
+---
+
+## Row Sorting
+
+Fae uses [jQuery UI Sortable](https://jqueryui.com/sortable/) to make your tables rows drag-and-drop sortable. To take advantage of this add a `position` attribute to your object when you scaffold it:
+
+```
+rails g fae:scaffold Person first_name last_name position:integer
+```
+
+If your object has already been created you'll have to do a couple steps to make it sortable.
+
+1) Add an integer `position` column on your object with a type of `integer`.
+
+2) Add a default scope to the object model to always order by position. Optionally you can config `acts_as_list`
+```ruby
+class Person < ApplicationRecord
+  acts_as_list add_new_at: :top
+  default_scope { order(:position) }
+  # ...
+```
+
+3) In your HTML you must add the `js-sort-row` class to your `<table>`, and the
+`sortable-handle` class on the `<td>` you want to make draggable. Here is an example in slim:
+```slim
+table.js-sort-row / <---- here
+  thead
+    tr
+      th.-action data-sorter='false'
+      th Name
+  tbody
+    - @items.each do |item|
+      tr id=fae_sort_id(item)
+        td.sortable-handle / <---- here
+          i.icon-sort
+        td = item.name
 ```
 

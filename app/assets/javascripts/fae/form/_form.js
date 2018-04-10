@@ -11,6 +11,7 @@ Fae.form = {
     this.makeTwoColumnLabels();
 
     this.dates.init();
+    this.color.init();
     this.text.init();
     this.select.init();
     this.checkbox.init();
@@ -36,7 +37,9 @@ Fae.form = {
       var has_no_helper_text = false;
 
       // Bail if we cannot find any helper_text
-      if (!$element.find('.helper_text').length) { has_no_helper_text = true; }
+      if (!$element.find('.helper_text').length) {
+        $element.addClass('has_no_helper_text');
+      }
 
       // If present, get all DOM nodes w/ contents(), but ignore the .helper_text
       var label_inner = $element.contents().filter(function() {

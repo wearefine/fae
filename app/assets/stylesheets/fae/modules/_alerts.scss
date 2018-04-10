@@ -24,7 +24,7 @@
   color: $c-notice-content;
 
   &:before {
-    @extend .icon-check:before;
+    content: fae-icon(check);
   }
 }
 
@@ -34,16 +34,17 @@
   color: $c-warning-content;
 
   &:before {
-    @extend .icon-alert:before;
+    content: fae-icon(alert);
   }
 }
 
+.flash-message.error,
 .alert {
   border-color: $c-error-content;
   background: $c-error-bg;
   color: $c-error-content;
 
   &:before {
-    @extend .icon-alert:before;
+    content: fae-icon(alert);
   }
 }
