@@ -244,6 +244,8 @@ tbody {
   border-bottom: 1px solid $c-border;
   top: 0;
 
+  transition: top 0.4s ease;
+
   h1 {
     padding: 5px 0;
     font-weight: bold;

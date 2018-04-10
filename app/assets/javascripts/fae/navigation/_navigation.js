@@ -16,6 +16,7 @@ Fae.navigation = {
     this.language.init();
     this.subnav_highlighter.init();
     this.global_search.init();
+    this.peek.init();
   },
 
   load: function() {

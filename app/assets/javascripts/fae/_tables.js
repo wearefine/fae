@@ -299,7 +299,7 @@ Fae.tables = {
         class: 'sticky-table-header stuck-table'
       });
 
-      $fixed_header.append( $header );
+      $fixed_header.append( $header);
       $this.after($fixed_header);
 
       // Proxy clicks from .sticky-table-header to underlying tablesorter instance
@@ -369,6 +369,7 @@ Fae.tables = {
       var thead_height = $this.find('thead').outerHeight();
       var bottom_offset = $this.height() + top_offset - thead_height;
       var $fixed_header = $this.next('.sticky-table-header');
+      var peek_height = Fae.navigation.peek.getPeekHeight();
 
       // For whatever reason IE9 does not pickup the .sticky plugin
       if(!FCH.exists('.js-will-be-sticky')) {
@@ -381,14 +382,14 @@ Fae.tables = {
       bottom_offset = Math.max(header_height, bottom_offset);
 
       $fixed_header.data({
-        'table-top' : top_offset,
+        'table-top' : top_offset - peek_height,
         'table-bottom' : bottom_offset
       });
 
       $fixed_header.css({
         width: $this.outerWidth(),
         height: thead_height,
-        top: header_height
+        top: header_height + peek_height
       });
     }
 

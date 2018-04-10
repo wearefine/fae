@@ -22,10 +22,9 @@ gem 'rake', '< 12.0.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'sass', require: 'sass'
-gem 'rmagick', require: false
 
 group :test, :development do
-  gem 'rspec-rails', '~> 3.0.2'
+  gem 'rspec-rails', '~> 3.5', '>= 3.5.2'
   gem 'pry'
 end
 
@@ -33,12 +32,11 @@ group :test do
   gem 'factory_girl_rails', '~> 4.4.1'
   gem 'capybara-webkit', '~> 1.11.1'
   gem 'capybara-screenshot'
-  gem 'guard-rspec', '~> 4.3.1'
+  gem 'guard-rspec', '~> 4.7', '>= 4.7.3'
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
   gem 'database_cleaner'
-  gem 'rails-controller-testing'
 end
 
 gem 'capistrano',  '~> 3.1'
