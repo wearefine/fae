@@ -10,7 +10,7 @@ module Fae
 
     def help
       require 'browser'
-      @browser = Browser.new(ua: request.user_agent, accept_language: 'en-us')
+      @browser = Browser.new(request.user_agent, accept_language: 'en-us')
     end
 
     def activity_log

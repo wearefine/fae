@@ -15,24 +15,24 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
 
   # Rails dependencies
-  s.add_dependency 'rails', '>= 4.1'
-  s.add_dependency 'jquery-rails', '>= 3.1.1'
+  s.add_dependency 'rails', '>= 5.0'
+  s.add_dependency 'jquery-rails', '~> 4.3.1'
   s.add_dependency 'sass', '>= 3.4.0'
-  s.add_dependency 'sass-rails', '>= 5.0.3'
+  s.add_dependency 'sass-rails', '>= 5.0.7'
   s.add_dependency 'uglifier'
 
   # other dependencies
-  s.add_dependency 'acts_as_list', '~> 0.9.0'
-  s.add_dependency 'browser', '~> 0.8.0'
-  s.add_dependency 'carrierwave', '~> 0.11.0'
-  s.add_dependency 'devise', '~> 4.3.0'
-  s.add_dependency 'jquery-ui-rails', '~> 4.2.1'
+  s.add_dependency 'acts_as_list', '~> 0.9.11'
+  s.add_dependency 'browser', '~> 2.5.3'
+  s.add_dependency 'carrierwave', '~> 1.2.2'
+  s.add_dependency 'devise', '~> 4.4.3'
+  s.add_dependency 'jquery-ui-rails', '~> 6.0.1'
   s.add_dependency 'judge', '~> 2.1.1'
   s.add_dependency 'judge-simple_form', '~> 1.0.0'
   s.add_dependency 'kaminari', '~> 1.1.1'
-  s.add_dependency 'remotipart', '~> 1.3.1'
+  s.add_dependency 'remotipart', '~> 1.4.0'
   s.add_dependency 'rmagick', '~> 2.16.0'
-  s.add_dependency 'simple_form', '>= 3.1.0'
+  s.add_dependency 'simple_form', '~> 3.5.1'
   s.add_dependency 'slim'
 
   s.add_development_dependency 'appraisal'
