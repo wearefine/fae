@@ -1,4 +1,4 @@
-class CreateFaeTextAreas < ActiveRecord::Migration
+class CreateFaeTextAreas < ActiveRecord::Migration[4.2]
   def change
     create_table :fae_text_areas do |t|
       t.string :label
