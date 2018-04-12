@@ -1,45 +1,35 @@
 header.content-header.js-content-header.-dashboard
- i.icon-home>
- | &nbsp;&nbsp;Welcome,
- strong< = current_user.full_name
+  i.icon-home>
+  | &nbsp;&nbsp;Welcome,
+  strong< = current_user.full_name
 
 == render 'flash_messages'
 
-main.content
-- if !@models.any?
-   section.content.tutorial
-     h2
-       | Let's get started!
-     p
-       | Using the Fae CMS, we can generate models and page views quickly leveraging the rails generator commands. Take a look at the
-       '
-       a href='https://github.com/wearefine/fae/blob/master/docs/quickstart-guide.md' quick-start guide
-       '
-       | to generate your first model.
-     p
-       | Once a model is created, refresh the page and it will appear in the top bar. Click on this link to generate your first object.
-     div
-     p
-       | After you create your first model, this tutorial will be finished. To continue learning about Fae, follow this
-       '
-       a href='https://www.faecms.com/documentation' link!
-
-
+- if @models.any?
+  main.content
+    table.js-sort-column
+      thead
+        tr
+          th Name
+          th Type
+          th.-action-wide Modified
+      tbody
+        - @list.each do |item|
+          - begin
+            - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
+            - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
+            - index_path = polymorphic_path([main_app, fae_scope, parent, item.class.to_s.pluralize.underscore])
+            tr
+              td: a href=edit_path = item.fae_display_field
+              td: a href=index_path = item.class.to_s
+              td = fae_date_format item.updated_at
+          - rescue
 - else
- table.js-sort-column
-   thead
-     tr
-       th Name
-       th Type
-       th.-action-wide Modified
-   tbody
-       - @list.each do |item|
-         - begin
-           - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
-           - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
-           - index_path = polymorphic_path([main_app, fae_scope, parent, item.class.to_s.pluralize.underscore])
-           tr
-             td: a href=edit_path = item.fae_display_field
-             td: a href=index_path = item.class.to_s
-             td = fae_date_format item.updated_at
-         - rescue
+  section.help-section
+    article.content
+      h2 Welcome to Fae
+      p
+        ' You don'thave any objects setup to manage. If you need help getting started, check out the
+        br
+        a href="https://www.faecms.com/documentation/quickstart-guide" target="_blank" Quickstart Guide and Documentation site
+        ' .
