@@ -14,15 +14,12 @@ gemspec
 # gem 'debugger'
 
 # Set the version of Rails for the dummy app
-gem 'rails', '~> 5.1.0'
+gem 'rails', '~> 5.2.0'
 
 # Lock in Rake to a version compatible with rspec-rails 3.0
 gem 'rake', '< 12.0.0'
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'sass', require: 'sass'
-gem 'rmagick', require: false
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.6.0'

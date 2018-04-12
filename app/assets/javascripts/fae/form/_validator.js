@@ -29,7 +29,7 @@ Fae.form.validator = {
   formValidate: function () {
     var _this = this;
 
-    FCH.$document.on('submit', 'form', function (e) {
+    FCH.$document.on('submit', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
       if ($this.data('passed_validation') !== 'true') {
@@ -81,6 +81,7 @@ Fae.form.validator = {
         if (_this.is_valid) {
           // if form is valid, submit it
           $this.data('passed_validation', 'true');
+
           $this.submit();
         } else {
           // otherwise scroll to the top to display alerts
