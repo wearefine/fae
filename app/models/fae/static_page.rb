@@ -91,6 +91,10 @@ module Fae
       case assoc_obj.class.name
       when 'Fae::TextField', 'Fae::TextArea'
         return assoc_obj.content
+      when 'Fae::Image', 'Fae::File'
+        assoc_json = assoc_obj.as_json
+        assoc_json['asset'] = assoc_obj.asset.as_json
+        return assoc_json
       else
         return assoc_obj.as_json
       end

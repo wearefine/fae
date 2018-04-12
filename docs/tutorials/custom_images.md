@@ -14,7 +14,6 @@ You may copy the contents of the `uploaders/fae/image_upload.rb` file and add yo
 # encoding: utf-8
 module Fae
   class ImageUploader < CarrierWave::Uploader::Base
-    include CarrierWave::MimeTypes
     include CarrierWave::RMagick
 
     # saves file size to DB

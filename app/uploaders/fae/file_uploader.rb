@@ -2,11 +2,8 @@
 module Fae
   class FileUploader < CarrierWave::Uploader::Base
 
-    # Include RMagick support:
-    # include CarrierWave::RMagick
-    include CarrierWave::MimeTypes
+    include CarrierWave::MiniMagick
 
-    process :set_content_type
     process :save_file_size_in_model
 
     def save_file_size_in_model
