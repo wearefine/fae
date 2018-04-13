@@ -19,7 +19,7 @@ feature 'Clone record' do
 
         # only whiteliested attributes should be cloned
         expect(cloned_release.slug).to          eq(release.intro)
-        expect(cloned_release.intro).to         eq(release.intro)
+        expect(cloned_release.intro).to         eq('nope')
         expect(cloned_release.body).to          eq(release.body)
         expect(cloned_release.wine_id).to       eq(release.wine_id)
         expect(cloned_release.release_date).to  eq(release.release_date)
