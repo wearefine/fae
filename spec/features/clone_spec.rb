@@ -18,7 +18,7 @@ feature 'Clone record' do
         expect(find_field('release_name').value).to eq(cloned_release.name)
 
         # only whiteliested attributes should be cloned
-        expect(cloned_release.slug).to          eq(release.slug)
+        expect(cloned_release.slug).to          eq(release.intro)
         expect(cloned_release.intro).to         eq(release.intro)
         expect(cloned_release.body).to          eq(release.body)
         expect(cloned_release.wine_id).to       eq(release.wine_id)
