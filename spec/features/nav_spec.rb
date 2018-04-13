@@ -9,7 +9,7 @@ feature 'Main Navigation' do
     within('.main-header-nav > .-parent-current') do
       expect(page).to have_content('Products')
       page.find('a').hover
-      expect(page.find('.-current')).to have_content('Legacy Releases')
+      expect(page.find('.-current')).to have_content('Legacy Releases Nope')
     end
   end
 

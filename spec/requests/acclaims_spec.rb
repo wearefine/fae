@@ -5,6 +5,7 @@ describe 'acclaims#index' do
   it 'should return found' do
     admin_login
     get admin_acclaims_path
+    raise up
 
     expect(response.status).to eq(200)
   end
