@@ -81,7 +81,7 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'passord1'
     click_button 'Submit'
     if no_models_exist?
-      expect(page).to have_content("Let's get started!")
+      expect(page).to have_content("Welcome to Fae")
     end
   end
 end
