@@ -5,7 +5,6 @@ module Fae
 
     def go
       generate_model
-      inject_display_field_to_model
       generate_controller_file
       generate_view_files
       add_route

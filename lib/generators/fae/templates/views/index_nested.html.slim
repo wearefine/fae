@@ -4,4 +4,5 @@ section.js-index-addedit-form
   == render 'fae/shared/nested_table',
     assoc: :<%= file_name.pluralize %>,
     index: true,
+    ordered: <%= @has_position %>,
     cols: [<%= @form_attrs.map {|attr| ":#{attr}"}.join(', ') %>]
