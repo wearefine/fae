@@ -1,7 +1,8 @@
 header.content-header.js-content-header.-dashboard
-  i.icon-home>
-  | &nbsp;&nbsp;Welcome,
-  strong< = current_user.full_name
+  div
+    i.icon-home>
+    | &nbsp;&nbsp;Hello
+    strong< = current_user.full_name
 
 == render 'flash_messages'
 
