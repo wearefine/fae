@@ -228,9 +228,9 @@ module Fae
     def attempt_common_helper_text(attribute)
       case attribute
       when :seo_title
-       return 'Company Name | Keyword-driven description of the page section. Approx 65 characters.'
+       return 'A descriptive page title of ~50-65 characters. Displayed in search engine results.'
       when :seo_description
-       return 'Displayed in search engine results. Under 150 characters.'
+       return 'A helpful page summary of 320 characters or less. Displayed in search engine results.'
       else
        ''
       end

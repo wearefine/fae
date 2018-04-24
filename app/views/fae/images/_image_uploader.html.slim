@@ -4,8 +4,8 @@ ruby:
   image_name          ||= :image
   the_image             = item.send(image_name)
   label               ||= image_name.to_s.titleize
-  alt_label           ||= "#{label} alt text"
-  caption_label       ||= "#{label} caption"
+  alt_label           ||= "#{label} Alt Text"
+  caption_label       ||= "#{label} Caption"
   helper_text         ||= ""
   alt_helper_text     ||= 'Brief description of image contents, used in hover text and by visually impaired users.'
   caption_helper_text ||= ""
