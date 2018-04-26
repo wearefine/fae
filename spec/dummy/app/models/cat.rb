@@ -7,4 +7,8 @@ class Cat < ActiveRecord::Base
     name
   end
 
+  def lives
+    9
+  end
+
 end
