@@ -214,9 +214,9 @@ Fae.form.validator = {
 
     var $wrapper = $input.closest('.input');
     if ($wrapper.children('.error').length) {
-      $wrapper.children('.error').text(messages.join(','));
+      $wrapper.children('.error').text(messages.join(', '));
     } else {
-      $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
+      $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(', ') + "</span>");
     }
   },
 

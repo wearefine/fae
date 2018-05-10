@@ -52,7 +52,7 @@ describe Fae::BaseModelConcern do
     end
   end
 
-  describe '#translate' do
+  describe '#fae_translate' do
     it 'should translate specified attributes' do
       wine = FactoryGirl.build_stubbed(:wine)
 

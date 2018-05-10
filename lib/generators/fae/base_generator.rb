@@ -50,8 +50,9 @@ module Fae
     def generate_model
       generate "model #{file_name} #{@@attributes_flat}"
       inject_concern
-      inject_position_scope
+      inject_display_field_to_model
       inject_model_attachments
+      inject_position_scope
     end
 
     def generate_controller_file
@@ -105,9 +106,9 @@ RUBY
       end
 
       inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do <<-RUBY
-\n  def fae_display_field
+  def fae_display_field
     #{@@display_field}
-  end\n
+  end
 RUBY
       end
 
@@ -117,7 +118,7 @@ RUBY
       if @@has_position
         inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do <<-RUBY
 \n  acts_as_list add_new_at: :top
-  default_scope { order(:position) }
+  default_scope { order(:position) }\n
 RUBY
         end
       end

@@ -1,5 +1,23 @@
 # Fae Changelog
 
+## 2.0
+
+- enhancements
+    + Add Rails 5.1 and 5.2 support
+    + Consolidate `form_header` partial [#342](https://github.com/wearefine/fae/pull/342)
+    + Rename translate to fae_translate to avoid conflicts [#375](https://github.com/wearefine/fae/pull/375)
+    + Add quickstart content to dashboard [#379](https://github.com/wearefine/fae/pull/379)
+    + Update gem dependency versions [#395](https://github.com/wearefine/fae/pull/395)
+    + Add Rails version to migrations [#396](https://github.com/wearefine/fae/pull/396)
+    + Make polymorphic assets optional as required by Rails 5.1+ [#402](https://github.com/wearefine/fae/pull/402)
+    + Small content fixes [#403](https://github.com/wearefine/fae/pull/403)
+- bug fixes
+    + Allow integers to be passed through nested table columns [#405](https://github.com/wearefine/fae/pull/405)
+- deprecations
+    + Deprecate Rails 4 support [#338](https://github.com/wearefine/fae/pull/338)
+    + Deprecate <1.3 markup ([#332](https://github.com/wearefine/fae/pull/332), [#343](https://github.com/wearefine/fae/pull/343))
+    + Deprecate attr_toggle in favor of fae_toggle [#355](https://github.com/wearefine/fae/pull/355)
+
 ## 1.7.1
 
 - enhancements

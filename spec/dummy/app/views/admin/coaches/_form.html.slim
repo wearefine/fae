@@ -1,6 +1,5 @@
 = simple_form_for(['admin', @parent_item, @item]) do |f|
-  header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: "New #{@parent_item.name} Coach"
+  == render 'fae/shared/form_header', header: "New #{@parent_item.name} Coach"
 
   section.content
     = fae_input f, :first_name

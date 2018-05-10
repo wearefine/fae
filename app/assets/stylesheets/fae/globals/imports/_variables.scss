@@ -7,8 +7,6 @@ $custom-breakpoints: () !default;
 
 // Fae-specific breakpoints
 $fae-breakpoints: (
-  // @depreciation - remove page_header_save_block in v2.0
-  'page_header_save_block': ( max-width:  615px ),
   'login_container':        ( min-width: 700px ),
   'login_submit':           ( min-width: 500px ),
 );

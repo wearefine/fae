@@ -53,6 +53,7 @@ Displays breadcrumb links and form title.
 | cloneable | boolean | false | includes Clone button |
 | clone_button_text | string | 'Clone' | clone button text |
 | subnav | Array<String> | [] | generates "jump to" anchor links for long forms |
+| show_flash_messages | boolean | true | display flash messages rendered by form
 
 ### With subnav
 
@@ -77,30 +78,11 @@ To separate name and ID selector, pass an Array instead of a String.
 - subnav_array = ['SEO', 'Attributes', ['Images', 'images_table']]
 ```
 
-## Form Buttons
-
-```ruby
-form_buttons
-```
-**Warning**: This partial will be depreceated in v2.0. Use [`fae/shared/form_header`](#form_header-1) instead.
-
-Displays form's save and cancel buttons.
-
-| option | type | default | description |
-| ------ | ---- | ------- | ----------- |
-| save_button_text   | string | 'Save' | save button text  |
-| cancel_button_text | string | 'Cancel' | cancel button text  |
-
 **Examples**
 
 Standard implementation
 ```ruby
-render 'fae/shared/form_buttons'
-```
-
-With custom text
-```ruby
-render 'fae/shared/form_buttons', save_button_text: 'Yes!', cancel_button_text: 'Nope :('
+render 'fae/shared/form_header', header: @item, subnav: ['SEO', 'Image Gallery', 'Recent Changes']
 ```
 
 ## Nested Table

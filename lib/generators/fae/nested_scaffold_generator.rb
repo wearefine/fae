@@ -16,9 +16,9 @@ module Fae
       def generate_nested_model_file
         generate "model #{file_name} #{@@attributes_flat}"
         inject_concern
-        inject_position_scope
-        inject_model_attachments
         inject_display_field_to_model
+        inject_model_attachments
+        inject_position_scope
         inject_parent_info if options.parent_model.present?
       end
 

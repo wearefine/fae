@@ -123,13 +123,10 @@ Fae.form.ajax = {
           if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
             _this._addEditReplaceAndReinit($this, $html.html(), $target);
-          } else if ($html.hasClass('nested-form') || $html.hasClass('form_content-wrapper')) {
-
-            // @depreciation - remove `|| $html.hasClass('form_content_wrapper')` from above conditional as well as the following ternary (value should just be '.nested-form') in v2.0
-            var form_wrapper_selector = $html.hasClass('nested-form') ? '.nested-form' : '.form_content-wrapper';
+          } else if ($html.hasClass('nested-form')) {
 
             // we're returning the form due to an error, just replace the form
-            $this.find( form_wrapper_selector ).replaceWith(data);
+            $this.find( '.nested-form' ).replaceWith(data);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
 
@@ -286,7 +283,7 @@ Fae.form.ajax = {
   },
 
   /**
-   * Attaching click handlers to #main_content to allow ajax replacement
+   * Attaching click handlers to #js-main-content to allow ajax replacement
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {

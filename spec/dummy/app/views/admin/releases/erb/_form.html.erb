@@ -1,24 +1,9 @@
 <%= simple_form_for(['admin', @item]) do |f| %>
-  <section class="main_content-header">
-    <div class="main_content-header-wrapper">
-      <%= render 'fae/shared/form_header', header: @klass_name  %>
-      <nav class="main_content-header-section">
-        <ul class="main_content-header-section-links">
-          <li><a href="#general_info">Attributes</a></li>
-          <li><a href="#asset_section">Assets</a></li>
-          <li><a href="#associations_section">Associations</a></li>
-          <% if params[:action] == 'edit' %>
-            <li><a href="#aromas_section">Nested Table</a></li>
-            <li><a href="#recent_changes">Recent Changes</a></li>
-          <% end %>
-        </ul>
-      </nav>
-      <%= render 'fae/shared/form_buttons', f: f, item: @item, cloneable: true %>
-    </div>
-  </section>
-  <%= render 'fae/shared/errors' %>
+  <% subnav_array = ['Attributes', 'Assets', 'Associations']
+     subnav_array.concat ['Aromas', 'Recent Changes'] if params[:action] == 'edit' %>
+  <%= render 'fae/shared/form_header', header: @klass_name, cloneable: true, subnav: subnav_array  %>
 
-  <section class="content" id="general_info">
+  <section class="content" id="attributes">
 
     <!-- Text inputs -->
     <%= fae_input f, :name,
@@ -29,8 +14,7 @@
 
     <%= fae_input f, :vintage,
       input_class: 'slugger',
-      helper_text: 'text input',
-      dark_hint: '<h3>Dark Hint</h3><p>Yes, HTML is allowed</p>'.html_safe
+      helper_text: 'text input'
     %>
 
     <%= fae_input f, :slug, helper_text: 'text input (populated from name and vintage)' %>
@@ -78,7 +62,7 @@
 
   </section>
 
-  <section class="content" id="asset_section">
+  <section class="content" id="assets">
     <%= content_tag :h2, 'Assets' %>
 
       <!-- Image Form -->
@@ -91,7 +75,7 @@
 
   </section>
 
-  <section class="content" id="associations_section">
+  <section class="content" id="associations">
     <%= content_tag :h2, 'Associations' %>
 
     <!-- Association/Large Pulldown -->
@@ -114,7 +98,7 @@
 
 <!-- Nested Table -->
 <% if params[:action] == 'edit' %>
-  <section class="main_content-section" id="aromas_section">
+  <section class="content" id="aromas">
     <%= render 'fae/shared/nested_table',
       assoc: :aromas,
       parent_item: @item,

@@ -27,7 +27,7 @@ module Fae
       instance = first
 
       if instance.blank?
-        instance = Option.new({title: 'My FINE Admin', time_zone: 'Pacific Time (US & Canada)', live_url: 'http://www.wearefine.com'})
+        instance = Option.new({title: 'My Fae Admin', time_zone: 'Pacific Time (US & Canada)', live_url: 'http://www.wearefine.com'})
         instance.singleton_guard = 0
         instance.save!
       end

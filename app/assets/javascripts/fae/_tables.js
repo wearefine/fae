@@ -17,16 +17,14 @@ Fae.tables = {
   sort_cookie_name: 'Fae_table_sort_preferences',
 
   ready: function() {
-    // @depreciation - remove `|| FCH.exists('.main_table-sort_columns')` and only use FCH.exists('.js-sort-column') in v2.0
-    if (FCH.exists('.js-sort-column') || FCH.exists('.main_table-sort_columns')) {
+    if (FCH.exists('.js-sort-column')) {
       this.dateColumnSorting();
       this.columnSorting();
       this.defaultSortCookie();
       this.sortColumnsFromCookies();
     }
 
-    // @depreciation - remove || FCH.exists('.main_content-sortable-handle') and only use FCH.exists('.sortable-handle') in v2.0
-    if (FCH.exists('.sortable-handle') || FCH.exists('.main_content-sortable-handle')) {
+    if (FCH.exists('.sortable-handle')) {
       this.rowSorting();
     }
 
@@ -36,10 +34,7 @@ Fae.tables = {
       this.collapsibleTable();
     }
 
-    // @depreciation - remove conditional wrapping and call endingSelectShim like `this.endingSelectShim()` in v2.0
-    if (FCH.exists('form ' + Fae.content_selector)) {
-      this.endingSelectShim(Fae.content_selector);
-    }
+    this.endingSelectShim();
 
     if (FCH.exists('.js-tooltip')) {
       this.tooltip();
@@ -54,8 +49,7 @@ Fae.tables = {
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
 
-    // @depreciation - remove `, .main_table-sort_columns` and only use '.js-sort-column' in v2.0
-    $('.js-sort-column, .main_table-sort_columns')
+    $('.js-sort-column')
       .tablesorter()
       .on('sortEnd', function(e) {
         var $this = $(this);
@@ -142,8 +136,7 @@ Fae.tables = {
       return;
     }
 
-    // @depreciation - remove `, .main_table-sort_columns` and only use '.js-sort-column' in v2.0
-    $('.js-sort-column, .main_table-sort_columns').each(function(idx) {
+    $('.js-sort-column').each(function(idx) {
       // If this table exists in the cookie hash
       if (cookie_value[path].hasOwnProperty(idx)) {
         // Use array value within another array because of how tablesorter accepts this argument
@@ -156,15 +149,10 @@ Fae.tables = {
    * Make table rows draggable by user
    */
   rowSorting: function() {
-    // @depreciation - remove sort_selector var in v2.0
-    var sort_selector = FCH.exists('.sortable-handle') ? '.sortable-handle' : '.main_content-sortable-handle';
-
-    // @depreciation - remove `, .main_content-sortable` and only use '.js-sort-row' in v2.0
-    $('.js-sort-row, .main_content-sortable').sortable({
+    $('.js-sort-row').sortable({
       items: 'tbody tr',
       opacity: 0.8,
-      // @depreciation - replace sort_selector with '.sortable-handle' in v2.0
-      handle: (sort_selector),
+      handle: ('.sortable-handle'),
 
       //helper function to preserve the width of the table row
       helper: function(e, $tr) {
@@ -271,11 +259,9 @@ Fae.tables = {
 
   /**
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
-   * @param {String} selector - Last of type element to target
-   * @deprecation remove selector arg and replace selector variable with '.content' in v2.0
    */
-  endingSelectShim: function(selector) {
-    $('form ' + selector + ':last-of-type').each(function() {
+  endingSelectShim: function() {
+    $('form .content:last-of-type').each(function() {
       var $last_item = $(this).find('.input:last-of-type');
 
       if( $last_item.hasClass('select') ) {
@@ -342,8 +328,8 @@ Fae.tables = {
    */
   sizeFixedHeader: function() {
     var $tables = $('.content table');
-    // @depreciation - change value from ternary to $('.js-content-header').outerHeight() in v2.0
-    var header_height = FCH.exists('.js-content-header') ? $('.js-content-header').outerHeight() : $('.main_content-header').outerHeight();
+
+    var header_height = $('.js-content-header').outerHeight();
     if(FCH.large_down) {
       header_height = $('#js-main-header').outerHeight();
     }

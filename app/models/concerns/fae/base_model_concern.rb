@@ -45,12 +45,6 @@ module Fae
         end
       end
 
-      # @depreciation - deprecate in v2.0
-      def filter_all
-        # override this method in your model
-        for_fae_index
-      end
-
       def filter(params)
         # override this method in your model
         for_fae_index
@@ -69,7 +63,7 @@ module Fae
         end
       end
 
-      def translate(*attributes)
+      def fae_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
             self.send "#{attribute}_#{I18n.locale}"

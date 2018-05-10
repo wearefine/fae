@@ -1,22 +1,20 @@
+$content-header-padding: 16px;
+
 // content header
 .content-header {
-  @include clearfix;
   @include stack($fae-nav-stack);
   width: 100%;
-  padding: 16px $content-buffer;
+  padding: $content-header-padding $content-buffer;
   background: $c-content-header-bg;
   border-bottom: 1px solid $c-grey;
   position: absolute;
   left: 0;
   top: 0;
   box-shadow: 0 0 10px $c-grey;
-
-  &:after {
-    content: '';
-    display: block;
-    height: 100%;
-    position: static;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 
   &.-dashboard {
     padding-top: 26px;
@@ -28,13 +26,6 @@
     }
   }
 
-  h1,
-  .breadcrumbs {
-    @include bp(large) {
-      float: left;
-    }
-  }
-
   h1 {
     padding: 5px 0;
     font-weight: bold;
@@ -42,10 +33,10 @@
 }
 
 .content-header-subnav {
-  position: absolute;
-  left: $content-buffer;
   bottom: 0;
   width: 100%;
+  margin-bottom: negate($content-header-padding);
+  flex-basis: 100%;
 
   a {
     @include transition(all .2s);
@@ -83,19 +74,8 @@
 }
 
 .content-header-buttons {
-  margin: 10px 0;
-
-  @include bp(large) {
-    float: right;
-    margin: 0;
-  }
-
   a {
     margin-right: 5px;
-
-    @include bp(medium) {
-      height: 37px; // Fix height so descenders don't mess up the visual balance
-    }
 
     &:last-child {
       margin-right: 0;
