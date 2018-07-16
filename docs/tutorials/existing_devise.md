@@ -10,7 +10,7 @@ This tutorial was in reference to issue [wearefine/fae#302](https://github.com/w
 
 ## Controllers
 
-Fae provides a set of controller actions that setup the look and feel for there layout and other custom configurations. In order to keep these before actions from running on your devise controllers, you can setup a controller to skip them. If you look at the source code [here](https://github.com/wearefine/fae/blob/master/app/controllers/fae/application_controller.rb) you will see that fae sets devise base controller as `Fae::ApplicationController`. In order to keep these intact, you will have to create a controller that inherits that controller. Below is a snippet that will help you get started:
+Fae provides a set of controller actions that setup the look and feel for the layout and other custom configurations. In order to keep these before actions from running on your devise controllers, you can setup a controller to skip them. If you look at the source code [here](https://github.com/wearefine/fae/blob/master/app/controllers/fae/application_controller.rb) you will see that fae sets devise base controller as `Fae::ApplicationController`. In order to keep these intact, you will have to create a controller that inherits that controller. Below is a snippet that will help you get started:
 
 ```ruby
 class ApplicationDeviseController < Fae::ApplicationController

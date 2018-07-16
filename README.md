@@ -84,6 +84,7 @@ https://www.faecms.com/documentation
 
 * [Running Fae Locally](docs/contributing/local_setup.md)
 * [Fae Standards](docs/contributing/standards.md)
+* [Share Your Creation](docs/contributing/share_your_creation.md)
 
 ## [Upgrading](docs/upgrading/index.md)
 
