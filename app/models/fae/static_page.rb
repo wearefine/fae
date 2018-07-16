@@ -42,7 +42,8 @@ module Fae
           languages.each do |lang|
             # Save with suffix for form fields
             define_association("#{name}_#{lang}", type)
-            define_validations("#{name}_#{lang}", type, value[:validates]) if value.try(:[], :validates).present?
+            # validations are only supported with Fae::TextField and Fae::TextArea
+            define_validations("#{name}_#{lang}", type, value[:validates]) if poly_sym(type) == :contentable && value.try(:[], :validates).present?
           end
           # Save with lookup to have default language return in front-end use (don't need to worry about validations here)
           default_language = Rails.application.config.i18n.default_locale || languages.first
@@ -50,7 +51,8 @@ module Fae
         else
           # Normal content_blocks
           define_association(name, type)
-          define_validations(name, type, value[:validates]) if value.try(:[], :validates).present?
+          # validations are only supported with Fae::TextField and Fae::TextArea
+          define_validations(name, type, value[:validates]) if poly_sym(type) == :contentable && value.try(:[], :validates).present?
         end
       end
 
