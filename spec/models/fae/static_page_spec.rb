@@ -100,4 +100,28 @@ describe Fae::StaticPage do
     end
   end
 
+  describe '.supports_validation' do
+    
+    context 'when the type is supported' do
+      it 'should return false without validates hash' do
+        expect(Fae::StaticPage.supports_validation(Fae::TextField, Fae::TextField)).to eq(false)
+        expect(Fae::StaticPage.supports_validation(Fae::TextField, { type: Fae::TextField })).to eq(false)
+      end
+
+      it 'should return true with validates hash' do
+        value = { type: Fae::TextField, validates: { presence: true } }
+        expect(Fae::StaticPage.supports_validation(Fae::TextField, value)).to eq(true)
+      end
+    end
+
+    context 'when the type is not supported' do
+      it 'should always return false' do
+        without_validates = { type: Fae::File }
+        with_validates = { type: Fae::Image, validates: { presence: true } }
+        expect(Fae::StaticPage.supports_validation(Fae::File, without_validates)).to eq(false)
+        expect(Fae::StaticPage.supports_validation(Fae::Image, with_validates)).to eq(false)
+      end
+    end
+  end
+
 end
