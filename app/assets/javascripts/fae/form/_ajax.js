@@ -66,6 +66,9 @@ Fae.form.ajax = {
         $wrapper.find('.input.file').fileinputer();
       }
 
+      // Re-bind form validations to catch new AJAX loaded fields
+      Fae.form.validator.bindValidationEvents();
+
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
       Fae.form.dates.initDateRangePicker();
