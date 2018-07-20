@@ -77,7 +77,7 @@ module Fae
 
     def self.supports_validation(type, value)
       # validations are only supported on Fae::TextField and Fae::TextArea
-      poly_sym(type) == :contentable && value.try(:[], :validates).present? 
+      poly_sym(type) == :contentable && value.try(:[], :validates).present?
     end
 
     def self.poly_sym(assoc)
