@@ -67,7 +67,7 @@ Fae.form.ajax = {
       }
 
       // Bind validation to nested form fields added by AJAX
-      Fae.form.validator.bindValidationEvents($scope = $('.nested-form'));
+      Fae.form.validator.bindValidationEvents($('.nested-form'));
 
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();

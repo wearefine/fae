@@ -108,8 +108,12 @@ Fae.form.validator = {
   /**
    * Bind validation events based on input type
    */
-  bindValidationEvents: function ($scope = $('body')) {
+  bindValidationEvents: function ($scope) {
     var _this = this;
+
+    if (typeof($scope) === 'undefined'){
+      $scope = $('body');
+    }
 
     $scope.find('[data-validate]').each(function () {
       var $this = $(this);
