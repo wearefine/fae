@@ -5,12 +5,12 @@
     = fae_input f, :title
     = fae_content_form f, :header
     = fae_content_form f, :hero
-    = fae_content_form f, :email
-    = fae_content_form f, :phone
+    = fae_content_form f, :email, helper_text: 'ex: fae@wearefine.com'
+    = fae_content_form f, :phone, input_options: { wrapper_html: { class: 'phone-wrapper', id: 'phone-id' } }
     = fae_content_form f, :cell_phone, label: false
     = fae_content_form f, :work_phone, label: ''
     = fae_content_form f, :introduction
-    = fae_content_form f, :introduction_2, markdown: true
+    = fae_content_form f, :introduction_2, markdown: true, markdown_supported: true, helper_text: 'helper text'
     = fae_content_form f, :phone, input_options: { input_html: { class: 'phone-mask' } }, helper_text: 'Numbers only, do not format', label: 'Phone #'
     = fae_content_form f, :body, input_options: { input_html: { class: 'some-cool-class' } }, markdown: true
     = fae_image_form f, :hero_image

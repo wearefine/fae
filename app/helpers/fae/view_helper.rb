@@ -21,8 +21,12 @@ module Fae
       render 'fae/application/file_uploader', f: f, file_name: file_name, label: label, required: required, helper_text: helper_text
     end
 
-    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, input_options: nil)
-      render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options
+    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: false, markdown_supported: false, input_options: {})
+      required = f.object.send(attribute).is_required?(f.object.class)
+      text_options = { required: required, label: label, hint: hint, helper_text: helper_text }
+      markdown_options = { markdown: markdown, markdown_supported: markdown_supported }
+      options = Fae::FormOptions.new(attribute, text_options, markdown_options, input_options).to_hash
+      render 'fae/application/content_form', f: f, attribute: attribute, options: options
     end
 
     def fae_index_image(image, path = nil)
