@@ -66,6 +66,9 @@ Fae.form.ajax = {
         $wrapper.find('.input.file').fileinputer();
       }
 
+      // Bind validation to nested form fields added by AJAX
+      Fae.form.validator.bindValidationEvents($('.nested-form'));
+
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
       Fae.form.dates.initDateRangePicker();
