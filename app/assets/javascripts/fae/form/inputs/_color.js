@@ -23,8 +23,9 @@ Fae.form.color = {
         var inputOffset = $elm.offset().top;
         var distanceToBottom = $(document).height() - inputOffset;
         var top = distanceToBottom <= this.$UI._height ? 414 : inputOffset + $elm.innerHeight();
+        var left = $elm.offset().left;
 
-        return { left: 30, top: top }
+        return { left: left, top: top }
       },
       renderCallback: function($elm, toggled) {
         var colors = this.color.colors;
