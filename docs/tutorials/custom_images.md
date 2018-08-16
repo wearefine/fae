@@ -12,7 +12,7 @@ If you need to add your own image versions to Carrierwave you can copy the conte
 
 The caveat being any bugfixes or features added to this file in Fae will now be ignored in favor of your local file. If you are updating Fae, you may want to verify this base file hasn't changed.
 
-In this example we will be adding some extra version to support a responsive design:
+In this example we will be adding some extra versions to support a responsive design:
 
 ```ruby
 version :mobile do
@@ -24,7 +24,7 @@ version :tablet do
 end
 ```
 
-Then in the view:
+Then to access the versions in the view:
 
 ```ruby
 = image_tag(item.image.asset.tablet.url)
