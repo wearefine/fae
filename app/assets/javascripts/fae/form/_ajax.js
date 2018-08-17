@@ -17,6 +17,7 @@ Fae.form.ajax = {
     this.addCancelLinks();
 
     this.imageDeleteLinks();
+    this.fileDeleteLinks();
     this.htmlListeners();
 
     this.deleteNoForm();
@@ -286,6 +287,19 @@ Fae.form.ajax = {
         $this.parent().hide();
       }
     });
+  },
+
+  fileDeleteLinks: function() {
+    $('body' ).on('click', 'a.js-file-clear', (function(e) {
+
+      e.preventDefault();
+      var $this = $(this);
+
+      if (confirm('Are you sure you want to clear this file?')) {
+        $this.parent().next().show();
+        $this.parent().hide();
+      }
+    }));
   },
 
   /**
