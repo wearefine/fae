@@ -78,6 +78,9 @@ Fae.form.ajax = {
       Fae.form.text.initMarkdown();
       Fae.form.checkbox.setCheckboxAsActive();
 
+      // validate nested form fields on submit
+      Fae.form.validator.formValidate($('.nested-form'));
+
       $wrapper.find('.hint').hinter();
     });
   },
@@ -129,7 +132,7 @@ Fae.form.ajax = {
           } else if ($html.hasClass('nested-form')) {
 
             // we're returning the form due to an error, just replace the form
-            $this.find( '.nested-form' ).replaceWith(data);
+            $this.find('.nested-form' ).replaceWith($html);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
 
