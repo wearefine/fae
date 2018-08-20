@@ -32,8 +32,7 @@ Fae.form.validator = {
     if (typeof($scope) === 'undefined'){
       $scope = FCH.$document;
     }
-
-    $scope.on('submit', function (e) {
+    $scope.on('submit', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
       if ($this.data('passed_validation') !== 'true') {
