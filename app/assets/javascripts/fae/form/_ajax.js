@@ -17,7 +17,6 @@ Fae.form.ajax = {
     this.addCancelLinks();
 
     this.imageDeleteLinks();
-    this.fileDeleteLinks();
     this.htmlListeners();
 
     this.deleteNoForm();
@@ -289,25 +288,22 @@ Fae.form.ajax = {
     });
   },
 
-  fileDeleteLinks: function() {
-    $('body' ).on('click', 'a.js-file-clear', (function(e) {
-
-      e.preventDefault();
-      var $this = $(this);
-
-      if (confirm('Are you sure you want to clear this file?')) {
-        $this.parent().next().show();
-        $this.parent().hide();
-      }
-    }));
-  },
-
   /**
    * Attaching click handlers to #js-main-content to allow ajax replacement
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
     $('#js-main-content, .login-form > form')
+
+      /**
+       * For the delete button on file input
+       */
+      .on('click', '.js-file-clear', function(e) {
+        e.preventDefault();
+        var $parent = $(this).parent();
+        $parent.next().show();
+        $parent.hide();
+      })
 
       /**
        * For the yes/no slider
