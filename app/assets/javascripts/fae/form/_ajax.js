@@ -10,6 +10,7 @@ Fae.form.ajax = {
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
+    this.$nested_form = $('.nested-form');
 
     this.addEditLinks();
     this.addEditSubmission();
@@ -67,7 +68,7 @@ Fae.form.ajax = {
       }
 
       // Bind validation to nested form fields added by AJAX
-      Fae.form.validator.bindValidationEvents($('.nested-form'));
+      Fae.form.validator.bindValidationEvents(this.$nested_form);
 
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
@@ -79,7 +80,7 @@ Fae.form.ajax = {
       Fae.form.checkbox.setCheckboxAsActive();
 
       // validate nested form fields on submit
-      Fae.form.validator.formValidate($('.nested-form'));
+      Fae.form.validator.formValidate(this.$nested_form);
 
       $wrapper.find('.hint').hinter();
     });
