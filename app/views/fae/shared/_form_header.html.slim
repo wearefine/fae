@@ -1,5 +1,6 @@
 ruby:
   require_locals ['header'], local_assigns
+  save_button           = !local_assigns[:save_button].eql?(false)
   save_button_text    ||= 'Save'
   cancel_button_text  ||= 'Cancel'
   cloneable           ||= false
@@ -28,7 +29,8 @@ header.content-header.js-content-header
     a.button#js-header-cancel href=@index_path = cancel_button_text
     - if cloneable.present? && params[:id].present?
       a.button data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
-    input name="commit" type="submit" value=save_button_text
+    - if save_button
+      input name="commit" type="submit" value=save_button_text
 
   - if subnav.present?
     ul.content-header-subnav#js-content-header-subnav
