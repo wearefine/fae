@@ -268,12 +268,13 @@ Fae.form.validator = {
       // if the kind matches, remove it from the array
       if (validations[i]['kind'] === kind) {
         validations.splice(i, 1);
+        i--;
+      } else {
+        // otherwise convert JSON back to a string
+        validations[i] = JSON.stringify(validations[i]);
       }
-
-      // convert JSON back to a string
-      validations[i] = JSON.stringify(validations[i]);
     }
-    $field.attr('data-validate', '[' + validations + ']');
+    $field.data('validate', '[' + validations + ']');
   },
 
   /**
