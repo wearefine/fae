@@ -92,6 +92,7 @@ GEM
       debug_inspector (>= 0.0.1)
     browser (2.5.3)
     builder (3.2.3)
+    byebug (10.0.2)
     capistrano (3.10.1)
       airbrussh (>= 1.0.0)
       i18n
@@ -226,6 +227,9 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    pry-byebug (3.6.0)
+      byebug (~> 10.0)
+      pry (~> 0.10)
     public_suffix (3.0.2)
     rack (2.0.4)
     rack-test (1.0.0)
@@ -368,6 +372,7 @@ DEPENDENCIES
   guard-rspec (~> 4.7.3)
   mysql2
   pry
+  pry-byebug
   rails (~> 5.2.0)
   rails-controller-testing
   rails-perftest
@@ -381,4 +386,4 @@ DEPENDENCIES
   yarjuf
 
 BUNDLED WITH
-   1.13.0
+   1.16.5

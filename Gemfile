@@ -24,6 +24,7 @@ gem 'sass', require: 'sass'
 group :test, :development do
   gem 'rspec-rails', '~> 3.6.0'
   gem 'pry'
+  gem 'pry-byebug'
 end
 
 group :test do
