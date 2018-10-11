@@ -1,4 +1,4 @@
-class CreateReleaseSellingPoint < ActiveRecord::Migration
+class CreateReleaseSellingPoint < ActiveRecord::Migration[4.2]
   def change
     create_table :release_selling_points do |t|
       t.references :release

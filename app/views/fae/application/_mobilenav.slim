@@ -55,12 +55,12 @@ nav.nav.mobilenav
     - if @option.stage_url.present? || @option.live_url.present?
       li class=view_site_class
         - if site_urls_are_present
-          a href="#" View Site
+          a href="#" = t('fae.application.view_site')
           ul.subnav.js-subnav
-            li: span.mobilenav-subheader.js-mobile-back View Site
-            li: a.-viewsite href=@option.stage_url target="_blank" Preview Site
-            li: a.-viewsite href=@option.live_url target="_blank" Live Site
+            li: span.mobilenav-subheader.js-mobile-back = t('fae.application.view_site')
+            li: a.-viewsite href=@option.stage_url target="_blank" = t('fae.application.preview_site')
+            li: a.-viewsite href=@option.live_url target="_blank" = t('fae.application.live_site')
         - elsif @option.stage_url.present?
-          a.-viewsite href=@option.stage_url target="_blank" Preview Site
+          a.-viewsite href=@option.stage_url target="_blank" = t('fae.application.preview_site')
         - elsif @option.live_url.present?
-          a.-viewsite href=@option.live_url target="_blank" Live Site
+          a.-viewsite href=@option.live_url target="_blank" = t('fae.application.live_site')

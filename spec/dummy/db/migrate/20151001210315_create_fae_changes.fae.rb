@@ -1,5 +1,5 @@
 # This migration comes from fae (originally 20150930224821)
-class CreateFaeChanges < ActiveRecord::Migration
+class CreateFaeChanges < ActiveRecord::Migration[4.2]
   def change
     create_table :fae_changes do |t|
       t.integer :changeable_id

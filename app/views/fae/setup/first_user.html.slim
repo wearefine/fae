@@ -1,11 +1,11 @@
 .first_user-form
-  p Please create your super admin user.
+  p = t('fae.setup.prompt')
 
   = simple_form_for(@user, html: { multipart: true, novalidate: true }, url: fae.first_user_path) do |f|
     = fae_input f, :first_name
     = fae_input f, :last_name
     = fae_input f, :email
-    = fae_input f, :password, helper_text: 'Passwords must contain at least 8 characters.'
+    = fae_input f, :password, helper_text: t('fae.setup.password')
     = fae_input f, :password_confirmation
     .login-form-actions
-      = f.button :submit, "Submit"
+      = f.button :submit, t('fae.form.submit')

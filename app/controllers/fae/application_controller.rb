@@ -21,7 +21,7 @@ module Fae
     private
 
     def set_locale
-      I18n.locale = :en
+      I18n.locale = current_user.nil? ? :en : current_user.language
     end
 
     def check_disabled_environment

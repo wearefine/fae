@@ -1,4 +1,4 @@
-class CreateWine < ActiveRecord::Migration
+class CreateWine < ActiveRecord::Migration[4.2]
   def change
     create_table :wines do |t|
       t.string :name

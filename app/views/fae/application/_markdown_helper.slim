@@ -1,41 +1,41 @@
 .markdown-hint
   .markdown-hint-wrapper
-    h3 Markdown Options
+    h3 = t('fae.application.markdown_opts')
 
-    h4 Links
+    h4 = t('fae.application.links')
     p
-      | To link text, place a [bracket] around the link title and use a (/url) to house the url.
+      = t('fae.application.links_help')
       br
       | Internal Link: [link to about](/about)
       br
       | External link: [link to about](http://www.google.com/about)
 
-    h4 Formatting
+    h4 = t('fae.application.formatting')
     p
-      | Emphasize text in a variety of ways by placing **asterisks** to bold, _underscores_ to italicize.
+      = t('fae.application.formatting_help')
       br
-      | Bold **bold**
+      = t('fae.application.bold')
       br
-      | Italicize _italic
+      = t('fae.application.italic')
 
-    h4 Headers
+    h4 = t('fae.application.headers')
     p
-      | Use up to six hashtags to identify the importance of the section header.
+      = t('fae.application.headers_help')
       br
-      | Page Header: # Page Header
+      = t('fae.apllication.headers_example')
       br
-      | Sub Header: ## Sub Header
+      = t('fae.application.subheaders_example')
 
-    h4 List
+    h4 = t('fae.application.list')
     p
-      | Format lists by swapping out the characters that lead the list item.
+      = t('fae.application.list_help')
       br
-      span Bulleted List:
+      span = t('fae.application.bulleted_list')
       br
       == ['* bullet', '* bullet 2'].join('<br />')
       br
-      span Numbered List
+      span = t('fae.application.numbered_list')
       == ['1. line item', '2. line item'].join('<br />')
 
-    h4 Paragraph break
-    p Adding a blank line in between your paragraphs makes a paragraph break.
+    h4 = t('fae.application.paragraph_break')
+    p = t('fae.application.paragraph_break_help')

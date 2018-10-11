@@ -3,7 +3,8 @@ ruby:
   title       ||= @klass_humanized.pluralize.titleize
   new_button    = !local_assigns[:new_button].eql?(false)
   new_path    ||= "new_#{fae_path}_#{@klass_singular}_path"
-  button_text ||= "Add #{title.singularize}"
+  button_text ||= t('fae.common.add', title: title.singularize)
+  export_text ||= t('fae.common.csv_export')
   csv         ||= false
   breadcrumb    = !local_assigns[:breadcrumbs].eql?(false)
 
@@ -15,7 +16,7 @@ header.content-header.js-content-header
 
   .content-header-buttons
     - if csv && @items.present?
-      a.button href="#{@index_path}.csv" Export to CSV
+      a.button href="#{@index_path}.csv" = export_text
 
     - if new_button
       - if nested
