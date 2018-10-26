@@ -8,7 +8,7 @@ By default, Fae includes a thumbnail size called `thumb` that is triggered like 
 = image_tag(item.image.asset.thumb.url)
 ```
 
-You may copy the contents of the `uploaders/fae/image_upload.rb` file and add your own options, such as mobile and tablet and call them the same way.
+You may copy the contents of the `uploaders/fae/image_uploader.rb` file and add your own options, such as mobile and tablet and call them the same way. Don't forget to also add `gem 'rmagick'` to youre gemfile and then run bundle install.
 
 ```ruby
 # encoding: utf-8
