@@ -77,6 +77,7 @@ Fae.form.ajax = {
       Fae.form.validator.length_counter.init();
       Fae.form.text.initMarkdown();
       Fae.form.checkbox.setCheckboxAsActive();
+      Fae.form.select.init();
 
       $wrapper.find('.hint').hinter();
     });
