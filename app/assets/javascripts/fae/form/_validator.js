@@ -26,10 +26,13 @@ Fae.form.validator = {
   /**
    * Validate the entire form on submit and stop it if the form is invalid
    */
-  formValidate: function () {
+  formValidate: function ($scope) {
     var _this = this;
 
-    FCH.$document.on('submit', 'form:not([data-remote=true])', function (e) {
+    if (typeof($scope) === 'undefined'){
+      $scope = FCH.$document;
+    }
+    $scope.on('submit', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
       if ($this.data('passed_validation') !== 'true') {
@@ -58,7 +61,7 @@ Fae.form.validator = {
           }
         });
 
-        _this.testValidation($this);
+        _this.testValidation($this, $scope);
 
       }
 
@@ -69,7 +72,7 @@ Fae.form.validator = {
    * Tests a forms validation after all validation checks have responded
    * Polls validations responses every 50ms to allow uniqueness AJAX calls to complete
    */
-  testValidation: function($this) {
+  testValidation: function($this, $scope) {
     var _this = this;
     _this.validation_test_count++;
 
@@ -84,9 +87,11 @@ Fae.form.validator = {
 
           $this.submit();
         } else {
-          // otherwise scroll to the top to display alerts
+          // otherwise scroll to the top to display alerts (unless in a nested form scope)
           Fae.navigation.language.checkForHiddenErrors();
-          FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
+          if (typeof($scope) === 'undefined') {
+            FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
+          }
 
           if ($(".field_with_errors").length) {
             $('.alert').slideDown('fast').delay(3000).slideUp('fast');
