@@ -8,7 +8,7 @@ By default, Fae includes a thumbnail size called `thumb` that is triggered like 
 = image_tag(item.image.asset.thumb.url)
 ```
 
-If you need to add your own image versions to Carrierwave you can copy the contents of https://github.com/wearefine/fae/blob/master/app/uploaders/fae/image_uploader.rb to `app/uploaders/fae/image_uploader.rb` of the parent application. From there you can add any custom image proccessing you like.
+If you need to add your own image versions to Carrierwave you may copy the contents of the https://github.com/wearefine/fae/blob/master/app/uploaders/fae/image_uploader.rb to `app/uploaders/fae/image_uploader.rb` of the parent application. From there you can add any custom image proccessing you like.
 
 The caveat being any bugfixes or features added to this file in Fae will now be ignored in favor of your local file. If you are updating Fae, you may want to verify this base file hasn't changed.
 
