@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170714185443) do
+ActiveRecord::Schema.define(version: 20171121212302) do
 
   create_table "acclaims", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "score"
@@ -37,16 +37,6 @@ ActiveRecord::Schema.define(version: 20170714185443) do
     t.index ["release_id"], name: "index_aromas_on_release_id", using: :btree
   end
 
-  create_table "beers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "name"
-    t.string   "seo_title"
-    t.string   "seo_description"
-    t.boolean  "on_stage"
-    t.boolean  "on_prod"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-  end
-
   create_table "article_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.integer  "position"
@@ -62,6 +52,16 @@ ActiveRecord::Schema.define(version: 20170714185443) do
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
     t.index ["article_category_id"], name: "index_articles_on_article_category_id", using: :btree
+  end
+
+  create_table "beers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "name"
+    t.string   "seo_title"
+    t.string   "seo_description"
+    t.boolean  "on_stage"
+    t.boolean  "on_prod"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "cats", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -339,6 +339,7 @@ ActiveRecord::Schema.define(version: 20170714185443) do
     t.text     "content",           limit: 65535
     t.string   "seo_title"
     t.string   "seo_description"
+    t.string   "color"
   end
 
   create_table "selling_points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

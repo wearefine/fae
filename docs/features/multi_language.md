@@ -39,13 +39,13 @@ Using Fae's generators let's quickly scaffold a model that supports multiple lan
 $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
 ```
 
-To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `translate` class method.
+To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `fae_translate` class method.
 
 ```ruby
 class Person < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
-  translate :name, :title, :intro
+  fae_translate :name, :title, :intro
 end
 
 # i.e. if English is the locale, @person.name == @person.name_en
@@ -68,10 +68,9 @@ Finally, to display the language select menu, you'll need to add `language: true
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: @klass_name, language: true
+  = render 'fae/shared/form_header', header: @klass_name, language: true
 
-    // ...
+  // ...
 ```
 
 ## Internalization of Pages and Content Blocks
@@ -94,3 +93,40 @@ end
 ```
 
 Add `languages: true` to the page's `fae/shared/form_header` partial to utilize Fae's language switcher.
+
+## In the Application
+
+To display the right translation, Rails needs to interpret the requested locale. This can be done with a simple ApplicationController method:
+
+```ruby
+# app/controllers/application_controller
+class ApplicationController < ActionController::Base
+  before_action :set_locale
+
+  private
+    def set_locale
+      I18n.locale = params[:locale] || request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first.presence || I18n.default_locale
+    end
+end
+```
+
+The above assumes that your routes support a `locale` parameter:
+
+```ruby
+# config/routes.rb
+scope '(:locale)', locale: /en|zh/ do
+  get '/' => 'pages#home', as: 'home' # / or /zh
+  get '/about' => 'pages#about', as: 'about' # /about or /zh/about
+end
+```
+
+For URL schemes that require a language locale to always be present, a separate method can be added beneath `private` in the ApplicationController:
+
+```ruby
+# Forces locale to appear in the URL, even if the request locale matches the default locale
+def default_url_options(options={})
+  {locale: I18n.locale }
+end
+```
+
+The attribute can then be retrieved normally (i.e. `@item.name` will render `@item.name_en` if `I18n.locale` is `:en`).

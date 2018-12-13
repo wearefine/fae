@@ -41,7 +41,6 @@ fae_method_name(f, attribute, options)
 | label | string | attribute.titleize | the form label |
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal |
-| dark_hint | string | | **warning: this option will be depreciated in v2.0** text that appears in a dark color scheme (`hint` will override `dark_hint` if simultaneously supplied) |
 | markdown | boolean | false | adds markdown GUI toolbar |
 | markdown_supported | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
@@ -251,6 +250,16 @@ The daterangepicker is a little different: instead of a single attribute, it acc
 ```ruby
 fae_daterange f, [:start_date, :end_date], label: 'Start/End dates'
 ```
+
+## Fae Color Picker
+
+The color picker includes alpha support but can be disabled by setting `alpha: false`
+
+```ruby
+fae_color_picker f, :color
+```
+
+![Suffix](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/colorpicker.gif)
 
 ## Fae Prefix
 

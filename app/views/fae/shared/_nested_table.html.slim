@@ -9,9 +9,7 @@ ruby:
 
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
-  # @depreciation - remove header option in v2.0
-  header              ||= assoc_name.titleize             # 'Restaurant Bars'
-  title               ||= header
+  title               ||= assoc_name.titleize             # 'Restaurant Bars'
   add_button_text     ||= "Add #{title.singularize}"
   ordered             ||= false
   has_thumb           ||= false
@@ -35,7 +33,7 @@ ruby:
     new_path += "item_id=#{parent_item.id}&=item_class=#{parent_item.class.to_s}"
   end
 
-  options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, header: header, add_button_text: add_button_text, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
+  options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, add_button_text: add_button_text, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
   options_for_table[:parent_item] = parent_item unless index
 
 section.addedit-form.js-addedit-form class="#{'content' if index}"

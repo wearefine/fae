@@ -22,20 +22,14 @@ feature 'fae_input' do
   end
 
   scenario 'should display common helper texts' do
-    expect(page).to have_content('Company Name | Keyword-driven description of the page section. Approx 65 characters.')
-    expect(page).to have_content('Displayed in search engine results. Under 150 characters.')
+    expect(page).to have_content('A descriptive page title of ~50-65 characters. Displayed in search engine results.')
+    expect(page).to have_content('A helpful page summary of 320 characters or less. Displayed in search engine results.')
   end
 
   scenario 'should display hint when clicked', js: true do
     expect(page).to_not have_content('Normal Hint')
-    page.find('.release_name .hinter-clicker').trigger('click')
-    expect(page).to have_content('Normal Hint')
-  end
-
-  scenario 'should display dark hint when clicked', js: true do
-    expect(page).to_not have_content('Dark Hint')
     page.find('.release_vintage .hinter-clicker').trigger('click')
-    expect(page).to have_content('Dark Hint')
+    expect(page).to have_content('Normal Hint')
   end
 
   scenario 'should hide label on hidden fields', js: true do

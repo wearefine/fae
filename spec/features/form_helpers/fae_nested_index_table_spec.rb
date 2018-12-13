@@ -54,4 +54,14 @@ feature 'fae_nested_index_table' do
     expect(page.find('.cats .content table')).to_not have_content('Snowball McPuffypants')
   end
 
+  scenario 'should allow strings and integers in cols', js: true do
+    cat = FactoryGirl.create(:cat, name: 'Snowball McPuffypants', description: 'Snowy')
+
+    admin_login
+    visit admin_cats_path
+
+    expect(page.find('.cats .content table')).to have_content('Snowy')
+    expect(page.find('.cats .content table')).to have_content('9')
+  end
+
 end

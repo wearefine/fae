@@ -14,9 +14,6 @@ Fae.setup do |config|
     ja: 'Japanese'
   }
 
-  # has_top_nav has been deprecated, but keeping in to ensure definition doesn't rasie exceptions
-  config.has_top_nav = true
-
-  config.per_page = 20
+  config.per_page = 5
 
 end

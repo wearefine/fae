@@ -78,11 +78,7 @@ describe 'setup#create_first_user' do
       password_confirmation: 'password'
     }
 
-    if Rails::VERSION::MAJOR > 4
-      post fae.first_user_path, params: { user: user_params }
-    else
-      post fae.first_user_path, user: user_params
-    end
+    post fae.first_user_path, params: { user: user_params }
 
     expect(response).to redirect_to(fae.root_path)
   end

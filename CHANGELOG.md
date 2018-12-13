@@ -1,5 +1,52 @@
 # Fae Changelog
 
+## 2.0
+
+- enhancements
+    + Add Rails 5.1 and 5.2 support
+    + Consolidate `form_header` partial [#342](https://github.com/wearefine/fae/pull/342)
+    + Rename translate to fae_translate to avoid conflicts [#375](https://github.com/wearefine/fae/pull/375)
+    + Add quickstart content to dashboard [#379](https://github.com/wearefine/fae/pull/379)
+    + Update gem dependency versions [#395](https://github.com/wearefine/fae/pull/395)
+    + Add Rails version to migrations [#396](https://github.com/wearefine/fae/pull/396)
+    + Make polymorphic assets optional as required by Rails 5.1+ [#402](https://github.com/wearefine/fae/pull/402)
+    + Small content fixes [#403](https://github.com/wearefine/fae/pull/403)
+- bug fixes
+    + Allow integers to be passed through nested table columns [#405](https://github.com/wearefine/fae/pull/405)
+- deprecations
+    + Deprecate Rails 4 support [#338](https://github.com/wearefine/fae/pull/338)
+    + Deprecate <1.3 markup ([#332](https://github.com/wearefine/fae/pull/332), [#343](https://github.com/wearefine/fae/pull/343))
+    + Deprecate attr_toggle in favor of fae_toggle [#355](https://github.com/wearefine/fae/pull/355)
+
+## 1.7.1
+
+- enhancements
+    + Add Simplified Chinese translations [#359](https://github.com/wearefine/fae/pull/359)
+    + Update carrierwave, rmagick and kaminari dependencies [#380](https://github.com/wearefine/fae/pull/380)
+    + Better documentation for dynamic relationships on static pages [#363](https://github.com/wearefine/fae/pull/363)
+- bug fixes
+    + Prevent duplicate submissions on nested forms [#383](https://github.com/wearefine/fae/pull/383)
+    + `fae_display_field` is supposed to be scoped to the instance not the class [#374](https://github.com/wearefine/fae/pull/374)
+
+## 1.7
+
+- enhancements
+    + Add color picker form helper [#345](https://github.com/wearefine/fae/pull/345)
+    + Decouple pagination from filters [#328](https://github.com/wearefine/fae/pull/328)
+    + Allow blank labels for fae_content_form [#360](https://github.com/wearefine/fae/pull/360)
+    + Resolve Sass warnings about extending compound selectors [#349](https://github.com/wearefine/fae/pull/349)
+    + Add support for decorator pattern [#361](https://github.com/wearefine/fae/pull/361)
+    + Documentation for language, Heroku, and files [#331](https://github.com/wearefine/fae/pull/331)
+    + Document specify static_page association as optional [#356](https://github.com/wearefine/fae/pull/356)
+    + Remove test_files from gemspec [#357](https://github.com/wearefine/fae/pull/357)
+- bug fixes
+    + Wait for all validation checks to complete before submitting form [#335](https://github.com/wearefine/fae/pull/335)
+    + Don't assume objects for cloning have on_prod attr [#330](https://github.com/wearefine/fae/pull/330)
+    + Remove include_blank duplicate [#346](https://github.com/wearefine/fae/pull/346)
+    + Show action returns a 404 by default [#339](https://github.com/wearefine/fae/pull/339)
+    + Style flash message errors appropriately [#333](https://github.com/wearefine/fae/pull/333)
+    + Documentation formatting & vulnerability update [#358](https://github.com/wearefine/fae/pull/358)
+
 ## 1.6
 
 - enhancements

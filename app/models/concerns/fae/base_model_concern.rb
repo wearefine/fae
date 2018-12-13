@@ -10,6 +10,10 @@ module Fae
       include Fae::Sortable
     end
 
+    def fae_display_field
+      # override this method in your model
+    end
+
     def fae_nested_parent
       # override this method in your model
     end
@@ -24,10 +28,6 @@ module Fae
     end
 
     module ClassMethods
-      def fae_display_field
-        # override this method in your model
-      end
-
       def for_fae_index
         order(order_method)
       end
@@ -43,12 +43,6 @@ module Fae
         else
           raise "No order_method found, please define for_fae_index as a #{name} class method to set a custom scope."
         end
-      end
-
-      # @depreciation - deprecate in v2.0
-      def filter_all
-        # override this method in your model
-        for_fae_index
       end
 
       def filter(params)
@@ -69,7 +63,7 @@ module Fae
         end
       end
 
-      def translate(*attributes)
+      def fae_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
             self.send "#{attribute}_#{I18n.locale}"

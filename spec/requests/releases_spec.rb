@@ -57,3 +57,15 @@ describe 'releases#create' do
   end
 
 end
+
+describe 'releases#show' do
+
+  it 'should return not found' do
+    release = FactoryGirl.create(:release)
+    admin_login
+    get admin_release_path(release)
+
+    expect(response.status).to eq(404)
+  end
+
+end

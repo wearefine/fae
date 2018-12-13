@@ -35,4 +35,5 @@ Fae.form.cancel = {
 
     $('form').on('change', 'input, textarea, select', updateCancel);
   }
+
 };

@@ -17,7 +17,7 @@ module Fae
         maximum: Fae.max_image_upload_size.megabytes.to_i
       }
 
-    belongs_to :imageable, polymorphic: true, touch: true
+    belongs_to :imageable, polymorphic: true, touch: true, optional: true
 
     def readonly?
       false

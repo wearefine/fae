@@ -20,7 +20,7 @@ module Fae
       custom_options attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
-      set_prompt f, attribute, options
+      set_prompt f, attribute, options if !options[:include_blank].is_a?(String)
 
       f.association attribute, options
     end
@@ -74,6 +74,15 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def fae_color_picker(f, attribute, options={})
+      options.update(
+        as: :string,
+        input_class: "js-color-picker color-picker #{'alpha-slider' unless options[:alpha] == false}",
+        input_html: { value: f.object.send(attribute).to_s } # value needs to be set to clear color picker
+      )
+      fae_input f, attribute, options
+    end
+
     def fae_daterange(f, attr_array, options={})
       raise "Fae::MissingRequiredOption: fae_daterange requires the 'label' option." if options[:label].blank?
       raise "Fae::MalformedArgument: fae_daterange requires an array of two attributes as it's second argument." unless attr_array.present? && attr_array.is_a?(Array) && attr_array.length == 2
@@ -108,8 +117,7 @@ module Fae
     end
 
     def label_and_hint(attribute, options)
-      # @depreciation - remove dark_hint option in v2.0
-      hint = options[:hint] || options[:dark_hint]
+      hint = options[:hint]
 
       options[:helper_text] = attempt_common_helper_text(attribute) if options[:helper_text].blank?
 
@@ -165,7 +173,7 @@ module Fae
 
     def add_input_class(options, class_name)
       if options.key?(:input_html)
-        options[:input_html] = { class: "#{options[:input_html][:class]} #{class_name}" }
+        options[:input_html].merge!({class: "#{options[:input_html][:class]} #{class_name}"})
       else
         options[:input_html] = { class: class_name }
       end
@@ -220,9 +228,9 @@ module Fae
     def attempt_common_helper_text(attribute)
       case attribute
       when :seo_title
-       return 'Company Name | Keyword-driven description of the page section. Approx 65 characters.'
+       return 'A descriptive page title of ~50-65 characters. Displayed in search engine results.'
       when :seo_description
-       return 'Displayed in search engine results. Under 150 characters.'
+       return 'A helpful page summary of 320 characters or less. Displayed in search engine results.'
       else
        ''
       end

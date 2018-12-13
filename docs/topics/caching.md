@@ -1,12 +1,12 @@
 # Caching within Fae
 
-Fae internally caching caches a couple objects to help with performance. Before you can utilize this, you'll need to do a couple steps first.
+Fae internally caches a couple objects to help with performance. Before you can utilize this, you'll need to do a couple steps first.
 
 ## Setup
 
 ### 1. Enable caching in the parent app.
 
-You'll need setup caching in the parent app as you normally would. This includes enabling `perform_caching` and setting a `cache_store` in you environment configs.
+You'll need setup caching in the parent app as you normally would. This includes enabling `perform_caching` and setting a `cache_store` in your environment configs.
 
 We're fans of memcached and the [Dalli gem](https://github.com/petergoldstein/dalli).
 

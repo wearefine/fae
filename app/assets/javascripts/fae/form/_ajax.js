@@ -10,6 +10,7 @@ Fae.form.ajax = {
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
+    this.$nested_form = $('.nested-form');
 
     this.addEditLinks();
     this.addEditSubmission();
@@ -66,13 +67,21 @@ Fae.form.ajax = {
         $wrapper.find('.input.file').fileinputer();
       }
 
+      // Bind validation to nested form fields added by AJAX
+      Fae.form.validator.bindValidationEvents(this.$nested_form);
+
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
       Fae.form.dates.initDateRangePicker();
+      Fae.form.color.initColorpicker();
       Fae.form.slugger.addListener();
       Fae.form.validator.length_counter.init();
       Fae.form.text.initMarkdown();
       Fae.form.checkbox.setCheckboxAsActive();
+      Fae.form.select.init();
+
+      // validate nested form fields on submit
+      Fae.form.validator.formValidate(this.$nested_form);
 
       $wrapper.find('.hint').hinter();
     });
@@ -122,18 +131,16 @@ Fae.form.ajax = {
           if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
             _this._addEditReplaceAndReinit($this, $html.html(), $target);
-          } else if ($html.hasClass('nested-form') || $html.hasClass('form_content-wrapper')) {
-
-            // @depreciation - remove `|| $html.hasClass('form_content_wrapper')` from above conditional as well as the following ternary (value should just be '.nested-form') in v2.0
-            var form_wrapper_selector = $html.hasClass('nested-form') ? '.nested-form' : '.form_content-wrapper';
+          } else if ($html.hasClass('nested-form')) {
 
             // we're returning the form due to an error, just replace the form
-            $this.find( form_wrapper_selector ).replaceWith(data);
+            $this.find('.nested-form' ).replaceWith($html);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();
+            Fae.form.color.initColorpicker();
             Fae.form.validator.length_counter.init();
             Fae.form.checkbox.setCheckboxAsActive();
             Fae.form.text.initMarkdown();
@@ -284,11 +291,21 @@ Fae.form.ajax = {
   },
 
   /**
-   * Attaching click handlers to #main_content to allow ajax replacement
+   * Attaching click handlers to #js-main-content to allow ajax replacement
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
     $('#js-main-content, .login-form > form')
+
+      /**
+       * For the delete button on file input
+       */
+      .on('click', '.js-file-clear', function(e) {
+        e.preventDefault();
+        var $parent = $(this).parent();
+        $parent.next().show();
+        $parent.hide();
+      })
 
       /**
        * For the yes/no slider

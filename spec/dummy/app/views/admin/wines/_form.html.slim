@@ -1,6 +1,5 @@
 = simple_form_for(['admin', @item]) do |f|
-  header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: @klass_name, languages: true
+  == render 'fae/shared/form_header', header: @klass_name, languages: true
 
   main.content
     = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'
@@ -14,7 +13,7 @@
     = fae_input f, :food_pairing_ja
 
 - if params[:action] == 'edit'
-  section.main_content-section#oregon_winemakers_section
+  section.content#oregon_winemakers_section
     = render 'fae/shared/nested_table',
       assoc: :oregon_winemakers,
       assoc_name: 'winemakers',
@@ -27,7 +26,7 @@
       header: 'Oregon Winemaker',
       title: 'Oregon Winemakers'
 
-  section.main_content-section#california_winemakers_section
+  section.content#california_winemakers_section
     = render 'fae/shared/nested_table',
       assoc: :california_winemakers,
       assoc_name: 'winemakers',

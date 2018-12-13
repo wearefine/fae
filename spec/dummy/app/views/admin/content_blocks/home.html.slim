@@ -1,12 +1,14 @@
 = simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
-  header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: @item, f: f
+  == render 'fae/shared/form_header', header: @item, f: f
 
   main.content
     = fae_input f, :title
     = fae_content_form f, :header
     = fae_content_form f, :hero
     = fae_content_form f, :email
+    = fae_content_form f, :phone
+    = fae_content_form f, :cell_phone, label: false
+    = fae_content_form f, :work_phone, label: ''
     = fae_content_form f, :introduction
     = fae_content_form f, :introduction_2, markdown: true
     = fae_content_form f, :phone, input_options: { input_html: { class: 'phone-mask' } }, helper_text: 'Numbers only, do not format', label: 'Phone #'

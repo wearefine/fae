@@ -32,7 +32,7 @@ module Fae
       end
     end
 
-    def attr_toggle(item, column)
+    def fae_toggle(item, column)
       active = item.send(column)
       link_class = active ? 'slider-yes-selected' : ''
       model_name = item.class.to_s.gsub('::','__').underscore.pluralize
@@ -46,8 +46,6 @@ module Fae
         </div>'.html_safe
       end
     end
-    # for backwards compatibility
-    alias_method :fae_toggle, :attr_toggle
 
     def fae_clone_button(item)
       return if item.blank?
@@ -137,7 +135,7 @@ module Fae
     end
 
     def fae_paginate(items)
-      content_tag :nav, class: 'pagination' do
+      content_tag :nav, class: 'pagination', data: { filter_path: "#{@index_path}/filter" } do
         paginate items, theme: 'fae'
       end
     end

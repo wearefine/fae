@@ -474,8 +474,8 @@ tbody {
   z-index: 1;
 
   &:after {
-    @extend .icon-arrow_down:before;
     @include icon-stuff;
+    content: fae-icon(arrow_down);
     vertical-align: middle;
     font-size: 5px;
     color: $c-text-sub;
@@ -548,8 +548,8 @@ tbody {
     color: $c-warning-content;
 
     &:before {
-      @extend .icon-alert:before;
       @include icon-stuff;
+      content: fae-icon(alert);
       margin-right: 10px;
     }
 
@@ -611,7 +611,7 @@ tbody {
 
   &:before {
     @include icon-stuff;
-    @extend .icon-delete_x:before;
+    content: fae-icon(delete_x);
     font-size: 12px;
     margin-right: 6px;
   }

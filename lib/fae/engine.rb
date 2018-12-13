@@ -19,6 +19,11 @@ module Fae
     config.autoload_paths += %W(#{config.root}/lib)
 
     config.to_prepare do
+      # Require decorators from main application
+      Dir.glob(Rails.root.join('app', 'decorators', '**', '*_decorator.rb')).each do |decorator|
+        Rails.configuration.cache_classes ? require(decorator) : load(decorator)
+      end
+
       ApplicationController.helper(ApplicationHelper)
     end
 

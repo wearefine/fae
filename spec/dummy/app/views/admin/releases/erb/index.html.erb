@@ -14,7 +14,7 @@
     <%= fae_filter_select :grouped_association, collection: Aroma.all, grouped_by: :release %>
   <% end %>
 
-  <table class="main_table-sort_columns">
+  <table>
     <thead>
       <tr>
         <th>Name</th>
@@ -22,11 +22,11 @@
         <th>Modified</th>
         <th>Slug</th>
         <th>Price</th>
-        <th class="main_table-header-live" data-sorter="false">On Stage</th>
-        <th class="main_table-header-live" data-sorter="false">On Prod</th>
-        <th class="main_table-header-edit" data-sorter="false">Edit</th>
-        <th class="main_table-header-clone" data-sorter="false">Clone</th>
-        <th class="main_table-header-delete" data-sorter="false">Delete</th>
+        <th class="-action-wide">On Stage</th>
+        <th class="-action-wide">On Prod</th>
+        <th class="-action-wide" data-sorter="false">Edit</th>
+        <th class="-action-wide" data-sorter="false">Clone</th>
+        <th class="-action-wide" data-sorter="false">Delete</th>
       </tr>
     </thead>
 
@@ -34,24 +34,20 @@
       <% if @items.present? %>
         <% @items.each do |item| %>
           <tr id="<%= "#{@klass_singular}_#{item.id}" %>">
-            <td class="main_table-description-item"><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
+            <td><%= link_to item.fae_display_field, edit_admin_release_path(item) %></td>
             <td><%= item.wine.name_en %></td>
             <td><%= fae_date_format item.updated_at %></td>
             <td><%= item.slug %></td>
             <td><%= item.price %></td>
             <td><%= fae_toggle item, :on_stage %></td>
             <td><%= fae_toggle item, :on_prod %></td>
-            <td class="main_table-edit">
-              <%= link_to edit_admin_release_path(item), class: "main_table-action" do %>
+            <td>
+              <%= link_to edit_admin_release_path(item) do %>
                 <span class="icon-edit"></span>
               <% end %>
             </td>
             <td><%= fae_clone_button item %></td>
-            <td class="main_table-delete">
-              <%= link_to ['admin', item], method: :delete, data: { confirm: t('fae.delete_confirmation') }, class: 'main_table-action' do %>
-                <span class="icon-delete_x"></span>
-              <% end %>
-            </td>
+            <td><%= fae_delete_button item %></td>
           </tr>
         <% end %>
       <% else %>

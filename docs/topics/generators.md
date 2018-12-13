@@ -2,17 +2,19 @@
 
 Once you have Fae installed, you're ready to start generating your data model. Fae comes with a few generators that work similarly to the ones in Rails. The idea is scaffolding a model with these generators will give you a section to create, edit and delete objects.
 
-* [Fae Scaffold](#fae-scaffold)
-* [Fae Nested Scaffold](#fae-nested-scaffold)
-* [Fae Page](#fae-page)
+* [Scaffold](#scaffold)
+* [Nested Scaffold](#nested-scaffold)
+* [Nested Index Scaffold](#nested-index-scaffold)
+* [Page](#page)
 
 ---
 
-## Fae Scaffold
+## Scaffold
 
 ```bash
 rails g fae:scaffold [ModelName] [field:type] [field:type]
 ```
+
 | option | description |
 |------- | ----------- |
 | ModelName | singular camel-cased model name |
@@ -46,7 +48,7 @@ rails g fae:scaffold Person first_name last_name title body:text date_of_birth:d
 ```
 
 
-## Fae Nested Scaffold
+## Nested Scaffold
 
 ```bash
 rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel]
@@ -58,15 +60,17 @@ rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-mode
 
 The nested scaffold creates a model that is meant to be nested in another object's form via the `nested_table` partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
 
-## fae:nested_index_scaffold
+## Nested Index Scaffold
 
 ```bash
 rails g fae:nested_index_scaffold [ModelName] [field:type] [field:type]
 ```
 
-The nested index scaffold creates a normal model and a controller that supports the nested_index_form partial. This generator is very similar to `fae:scaffold`, the main difference is in the views that are setup to serve the nested form.
+The nested index scaffold creates a section to manage the object similar to `fae:scaffold`. The main difference there is no separate form view, all items are managed on the index view via AJAXed nested forms.
 
-## Fae Page
+This is helpful for objects that have very few attributes, but aren't nested under another object. E.g. categories, etc.
+
+## Page
 
 ```bash
 rails g fae:page [PageName] [field:type] [field:type]

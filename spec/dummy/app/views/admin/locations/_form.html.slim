@@ -1,8 +1,7 @@
 = simple_form_for(['admin', @item]) do |f|
-  header.content-header.js-content-header
-    = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
+  == render 'fae/shared/form_header', header: @klass_name, f: f, item: @item
 
   section.content
     = fae_input f, :name
 
-    = fae_association f, :contact, collection: Person.all
+    = fae_association f, :contact, collection: Person.all, include_blank: 'Select One'

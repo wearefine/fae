@@ -14,9 +14,6 @@ Rails.application.routes.draw do
     resources :releases do
       post 'filter', on: :collection
     end
-    resources :legacy_releases do
-      post 'filter', on: :collection
-    end
     resources :wines
     resources :varietals
     resources :acclaims
@@ -25,6 +22,7 @@ Rails.application.routes.draw do
     resources :people
     resources :aromas
     resources :teams do
+      post 'filter', on: :collection
       resources :coaches
       resources :players
       resources :jerseys

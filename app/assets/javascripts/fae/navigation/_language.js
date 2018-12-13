@@ -83,7 +83,7 @@ Fae.navigation.language = {
    */
   checkForHiddenErrors: function() {
     if (this.el.$select.length && $('div.field_with_errors:hidden').length && !FCH.exists('.hidden_errors')) {
-      $(Fae.content_selector).prepend('<div class="hidden_errors field_with_errors"><span class="error">There are hidden errors. Click "All Languages" in the language nav to view all errors.</span></div>');
+      $('.content').prepend('<div class="hidden_errors field_with_errors"><span class="error">There are hidden errors. Click "All Languages" in the language nav to view all errors.</span></div>');
     }
   }
 };

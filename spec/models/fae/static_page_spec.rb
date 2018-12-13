@@ -18,11 +18,11 @@ describe Fae::StaticPage do
 
     it 'should attach only once' do
       hp = HomePage.instance
-      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
+      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :cell_phone, :work_phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
 
       # trigger instance twice
       hp = HomePage.instance
-      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
+      expect(hp.class.reflect_on_all_associations(:has_one).map(&:name)).to eq([:header, :hero, :email, :phone, :cell_phone, :work_phone, :introduction, :introduction_2, :body, :hero_image, :welcome_pdf])
     end
 
     it 'should attach language associations when present' do
@@ -89,6 +89,39 @@ describe Fae::StaticPage do
       expect(@home_page.as_json[:welcome_pdf]['asset']['url']).to include('test.pdf')
     end
 
+  end
+
+  describe 'when decorated' do
+    it 'should respond to decorator method' do
+      static_page = FactoryGirl.build_stubbed(:fae_static_page)
+
+      expect(static_page.respond_to?('instance_is_decorated')).to eq true
+      expect(static_page.instance_is_decorated).to eq('Fae::StaticPage instance is decorated')
+    end
+  end
+
+  describe '.supports_validation' do
+    
+    context 'when the type is supported' do
+      it 'should return false without validates hash' do
+        expect(Fae::StaticPage.supports_validation(Fae::TextField, Fae::TextField)).to eq(false)
+        expect(Fae::StaticPage.supports_validation(Fae::TextField, { type: Fae::TextField })).to eq(false)
+      end
+
+      it 'should return true with validates hash' do
+        value = { type: Fae::TextField, validates: { presence: true } }
+        expect(Fae::StaticPage.supports_validation(Fae::TextField, value)).to eq(true)
+      end
+    end
+
+    context 'when the type is not supported' do
+      it 'should always return false' do
+        without_validates = { type: Fae::File }
+        with_validates = { type: Fae::Image, validates: { presence: true } }
+        expect(Fae::StaticPage.supports_validation(Fae::File, without_validates)).to eq(false)
+        expect(Fae::StaticPage.supports_validation(Fae::Image, with_validates)).to eq(false)
+      end
+    end
   end
 
 end

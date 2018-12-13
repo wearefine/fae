@@ -6,7 +6,6 @@ module Fae
     def go
       generate_model
       generate_nested_index_controller_file
-      inject_display_field_to_model
       generate_view_files
       add_route
       inject_nav_item

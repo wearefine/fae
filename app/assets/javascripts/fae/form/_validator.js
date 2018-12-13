@@ -8,9 +8,13 @@
 Fae.form.validator = {
 
   is_valid: '',
+  validations_called: 0,
+  validations_returned: 0,
+  validation_test_count: 0,
 
   init: function () {
-    if (FCH.exists('form')) {
+    // validate all forms except the login form
+    if ($('form').not('#login_form').length) {
       this.password_confirmation_validation.init();
       this.passwordPresenceConditional();
       this.bindValidationEvents();
@@ -21,46 +25,102 @@ Fae.form.validator = {
 
   /**
    * Validate the entire form on submit and stop it if the form is invalid
-   * @fires {@link navigation.language.checkForHiddenErrors}
    */
-  formValidate: function () {
+  formValidate: function ($scope) {
     var _this = this;
-    FCH.$document.on('submit', 'form', function (e) {
-      _this.is_valid = true;
 
-      // Scope the data-validation only to the form submitted
-      $('[data-validate]', $(this)).each(function () {
-        if ($(this).data('validate').length) {
-          _this._judgeIt($(this));
-        }
-      });
+    if (typeof($scope) === 'undefined'){
+      $scope = FCH.$document;
+    }
+    $scope.on('submit', 'form:not([data-remote=true])', function (e) {
+      var $this = $(this);
 
-      // Catch visible errors for image/file inputs hitting the fae config file size limiter
-      $('.input.file', $(this)).each(function () {
-        if ($(this).hasClass('field_with_errors')) {
-          _this.is_valid = false
-        }
-      });
+      if ($this.data('passed_validation') !== 'true') {
 
-      if (_this.is_valid === false) {
-        Fae.navigation.language.checkForHiddenErrors();
-        FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
+        // pause form submission
         e.preventDefault();
+
+        // set defaults
+        _this.is_valid = true;
+        _this.validations_called = 0;
+        _this.validations_returned = 0;
+        _this.validation_test_count = 0;
+
+        // Scope the data-validation only to the form submitted
+        $('[data-validate]', $this).each(function () {
+          if ($(this).data('validate').length) {
+            _this.validations_called++;
+            _this._judgeIt($(this));
+          }
+        });
+
+        // Catch visible errors for image/file inputs hitting the fae config file size limiter
+        $('.input.file', $this).each(function () {
+          if ($(this).hasClass('field_with_errors')) {
+            _this.is_valid = false;
+          }
+        });
+
+        _this.testValidation($this, $scope);
+
       }
 
-      if ($(".field_with_errors").length) {
-        $('.alert').slideDown('fast').removeClass('hide').delay(3000).slideUp('fast');
-      }
     });
+  },
+
+  /**
+   * Tests a forms validation after all validation checks have responded
+   * Polls validations responses every 50ms to allow uniqueness AJAX calls to complete
+   */
+  testValidation: function($this, $scope) {
+    var _this = this;
+    _this.validation_test_count++;
+
+    setTimeout(function(){
+
+      // if all the validation checks have returned a response
+      if (_this.validations_called === _this.validations_returned) {
+
+        if (_this.is_valid) {
+          // if form is valid, submit it
+          $this.data('passed_validation', 'true');
+
+          $this.submit();
+        } else {
+          // otherwise scroll to the top to display alerts (unless in a nested form scope)
+          Fae.navigation.language.checkForHiddenErrors();
+          if (typeof($scope) === 'undefined') {
+            FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
+          }
+
+          if ($(".field_with_errors").length) {
+            $('.alert').slideDown('fast').delay(3000).slideUp('fast');
+          }
+        }
+
+      } else {
+        // check again if it hasn't run more than 50 times
+        // (to prevent against infinite loop)
+        if (_this.validation_test_count < 50) {
+          _this.testValidation($this);
+        }
+      }
+
+    }, 50);
+
   },
 
   /**
    * Bind validation events based on input type
    */
-  bindValidationEvents: function () {
+  bindValidationEvents: function ($scope) {
     var _this = this;
 
-    $('[data-validate]').each(function () {
+    if (typeof($scope) === 'undefined'){
+      $scope = $('body');
+    }
+
+    $scope.find('[data-validate]').each(function () {
       var $this = $(this);
 
       if ($this.data('validate').length) {
@@ -97,9 +157,11 @@ Fae.form.validator = {
 
     judge.validate($input[0], {
       valid: function () {
+        _this.validations_returned++;
         _this._createSuccessClass($input);
       },
       invalid: function (input, messages) {
+        _this.validations_returned++;
         messages = _this._removeIgnoredErrors(messages);
         if (messages.length) {
           _this.is_valid = false;
@@ -161,9 +223,9 @@ Fae.form.validator = {
 
     var $wrapper = $input.closest('.input');
     if ($wrapper.children('.error').length) {
-      $wrapper.children('.error').text(messages.join(','));
+      $wrapper.children('.error').text(messages.join(', '));
     } else {
-      $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(',') + "</span>");
+      $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(', ') + "</span>");
     }
   },
 
@@ -211,12 +273,13 @@ Fae.form.validator = {
       // if the kind matches, remove it from the array
       if (validations[i]['kind'] === kind) {
         validations.splice(i, 1);
+        i--;
+      } else {
+        // otherwise convert JSON back to a string
+        validations[i] = JSON.stringify(validations[i]);
       }
-
-      // convert JSON back to a string
-      validations[i] = JSON.stringify(validations[i]);
     }
-    $field.attr('data-validate', '[' + validations + ']');
+    $field.data('validate', '[' + validations + ']');
   },
 
   /**
