@@ -24,7 +24,7 @@ main.content
         - @items.each do |change|
           tr
             td = change.user.full_name if change.user.present?
-            td = change_item_link(change)
+            td = change.change_item_link
             td = change.change_type
             td = change.updated_attributes.join(', ') if change.updated_attributes.present?
             td = fae_datetime_format(change.updated_at)
