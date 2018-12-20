@@ -88,6 +88,7 @@ Fae.form.filtering = {
       // update search param when form submits
       .on('submit', function(ev) {
         $('.js-reset-btn').show();
+        $('.js-reset-btn').removeClass('hidden');
         _this.updateFryrAndResetPaging('search', $('#filter_search').val());
         return false;
       })
