@@ -118,6 +118,7 @@ Fae.form.filtering = {
         _this.updateFryrAndResetPaging(key, value);
 
         $('.js-reset-btn').show();
+        $('.js-reset-btn').removeClass('hidden');
       })
 
       // update hash when date inputs changed
