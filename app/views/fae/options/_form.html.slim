@@ -9,6 +9,7 @@
 
   section.content
     = fae_input f, :title, label: t('fae.options.project.name')
+    = fae_input f, :highlight_color, helper_text: 'Enter hex color code as "#9AA142".'
     = fae_input f, :time_zone, wrapper_class: 'select'
     = fae_input f, :live_url, label: t('fae.options.live_url'), helper_text: t('fae.options.url_helper')
     = fae_input f, :stage_url, label: t('fae.options.stage_url'), helper_text: t('fae.options.url_helper')
