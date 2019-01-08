@@ -1,4 +1,4 @@
-class CreateValidationTesters < ActiveRecord::Migration
+class CreateValidationTesters < ActiveRecord::Migration[4.2]
   def change
     create_table :validation_testers do |t|
       t.string :name

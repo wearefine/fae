@@ -1,0 +1,26 @@
+version: '3.3'
+volumes:
+  gems:
+services:
+  db:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=
+      - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+    ports:
+      - '3307:3306'
+    volumes:
+      - /private/app/dbs:/var/lib/mysql
+  app:
+    build: .
+    command: /bin/bash -c "bundle check || bundle install && cd spec/dummy && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
+    volumes:
+      - gems:/gems
+      - .:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_ENV=development
+      - DEV_MYSQL_HOST=db
+    depends_on:
+      - db
