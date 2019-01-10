@@ -79,6 +79,7 @@ Fae.form.ajax = {
       Fae.form.text.initMarkdown();
       Fae.form.checkbox.setCheckboxAsActive();
       Fae.form.select.init();
+      Fae.tables.rowSorting();
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);
@@ -117,7 +118,8 @@ Fae.form.ajax = {
 
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
-        var $this = $(this);
+        // find closet addedit form in case they are nested
+        var $closest_addedit_form = $target.closest('.js-addedit-form');
 
         // if its the new or old remotipart, return the html
         var $html = $(data).length === 1 ? $(data) : $(data)[2];
@@ -130,13 +132,13 @@ Fae.form.ajax = {
         if ($html) {
           if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
-            _this._addEditReplaceAndReinit($this, $html.html(), $target);
+            _this._addEditReplaceAndReinit($closest_addedit_form, $html.html(), $target);
           } else if ($html.hasClass('nested-form')) {
 
             // we're returning the form due to an error, just replace the form
-            $this.find('.nested-form' ).replaceWith($html);
-            $this.find('.select select').fae_chosen();
-            $this.find('.input.file').fileinputer();
+            $closest_addedit_form.find('.nested-form' ).replaceWith($html);
+            $closest_addedit_form.find('.select select').fae_chosen();
+            $closest_addedit_form.find('.input.file').fileinputer();
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();
@@ -145,7 +147,7 @@ Fae.form.ajax = {
             Fae.form.checkbox.setCheckboxAsActive();
             Fae.form.text.initMarkdown();
 
-            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
+            FCH.smoothScroll($closest_addedit_form.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
         }
 
