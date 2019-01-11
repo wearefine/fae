@@ -21,10 +21,6 @@
   padding-bottom: 0;
   display: block; // IE, Safari don't treat <main> as a block element
 
-  .content {
-    padding: 30px 0;
-  }
-
   &.-bottom-shim {
     padding-bottom: 150px;
   }
