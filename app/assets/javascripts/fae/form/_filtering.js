@@ -109,8 +109,8 @@ Fae.form.filtering = {
       })
 
       // update hash when filter dropdowns changed
-      .on('change', 'select', function() {
-        // get key and value from select
+      .on('change', 'select,input', function() {
+        // get key and value from select or
         var key = $(this).attr('id').split('filter_')[1];
         var value = $(this).val();
 
