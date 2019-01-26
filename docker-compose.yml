@@ -12,7 +12,7 @@ services:
     volumes:
       - /private/app/dbs:/var/lib/mysql
   app:
-    build: .
+    image: wearefine/ruby:2.3.1
     command: /bin/bash -c "bundle check || bundle install && cd spec/dummy && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
     volumes:
       - gems:/gems
