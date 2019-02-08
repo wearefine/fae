@@ -5,7 +5,7 @@ describe Fae::BaseModelConcern do
   describe '#to_csv' do
     context 'when to_csv is run' do
       it 'it should return a csv with the correct data items' do
-        release1 = FactoryGirl.create(:release, id: 1, release_date: Date.today)
+        release1 = FactoryBot.create(:release, id: 1, release_date: Date.today)
         @items = Release.for_fae_index
         @csv = CSV.parse(@items.to_csv)
         expect(@csv.first) == Release.column_names
@@ -23,14 +23,14 @@ describe Fae::BaseModelConcern do
   describe '#fae_nested_parent' do
     context 'when defined in a model' do
       it 'should return a symbol' do
-        aroma = FactoryGirl.build_stubbed(:aroma)
+        aroma = FactoryBot.build_stubbed(:aroma)
         expect(aroma.fae_nested_parent).to eq(:release)
       end
     end
 
     context 'when not defined in a model' do
       it 'should return nil' do
-        release = FactoryGirl.build_stubbed(:release)
+        release = FactoryBot.build_stubbed(:release)
         expect(release.fae_nested_parent).to eq(nil)
       end
     end
@@ -39,14 +39,14 @@ describe Fae::BaseModelConcern do
   describe '#fae_nested_foreign_key' do
     context 'when #fae_nested_parent is defined in a model' do
       it 'should return a foreign key' do
-        aroma = FactoryGirl.build_stubbed(:aroma)
+        aroma = FactoryBot.build_stubbed(:aroma)
         expect(aroma.fae_nested_foreign_key).to eq('release_id')
       end
     end
 
     context 'when #fae_nested_parent is not defined in a model' do
       it 'should return nil' do
-        release = FactoryGirl.build_stubbed(:release)
+        release = FactoryBot.build_stubbed(:release)
         expect(release.fae_nested_foreign_key).to eq(nil)
       end
     end
@@ -54,7 +54,7 @@ describe Fae::BaseModelConcern do
 
   describe '#fae_translate' do
     it 'should translate specified attributes' do
-      wine = FactoryGirl.build_stubbed(:wine)
+      wine = FactoryBot.build_stubbed(:wine)
 
       expect(wine.name).to eq( wine.send("name_#{I18n.locale}") )
 
@@ -63,7 +63,7 @@ describe Fae::BaseModelConcern do
     end
 
     it 'should find_by translated attribute' do
-      wine = FactoryGirl.create(:wine, name_en: 'Funky', name_zh: 'Funky', name_ja: 'Funky')
+      wine = FactoryBot.create(:wine, name_en: 'Funky', name_zh: 'Funky', name_ja: 'Funky')
 
       expect( Wine.find_by_name('Funky') ).to be_present
     end

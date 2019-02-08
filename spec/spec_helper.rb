@@ -5,9 +5,8 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
 require 'yarjuf'
-require 'factory_girl_rails'
+require 'factory_bot_rails'
 require 'database_cleaner'
-require 'rspec/rails'
 require 'shoulda/matchers'
 require 'pry'
 
@@ -39,9 +38,9 @@ RSpec.configure do |config|
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
-  config.include FactoryGirl::Syntax::Methods
-  FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-  FactoryGirl.find_definitions
+  config.include FactoryBot::Syntax::Methods
+  FactoryBot.definition_file_paths = [File.expand_path('../factories', __FILE__)]
+  # FactoryBot.find_definitions
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

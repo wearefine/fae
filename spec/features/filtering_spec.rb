@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'filtering' do
   scenario 'pagination', js: true do
     (1..6).each do |n|
-      FactoryGirl.create(:team, name: "team #{n}")
+      FactoryBot.create(:team, name: "team #{n}")
     end
 
     admin_login
@@ -14,11 +14,11 @@ feature 'filtering' do
   end
 
   scenario 'filtering', js: true do
-    red = FactoryGirl.create(:wine, name_en: 'Red')
-    white = FactoryGirl.create(:wine, name_en: 'White')
-    FactoryGirl.create(:release, name: 'Release 1', wine: red)
-    FactoryGirl.create(:release, name: 'Release 2', wine: red)
-    FactoryGirl.create(:release, name: 'Release 3', wine: white)
+    red = FactoryBot.create(:wine, name_en: 'Red')
+    white = FactoryBot.create(:wine, name_en: 'White')
+    FactoryBot.create(:release, name: 'Release 1', wine: red)
+    FactoryBot.create(:release, name: 'Release 2', wine: red)
+    FactoryBot.create(:release, name: 'Release 3', wine: white)
 
     admin_login
     visit admin_releases_path + "#?wine=#{red.id}"

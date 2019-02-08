@@ -74,6 +74,8 @@ GEM
       tzinfo (~> 1.1)
     acts_as_list (0.9.11)
       activerecord (>= 3.0)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     appraisal (2.2.0)
@@ -101,6 +103,19 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
+    capybara (2.7.1)
+      addressable
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
+    capybara-screenshot (1.0.19)
+      capybara (>= 1.0, < 4)
+      launchy
+    capybara-webkit (1.11.1)
+      capybara (>= 2.3.0, < 2.8.0)
+      json
     carrierwave (1.2.2)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -123,10 +138,10 @@ GEM
     erubi (1.7.1)
     eventmachine (1.2.5)
     execjs (2.7.0)
-    factory_girl (4.4.0)
+    factory_bot (4.11.1)
       activesupport (>= 3.0.0)
-    factory_girl_rails (4.4.1)
-      factory_girl (~> 4.4.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
       railties (>= 3.0.0)
     ffi (1.9.23)
     formatador (0.2.5)
@@ -154,6 +169,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    json (2.1.0)
     judge (3.0.0)
       rails (>= 5.0)
     judge-simple_form (1.1.0)
@@ -171,6 +187,8 @@ GEM
       activerecord
       kaminari-core (= 1.1.1)
     kaminari-core (1.1.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -208,6 +226,7 @@ GEM
     pry (0.11.3)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
+    public_suffix (3.0.2)
     rack (2.0.4)
     rack-test (1.0.0)
       rack (>= 1.0, < 3)
@@ -325,6 +344,8 @@ GEM
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
+    xpath (2.1.0)
+      nokogiri (~> 1.3)
     yarjuf (2.0.0)
       builder
       rspec (~> 3)
@@ -339,8 +360,10 @@ DEPENDENCIES
   capistrano (~> 3.1)
   capistrano-rails!
   capistrano-rvm
+  capybara-screenshot
+  capybara-webkit (~> 1.11.1)
   database_cleaner
-  factory_girl_rails (~> 4.4.1)
+  factory_bot_rails
   fae-rails!
   guard-rspec (~> 4.7.3)
   mysql2

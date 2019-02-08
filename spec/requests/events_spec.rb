@@ -25,7 +25,7 @@ end
 describe 'events#edit' do
 
   it 'should return found' do
-    event = FactoryGirl.create(:event)
+    event = FactoryBot.create(:event)
     admin_login
     get edit_admin_event_path(event)
 

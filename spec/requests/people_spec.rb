@@ -25,7 +25,7 @@ end
 describe 'people#edit' do
 
   it 'should return found' do
-    person = FactoryGirl.create(:person)
+    person = FactoryBot.create(:person)
     admin_login
     get edit_admin_person_path(person)
 

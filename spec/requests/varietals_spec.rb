@@ -25,7 +25,7 @@ end
 describe 'varietals#edit' do
 
   it 'should return found' do
-    varietal = FactoryGirl.create(:varietal)
+    varietal = FactoryBot.create(:varietal)
     admin_login
     get edit_admin_varietal_path(varietal)
 

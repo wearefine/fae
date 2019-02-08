@@ -16,7 +16,7 @@ describe HomePage do
 
     context 'when an option object is present' do
       it 'should return the instance' do
-        FactoryGirl.create(:home_page)
+        FactoryBot.create(:home_page)
         home_page_length_before = HomePage.all.length
         home_page = HomePage.instance
         home_page_length_after = HomePage.all.length
@@ -28,7 +28,7 @@ describe HomePage do
     end
 
     it 'should have all associations from #fae_fields' do
-      FactoryGirl.create(:home_page)
+      FactoryBot.create(:home_page)
       home_page = HomePage.instance
 
       expect(home_page).to respond_to(:hero, :introduction, :body, :welcome_pdf)
@@ -36,7 +36,7 @@ describe HomePage do
 
     context 'when association has been created' do
       before(:each) do
-        FactoryGirl.create(:home_page)
+        FactoryBot.create(:home_page)
         @home_page = HomePage.instance
       end
 
@@ -53,7 +53,7 @@ describe HomePage do
 
     context 'when assocation has not been created' do
       it 'hero_content should return nil' do
-        FactoryGirl.create(:home_page)
+        FactoryBot.create(:home_page)
         home_page = HomePage.instance
         expect(home_page.hero_content).to be_nil
       end

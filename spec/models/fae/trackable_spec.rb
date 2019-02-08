@@ -4,7 +4,7 @@ describe Fae::Trackable do
 
   describe 'after_create' do
     it 'should create a change item related to the model' do
-      wine = FactoryGirl.create(:wine)
+      wine = FactoryBot.create(:wine)
 
       change = Fae::Change.last
       expect(change.changeable_id).to eq(wine.id)
@@ -14,20 +14,20 @@ describe Fae::Trackable do
 
     context 'when fae_tracker_blacklist == all' do
       it 'should not create change item' do
-        aroma = FactoryGirl.build_stubbed(:aroma)
+        aroma = FactoryBot.build_stubbed(:aroma)
         expect(aroma.tracked_changes).to eq([])
       end
     end
 
     context 'on a Fae::Image' do
       it 'should not create a change item' do
-        image = FactoryGirl.build_stubbed(:fae_image)
+        image = FactoryBot.build_stubbed(:fae_image)
         expect(image.tracked_changes).to eq([])
         expect(Fae::Change.all.length).to eq(0)
       end
 
       it 'should not create a change item via nested form' do
-        release = FactoryGirl.build(:release)
+        release = FactoryBot.build(:release)
         release.build_bottle_shot
         release.save
 
@@ -38,13 +38,13 @@ describe Fae::Trackable do
 
     context 'on a Fae::File' do
       it 'should not create a change item' do
-        file = FactoryGirl.create(:fae_file)
+        file = FactoryBot.create(:fae_file)
         expect(file.tracked_changes).to eq([])
         expect(Fae::Change.all.length).to eq(0)
       end
 
       it 'should not create a change item via nested form' do
-        release = FactoryGirl.build(:release)
+        release = FactoryBot.build(:release)
         release.build_label_pdf
         release.save
 
@@ -55,8 +55,8 @@ describe Fae::Trackable do
 
     context 'on an arbitrary non-FAE:: child model' do
       it 'should create a change item created for the parent with the child info' do
-        release = FactoryGirl.build(:release)
-        release_note = FactoryGirl.build(:release_note, release: release)
+        release = FactoryBot.build(:release)
+        release_note = FactoryBot.build(:release_note, release: release)
         release_note.save
         release_note_change = Fae::Change.last
 
@@ -68,7 +68,7 @@ describe Fae::Trackable do
 
   describe 'before_update' do
     it 'should create a change item related to the model' do
-      wine = FactoryGirl.create(:wine)
+      wine = FactoryBot.create(:wine)
       wine.update({name_en: 'new name', description_en: 'new desc', food_pairing_en: 'new pairing'})
 
       change = Fae::Change.last
@@ -79,7 +79,7 @@ describe Fae::Trackable do
     end
 
     it 'should not create item if no changes were made' do
-      wine = FactoryGirl.create(:wine, name_en: 'test')
+      wine = FactoryBot.create(:wine, name_en: 'test')
       wine.update({name_en: 'test'})
 
       change = Fae::Change.last
@@ -90,7 +90,7 @@ describe Fae::Trackable do
 
     context 'when fae_tracker_blacklist == all' do
       it 'should not create change item' do
-        aroma = FactoryGirl.create(:aroma)
+        aroma = FactoryBot.create(:aroma)
         aroma.update({name: 'something else'})
         expect(aroma.tracked_changes).to eq([])
       end
@@ -98,14 +98,14 @@ describe Fae::Trackable do
 
     context 'when fae_tracker_blacklist contains attributes' do
       it 'should not create a change item if only blacklisted attribues change' do
-        release = FactoryGirl.create(:release)
+        release = FactoryBot.create(:release)
         release.update({position: 5})
         expect(release.tracked_changes.length).to eq(1)
         expect(release.tracked_changes.first.change_type).to eq('created')
       end
 
       it 'should not include blacklisted attributes in updated_attributes' do
-        release = FactoryGirl.create(:release)
+        release = FactoryBot.create(:release)
         release.update({name: 'new name', slug: 'new_slug', price: 15})
         expect(release.tracked_changes.length).to eq(2)
         expect(release.tracked_changes.first.updated_attributes).to_not include('price')
@@ -114,15 +114,15 @@ describe Fae::Trackable do
 
     context 'on a Fae::Image' do
       it 'should not create a change item' do
-        image = FactoryGirl.create(:fae_image)
+        image = FactoryBot.create(:fae_image)
         image.update_attribute(:asset, 'peanut_butter.jiff')
         expect(image.tracked_changes).to eq([])
         expect(Fae::Change.all.length).to eq(0)
       end
 
       it 'should associate change to parent item via nested form' do
-        release = FactoryGirl.create(:release)
-        image = FactoryGirl.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
+        release = FactoryBot.create(:release)
+        image = FactoryBot.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
 
         release.update({'bottle_shot_attributes' => { alt: 'asdfasdfa', id: image.id }})
 
@@ -131,8 +131,8 @@ describe Fae::Trackable do
       end
 
       it 'should combine change last parent item via nested form' do
-        release = FactoryGirl.create(:release)
-        image = FactoryGirl.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
+        release = FactoryBot.create(:release)
+        image = FactoryBot.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
 
         release.update({name: 'something', 'bottle_shot_attributes' => { alt: 'asdfasdfa', id: image.id }})
 
@@ -143,15 +143,15 @@ describe Fae::Trackable do
 
     context 'on a Fae::File' do
       it 'should not create a change item' do
-        file = FactoryGirl.create(:fae_file)
+        file = FactoryBot.create(:fae_file)
         file.update_attribute(:asset, 'peanut_butter.jiff')
         expect(file.tracked_changes).to eq([])
         expect(Fae::Change.all.length).to eq(0)
       end
 
       it 'should associate change to parent item via nested form' do
-        release = FactoryGirl.create(:release)
-        file = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
+        release = FactoryBot.create(:release)
+        file = FactoryBot.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
 
         release.update({'label_pdf_attributes' => { name: 'asdfasdfa', id: file.id }})
 
@@ -160,8 +160,8 @@ describe Fae::Trackable do
       end
 
       it 'should combine change last parent item via nested form' do
-        release = FactoryGirl.create(:release)
-        file = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
+        release = FactoryBot.create(:release)
+        file = FactoryBot.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
 
         release.update({name: 'something', 'label_pdf_attributes' => { name: 'asdfasdfa', id: file.id }})
 
@@ -170,8 +170,8 @@ describe Fae::Trackable do
       end
 
       it 'fallback to object name if attached_as isn\'t present' do
-        release = FactoryGirl.create(:release)
-        file = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release')
+        release = FactoryBot.create(:release)
+        file = FactoryBot.create(:fae_file, fileable_id: release.id, fileable_type: 'Release')
 
         release.update({'label_pdf_attributes' => { name: 'asdfasdfa', id: file.id }})
 
@@ -182,9 +182,9 @@ describe Fae::Trackable do
 
     context 'on an object with multple assets' do
       it 'should combine updates into one record on the partent item' do
-        release = FactoryGirl.create(:release)
-        bottle_shot = FactoryGirl.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
-        label_pdf = FactoryGirl.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
+        release = FactoryBot.create(:release)
+        bottle_shot = FactoryBot.create(:fae_image, imageable_id: release.id, imageable_type: 'Release', attached_as: 'bottle_shot')
+        label_pdf = FactoryBot.create(:fae_file, fileable_id: release.id, fileable_type: 'Release', attached_as: 'label_pdf')
 
         release.update({
           name: 'something',
@@ -210,8 +210,8 @@ describe Fae::Trackable do
 
     context 'on an arbitrary non-FAE:: child model' do
       it 'should create a change item updated record for the parent with the child info' do
-        release = FactoryGirl.build(:release)
-        release_note = FactoryGirl.build(:release_note, release: release)
+        release = FactoryBot.build(:release)
+        release_note = FactoryBot.build(:release_note, release: release)
         release_note.save
 
         release_note.update({
@@ -227,7 +227,7 @@ describe Fae::Trackable do
 
   describe 'before_destroy' do
     it 'should create a change item related to the model' do
-      wine = FactoryGirl.create(:wine)
+      wine = FactoryBot.create(:wine)
       wine.destroy
 
       change = Fae::Change.last
@@ -238,7 +238,7 @@ describe Fae::Trackable do
 
     context 'when fae_tracker_blacklist == all' do
       it 'should not create change item' do
-        aroma = FactoryGirl.create(:aroma)
+        aroma = FactoryBot.create(:aroma)
         aroma.destroy
         expect(Fae::Change.where(changeable_type: 'Aroma')).to eq([])
       end
@@ -246,7 +246,7 @@ describe Fae::Trackable do
 
     context 'on a Fae::Image' do
       it 'should not create a change item' do
-        image = FactoryGirl.create(:fae_image)
+        image = FactoryBot.create(:fae_image)
         image.destroy
         expect(Fae::Change.all.length).to eq(0)
       end
@@ -254,7 +254,7 @@ describe Fae::Trackable do
 
     context 'on a Fae::File' do
       it 'should not create a change item' do
-        file = FactoryGirl.create(:fae_file)
+        file = FactoryBot.create(:fae_file)
         file.destroy
         expect(Fae::Change.all.length).to eq(0)
       end
@@ -262,8 +262,8 @@ describe Fae::Trackable do
 
     context 'on an arbitrary non-FAE:: child model' do
       it 'should create a change item deleted record for the parent with the child info' do
-        release = FactoryGirl.build(:release)
-        release_note = FactoryGirl.build(:release_note, release: release)
+        release = FactoryBot.build(:release)
+        release_note = FactoryBot.build(:release_note, release: release)
         release_note.save
         release_note.destroy
         release_note_change = Fae::Change.last
@@ -276,13 +276,13 @@ describe Fae::Trackable do
 
   describe 'tracked_changes' do
     it 'should assign association to parent object' do
-      wine = FactoryGirl.create(:wine)
+      wine = FactoryBot.create(:wine)
       wine.update({name_en: 'testttt'})
       expect(wine.tracked_changes.length).to eq(2)
     end
 
     it 'should assign no more than Fae.tracker_history_length changes' do
-      wine = FactoryGirl.create(:wine, name_en: 'change 1')
+      wine = FactoryBot.create(:wine, name_en: 'change 1')
       wine.update({name_en: 'change 2'})
       wine.update({name_en: 'change 3'})
       wine.update({name_en: 'change 4'})

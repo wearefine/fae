@@ -37,7 +37,7 @@
 #   end
 
 #   scenario 'selects should validate on change', js: true do
-#     wine = FactoryGirl.create(:wine)
+#     wine = FactoryBot.create(:wine)
 
 #     admin_login
 #     visit new_admin_release_path

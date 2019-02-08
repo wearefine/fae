@@ -4,7 +4,7 @@ describe Fae::StaticPage do
 
   describe 'concerns' do
     it 'should allow instance methods through Fae::StaticPageConcern' do
-      static_page = FactoryGirl.build_stubbed(:fae_static_page)
+      static_page = FactoryBot.build_stubbed(:fae_static_page)
 
       expect(static_page.instance_says_what).to eq('Fae::StaticPage instance: what?')
     end
@@ -79,8 +79,8 @@ describe Fae::StaticPage do
     end
 
     it 'should return Fae::Image and Fae::File association as a hash' do
-      home_page_image = FactoryGirl.create(:fae_image, caption: 'look, a mountain', imageable_type: 'Fae::StaticPage', imageable_id: @home_page.id, attached_as: 'hero_image')
-      home_page_file = FactoryGirl.create(:fae_file, fileable_type: 'Fae::StaticPage', fileable_id: @home_page.id, attached_as: 'welcome_pdf')
+      home_page_image = FactoryBot.create(:fae_image, caption: 'look, a mountain', imageable_type: 'Fae::StaticPage', imageable_id: @home_page.id, attached_as: 'hero_image')
+      home_page_file = FactoryBot.create(:fae_file, fileable_type: 'Fae::StaticPage', fileable_id: @home_page.id, attached_as: 'welcome_pdf')
 
       expect(@home_page.as_json[:hero_image]).to have_key('asset')
       expect(@home_page.as_json[:hero_image]['asset']['url']).to include('test.jpg')
@@ -93,7 +93,7 @@ describe Fae::StaticPage do
 
   describe 'when decorated' do
     it 'should respond to decorator method' do
-      static_page = FactoryGirl.build_stubbed(:fae_static_page)
+      static_page = FactoryBot.build_stubbed(:fae_static_page)
 
       expect(static_page.respond_to?('instance_is_decorated')).to eq true
       expect(static_page.instance_is_decorated).to eq('Fae::StaticPage instance is decorated')

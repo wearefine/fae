@@ -19,7 +19,7 @@ feature 'fae_nested_index_table' do
 
   # scenario 'should allow editing existing item', js: true do
     ## TODO: fix flickering spec
-    # cat = FactoryGirl.create(:cat, name: 'Buttercup')
+    # cat = FactoryBot.create(:cat, name: 'Buttercup')
 
     # admin_login
     # visit admin_cats_path
@@ -42,7 +42,7 @@ feature 'fae_nested_index_table' do
   # end
 
   scenario 'should allow deletion of item', js: true do
-    cat = FactoryGirl.create(:cat, name: 'Snowball McPuffypants')
+    cat = FactoryBot.create(:cat, name: 'Snowball McPuffypants')
 
     admin_login
     visit admin_cats_path
@@ -55,7 +55,7 @@ feature 'fae_nested_index_table' do
   end
 
   scenario 'should allow strings and integers in cols', js: true do
-    cat = FactoryGirl.create(:cat, name: 'Snowball McPuffypants', description: 'Snowy')
+    cat = FactoryBot.create(:cat, name: 'Snowball McPuffypants', description: 'Snowy')
 
     admin_login
     visit admin_cats_path

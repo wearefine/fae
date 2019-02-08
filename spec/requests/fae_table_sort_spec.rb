@@ -4,7 +4,7 @@ feature 'fae_table_sort' do
 
   # TODO: fix flickering test
   # scenario 'save sort preferences in session', js: true do
-  #   FactoryGirl.create(:release)
+  #   FactoryBot.create(:release)
 
   #   admin_login
   #   visit admin_releases_path
