@@ -141,7 +141,7 @@ validates :slug, Fae.validation_helpers.slug
 
 ### Judge and Uniqueness
 
-Fae uses [Judge](https://github.com/joecorcoran/judge) to automatically add client side validation from the declarations in the models. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/jugde.rb`:
+Fae uses [Judge](https://github.com/joecorcoran/judge) to automatically add client side validation from the declarations in the models. The caveat is Judge requires you to expose any attributes that have a uniqueness validation. You can do this in `config/initializers/judge.rb`:
 
 ```ruby
 Judge.configure do
