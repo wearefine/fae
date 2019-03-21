@@ -77,6 +77,7 @@ Fae.form.ajax = {
       Fae.form.slugger.addListener();
       Fae.form.validator.length_counter.init();
       Fae.form.text.initMarkdown();
+      Fae.form.text.initHTML();
       Fae.form.checkbox.setCheckboxAsActive();
       Fae.form.select.init();
 
@@ -144,6 +145,7 @@ Fae.form.ajax = {
             Fae.form.validator.length_counter.init();
             Fae.form.checkbox.setCheckboxAsActive();
             Fae.form.text.initMarkdown();
+            Fae.form.text.initHTML();
 
             FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
