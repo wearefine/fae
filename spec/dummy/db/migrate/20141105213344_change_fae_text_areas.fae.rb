@@ -1,5 +1,5 @@
 # This migration comes from fae (originally 20141105210119)
-class ChangeFaeTextAreas < ActiveRecord::Migration
+class ChangeFaeTextAreas < ActiveRecord::Migration[4.2]
   def change
     change_table :fae_text_areas do |t|
       t.remove :contentable

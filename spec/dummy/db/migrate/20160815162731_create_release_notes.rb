@@ -1,4 +1,4 @@
-class CreateReleaseNotes < ActiveRecord::Migration
+class CreateReleaseNotes < ActiveRecord::Migration[4.2]
   def change
     create_table :release_notes do |t|
       t.string :title
