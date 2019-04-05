@@ -1,5 +1,5 @@
 # This migration comes from fae (originally 20141021184311)
-class CreateFaePages < ActiveRecord::Migration
+class CreateFaePages < ActiveRecord::Migration[4.2]
   def change
     create_table :fae_pages do |t|
       t.string :title

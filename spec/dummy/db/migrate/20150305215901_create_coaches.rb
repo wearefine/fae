@@ -1,4 +1,4 @@
-class CreateCoaches < ActiveRecord::Migration
+class CreateCoaches < ActiveRecord::Migration[4.2]
   def change
     create_table :coaches do |t|
       t.string :first_name

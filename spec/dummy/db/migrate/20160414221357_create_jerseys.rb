@@ -1,4 +1,4 @@
-class CreateJerseys < ActiveRecord::Migration
+class CreateJerseys < ActiveRecord::Migration[4.2]
   def change
     create_table :jerseys do |t|
       t.string :name
