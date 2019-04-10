@@ -28,7 +28,6 @@ services:
 
 rvm:
   - '2.3'
-  - '2.6'
 
 gemfile:
   - 'gemfiles/rails_5_0.gemfile'
