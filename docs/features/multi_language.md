@@ -63,12 +63,12 @@ end
 
 ## Displaying the Language Nav
 
-Finally, to display the language select menu, you'll need to add `language: true` to your `form_header` partial:
+Finally, to display the language select menu, you'll need to add `languages: true` to your `form_header` partial:
 
 `app/views/admin/people/_form.html.slim`
 ```slim
 = simple_form_for(['admin', @item]) do |f|
-  = render 'fae/shared/form_header', header: @klass_name, language: true
+  = render 'fae/shared/form_header', header: @klass_name, languages: true
 
   // ...
 ```
