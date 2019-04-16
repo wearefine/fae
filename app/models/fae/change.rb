@@ -29,7 +29,7 @@ module Fae
         conditions[:changeable_type] = params['model'] if params['model'].present?
         conditions[:change_type] = params['type'] if params['type'].present?
 
-        date_scope = case params['date']
+        date_scope = case URI.decode(params['date'])
           when 'Last Hour' then   ['fae_changes.updated_at >= ?', 60.minutes.ago]
           when 'Last Day' then    ['fae_changes.updated_at >= ?', 1.day.ago]
           when 'Last Week' then   ['fae_changes.updated_at >= ?', 1.week.ago]
