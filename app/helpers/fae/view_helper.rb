@@ -1,5 +1,5 @@
 module Fae
-  module  ViewHelper
+  module ViewHelper
 
     def fae_date_format(datetime, timezone = @option.time_zone)
       datetime.in_time_zone(timezone).strftime('%m/%d/%y') if is_date_or_time?(datetime)
@@ -71,47 +71,34 @@ module Fae
     end
 
     def fae_filter_form(options = {}, &block)
-      options[:collection] ||= @items
-      options[:action]     ||= "#{@index_path}/filter"
-      options[:title]      ||= "Search #{@klass_humanized.pluralize.titleize}"
-      options[:search]       = true if options[:search].nil?
-      options[:cookie_key] ||= false
-
+      options = prepare_options_for_filter_form options
       return if options[:collection].blank?
 
-      form_hash = { class: 'js-filter-form table-filter-area' }
-      form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
-
-      filter_header = content_tag(:div, class: 'table-filter-header') do
-        concat content_tag :h4, options[:title]
-        concat filter_search_field if options[:search]
-      end
-
-      form_tag(options[:action], form_hash) do
-        concat filter_header
+      form_tag(options[:action], prepare_form_filter_hash(options)) do
+        concat prepare_filter_header(options)
 
         if block_given?
           filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
+            link_tag = content_tag(:a,
+                                   t('fae.reset_search'),
+                                   class: 'js-reset-btn button -small hidden',
+                                   href: '#')
             concat capture(&block)
-            concat content_tag(:div, content_tag(:a, 'Reset Search', class: 'js-reset-btn button -small hidden', href: '#'), class: 'table-filter-group')
+            concat content_tag(:div,
+                               link_tag,
+                               class: 'table-filter-group')
           end
         end
-
         concat filter_group_wrapper
         # I know this `unless !` looks like it should be an `if` but it's definitely supposed to be `unless !`
-        concat submit_tag 'Apply Filters', class: 'hidden' unless !options[:search]
+        unless !options[:search]
+          concat submit_tag t('fae.apply_filters'), class: 'hidden'
+        end
       end
     end
 
-    def fae_filter_select(attribute, options = {})
-      options[:label]           ||= attribute.to_s.titleize
-      options[:collection]      ||= default_collection_from_attribute(attribute)
-      options[:label_method]    ||= :fae_display_field
-      options[:placeholder]       = "All #{options[:label].pluralize}" if options[:placeholder].nil?
-      options[:options]         ||= []
-      options[:grouped_by]      ||= nil
-      options[:grouped_options] ||= []
-
+    def fae_filter_select(attribute, opts = {})
+      options = prepare_options_for_filter_select(attribute, opts)
       # grouped_by takes priority over grouped_options
       if options[:grouped_by].present?
         select_options = filter_generate_select_group(options[:collection], options[:grouped_by], options[:label_method])
@@ -121,7 +108,6 @@ module Fae
         select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
         select_options = options_for_select(options[:options]) if options[:options].present?
       end
-
 
       content_tag :div, class: 'table-filter-group' do
         concat label_tag "filter[#{attribute}]", options[:label]
@@ -144,7 +130,9 @@ module Fae
 
     def filter_search_field
       content_tag :div, class: 'table-filter-keyword-wrapper' do
-        concat text_field_tag 'filter[search]', nil, placeholder: 'Search by Keyword'
+        concat text_field_tag('filter[search]',
+                              nil,
+                              placeholder: t('fae.keyword_search'))
         concat content_tag(:i, '', class: 'icon-search')
       end
     end
@@ -171,5 +159,62 @@ module Fae
       datetime.present? && ( datetime.kind_of?(Date) || datetime.kind_of?(Time) || datetime.kind_of?(ActiveSupport::TimeWithZone) )
     end
 
+    def try_placeholder_translation(attribute, path, label)
+      items = try_translation(attribute, path) || label
+      t('fae.all_items', items: items)
+    end
+
+    def prepare_options_for_filter_select(attribute, options)
+      options = preprare_label_for_filter_select attribute, options
+      options = prepare_placeholder_for_filter_select attribute, options
+      options[:collection] ||= default_collection_from_attribute(attribute)
+      options[:label_method] ||= :fae_display_field
+      options[:options] ||= []
+      options[:grouped_by] ||= nil
+      options[:grouped_options] ||= []
+      options
+    end
+
+    def preprare_label_for_filter_select(attribute, options)
+      options[:label] ||= try_translation(attribute.to_s,
+                                          options[:translation_path]) ||
+                          attribute.to_s.titleize
+      options
+    end
+
+    def prepare_placeholder_for_filter_select(attribute, options)
+      if options[:placeholder].nil?
+        options[:placeholder] = try_placeholder_translation(
+          attribute.to_s.pluralize,
+          options[:translation_path],
+          options[:label].pluralize
+        )
+      end
+      options
+    end
+
+    def prepare_options_for_filter_form(options)
+      options[:collection] ||= @items
+      options[:action] ||= "#{@index_path}/filter"
+      options[:title] ||= t('fae.search',
+                            search: @klass_humanized.pluralize.titleize)
+
+      options[:search] = true if options[:search].nil?
+      options[:cookie_key] ||= false
+      options
+    end
+
+    def prepare_filter_header(options)
+      content_tag(:div, class: 'table-filter-header') do
+        concat content_tag :h4, options[:title]
+        concat filter_search_field if options[:search]
+      end
+    end
+
+    def prepare_form_filter_hash(options)
+      form_hash = { class: 'js-filter-form table-filter-area' }
+      form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
+      form_hash
+    end
   end
 end

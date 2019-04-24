@@ -122,7 +122,7 @@ module Fae
       options[:helper_text] = attempt_common_helper_text(attribute) if options[:helper_text].blank?
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
-      label = options[:label] || attribute_name
+      label = options[:label] || label_translation(attribute) || attribute_name
       if options[:markdown_supported].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
           concat(options[:helper_text]) if options[:helper_text].present?
@@ -132,6 +132,15 @@ module Fae
       options[:label] = label.html_safe if label.present?
 
       options[:hint] = hint.html_safe if hint.present?
+    end
+
+    def label_translation(attribute)
+      try_translation attribute, 'fae.form.attribute'
+    end
+
+    def try_translation(item, translation_path)
+      translation = t("#{translation_path}.#{item}")
+      translation =~ /translation_missing/ ? nil : translation
     end
 
     def is_attribute_or_association?(f, attribute)
@@ -228,9 +237,9 @@ module Fae
     def attempt_common_helper_text(attribute)
       case attribute
       when :seo_title
-       return 'A descriptive page title of ~50-65 characters. Displayed in search engine results.'
+       return t('fae.seo_title')
       when :seo_description
-       return 'A helpful page summary of 320 characters or less. Displayed in search engine results.'
+       return t('fae.seo_description')
       else
        ''
       end

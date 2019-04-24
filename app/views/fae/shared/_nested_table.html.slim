@@ -10,7 +10,7 @@ ruby:
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
   title               ||= assoc_name.titleize             # 'Restaurant Bars'
-  add_button_text     ||= "Add #{title.singularize}"
+  add_button_text     ||= t('fae.common.add', title: title.singularize)
   ordered             ||= false
   has_thumb           ||= false
   edit_column         ||= false

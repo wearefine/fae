@@ -28,9 +28,9 @@
               - if changed.present?
                 tr
                   td = version.created_at
-                  td = version.user.present? ? version.user.full_name : content_tag(:em, "user no longer exists")
+                  td = version.user.present? ? version.user.full_name : content_tag(:em, t('fae.application.user_absent'))
                   td = changed.join(', ')
 
           - else
             tr
-              td colspan="3" No logs available.
+              td colspan="3" = t('fae.application.no_logs')

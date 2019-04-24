@@ -1,4 +1,4 @@
-class CreateSellingPoints < ActiveRecord::Migration
+class CreateSellingPoints < ActiveRecord::Migration[4.2]
   def change
     create_table :selling_points do |t|
       t.string :name

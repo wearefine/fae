@@ -1,4 +1,4 @@
-class AddLanguagesToWines < ActiveRecord::Migration
+class AddLanguagesToWines < ActiveRecord::Migration[4.2]
   def change
     rename_column :wines, :name, :name_en
     add_column :wines, :name_zh, :string

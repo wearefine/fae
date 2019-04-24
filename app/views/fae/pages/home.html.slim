@@ -1,7 +1,8 @@
 header.content-header.js-content-header.-dashboard
   div
     i.icon-home>
-    | &nbsp;&nbsp;Hello
+    | &nbsp;&nbsp;
+    = t('fae.page.hello')
     strong< = current_user.full_name
 
 == render 'flash_messages'
@@ -11,9 +12,9 @@ header.content-header.js-content-header.-dashboard
     table.js-sort-column
       thead
         tr
-          th Name
-          th Type
-          th.-action-wide Modified
+          th = t('fae.common.name')
+          th = t('fae.changes.type')
+          th.-action-wide = t('fae.changes.modified')
       tbody
         - @list.each do |item|
           - begin
@@ -28,9 +29,9 @@ header.content-header.js-content-header.-dashboard
 - else
   section.help-section
     article.content
-      h2 Welcome to Fae
+      h2 = t('fae.page.welcome')
       p
-        ' You don'thave any objects setup to manage. If you need help getting started, check out the
+        = t('fae.page.no_objs_start')
         br
-        a href="https://www.faecms.com/documentation/quickstart-guide" target="_blank" Quickstart Guide and Documentation site
-        ' .
+        a href="https://www.faecms.com/documentation/quickstart-guide" target="_blank"
+        = t('fae.page.no_objs.end')

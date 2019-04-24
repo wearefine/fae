@@ -33,7 +33,7 @@ table class=table_class
             = td_columns(options_for_td)
           - if edit_column
             td
-              a.js-edit-link.js-tooltip.table-action title="Edit" href=self.send(edit_path, item)
+              a.js-edit-link.js-tooltip.table-action title=t('fae.common.edit') href=self.send(edit_path, item)
                 i.icon-edit
           td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
 

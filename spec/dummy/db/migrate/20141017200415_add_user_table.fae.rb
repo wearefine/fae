@@ -1,5 +1,5 @@
 # This migration comes from fae (originally 20140809222030)
-class AddUserTable < ActiveRecord::Migration
+class AddUserTable < ActiveRecord::Migration[4.2]
   def change
     create_table(:fae_users) do |t|
       ## Database authenticatable

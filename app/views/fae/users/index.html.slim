@@ -1,15 +1,15 @@
 - @new_path = new_user_path
-== render 'fae/shared/index_header', title: 'Users', new_button: true, button_text: 'Add User', breadcrumbs: false
+== render 'fae/shared/index_header', title: 'Users', new_button: true, button_text: t('fae.user.add_user'), breadcrumbs: false
 
 main.content
   table.js-sort-column
     thead
       tr
-        th Name
-        th Email
-        th Role
-        th Last Logged In
-        th.-action-wide data-sorter="false" Active
+        th = t('fae.common.name')
+        th = t('fae.user.email')
+        th = t('fae.user.role')
+        th = t('fae.user.last_login')
+        th.-action-wide data-sorter="false" = t('fae.user.active')
         th.-action data-sorter="false"
 
     tbody
