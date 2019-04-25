@@ -20,8 +20,22 @@ module Fae
 
     private
 
+    # defines the locale used to translate the Fae interface
     def set_locale
-      I18n.locale = current_user.nil? ? :en : current_user.language
+      if I18n.available_locales.include?(language_from_browser)
+        language_from_browser
+      else
+        :en
+      end
+    end
+
+    # parse HTTP_ACCEPT_LANGUAGE and return an array of language codes
+    # ex: ["en-US", "en", "zh-CN", "zh", "cs"]
+    # then grab the first and convert to symbol
+    def language_from_browser
+      if request.env['HTTP_ACCEPT_LANGUAGE'].present?
+        request.env['HTTP_ACCEPT_LANGUAGE'].scan(/[a-z-]{2,5}/i).first.try(:to_sym)
+      end
     end
 
     def check_disabled_environment

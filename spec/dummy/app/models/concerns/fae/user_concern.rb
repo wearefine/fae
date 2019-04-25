@@ -10,10 +10,6 @@ module Fae
       def class_says_what
         'Fae::User class: what?'
       end
-
-      def available_languages
-        [:en]
-      end
     end
 
   end
