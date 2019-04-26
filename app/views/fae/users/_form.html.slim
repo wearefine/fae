@@ -13,7 +13,6 @@
     = fae_input f, :first_name
     = fae_input f, :last_name
     = fae_input f, :email
-    = fae_pulldown f, :language, :collection => Fae::User.available_languages
     = fae_input f, :password, helper_text: t('fae.user.password_hint')
     = fae_input f, :password_confirmation
     - if current_user.admin? || current_user.super_admin?

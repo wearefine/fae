@@ -11,7 +11,8 @@ Fae.setup do |config|
   config.languages = {
     en: 'English',
     zh: 'Chinese',
-    ja: 'Japanese'
+    ja: 'Japanese',
+    cs: 'Czech'
   }
 
   config.per_page = 5
