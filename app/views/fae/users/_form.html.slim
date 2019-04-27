@@ -1,13 +1,9 @@
-= simple_form_for(@user, html: {multipart: true, novalidate: true}) do |f|
-  header.content-header.js-content-header
-    - if params[:action] === 'settings'
-      h1 = t('fae.navbar.your_settings')
-    - else
-      = form_header @user
-    .content-header-buttons
-      - cancel_path = params[:action] == 'settings' ? root_path : users_path
-      a.button#js-header-cancel href=cancel_path = t('fae.form.cancel')
-      = f.submit(t 'fae.form.save')
+= simple_form_for(@user) do |f|
+  - if params[:action] === 'settings'
+    - title = t('fae.navbar.your_settings')
+  - else
+    - title = "#{params[:action]} User".titleize
+  == render 'fae/shared/form_header', header: 'User', title: title
 
   main.content
     = fae_input f, :first_name
@@ -16,4 +12,4 @@
     = fae_input f, :password, helper_text: t('fae.user.password_hint')
     = fae_input f, :password_confirmation
     - if current_user.admin? || current_user.super_admin?
-      = fae_association f, :role, collection: @role_collection
+      = fae_association f, :role, collection: @role_collection, prompt: false
