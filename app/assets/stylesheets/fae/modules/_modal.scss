@@ -61,10 +61,6 @@
   }
 }
 
-// .simplemodal-data {
-//   height: 100%;
-// }
-
 .simplemodal-close {
   display: block;
   height: 10px;
@@ -78,5 +74,30 @@
     color: $c-white;
     cursor: pointer;
     font-size: 12px;
+  }
+}
+
+#fae-ajax-modal {
+  padding: 0;
+  box-shadow: none;
+
+  .simplemodal-data {
+    min-height: 100%;
+  }
+
+  .simplemodal-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    height: 20px;
+    width: 20px;
+
+    &:before {
+      position: relative;
+      padding: 4px;
+      top: auto;
+      right: auto;
+      color: #3b3b3b;
+    }
   }
 }

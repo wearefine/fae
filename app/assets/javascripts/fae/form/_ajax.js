@@ -6,17 +6,14 @@
  * @memberof form
  */
 Fae.form.ajax = {
+
   init: function() {
-    this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form, .js-addedit-form-modal');
+    this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
     this.$nested_form = $('.nested-form');
-    this.modalOpen = false;
 
     this.addEditLinks();
     this.addEditSubmission();
-
-    this.addModalEditLinks();
-
 
     this.addCancelLinks();
 
@@ -35,31 +32,12 @@ Fae.form.ajax = {
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
-      _this.$parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
+      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
-      if (_this.$parent.hasClass('js-addedit-form-modal')) {
-        _this._modalAddEditActions($this.attr("href"), _this.$parent.find(".js-addedit-form-wrapper"));
-      } else {
-        // scroll to the last column of the tbody, where the form will start
-        FCH.smoothScroll(_this.$parent.find('tbody tr:last-child'), 500, 450, -20);
+      // scroll to the last column of the tbody, where the form will start
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
 
-        _this._addEditActions($this.attr('href'), _this.$parent.find('.js-addedit-form-wrapper'));
-      }
-    });
-  },
-
-  /**
-   * Click event listener for add and edit links applied to both index and nested forms
-   */
-  addModalEditLinks: function () {
-    var _this = this;
-
-    this.$addedit_form.on('click', '.js-modal-edit-link', function (ev) {
-      ev.preventDefault();
-      var $this = $(this);
-      // _this.$parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
-
-      _this._modalAddEditActions($this.attr("href"), _this.$parent.find(".js-addedit-form-wrapper"));
+      _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
     });
   },
 
@@ -71,7 +49,6 @@ Fae.form.ajax = {
    * @see addEditLinks
    */
   _addEditActions: function(remote_url, $wrapper) {
-    var _this = this;
 
     $.get(remote_url, function(data){
       // check to see if the content is hidden and slide it down if it is.
@@ -112,81 +89,9 @@ Fae.form.ajax = {
   },
 
   /**
-   * Once add or edit is clicked, load remote data, open modal and initialize listeners on the new create form within modal view
-   * @protected
-   * @param {String} remote_url - Remote page to load form from
-   * @param {jQuery} $wrapper - Whole form container
-   * @see addEditLinks
-   */
-  _modalAddEditActions: function (remote_url, $wrapper) {
-    var _this = this;
-
-    $.get(remote_url, function (data) {
-      //Open form content in modal window
-      $(data).modal({
-        minHeight: "75%",
-        minWidth: "75%",
-        overlayClose: true,
-        zIndex: 1100,
-        containerId: "addedit-form-modal",
-        onOpen: function(dialog) {
-          // Fade in modal + show data
-          dialog.overlay.fadeIn();
-          dialog.container.fadeIn();
-          dialog.data.show();
-
-          _this.$addedit_form = $('#addedit-form-modal');
-          _this.modalOpen = true;
-        },
-        onShow: function(dialog) {
-          var $data = $(dialog.data[0]);
-
-          _this.addEditSubmission();
-          _this.addCancelLinks();
-          _this.htmlListeners();
-
-          // initiate the chosen and fileinputer
-          $data.find(".select select").fae_chosen({ width: "300px" });
-          $data.find(".input.file").fileinputer();
-
-          // Bind validation to nested form fields added by AJAX
-          Fae.form.validator.bindValidationEvents(this.$nested_form);
-
-          // Reinitialize form elements
-          Fae.form.dates.initDatepicker();
-          Fae.form.dates.initDateRangePicker();
-          Fae.form.color.initColorpicker();
-          Fae.form.slugger.addListener();
-          Fae.form.validator.length_counter.init();
-          Fae.form.text.initMarkdown();
-          Fae.form.text.initHTML();
-          Fae.form.checkbox.setCheckboxAsActive();
-          Fae.form.select.init();
-
-          // validate nested form fields on submit
-          Fae.form.validator.formValidate(this.$nested_form);
-
-          $data.find(".hint").hinter();
-        },
-        onClose: function(dialog) {
-          // Fade out modal and close
-          dialog.container.fadeOut();
-          dialog.overlay.fadeOut(function() {
-            $.modal.close(); // must call this!
-            _this.modalOpen = false;
-          });
-        }
-      });
-
-    });
-  },
-
-  /**
    * Click event listener for cancel links applied to both index and nested forms; clears form to prevent saving errors
    */
   addCancelLinks: function() {
-    var _this = this;
-
     this.$addedit_form.on('click', '.js-cancel-nested', function(ev) {
       ev.preventDefault();
       var $this = $(this);
@@ -196,10 +101,6 @@ Fae.form.ajax = {
         $form_wrapper.slideUp('normal', function(){
           $form_wrapper.empty();
         });
-      }
-
-      if (_this.modalOpen) {
-        $.modal.close();
       }
     });
   },
@@ -228,17 +129,9 @@ Fae.form.ajax = {
         }
 
         if ($html) {
-          if ($html.hasClass('js-addedit-form') || $html.hasClass('js-index-addedit-form')) {
+          if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
-            if (_this.modalOpen) {
-              _this._addEditReplaceAndReinit(_this.$parent, $html.html(), $target);
-            } else {
-              _this._addEditReplaceAndReinit($this, $html.html(), $target);
-            }
-
-            if (_this.modalOpen) {
-              $.modal.close();
-            }
+            _this._addEditReplaceAndReinit($this, $html.html(), $target);
           } else if ($html.hasClass('nested-form')) {
 
             // we're returning the form due to an error, just replace the form
@@ -254,11 +147,7 @@ Fae.form.ajax = {
             Fae.form.text.initMarkdown();
             Fae.form.text.initHTML();
 
-            if (_this.modalOpen) {
-              $('#addedit-form-modal .simplemodal-wrap').scrollTop(0);
-            } else {
-              FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
-            }
+            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
           }
         }
 
@@ -292,8 +181,6 @@ Fae.form.ajax = {
   _addEditReplaceAndReinit: function($el, html, $target) {
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
-    console.log($form_wrapper);
-
     // Private function replaces parent element with HTML and reinits select and sorting
     function regenerateHTML() {
       // .html() is not replacing it properly
@@ -310,6 +197,7 @@ Fae.form.ajax = {
     // if there's a form wrap, slide it up before replacing content
     if ($form_wrapper.length) {
       $form_wrapper.slideUp(regenerateHTML);
+
     } else {
       regenerateHTML();
     }
@@ -409,7 +297,7 @@ Fae.form.ajax = {
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
-    $('#js-main-content, .login-form > form, #addedit-form-modal')
+    $('#js-main-content, .login-form > form')
 
       /**
        * For the delete button on file input
@@ -503,16 +391,6 @@ Fae.form.ajax = {
             $prevFocusable.trigger('chosen:activate');
           }
         }
-      })
-
-      /**
-       * For the delete button on file input
-       */
-      .on('click', '.js-file-clear', function (e) {
-        e.preventDefault();
-        var $parent = $(this).parent();
-        $parent.next().show();
-        $parent.hide();
       });
   }
 

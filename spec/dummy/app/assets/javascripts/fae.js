@@ -7,4 +7,36 @@
 
 $(document).ready(function(){
   $('.login-body').addClass('test-class');
+
+  $("body").on("modal:data_loaded", function (e) {
+    console.log(e);
+  });
+
+  $("body").on("modal:opened", function (e) {
+    console.log(e);
+  });
+
+  $("body").on("modal:show", function (e) {
+    console.log(e);
+  });
+
+  $("body").on("modal:closed", function (e) {
+    console.log(e);
+  });
 });
+
+
+
+
+
+// $("body").on("modal.shown", function (e) {
+//   console.log(e);
+// });
+
+// $("body").on("modal.closed", function (e) {
+//   console.log(e);
+// });
+
+
+
+
