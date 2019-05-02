@@ -65,7 +65,7 @@
     h2 Associations
     = fae_association f, :varietal, helper_text: 'pulldown', input_class: 'slugger'
 
-    = fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short or <a href=\'/admin/wines/new\' class=\'js-ajax-modal\' id=\'wines\'>add new</a>'.html_safe, collection: Wine.order(:name_en), label_method: :name_en
+    = fae_pulldown f, :wine, size: 'short', helper_text: 'pulldown short', collection: Wine.order(:name_en), label_method: :name_en
 
     = fae_multiselect f, :acclaims, label_method: :publication, helper_text: 'multiselect with a long helper description to ensure that the multiselect actions can coexist peacefully'
 
