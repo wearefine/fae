@@ -24,19 +24,3 @@ $(document).ready(function(){
     console.log(e);
   });
 });
-
-
-
-
-
-// $("body").on("modal.shown", function (e) {
-//   console.log(e);
-// });
-
-// $("body").on("modal.closed", function (e) {
-//   console.log(e);
-// });
-
-
-
-
