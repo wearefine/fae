@@ -5,7 +5,7 @@
   = fae_input f, :live
   = fae_image_form f, :image
   = f.hidden_field :release_id
-  = fae_association f, :cats, helper_text: "Select from existing categories, or <a href=\"/admin/cats/new\" class=\"js-modal-edit-link\">add new</a>.".html_safe
+  = fae_association f, :cats, helper_text: "Select from existing categories, or <a href=\"/admin/cats/new\" class=\"js-ajax-modal\">add new</a>.".html_safe
 
 
   = f.submit
