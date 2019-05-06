@@ -9,7 +9,7 @@ $(document).ready(function(){
   $('.login-body').addClass('test-class');
 
   $("body").on("modal:show", function (e) {
-    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Show</p>" );
+    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Open/Show</p>" );
   });
 
   $("body").on("modal:open", function (e) {
