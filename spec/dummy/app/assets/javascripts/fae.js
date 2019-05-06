@@ -8,19 +8,20 @@
 $(document).ready(function(){
   $('.login-body').addClass('test-class');
 
-  $("body").on("modal:data_loaded", function (e) {
-    console.log(e);
-  });
-
-  $("body").on("modal:opened", function (e) {
-    console.log(e);
-  });
-
   $("body").on("modal:show", function (e) {
-    console.log(e);
+    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Show</p>" );
+  });
+
+  $("body").on("modal:open", function (e) {
+    $(e.relatedTarget).closest('.input').append("<p class='modal-callback'>Modal Opened</p>");
+  });
+
+
+  $("body").on("modal:close", function (e) {
+    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Close</p>" );
   });
 
   $("body").on("modal:closed", function (e) {
-    console.log(e);
+    $(e.relatedTarget).closest('.input').append("<p class='modal-callback'>Modal Closed</p>");
   });
 });
