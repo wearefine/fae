@@ -9,9 +9,9 @@ Fae.modals = {
     this.$body = $('body');
     this.openClass = 'modal-open';
     this.modalClass = 'MODAL_ID-modal-open';
-    this.loadDataEvent = 'modal:data_loaded';
-    this.openedEvent = 'modal:opened';
+    this.openEvent = 'modal:open';
     this.showEvent = 'modal:show';
+    this.closeEvent = 'modal:close';
     this.closedEvent = 'modal:closed';
     this.modalOpen = false;
 
@@ -74,13 +74,11 @@ Fae.modals = {
    * @see {@link modals.formModalListener}
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
-  openAjaxModal: function (remoteUrl, modalId) {
+  openAjaxModal: function (remoteUrl, relatedTarget) {
     var _this = this;
+    console.log(relatedTarget);
 
     $.get(remoteUrl, function (data) {
-      var dataLoadedEvent = $.Event(_this.loadDataEvent, { html: $(data), modalId: modalId });
-      _this.$body.trigger(dataLoadedEvent);
-
       //Open remote url content in modal window
       $(data).modal({
         minHeight: "75%",
@@ -94,32 +92,36 @@ Fae.modals = {
         onOpen: function (dialog) {
           // Fade in modal + show data
           dialog.overlay.fadeIn();
-          dialog.container.fadeIn();
+          dialog.container.fadeIn(function() {
+            var openEvent = $.Event(_this.openEvent, { dialog: dialog, relatedTarget: relatedTarget });
+            _this.$body.trigger(openEvent);
+          });
           dialog.data.show();
 
-          var modalClasses = [_this._createClassFromModalId(modalId), _this.openClass].join(' ');
-          var openEvent = $.Event(_this.openedEvent, { dialog: dialog, modalId: modalId });
+          var modalClasses = [_this._createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
 
           _this.modalOpen = true;
           _this.$body.addClass(modalClasses);
-          _this.$body.trigger(openEvent);
         },
         onShow: function (dialog) {
-          var showEvent = $.Event(_this.showEvent, { dialog: dialog, modalId: modalId });
+          var showEvent = $.Event(_this.showEvent, { dialog: dialog, relatedTarget: relatedTarget });
           _this.$body.trigger(showEvent);
         },
         onClose: function (dialog) {
+          var closeEvent = $.Event(_this.closeEvent, { dialog: dialog, relatedTarget: relatedTarget });
+          _this.$body.trigger(closeEvent);
+
           // Fade out modal and close
           dialog.container.fadeOut();
           dialog.overlay.fadeOut(function () {
             $.modal.close(); // must call this!
 
-            var closeEvent = $.Event(_this.closedEvent, { dialog: dialog, modalId: modalId });
-            var modalClasses = [_this._createClassFromModalId(modalId), _this.openClass].join(' ');
+            var closedEvent = $.Event(_this.closedEvent, { dialog: dialog, relatedTarget: relatedTarget });
+            var modalClasses = [_this._createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
 
             _this.modalOpen = false;
             _this.$body.removeClass(modalClasses);
-            _this.$body.trigger(closeEvent);
+            _this.$body.trigger(closedEvent);
           });
         }
       });
@@ -138,10 +140,10 @@ Fae.modals = {
     FCH.$document.on('click', '.js-ajax-modal', function (e) {
       e.preventDefault();
       var $this = $(this);
-      var target = $this.attr('href');
+      var url = $this.attr('href');
       var id = $this.attr('id');
 
-      _this.openAjaxModal(target, id)
+      _this.openAjaxModal(url, $this)
     });
   },
 
