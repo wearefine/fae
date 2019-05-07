@@ -170,9 +170,9 @@ RUBY
       when 'boolean'
         'Boolean'
       when 'image'
-        'Fae::ImageType'
+        'Types::FaeImageType'
       when 'file'
-        'Fae::FileType'
+        'Types::FaeFileType'
       else
         'String'
       end
