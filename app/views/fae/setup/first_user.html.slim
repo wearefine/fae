@@ -8,4 +8,4 @@
     = fae_input f, :password, helper_text: t('fae.setup.password')
     = fae_input f, :password_confirmation
     .login-form-actions
-      = f.button :submit, t('fae.form.submit')
+      input name="commit" type="submit" value=t('fae.form.save')
