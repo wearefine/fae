@@ -11,6 +11,7 @@ module Fae
       if attributes.present?
         attributes.each do |attr|
           @@attributes[attr.name.to_sym] = convert_attr_type(attr.type)
+          @@graphql_attributes << graphql_object(attr)
         end
       end
     end
@@ -18,6 +19,7 @@ module Fae
     def go
       generate_static_page_controller
       generate_static_page_model
+      generate_graphql_type
       generate_static_page_view
     end
 
@@ -35,6 +37,12 @@ module Fae
     def generate_static_page_model
       @attributes = @@attributes
       template "models/pages_model.rb", "app/models/#{file_name}_page.rb"
+    end
+
+    def generate_graphql_type
+      return unless uses_graphql
+      @graphql_attributes = @@graphql_attributes
+      template "graphql/graphql_page_type.rb", "app/graphql/types/#{file_name}_page_type.rb"
     end
 
     def generate_static_page_view

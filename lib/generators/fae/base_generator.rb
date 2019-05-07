@@ -57,7 +57,6 @@ module Fae
       inject_display_field_to_model
       inject_model_attachments
       inject_position_scope
-      generate_graphql_type
     end
 
     def generate_controller_file
@@ -156,7 +155,7 @@ RUBY
     def graphql_object(arg)
       if is_association(arg)
         assoc_name = arg.name.gsub(/_id$/, '')
-        assoc_type = "#{assoc_name.classify}Type"
+        assoc_type = "Types::#{assoc_name.classify}Type"
         { attr: assoc_name.to_sym, type: assoc_type }
       else
         { attr: arg.name.to_sym, type: graphql_type(arg.type) }
