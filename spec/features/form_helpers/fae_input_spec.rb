@@ -85,11 +85,11 @@ feature 'fae_input' do
   end
 
   scenario 'should display ajax modal popup when link is clicked', js: true do
-    expect(page).to_not have_selector('#fae-ajax-modal')
+    expect(page).to_not have_selector('#fae-modal')
 
-    page.find('.js-ajax-modal').click
+    page.find('.js-fae-modal').click
 
-    expect(page).to have_selector('#fae-ajax-modal')
+    expect(page).to have_selector('#fae-modal')
   end
 
 end

@@ -76,7 +76,6 @@ Fae.modals = {
    */
   openAjaxModal: function (remoteUrl, relatedTarget) {
     var _this = this;
-    console.log(relatedTarget);
 
     $.get(remoteUrl, function (data) {
       //Open remote url content in modal window
@@ -85,7 +84,7 @@ Fae.modals = {
         minWidth: "75%",
         overlayClose: true,
         zIndex: 1100,
-        containerId: "fae-ajax-modal",
+        containerId: "fae-modal",
         persist: true,
         opacity: 70,
         overlayCss: { backgroundColor: "#000" },
@@ -137,7 +136,7 @@ Fae.modals = {
   ajaxModalListener: function () {
     var _this = this;
 
-    FCH.$document.on('click', '.js-ajax-modal', function (e) {
+    FCH.$document.on('click', '.js-fae-modal', function (e) {
       e.preventDefault();
       var $this = $(this);
       var url = $this.attr('href');
