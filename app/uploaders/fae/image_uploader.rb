@@ -10,7 +10,7 @@ module Fae
       model.file_size = file.size
     end
 
-    def extension_white_list
+    def extension_whitelist
       %w(jpg jpeg gif png ico)
     end
 
