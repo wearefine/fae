@@ -24,7 +24,6 @@ gem 'sass', require: 'sass'
 group :test, :development do
   gem 'rspec-rails', '~> 3.6.0'
   gem 'pry'
-  gem 'rb-readline'
 end
 
 group :test do
