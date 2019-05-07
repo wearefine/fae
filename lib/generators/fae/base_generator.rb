@@ -74,7 +74,7 @@ module Fae
     end
 
     def add_route
-      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n" do <<-RUBY
+      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do <<-RUBY
     resources :#{plural_file_name}
 RUBY
       end
