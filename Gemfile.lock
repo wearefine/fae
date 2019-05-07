@@ -147,10 +147,6 @@ GEM
     formatador (0.2.5)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
-    graphiql-rails (1.7.0)
-      railties
-      sprockets-rails
-    graphql (1.9.4)
     guard (2.14.2)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -369,8 +365,6 @@ DEPENDENCIES
   database_cleaner
   factory_girl_rails (~> 4.4.1)
   fae-rails!
-  graphiql-rails
-  graphql
   guard-rspec (~> 4.7.3)
   mysql2
   pry

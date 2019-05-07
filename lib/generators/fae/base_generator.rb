@@ -159,7 +159,7 @@ RUBY
         assoc_type = "#{assoc_name.classify}Type"
         { attr: assoc_name.to_sym, type: assoc_type }
       else
-        { attr: arg.name.to_sym, type: graphql_type(arg) }
+        { attr: arg.name.to_sym, type: graphql_type(arg.type) }
       end
     end
 
@@ -179,7 +179,8 @@ RUBY
     end
 
     def generate_graphql_type
-      return unles uses_graphql
+      return unless uses_graphql
+      @graphql_attributes = @@graphql_attributes
       template "graphql/graphql_type.rb", "app/graphql/types/#{file_name}_type.rb"
     end
 
