@@ -61,6 +61,7 @@ https://www.faecms.com/documentation
 
 ### Tutorials
 
+* [Setting Up GraphQL with Fae](docs/tutorials/graphql_support.md)
 * [Setting Up Images and Files](docs/tutorials/image_and_files.md)
 * [Adding Dynamic Relationships to Pages](docs/tutorials/dynamic_relationships_to_pages.md)
 * [Adding Conditional Validations](docs/tutorials/conditional_validations.md)
