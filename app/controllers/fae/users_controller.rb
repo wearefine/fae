@@ -18,6 +18,8 @@ module Fae
 
     def settings
       @user = current_user
+      # set index path to dashboard
+      @index_path = root_path
     end
 
     def create
