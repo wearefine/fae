@@ -25,6 +25,7 @@ Fae.form.filtering = {
       }
 
       this.setFilterDropDowns();
+      this.setTextInputs();
       this.filterFormListeners();
       this.paginationListeners();
       this.sortingSetup();
@@ -117,6 +118,17 @@ Fae.form.filtering = {
         _this.updateFryrAndResetPaging(key, value);
 
         $('.js-reset-btn').show();
+      })
+
+      // update hash when date inputs changed
+      .on('change', '.datepicker input', function() {
+        var key = $(this).attr('id').split('filter_')[1];
+        var value = $(this).val();
+        console.log(value);
+        timer = setTimeout(function() {
+          _this.updateFryrAndResetPaging(key, value);
+          $('.js-reset-btn').show();
+        }, 500);
       });
   },
 
@@ -141,6 +153,27 @@ Fae.form.filtering = {
           $option.prop('selected', 'selected');
           $select.trigger('chosen:updated');
         }
+      }
+    });
+
+    $('.js-reset-btn').show();
+  },
+
+  /**
+   * Sets filter dropdowns on page load based on Fryr params
+   */
+  setTextInputs: function() {
+    // Exit early if this.fry.params is blank
+    if ($.isEmptyObject(this.fry.params)) {
+      return;
+    }
+
+    // Loop through all available this.fry.params to find the select menu and the proper option
+    $.each(this.fry.params, function(key, value) {
+      var $input = $('.js-filter-form .table-filter-group.text-input #filter_' + key);
+
+      if($input.length) {
+        $input.val(decodeURIComponent(value));
       }
     });
 
