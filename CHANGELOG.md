@@ -1,5 +1,33 @@
 # Fae Changelog
 
+## 2.1
+
+- enhancements
+    + Add GraphQL support [#475](https://github.com/wearefine/fae/pull/475)
+    + Add I18n support for the admin interface [#434](https://github.com/wearefine/fae/pull/434)
+    + Update Carrierwave whitelist method naming [#470](https://github.com/wearefine/fae/pull/470)
+    + Make user edit and my settings view more consistent [#473](https://github.com/wearefine/fae/pull/473)
+    + Update Devise to latest version [#465](https://github.com/wearefine/fae/pull/465)
+    + Add Rails versions to dummy migrations [#463](https://github.com/wearefine/fae/pull/463)
+- bugs
+    + Fix user settings cancel path [#476](https://github.com/wearefine/fae/pull/476)
+    + Force adding route via generator if it already exists [#471](https://github.com/wearefine/fae/pull/471)
+    + Init HTML editors when AJAX loads forms [#460](https://github.com/wearefine/fae/pull/460)
+    + Fix bugs in stripValidation() [#426](https://github.com/wearefine/fae/pull/426)
+    + Nested ajax form fixes for file attachment fields [#421](https://github.com/wearefine/fae/pull/421)
+    + Selects need initing for nested forms so we can have select all, etc [#430](https://github.com/wearefine/fae/pull/430)
+    + Fix colour picker when sidenav present [#413](https://github.com/wearefine/fae/pull/413)
+    + Fix nested AJAX form validations [#419](https://github.com/wearefine/fae/pull/419)
+    + Only define StaticPage validations on Fae::TextField and Fae::TextArea [#418](https://github.com/wearefine/fae/pull/418)
+- documentation
+    + Test and document fae_translate on Fae::StaticPage [#472](https://github.com/wearefine/fae/pull/472)
+    + Fix languages selector attribute in shared form headers documentation [#444](https://github.com/wearefine/fae/pull/444)
+    + Fix typos in documentation [#459](https://github.com/wearefine/fae/pull/459)
+    + Update custom image docs [#438](https://github.com/wearefine/fae/pull/438)
+    + Update custom image docs [#420](https://github.com/wearefine/fae/pull/420)
+    + Minor docs fix [#417](https://github.com/wearefine/fae/pull/417)
+    + Clarifying supported Rails versions in README [#412](https://github.com/wearefine/fae/pull/412)
+
 ## 2.0
 
 - enhancements
