@@ -15,7 +15,7 @@ Fae::Engine.routes.draw do
   get 'settings' => 'users#settings', as: 'settings'
   get 'help' => 'pages#help', as: 'help'
   get 'activity' => 'pages#activity_log', as: 'activity_log'
-  post 'filter' => 'pages#activity_log_filter', as: 'activity_log_filter'
+  post 'activity/filter' => 'pages#activity_log_filter', as: 'activity_log_filter'
 
   get 'first_user' => 'setup#first_user'
   post 'first_user' => 'setup#create_first_user'
