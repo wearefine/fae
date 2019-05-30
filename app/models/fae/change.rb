@@ -8,6 +8,14 @@ module Fae
 
     serialize :updated_attributes
 
+    def main_app
+      Rails.application.class.routes.url_helpers
+    end
+
+    def fae_scope
+      Fae::ApplicationHelper.helpers.fae_scope
+    end
+
     def change_item_link
       text = "#{changeable_type.gsub('Fae::','')}: "
       test_source_method = :data_source_exists?
