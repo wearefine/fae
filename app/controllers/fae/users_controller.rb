@@ -3,6 +3,7 @@ module Fae
     before_action :admin_only, except: [:settings, :update]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :set_role_collection, except: [:index, :destroy]
+    before_action :set_index_path, only: [:settings, :new, :edit]
 
     def index
       @users = current_user.super_admin? ? Fae::User.all : Fae::User.public_users
@@ -17,6 +18,8 @@ module Fae
 
     def settings
       @user = current_user
+      # set index path to dashboard
+      @index_path = root_path
     end
 
     def create
@@ -66,6 +69,11 @@ module Fae
         elsif @user === current_user
           params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
         end
+      end
+
+      def set_index_path
+        # @index_path determines form's cancel btn path
+        @index_path = users_path
       end
   end
 end

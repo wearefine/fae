@@ -71,6 +71,9 @@
 
 - name: Tutorials
   children:
+    - name: Setting Up GraphQL with Fae
+      path: docs/tutorials/graphql_support.md
+      page_title: Setting Up GraphQL with Fae | Ruby on Rails CMS Tutorial
     - name: Setting up Images and Files
       path: docs/tutorials/image_and_files.md
       page_title: Setting Up Images and Files in Fae | Ruby on Rails CMS Tutorial

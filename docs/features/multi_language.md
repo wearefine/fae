@@ -78,18 +78,37 @@ Finally, to display the language select menu, you'll need to add `languages: tru
 Multiple inputs will be generated for blocks that support for multiple languages. Add a `:languages` key to the field's definition.
 
 ```ruby
-def self.fae_fields
-  {
-    body: {
-      type: Fae::TextArea,
-      languages: [:en, :zh]
-    },
-    annual_report: {
-      type: Fae::File,
-      languages: Fae.languages.keys # Set in config/initializers/fae.rb
+class AboutPage < Fae::StaticPage
+
+  @slug = 'about'
+
+  fae_translate :body, :annual_report
+
+  def self.fae_fields
+    {
+      body: {
+        type: Fae::TextArea,
+        languages: [:en, :zh]
+      },
+      annual_report: {
+        type: Fae::File,
+        languages: Fae.languages.keys # Set in config/initializers/fae.rb
+      }
     }
-  }
+  end
+
 end
+```
+
+Utilizing `fae_translate` in a `Fae::StaticPage` will automatically use the set locale to determine which content to return.
+
+```ruby
+# set locale
+I18n.locale = :zh
+
+# calling an attribute will return the translation content
+AboutPage.instance.body_content
+# => content set in body_zh
 ```
 
 Add `languages: true` to the page's `fae/shared/form_header` partial to utilize Fae's language switcher.

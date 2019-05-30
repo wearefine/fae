@@ -1,9 +1,9 @@
 ruby:
   require_locals ['header'], local_assigns
-  save_button_text    ||= 'Save'
-  cancel_button_text  ||= 'Cancel'
+  save_button_text    ||= t('fae.form.save')
+  cancel_button_text  ||= t('fae.form.cancel')
   cloneable           ||= false
-  clone_button_text   ||= 'Clone'
+  clone_button_text   ||= t('fae.form.clone')
   subnav              ||= []
   header_as_string      = header.is_a?(String) ? header : header.class.name.split('::').last
   header_as_string      = header_as_string.singularize

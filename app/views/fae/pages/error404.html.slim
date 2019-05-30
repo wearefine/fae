@@ -2,6 +2,8 @@
   .sad_face
   h1 Oops!
 p
-  | The page you requested can not be found. Please&nbsp;
-  a href=fae.root_path click here
-  | &nbsp;to be taken to our home page.
+  = t('fae.page.error_start')
+  |&nbsp;
+  a href=fae.root_path = t('fae.page.click')
+  | &nbsp;
+  = t('fae.page.error_end')

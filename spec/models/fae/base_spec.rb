@@ -67,6 +67,19 @@ describe Fae::BaseModelConcern do
 
       expect( Wine.find_by_name('Funky') ).to be_present
     end
+
+    it 'should translate Fae::StaticPage attributes' do
+      FactoryGirl.create(:contact_us_page)
+      contact_page = home_page = ContactUsPage.instance
+      contact_page.create_body_en(attached_as: 'body_en', content: 'EN body')
+      contact_page.create_body_zh(attached_as: 'body_zh', content: 'ZH body')
+
+      I18n.locale = :zh
+      expect(contact_page.body_content).to eq('ZH body')
+
+      I18n.locale = :en
+      expect(contact_page.body_content).to eq('EN body')
+    end
   end
 
 end
