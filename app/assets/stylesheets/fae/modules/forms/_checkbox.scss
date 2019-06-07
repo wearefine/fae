@@ -38,6 +38,7 @@
 
 label.checkbox,
 .checkbox label {
+  display: block;
   padding-top: 6px; // Vertical align hack
 
   &:before {
