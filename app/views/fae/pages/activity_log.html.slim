@@ -7,9 +7,10 @@ main.content
     == fae_filter_select :model, options: Fae::Change.unique_changeable_types
     == fae_filter_select :type, options: ['created', 'updated', 'deleted']
     == fae_filter_select :date, options: ['Last Hour', 'Last Day', 'Last Week', 'Last Month'], placeholder: 'All Time'
-    br
-    == fae_filter_datepicker :start_date
-    == fae_filter_datepicker :end_date
+
+    .table-filter-group.no-right-margin
+      == fae_filter_datepicker :start_date, placeholder: 'MM/DD/YYYY', class: 'test'
+      == fae_filter_datepicker :end_date, placeholder: 'MM/DD/YYYY'
 
   table.js-results-table
     thead
