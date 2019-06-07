@@ -120,8 +120,8 @@ Then to get content from a `Fae::TextField` and `Fae::TextArea`:
 # for `Fae::Image` or `Fae::File`
 @about_us_page.hero_image.asset.url
 # for `Fae::Image` only
-@about_us_page.hero_image.asset.alt
-@about_us_page.hero_image.asset.caption
+@about_us_page.hero_image.alt
+@about_us_page.hero_image.caption
 ```
 
 ## Invalid Content Block Names
