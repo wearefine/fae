@@ -7,6 +7,7 @@ The system is just your basic inherited singleton with dynamic polymorphic assoc
 * [Pages vs Content Blocks](#pages-vs-content-blocks)
 * [Generating Pages](#generating-pages)
 * [Adding Content Blocks](#adding-content-blocks)
+* [Getting Your Content Blocks](#getting-your-content-blocks)
 * [Invalid Content Block Names](#invalid-content-block-names)
 * [Validations on Content Blocks](#validations-on-content-blocks)
 
