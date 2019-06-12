@@ -58,4 +58,8 @@
 .table-filter-group {
   display: inline-block;
   margin: 0 30px 20px 0;
+
+  &.no-right-margin {
+    margin-right: 0;
+  }
 }
