@@ -8,14 +8,6 @@ module Fae
 
     serialize :updated_attributes
 
-    def main_app
-      Rails.application.class.routes.url_helpers
-    end
-
-    def fae_scope
-      Fae::ApplicationHelper.helpers.fae_scope
-    end
-
     class << self
       # writing current_user to thread for thread safety
       def current_user=(user)
