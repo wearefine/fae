@@ -58,6 +58,28 @@ module Fae
       @body_class.present? ? @body_class : "#{controller_name} #{action_name}"
     end
 
+    def change_item_link(change)
+      text = "#{change.changeable_type.gsub('Fae::','')}: "
+      test_source_method = :data_source_exists?
+
+      if change.changeable_type.exclude?('Fae') && change.changeable_type.exclude?('Page') && !ActiveRecord::Base.connection.send(test_source_method, change.changeable_type.tableize)
+        return "#{change.changeable_type}: model destroyed"
+      else
+        display_text = change.try(:changeable).try(:fae_display_field)
+        display_text = (display_text.is_a? Integer) ? display_text.to_s : display_text
+        text += display_text || "##{change.changeable_id}"
+
+        begin
+          return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
+          parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
+          edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
+          return link_to text, edit_path
+        rescue
+          return text
+        end
+      end
+    end
+
     private
 
     def nav_path_current?(path)
