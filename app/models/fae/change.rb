@@ -16,29 +16,6 @@ module Fae
       Fae::ApplicationHelper.helpers.fae_scope
     end
 
-    def change_item_link
-      text = "#{changeable_type.gsub('Fae::','')}: "
-      test_source_method = :data_source_exists?
-
-      if changeable_type.exclude?('Fae') && changeable_type.exclude?('Page') && !ActiveRecord::Base.connection.send(test_source_method, changeable_type.tableize)
-        return "#{changeable_type}: model destroyed"
-      else
-        display_text = try(:changeable).try(:fae_display_field)
-        display_text = [Integer, Symbol].include?(display_text.class) ? display_text.to_s : display_text
-        text += display_text || "##{changeable_id}"
-
-        begin
-          return link_to text, fae.edit_content_block_path(changeable.slug) if changeable_type == 'Fae::StaticPage'
-          parent = changeable.respond_to?(:fae_parent) ? changeable.fae_parent : nil
-          edit_path = edit_polymorphic_path([main_app, fae_scope, parent, changeable])
-          return link_to text, edit_path
-        rescue StandardError => error
-          logger.tagged('Fae::Change') { logger.error "Error: #{error}, for link to #{text}" }
-          return text
-        end
-      end
-    end
-
     class << self
       # writing current_user to thread for thread safety
       def current_user=(user)
