@@ -16,9 +16,8 @@ module Fae
       presence: true,
       uniqueness: { message: 'That email address is already in use. Give another one a go.' },
       format: {
-        with: /^\s*(([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[\s\/,;]*)+$/i,
-        message: 'is invalid',
-        multiline: true
+        with: Fae.validation_helpers.email_regex,
+        message: 'is invalid'
       }
     validates :password,
       presence: { on: :create },

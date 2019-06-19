@@ -1,10 +1,10 @@
-== render 'fae/shared/index_header', title: 'Pages', breadcrumbs: false, new_button: false
+== render 'fae/shared/index_header', title: t('fae.page.title'), breadcrumbs: false, new_button: false
 
 main.content
   table.js-sort-column
     thead
       tr
-        th Name
+        th = t('fae.common.name')
         th.-action-wide Modified
     tbody
       - @items.each do |item|

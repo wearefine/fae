@@ -2,23 +2,23 @@
 
 main.content
 
-  == fae_filter_form title: 'Search Changes', action: fae.activity_log_filter_path do
-    == fae_filter_select :type, options: ['created', 'updated', 'deleted']
+  == fae_filter_form title: t('fae.changes.title'), action: fae.activity_log_filter_path do
+    == fae_filter_select :type, options: [t('fae.changes.created'), t('fae.changes.updated'), t('fae.changes.deleted')], translation_path: 'fae.changes.models'
     == fae_filter_datepicker :start_date, placeholder: 'MM/DD/YYYY', class: 'test'
     == fae_filter_datepicker :end_date, placeholder: 'MM/DD/YYYY'
-    == fae_filter_select :date, options: ['Last Hour', 'Last Day', 'Last Week', 'Last Month'], placeholder: 'All Time'
+    == fae_filter_select :date, options: [t('fae.changes.last_hour'), t('fae.changes.last_day'), t('fae.changes.last_week'), t('fae.changes.last_month')], placeholder: t('fae.changes.all_time')
     br
-    == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }
-    == fae_filter_select :model, options: Fae::Change.unique_changeable_types
+    == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }, translation_path: 'fae.changes.models'
+    == fae_filter_select :model, options: Fae::Change.unique_changeable_types, translation_path: 'fae.changes.models'
 
   table.js-results-table
     thead
       tr
-        th data-sort="user.first_name" User
-        th data-sort="changeable_type" Item
-        th data-sort="change_type" Type
-        th Attribute(s) Updated
-        th data-sort="updated_at" Modified
+        th data-sort="user.first_name" = t('fae.changes.user')
+        th data-sort="changeable_type" = t('fae.changes.item')
+        th data-sort="change_type" = t('fae.changes.type')
+        th = t('fae.changes.attrs')
+        th data-sort="updated_at" = t('fae.changes.modified')
     tbody
       - if @items.present?
         - @items.each do |change|
@@ -30,6 +30,6 @@ main.content
             td = fae_datetime_format(change.updated_at)
       - else
         tr
-          td colspan=5 No changes recorded
+          td colspan=5 = t('fae.changes.no_changes')
 
   == fae_paginate @items

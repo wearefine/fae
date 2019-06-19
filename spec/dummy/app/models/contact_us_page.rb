@@ -2,6 +2,8 @@ class ContactUsPage < Fae::StaticPage
 
   @slug = 'contact_us'
 
+  fae_translate :body
+
   # required to set the has_one associations, Fae::StaticPage will build these associations dynamically
   def self.fae_fields
     {

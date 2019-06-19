@@ -6,6 +6,7 @@ module Fae
 
     def go
       generate_nested_model_file
+      generate_graphql_type
       generate_nested_controller_file
       generate_view_files
       add_route

@@ -9,6 +9,7 @@ module Fae
     @@attribute_names = []
     @@association_names = []
     @@attachments = []
+    @@graphql_attributes = []
     @@has_position = false
     @@display_field = ''
 
@@ -28,18 +29,21 @@ module Fae
             @@attributes_flat << "#{arg.name}:#{arg.type}"
           end
 
-          if arg.name['_id'] || arg.type.to_s == 'references'
-            @@association_names << arg.name.gsub('_id', '')
+          if is_association(arg)
+            @@association_names << arg.name.gsub(/_id$/, '')
           elsif !is_attachment(arg)
             @@attribute_names << arg.name
           end
           @@has_position = true if arg.name === 'position'
+
+          @@graphql_attributes << graphql_object(arg)
         end
 
         @@attributes_flat = @@attributes_flat.uniq.join(' ')
         @@association_names.uniq!
         @@attribute_names.uniq!
         @@attachments.uniq!
+        @@graphql_attributes.uniq!
       end
     end
 
@@ -74,7 +78,7 @@ module Fae
     end
 
     def add_route
-      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n" do <<-RUBY
+      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do <<-RUBY
     resources :#{plural_file_name}
 RUBY
       end
@@ -146,6 +150,45 @@ RUBY
     def inject_nav_item
       line = "item('#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path),\n\s\s\s\s\s\s\s\s"
       inject_into_file 'app/models/concerns/fae/navigation_concern.rb', line, before: '# scaffold inject marker'
+    end
+
+    def graphql_object(arg)
+      if is_association(arg)
+        assoc_name = arg.name.gsub(/_id$/, '')
+        assoc_type = "Types::#{assoc_name.classify}Type"
+        { attr: assoc_name.to_sym, type: assoc_type }
+      else
+        { attr: arg.name.to_sym, type: graphql_type(arg.type) }
+      end
+    end
+
+    def graphql_type(type)
+      case type.to_s
+      when 'integer'
+        'Integer'
+      when 'boolean'
+        'Boolean'
+      when 'image'
+        'Types::FaeImageType'
+      when 'file'
+        'Types::FaeFileType'
+      else
+        'String'
+      end
+    end
+
+    def generate_graphql_type
+      return unless uses_graphql
+      @graphql_attributes = @@graphql_attributes
+      template "graphql/graphql_type.rb", "app/graphql/types/#{file_name}_type.rb"
+    end
+
+    def uses_graphql
+      defined?(GraphQL)
+    end
+
+    def is_association(arg)
+      arg.name.end_with?('_id') || arg.type.to_s == 'references'
     end
 
     def is_attachment(arg)
