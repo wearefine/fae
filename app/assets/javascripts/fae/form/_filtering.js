@@ -124,7 +124,6 @@ Fae.form.filtering = {
       .on('change', '.datepicker input', function() {
         var key = $(this).attr('id').split('filter_')[1];
         var value = $(this).val();
-        console.log(value);
         timer = setTimeout(function() {
           _this.updateFryrAndResetPaging(key, value);
           $('.js-reset-btn').show();
