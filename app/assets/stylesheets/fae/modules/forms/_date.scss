@@ -208,6 +208,21 @@
     font-size: 19px;
     color: $c-darker-grey;
   }
+
+  &.table-filter-group {
+    width: 130px;
+
+    input[type=text] {
+      border-radius: 0;
+    }
+
+    label:before {
+      right: -5px;
+      bottom: -6px;
+
+      font-size: 15px;
+    }
+  }
 }
 
 // Daterange picker

@@ -131,6 +131,15 @@ module Fae
       end
     end
 
+    def fae_filter_datepicker(attribute, options={})
+      options[:label]       ||= attribute.to_s.titleize
+      options[:placeholder] = options[:label] if options[:placeholder].nil?
+      content_tag :div, class: 'table-filter-group text-input datepicker' do
+        concat label_tag "filter[#{attribute}]", options[:label]
+        concat text_field_tag "filter[#{attribute}]", nil, placeholder: options[:placeholder]
+      end
+    end
+
     def fae_avatar(user = current_user)
       hash = Digest::MD5.hexdigest(user.email.downcase)
       "https://secure.gravatar.com/avatar/#{hash}?s=80&d=mm"
