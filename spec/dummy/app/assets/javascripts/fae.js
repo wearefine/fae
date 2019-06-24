@@ -10,6 +10,17 @@ $(document).ready(function(){
 
   $("body").on("modal:show", function (e) {
     $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Open/Show</p>" );
+
+    //Add form listeners & close form on ajax success
+    if (e.dialog.data[0].classList.contains('nested-form')) {
+      Fae.form.ajax.htmlListeners();
+
+      $('#fae-modal').on('ajax:success', function (evt, data, status, xhr) {
+        if (Fae.modals.modalOpen) {
+          $.modal.close();
+        }
+      });
+    }
   });
 
   $("body").on("modal:open", function (e) {
