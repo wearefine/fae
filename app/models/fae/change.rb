@@ -56,7 +56,7 @@ module Fae
         # apply conditions and search from above to our scope
         order(id: :desc)
           .includes(:user).references(:user)
-          .where(date_scope).where(conditions).where(date_scope)
+          .where(date_scope).where(conditions).where(search)
       end
 
     end
