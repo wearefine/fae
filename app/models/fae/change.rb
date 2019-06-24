@@ -29,11 +29,22 @@ module Fae
         conditions[:changeable_type] = params['model'] if params['model'].present?
         conditions[:change_type] = params['type'] if params['type'].present?
 
-        date_scope = case params['date']
-          when 'Last Hour' then   ['fae_changes.updated_at >= ?', 60.minutes.ago]
-          when 'Last Day' then    ['fae_changes.updated_at >= ?', 1.day.ago]
-          when 'Last Week' then   ['fae_changes.updated_at >= ?', 1.week.ago]
-          when 'Last Month' then  ['fae_changes.updated_at >= ?', 1.month.ago]
+        date_scope = []
+        if params['start_date'].present? || params['end_date'].present?
+          start_date = params['start_date'].present? ? CGI.unescape(params['start_date']).to_date : nil
+          end_date   = params['end_date'].present? ? CGI.unescape(params['end_date']).to_date : nil
+          date_scope = ['fae_changes.updated_at >= ?', start_date] if start_date.present?
+          date_scope = ['fae_changes.updated_at <= ?', end_date] if end_date.present?
+          date_scope = ['fae_changes.updated_at >= ? AND fae_changes.updated_at <= ?', start_date, end_date] if start_date.present? && end_date.present?
+        else
+          date_scope = case params['date']
+            when 'Last Hour' then   ['fae_changes.updated_at >= ?', 60.minutes.ago]
+            when 'Last Day' then    ['fae_changes.updated_at >= ?', 1.day.ago]
+            when 'Last Week' then   ['fae_changes.updated_at >= ?', 1.week.ago]
+            when 'Last Month' then  ['fae_changes.updated_at >= ?', 1.month.ago]
+            else
+              []
+          end
         end
 
         # use good 'ol MySQL to search if search param is present
@@ -45,7 +56,7 @@ module Fae
         # apply conditions and search from above to our scope
         order(id: :desc)
           .includes(:user).references(:user)
-          .where(Arel.sql(date_scope)).where(conditions).where(Arel.sql(search))
+          .where(date_scope).where(conditions).where(date_scope)
       end
 
     end

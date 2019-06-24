@@ -3,10 +3,13 @@
 main.content
 
   == fae_filter_form title: t('fae.changes.title'), action: fae.activity_log_filter_path do
+    == fae_filter_select :type, options: [t('fae.changes.created'), t('fae.changes.updated'), t('fae.changes.deleted')], translation_path: 'fae.changes.models'
+    == fae_filter_datepicker :start_date, placeholder: 'MM/DD/YYYY', class: 'test'
+    == fae_filter_datepicker :end_date, placeholder: 'MM/DD/YYYY'
+    == fae_filter_select :date, options: [t('fae.changes.last_hour'), t('fae.changes.last_day'), t('fae.changes.last_week'), t('fae.changes.last_month')], placeholder: t('fae.changes.all_time')
+    br
     == fae_filter_select :user, options: Fae::User.all.map { |u| [u.full_name, u.id] }, translation_path: 'fae.changes.models'
     == fae_filter_select :model, options: Fae::Change.unique_changeable_types, translation_path: 'fae.changes.models'
-    == fae_filter_select :type, options: [t('fae.changes.created'), t('fae.changes.updated'), t('fae.changes.deleted')], translation_path: 'fae.changes.models'
-    == fae_filter_select :date, options: [t('fae.changes.last_hour'), t('fae.changes.last_day'), t('fae.changes.last_week'), t('fae.changes.last_month')], placeholder: t('fae.changes.all_time')
 
   table.js-results-table
     thead
