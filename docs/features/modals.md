@@ -1,82 +1,88 @@
 # Modals
+You can use the Fae modal feature to add the ability of opening a specific view (list view or nested form) within a modal popup. You can then use the custom event hooks to extend the modal functionality.
 
-Many users find it easier to clone records that have similar content, rather than spending the time manually setting them up. Fae has the ability to allow one-click clones from the index or the edit form, as well as flexibility to whitelist attributes and clone assocations.
-
-
-* [Basic](#basic)
-* [Advanced](#advanced)
-* [Cloning Associations](#cloning-associations)
-* [Fae Clone Button](#fae-clone-button)
+* [Usage](#usage)
+* [Callbacks](#callbacks)
 
 ---
 
+## Usage
+The most basic way to setup a modal popup is to attach the specific class to a link that references a specific view/url. This will add a click event listener and when clicked will use an ajax request to return the view/url data and trigger the modal. When the modal is opened it will also add `.modal-open` and `.{link_id}-modal-open` classes to the `body`.
 
-## Basics
+### Via Modal Link
 
-The most basic implementation of this feature clones the record, all it's attributes (except id, created and updated at) and any belongs_to associations via foreign_keys. We also check for any uniqueness validators on your attributes and rename them to "attribute-#", starting at 2, for your convenience.
-
-## Add Modal Trigger
-
-You can add a modal trigger by adding the modal trigger class to any link.
-
-**Examples**
-
-#### For Index
-
-Add the following to your `thead`, usually after 'Delete':
+You can activate a modal by adding the `.js-fae-modal` class on a link as well as passing in view path/url as href to trigger ajax modal on click.
 
 ```slim
   <a href="/admin/cats/new" id="cats" class="js-fae-modal">add new cat via modal popup</a>
 ```
 
-#### For Form
+### Via Javascript
+Open a modal using JS by passing a remote url to `openAjaxModal` function.
 
-Simply pass `cloneable: true` into your form_header partial. You may also edit the default text 'Clone', by passing in `clone_button_text` and your own string.
-
-```ruby
-  render 'fae/shared/form_header', cloneable: true, clone_button_text: 'Duplicate Me!'
+```javascript
+  Fae.modals.openAjaxModal(remoteUrl);
 ```
 
-That's all for basic set-up.
-
-## Advanced
-
-If you want complete control over which attributes and associations are cloned, we wouldn't call you a control freak. We've baked in some nice simple methods to make this possible.
-
-**Note:** Asset cloning is not currently supported, so if you try to pass in those associations, cloning will fail.
-
-## Whitelisting Attributes
-
-If you want to whitelist attributes to be cloned, you may add the `attributes_for_cloning` method into your controller's private method. Just pass in an array of symbols and we will take care to only copy those attributes over.
-
-**Note:** please make sure to include _everything_ that is required, or the record will fail to get created. You've been warned.
+### Close Modal
+You can programatically close the currently opened modal popup by calling `$.modal.close();`
 
 **Example**
-
-```ruby
-def attributes_for_cloning
-  [:name, :slug, :description, :wine_id]
-end
+```javascript
+  $("body").on("modal:show", function (e) {
+    $('#fae-modal').on('ajax:success', function (evt, data, status, xhr) {
+      if (Fae.modals.modalOpen) {
+        $.modal.close();
+      }
+    });
+  }
 ```
 
-## Cloning Associations
+## Events/Callbacks
 
-Belongs_to associations are automatically copied over, unless you are whitelisting attributes and forget to/ purposely don't add it there. For the rest of the associations you may have (i.e. has_one, has_many, has_and_belongs_to_many, has_many_through), you may use the `associations_for_cloning` method by passing in array of symbols.
+These events can be used to hook into the modal functionality. The modal object is available by referencing the `dialog` property. If modal is triggered by a click, the clicked element will be available as the `relatedTarget` event property.
 
-**Note:** Any images or files you have will **not** be copied along, if you have included those relationships.
+| event | description |
+|--------|-------------------|
+| modal:show |  This event is useful for binding events/actions after modal dialog elements have been initialized.  |
 
-**Example**
 
-```ruby
-def associations_for_cloning
-  [:aromas, :events]
-end
+```javascript
+  $("body").on("modal:show", function (e) {
+    //do something once modal show is triggered
+
+    if (e.dialog.data[0].classList.contains('nested-form')) {
+      Fae.form.ajax.htmlListeners();
+    }
+  }
 ```
 
-## Fae Clone Button
+| event | description |
+|--------|-------------------|
+| modal:shown |  This event is triggered once modal is completely visible and fadeIn animation has completed.  |
 
-You can use `fae_clone_button` in your list view tables to provide easy access to clone an item. Just pass in the item and the button will clone the object and take you to the newly created object's edit form.
+```javascript
+  $("body").on("modal:shown", function (e) {
+    //do something once modal is fully visible
+  }
+```
 
-```ruby
-fae_clone_button item
+| event | description |
+|--------|-------------------|
+| modal:close |  This event is triggered immediately when the onClose function has been triggered.  |
+
+```javascript
+  $("body").on("modal:close", function (e) {
+    //do something once modal close is triggered
+  }
+```
+
+| event | description |
+|--------|-------------------|
+| modal:closed |  This event is triggered once modal is completely hidden and fadeOut animation has completed.  |
+
+```javascript
+  $("body").on("modal:closed", function (e) {
+    //do something once modal is fully hidden
+  }
 ```

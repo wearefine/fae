@@ -23,13 +23,13 @@ $(document).ready(function(){
     }
   });
 
-  $("body").on("modal:open", function (e) {
-    $(e.relatedTarget).closest('.input').append("<p class='modal-callback'>Modal Opened</p>");
+  $("body").on("modal:shown", function (e) {
+    $(e.relatedTarget).closest('.input').append("<p class='modal-callback'>Modal Shown</p>");
   });
 
 
   $("body").on("modal:close", function (e) {
-    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Close</p>" );
+    $(e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Close</p>" );
   });
 
   $("body").on("modal:closed", function (e) {
