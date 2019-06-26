@@ -14,6 +14,7 @@ Form helpers in Fae use the [simple_form](https://github.com/plataformatec/simpl
 * [Fae Grouped Select](#fae-grouped-select)
 * [Fae Datepicker](#fae-datepicker)
 * [Fae Daterangepicker](#fae-daterangepicker)
+* [Fae Colorpicker](#fae-color-picker)
 * [Fae Prefix](#fae-prefix)
 * [Fae Suffix](#fae-suffix)
 * [Fae Video URL](#fae-video-url)
