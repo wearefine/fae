@@ -7,6 +7,7 @@ The system is just your basic inherited singleton with dynamic polymorphic assoc
 * [Pages vs Content Blocks](#pages-vs-content-blocks)
 * [Generating Pages](#generating-pages)
 * [Adding Content Blocks](#adding-content-blocks)
+* [Getting Your Content Blocks](#getting-your-content-blocks)
 * [Invalid Content Block Names](#invalid-content-block-names)
 * [Validations on Content Blocks](#validations-on-content-blocks)
 
@@ -120,8 +121,8 @@ Then to get content from a `Fae::TextField` and `Fae::TextArea`:
 # for `Fae::Image` or `Fae::File`
 @about_us_page.hero_image.asset.url
 # for `Fae::Image` only
-@about_us_page.hero_image.asset.alt
-@about_us_page.hero_image.asset.caption
+@about_us_page.hero_image.alt
+@about_us_page.hero_image.caption
 ```
 
 ## Invalid Content Block Names
