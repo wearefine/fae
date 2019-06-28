@@ -35,7 +35,11 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @index_path, notice: t('fae.save_notice')
+        if @item.try(:fae_redirect_to_form_on_create)
+          redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
+        else
+          redirect_to @index_path, notice: t('fae.save_notice')
+        end
       else
         build_assets
         flash[:alert] = t('fae.save_error')
