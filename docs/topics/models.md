@@ -60,6 +60,18 @@ def self.for_fae_index
 end
 ```
 
+## fae_redirect_to_form_on_create
+
+Use this if you'd prefer to redirect back to the edit form of a newly created object.
+
+### Examples
+
+```ruby
+def fae_redirect_to_form_on_create
+  true
+end
+```
+
 ## to_csv
 
 Fae uses a class method called `to_csv` as a method to export all the objects related to a given model to a csv. This method is inherited from `Fae::BaseModelConcern`. It is meant to be called from the index action.
