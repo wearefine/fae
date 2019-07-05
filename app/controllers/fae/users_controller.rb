@@ -23,6 +23,8 @@ module Fae
     end
 
     def create
+      authorize_role
+
       @user = Fae::User.new(user_params)
 
       if @user.save
@@ -33,11 +35,13 @@ module Fae
     end
 
     def update
+      authorize_role
+
       params[:user].delete(:password) if params[:user][:password].blank?
       params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
 
       if @user.update(user_params)
-        path = current_user.super_admin? ? users_path : fae.root_path
+        path = current_user.super_admin_or_admin? ? users_path : fae.root_path
         redirect_to path, notice: t('fae.save_notice')
       else
         render action: 'edit', error: t('fae.save_error')
@@ -74,6 +78,12 @@ module Fae
       def set_index_path
         # @index_path determines form's cancel btn path
         @index_path = users_path
+      end
+
+      def authorize_role
+        return if params[:user][:role_id].blank?
+        return if @role_collection.map(&:id).include?(params[:user][:role_id].to_i)
+        params[:user].delete(:role_id)
       end
   end
 end
