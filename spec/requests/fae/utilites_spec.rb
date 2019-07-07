@@ -10,7 +10,7 @@ describe 'utilities#toggle' do
       expect(response.status).to eq(401)
     end
 
-    it "shouldn be able to toggle release's on_prod attr" do
+    it "shouldn't be able to toggle release's on_prod attr" do
       user_login
       release = FactoryGirl.create(:release)
       post "/admin/toggle/releases/#{release.id}/on_prod", as: :json
@@ -18,10 +18,17 @@ describe 'utilities#toggle' do
       expect(response.status).to eq(200)
     end
 
-    it "shouldn be able to toggle non-boolean attrs" do
+    it "shouldn't be able to toggle non-boolean attrs" do
       user_login
       release = FactoryGirl.create(:release)
       post "/admin/toggle/releases/#{release.id}/wine_id", as: :json
+
+      expect(response.status).to eq(401)
+    end
+
+    it "should't expose missing classes" do
+      user_login
+      post "/admin/toggle/not_a_class/1/on_prod", as: :json
 
       expect(response.status).to eq(401)
     end

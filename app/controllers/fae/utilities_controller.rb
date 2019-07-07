@@ -2,8 +2,9 @@ module Fae
   class UtilitiesController < ApplicationController
 
     def toggle
-      klass = params[:object].gsub('__', '/').classify.constantize
+      klass = params[:object].gsub('__', '/').classify
       if can_toggle(klass, params[:attr])
+        klass = klass.constantize
         klass.find(params[:id]).toggle(params[:attr]).save(validate: false)
         render body: nil
       else
@@ -43,6 +44,10 @@ module Fae
     private
 
     def can_toggle(klass, attribute)
+      # check if class exists and convert
+      return false unless Object.const_defined?(klass)
+      klass = klass.constantize
+
       # allow admins to toggle Fae::User#active
       return true if klass == Fae::User && attribute == 'active' && current_user.super_admin_or_admin?
 
