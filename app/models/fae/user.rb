@@ -5,9 +5,9 @@ module Fae
     include Fae::UserConcern
 
     # Include default devise modules. Others available are:
-    # :registerable, :confirmable, :lockable, :timeoutable and :omniauthable
+    # :registerable, :confirmable, :timeoutable and :omniauthable
     devise :database_authenticatable,
-           :recoverable, :rememberable, :trackable
+           :recoverable, :rememberable, :trackable, :lockable
 
     belongs_to :role
 
