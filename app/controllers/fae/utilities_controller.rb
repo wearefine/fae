@@ -2,8 +2,9 @@ module Fae
   class UtilitiesController < ApplicationController
 
     def toggle
-      klass = params[:object].gsub('__', '/').classify.constantize
-      if can_toggle(klass)
+      klass = params[:object].gsub('__', '/').classify
+      if can_toggle(klass, params[:attr])
+        klass = klass.constantize
         klass.find(params[:id]).toggle(params[:attr]).save(validate: false)
         render body: nil
       else
@@ -42,10 +43,21 @@ module Fae
 
     private
 
-    def can_toggle(klass)
-      # restrict models that non-admins aren't allowed to update
-      restricted_classes = %w(Fae::User Fae::Role Fae::Option)
-      return false if restricted_classes.include?(klass.name.to_s) && !current_user.super_admin_or_admin?
+    def can_toggle(klass, attribute)
+      # check if class exists and convert
+      return false unless Object.const_defined?(klass)
+      klass = klass.constantize
+
+      # allow admins to toggle Fae::User#active
+      return true if klass == Fae::User && attribute == 'active' && current_user.super_admin_or_admin?
+
+      # restrict models that only super admins can toggle
+      restricted_classes = %w(Fae::User Fae::Role Fae::Option Fae::Change)
+      return false if restricted_classes.include?(klass.name.to_s) && !current_user.super_admin?
+
+      # restrict to only other boolean fields
+      return false unless klass.columns_hash[attribute].type == :boolean
+
       true
     end
 
