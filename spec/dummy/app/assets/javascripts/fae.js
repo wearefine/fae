@@ -9,19 +9,31 @@ $(document).ready(function(){
   $('.login-body').addClass('test-class');
 
   $("body").on("modal:show", function (e) {
-    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Open/Show</p>" );
+    $('.modal-callback').remove();
+    $(e.relatedTarget).closest('.input').append("<p class='modal-callback modal-callback--show'>Modal Open/Show</p>");
+
+    //Add form listeners & close form on ajax success
+    if (e.dialog.data[0].classList.contains('nested-form')) {
+      Fae.form.ajax.htmlListeners();
+
+      $('#fae-modal').on('ajax:success', function (evt, data, status, xhr) {
+        if (Fae.modals.modalOpen) {
+          $.modal.close();
+        }
+      });
+    }
   });
 
-  $("body").on("modal:open", function (e) {
-    $(e.relatedTarget).closest('.input').append("<p class='modal-callback'>Modal Opened</p>");
+  $("body").on("modal:shown", function (e) {
+    $(e.relatedTarget).closest('.input').append("<p class='modal-callback modal-callback--shown'>Modal Shown</p>");
   });
 
 
   $("body").on("modal:close", function (e) {
-    $( e.relatedTarget ).closest('.input').append( "<p class='modal-callback'>Modal Close</p>" );
+    $(e.relatedTarget ).closest('.input').append( "<p class='modal-callback modal-callback--close'>Modal Close</p>" );
   });
 
   $("body").on("modal:closed", function (e) {
-    $(e.relatedTarget).closest('.input').append("<p class='modal-callback'>Modal Closed</p>");
+    $(e.relatedTarget).closest('.input').append("<p class='modal-callback modal-callback--closed'>Modal Closed</p>");
   });
 });

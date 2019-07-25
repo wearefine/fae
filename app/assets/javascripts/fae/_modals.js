@@ -9,8 +9,8 @@ Fae.modals = {
     this.$body = $('body');
     this.openClass = 'modal-open';
     this.modalClass = 'MODAL_ID-modal-open';
-    this.openEvent = 'modal:open';
     this.showEvent = 'modal:show';
+    this.shownEvent = 'modal:shown';
     this.closeEvent = 'modal:close';
     this.closedEvent = 'modal:closed';
     this.modalOpen = false;
@@ -92,8 +92,8 @@ Fae.modals = {
           // Fade in modal + show data
           dialog.overlay.fadeIn();
           dialog.container.fadeIn(function() {
-            var openEvent = $.Event(_this.openEvent, { dialog: dialog, relatedTarget: relatedTarget });
-            _this.$body.trigger(openEvent);
+            var shownEvent = $.Event(_this.shownEvent, { dialog: dialog, relatedTarget: relatedTarget });
+            _this.$body.trigger(shownEvent);
           });
           dialog.data.show();
 
@@ -105,6 +105,8 @@ Fae.modals = {
         onShow: function (dialog) {
           var showEvent = $.Event(_this.showEvent, { dialog: dialog, relatedTarget: relatedTarget });
           _this.$body.trigger(showEvent);
+
+          $(dialog.container).css('height', 'auto')
         },
         onClose: function (dialog) {
           var closeEvent = $.Event(_this.closeEvent, { dialog: dialog, relatedTarget: relatedTarget });
