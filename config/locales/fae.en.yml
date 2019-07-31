@@ -86,7 +86,7 @@ en:
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
     images:
-      alt_helper: 'Brief description of image contents, used in hover text and by visually impaired users.'
+      alt_helper: 'Read by search engines and visually impaired readers.'
     application:
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
