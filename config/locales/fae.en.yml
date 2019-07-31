@@ -111,7 +111,7 @@ en:
       paragraph_break: 'Paragraph break'
       paragraph_break_help: 'Adding a blank line in between your paragraphs makes a paragraph break.'
     seo_title: 'A descriptive page title of ~50-65 characters. Displayed in search engine results.'
-    seo_description: 'A helpful page summary of 320 characters or less. Displayed in search engine results.'
+    seo_description: 'A helpful page summary of 200 characters or less. Displayed in search engine results.'
     search: 'Search %{search}'
     reset_search: 'Reset Search'
     apply_filters: 'Apply Filters'
