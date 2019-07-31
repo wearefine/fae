@@ -1,6 +1,6 @@
 = simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
   = fae_input f, :name
-  = fae_image_form f, :winemaker_image
+  = fae_image_form f, :winemaker_image, required: true
   = f.hidden_field :wine_id
   = f.hidden_field :region_type, value: @item.region_type
 
