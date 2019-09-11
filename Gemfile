@@ -1,4 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # Declare your gem's dependencies in fae.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -22,23 +22,23 @@ gem 'rake', '< 12.0.0'
 gem 'sass', require: 'sass'
 
 group :test, :development do
-  gem 'rspec-rails', '~> 3.6.0'
   gem 'pry'
+  gem 'rspec-rails', '~> 3.6.0'
 end
 
 group :test do
-  gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'capybara-webkit', '~> 1.11.1'
   gem 'capybara-screenshot'
+  gem 'capybara-webkit', '~> 1.15', '>= 1.15.1'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails', '~> 4.4.1'
   gem 'guard-rspec', '~> 4.7.3'
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver', '~> 2.42.0'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
-  gem 'database_cleaner'
-  gem 'rails-controller-testing'
 end
 
-gem 'capistrano',  '~> 3.1'
+gem 'capistrano', '~> 3.1'
 gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
