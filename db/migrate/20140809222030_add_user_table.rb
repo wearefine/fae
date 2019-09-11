@@ -34,7 +34,7 @@ class AddUserTable < ActiveRecord::Migration[4.2]
       t.string  :first_name
       t.string  :last_name
       t.integer :role_id
-      t.boolean :active
+      t.boolean :active, :default => true, :null => false
       t.string :language
 
       t.timestamps
