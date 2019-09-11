@@ -129,7 +129,7 @@ Fae.form.ajax = {
             var form_wrapper_selector = $html.hasClass('nested-form') ? '.nested-form' : '.form_content-wrapper';
 
             // we're returning the form due to an error, just replace the form
-            $this.find( form_wrapper_selector ).replaceWith(data);
+            $this.find( form_wrapper_selector ).replaceWith($html);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
 
