@@ -41,7 +41,7 @@ en:
       error_end: 'to be taken to our home page.'
       hello: 'Hello'
       welcome: 'Welcome to Fae'
-      no_objs_start: "You don'thave any objects setup to manage. If you need help getting started, check out the"
+      no_objs_start: "You don't have any objects setup to manage. If you need help getting started, check out the"
       no_objs_end: 'Quickstart Guide and Documentation site.'
     navbar:
       logout: 'Log Out'
