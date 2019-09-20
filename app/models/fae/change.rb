@@ -38,6 +38,7 @@ module Fae
           date_scope = ['fae_changes.updated_at <= ?', end_date] if end_date.present?
           date_scope = ['fae_changes.updated_at >= ? AND fae_changes.updated_at <= ?', start_date, end_date] if start_date.present? && end_date.present?
         else
+          # normalize url param strings because "Last Hour" != "Last%20Hour"
           date_scope = case params['date'].downcase.gsub('%20', '-')
           when 'last-hour' then   ['fae_changes.updated_at >= ?', 60.minutes.ago]
           when 'last-day' then    ['fae_changes.updated_at >= ?', 1.day.ago]
