@@ -11,6 +11,7 @@ ruby:
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
   title               ||= assoc_name.titleize             # 'Restaurant Bars'
   add_button_text     ||= t('fae.common.add', title: title.singularize)
+  hide_add_button     ||= false
   ordered             ||= false
   has_thumb           ||= false
   edit_column         ||= false
@@ -41,7 +42,8 @@ section.addedit-form.js-addedit-form class="#{'content' if index}"
     == render 'fae/shared/shared_nested_table', options_for_table
 
   - else
-    a.js-add-link.table-add-link.button.-small href=new_path = add_button_text
+    - unless hide_add_button
+      a.js-add-link.table-add-link.button.-small href=new_path = add_button_text
     h2 = title
     - if helper_text.present?
       h6.table-helper-text = helper_text
