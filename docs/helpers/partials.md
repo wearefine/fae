@@ -103,6 +103,7 @@ The nested_table should go after the main form ends and should only be placed on
 | cols* | array of symbols, or array of symbols and hashes | [], [{}] | an array of attributes to display on the list view, associations will display the `fae_display_field` or a thumbnail if it's a `Fae::Image` |
 | title | string | assoc.to_s.titleize | the H3 directly above the form |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
+| hide_add_button | false | boolean | Disables the Add button in the table header and the "add some" link in the table body |
 | ordered | boolean | false | allows list view to be sortable, which is saved to a `position` attribute |
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | edit_column | boolean | false | displays edit link
