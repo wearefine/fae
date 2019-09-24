@@ -14,7 +14,10 @@ module Fae
     validates :first_name, presence: true
     validates :email,
       presence: true,
-      uniqueness: { message: 'That email address is already in use. Give another one a go.' },
+      uniqueness: { 
+        message: 'That email address is already in use. Give another one a go.', 
+        case_sensitive: true 
+      },
       format: {
         with: Fae.validation_helpers.email_regex,
         message: 'is invalid'

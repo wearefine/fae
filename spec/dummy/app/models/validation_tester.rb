@@ -2,7 +2,9 @@ class ValidationTester < ActiveRecord::Base
   include Fae::Concerns::Models::Base
 
   validates :slug,
-    uniqueness: true,
+    uniqueness: {
+      case_sensitive: true 
+    },
     presence: true,
     format: {
       with: Fae.validation_helpers.slug_regex,

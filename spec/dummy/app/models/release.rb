@@ -5,7 +5,7 @@ class Release < ActiveRecord::Base
     name
   end
 
-  validates :name, presence: true, length: {in: 3..15}, uniqueness: true, exclusion: %w(admin danny)
+  validates :name, presence: true, length: {in: 3..15}, uniqueness: {case_sensitive: true}, exclusion: %w(admin danny) 
   validates :body, length: { maximum: 900 }
   validates :description, length: { maximum: 500 }
   validates :price, numericality: {greater_than: 12}, allow_blank: true
