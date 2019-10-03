@@ -1,4 +1,12 @@
 GIT
+  remote: https://github.com/thoughtbot/capybara-webkit.git
+  revision: 77fdac424cd6fdb5aa266b229a888cc58da8e95e
+  specs:
+    capybara-webkit (1.15.1)
+      capybara (>= 2.3, < 4.0)
+      json
+
+GIT
   remote: https://github.com/wearefine/rails
   revision: 8250e29e4622ff60f8093dba92d52dbae9d26460
   specs:
@@ -105,7 +113,7 @@ GEM
       debug_inspector (>= 0.0.1)
     browser (2.5.3)
     builder (3.2.3)
-    capistrano (3.11.1)
+    capistrano (3.11.2)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
@@ -126,9 +134,6 @@ GEM
     capybara-screenshot (1.0.23)
       capybara (>= 1.0, < 4)
       launchy
-    capybara-webkit (1.15.1)
-      capybara (>= 2.3, < 4.0)
-      json
     carrierwave (1.2.3)
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
@@ -147,7 +152,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.3)
-    erubi (1.8.0)
+    erubi (1.9.0)
     eventmachine (1.2.7)
     execjs (2.7.0)
     factory_girl (4.4.0)
@@ -201,11 +206,10 @@ GEM
     kaminari-core (1.1.1)
     launchy (2.4.3)
       addressable (~> 2.3)
-    listen (3.1.5)
-      rb-fsevent (~> 0.9, >= 0.9.4)
-      rb-inotify (~> 0.9, >= 0.9.7)
-      ruby_dep (~> 1.2)
-    loofah (2.2.3)
+    listen (3.2.0)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
+    loofah (2.3.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.13)
@@ -221,7 +225,7 @@ GEM
     mini_magick (4.9.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.12.0)
+    minitest (5.12.2)
     multi_json (1.13.1)
     mysql2 (0.5.2)
     nenv (0.3.0)
@@ -304,8 +308,7 @@ GEM
       rspec-support (~> 3.6.0)
     rspec-support (3.6.0)
     ruby-prof (1.0.0)
-    ruby_dep (1.5.0)
-    rubyzip (1.2.4)
+    rubyzip (1.3.0)
     sass (3.7.4)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -355,7 +358,7 @@ GEM
     tilt (2.0.10)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    uglifier (4.1.20)
+    uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     warden (1.2.8)
       rack (>= 2.0.6)
@@ -380,8 +383,9 @@ DEPENDENCIES
   capistrano (~> 3.1)
   capistrano-rails!
   capistrano-rvm
+  capybara
   capybara-screenshot
-  capybara-webkit (~> 1.15.1)
+  capybara-webkit!
   database_cleaner
   factory_girl_rails (~> 4.4.1)
   fae-rails!

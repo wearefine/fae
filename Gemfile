@@ -27,8 +27,10 @@ group :test, :development do
 end
 
 group :test do
+  # gem 'puma', '~> 3.4'
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'capybara-webkit', '~> 1.15.1'
+  gem "capybara"
+  gem 'capybara-webkit', git: 'https://github.com/thoughtbot/capybara-webkit.git'
   gem 'capybara-screenshot'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'selenium-webdriver', '~> 2.42.0'
