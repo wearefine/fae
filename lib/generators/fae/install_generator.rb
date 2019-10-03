@@ -19,6 +19,11 @@ module Fae
       rake 'fae:seed_db'
     end
 
+    def install_form_manager
+      copy_file ::File.expand_path(::File.join(__FILE__, "../../../../../db/migrate/20190925153222_create_fae_form_managers.rb")), 'db/migrate/20190925153222_create_fae_form_managers.rb'
+      rake 'db:migrate'
+    end
+
   private
 
     def add_route

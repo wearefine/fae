@@ -1,16 +1,17 @@
 ruby:
   require_locals ['header'], local_assigns
-  save_button_text    ||= t('fae.form.save')
-  cancel_button_text  ||= t('fae.form.cancel')
-  cloneable           ||= false
-  clone_button_text   ||= t('fae.form.clone')
-  subnav              ||= []
-  header_as_string      = header.is_a?(String) ? header : header.class.name.split('::').last
-  header_as_string      = header_as_string.singularize
-  title               ||= "#{params[:action]} #{header_as_string}".titleize
-  breadcrumb            = !local_assigns[:breadcrumbs].eql?(false)
-  languages           ||= false
-  show_flash_messages   = !local_assigns[:show_flash_messages].eql?(false)
+  save_button_text          ||= t('fae.form.save')
+  cancel_button_text        ||= t('fae.form.cancel')
+  cloneable                 ||= false
+  clone_button_text         ||= t('fae.form.clone')
+  manage_form_button_text   ||= t('fae.form.manage_form')
+  subnav                    ||= []
+  header_as_string          = header.is_a?(String) ? header : header.class.name.split('::').last
+  header_as_string          = header_as_string.singularize
+  title                     ||= "#{params[:action]} #{header_as_string}".titleize
+  breadcrumb                = !local_assigns[:breadcrumbs].eql?(false)
+  languages                 ||= false
+  show_flash_messages       = !local_assigns[:show_flash_messages].eql?(false)
 
 header.content-header.js-content-header
   - if breadcrumb
@@ -24,6 +25,9 @@ header.content-header.js-content-header
 
       .content-header-select
         = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown', prompt: 'All Languages'
+
+    - if Fae.use_form_manager && params[:action] == 'edit'
+      a.button.js-launch-form-manager href='#' = manage_form_button_text
 
     a.button#js-header-cancel href=@index_path = cancel_button_text
     - if cloneable.present? && params[:id].present?

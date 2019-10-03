@@ -17,8 +17,15 @@ module Fae
     before_action :detect_cancellation
     before_action :set_change_user
     before_action :set_locale
+    before_action :setup_form_manager
 
     private
+
+    def setup_form_manager
+      if Fae.use_form_manager
+        @form_manager = FormManager.for_model(params, @item)
+      end
+    end
 
     # defines the locale used to translate the Fae interface
     def set_locale

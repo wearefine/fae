@@ -38,6 +38,9 @@ Fae::Engine.routes.draw do
   get 'content_blocks/:slug' => '/admin/content_blocks#edit', as: 'edit_content_block'
   match 'content_blocks/:slug/update' => '/admin/content_blocks#update', via: [:put, :patch], as: 'update_content_block'
 
+  get 'form_managers/fields' => 'form_managers#fields', as: 'form_managers_fields'
+  post 'form_managers/update' => 'form_managers#update', as: 'form_managers_update'
+
   # catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
 

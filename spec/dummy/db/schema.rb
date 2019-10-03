@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_11_21_212302) do
+ActiveRecord::Schema.define(version: 2019_10_03_143347) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -121,8 +121,8 @@ ActiveRecord::Schema.define(version: 2017_11_21_212302) do
   create_table "fae_files", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "asset"
-    t.string "fileable_type"
     t.integer "fileable_id"
+    t.string "fileable_type"
     t.integer "file_size"
     t.integer "position", default: 0
     t.string "attached_as"
@@ -131,15 +131,23 @@ ActiveRecord::Schema.define(version: 2017_11_21_212302) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean "required", default: false
-    t.index ["attached_as"], name: "index_fae_files_on_attached_as"
-    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
+    t.index ["fileable_id", "fileable_type"], name: "index_fae_files_on_fileable_id_and_fileable_type"
+  end
+
+  create_table "fae_form_managers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "form_manager_model_name"
+    t.text "fields"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "form_manager_model_id"
+    t.index ["form_manager_model_name"], name: "index_fae_form_managers_on_form_manager_model_name"
   end
 
   create_table "fae_images", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "asset"
-    t.string "imageable_type"
     t.integer "imageable_id"
+    t.string "imageable_type"
     t.string "alt"
     t.string "caption"
     t.integer "position", default: 0
@@ -150,8 +158,7 @@ ActiveRecord::Schema.define(version: 2017_11_21_212302) do
     t.datetime "updated_at"
     t.integer "file_size"
     t.boolean "required", default: false
-    t.index ["attached_as"], name: "index_fae_images_on_attached_as"
-    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id"
+    t.index ["imageable_id", "imageable_type"], name: "index_fae_images_on_imageable_id_and_imageable_type"
   end
 
   create_table "fae_options", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -204,8 +211,8 @@ ActiveRecord::Schema.define(version: 2017_11_21_212302) do
   end
 
   create_table "fae_text_fields", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "contentable_type"
     t.integer "contentable_id"
+    t.string "contentable_type"
     t.string "attached_as"
     t.string "label"
     t.string "content"
@@ -215,7 +222,7 @@ ActiveRecord::Schema.define(version: 2017_11_21_212302) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["attached_as"], name: "index_fae_text_fields_on_attached_as"
-    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable_type_and_contentable_id"
+    t.index ["contentable_id", "contentable_type"], name: "index_fae_text_fields_on_contentable_id_and_contentable_type"
     t.index ["on_prod"], name: "index_fae_text_fields_on_on_prod"
     t.index ["on_stage"], name: "index_fae_text_fields_on_on_stage"
     t.index ["position"], name: "index_fae_text_fields_on_position"

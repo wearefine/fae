@@ -17,4 +17,6 @@ Fae.setup do |config|
 
   config.per_page = 5
 
+  config.use_form_manager = true
+
 end

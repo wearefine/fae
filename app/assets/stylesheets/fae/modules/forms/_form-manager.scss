@@ -1,0 +1,18 @@
+.js-launch-form-manager {
+	margin-left: 10px
+}
+
+.active-manager-helper {
+  margin-left: 10px;
+  padding-left: 10px;
+  border-left: 1px solid #000;
+}
+
+.active-manager-label:before,
+.active-manager-label:after {
+  display: none;
+}
+
+.active-manager-label.checkbox {
+	padding-left: 0;
+}

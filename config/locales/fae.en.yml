@@ -12,6 +12,7 @@ en:
       save: 'Save'
       cancel: 'Cancel'
       clone: 'Clone'
+      manage_form: 'Manage Form'
       attribute:
         first_name: 'First Name'
         last_name: 'Last Name'
