@@ -102,14 +102,12 @@ Fae.form.formManager = {
 
   launchManager: function($launchButton) {
     var _this = this;
-    console.log('hi3');
 
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).hide();
     });
 
     $(_this.$theForm.find('['+_this.containerManagerDataIds+']')).each(function(i) {
-      console.log(i);
       var $container = $(this);
       var $label        = $container.find('label:first');
       var $labelTextEl  = $label;
@@ -127,21 +125,6 @@ Fae.form.formManager = {
 
       $container.append($labelInput).append($helperInput);
     });
-
-    // _this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first').show().attr('contenteditable', true).addClass('active-manager-label');
-    // //.find('h6').attr('contenteditable', true).addClass('active-manager-helper');
-
-    // $(_this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first')).each(function(i) {
-    //   console.log($(this).length);
-    //   var $helperTextContainerEl = null;
-    //   if ($(this).find('h6').length) {
-    //     $helperTextContainerEl = $(this).find('h6');
-    //   } else {
-    //     $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: 'placeholder'}));
-    //     $(this).append($helperTextContainerEl);
-    //   }
-    //   $helperTextContainerEl.attr('contenteditable', true).addClass('active-manager-helper');
-    // });
 
     $launchButton.removeClass(_this.launchManagerClass);
     $launchButton.addClass(_this.saveAndCloseManagerClass);
