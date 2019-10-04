@@ -184,7 +184,7 @@ Fae.form.formManager = {
     });
 
     $.ajax({
-      url: '/admin/form_managers/update',
+      url: Fae.path+'/form_managers/update',
       type: 'post',
       data: payload,
       headers: {
