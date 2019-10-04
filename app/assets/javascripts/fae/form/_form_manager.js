@@ -32,8 +32,8 @@ Fae.form.formManager = {
   ],
 
   init: function(formSelector) {
-    var _this = this;
-    formSelector = formSelector || 'form:first';
+    var _this      = this;
+    formSelector   = formSelector || 'form:first';
     _this.$theForm = $(formSelector);
 
     if (_this.$theForm.length && _this.$theForm.attr(_this.infoAttr)) {
@@ -108,7 +108,7 @@ Fae.form.formManager = {
     });
 
     $(_this.$theForm.find('['+_this.containerManagerDataIds+']')).each(function(i) {
-      var $container = $(this);
+      var $container    = $(this);
       var $label        = $container.find('label:first');
       var $labelTextEl  = $label;
       var $labelInner   = $label.find('.label_inner');
@@ -116,10 +116,10 @@ Fae.form.formManager = {
         $labelTextEl = $labelInner;
       }
       var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
-      var labelValue    = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
-      var helperValue   = $helperTextTextEl.text();
-      var $labelInput = $('<input />', {type: 'text', class: 'form_manager_label_input label_input', value: labelValue});
-      var $helperInput = $('<input />', {type: 'text', class: 'form_manager_label_input helper_input', value: helperValue});
+      var labelValue        = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
+      var helperValue       = $helperTextTextEl.text();
+      var $labelInput       = $('<input />', {type: 'text', class: 'form_manager_label_input label_input', value: labelValue});
+      var $helperInput      = $('<input />', {type: 'text', class: 'form_manager_label_input helper_input', value: helperValue});
 
       $label.hide();
 
@@ -160,15 +160,6 @@ Fae.form.formManager = {
     $.each(_this.$theForm.find('['+_this.containerManagerDataIds+']'), function(i) {
       var $container    = $(this);
       var formManagerId = $container.attr(_this.containerManagerDataIds);
-      // var $label        = $container.find('label:first');
-      // var $labelTextEl  = $label;
-      // var $labelInner   = $label.find('.label_inner');
-      // if ($labelInner.length) {
-      //   $labelTextEl = $labelInner;
-      // }
-      // var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
-      // var labelValue    = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
-      // var helperValue   = $helperTextTextEl.text();
       var requiredValue = $container.hasClass('required') ? 1 : 0;
 
       payload.form_manager.fields[formManagerId] = {
