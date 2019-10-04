@@ -12,6 +12,7 @@ Fae.form.formManager = {
   launchManagerClass:       'js-launch-form-manager',
   saveAndCloseManagerClass: 'js-manager-is-active',
   helperTextTextElClass:    'helper_text_text',
+  infoAttr:                 'data-form-manager-info',
   requiredEl:               '<abbr title="required">*</abbr>',
   containerManagerDataIds:  'data-form_manager_id',
   hiddenWhenLaunchedEls: [
@@ -34,10 +35,9 @@ Fae.form.formManager = {
     var _this = this;
     formSelector = formSelector || 'form:first';
     _this.$theForm = $(formSelector);
-    var infoAttr = 'data-form-manager-info';
 
-    if (_this.$theForm.length && _this.$theForm.attr(infoAttr)) {
-      this.savedFieldSettings = JSON.parse(_this.$theForm.attr(infoAttr));
+    if (_this.$theForm.length && _this.$theForm.attr(_this.infoAttr)) {
+      this.savedFieldSettings = JSON.parse(_this.$theForm.attr(_this.infoAttr));
 
       $.each(JSON.parse(this.savedFieldSettings.fields), function(i, fieldSettings) {
         _this.setupField(fieldSettings);
@@ -46,6 +46,7 @@ Fae.form.formManager = {
 
     $('body').on('click', '.'+_this.launchManagerClass, function(e) {
       e.preventDefault();
+      _this.$theForm = $(this).parents('form');
       _this.launchManager($(this));
     });
 
@@ -53,6 +54,7 @@ Fae.form.formManager = {
       e.preventDefault();
       _this.saveAndCloseManager($(this));
     });
+
   },
 
   setupField: function(fieldSettings) {
@@ -81,6 +83,8 @@ Fae.form.formManager = {
       //   $labelTextEl.append($labelsCheckbox);
       // }
       if (fieldSettings.helper) {
+        $label.removeClass('has_no_helper_text');
+
         // Main form and nested form markup differs, deal with it
         if ($container.find('h6').length) {
           $label.find('.'+_this.helperTextTextElClass).text(fieldSettings.helper);
@@ -98,25 +102,46 @@ Fae.form.formManager = {
 
   launchManager: function($launchButton) {
     var _this = this;
+    console.log('hi3');
 
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).hide();
     });
 
-    _this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first').show().attr('contenteditable', true).addClass('active-manager-label');
-    //.find('h6').attr('contenteditable', true).addClass('active-manager-helper');
-
-    $(_this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first')).each(function(i) {
-      console.log($(this).length);
-      var $helperTextContainerEl = null;
-      if ($(this).find('h6').length) {
-        $helperTextContainerEl = $(this).find('h6');
-      } else {
-        $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: 'placeholder'}));
-        $(this).append($helperTextContainerEl);
+    $(_this.$theForm.find('['+_this.containerManagerDataIds+']')).each(function(i) {
+      console.log(i);
+      var $container = $(this);
+      var $label        = $container.find('label:first');
+      var $labelTextEl  = $label;
+      var $labelInner   = $label.find('.label_inner');
+      if ($labelInner.length) {
+        $labelTextEl = $labelInner;
       }
-      $helperTextContainerEl.attr('contenteditable', true).addClass('active-manager-helper');
+      var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
+      var labelValue    = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
+      var helperValue   = $helperTextTextEl.text();
+      var $labelInput = $('<input />', {type: 'text', class: 'form_manager_label_input label_input', value: labelValue});
+      var $helperInput = $('<input />', {type: 'text', class: 'form_manager_label_input helper_input', value: helperValue});
+
+      $label.hide();
+
+      $container.append($labelInput).append($helperInput);
     });
+
+    // _this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first').show().attr('contenteditable', true).addClass('active-manager-label');
+    // //.find('h6').attr('contenteditable', true).addClass('active-manager-helper');
+
+    // $(_this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first')).each(function(i) {
+    //   console.log($(this).length);
+    //   var $helperTextContainerEl = null;
+    //   if ($(this).find('h6').length) {
+    //     $helperTextContainerEl = $(this).find('h6');
+    //   } else {
+    //     $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: 'placeholder'}));
+    //     $(this).append($helperTextContainerEl);
+    //   }
+    //   $helperTextContainerEl.attr('contenteditable', true).addClass('active-manager-helper');
+    // });
 
     $launchButton.removeClass(_this.launchManagerClass);
     $launchButton.addClass(_this.saveAndCloseManagerClass);
@@ -127,12 +152,11 @@ Fae.form.formManager = {
 
     _this.submitManager();
 
+    $('.form_manager_label_input').remove();
+
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).show();
     });
-
-    _this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first').attr('contenteditable', false).removeClass('active-manager-label');
-    _this.$theForm.find('['+_this.containerManagerDataIds+']').find('label:first').find('h6').attr('contenteditable', false).removeClass('active-manager-helper');
 
     $launchButton.removeClass(_this.saveAndCloseManagerClass);
     $launchButton.addClass(_this.launchManagerClass);
@@ -148,31 +172,48 @@ Fae.form.formManager = {
       }
     };
 
+    // set the forms info attr to new payload and rerun setup fields
+
     $.each(_this.$theForm.find('['+_this.containerManagerDataIds+']'), function(i) {
       var $container    = $(this);
       var formManagerId = $container.attr(_this.containerManagerDataIds);
-      var $label        = $container.find('label:first');
-      var $labelTextEl  = $label;
-      var $labelInner   = $label.find('.label_inner');
-      if ($labelInner.length) {
-        $labelTextEl = $labelInner;
-      }
-      var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
-      var labelValue    = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
-      var helperValue   = $helperTextTextEl.text();
+      // var $label        = $container.find('label:first');
+      // var $labelTextEl  = $label;
+      // var $labelInner   = $label.find('.label_inner');
+      // if ($labelInner.length) {
+      //   $labelTextEl = $labelInner;
+      // }
+      // var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
+      // var labelValue    = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
+      // var helperValue   = $helperTextTextEl.text();
       var requiredValue = $container.hasClass('required') ? 1 : 0;
 
       payload.form_manager.fields[formManagerId] = {
         formManagerId: formManagerId,
-        label:         labelValue,
-        helper:        helperValue,
+        label:         $container.find('.label_input').val(),
+        helper:        $container.find('.helper_input').val(),
         required:      requiredValue
       };
     });
 
-    $.post('/admin/form_managers/update', payload, function(data) {
-      // do something?
+    $.each(payload.form_manager.fields, function(i, fieldSettings) {
+      _this.setupField(fieldSettings);
     });
+
+    $.ajax({
+      url: '/admin/form_managers/update',
+      type: 'post',
+      data: payload,
+      headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+      },
+      dataType: 'json',
+      success: function (data) {
+        // do something?
+      }
+    });
+
+
   }
 
 };

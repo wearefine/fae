@@ -1,8 +1,11 @@
-= simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
+= simple_form_for(['admin', @item],  html: {multipart: true, novalidate: true, class: 'js-file-form', 'data-form-manager-model' => @item.class.name, 'data-form-manager-info' => (@form_manager.present? ? @form_manager.to_json : nil)}, remote: true, data: {type: "html"}) do |f|
   = fae_input f, :title
-  = fae_input f, :body
+  = fae_input f, :body, helper_text: 'hi there'
 
   = f.hidden_field :release_id
 
   = f.submit
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
+
+  - if Fae.use_form_manager
+    a.button.js-launch-form-manager href='#' = t('fae.form.manage_form')
