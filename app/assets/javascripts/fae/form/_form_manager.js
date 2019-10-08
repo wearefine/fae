@@ -32,7 +32,6 @@ Fae.form.formManager = {
   ],
 
   init: function(formSelector) {
-    console.log('fucking init')
     var _this      = this;
     formSelector   = formSelector || 'form:first';
     _this.$theForm = $(formSelector);

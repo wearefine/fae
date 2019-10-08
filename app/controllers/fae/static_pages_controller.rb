@@ -31,8 +31,6 @@ module Fae
       @item = "#{params[:slug]}_page".classify.constantize.instance
       if Fae.use_form_manager
         @form_manager = FormManager.for_model(params, @item)
-        logger.debug '------------------fm'
-        logger.debug @form_manager.inspect
       end
     end
 
