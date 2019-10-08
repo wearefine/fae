@@ -13,8 +13,8 @@ Fae.form.formManager = {
   saveAndCloseManagerClass: 'js-manager-is-active',
   helperTextTextElClass:    'helper_text_text',
   infoAttr:                 'data-form-manager-info',
-  requiredEl:               '<abbr title="required">*</abbr>',
-  containerManagerDataIds:  'data-form_manager_id',
+  requiredEl:               '<abbr title="required">*</abbr> ',
+  containerManagerDataIds:  'data-form-manager-id',
   hiddenWhenLaunchedEls: [
     'input',
     'textarea:not(".mde-enabled, .trumbowyg-textarea")',
@@ -32,17 +32,12 @@ Fae.form.formManager = {
   ],
 
   init: function(formSelector) {
+    console.log('fucking init')
     var _this      = this;
     formSelector   = formSelector || 'form:first';
     _this.$theForm = $(formSelector);
 
-    if (_this.$theForm.length && _this.$theForm.attr(_this.infoAttr)) {
-      this.savedFieldSettings = JSON.parse(_this.$theForm.attr(_this.infoAttr));
-
-      $.each(JSON.parse(this.savedFieldSettings.fields), function(i, fieldSettings) {
-        _this.setupField(fieldSettings);
-      });
-    }
+    _this.setupAllFields(_this.$theForm);
 
     $('body').on('click', '.'+_this.launchManagerClass, function(e) {
       e.preventDefault();
@@ -57,9 +52,20 @@ Fae.form.formManager = {
 
   },
 
+  setupAllFields: function($theForm) {
+    _this = this;
+    if ($theForm.length && $theForm.attr(_this.infoAttr)) {
+      this.savedFieldSettings = JSON.parse($theForm.attr(_this.infoAttr));
+
+      $.each(JSON.parse(this.savedFieldSettings.fields), function(i, fieldSettings) {
+        _this.setupField(fieldSettings);
+      });
+    }
+  },
+
   setupField: function(fieldSettings) {
     var _this = this;
-    var $container = $('[data-form_manager_id="'+fieldSettings.formManagerId+'"]');
+    var $container = $('[data-form-manager-id="'+fieldSettings.formManagerId+'"]');
     if ($container.length) {
       var $label                 = $container.find('label:first');
       var $helperTextContainerEl = $container.find('h6');
@@ -103,10 +109,12 @@ Fae.form.formManager = {
   launchManager: function($launchButton) {
     var _this = this;
 
+    // Hide all the things
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).hide();
     });
 
+    // Insert a bunch of inputs for label/helper text
     $(_this.$theForm.find('['+_this.containerManagerDataIds+']')).each(function(i) {
       var $container    = $(this);
       var $label        = $container.find('label:first');
@@ -118,8 +126,8 @@ Fae.form.formManager = {
       var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
       var labelValue        = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
       var helperValue       = $helperTextTextEl.text();
-      var $labelInput       = $('<input />', {type: 'text', class: 'form_manager_label_input label_input', value: labelValue});
-      var $helperInput      = $('<input />', {type: 'text', class: 'form_manager_label_input helper_input', value: helperValue});
+      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'form_manager_label_input label_input', value: labelValue});
+      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'form_manager_label_input helper_input', value: helperValue});
 
       $label.hide();
 
@@ -137,6 +145,7 @@ Fae.form.formManager = {
 
     $('.form_manager_label_input').remove();
 
+    // Reveal hidden things
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).show();
     });
@@ -155,8 +164,7 @@ Fae.form.formManager = {
       }
     };
 
-    // set the forms info attr to new payload and rerun setup fields
-
+    // Gather everything in the inputs for a POST
     $.each(_this.$theForm.find('['+_this.containerManagerDataIds+']'), function(i) {
       var $container    = $(this);
       var formManagerId = $container.attr(_this.containerManagerDataIds);
@@ -170,6 +178,7 @@ Fae.form.formManager = {
       };
     });
 
+    // Reset the labels/helpers to the custom ones just made
     $.each(payload.form_manager.fields, function(i, fieldSettings) {
       _this.setupField(fieldSettings);
     });

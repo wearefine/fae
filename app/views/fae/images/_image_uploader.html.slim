@@ -22,10 +22,12 @@ ruby:
     = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", alt_label: "#{alt_label} (#{lang.to_s})", caption_label: "#{caption_label} (#{lang.to_s})", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang, ignore_form_manager: ignore_form_manager
 
 - else
-  - form_manager_id = !ignore_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+  ruby:
+    form_manager_id = !ignore_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+    form_manager_id += "_#{language}" if language.present?
   - wrapper_html = language.present? ? { data: { language: language } } : {}
   = f.simple_fields_for image_name, defaults: { wrapper_html: wrapper_html } do |i|
-    .input.field*wrapper_html data-form_manager_id=form_manager_id
+    .input.field*wrapper_html data-form-manager-id=form_manager_id
       label class="#{'required' if required}"
         - if required
           abbr title="required" *

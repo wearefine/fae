@@ -205,11 +205,10 @@ module Fae
       form_manager_id = f.object.attached_as if f.object.try(:attached_as)
       form_manager_id += "_#{attribute}"
       if options.key?(:wrapper_html)
-        options[:wrapper_html]['data-form_manager_id'] = form_manager_id
+        options[:wrapper_html]['data-form-manager-id'] = form_manager_id
       else
-        options[:wrapper_html] = { 'data-form_manager_id' => form_manager_id }
+        options[:wrapper_html] = { 'data-form-manager-id' => form_manager_id }
       end
-      #add_wrapper_data_atter(options, "js-form-manager-input-container.)
     end
 
     # sets collection to class.for_fae_index if not defined
