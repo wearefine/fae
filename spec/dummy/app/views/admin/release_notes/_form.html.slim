@@ -8,4 +8,4 @@
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
 
   - if Fae.use_form_manager
-    a.button.js-launch-form-manager href='#' = t('fae.form.manage_form')
+    a.button.js-launch-form-manager data-launch-prompt=t('fae.form.launch_form_manager') data-save-prompt=t('fae.form.save_form_manager') href='#' = t('fae.form.launch_form_manager')

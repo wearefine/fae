@@ -5,7 +5,7 @@ def make_some_form_changes
   click_link('Manage Form')
   fill_in('Release_name_label_input', with: 'Name edited')
   fill_in('Release_name_helper_input', with: 'Name helper text')
-  click_link('Manage Form')
+  click_link('Save Changes')
   expect(page).to have_content('* Name edited')
   expect(page).to have_content('Name helper text')
 end
@@ -53,7 +53,7 @@ feature 'Form Manager' do
       fill_in('ReleaseNote_title_label_input', with: 'Title edited')
       fill_in('ReleaseNote_title_helper_input', with: 'Title helper text')
 
-      click_link('Manage Form')
+      click_link('Save Changes')
       expect(page).to have_content('Title edited')
       expect(page).to have_content('Title helper text')
     end
@@ -77,7 +77,7 @@ feature 'Form Manager' do
     fill_in('ContactUsPage_email_label_input', with: 'Email address')
     fill_in('ContactUsPage_email_helper_input', with: 'Email helper')
 
-    click_link('Manage Form')
+    click_link('Save Changes')
     expect(page).to have_content('Email address')
     expect(page).to have_content('Email helper')
 
@@ -96,7 +96,7 @@ feature 'Form Manager' do
     fill_in('ContactUsPage_hero_en_label_input', with: 'Hero (en) edited')
     fill_in('ContactUsPage_hero_en_helper_input', with: 'Hero (en) helper')
 
-    click_link('Manage Form')
+    click_link('Save Changes')
     expect(page).to have_content('Hero (en) edited')
     expect(page).to have_content('Hero (en) helper')
 

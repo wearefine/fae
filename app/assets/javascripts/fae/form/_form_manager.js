@@ -15,6 +15,7 @@ Fae.form.formManager = {
   infoAttr:                 'data-form-manager-info',
   requiredEl:               '<abbr title="required">*</abbr> ',
   containerManagerDataIds:  'data-form-manager-id',
+  formManagerBodyClass:     'form-manager-is-active',
   hiddenWhenLaunchedEls: [
     'input',
     'textarea:not(".mde-enabled, .trumbowyg-textarea")',
@@ -28,7 +29,9 @@ Fae.form.formManager = {
     '.editor-toolbar',
     '.CodeMirror',
     '.trumbowyg-box',
-    '.hinter-clicker'
+    '.hinter-clicker',
+    '#js-header-cancel',
+    '#js-header-clone',
   ],
 
   init: function(formSelector) {
@@ -41,12 +44,12 @@ Fae.form.formManager = {
     $('body').on('click', '.'+_this.launchManagerClass, function(e) {
       e.preventDefault();
       _this.$theForm = $(this).parents('form');
-      _this.launchManager($(this));
+      _this._launchManager($(this));
     });
 
     $('body').on('click', '.'+_this.saveAndCloseManagerClass, function(e) {
       e.preventDefault();
-      _this.saveAndCloseManager($(this));
+      _this._saveAndCloseManager($(this));
     });
 
   },
@@ -57,12 +60,12 @@ Fae.form.formManager = {
       this.savedFieldSettings = JSON.parse($theForm.attr(_this.infoAttr));
 
       $.each(JSON.parse(this.savedFieldSettings.fields), function(i, fieldSettings) {
-        _this.setupField(fieldSettings);
+        _this._setupField(fieldSettings);
       });
     }
   },
 
-  setupField: function(fieldSettings) {
+  _setupField: function(fieldSettings) {
     var _this = this;
     var $container = $('[data-form-manager-id="'+fieldSettings.formManagerId+'"]');
     if ($container.length) {
@@ -105,8 +108,9 @@ Fae.form.formManager = {
     }
   },
 
-  launchManager: function($launchButton) {
+  _launchManager: function($launchButton) {
     var _this = this;
+    $('body').addClass(_this.formManagerBodyClass);
 
     // Hide all the things
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
@@ -116,6 +120,8 @@ Fae.form.formManager = {
     // Insert a bunch of inputs for label/helper text
     $(_this.$theForm.find('['+_this.containerManagerDataIds+']')).each(function(i) {
       var $container    = $(this);
+      if (!$container.is(':visible') || $container.hasClass('hidden')) { return; }
+
       var $label        = $container.find('label:first');
       var $labelTextEl  = $label;
       var $labelInner   = $label.find('.label_inner');
@@ -125,35 +131,38 @@ Fae.form.formManager = {
       var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
       var labelValue        = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
       var helperValue       = $helperTextTextEl.text();
-      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'form_manager_label_input label_input', value: labelValue});
-      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'form_manager_label_input helper_input', value: helperValue});
+      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'label_input', value: labelValue});
+      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'helper_input', value: helperValue});
 
       $label.hide();
 
       $container.append($labelInput).append($helperInput);
     });
 
+    $launchButton.text($launchButton.attr('data-save-prompt'));
     $launchButton.removeClass(_this.launchManagerClass);
     $launchButton.addClass(_this.saveAndCloseManagerClass);
   },
 
-  saveAndCloseManager: function($launchButton) {
+  _saveAndCloseManager: function($launchButton) {
     var _this = this;
+    $('body').removeClass(_this.formManagerBodyClass);
 
-    _this.submitManager();
+    _this._submitManager();
 
-    $('.form_manager_label_input').remove();
+    $('.label_input, .helper_input').remove();
 
     // Reveal hidden things
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).show();
     });
 
+    $launchButton.text($launchButton.attr('data-launch-prompt'));
     $launchButton.removeClass(_this.saveAndCloseManagerClass);
     $launchButton.addClass(_this.launchManagerClass);
   },
 
-  submitManager: function() {
+  _submitManager: function() {
     var _this = this;
     var payload = {
       form_manager: {
@@ -179,7 +188,7 @@ Fae.form.formManager = {
 
     // Reset the labels/helpers to the custom ones just made
     $.each(payload.form_manager.fields, function(i, fieldSettings) {
-      _this.setupField(fieldSettings);
+      _this._setupField(fieldSettings);
     });
 
     $.ajax({

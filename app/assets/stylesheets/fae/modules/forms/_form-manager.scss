@@ -2,21 +2,23 @@
 	margin-left: 10px
 }
 
-.active-manager-helper {
-  margin-left: 10px;
-  padding-left: 10px;
-  border-left: 1px solid #000;
+.form-manager-is-active .input {
+	max-width: 515px;
 }
 
-.active-manager-label:before,
-.active-manager-label:after {
-  display: none;
+.form-manager-is-active .symbol {
+	width: 515px;
 }
 
-.active-manager-label.checkbox {
-	padding-left: 0;
+.form-manager-is-active .input input {
+	width: 100%;
 }
 
 .label_input {
 	margin-bottom: 5px;
+}
+
+.symbol.symbol--prefix .label_input,
+.symbol.symbol--prefix .helper_input {
+	padding-left: 15px;
 }
