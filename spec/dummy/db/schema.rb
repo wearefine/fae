@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_03_143347) do
+ActiveRecord::Schema.define(version: 2019_10_10_130931) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -136,10 +136,11 @@ ActiveRecord::Schema.define(version: 2019_10_03_143347) do
 
   create_table "fae_form_managers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "form_manager_model_name"
+    t.integer "form_manager_model_id"
     t.text "fields"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "form_manager_model_id"
+    t.index ["form_manager_model_id"], name: "index_fae_form_managers_on_form_manager_model_id"
     t.index ["form_manager_model_name"], name: "index_fae_form_managers_on_form_manager_model_name"
   end
 
