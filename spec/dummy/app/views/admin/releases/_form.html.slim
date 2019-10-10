@@ -1,4 +1,13 @@
-= simple_form_for(['admin', @item], html: { 'data-form-manager-model' => @item.fae_form_manager_model_name, 'data-form-manager-info' => (@form_manager.present? ? @form_manager.to_json : nil) }) do |f|
+ruby:
+  form_options = {
+    html: {
+      data: {
+        form_manager_model: @item.fae_form_manager_model_name,
+        form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+      }
+    }
+  }
+= simple_form_for(['admin', @item], form_options) do |f|
   - subnav_array = ['Attributes', 'Assets', 'Associations']
   - subnav_array.concat ['Aromas', 'Release Notes', 'Recent Changes'] if params[:action] == 'edit'
   = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true, subnav: subnav_array, languages: true

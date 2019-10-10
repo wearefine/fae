@@ -1,4 +1,16 @@
-= simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
+ruby:
+	form_options = {
+		url: fae.update_content_block_path(slug: @item.slug),
+		method: :put,
+		html: {
+			data: {
+				form_manager_model: @item.fae_form_manager_model_name,
+				form_manager_model_id: @item.fae_form_manager_model_id,
+				form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+			}
+		}
+	}
+= simple_form_for @item, form_options do |f|
   == render 'fae/shared/form_header', header: @item
 
   main.content
