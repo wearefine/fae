@@ -131,8 +131,8 @@ Fae.form.formManager = {
       var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
       var labelValue        = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
       var helperValue       = $helperTextTextEl.text();
-      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'label_input', value: labelValue, placeholder: 'Label placeholder'});
-      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'helper_input', value: helperValue, placeholder: 'Helper text placeholder'});
+      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'label_input', value: labelValue});
+      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'helper_input', value: helperValue});
 
       $label.hide();
 
