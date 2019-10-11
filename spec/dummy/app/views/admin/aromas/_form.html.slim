@@ -1,4 +1,18 @@
-= simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form', 'data-form-manager-model' => @item.class.name, 'data-form-manager-info' => (@form_manager.present? ? @form_manager.to_json : nil)}, remote: true, data: {type: "html"}) do |f|
+ruby:
+  form_options = {
+    html: {
+      multipart: true,
+      novalidate: true,
+      class: 'js-file-form',
+      remote: true,
+      data: {
+        type: "html",
+        form_manager_model: @item.fae_form_manager_model_name,
+        form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+      }
+    }
+  }
+= simple_form_for(['admin', @item], form_options) do |f|
   = fae_input f, :name, input_class: 'slugger'
   = fae_input f, :slug
   = fae_input f, :description
