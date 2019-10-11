@@ -18,7 +18,7 @@ feature 'Form Manager' do
     visit edit_admin_release_path(release.id)
   end
 
-  # Standard main forms
+  # Standard main forms.
 
   scenario 'form manager displays when launched, hides things, shows inputs', js: true do
     expect(page).to have_content('* Name')
