@@ -46,6 +46,7 @@
 //= require fae/form/_cancel
 //= require fae/form/_ajax
 //= require fae/form/_filtering
+//= require fae/form/_form_manager
 //= require fae/form/fae_chosen
 //= require fae/form/fileinputer
 

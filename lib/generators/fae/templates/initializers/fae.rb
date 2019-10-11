@@ -60,4 +60,9 @@ Fae.setup do |config|
   # on the parent app
   # Defaults to false
   # config.use_cache = true
+
+  ## use_form_manager
+  # Enable Manage Form buttons in form headers
+  # Defaults to false
+  # config.use_form_manager = true
 end

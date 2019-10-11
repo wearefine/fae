@@ -8,15 +8,19 @@ ruby:
   required    ||= false
   languages     = f.object.class.try(:fae_fields).try(:[], file_name).try(:[], :languages)
   language    ||= nil
+  ignore_form_manager ||= false
 
 - if languages.present?
   - languages.each do |lang|
     = render 'fae/application/file_uploader', f: f, item: item, file_name: "#{file_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", helper_text: helper_text, required: required, language: lang
 
 - else
+  ruby:
+    form_manager_id = !ignore_form_manager ? "#{item.class.name}_#{file_name}" : nil
+    form_manager_id += "_#{language}" if language.present?
   - wrapper_html = language.present? ? { data: { language: language } } : {}
   = f.simple_fields_for file_name, defaults: { wrapper_html: wrapper_html } do |i|
-    .input.field
+    .input.field data-form-manager-id=form_manager_id
       = content_tag :label, class: ('required' if required) do
         - if required
           abbr title="required" *

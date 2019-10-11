@@ -15,15 +15,19 @@ ruby:
   attached_as         ||= image_name.to_s
   languages             = f.object.class.try(:fae_fields).try(:[], image_name).try(:[], :languages)
   language            ||= nil
+  ignore_form_manager ||= false
 
 - if languages.present?
   - languages.each do |lang|
-    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", alt_label: "#{alt_label} (#{lang.to_s})", caption_label: "#{caption_label} (#{lang.to_s})", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang
+    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", alt_label: "#{alt_label} (#{lang.to_s})", caption_label: "#{caption_label} (#{lang.to_s})", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang, ignore_form_manager: ignore_form_manager
 
 - else
+  ruby:
+    form_manager_id = !ignore_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+    form_manager_id += "_#{language}" if language.present?
   - wrapper_html = language.present? ? { data: { language: language } } : {}
   = f.simple_fields_for image_name, defaults: { wrapper_html: wrapper_html } do |i|
-    .field.input*wrapper_html
+    .input.field*wrapper_html data-form-manager-id=form_manager_id
       label class="#{'required' if required}"
         - if required
           abbr title="required" *
@@ -52,6 +56,7 @@ ruby:
         options = { label: caption_label.html_safe }
         options[:helper_text] = caption_helper_text if caption_helper_text.present?
         options[:wrapper_html] = wrapper_html
+        options[:ignore_form_manager] = true
 
       = fae_input i, :caption, options
 
@@ -60,6 +65,7 @@ ruby:
         options = { label: alt_label.html_safe }
         options[:helper_text] = alt_helper_text if alt_helper_text.present?
         options[:wrapper_html] = wrapper_html
+        options[:ignore_form_manager] = true
 
       = fae_input i, :alt, options
 

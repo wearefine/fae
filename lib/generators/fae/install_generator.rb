@@ -19,6 +19,11 @@ module Fae
       rake 'fae:seed_db'
     end
 
+    def install_form_manager
+      rake 'fae:install:migrations'
+      rake 'db:migrate'
+    end
+
   private
 
     def add_route

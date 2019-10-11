@@ -1,4 +1,4 @@
-= simple_form_for(['admin', @item]) do |f|
+= simple_form_for(['admin', @item], html: { 'data-form-manager-model' => @item.class.name, 'data-form-manager-info' => (@form_manager.present? ? @form_manager.to_json : nil) }) do |f|
   == render 'fae/shared/form_header', header: @klass_name, languages: true
 
   main.content

@@ -12,6 +12,8 @@ en:
       save: 'Save'
       cancel: 'Cancel'
       clone: 'Clone'
+      launch_form_manager: 'Manage Form'
+      save_form_manager: 'Save Changes'
       attribute:
         first_name: 'First Name'
         last_name: 'Last Name'

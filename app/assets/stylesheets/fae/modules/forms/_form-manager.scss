@@ -1,0 +1,24 @@
+.js-launch-form-manager {
+	margin-left: 10px
+}
+
+.form-manager-is-active .input {
+	max-width: 515px;
+}
+
+.form-manager-is-active .symbol {
+	width: 515px;
+}
+
+.form-manager-is-active .input input {
+	width: 100%;
+}
+
+.label_input {
+	margin-bottom: 5px;
+}
+
+.symbol.symbol--prefix .label_input,
+.symbol.symbol--prefix .helper_input {
+	padding-left: 15px;
+}
