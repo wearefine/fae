@@ -13,6 +13,7 @@ Fae.form.formManager = {
   saveAndCloseManagerClass: 'js-manager-is-active',
   helperTextTextElClass:    'helper_text_text',
   infoAttr:                 'data-form-manager-info',
+  languageAttr:             'data-language',
   requiredEl:               '<abbr title="required">*</abbr> ',
   containerManagerDataIds:  'data-form-manager-id',
   formManagerBodyClass:     'form-manager-is-active',
@@ -111,6 +112,9 @@ Fae.form.formManager = {
   _launchManager: function($launchButton) {
     var _this = this;
     $('body').addClass(_this.formManagerBodyClass);
+
+    // Show all language inputs!
+    _this.$theForm.find('['+_this.languageAttr+']').show();
 
     // Hide all the things
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
