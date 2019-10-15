@@ -34,6 +34,7 @@ Fae.form.formManager = {
     '.hinter-clicker',
     '#js-header-cancel',
     '#js-header-clone',
+    '.js-multiselect-action-deselect_all'
   ],
 
   init: function(formSelector) {
