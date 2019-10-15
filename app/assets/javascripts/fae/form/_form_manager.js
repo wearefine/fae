@@ -25,6 +25,7 @@ Fae.form.formManager = {
     '.markdown-support',
     '.daterangepicker-seperator',
     '.asset-inputs',
+    '.asset-actions',
     '.chosen-container',
     '.ms-container',
     '.editor-toolbar',

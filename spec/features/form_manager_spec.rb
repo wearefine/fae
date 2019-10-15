@@ -75,15 +75,15 @@ feature 'Form Manager' do
     expect(page).to have_content('Email')
 
     click_link('Manage Form')
-    fill_in('ContactUsPage_email_label_input', with: 'Email address')
+    fill_in('ContactUsPage_email_label_input', with: 'Email edited')
     fill_in('ContactUsPage_email_helper_input', with: 'Email helper')
 
     click_link('Save Changes')
-    expect(page).to have_content('Email address')
+    expect(page).to have_content('Email edited')
     expect(page).to have_content('Email helper')
 
     visit fae.edit_content_block_path('contact_us')
-    expect(page).to have_content('Email address')
+    expect(page).to have_content('Email edited')
     expect(page).to have_content('Email helper')
   end
 
