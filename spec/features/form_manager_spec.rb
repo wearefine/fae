@@ -18,7 +18,7 @@ feature 'Form Manager' do
     visit edit_admin_release_path(release.id)
   end
 
-  # Standard main forms
+  # Standard main forms.
 
   scenario 'form manager displays when launched, hides things, shows inputs', js: true do
     expect(page).to have_content('* Name')
@@ -106,14 +106,18 @@ feature 'Form Manager' do
     expect(page).to have_content('Hero (en) helper')
   end
 
-  # ignore_form_manager flag
+  # ignore field functionality
 
   scenario 'form manager ignores fields flagged as ignore_form_manager: true', js: true do
     release = FactoryGirl.create(:release, name: 'A Release')
     visit edit_admin_release_path(release.id)
+    expect(page).to have_content('Slug')
     expect(page).to have_content('Seo Title')
 
     click_link('Manage Form')
+    # Via fae_input argument
+    expect(page).to_not have_selector("input[value='Slug']")
+    # Via presets in form_manager JS
     expect(page).to_not have_selector("input[value='Seo Title']")
   end
 

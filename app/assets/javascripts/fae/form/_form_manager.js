@@ -15,8 +15,9 @@ Fae.form.formManager = {
   infoAttr:                 'data-form-manager-info',
   languageAttr:             'data-language',
   requiredEl:               '<abbr title="required">*</abbr> ',
-  containerManagerDataIds:  'data-form-manager-id',
+  containerManagerDataId:  'data-form-manager-id',
   formManagerBodyClass:     'form-manager-is-active',
+  ignoresHiddenClass:       'ignores-are-hidden',
   hiddenWhenLaunchedEls: [
     'input',
     'textarea:not(".mde-enabled, .trumbowyg-textarea")',
@@ -35,6 +36,13 @@ Fae.form.formManager = {
     '#js-header-cancel',
     '#js-header-clone',
     '.js-multiselect-action-deselect_all'
+  ],
+  ignoredFields: [
+    'seo_title',
+    'seo_description',
+    'social_media_title',
+    'social_media_description',
+    'social_media_image'
   ],
 
   init: function(formSelector) {
@@ -124,9 +132,12 @@ Fae.form.formManager = {
     });
 
     // Insert a bunch of inputs for label/helper text
-    $(_this.$theForm.find('['+_this.containerManagerDataIds+']')).each(function(i) {
+    $(_this.$theForm.find('['+_this.containerManagerDataId+']')).each(function(i) {
       var $container    = $(this);
       if (!$container.is(':visible') || $container.hasClass('hidden')) { return; }
+
+      // Expicit ignores
+      _this._ignoredFields('hide', $container);
 
       var $label        = $container.find('label:first');
       var $labelTextEl  = $label;
@@ -135,14 +146,16 @@ Fae.form.formManager = {
         $labelTextEl = $labelInner;
       }
       var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
-      var labelValue        = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
-      var helperValue       = $helperTextTextEl.text();
-      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'label_input', value: labelValue});
-      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'helper_input', value: helperValue});
+      var fMLabelText       = _this._titleize($container.attr(_this.containerManagerDataId).split('_').shift());
+      var labelInputValue   = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
+      var helperInputValue  = $helperTextTextEl.text();
+      var $fMLabel          = $('<label />', {text: fMLabelText, class: 'fm_label'});
+      var $labelInput       = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_label_input', class: 'label_input', value: labelInputValue});
+      var $helperInput      = $('<input />', {type: 'text', id: $container.attr('data-form-manager-id')+'_helper_input', class: 'helper_input', value: helperInputValue});
 
       $label.hide();
 
-      $container.append($labelInput).append($helperInput);
+      $container.append($fMLabel).append($labelInput).append($helperInput);
     });
 
     $launchButton.text($launchButton.attr('data-save-prompt'));
@@ -156,12 +169,16 @@ Fae.form.formManager = {
 
     _this._submitManager();
 
-    $('.label_input, .helper_input').remove();
+    // Get rid of form manager els
+    $('.label_input, .helper_input, .fm_label').remove();
 
     // Reveal hidden things
     $(_this.hiddenWhenLaunchedEls).each(function(i, className) {
       _this.$theForm.find(className).show();
     });
+
+    //Restore ignores
+    _this._ignoredFields('show', null);
 
     $launchButton.text($launchButton.attr('data-launch-prompt'));
     $launchButton.removeClass(_this.saveAndCloseManagerClass);
@@ -179,9 +196,9 @@ Fae.form.formManager = {
     };
 
     // Gather everything in the inputs for a POST
-    $.each(_this.$theForm.find('['+_this.containerManagerDataIds+']'), function(i) {
+    $.each(_this.$theForm.find('['+_this.containerManagerDataId+']'), function(i) {
       var $container    = $(this);
-      var formManagerId = $container.attr(_this.containerManagerDataIds);
+      var formManagerId = $container.attr(_this.containerManagerDataId);
       var requiredValue = $container.hasClass('required') ? 1 : 0;
 
       payload.form_manager.fields[formManagerId] = {
@@ -210,7 +227,35 @@ Fae.form.formManager = {
       }
     });
 
+  },
 
+  _ignoredFields: function(type, $container) {
+    var _this = this;
+    switch(type) {
+      case 'show':
+        $('.'+_this.ignoresHiddenClass).show().removeClass(_this.ignoresHiddenClass);
+        break;
+      case 'hide':
+        $(_this.ignoredFields).each(function(i, fuzzyClass) {
+          if ($container.attr('class').indexOf(fuzzyClass) !== -1) {
+            $container.hide().addClass(_this.ignoresHiddenClass);
+          }
+        });
+        break;
+    }
+  },
+
+  _capitalize: function(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  },
+
+  _titleize: function(str) {
+    var _this = this;
+    var string_array = str.split(' ');
+    string_array = string_array.map(function(str) {
+       return _this._capitalize(str);
+    });
+    return string_array.join(' ');
   }
 
 };
