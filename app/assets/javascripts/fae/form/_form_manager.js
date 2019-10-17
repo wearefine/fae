@@ -146,7 +146,9 @@ Fae.form.formManager = {
         $labelTextEl = $labelInner;
       }
       var $helperTextTextEl = $label.find('.'+_this.helperTextTextElClass);
-      var fMLabelText       = _this._titleize($container.attr(_this.containerManagerDataId).split('_').shift());
+      var iDParts           = $container.attr(_this.containerManagerDataId).split('_');
+      iDParts.shift();
+      var fMLabelText       = _this._titleize(iDParts.join(' '));
       var labelInputValue   = $labelTextEl.clone().children().remove().end().text().replace('*','').trim();
       var helperInputValue  = $helperTextTextEl.text();
       var $fMLabel          = $('<label />', {text: fMLabelText, class: 'fm_label'});
