@@ -20,7 +20,7 @@ ruby:
     form_manager_id += "_#{language}" if language.present?
   - wrapper_html = language.present? ? { data: { language: language } } : {}
   = f.simple_fields_for file_name, defaults: { wrapper_html: wrapper_html } do |i|
-    .input.field data-form-manager-id=form_manager_id
+    .input.field class="#{file_name}" data-form-manager-id=form_manager_id
       = content_tag :label, class: ('required' if required) do
         - if required
           abbr title="required" *
