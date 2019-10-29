@@ -14,7 +14,7 @@ ruby:
   }
 = simple_form_for(['admin', @item], form_options) do |f|
   = fae_input f, :name, input_class: 'slugger'
-  = fae_input f, :slug
+  = fae_input f, :slug, helper_text: 'default'
   = fae_input f, :description
   = fae_input f, :live
   = fae_image_form f, :image
@@ -25,4 +25,4 @@ ruby:
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
 
   - if Fae.use_form_manager
-    a.button.js-launch-form-manager data-launch-prompt=t('fae.form.launch_form_manager') data-save-prompt=t('fae.form.save_form_manager') href='#' = t('fae.form.launch_form_manager')
+    a.button.js-launch-form-manager href='#' = t('fae.form.launch_form_manager')
