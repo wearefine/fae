@@ -14,7 +14,7 @@ gemspec
 # gem 'debugger'
 
 # Set the version of Rails for the dummy app
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.0'
 
 # Lock in Rake to a version compatible with rspec-rails 3.0
 gem 'rake', '< 12.0.0'
@@ -27,8 +27,9 @@ group :test, :development do
 end
 
 group :test do
+  gem 'puma'
   gem 'factory_girl_rails', '~> 4.4.1'
-  gem 'capybara-webkit', '~> 1.11.1'
+  gem 'capybara-webkit', '~> 1.15.1'
   gem 'capybara-screenshot'
   gem 'guard-rspec', '~> 4.7.3'
   gem 'selenium-webdriver', '~> 2.42.0'
