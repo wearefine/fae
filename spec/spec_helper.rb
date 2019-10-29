@@ -29,6 +29,8 @@ RSpec.configure do |config|
   # Use capybara-webkit as the JS driver
   Capybara.javascript_driver = :webkit
 
+  # Capybara.server = :webrick
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
