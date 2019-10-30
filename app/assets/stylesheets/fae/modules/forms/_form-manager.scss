@@ -1,28 +1,82 @@
+.form-manager-form {
+  z-index: 2;
+  background: gray(90);
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  margin-top: 1px;
+  padding: 100px 40px 0px 30px;
+
+  .js-form-manager-submit {
+    background: gray(20);
+    color: white;
+    font-size: 13px;
+
+    &:hover {
+      background: gray(10);
+    }
+  }
+
+  .helper {
+    color: gray(40);
+    font-weight: normal;
+  }
+
+  .inner-content {
+    margin-top: 103px;
+  }
+
+  .field-input {
+    margin-bottom: 10px;
+  }
+
+  header {
+    height: 74px;
+
+    a {
+      margin-right: 5px;
+      float: right;
+    }
+  }
+
+  .form-section {
+    margin-bottom: 30px;
+    overflow: auto;
+  }
+
+  .single-field {
+    float: left;
+    width: 25%;
+    margin-right: 20px;
+
+    input {
+      width: 100%;
+    }
+
+    .field_title {
+      width: 100%;
+      display: inline-block;
+
+      label {
+        float: left;
+        margin-right: 10px;
+      }
+
+      input {
+        width: auto;
+        float: left;
+      }
+    }
+  }
+}
+
+.js-form-manager-container {
+  display: none;
+  z-index: 4;
+}
+
 .js-launch-form-manager {
-	margin-left: 10px
-}
-
-.form-manager-is-active .input {
-	max-width: 515px;
-}
-
-.form-manager-is-active .symbol {
-	width: 515px;
-}
-
-.form-manager-is-active .input input {
-	width: 100%;
-}
-
-.form-manager-is-active span.checkbox {
-	display: none;
-}
-
-.label_input {
-	margin-bottom: 5px;
-}
-
-.symbol.symbol--prefix .label_input,
-.symbol.symbol--prefix .helper_input {
-	padding-left: 15px;
+	margin-left: 10px;
 }
