@@ -26,7 +26,7 @@ module Fae
           if is_attachment(arg)
             @@attachments << arg
           else
-            @@attributes_flat << "#{arg.name}:#{arg.type}"
+            @@attributes_flat << "#{arg.name}:#{arg.type}" + (arg.has_index? ? ":index" : "")
           end
 
           if is_association(arg)
