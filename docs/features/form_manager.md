@@ -23,9 +23,6 @@ An additional option is available if you want to disallow a field from being edi
 = fae_input f, :name, input_class: 'slugger', show_form_manager: false
 ```
 
-
-
-
 ## Upgrading
 After updating the FAE gem and bundling
 1. `rake fae:install:migrations`
