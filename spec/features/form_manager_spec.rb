@@ -106,7 +106,7 @@ feature 'Form Manager' do
 
   # ignore field functionality
 
-  scenario 'form manager ignores fields flagged as ignore_form_manager: true', js: true do
+  scenario 'form manager ignores fields flagged as show_form_manager: false', js: true do
     release = FactoryGirl.create(:release, name: 'A Release')
     visit edit_admin_release_path(release.id)
     expect(page).to have_content('Slug')

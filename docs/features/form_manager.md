@@ -17,9 +17,20 @@ end
 ```
 A "Manage Form" button will now be available for use at the top of your forms that opens the manager overlay.
 
+An additional option is available if you want to disallow a field from being editable:
+
+```slim
+= fae_input f, :name, input_class: 'slugger', show_form_manager: false
+```
+
+
+
+
 ## Upgrading
-1. Run `rake fae:install_form_manager` this will copy over the migration to create the DB table and run it.
-2. Due to the generated nature of FAE's forms, you're going to have to edit any `form.html.slim` files that have already been generated where you want to use the manager.
+After updating the FAE gem and bundling
+1. `rake fae:install:migrations`
+2. `rake db:migrate`
+3. Due to the generated nature of FAE's forms, you're going to have to edit any `form.html.slim` files that have already been generated where you want to use the manager.
 
 ### Main Forms
 
