@@ -1,4 +1,4 @@
-= simple_form_for @item, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
+= simple_form_for @item, html: {'data-form-manager-model' => @item.fae_form_manager_model_name, 'data-form-manager-model-id' => @item.fae_form_manager_model_id, 'data-form-manager-info' => (@form_manager.present? ? @form_manager.to_json : nil)}, url: fae.update_content_block_path(slug: @item.slug), method: :put do |f|
   == render 'fae/shared/form_header', header: @item, f: f
 
   main.content

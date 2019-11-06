@@ -29,6 +29,9 @@ module Fae
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = "#{params[:slug]}_page".classify.constantize.instance
+      if Fae.use_form_manager
+        @form_manager = FormManager.for_model(params, @item)
+      end
     end
 
     # set up variables so that fae partial forms work
@@ -50,5 +53,6 @@ module Fae
         @item.send(:"create_#{assoc.name}", attached_as: assoc.name.to_s) if assoc.macro == :has_one && @item.send(:"#{assoc.name}").blank?
       end
     end
+
   end
 end
