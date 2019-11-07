@@ -23,7 +23,7 @@ feature 'fae_input' do
 
   scenario 'should display common helper texts' do
     expect(page).to have_content('A descriptive page title of ~50-65 characters. Displayed in search engine results.')
-    expect(page).to have_content('A helpful page summary of 320 characters or less. Displayed in search engine results.')
+    expect(page).to have_content('A helpful page summary of 200 characters or less. Displayed in search engine results.')
   end
 
   scenario 'should display hint when clicked', js: true do

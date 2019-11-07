@@ -11,6 +11,8 @@ module Fae
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
       add_input_class(options, 'js-html-editor') if options[:html].present?
 
+      set_form_manager_container_attr(f, options, attribute) unless options[:show_form_manager] == false
+
       set_maxlength(f, attribute, options)
 
       f.input attribute, options
@@ -21,6 +23,8 @@ module Fae
       label_and_hint attribute, options
       list_order f, attribute, options
       set_prompt f, attribute, options if !options[:include_blank].is_a?(String)
+
+      set_form_manager_container_attr(f, options, attribute) unless options[:show_form_manager] == false
 
       f.association attribute, options
     end
@@ -125,7 +129,7 @@ module Fae
       label = options[:label] || label_translation(attribute) || attribute_name
       if options[:markdown_supported].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
-          concat(options[:helper_text]) if options[:helper_text].present?
+          concat(content_tag(:span, options[:helper_text], class: 'helper_text_text')) if options[:helper_text].present?
           concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown_supported].present?
         end
       end
@@ -185,6 +189,25 @@ module Fae
         options[:input_html].merge!({class: "#{options[:input_html][:class]} #{class_name}"})
       else
         options[:input_html] = { class: class_name }
+      end
+    end
+
+    def add_wrapper_class(options, class_name)
+      if options.key?(:wrapper_html)
+        options[:wrapper_html].merge!({class: "#{options[:wrapper_html][:class]} #{class_name}"})
+      else
+        options[:wrapper_html] = { class: class_name }
+      end
+    end
+
+    def set_form_manager_container_attr(f, options, attribute)
+      form_manager_id = f.object.class.name
+      form_manager_id = f.object.attached_as if f.object.try(:attached_as)
+      form_manager_id += "_#{attribute}"
+      if options.key?(:wrapper_html)
+        options[:wrapper_html]['data-form-manager-id'] = form_manager_id
+      else
+        options[:wrapper_html] = { 'data-form-manager-id' => form_manager_id }
       end
     end
 

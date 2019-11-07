@@ -80,6 +80,7 @@ Fae.form.ajax = {
       Fae.form.text.initHTML();
       Fae.form.checkbox.setCheckboxAsActive();
       Fae.form.select.init();
+      Fae.form.formManager.setupAllFields($wrapper.find('form'));
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);

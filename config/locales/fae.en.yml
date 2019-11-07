@@ -12,6 +12,9 @@ en:
       save: 'Save'
       cancel: 'Cancel'
       clone: 'Clone'
+      launch_form_manager: 'Manage Form'
+      save_form_manager: 'Save Changes'
+      cancel_form_manager: 'Cancel'
       attribute:
         first_name: 'First Name'
         last_name: 'Last Name'
@@ -41,7 +44,7 @@ en:
       error_end: 'to be taken to our home page.'
       hello: 'Hello'
       welcome: 'Welcome to Fae'
-      no_objs_start: "You don'thave any objects setup to manage. If you need help getting started, check out the"
+      no_objs_start: "You don't have any objects setup to manage. If you need help getting started, check out the"
       no_objs_end: 'Quickstart Guide and Documentation site.'
     navbar:
       logout: 'Log Out'
@@ -86,7 +89,7 @@ en:
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
     images:
-      alt_helper: 'Brief description of image contents, used in hover text and by visually impaired users.'
+      alt_helper: 'Read by search engines and visually impaired readers.'
     application:
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
@@ -111,7 +114,7 @@ en:
       paragraph_break: 'Paragraph break'
       paragraph_break_help: 'Adding a blank line in between your paragraphs makes a paragraph break.'
     seo_title: 'A descriptive page title of ~50-65 characters. Displayed in search engine results.'
-    seo_description: 'A helpful page summary of 320 characters or less. Displayed in search engine results.'
+    seo_description: 'A helpful page summary of 200 characters or less. Displayed in search engine results.'
     search: 'Search %{search}'
     reset_search: 'Reset Search'
     apply_filters: 'Apply Filters'

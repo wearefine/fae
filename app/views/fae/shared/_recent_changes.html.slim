@@ -8,7 +8,7 @@
             th = t('fae.changes.user')
             th = t('fae.changes.type')
             th = t('fae.changes.attrs')
-            th.-action-wide t('fea.changes.modified')
+            th.-action-wide = t('fea.changes.modified')
         tbody
           - if @item.try(:tracked_changes).present?
             - @item.tracked_changes.each do |change|

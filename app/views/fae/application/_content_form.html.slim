@@ -1,14 +1,15 @@
 ruby:
-  require_locals     ['attribute', 'f'], local_assigns
-  has_label            = ![false, ''].include?(local_assigns[:label])
-  label              ||= attribute.to_s.titleize
-  required           ||= f.object.send(attribute).is_required?(f.object.class)
-  helper_text        ||= attempt_common_helper_text(attribute)
-  markdown           ||= false
-  markdown_supported ||= false
-  hint               ||= nil
-  options            ||= {}
-  input_options      ||= {}
+  require_locals      ['attribute', 'f'], local_assigns
+  has_label             = ![false, ''].include?(local_assigns[:label])
+  label               ||= attribute.to_s.titleize
+  required            ||= f.object.send(attribute).is_required?(f.object.class)
+  helper_text         ||= attempt_common_helper_text(attribute)
+  markdown            ||= false
+  markdown_supported  ||= false
+  hint                ||= nil
+  options             ||= {}
+  input_options       ||= {}
+  show_form_manager   ||= true
 
   if has_label
     label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
@@ -28,6 +29,8 @@ ruby:
   options.merge! input_options if (input_options.keys).any?
   options.merge! wrapper_html: {} if input_options[:wrapper_html].blank?
 
+  options.merge! wrapper_html: { data: { form_manager_id:  "#{f.object.class.name}_#{attribute}" } } if show_form_manager
+
   if options[:input_html].present? && options[:input_html][:class].present? && markdown.present?
     options[:input_html][:class] = options[:input_html][:class] + ' js-markdown-editor'
   elsif options[:input_html].blank?
@@ -44,6 +47,8 @@ ruby:
   - languages.each do |lang|
     - options.deep_merge! wrapper_html: { data: { language: lang } }
     - options[:label] = orig_label.gsub(label, "#{label} (#{lang.to_s})").html_safe
+
+    - options.deep_merge! wrapper_html: { data: { form_manager_id: "#{f.object.class.name}_#{attribute}_#{lang}" } } if show_form_manager
 
     = f.simple_fields_for "#{attribute}_#{lang}".to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
       - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }

@@ -27,6 +27,15 @@ module Fae
       "#{fae_nested_parent}_id"
     end
 
+    def fae_form_manager_model_name
+      return 'Fae::StaticPage' if self.class.name.constantize.superclass.name == 'Fae::StaticPage'
+      self.class.name
+    end
+
+    def fae_form_manager_model_id
+      self.id
+    end
+
     module ClassMethods
       def for_fae_index
         order(order_method)
