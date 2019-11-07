@@ -19,7 +19,8 @@ ruby:
   = fae_input f, :live
   = fae_image_form f, :image
   = f.hidden_field :release_id
-  = fae_association f, :cats
+  = fae_association f, :cats, helper_text: "Select from existing categories, or <a href=\"/admin/cats/new\" id=\"cats\" class=\"js-fae-modal\">add new cat via modal popup</a>.".html_safe
+
 
   = f.submit
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
