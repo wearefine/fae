@@ -97,7 +97,7 @@ Fae.modals = {
           });
           dialog.data.show();
 
-          var modalClasses = [_this._createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
+          var modalClasses = [_this.createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
 
           _this.modalOpen = true;
           _this.$body.addClass(modalClasses);
@@ -118,7 +118,7 @@ Fae.modals = {
             $.modal.close(); // must call this!
 
             var closedEvent = $.Event(_this.closedEvent, { dialog: dialog, relatedTarget: relatedTarget });
-            var modalClasses = [_this._createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
+            var modalClasses = [_this.createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
 
             _this.modalOpen = false;
             _this.$body.removeClass(modalClasses);
@@ -148,7 +148,7 @@ Fae.modals = {
     });
   },
 
-  _createClassFromModalId(modalId) {
+  createClassFromModalId: function(modalId) {
     return this.modalClass.replace('MODAL_ID', modalId);
   }
 };
