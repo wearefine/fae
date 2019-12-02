@@ -74,8 +74,8 @@ Fae.form.slugger = {
     slug_text = slug_text.join(' ');
 
     // Strip accented characters
-    var from = 'àáâãäæåçèéêëęēėìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ';
-    var to = 'aaaaaaaceeeeeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
+    var from = 'âàáâãäæåçèéêëęēėìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ';
+    var to = 'aaaaaaaaceeeeeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY';
 
     // Loop through all accented characters and replace with non-accents
     for (var i = 0; i < from.length; i++) {
