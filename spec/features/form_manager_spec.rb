@@ -41,6 +41,8 @@ feature 'Form Manager' do
     expect(page).to have_content('Name helper text')
     expect(page).to have_content('Hero Image edited')
     expect(page).to have_content('Hero Image helper text edited')
+    expect(page).to have_content('Label Pdf Edited')
+    expect(page).to have_content('Label Pdf helper text Edited')
     # new stuff is persisted across page loads
     page.evaluate_script 'window.location.reload()'
     expect(page).to have_content('* Name edited')
