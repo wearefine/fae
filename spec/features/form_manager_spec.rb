@@ -51,14 +51,6 @@ feature 'Form Manager' do
     expect(page).to have_content('Label Pdf helper text Edited')
   end
 
-  # Flickering on dev
-  # scenario 'form manager saves changes to db and page requests show changes', js: true do
-  #   make_some_form_changes
-  #   visit new_admin_release_path
-  #   expect(page).to have_content('* Name edited')
-  #   expect(page).to have_content('Name helper text')
-  # end
-
   # Nested forms
 
   scenario 'form manager works for nested forms', js: true do
