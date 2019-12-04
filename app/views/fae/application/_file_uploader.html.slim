@@ -26,7 +26,8 @@ ruby:
           abbr title="required" *
         = label.html_safe
         - if helper_text.present?
-          h6.helper_text = helper_text
+          h6.helper_text
+            span.helper_text_text = helper_text
 
       - if the_file.asset.present?
         .asset-actions.-files
