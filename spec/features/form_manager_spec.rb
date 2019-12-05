@@ -28,16 +28,30 @@ feature 'Form Manager' do
   end
 
   scenario 'form manager goes away and things show their new values', js: true do
-    make_some_form_changes
+    expect(page).to_not have_content('Name helper text')
+    click_link('Manage Form')
+    fill_in('Release_name_label_input', with: 'Name edited')
+    fill_in('Release_name_helper_input', with: 'Name helper text')
+    fill_in('Release_hero_image_label_input', with: 'Hero Image edited')
+    fill_in('Release_hero_image_helper_input', with: 'Hero Image helper text edited')
+    fill_in('Release_label_pdf_label_input', with: 'Label Pdf Edited')
+    fill_in('Release_label_pdf_helper_input', with: 'Label Pdf helper text Edited')
+    click_link('Submit')
+    expect(page).to have_content('* Name edited')
+    expect(page).to have_content('Name helper text')
+    expect(page).to have_content('Hero Image edited')
+    expect(page).to have_content('Hero Image helper text edited')
+    expect(page).to have_content('Label Pdf Edited')
+    expect(page).to have_content('Label Pdf helper text Edited')
+    # new stuff is persisted across page loads
+    page.evaluate_script 'window.location.reload()'
+    expect(page).to have_content('* Name edited')
+    expect(page).to have_content('Name helper text')
+    expect(page).to have_content('Hero Image edited')
+    expect(page).to have_content('Hero Image helper text edited')
+    expect(page).to have_content('Label Pdf Edited')
+    expect(page).to have_content('Label Pdf helper text Edited')
   end
-
-  # Flickering on dev
-  # scenario 'form manager saves changes to db and page requests show changes', js: true do
-  #   make_some_form_changes
-  #   visit new_admin_release_path
-  #   expect(page).to have_content('* Name edited')
-  #   expect(page).to have_content('Name helper text')
-  # end
 
   # Nested forms
 
