@@ -77,6 +77,7 @@ Fae.form.formManager = {
       if ($labelInner.length) {
         $labelTextEl = $labelInner;
       }
+      var $labelsCheckbox = $labelTextEl.find('input');
 
       var newLabelText = '';
       if ($container.hasClass('required')) {
@@ -85,6 +86,10 @@ Fae.form.formManager = {
 
       newLabelText += fieldSettings.label;
       $labelTextEl.html(newLabelText);
+
+      if($labelsCheckbox.length) {
+        $labelTextEl.append($labelsCheckbox);
+      }
 
       if (fieldSettings.helper) {
         $label.removeClass('has_no_helper_text');

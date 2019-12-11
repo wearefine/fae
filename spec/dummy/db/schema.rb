@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_10_130931) do
+ActiveRecord::Schema.define(version: 2019_12_11_193749) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -348,6 +348,7 @@ ActiveRecord::Schema.define(version: 2019_10_10_130931) do
     t.string "seo_title"
     t.string "seo_description"
     t.string "color"
+    t.boolean "is_something", default: false
   end
 
   create_table "selling_points", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
