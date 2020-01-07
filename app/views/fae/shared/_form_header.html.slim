@@ -26,7 +26,7 @@ header.content-header.js-content-header
       .content-header-select
         = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown', prompt: 'All Languages'
 
-    - if Fae.use_form_manager && params[:action] == 'edit'
+    - if Fae.use_form_manager
       a.button.js-launch-form-manager href='#' = launch_manager_text
 
     a.button#js-header-cancel href=@index_path = cancel_button_text

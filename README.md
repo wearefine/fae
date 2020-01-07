@@ -27,7 +27,7 @@ $ rails g fae:install
 
 ## Documentation
 
-For full documentation visit:  
+For full documentation visit:
 https://www.faecms.com/documentation
 
 ### Topics
@@ -57,6 +57,7 @@ https://www.faecms.com/documentation
 * [Change Tracker](docs/features/change_tracker.md)
 * [Slugger](docs/features/slugger.md)
 * [Disabling Environments](docs/features/disable_envs.md)
+* [Form Field Label & Helper Text Manager](docs/features/form_manager.md)
 
 
 ### Tutorials

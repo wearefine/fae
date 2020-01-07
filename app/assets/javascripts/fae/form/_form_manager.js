@@ -61,14 +61,32 @@ Fae.form.formManager = {
       this.savedFieldSettings = JSON.parse($theForm.attr(_this.infoAttr));
 
       $.each(JSON.parse(this.savedFieldSettings.fields), function(i, fieldSettings) {
-        _this._setupField(fieldSettings);
+        _this._determineFieldSetup(fieldSettings);
       });
     }
   },
 
-  _setupField: function(fieldSettings) {
-    var _this = this;
+  _determineFieldSetup: function(fieldSettings) {
     var $container = $('[data-form-manager-id="'+fieldSettings.formManagerId+'"]');
+    _this._setupField($container, fieldSettings.label, fieldSettings.helper);
+
+    if ($container.hasClass('image')) {
+      var $captionContainer = $('.' + fieldSettings.formManagerId + '_caption_container');
+      var $altContainer = $('.' + fieldSettings.formManagerId + '_alt_container');
+
+      if ($captionContainer) {
+        var captionLabel = fieldSettings.label + ' Caption';
+        _this._setupField($captionContainer, captionLabel, null);
+      }
+      if ($altContainer) {
+        var altLabel = fieldSettings.label + ' Alt Text';
+        _this._setupField($altContainer, altLabel, null);
+      }
+    }
+  },
+
+  _setupField: function($container, overriddenLabel, overriddenHelper) {
+    var _this = this;
     if ($container.length) {
       var $label                 = $container.find('label:first');
       var $helperTextContainerEl = $container.find('h6');
@@ -77,26 +95,31 @@ Fae.form.formManager = {
       if ($labelInner.length) {
         $labelTextEl = $labelInner;
       }
+      var $labelsCheckbox = $labelTextEl.find('input');
 
       var newLabelText = '';
       if ($container.hasClass('required')) {
         newLabelText = _this.requiredEl;
       }
 
-      newLabelText += fieldSettings.label;
+      newLabelText += overriddenLabel;
       $labelTextEl.html(newLabelText);
 
-      if (fieldSettings.helper) {
+      if($labelsCheckbox.length) {
+        $labelTextEl.append($labelsCheckbox);
+      }
+
+      if (overriddenHelper) {
         $label.removeClass('has_no_helper_text');
 
         // Main form and nested form markup differs, deal with it
         if ($container.find('h6').length) {
-          $label.find('.'+_this.helperTextTextElClass).text(fieldSettings.helper);
+          $label.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
         } else {
           if ($helperTextContainerEl.length) {
-            $helperTextContainerEl.find('.'+_this.helperTextTextElClass).text(fieldSettings.helper);
+            $helperTextContainerEl.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
           } else {
-            $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: fieldSettings.helper}));
+            $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: overriddenHelper}));
           }
           $label.append($helperTextContainerEl);
         }
@@ -220,7 +243,7 @@ Fae.form.formManager = {
 
     // Reset the labels/helpers to the custom ones just made
     $.each(payload.form_manager.fields, function(i, fieldSettings) {
-      _this._setupField(fieldSettings);
+      _this._determineFieldSetup(fieldSettings);
     });
 
     $.ajax({

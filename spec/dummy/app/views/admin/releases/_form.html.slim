@@ -21,7 +21,9 @@ ruby:
       helper_text: 'text input',
       hint: '<h4>Normal Hint</h4><p>Yes, HTML is allowed</p>'.html_safe
 
-    = fae_input f, :slug, ignore_form_manager: true, helper_text: 'This field is ignored by the form manager at the developer level'
+    = fae_input f, :slug, show_form_manager: false, helper_text: 'This field is ignored by the form manager at the developer level'
+
+    = fae_input f, :is_something
 
     = fae_input f, :seo_title
 

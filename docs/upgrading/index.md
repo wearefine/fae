@@ -1,11 +1,19 @@
 # Upgrading Fae
 
+* [To v2.2](#to-v22)
 * [To v2.0](#to-v20)
 * [To v1.5](#to-v15)
 * [From v1.2 to v1.3](#from-v10-to-v11)
 * [From v1.1 to v1.2](#from-v11-to-v12)
 
 ---
+
+# To v2.2
+
+* 2.2 introduces the [Form Manager](docs/features/form_manager.md) feature
+    1. run `rake fae:install:migrations`
+    2. run `rake db:migrate`
+    3. Further usage and upgrading instructions can be found in the [documentation](docs/features/form_manager.md)
 
 # To v2.0
 

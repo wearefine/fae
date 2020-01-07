@@ -298,7 +298,7 @@ Fae.form.ajax = {
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
-    $('#js-main-content, .login-form > form')
+    $('#js-main-content, .login-form > form, #simplemodal-data')
 
       /**
        * For the delete button on file input

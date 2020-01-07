@@ -11,7 +11,7 @@ module Fae
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
       add_input_class(options, 'js-html-editor') if options[:html].present?
 
-      set_form_manager_container_attr(f, options, attribute) unless options[:ignore_form_manager].present?
+      set_form_manager_container_attr(f, options, attribute) unless options[:show_form_manager] == false
 
       set_maxlength(f, attribute, options)
 
@@ -24,7 +24,7 @@ module Fae
       list_order f, attribute, options
       set_prompt f, attribute, options if !options[:include_blank].is_a?(String)
 
-      set_form_manager_container_attr(f, options, attribute) unless options[:ignore_form_manager].present?
+      set_form_manager_container_attr(f, options, attribute) unless options[:show_form_manager] == false
 
       f.association attribute, options
     end

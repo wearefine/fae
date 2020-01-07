@@ -9,7 +9,7 @@ ruby:
   hint                ||= nil
   options             ||= {}
   input_options       ||= {}
-  ignore_form_manager ||= false
+  show_form_manager   ||= true
 
   if has_label
     label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
@@ -29,7 +29,7 @@ ruby:
   options.merge! input_options if (input_options.keys).any?
   options.merge! wrapper_html: {} if input_options[:wrapper_html].blank?
 
-  options.merge! wrapper_html: { data: { form_manager_id:  "#{f.object.class.name}_#{attribute}" } } if !ignore_form_manager
+  options.merge! wrapper_html: { data: { form_manager_id:  "#{f.object.class.name}_#{attribute}" } } if show_form_manager
 
   if options[:input_html].present? && options[:input_html][:class].present? && markdown.present?
     options[:input_html][:class] = options[:input_html][:class] + ' js-markdown-editor'
@@ -48,7 +48,7 @@ ruby:
     - options.deep_merge! wrapper_html: { data: { language: lang } }
     - options[:label] = orig_label.gsub(label, "#{label} (#{lang.to_s})").html_safe
 
-    - options.deep_merge! wrapper_html: { data: { form_manager_id: "#{f.object.class.name}_#{attribute}_#{lang}" } } if !ignore_form_manager
+    - options.deep_merge! wrapper_html: { data: { form_manager_id: "#{f.object.class.name}_#{attribute}_#{lang}" } } if show_form_manager
 
     = f.simple_fields_for "#{attribute}_#{lang}".to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
       - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
