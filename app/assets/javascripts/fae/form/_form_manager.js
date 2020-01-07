@@ -61,23 +61,27 @@ Fae.form.formManager = {
       this.savedFieldSettings = JSON.parse($theForm.attr(_this.infoAttr));
 
       $.each(JSON.parse(this.savedFieldSettings.fields), function(i, fieldSettings) {
-        var $container = $('[data-form-manager-id="'+fieldSettings.formManagerId+'"]');
-        _this._setupField($container, fieldSettings.label, fieldSettings.helper);
-
-        // if ($container.hasClass('image')) {
-        //   var $captionContainer = $('.' + fieldSettings.formManagerId + '_caption_container');
-        //   var $altContainer = $('.' + fieldSettings.formManagerId + '_alt_container');
-
-        //   if ($captionContainer) {
-        //     var captionLabel = fieldSettings.label + ' Caption';
-        //     _this._setupField($captionContainer, captionLabel, null);
-        //   }
-        //   if ($altContainer) {
-        //     var altLabel = fieldSettings.label + ' Alt Text';
-        //     _this._setupField($altContainer, altLabel, null);
-        //   }
-        // }
+        _this._determineFieldSetup(fieldSettings);
       });
+    }
+  },
+
+  _determineFieldSetup: function(fieldSettings) {
+    var $container = $('[data-form-manager-id="'+fieldSettings.formManagerId+'"]');
+    _this._setupField($container, fieldSettings.label, fieldSettings.helper);
+
+    if ($container.hasClass('image')) {
+      var $captionContainer = $('.' + fieldSettings.formManagerId + '_caption_container');
+      var $altContainer = $('.' + fieldSettings.formManagerId + '_alt_container');
+
+      if ($captionContainer) {
+        var captionLabel = fieldSettings.label + ' Caption';
+        _this._setupField($captionContainer, captionLabel, null);
+      }
+      if ($altContainer) {
+        var altLabel = fieldSettings.label + ' Alt Text';
+        _this._setupField($altContainer, altLabel, null);
+      }
     }
   },
 
@@ -239,7 +243,7 @@ Fae.form.formManager = {
 
     // Reset the labels/helpers to the custom ones just made
     $.each(payload.form_manager.fields, function(i, fieldSettings) {
-      _this._setupField(fieldSettings);
+      _this._determineFieldSetup(fieldSettings);
     });
 
     $.ajax({
