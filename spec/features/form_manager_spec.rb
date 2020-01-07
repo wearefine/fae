@@ -102,12 +102,16 @@ feature 'Form Manager' do
     fill_in('ContactUsPage_email_helper_input', with: 'Email helper')
 
     click_link('Submit')
-    expect(page).to have_content('Email edited')
-    expect(page).to have_content('Email helper')
+    eventually {
+      expect(page).to have_content('Email edited')
+      expect(page).to have_content('Email helper')
+    }
 
     visit fae.edit_content_block_path('contact_us')
-    expect(page).to have_content('Email edited')
-    expect(page).to have_content('Email helper')
+    eventually {
+      expect(page).to have_content('Email edited')
+      expect(page).to have_content('Email helper')
+    }
   end
 
   # Multi language inputs
