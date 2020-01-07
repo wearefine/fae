@@ -43,6 +43,8 @@ feature 'Form Manager' do
     expect(page).to have_content('* Name edited')
     expect(page).to have_content('Name helper text')
     expect(page).to have_content('Hero Image edited')
+    expect(page).to have_content('Hero Image edited Caption')
+    expect(page).to have_content('Hero Image edited Alt Text')
     expect(page).to have_content('Hero Image helper text edited')
     expect(page).to have_content('Label Pdf Edited')
     expect(page).to have_content('Label Pdf helper text Edited')
