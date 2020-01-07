@@ -40,26 +40,28 @@ feature 'Form Manager' do
 
     click_link('Submit')
 
-    expect(page).to have_content('* Name edited')
-    expect(page).to have_content('Name helper text')
-    expect(page).to have_content('Hero Image edited')
-    expect(page).to have_content('Hero Image edited Caption')
-    expect(page).to have_content('Hero Image edited Alt Text')
-    expect(page).to have_content('Hero Image helper text edited')
-    expect(page).to have_content('Label Pdf Edited')
-    expect(page).to have_content('Label Pdf helper text Edited')
+    eventually {
+      expect(page).to have_content('* Name edited')
+      expect(page).to have_content('Name helper text')
+      expect(page).to have_content('Hero Image edited')
+      expect(page).to have_content('Hero Image edited Caption')
+      expect(page).to have_content('Hero Image edited Alt Text')
+      expect(page).to have_content('Hero Image helper text edited')
+      expect(page).to have_content('Label Pdf Edited')
+      expect(page).to have_content('Label Pdf helper text Edited')
 
-    # New stuff is persisted across page loads
-    page.evaluate_script 'window.location.reload()'
-    expect(page).to have_content('* Name edited')
-    expect(page).to have_content('Name helper text')
-    expect(page).to have_content('Hero Image edited')
-    expect(page).to have_content('Hero Image helper text edited')
-    expect(page).to have_content('Label Pdf Edited')
-    expect(page).to have_content('Label Pdf helper text Edited')
+      # New stuff is persisted across page loads
+      page.evaluate_script 'window.location.reload()'
+      expect(page).to have_content('* Name edited')
+      expect(page).to have_content('Name helper text')
+      expect(page).to have_content('Hero Image edited')
+      expect(page).to have_content('Hero Image helper text edited')
+      expect(page).to have_content('Label Pdf Edited')
+      expect(page).to have_content('Label Pdf helper text Edited')
 
-    # Checkboxes inside labels don't get mangled
-    expect(page).to have_selector("input[name='release[is_something]']")
+      # Checkboxes inside labels don't get mangled
+      expect(page).to have_selector("input[name='release[is_something]']")
+    }
   end
 
   # Nested forms
