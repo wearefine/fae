@@ -152,7 +152,7 @@ Fae.form.formManager = {
     $(_this.$theForm.find('['+_this.containerManagerDataId+']')).each(function(i) {
       var $container    = $(this);
 
-      if (!$container.is(':visible') || $container.hasClass('hidden') || !_this._shouldDisplayInManager($container)) { return; }
+      if ($container.hasClass('hidden') || !_this._shouldDisplayInManager($container)) { return; }
 
       var $label        = $container.find('label:first');
       var $labelTextEl  = $label;
