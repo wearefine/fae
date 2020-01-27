@@ -27,7 +27,7 @@ ruby:
     form_manager_id += "_#{language}" if language.present?
   - wrapper_html = language.present? ? { data: { language: language } } : {}
   = f.simple_fields_for image_name, defaults: { wrapper_html: wrapper_html } do |i|
-    .input.field*wrapper_html class="#{image_name}" data-form-manager-id=form_manager_id
+    .input.field.image*wrapper_html class="#{image_name}" data-form-manager-id=form_manager_id
       label class="#{'required' if required}"
         - if required
           abbr title="required" *
@@ -57,6 +57,7 @@ ruby:
         options = { label: caption_label.html_safe }
         options[:helper_text] = caption_helper_text if caption_helper_text.present?
         options[:wrapper_html] = wrapper_html
+        options[:wrapper_html].merge!({class: "#{form_manager_id}_caption_container"})
         options[:show_form_manager] = false
 
       = fae_input i, :caption, options
@@ -66,6 +67,7 @@ ruby:
         options = { label: alt_label.html_safe }
         options[:helper_text] = alt_helper_text if alt_helper_text.present?
         options[:wrapper_html] = wrapper_html
+        options[:wrapper_html].merge!({class: "#{form_manager_id}_alt_container"})
         options[:show_form_manager] = false
 
       = fae_input i, :alt, options
