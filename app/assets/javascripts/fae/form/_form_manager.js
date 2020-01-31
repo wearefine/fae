@@ -98,7 +98,7 @@ Fae.form.formManager = {
       var $labelsCheckbox = $labelTextEl.find('input');
 
       var newLabelText = '';
-      if ($container.hasClass('required')) {
+      if ($container.hasClass('required') || $label.hasClass('required')) {
         newLabelText = _this.requiredEl;
       }
 
