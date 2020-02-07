@@ -20,7 +20,7 @@ label {
   }
 
   &.label--two_col {
-    display: flex;
+    display: block;
 
     .label_inner {
       flex-shrink: 0;
@@ -33,8 +33,8 @@ label {
 
     h6 {
       flex-shrink: 1;
-      padding-left: 25px;
-      padding-top: 1px;
+      padding-left: 0;
+      padding-top: 4px;
     }
   }
 
