@@ -15,7 +15,7 @@ ruby:
     label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
     label_adjusted += label
     if markdown_supported.present? || helper_text.present?
-      label_adjusted += content_tag :h6, class: 'helper_text' do
+      label_adjusted += content_tag :h6, class: 'helper_text helper_text_text' do
         concat(helper_text) if helper_text.present?
         concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if markdown_supported.present?
       end
