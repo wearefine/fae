@@ -109,20 +109,20 @@ Fae.form.formManager = {
         $labelTextEl.append($labelsCheckbox);
       }
 
-      if (overriddenHelper) {
-        $label.removeClass('has_no_helper_text');
 
-        // Main form and nested form markup differs, deal with it
-        if ($container.find('h6').length) {
-          $label.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
+      // Just do the helper thing no matter what, aka allow empty
+      $label.removeClass('has_no_helper_text');
+
+      // Main form and nested form markup differs, deal with it
+      if ($container.find('h6').length) {
+        $label.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
+      } else {
+        if ($helperTextContainerEl.length) {
+          $helperTextContainerEl.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
         } else {
-          if ($helperTextContainerEl.length) {
-            $helperTextContainerEl.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
-          } else {
-            $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: overriddenHelper}));
-          }
-          $label.append($helperTextContainerEl);
+          $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: overriddenHelper}));
         }
+        $label.append($helperTextContainerEl);
       }
     }
   },
