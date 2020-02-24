@@ -109,6 +109,10 @@ Fae.form.formManager = {
         $labelTextEl.append($labelsCheckbox);
       }
 
+      // Don't mess with image alt text helpers
+      if ($container.attr('class').indexOf('alt_container') !== -1) {
+        return;
+      }
 
       // Just do the helper thing no matter what, aka allow empty
       $label.removeClass('has_no_helper_text');
