@@ -17,7 +17,7 @@ gemspec
 gem 'rails', '~> 5.2.0'
 
 # Lock in Rake to a version compatible with rspec-rails 3.0
-gem 'rake', '< 12.0.0'
+gem 'rake', '< 14.0.0'
 
 gem 'sass', require: 'sass'
 
