@@ -33,6 +33,10 @@
   width: 50%;
   margin: auto;
 
+  h2 {
+    margin: 0 0 28px;
+  }
+
   @include bp(login_container) {
     display: inline-block;
     vertical-align: middle;

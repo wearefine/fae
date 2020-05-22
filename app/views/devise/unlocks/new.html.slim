@@ -1,13 +1,9 @@
-h2 Resend unlock instructions
+.login-form
+  h2 Resend unlock instructions
 
-= simple_form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f|
-  = f.error_notification
-  = f.full_error :unlock_token
+  = simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, id: 'login_form' }) do |f|
 
-  .form-inputs
     = f.input :email, :required => true, :autofocus => true
 
-  .form-actions
-    = f.button :submit, "Resend unlock instructions"
-
-== render "devise/shared/links"
+    .login-form-actions
+      = f.button :submit, "Resend unlock instructions", class: "login-form-actions-submit"
