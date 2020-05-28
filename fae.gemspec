@@ -30,7 +30,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mini_magick'
   s.add_dependency 'judge', '~> 3.0.0'
   s.add_dependency 'judge-simple_form', '~> 1.1.0'
-  s.add_dependency 'kaminari', '~> 1.1.1'
+  s.add_dependency 'kaminari', '>= 1.1.1', '< 1.3.0'
   s.add_dependency 'remotipart', '~> 1.4.0'
   s.add_dependency 'simple_form', '~> 4.0.0'
   s.add_dependency 'slim'
