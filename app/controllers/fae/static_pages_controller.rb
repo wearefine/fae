@@ -20,7 +20,8 @@ module Fae
         redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assocs
-        render template: "#{fae.root_path.gsub('/', '')}/content_blocks/#{params[:slug]}", error: t('fae.save_error')
+        flash[:alert] = t('fae.save_error')
+        render template: "#{fae.root_path.gsub('/', '')}/content_blocks/#{params[:slug]}"
       end
     end
 
