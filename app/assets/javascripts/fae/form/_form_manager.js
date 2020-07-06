@@ -76,11 +76,11 @@ Fae.form.formManager = {
 
       if ($captionContainer) {
         var captionLabel = fieldSettings.label + ' Caption';
-        _this._setupField($captionContainer, captionLabel, null);
+        _this._setupField($captionContainer, captionLabel, '');
       }
       if ($altContainer) {
         var altLabel = fieldSettings.label + ' Alt Text';
-        _this._setupField($altContainer, altLabel, null);
+        _this._setupField($altContainer, altLabel, '');
       }
     }
   },
