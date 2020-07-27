@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "rails", "~> 5.2"
+gem 'rails', '~> 5.2', '>= 5.2.4.3'
 gem "rake", "< 12.0.0"
 gem "sass", require: "sass"
 gem "capistrano", "~> 3.1"
@@ -17,7 +17,7 @@ end
 
 group :test do
   gem "factory_girl_rails", "~> 4.4.1"
-  gem "capybara-webkit", "~> 1.11.1"
+  gem 'capybara-webkit', '~> 1.15', '>= 1.15.1'
   gem "capybara-screenshot"
   gem "guard-rspec", "~> 4.7.3"
   gem "selenium-webdriver", "~> 2.42.0"
