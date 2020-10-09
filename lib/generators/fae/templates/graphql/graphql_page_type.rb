@@ -1,4 +1,4 @@
-class Types::<%= class_name %>PageType < Types::BaseObject
+class Types::<%= class_name %>PageType < Types::BaseFaePageType
 
   graphql_name '<%= class_name %>Page'
 
