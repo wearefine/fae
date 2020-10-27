@@ -43,7 +43,7 @@ $content-header-padding: 16px;
     display: inline-block;
     vertical-align: top;
     padding: 6px 0;
-    border-bottom: 4px solid transparent;
+    border-bottom: 2px solid transparent;
     margin: 0 12px;
     font-size: 13px;
     color: $c-darkest-grey;
@@ -74,6 +74,12 @@ $content-header-padding: 16px;
 }
 
 .content-header-buttons {
+  position: absolute;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  right: 30px;
   a {
     margin-right: 5px;
 
