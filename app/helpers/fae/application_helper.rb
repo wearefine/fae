@@ -109,7 +109,7 @@ module Fae
     def tr_id(item)
       "#{item.class.name.underscore.gsub('/', '_').pluralize}_#{item.id}"
     end
-    
+
     def multi_column_nav_ul_class(item_count)
       num = item_count.length
       if num > 30
