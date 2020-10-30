@@ -39,15 +39,12 @@ header.main-header ul ul.multicol-nav {
 
 
 .multicol-nav {
-  width: ($col_width + $col_width_padding) * 2;
+  display: grid;
+  grid-template-columns: $col_width $col_width;
   &.three {
-    width: ($col_width + $col_width_padding) * 3;
+    grid-template-columns: $col_width $col_width $col_width;
   }
   &.four {
-    width: ($col_width + $col_width_padding) * 4;
+    grid-template-columns: $col_width $col_width $col_width $col_width;
   }
-  -webkit-column-width: $col_width;
-  -moz-column-width: $col_width;
-  column-width: $col_width;
 }
-  
