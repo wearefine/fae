@@ -10,10 +10,10 @@
 
 # To v2.2
 
-* 2.2 introduces the [Form Manager](docs/features/form_manager.md) feature
+* 2.2 introduces the [Form Manager](../features/form_manager.md) feature
     1. run `rake fae:install:migrations`
     2. run `rake db:migrate`
-    3. Further usage and upgrading instructions can be found in the [documentation](docs/features/form_manager.md)
+    3. Further usage and upgrading instructions can be found in the [documentation](../features/form_manager.md)
 
 # To v2.0
 
@@ -26,7 +26,7 @@
     - main_content-header-section-links
     - form_content-wrapper
 * `Model#filter_all` has been deprecated. You can replace any calls to it with a custom method.
-* `translate` has been renamed to `fae_translate`. Please refer to [the language documentation](docs/features/multi-language.md).
+* `translate` has been renamed to `fae_translate`. Please refer to [the language documentation](../features/multi-language.md).
 * The RMagick gem has been replaced by MiniMagick. Any custom methods in the uploaders not supported by MiniMagick will have to be updated.
 * The `form_header` partial includes the errors previously rendered as a separate partial as well as the parent node markup (`header.content-header.js-content-header`). Please consolidate existing markup to use only the partial:
 ```slim
@@ -40,7 +40,7 @@ header.content-header.js-content-header
 ```
 * The `language` option in the `form_header` parial has been renamed to `languages`.
 * The `header` option in the `nested_table` partial has been deprecated
-* `form_buttons` has been deprecated. Any admin still using this partial should remove `fae/shared/form_buttons` and only use [fae/shared/form_header](docs/helpers/partials.md#form-header). `form_header` still supports `save_button_text`, `cancel_button_text`, `cloneable`, and `cloneable_text` options.
+* `form_buttons` has been deprecated. Any admin still using this partial should remove `fae/shared/form_buttons` and only use [fae/shared/form_header](../helpers/partials.md#form-header). `form_header` still supports `save_button_text`, `cancel_button_text`, `cloneable`, and `cloneable_text` options.
 * The `dark_hint` input option has been deprecated. Please convert all `dark_hint` calls to `hint`.
 * `attr_toggle` has been deprecated. Use `fae_toggle` in its place.
 
