@@ -109,8 +109,10 @@ Fae.form.formManager = {
         $labelTextEl.append($labelsCheckbox);
       }
 
-      // Don't mess with image alt text helpers
-      if ($container.attr('class').indexOf('alt_container') !== -1) {
+      // Don't mess with image alt text or caption helpers
+      if ($container.attr('class').indexOf('alt_container') !== -1
+          || $container.attr('class').indexOf('caption_container') !== -1
+         ) {
         return;
       }
 
