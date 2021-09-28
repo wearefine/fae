@@ -1,0 +1,26 @@
+
+Publish Story:
+User lands on nelify page
+  show publish buttons for hooks in db.
+  show list of past deploys including time spent etc.
+    filter for env?
+
+User clicks a publish button
+  all publish buttons are now disabled
+  hit deploys api and get the most recent ID
+  use that to poll it's detail endpoint for completion status
+  when status is complete ("ready")
+    enable buttons
+    refresh past deploys list
+
+I’d add under “User lands on netlify page” above past deploys:
+show a list a Fae Changes since last deploy - this will likely have to be separated by ENV, but also means we’ll have to track deploys by env to compare timestamps
+then under “User clicks a publish button” I’d add:
+some way to show the progress of the build, maybe show time elapsed against the average of the last three builds
+ and finally:
+some way for users to sign up to get emailed deploy notifications (maybe not necessary in POC if we improve build progress interface)
+
+- add fae_publish_hooks scaffold similar to other fae things
+- add service class? or?
+- add publish page
+- set up JS

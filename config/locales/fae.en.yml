@@ -34,6 +34,10 @@ en:
       last_login: 'Last Logged In'
       active: 'Active'
       add_user: 'Add User'
+    publish_hook:
+      environment: 'Environment'
+      url: 'URL'
+      last_published_at: 'Last Published At'
     page:
       title: 'Pages'
       disabled_title: 'Disabled Admin'
@@ -55,6 +59,8 @@ en:
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
       no_results: 'No Results'
+      publish_hooks: 'Publish Hooks'
+      publish: 'Publish'
     changes:
       recent: 'Recent Changes'
       user: 'User'
