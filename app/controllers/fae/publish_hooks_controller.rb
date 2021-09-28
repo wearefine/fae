@@ -26,9 +26,6 @@ module Fae
     end
 
     def update
-      params[:publish_hook].delete(:password) if params[:publish_hook][:password].blank?
-      params[:publish_hook].delete(:password_confirmation) if params[:publish_hook][:password].blank? and params[:publish_hook][:password_confirmation].blank?
-
       if @publish_hook.update(publish_hook_params)
         path = current_publish_hook.super_admin_or_admin? ? publish_hooks_path : fae.root_path
         redirect_to path, notice: t('fae.save_notice')

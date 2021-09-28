@@ -38,6 +38,7 @@ en:
       environment: 'Environment'
       url: 'URL'
       last_published_at: 'Last Published At'
+      add_publish_hook: 'Add Publish Hook'
     page:
       title: 'Pages'
       disabled_title: 'Disabled Admin'

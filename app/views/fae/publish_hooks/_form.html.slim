@@ -1,15 +1,7 @@
-= simple_form_for(@user) do |f|
-  - if params[:action] === 'settings'
-    - title = t('fae.navbar.your_settings')
-  - else
-    - title = "#{params[:action]} User".titleize
+= simple_form_for(@publish_hook) do |f|
+  - title = "#{params[:action]} Publish Hook".titleize
   == render 'fae/shared/form_header', header: 'User', title: title
 
   main.content
-    = fae_input f, :first_name
-    = fae_input f, :last_name
-    = fae_input f, :email
-    = fae_input f, :password, helper_text: t('fae.user.password_hint')
-    = fae_input f, :password_confirmation
-    - if current_user.admin? || current_user.super_admin?
-      = fae_association f, :role, collection: @role_collection, prompt: false
+    = fae_input f, :environment
+    = fae_input f, :url

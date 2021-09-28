@@ -1,5 +1,5 @@
 - @new_path = new_publish_hook_path
-== render 'fae/shared/index_header', title: 'publish_hooks', new_button: true, button_text: t('fae.publish_hook.add_publish_hook'), breadcrumbs: false
+== render 'fae/shared/index_header', title: 'Publish Hooks', new_button: true, button_text: t('fae.publish_hook.add_publish_hook'), breadcrumbs: false
 
 main.content
   table.js-sort-column
@@ -8,7 +8,7 @@ main.content
         th = t('fae.publish_hooks.environment')
         th = t('fae.publish_hooks.url')
         th = t('fae.publish_hooks.last_published_at')
-        th.-action data-sorter="false"
+        / th.-action data-sorter="false"
 
     tbody
       - @publish_hooks.each do |publish_hook|
@@ -16,4 +16,5 @@ main.content
           td: a href=edit_publish_hook_path(publish_hook) #{publish_hook.environment}
           td = publish_hook.url
           td = publish_hook.last_published_at if publish_hook.last_published_at.present?
-          td = fae_delete_button publish_hook, publish_hook
+          / Do we want to allow deletes?
+          / td = fae_delete_button publish_hook, publish_hook
