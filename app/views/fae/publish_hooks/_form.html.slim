@@ -3,5 +3,6 @@
   == render 'fae/shared/form_header', header: 'User', title: title
 
   main.content
-    = fae_input f, :environment
+    = fae_input f, :name, helper_text: "Most commonly would be the branch name you've set up the hook for."
+    = fae_input f, :admin_environment, collection: Fae::PublishHook.envs_for_select, helper_text: 'Admin environment where this hook will be used.'
     = fae_input f, :url

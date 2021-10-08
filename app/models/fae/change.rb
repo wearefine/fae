@@ -61,6 +61,14 @@ module Fae
           .where(date_scope).where(conditions).where(search)
       end
 
+      def since_last_deploy
+        last_deploy = Fae::NetlifyApi.new().last_successful_deploy
+        return if last_deploy.blank?
+        order(id: :desc)
+        .includes(:user)
+        .where('fae_changes.updated_at >= ?', last_deploy['created_at'].to_time)
+      end
+
     end
   end
 end

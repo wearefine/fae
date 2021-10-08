@@ -1,0 +1,27 @@
+ruby:
+  deploys ||= nil
+
+/= pp deploys.inspect
+- if deploys.blank?
+  h2 No deploys found.
+
+- else
+  ul
+  - deploys.each do |deploy|
+    br
+    p
+      | Title: #{deploy['title']}
+      br
+      | Published: #{deploy['published_at']}
+      br
+      | Time spent: #{distance_of_time_in_words(0.seconds, deploy['deploy_time'].to_i.seconds)}
+      br
+      | Branch: #{deploy['branch']}
+      br
+      | Committer: #{deploy['committer']}
+      br
+      | Context: #{deploy['context']}
+      br
+      | State: #{deploy['state']}
+      br
+      | Error Msg: #{deploy['error_message']}

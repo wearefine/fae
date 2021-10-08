@@ -27,8 +27,7 @@ module Fae
 
     def update
       if @publish_hook.update(publish_hook_params)
-        path = current_publish_hook.super_admin_or_admin? ? publish_hooks_path : fae.root_path
-        redirect_to path, notice: t('fae.save_notice')
+        redirect_to publish_hooks_path, notice: t('fae.save_notice')
       else
         render action: 'edit', error: t('fae.save_error')
       end

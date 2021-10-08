@@ -5,7 +5,8 @@ require_relative 'validation_helper_collection'
 module Fae
   # configurable defaults
   class << self
-    mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager
+    mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager,
+    :netlify_api_user, :netlify_api_token, :netlify_site, :netlify_site_id, :netlify_api_base
 
     self.devise_secret_key      = ''
     self.devise_mailer_sender   = 'change-me@example.com'
@@ -22,6 +23,11 @@ module Fae
     self.per_page               = 25
     self.use_cache              = false
     self.use_form_manager       = false
+    self.netlify_api_user       = ''
+    self.netlify_api_token      = ''
+    self.netlify_site           = ''
+    self.netlify_site_id        = ''
+    self.netlify_api_base       = ''
   end
 
   # this function maps the vars from your app into your engine

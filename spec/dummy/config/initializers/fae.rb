@@ -19,4 +19,10 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
+  config.netlify_api_user   = ENV['FINE_NETLIFY_API_USER']
+  config.netlify_api_token  = ENV['FINE_NETLIFY_API_TOKEN']
+  config.netlify_site       = 'nelson-global'
+  config.netlify_site_id    = 'd294f9f6-2434-4fa3-841e-40a1d948bf90'
+  config.netlify_api_base   = 'https://api.netlify.com/api/v1/'
+
 end

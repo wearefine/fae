@@ -35,7 +35,8 @@ en:
       active: 'Active'
       add_user: 'Add User'
     publish_hook:
-      environment: 'Environment'
+      name: 'Name'
+      admin_environment: 'Admin Environment'
       url: 'URL'
       last_published_at: 'Last Published At'
       add_publish_hook: 'Add Publish Hook'

@@ -65,4 +65,12 @@ Fae.setup do |config|
   # Enable Manage Form buttons in form headers
   # Defaults to false
   # config.use_form_manager = true
+
+  ## Netlify configs
+  # Environment variables are recommended for sensitive info.
+  # config.netlify_api_user   = ''
+  # config.netlify_api_token  = ''
+  # config.netlify_site       = ''
+  # config.netlify_site_id    = ''
+  # config.netlify_api_base   = ''
 end
