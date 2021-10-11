@@ -3,18 +3,21 @@ module Fae
 
     def index
       @publish_hooks = PublishHook.for_admin_environment
-      @fae_changes = Fae::Change.since_last_deploy
     end
 
     def deploys_list
-      render partial: 'deploys_list', locals: { deploys: Fae::NetlifyApi.new().get_deploys }
+      render partial: 'deploys_list', locals: { deploys: Fae::NetlifyApi.new().get_finished_deploys }
+    end
+
+    def changes_list
+      render partial: 'changes_list', locals: { changes: Fae::Change.since_last_deploy }
     end
 
     def publish_site
       if Fae::NetlifyApi.new().run_deploy(params['publish_hook_id'], current_user)
         return render json: {
           success: true,
-          last_successful_deploy: Fae::NetlifyApi.new().last_successful_deploy
+          last_successful_admin_deploy: Fae::NetlifyApi.new().last_successful_admin_deploy
         }
       end
       render json: {success: false}

@@ -87,6 +87,17 @@ en:
         user: 'User'
         type: 'Type'
         model: 'Model'
+    publish:
+        table:
+          title: 'Title'
+          published: 'Published'
+          duration: 'Duration'
+          branch: 'Branch'
+          committer: 'Committer'
+          context: 'Context'
+          state: 'State'
+          error_msg: 'Error Msg'
+          no_deploys: 'No deploys were found.'
     setup:
       prompt: 'Please create your super admin user.'
       password: 'Passwords must contain at least 8 characters.'

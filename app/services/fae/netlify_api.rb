@@ -22,10 +22,15 @@ module Fae
       get "#{@endpoint_base}#{path}"
     end
 
+    def get_finished_deploys
+      deploys = get_deploys
+      return if deploys.blank?
+      deploys.reject{ |deploy| deploy_running?(deploy) }
+    end
+
     def run_deploy(publish_hook_id, current_user)
       hook = PublishHook.find_by_id(publish_hook_id)
       if hook.present?
-        #post("#{hook.url}?trigger_title=J deploy test")
         post("#{hook.url}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{hook.name}+build")
         return true
       end
@@ -36,26 +41,37 @@ module Fae
       deploys = get_deploys
       return if deploys.blank?
       the_deploy = nil
-      deploys.each{ |deploy| the_deploy = deploy if deploy['state'] == 'building' }
+      deploys.each do |deploy|
+        the_deploy = deploy if deploy_running?(deploy)
+        break
+      end
       the_deploy
     end
 
-    # def create_site_build
-    #   path = "sites/#{@site_id}/builds"
-    #   post "#{@endpoint_base}#{path}", {}
-    # end
-
-    def prod_deploy
-      hook = 'https://api.netlify.com/build_hooks/614b5d93745aeefacb1a7fcb'
-      # RestClient.post "#{hook.url}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{params['environment']}+build", {}.to_json, {}
-      post "#{hook}?trigger_title=J testing API build", {}.to_json
+    def last_successful_any_deploy
+      deploys = get_deploys
+      return if deploys.blank?
+      the_deploy = nil
+      deploys.each do |deploy|
+        if deploy['state'] == 'ready'
+          the_deploy = deploy
+          break
+        end
+      end
+      the_deploy
     end
 
-    def last_successful_deploy
+    def last_successful_admin_deploy
       deploys = get_deploys
-      if deploys.present?
-        deploys.each{ |deploy| return deploy if deploy['state'] == 'ready' }
+      return if deploys.blank?
+      the_deploy = nil
+      deploys.each do |deploy|
+        if deploy['state'] == 'ready' && deploy['commit_ref'].blank?
+          the_deploy = deploy
+          break
+        end
       end
+      the_deploy
     end
 
     private
@@ -100,6 +116,10 @@ module Fae
     def set_headers(request)
       request['User-Agent'] = "#{@site} (#{@netlify_api_user})"
       request['Authorization'] = "Bearer #{@netlify_api_token}"
+    end
+
+    def deploy_running?(deploy)
+      deploy['state'] == 'building' || deploy['state'] == 'processing'
     end
 
   end

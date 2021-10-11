@@ -62,7 +62,7 @@ module Fae
       end
 
       def since_last_deploy
-        last_deploy = Fae::NetlifyApi.new().last_successful_deploy
+        last_deploy = Fae::NetlifyApi.new().last_successful_any_deploy
         return if last_deploy.blank?
         order(id: :desc)
         .includes(:user)

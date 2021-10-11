@@ -14,17 +14,26 @@ Fae.publish = {
     this.lastSuccessfulDeployTime = null;
     this.pollTimeout              = null;
     this.timerInterval            = null;
-    this.externalDeployRunning    = false;
+    this.deployFinished           = true;
     this.buttonsEnabled           = true;
 
     this.refreshDeploysList();
+    this.refreshChangesList();
     this.publishButtonListener();
     this.pollDeployStatus();
   },
 
   refreshDeploysList: function() {
+    console.log('refreshDeploys');
     $.get('/admin/publish/deploys_list', function (data) {
       $('.js-deploys-list').html(data);
+    });
+  },
+
+  refreshChangesList: function() {
+    console.log('refreshChanges');
+    $.get('/admin/publish/changes_list', function (data) {
+      $('.js-changes-list').html(data);
     });
   },
 
@@ -33,14 +42,14 @@ Fae.publish = {
 
     function poll() {
       $.get('/admin/publish/current_deploy', function (data) {
-        if (data && data.state === 'building') {
+        if (data && (data.state === 'building' || data.state === 'processing')) {
           _this.notifyRunning();
+          _this.deployFinished = false;
           if (!_this.timerInterval) {
             _this.startTimer(_this.lastSuccessfulDeployTime);
           }
         } else {
-          _this.notifyIdle();
-          _this.enableButtons();
+          _this.afterDeploy();
           if (_this.timerInterval) {
             clearInterval(_this.timerInterval);
           }
@@ -64,8 +73,8 @@ Fae.publish = {
         // FYI Netlify returns nothing for deploy hook posts
         console.log(data);
         _this.pollDeployStatus();
-        if (data && data.last_successful_deploy.deploy_time) {
-          _this.lastSuccessfulDeployTime = data.last_successful_deploy.deploy_time;
+        if (data && data.last_successful_admin_deploy.deploy_time) {
+          _this.lastSuccessfulDeployTime = data.last_successful_admin_deploy.deploy_time;
         }
       });
     });
@@ -134,7 +143,19 @@ Fae.publish = {
 
   resetTimerDisplay: function() {
     var _this = this;
-    _this.timerEl.text('00:00');
+    _this.$timerEl.text('N/A');
+  },
+
+  afterDeploy: function() {
+    var _this = this;
+    if (!_this.deployFinished) {
+      _this.notifyIdle();
+      _this.enableButtons();
+      _this.resetTimerDisplay();
+      _this.refreshChangesList();
+      _this.refreshDeploysList();
+      _this.deployFinished = true;
+    }
   }
 
 };
