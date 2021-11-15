@@ -8,6 +8,11 @@ module Fae
 
     serialize :updated_attributes
 
+    def env_status(env_flag)
+      return 'n/a' if changeable.try(env_flag).nil?
+      changeable.send(env_flag) == true ? 'Yes' : 'No'
+    end
+
     class << self
       # writing current_user to thread for thread safety
       def current_user=(user)
@@ -61,12 +66,17 @@ module Fae
           .where(date_scope).where(conditions).where(search)
       end
 
-      def since_last_deploy
-        last_deploy = Fae::NetlifyApi.new().last_successful_any_deploy
+      def since_last_deploy(env)
+        case env
+        when 'staging'
+          last_deploy = Fae::NetlifyApi.new().last_successful_staging_deploy
+        when 'production'
+          last_deploy = Fae::NetlifyApi.new().last_successful_production_deploy
+        end
         return if last_deploy.blank?
         order(id: :desc)
         .includes(:user)
-        .where('fae_changes.updated_at >= ?', last_deploy['created_at'].to_time)
+        .where('fae_changes.updated_at >= ?', last_deploy['updated_at'].to_time)
       end
 
     end

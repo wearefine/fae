@@ -18,13 +18,12 @@ module Fae
     end
 
     def get_deploys
-      path = "sites/#{@site_id}/deploys"
-      get "#{@endpoint_base}#{path}"
+      path = "sites/#{@site_id}/deploys?per_page=10"
+      get_deploys_env_response(path)
     end
 
     def get_finished_deploys
-      deploys = get_deploys
-      return if deploys.blank?
+      deploys = get_deploys || []
       deploys.reject{ |deploy| deploy_running?(deploy) }
     end
 
@@ -38,8 +37,7 @@ module Fae
     end
 
     def current_deploy
-      deploys = get_deploys
-      return if deploys.blank?
+      deploys = get_deploys || []
       the_deploy = nil
       deploys.each do |deploy|
         the_deploy = deploy if deploy_running?(deploy)
@@ -49,8 +47,7 @@ module Fae
     end
 
     def last_successful_any_deploy
-      deploys = get_deploys
-      return if deploys.blank?
+      deploys = get_deploys || []
       the_deploy = nil
       deploys.each do |deploy|
         if deploy['state'] == 'ready'
@@ -62,11 +59,34 @@ module Fae
     end
 
     def last_successful_admin_deploy
-      deploys = get_deploys
-      return if deploys.blank?
+      deploys = get_deploys || []
       the_deploy = nil
       deploys.each do |deploy|
         if deploy['state'] == 'ready' && deploy['commit_ref'].blank?
+          the_deploy = deploy
+          break
+        end
+      end
+      the_deploy
+    end
+
+    def last_successful_production_deploy
+      deploys = get_deploys || []
+      the_deploy = nil
+      deploys.each do |deploy|
+        if deploy['state'] == 'ready' && deploy['context'] == 'production'
+          the_deploy = deploy
+          break
+        end
+      end
+      the_deploy
+    end
+
+    def last_successful_staging_deploy
+      deploys = get_deploys || []
+      the_deploy = nil
+      deploys.each do |deploy|
+        if deploy['state'] == 'ready' && deploy['context'] == 'branch-deploy' && deploy['branch'] == 'staging'
           the_deploy = deploy
           break
         end
@@ -119,7 +139,132 @@ module Fae
     end
 
     def deploy_running?(deploy)
-      deploy['state'] == 'building' || deploy['state'] == 'processing'
+      %w(building processing).include?(deploy['state'])
+    end
+
+    def get_deploys_env_response(path)
+      return get "#{@endpoint_base}#{path}" unless Rails.env.test?
+      [
+        {
+          "state"=>"building",
+          "name"=>"building-test",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>nil,
+          "commit_ref"=>nil,
+          "branch"=>"staging",
+          "title"=>"Staging building",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"branch-deploy",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+        {
+          "state"=>"processing",
+          "name"=>"processing-test",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>nil,
+          "commit_ref"=>nil,
+          "branch"=>"staging",
+          "title"=>"Staging processing",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"branch-deploy",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+        {
+          "state"=>"ready",
+          "name"=>"complete-test",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>nil,
+          "commit_ref"=>'string',
+          "branch"=>"staging",
+          "title"=>"Staging complete",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"branch-deploy",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+        {
+          "state"=>"ready",
+          "name"=>"admin-test",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>nil,
+          "commit_ref"=>nil,
+          "branch"=>"staging",
+          "title"=>"Staging admin complete",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"branch-deploy",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+        {
+          "state"=>"error",
+          "name"=>"error-test",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>'Error!',
+          "commit_ref"=>nil,
+          "branch"=>"staging",
+          "title"=>"FINE admin triggered a Staging build",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"branch-deploy",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+        {
+          "state"=>"ready",
+          "name"=>"fae-dummy",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>nil,
+          "commit_ref"=>nil,
+          "branch"=>"master",
+          "title"=>"A production build",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"production",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+        {
+          "state"=>"ready",
+          "name"=>"fae-dummy",
+          "created_at"=>"2021-10-22T14:56:18.163Z",
+          "updated_at"=>"2021-10-22T14:57:55.905Z",
+          "error_message"=>nil,
+          "commit_ref"=>nil,
+          "branch"=>"master",
+          "title"=>"Another production build",
+          "review_url"=>nil,
+          "published_at"=>nil,
+          "context"=>"production",
+          "deploy_time"=>93,
+          "committer"=>nil,
+          "skipped_log"=>nil,
+          "manual_deploy"=>false,
+        },
+      ]
     end
 
   end

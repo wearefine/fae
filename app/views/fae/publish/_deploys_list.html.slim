@@ -17,8 +17,12 @@ table
       - deploys.each do |deploy|
         tr
           td = deploy['title']
-          td = (deploy['published_at'].to_time if deploy['published_at'].present?)
-          td = distance_of_time_in_words(0.seconds, deploy['deploy_time'].to_i.seconds)
+          / Branch deploys don't return a value for published_at, but updated_at seems to be pretty close
+          / so we'll just use that for now.
+          td = (deploy['updated_at'].to_time if deploy['updated_at'].present?)
+          td
+            = deploy['deploy_time'].to_i.seconds
+            |  Seconds
           td = deploy['branch']
           td = deploy['committer']
           td = deploy['context']

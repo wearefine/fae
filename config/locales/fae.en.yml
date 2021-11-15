@@ -80,6 +80,8 @@ en:
       last_day: 'Last Day'
       last_week: 'Last Week'
       last_month: 'Last Month'
+      on_prod: 'On Prod'
+      on_stage: 'On Stage'
       models:
         users: 'Users'
         types: 'Types'

@@ -1,7 +1,9 @@
 require 'rails_helper'
 
-module Fae
-  RSpec.describe PublishHook, type: :model do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+describe Fae::User do
+
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:url) }
+  it { should validate_presence_of(:admin_environment) }
+
 end

@@ -7,9 +7,9 @@ main.content
 section.content
   - if @publish_hooks.present?
     - @publish_hooks.each do |publish_hook|
-      button.button.js-run-publish data-publish-hook-id=publish_hook.id href="#" = "Publish #{publish_hook.name}"
+      button.button.publish-button.js-run-publish data-publish-hook-id=publish_hook.id href="#" = "Publish #{publish_hook.name}"
 
-section.content
+/section.content
   p
     | Deploy Status:&nbsp;
     span.js-deploy-status idle
@@ -17,13 +17,16 @@ section.content
     | Approx time remaining:&nbsp;
     span.js-timer N/A
 
-/ TODO - how do we differentiate prod/stage deploys and changes?
 section.content
-  h2 Changes since last deploy
-  .js-changes-list
+  h2 Deploys
+  .js-deploys-list
 
 section.content
-  h2 Recent Deploys
-  .js-deploys-list
+  h2 Changes since last production delpoy
+  .js-production-changes-list
+
+section.content
+  h2 Changes since last staging delpoy
+  .js-staging-changes-list
 
 

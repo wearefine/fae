@@ -6,11 +6,11 @@ module Fae
     end
 
     def deploys_list
-      render partial: 'deploys_list', locals: { deploys: Fae::NetlifyApi.new().get_finished_deploys }
+      render partial: 'deploys_list', locals: { deploys: Fae::NetlifyApi.new().get_deploys }
     end
 
     def changes_list
-      render partial: 'changes_list', locals: { changes: Fae::Change.since_last_deploy }
+      render partial: 'changes_list', locals: { changes: Fae::Change.since_last_deploy(params[:env]) }
     end
 
     def publish_site
