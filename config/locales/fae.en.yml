@@ -90,7 +90,14 @@ en:
         type: 'Type'
         model: 'Model'
     publish:
+        page:
+          heading: 'Publish'
+          status_label: 'Deploy status:'
+        ctas:
+          publish: 'Publish'
         table:
+          heading: 'Deploys'
+          helper: 'Activity is updated on a five-second interval and will reflect deploys spawned from other places.'
           title: 'Title'
           published: 'Published'
           duration: 'Duration'
@@ -100,6 +107,9 @@ en:
           state: 'State'
           error_msg: 'Error Msg'
           no_deploys: 'No deploys were found.'
+        changes:
+          production_heading: 'Changes since last production delpoy'
+          staging_heading: 'Changes since last staging delpoy'
     setup:
       prompt: 'Please create your super admin user.'
       password: 'Passwords must contain at least 8 characters.'

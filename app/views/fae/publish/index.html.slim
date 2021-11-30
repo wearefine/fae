@@ -2,22 +2,22 @@
 
 main.content
 
-  h1 Publish
+  h1 = t('fae.publish.page.heading')
 
 section.content
   - if Fae.netlify.present? && Fae.netlify[:build_hooks].present?
     - Fae.netlify[:build_hooks].each do |type, build_hook|
       - if build_hook.present?
-        button.button.publish-button.js-run-build data-build-hook-type=type href="#" = "Publish #{type.to_s.titleize}"
+        button.button.publish-button.js-run-build data-build-hook-type=type href="#" = "#{t('fae.publish.ctas.publish')} #{type.to_s.titleize}"
 
 section.content
   p
-    | Deploy status:&nbsp;
+    | #{t('fae.publish.page.status_label')}&nbsp;
     span.js-deploy-status
 
 section.content
-  h2 Deploys
-  p Activity is updated on a five-second interval and will reflect deploys spawned from other places.
+  h2 = t('fae.publish.table.heading')
+  p = t('fae.publish.table.helper')
   br
   .js-deploys-list
     table
@@ -35,11 +35,11 @@ section.content
 
 
 section.content
-  h2 Changes since last production delpoy
+  h2 = t('fae.publish.changes.production_heading')
   .js-production-changes-list
 
 section.content
-  h2 Changes since last staging delpoy
+  h2 = t('fae.publish.changes.staging_heading')
   .js-staging-changes-list
 
 
