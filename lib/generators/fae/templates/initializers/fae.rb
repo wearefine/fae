@@ -68,9 +68,14 @@ Fae.setup do |config|
 
   ## Netlify configs
   # Environment variables are recommended for sensitive info.
-  # config.netlify_api_user   = ''
-  # config.netlify_api_token  = ''
-  # config.netlify_site       = ''
-  # config.netlify_site_id    = ''
-  # config.netlify_api_base   = ''
+  # config.netlify = {
+  #   api_user: ENV['FINE_NETLIFY_API_USER'],
+  #   api_token: ENV['FINE_NETLIFY_API_TOKEN'],
+  #   site: 'nelson-global',
+  #   site_id: '',
+  #   api_base: 'https://api.netlify.com/api/v1/',
+  #   production_build_hook: '',
+  #   staging_build_hook: '',
+  #   development_build_hook: ''
+  # }
 end

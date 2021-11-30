@@ -5,21 +5,34 @@ main.content
   h1 Publish
 
 section.content
-  - if @publish_hooks.present?
-    - @publish_hooks.each do |publish_hook|
-      button.button.publish-button.js-run-publish data-publish-hook-id=publish_hook.id href="#" = "Publish #{publish_hook.name}"
+  - if Fae.netlify.present? && Fae.netlify[:build_hooks].present?
+    - Fae.netlify[:build_hooks].each do |type, build_hook|
+      - if build_hook.present?
+        button.button.publish-button.js-run-build data-build-hook-type=type href="#" = "Publish #{type.to_s.titleize}"
 
-/section.content
+section.content
   p
-    | Deploy Status:&nbsp;
-    span.js-deploy-status idle
-  p
-    | Approx time remaining:&nbsp;
-    span.js-timer N/A
+    | Deploy status:&nbsp;
+    span.js-deploy-status
 
 section.content
   h2 Deploys
+  p Activity is updated on a five-second interval and will reflect deploys spawned from other places.
+  br
   .js-deploys-list
+    table
+      thead
+        tr
+          th = t('fae.publish.table.title')
+          th = t('fae.publish.table.published')
+          th = t('fae.publish.table.duration')
+          th = t('fae.publish.table.branch')
+          th = t('fae.publish.table.committer')
+          th = t('fae.publish.table.context')
+          th = t('fae.publish.table.state')
+          th = t('fae.publish.table.error_msg')
+      tbody
+
 
 section.content
   h2 Changes since last production delpoy

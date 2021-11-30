@@ -4,17 +4,12 @@ module Fae
   class NetlifyApi
 
     def initialize()
-      @netlify_api_user   = Fae.netlify_api_user
-      @netlify_api_token  = Fae.netlify_api_token
-      @site               = Fae.netlify_site
-      @site_id            = Fae.netlify_site_id
-      @endpoint_base      = Fae.netlify_api_base
+      @netlify_api_user   = Fae.netlify[:api_user]
+      @netlify_api_token  = Fae.netlify[:api_token]
+      @site               = Fae.netlify[:site]
+      @site_id            = Fae.netlify[:site_id]
+      @endpoint_base      = Fae.netlify[:api_base]
       @logger             = Logger.new(Rails.root.join('log', 'netlify_api.log'))
-    end
-
-    def get_sites
-      path = 'sites/'
-      get "#{@endpoint_base}#{path}"
     end
 
     def get_deploys
@@ -22,28 +17,13 @@ module Fae
       get_deploys_env_response(path)
     end
 
-    def get_finished_deploys
-      deploys = get_deploys || []
-      deploys.reject{ |deploy| deploy_running?(deploy) }
-    end
-
-    def run_deploy(publish_hook_id, current_user)
-      hook = PublishHook.find_by_id(publish_hook_id)
+    def run_deploy(build_hook_type, current_user)
+      hook = Fae.netlify[:build_hooks][build_hook_type]
       if hook.present?
         post("#{hook.url}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{hook.name}+build")
         return true
       end
       false
-    end
-
-    def current_deploy
-      deploys = get_deploys || []
-      the_deploy = nil
-      deploys.each do |deploy|
-        the_deploy = deploy if deploy_running?(deploy)
-        break
-      end
-      the_deploy
     end
 
     def last_successful_any_deploy
@@ -139,7 +119,7 @@ module Fae
     end
 
     def deploy_running?(deploy)
-      %w(building processing).include?(deploy['state'])
+      %w(building processing enqueued uploading).include?(deploy['state'])
     end
 
     def get_deploys_env_response(path)

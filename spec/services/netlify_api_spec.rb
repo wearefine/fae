@@ -2,18 +2,6 @@ require 'rails_helper'
 
 describe Fae::NetlifyApi, type: :model do
 
-  describe '#get_finished_deploys' do
-    it 'should return only complete deploys' do
-      expect(Fae::NetlifyApi.new().get_deploys.pluck(:title)).to_not include('Staging building', 'Staging processing')
-    end
-  end
-
-  describe '#get_current_deploy' do
-    it 'should return the first running deploy' do
-      expect(Fae::NetlifyApi.new().current_deploy['title']).to eq('Staging building')
-    end
-  end
-
   describe '#last_successful_any_deploy' do
     it 'should return the last successful deploy' do
       expect(Fae::NetlifyApi.new().last_successful_any_deploy['title']).to eq('Staging complete')

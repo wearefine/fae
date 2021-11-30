@@ -9,28 +9,46 @@
 Fae.publish = {
 
   ready: function() {
-    if (!$('body').hasClass('publish')) { return false; }
-
-    this.$publishButtons          = $('.js-run-publish');
+    if (!$('body').hasClass('publish')) return false;
+    console.log('ass');
+    this.$publishButtons          = $('.js-run-build');
     this.$timerEl                 = $('.js-timer');
     this.lastSuccessfulDeployTime = null;
     this.pollTimeout              = null;
-    this.pollInterval             = 3000;
+    this.pollInterval             = 5000;
     this.timerInterval            = null;
     this.deployFinished           = true;
     this.buttonsEnabled           = true;
 
-    //this.refreshDeploysList();
     this.refreshProductionChangesList();
     this.refreshStagingChangesList();
     this.publishButtonListener();
     this.pollDeployStatus();
-    //TODO - refresh deploy list on interval instead of timer? move list up and limit to 10
+
+    this.notifyIdle();
   },
 
-  refreshDeploysList: function() {
+  publishButtonListener: function() {
+    var _this = this;
+    _this.$publishButtons.click(function(e) {
+      e.preventDefault();
+      _this.disableButtons();
+      var $button = $(this);
+      var build_hook_type = $button.data('build-hook-type');
+      $.post( '/admin/publish/publish_site', { build_hook_type: build_hook_type }, function(data) {
+        // FYI Netlify returns nothing for deploy hook posts, a deploy ID would be nice to enable
+        // tracking of the deploy, so our workaround is to just keep a poll running on the deploys list.
+      });
+    });
+  },
+
+  refreshDeploysListAndStatuses: function() {
+    var _this = this;
     $.get('/admin/publish/deploys_list', function (data) {
-      $('.js-deploys-list').html(data);
+      if (data) {
+        _this.drawTable(data);
+        _this.stateChecks(data);
+      }
     });
   },
 
@@ -48,91 +66,19 @@ Fae.publish = {
 
   pollDeployStatus: function() {
     var _this = this;
-
     function poll() {
-      _this.refreshDeploysList();
-      // $.get('/admin/publish/current_deploy', function (data) {
-      //   if (data && (data.state === 'building' || data.state === 'processing')) {
-      //     _this.notifyRunning();
-      //     _this.deployFinished = false;
-      //     if (!_this.timerInterval) {
-      //       _this.startTimer(_this.lastSuccessfulDeployTime);
-      //     }
-      //   } else {
-      //     _this.afterDeploy();
-      //     if (_this.timerInterval) {
-      //       clearInterval(_this.timerInterval);
-      //     }
-      //   }
-      // });
+      _this.refreshDeploysListAndStatuses();
       _this.pollTimeout = setTimeout(poll, _this.pollInterval);
     }
-
     poll();
   },
 
-  publishButtonListener: function() {
-    var _this = this;
-    _this.$publishButtons.click(function(e) {
-      e.preventDefault();
-      _this.disableButtons();
-      // clearTimeout(_this.pollTimeout);
-      var $button = $(this);
-      var publish_hook_id = $button.data('publish-hook-id');
-      $.post( '/admin/publish/publish_site', { publish_hook_id: publish_hook_id }, function(data) {
-        // FYI Netlify returns nothing for deploy hook posts
-        console.log(data);
-        //_this.pollDeployStatus();
-        if (data && data.last_successful_admin_deploy.deploy_time) {
-          _this.lastSuccessfulDeployTime = data.last_successful_admin_deploy.deploy_time;
-        }
-      });
-    });
-  },
-
-  startTimer: function(duration) {
-    var _this = this;
-    var start = Date.now(),
-        diff,
-        minutes,
-        seconds;
-    function timer() {
-      // get the number of seconds that have elapsed since
-      // startTimer() was called
-      diff = duration - (((Date.now() - start) / 1000) | 0);
-
-      // does the same job as parseInt truncates the float
-      minutes = (diff / 60) | 0;
-      seconds = (diff % 60) | 0;
-
-      if (minutes === 0 && seconds === 0) {
-        $('.js-timer').text('');
-        clearInterval(_this.timerInterval);
-      }
-
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      seconds = seconds < 10 ? "0" + seconds : seconds;
-
-
-      _this.$timerEl.text(minutes + ":" + seconds);
-
-      if (diff <= 0) {
-        // add one second so that the count down starts at the full duration
-        // example 05:00 not 04:59
-        start = Date.now() + 1000;
-      }
-    };
-    // we don't want to wait a full second before the timer starts
-    timer();
-    _this.timerInterval = setInterval(timer, 1000);
-  },
-
   notifyRunning: function() {
-    $('.js-deploy-status').text('a deploy is running!');
+    $('.js-deploy-status').text('A deploy is running!');
   },
 
   notifyIdle: function() {
-    $('.js-deploy-status').text('idle');
+    $('.js-deploy-status').text('Idle');
   },
 
   enableButtons: function() {
@@ -151,22 +97,70 @@ Fae.publish = {
     }
   },
 
-  resetTimerDisplay: function() {
-    var _this = this;
-    _this.$timerEl.text('N/A');
-  },
-
   afterDeploy: function() {
     var _this = this;
     if (!_this.deployFinished) {
       _this.notifyIdle();
       _this.enableButtons();
-      _this.resetTimerDisplay();
       _this.refreshProductionChangesList();
       _this.refreshStagingChangesList();
-      _this.refreshDeploysList();
       _this.deployFinished = true;
+    }
+  },
+
+  drawTable: function(data) {
+    var _this = this;
+    var $theTbody = $('.js-deploys-list').find('tbody');
+    $theTbody.find('tr').remove();
+    $.each(data, function(i, deploy) {
+      $theTbody.append(
+        $('<tr>').append([
+          $('<td>').text(deploy.title),
+          $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
+          $('<td>').text(_this._deployDuration(deploy)),
+          $('<td>').text(deploy.branch),
+          $('<td>').text(_this._valCheck(deploy.committer)),
+          $('<td>').text(deploy.context),
+          $('<td class="state">').text(deploy.state),
+          $('<td>').text(_this._valCheck(deploy.error_message)),
+        ])
+      );
+    });
+  },
+
+  stateChecks: function(data) {
+    var _this = this;
+    if (_this._deployIsRunning(data)) {
+      _this.notifyRunning();
+      _this.disableButtons();
+      _this.deployFinished = false;
+    } else {
+      _this.afterDeploy();
+    }
+  },
+
+  _valCheck: function(val) {
+    if (val !== null) return val;
+  },
+
+  _deployIsRunning: function(data) {
+    var running = false;
+    $.each(data, function(i, deploy) {
+      if(['error', 'ready'].indexOf(deploy.state) === -1) {
+        running = true;
+        return false;
+      }
+    });
+    return running;
+  },
+
+  _deployDuration: function(deploy) {
+    if (deploy.deploy_time === null) {
+      return '...';
+    } else {
+      return moment.utc(parseInt(deploy.deploy_time)*1000).format('HH:mm:ss');
     }
   }
 
 };
+

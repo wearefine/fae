@@ -48,8 +48,12 @@ button[type=button],
   color: $c-light-button;
   border-color: $c-border;
 
-  &:hover {
+  &:hover, &:disabled {
     background: $c-light-button-gradient-end;
+  }
+
+  &:disabled {
+    cursor: wait;
   }
 }
 

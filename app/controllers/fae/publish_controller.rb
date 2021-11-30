@@ -1,12 +1,12 @@
 module Fae
   class PublishController < ApplicationController
+    before_action :super_admin_only
 
     def index
-      @publish_hooks = PublishHook.for_admin_environment
     end
 
     def deploys_list
-      render partial: 'deploys_list', locals: { deploys: Fae::NetlifyApi.new().get_deploys }
+      render json: Fae::NetlifyApi.new().get_deploys
     end
 
     def changes_list
@@ -14,7 +14,7 @@ module Fae
     end
 
     def publish_site
-      if Fae::NetlifyApi.new().run_deploy(params['publish_hook_id'], current_user)
+      if Fae::NetlifyApi.new().run_deploy(params['build_hook_type'], current_user)
         return render json: {
           success: true,
           last_successful_admin_deploy: Fae::NetlifyApi.new().last_successful_admin_deploy
@@ -22,12 +22,6 @@ module Fae
       end
       render json: {success: false}
     end
-
-    def current_deploy
-      render json: Fae::NetlifyApi.new().current_deploy
-    end
-
-    private
 
   end
 end

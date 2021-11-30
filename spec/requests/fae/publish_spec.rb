@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-describe 'publish_hooks#index' do
+describe 'publish#index' do
 
   context 'when role is super admin' do
     before do
       super_admin_login
     end
 
-    it 'should be able to access publish hooks' do
-      get fae.publish_hooks_path
+    it 'should be able to access publish' do
+      get fae.publish_path
 
       expect(response.status).to eq(200)
     end
@@ -19,8 +19,8 @@ describe 'publish_hooks#index' do
       admin_login
     end
 
-    it 'should not be able to access publish hooks' do
-      get fae.publish_hooks_path
+    it 'should not be able to access publish' do
+      get fae.publish_path
 
       expect(response.status).to eq(302)
       expect(response).to redirect_to(fae.root_path)
@@ -32,8 +32,8 @@ describe 'publish_hooks#index' do
       user_login
     end
 
-    it 'should not be able to access publish hooks' do
-      get fae.publish_hooks_path
+    it 'should not be able to access publish' do
+      get fae.publish_path
 
       expect(response.status).to eq(302)
       expect(response).to redirect_to(fae.root_path)
@@ -41,9 +41,9 @@ describe 'publish_hooks#index' do
   end
 
   context 'when logged out' do
-    it "shouldn't be able to access publish hooks" do
+    it "shouldn't be able to access publish" do
       create_super_user
-      get fae.publish_hooks_path
+      get fae.publish_path
 
       expect(response.status).to eq(302)
       expect(response).to redirect_to('/admin/login')
