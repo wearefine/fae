@@ -10,7 +10,6 @@ Fae.publish = {
 
   ready: function() {
     if (!$('body').hasClass('publish')) return false;
-    console.log('ass');
     this.$publishButtons          = $('.js-run-build');
     this.$timerEl                 = $('.js-timer');
     this.lastSuccessfulDeployTime = null;

@@ -174,17 +174,6 @@ ActiveRecord::Schema.define(version: 2021_10_06_173101) do
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
   end
 
-  create_table "fae_publish_hooks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "url"
-    t.string "admin_environment"
-    t.datetime "last_published_at"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "name"
-    t.index ["admin_environment"], name: "index_fae_publish_hooks_on_admin_environment"
-    t.index ["last_published_at"], name: "index_fae_publish_hooks_on_last_published_at"
-  end
-
   create_table "fae_roles", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
     t.integer "position"

@@ -19,6 +19,9 @@ module Fae
 
     def run_deploy(build_hook_type, current_user)
       hook = Fae.netlify[:build_hooks][build_hook_type]
+      Rails.logger.info '---------------------'
+      Rails.logger.info build_hook_type
+      Rails.logger.info Fae.netlify[:build_hooks][build_hook_type]
       if hook.present?
         post("#{hook.url}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{hook.name}+build")
         return true
