@@ -17,8 +17,16 @@ feature 'Publish' do
     old_beer.tracked_changes.first.update_columns(updated_at: DateTime.new(2020, 10, 20))
 
     visit fae.publish_path
-    expect(page).to have_content('New Beer')
-    expect(page).to_not have_content('Old Beer')
+
+    within('#production_changes') do
+      expect(page).to have_content('New Beer')
+      expect(page).to_not have_content('Old Beer')
+    end
+
+    within('#staging_changes') do
+      expect(page).to have_content('New Beer')
+      expect(page).to_not have_content('Old Beer')
+    end
   end
 
 end

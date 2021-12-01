@@ -38,18 +38,6 @@ module Fae
       the_deploy
     end
 
-    def last_successful_admin_deploy
-      deploys = get_deploys || []
-      the_deploy = nil
-      deploys.each do |deploy|
-        if deploy['state'] == 'ready' && deploy['commit_ref'].blank?
-          the_deploy = deploy
-          break
-        end
-      end
-      the_deploy
-    end
-
     def last_successful_production_deploy
       deploys = get_deploys || []
       the_deploy = nil
@@ -77,40 +65,38 @@ module Fae
     private
 
     def get(endpoint, params = nil)
-      #begin
-        puts endpoint
+      begin
         uri = URI.parse(endpoint)
-        @request = Net::HTTP::Get.new(uri)
-        set_headers(@request)
+        request = Net::HTTP::Get.new(uri)
+        set_headers(request)
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
-          http.request(@request)
+          http.request(request)
         }
         return JSON.parse(response.body) if response.present? && response.body.present?
-      #rescue Exception => e
+      rescue Exception => e
         @logger.info "\n"
         @logger.info "Failed getting on #{DateTime.now} to #{endpoint}"
         @logger.info "Params: #{params}"
         @logger.info "Reason: #{e}"
-      #end
+      end
     end
 
     def post(endpoint, params = nil)
-      #begin
-        puts endpoint
+      begin
         uri = URI.parse(endpoint)
-        @request = Net::HTTP::Post.new(uri)
-        set_headers(@request)
-        @request.body = params.to_json
+        request = Net::HTTP::Post.new(uri)
+        set_headers(request)
+        request.body = params.to_json
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
-          http.request(@request)
+          http.request(request)
         }
         return JSON.parse(response.body) if response.present? && response.body.present?
-      #rescue Exception => e
-        # @logger.info "\n"
-        # @logger.info "Failed posting on #{DateTime.now} to #{endpoint}"
-        # @logger.info "Params: #{params}"
-        # @logger.info "Reason: #{e}"
-      #end
+      rescue Exception => e
+        @logger.info "\n"
+        @logger.info "Failed posting on #{DateTime.now} to #{endpoint}"
+        @logger.info "Params: #{params}"
+        @logger.info "Reason: #{e}"
+      end
     end
 
     def set_headers(request)

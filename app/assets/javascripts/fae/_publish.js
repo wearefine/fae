@@ -11,19 +11,15 @@ Fae.publish = {
   ready: function() {
     if (!$('body').hasClass('publish')) return false;
     this.$publishButtons          = $('.js-run-build');
-    this.$timerEl                 = $('.js-timer');
-    this.lastSuccessfulDeployTime = null;
-    this.pollTimeout              = null;
-    this.pollInterval             = 5000;
-    this.timerInterval            = null;
     this.deployFinished           = true;
     this.buttonsEnabled           = true;
+    this.pollTimeout              = null;
+    this.pollInterval             = 5000;
 
     this.refreshProductionChangesList();
     this.refreshStagingChangesList();
     this.publishButtonListener();
     this.pollDeployStatus();
-
     this.notifyIdle();
   },
 
@@ -35,8 +31,7 @@ Fae.publish = {
       var $button = $(this);
       var build_hook_type = $button.data('build-hook-type');
       $.post( '/admin/publish/publish_site', { build_hook_type: build_hook_type }, function(data) {
-        // FYI Netlify returns nothing for deploy hook posts, a deploy ID would be nice to enable
-        // tracking of the deploy, so our workaround is to just keep a poll running on the deploys list.
+        // Netlify returns nothing for deploy hook posts
       });
     });
   },
@@ -116,12 +111,12 @@ Fae.publish = {
         $('<tr>').append([
           $('<td>').text(deploy.title),
           $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
-          $('<td>').text(_this._deployDuration(deploy)),
+          $('<td>').text(_this.deployDuration(deploy)),
           $('<td>').text(deploy.branch),
-          $('<td>').text(_this._valCheck(deploy.committer)),
+          $('<td>').text(_this.valCheck(deploy.committer)),
           $('<td>').text(deploy.context),
           $('<td class="state">').text(deploy.state),
-          $('<td>').text(_this._valCheck(deploy.error_message)),
+          $('<td>').text(_this.valCheck(deploy.error_message)),
         ])
       );
     });
@@ -129,7 +124,7 @@ Fae.publish = {
 
   stateChecks: function(data) {
     var _this = this;
-    if (_this._deployIsRunning(data)) {
+    if (_this.deployIsRunning(data)) {
       _this.notifyRunning();
       _this.disableButtons();
       _this.deployFinished = false;
@@ -138,11 +133,11 @@ Fae.publish = {
     }
   },
 
-  _valCheck: function(val) {
+  valCheck: function(val) {
     if (val !== null) return val;
   },
 
-  _deployIsRunning: function(data) {
+  deployIsRunning: function(data) {
     var running = false;
     $.each(data, function(i, deploy) {
       if(['error', 'ready'].indexOf(deploy.state) === -1) {
@@ -153,7 +148,7 @@ Fae.publish = {
     return running;
   },
 
-  _deployDuration: function(deploy) {
+  deployDuration: function(deploy) {
     if (deploy.deploy_time === null) {
       return '...';
     } else {

@@ -15,10 +15,7 @@ module Fae
 
     def publish_site
       if Fae::NetlifyApi.new().run_deploy(params['build_hook_type'], current_user)
-        return render json: {
-          success: true,
-          last_successful_admin_deploy: Fae::NetlifyApi.new().last_successful_admin_deploy
-        }
+        return render json: { success: true }
       end
       render json: {success: false}
     end

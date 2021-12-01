@@ -8,12 +8,6 @@ describe Fae::NetlifyApi, type: :model do
     end
   end
 
-  describe '#last_successful_admin_deploy' do
-    it 'should return the last successful deploy with no commit_ref' do
-      expect(Fae::NetlifyApi.new().last_successful_admin_deploy['title']).to eq('Staging admin complete')
-    end
-  end
-
   describe '#last_successful_production_deploy' do
     it 'should return the last successful production deploy' do
       expect(Fae::NetlifyApi.new().last_successful_production_deploy['title']).to eq('A production build')
