@@ -3,6 +3,7 @@ module Fae
     before_action :super_admin_only
 
     def index
+      raise 'Fae.netlify configs are missing.' if Fae.netlify.blank?
     end
 
     def deploys_list

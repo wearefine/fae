@@ -29,7 +29,7 @@ header.main-header#js-main-header
           - if current_user.super_admin_or_admin?
             li: a href=fae.users_path = t('fae.navbar.users')
             li: a href=fae.activity_log_path = t('fae.navbar.activity_log')
-          - if current_user.super_admin?
+          - if current_user.super_admin? && Fae.netlify.present?
             li: a href=fae.publish_path = t('fae.navbar.publish')
           - if @option.live_url.present?
             li: a href=@option.live_url target="_blank" = t('fae.application.live_site')
