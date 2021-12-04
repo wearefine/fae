@@ -46,7 +46,7 @@ Fae::Engine.routes.draw do
   get 'publish/changes_list' => 'publish#changes_list', as: 'publish_changes_list'
   post 'publish/publish_site' => 'publish#publish_site', as: 'publish_publish_site'
 
-  # catch all 404
+  ## catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
 
 end
