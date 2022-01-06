@@ -7,8 +7,8 @@ require 'capybara-screenshot/rspec'
 require 'yarjuf'
 require 'factory_girl_rails'
 require 'database_cleaner'
-require 'rspec/rails'
 require 'shoulda/matchers'
+require 'rspec/rails'
 require 'pry'
 
 # File.dirname(__FILE__) used because Rails.root is the dummy app
@@ -41,7 +41,7 @@ RSpec.configure do |config|
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryGirl::Syntax::Methods
   FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-  FactoryGirl.find_definitions
+
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

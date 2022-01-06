@@ -27,7 +27,7 @@ group :test, :development do
 end
 
 group :test do
-  gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'factory_girl_rails', '~> 4.4.1',  :require => false
   gem 'capybara-webkit', '~> 1.11.1'
   gem 'capybara-screenshot'
   gem 'guard-rspec', '~> 4.7.3'
