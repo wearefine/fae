@@ -29,6 +29,8 @@ RSpec.configure do |config|
   # Use capybara-webkit as the JS driver
   Capybara.javascript_driver = :webkit
 
+  Capybara.default_max_wait_time = 5
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:

@@ -377,7 +377,7 @@ DEPENDENCIES
   rspec-rails (~> 3.6.0)
   ruby-prof
   sass
-  selenium-webdriver (~> 2.42.0)
+  selenium-webdriver
   shoulda-matchers
   thin
   yarjuf
