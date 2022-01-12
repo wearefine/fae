@@ -6,8 +6,8 @@
       stdin_open: true 
       tty: true    
       build: .
-      # command: /bin/bash -c "RAILS_ENV=test && bundle exec rake db:create db:migrate && rspec"
-      # command: /bin/bash -c "bundle check || bundle install && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
+      working_dir: /app/spec/dummy
+      command: /bin/bash -c "bundle check || bundle install && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
       volumes:
         - gems:/gems
         - .:/app
@@ -26,4 +26,4 @@
       ports:
         - '3307:3306'
       volumes:
-        - /private/app/dbs
+        - /private/app/dbs:/var/lib/mysql
