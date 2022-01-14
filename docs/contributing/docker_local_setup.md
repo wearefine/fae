@@ -1,6 +1,6 @@
 # Docker Local Setup
 
-1. Update Dockerfile to pull in x-server lib. This is required for running a headless browser on a linux instance and is needed to run tests
+1. Update Dockerfile to pull in an x-server lib. This is required for running a headless browser on a linux instance and is needed for running tests
     ```
     # place immediately after FROM definition
     RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -23,41 +23,33 @@
 <br>
 
 ## Running tests on dummy app gemset
-1. Start a bash shell inside container
+1. Start a bash shell in containers /app directory
     ```
-    docker-compose run app bash
+    docker-compose run -w /app app /bin/bash
     ```
-1. Move up to the app directory
+2. Run tests while inside container shell
     ```
-    cd ../..
-    ```
-5. Run tests while inside container shell
-    ```
-    RAILS_ENV=test xvfb-run -a bundle exec rspec spec/
+    RAILS_ENV=test xvfb-run -a bundle exec rspec
     ```
 <br>
 
 ## Running tests using Appraisal
 
-1. Start a bash shell inside container
+1. Start a bash shell in containers /app directory
     ```
-    docker-compose run app bash
+    docker-compose run -w /app app /bin/bash
     ```
-2. Move up to the app directory
-    ```
-    cd ../..
-    ```
-3. Download gems for appraisal versions
+2. Download gems for appraisal versions
     ```
     appraisal install
     ```
-4. If you need to update any gems for a specific appraisal gemset
+3. If you need to update any gems for a specific appraisal gemset
     ```
     bundle update --gemfile='/app/gemfiles/rails_5_2.gemfile'
 
     # change to use whichever gemfile.lock you need updated
     ```
-5. Run tests against an appraisal gemset. Omit the appraisal name to run tests against all versions
+4. Run tests against an appraisal gemset. Omit the appraisal name to run tests against all versions
     ```
     RAILS_ENV=test appraisal rails_5_2 xvfb-run -a rspec
     ```
