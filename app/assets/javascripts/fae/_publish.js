@@ -16,11 +16,12 @@ Fae.publish = {
     this.pollTimeout              = null;
     this.pollInterval             = 5000;
 
-    this.refreshProductionChangesList();
-    this.refreshStagingChangesList();
+    // this.refreshProductionChangesList();
+    // this.refreshStagingChangesList();
     this.publishButtonListener();
     this.pollDeployStatus();
     this.notifyIdle();
+    this.refreshDeploysListAndStatuses();
   },
 
   publishButtonListener: function() {
@@ -40,7 +41,7 @@ Fae.publish = {
     var _this = this;
     $.get('/admin/publish/deploys_list', function (data) {
       if (data) {
-        _this.drawTable(data);
+        _this.drawTables(data);
         _this.stateChecks(data);
       }
     });
@@ -68,11 +69,11 @@ Fae.publish = {
   },
 
   notifyRunning: function() {
-    $('.js-deploy-status').text('A deploy is running!');
+    $('.deploying-heading').addClass('running');
   },
 
   notifyIdle: function() {
-    $('.js-deploy-status').text('Idle');
+    $('.deploying-heading').removeClass('running');
   },
 
   enableButtons: function() {
@@ -102,20 +103,38 @@ Fae.publish = {
     }
   },
 
-  drawTable: function(data) {
+  drawTables: function(data) {
     var _this = this;
-    var $theTbody = $('.js-deploys-list').find('tbody');
-    $theTbody.find('tr').remove();
-    $.each(data, function(i, deploy) {
-      $theTbody.append(
+    var runningDeploys = _this.getRunningDeploys(data);
+    var pastDeploys = _this.getPastDeploys(data);
+    $('.js-deploys-list').find('tbody').find('tr').remove();
+    _this.injectTableDeployData(runningDeploys, $('.js-deploys-list.running').find('tbody'));
+    _this.injectTableDeployData(pastDeploys, $('.js-deploys-list.past').find('tbody'));
+  },
+
+  getRunningDeploys: function(data) {
+    return data.filter(function(deploy) {
+      return $.inArray(deploy.state, ['ready', 'error']) === -1;
+    });
+  },
+
+  getPastDeploys: function(data) {
+    return data.filter(function(deploy) {
+      return $.inArray(deploy.state, ['ready', 'error']) !== -1;
+    });
+  },
+
+  injectTableDeployData: function(deploys, $tbody) {
+    var _this = this;
+    $.each(deploys, function(i, deploy) {
+      $tbody.append(
         $('<tr>').append([
-          $('<td>').text(deploy.title),
+          $('<td>').text(deploy.commit_ref !== null ? 'FINE dev update' : deploy.title),
           $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
           $('<td>').text(_this.deployDuration(deploy)),
-          $('<td>').text(deploy.branch),
-          $('<td>').text(_this.valCheck(deploy.committer)),
-          $('<td>').text(deploy.context),
-          $('<td class="state">').text(deploy.state),
+          // $('<td>').text(deploy.branch),
+          $('<td>').text(_this.deployEnvironment(deploy)),
+          // $('<td class="state">').text(deploy.state === 'ready' ? 'complete' : deploy.state),
           $('<td>').text(_this.valCheck(deploy.error_message)),
         ])
       );
@@ -150,10 +169,17 @@ Fae.publish = {
 
   deployDuration: function(deploy) {
     if (deploy.deploy_time === null) {
-      return '...';
+      return '–';
     } else {
       return moment.utc(parseInt(deploy.deploy_time)*1000).format('HH:mm:ss');
     }
+  },
+
+  deployEnvironment: function(deploy) {
+    if (deploy.branch === 'master' || deploy.branch === 'main') {
+      return 'Production';
+    }
+    return deploy.branch.charAt(0).toUpperCase() + deploy.branch.slice(1);
   }
 
 };

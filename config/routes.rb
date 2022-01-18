@@ -11,6 +11,7 @@ Fae::Engine.routes.draw do
     get 'logout' => '/devise/sessions#destroy', as: :destroy_user_session
   end
   resources :users
+  resources :publish_hooks
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'publish' => 'publish#index', as: 'publish'

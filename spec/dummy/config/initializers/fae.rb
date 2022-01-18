@@ -22,13 +22,9 @@ Fae.setup do |config|
   config.netlify = {
     api_user: ENV['FINE_NETLIFY_API_USER'],
     api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-    site: 'nelson-global',
-    site_id: 'd294f9f6-2434-4fa3-841e-40a1d948bf90',
-    api_base: 'https://api.netlify.com/api/v1/',
-    build_hooks: {
-      production: 'https://api.netlify.com/build_hooks/614b5d93745aeefacb1a7fcb',
-      staging: 'https://api.netlify.com/build_hooks/6172c78c9be3dd3e66aa5a34',
-      development: ''
+    site: 'fine-pss',
+    site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
+    api_base: 'https://api.netlify.com/api/v1/'
     }
   }
 

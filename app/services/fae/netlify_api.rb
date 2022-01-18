@@ -13,53 +13,17 @@ module Fae
     end
 
     def get_deploys
-      path = "sites/#{@site_id}/deploys?per_page=10"
+      path = "sites/#{@site_id}/deploys?per_page=15"
       get_deploys_env_response(path)
     end
 
     def run_deploy(build_hook_type, current_user)
-      hook = Fae.netlify[:build_hooks][build_hook_type.to_sym]
+      hook = Fae::PublishHook.find_by_environment(build_hook_type)
       if hook.present?
         post("#{hook}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{build_hook_type.titleize}+build")
         return true
       end
       false
-    end
-
-    def last_successful_any_deploy
-      deploys = get_deploys || []
-      the_deploy = nil
-      deploys.each do |deploy|
-        if deploy['state'] == 'ready'
-          the_deploy = deploy
-          break
-        end
-      end
-      the_deploy
-    end
-
-    def last_successful_production_deploy
-      deploys = get_deploys || []
-      the_deploy = nil
-      deploys.each do |deploy|
-        if deploy['state'] == 'ready' && deploy['context'] == 'production'
-          the_deploy = deploy
-          break
-        end
-      end
-      the_deploy
-    end
-
-    def last_successful_staging_deploy
-      deploys = get_deploys || []
-      the_deploy = nil
-      deploys.each do |deploy|
-        if deploy['state'] == 'ready' && deploy['context'] == 'branch-deploy' && deploy['branch'] == 'staging'
-          the_deploy = deploy
-          break
-        end
-      end
-      the_deploy
     end
 
     private
@@ -102,10 +66,6 @@ module Fae
     def set_headers(request)
       request['User-Agent'] = "#{@site} (#{@netlify_api_user})"
       request['Authorization'] = "Bearer #{@netlify_api_token}"
-    end
-
-    def deploy_running?(deploy)
-      %w(building processing enqueued uploading).include?(deploy['state'])
     end
 
     def get_deploys_env_response(path)

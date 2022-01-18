@@ -5,41 +5,47 @@ main.content
   h1 = t('fae.publish.page.heading')
 
 section.content
-  - if Fae.netlify.present? && Fae.netlify[:build_hooks].present?
-    - Fae.netlify[:build_hooks].each do |type, build_hook|
-      - if build_hook.present?
-        button.button.publish-button.js-run-build data-build-hook-type=type href="#" = "#{t('fae.publish.ctas.publish')} #{type.to_s.titleize}"
+  - if Fae.netlify.present? && @publish_hooks.present?
+    - @publish_hooks.each do |publish_hook|
+      button.button.publish-button.js-run-build data-build-hook-type=publish_hook.environment href="#" = "#{t('fae.publish.ctas.publish')} #{publish_hook.environment.to_s.titleize}"
 
 section.content
-  p
-    | #{t('fae.publish.page.status_label')}&nbsp;
-    span.js-deploy-status
+  p = t('fae.publish.table.deploying_helper')
 
-section.content
-  h2 = t('fae.publish.table.heading')
-  p = t('fae.publish.table.helper')
-  br
-  .js-deploys-list
+section.content#deploying
+  h2.deploying-heading = t('fae.publish.table.deploying_heading')
+  .js-deploys-list.running
     table
       thead
         tr
           th = t('fae.publish.table.title')
           th = t('fae.publish.table.published')
           th = t('fae.publish.table.duration')
-          th = t('fae.publish.table.branch')
-          th = t('fae.publish.table.committer')
           th = t('fae.publish.table.context')
-          th = t('fae.publish.table.state')
+          th = t('fae.publish.table.error_msg')
+      tbody
+
+section.content
+  h2 = t('fae.publish.table.past_heading')
+  .js-deploys-list.past
+    table
+      thead
+        tr
+          th = t('fae.publish.table.title')
+          th = t('fae.publish.table.published')
+          th = t('fae.publish.table.duration')
+          th = t('fae.publish.table.context')
           th = t('fae.publish.table.error_msg')
       tbody
 
 
-section.content#production_changes
-  h2 = t('fae.publish.changes.production_heading')
-  .js-production-changes-list
+/ This feature may return
+/ section.content#production_changes
+/   h2 = t('fae.publish.changes.production_heading')
+/   .js-production-changes-list
 
-section.content#staging_changes
-  h2 = t('fae.publish.changes.staging_heading')
-  .js-staging-changes-list
+/ section.content#staging_changes
+/   h2 = t('fae.publish.changes.staging_heading')
+/   .js-staging-changes-list
 
 

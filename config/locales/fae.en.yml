@@ -34,6 +34,9 @@ en:
       last_login: 'Last Logged In'
       active: 'Active'
       add_user: 'Add User'
+    publish_hook:
+      environment: 'Environment'
+      add_publish_hook: 'Add Publish Hook'
     page:
       title: 'Pages'
       disabled_title: 'Disabled Admin'
@@ -56,6 +59,7 @@ en:
       root_settings: 'Root Settings'
       no_results: 'No Results'
       publish: 'Publish'
+      publish_hooks: 'Publish Hooks'
     changes:
       recent: 'Recent Changes'
       user: 'User'
@@ -85,24 +89,24 @@ en:
     publish:
         page:
           heading: 'Publish'
-          status_label: 'Deploy status:'
         ctas:
           publish: 'Publish'
         table:
-          heading: 'Deploys'
-          helper: 'Activity is updated on a five-second interval and will reflect deploys spawned from other places.'
-          title: 'Title'
+          past_heading: 'Past Deploys'
+          deploying_heading: 'Deploying'
+          deploying_helper: 'Activity is updated on a five-second interval and will reflect deploys spawned from other places.'
+          title: 'Deploys'
           published: 'Published'
           duration: 'Duration'
           branch: 'Branch'
           committer: 'Committer'
-          context: 'Context'
+          context: 'Environment'
           state: 'State'
           error_msg: 'Error Msg'
           no_deploys: 'No deploys were found.'
         changes:
-          production_heading: 'Changes since last production delpoy'
-          staging_heading: 'Changes since last staging delpoy'
+          production_heading: 'Changes since last production deploy'
+          staging_heading: 'Changes since last staging deploy'
     setup:
       prompt: 'Please create your super admin user.'
       password: 'Passwords must contain at least 8 characters.'

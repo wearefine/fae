@@ -4,6 +4,7 @@ module Fae
 
     def index
       raise 'Fae.netlify configs are missing.' if Fae.netlify.blank?
+      @publish_hooks = PublishHook.all
     end
 
     def deploys_list
