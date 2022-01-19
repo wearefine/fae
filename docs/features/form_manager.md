@@ -34,7 +34,7 @@ After updating the FAE gem and bundling
 Replace
 
 ```slim
-<%= simple_form_for(['admin', @item]) do |f| %>
+<%= simple_form_for([:admin, @item]) do |f| %>
 ```
 
 With
@@ -49,7 +49,7 @@ ruby:
       }
     }
   }
-= simple_form_for(['admin', @item], form_options) do |f|
+= simple_form_for([:admin, @item], form_options) do |f|
 ```
 
 ### Pages / Content Blocks
@@ -83,7 +83,7 @@ ruby:
 Replace
 
 ```slim
-= simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
+= simple_form_for([:admin, @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
 ```
 
 With
@@ -103,7 +103,7 @@ ruby:
       }
     }
   }
-= simple_form_for(['admin', @item], form_options) do |f|
+= simple_form_for([:admin, @item], form_options) do |f|
 ```
 
 Then at the bottom of the form, after
@@ -132,7 +132,7 @@ ruby:
       }
     }
   }
-= simple_form_for(['admin', @item], form_options) do |f|
+= simple_form_for([:admin, @item], form_options) do |f|
   = fae_input f, :name, input_class: 'slugger'
   = fae_input f, :slug, helper_text: 'default'
 

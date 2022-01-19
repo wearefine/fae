@@ -67,7 +67,7 @@ Finally, to display the language select menu, you'll need to add `languages: tru
 
 `app/views/admin/people/_form.html.slim`
 ```slim
-= simple_form_for(['admin', @item]) do |f|
+= simple_form_for([:admin, @item]) do |f|
   = render 'fae/shared/form_header', header: @klass_name, languages: true
 
   // ...
