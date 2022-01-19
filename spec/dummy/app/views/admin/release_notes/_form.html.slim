@@ -12,7 +12,7 @@ ruby:
 			}
 		}
 	}
-= simple_form_for(['admin', @item], form_options) do |f|
+= simple_form_for([:admin, @item], form_options) do |f|
   = fae_input f, :title, helper_text: 'i shouldnt be here'
   = fae_input f, :body, helper_text: 'i shouldnt be here'
 

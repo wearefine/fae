@@ -76,7 +76,7 @@ Lastly, in the object form be sure to add the `static_page_id` as a hidden field
 
 ```ruby
 
-= simple_form_for(['admin', @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
+= simple_form_for([:admin, @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
   = f.hidden_field :static_page_id
 
   = f.submit
