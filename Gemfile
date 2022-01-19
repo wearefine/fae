@@ -43,3 +43,5 @@ gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
 gem 'mysql2'
+
+gem 'mimemagic', '~> 0.3.10'

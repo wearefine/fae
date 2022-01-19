@@ -76,11 +76,11 @@ Fae.form.formManager = {
 
       if ($captionContainer) {
         var captionLabel = fieldSettings.label + ' Caption';
-        _this._setupField($captionContainer, captionLabel, null);
+        _this._setupField($captionContainer, captionLabel, '');
       }
       if ($altContainer) {
         var altLabel = fieldSettings.label + ' Alt Text';
-        _this._setupField($altContainer, altLabel, null);
+        _this._setupField($altContainer, altLabel, '');
       }
     }
   },
@@ -98,7 +98,7 @@ Fae.form.formManager = {
       var $labelsCheckbox = $labelTextEl.find('input');
 
       var newLabelText = '';
-      if ($container.hasClass('required') || $label.hasClass('required')) {
+      if ($container.hasClass('required') || $label.hasClass('required') || $labelInner.text().indexOf('*') !== -1) {
         newLabelText = _this.requiredEl;
       }
 
@@ -109,20 +109,26 @@ Fae.form.formManager = {
         $labelTextEl.append($labelsCheckbox);
       }
 
-      if (overriddenHelper) {
-        $label.removeClass('has_no_helper_text');
+      // Don't mess with image alt text or caption helpers
+      if ($container.attr('class').indexOf('alt_container') !== -1
+          || $container.attr('class').indexOf('caption_container') !== -1
+         ) {
+        return;
+      }
 
-        // Main form and nested form markup differs, deal with it
-        if ($container.find('h6').length) {
-          $label.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
+      // Just do the helper thing no matter what, aka allow empty
+      $label.removeClass('has_no_helper_text');
+
+      // Main form and nested form markup differs, deal with it
+      if ($container.find('h6').length) {
+        $label.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
+      } else {
+        if ($helperTextContainerEl.length) {
+          $helperTextContainerEl.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
         } else {
-          if ($helperTextContainerEl.length) {
-            $helperTextContainerEl.find('.'+_this.helperTextTextElClass).text(overriddenHelper);
-          } else {
-            $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: overriddenHelper}));
-          }
-          $label.append($helperTextContainerEl);
+          $helperTextContainerEl = $('<h6 />', {class: 'helper_text'}).append($('<span />', {class: 'helper_text_text', text: overriddenHelper}));
         }
+        $label.append($helperTextContainerEl);
       }
     }
   },
