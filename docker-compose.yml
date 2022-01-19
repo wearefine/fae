@@ -3,17 +3,16 @@
     gems:
   services:
     app:
+      stdin_open: true
+      tty: true
       build: .
-      command: /bin/bash -c "bundle check || bundle install && cd spec/dummy && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
+      working_dir: /app/spec/dummy
+      command: /bin/bash -c "bundle check || bundle install && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
       volumes:
         - gems:/gems
         - .:/app
-        # Uncomment below to run your local fae gem for debugging
-        # - ~/path/to/fae:/fae
-        # - ~/path/to/spec-importer:/spec-importer
       ports:
         - '3000:3000'
-        - '35729:35729'
       depends_on:
         - db
       environment:
@@ -21,10 +20,8 @@
         - DEV_MYSQL_HOST=db
         # - FINE_NETLIFY_API_TOKEN=
         # - FINE_NETLIFY_API_USER=
-      tty: true
-      stdin_open: true
     db:
-      image: mariadb:10.4
+      image: mariadb:10.2
       environment:
         - MYSQL_ROOT_PASSWORD=
         - MYSQL_ALLOW_EMPTY_PASSWORD='yes'

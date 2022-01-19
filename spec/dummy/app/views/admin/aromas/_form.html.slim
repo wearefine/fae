@@ -12,7 +12,7 @@ ruby:
       }
     }
   }
-= simple_form_for(['admin', @item], form_options) do |f|
+= simple_form_for([:admin, @item], form_options) do |f|
   = fae_input f, :name, input_class: 'slugger'
   = fae_input f, :slug, helper_text: 'default'
   = fae_input f, :description
