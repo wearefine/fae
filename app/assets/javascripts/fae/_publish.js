@@ -98,8 +98,8 @@ Fae.publish = {
     if (!_this.deployFinished) {
       _this.notifyIdle();
       _this.enableButtons();
-      _this.refreshProductionChangesList();
-      _this.refreshStagingChangesList();
+      // _this.refreshProductionChangesList();
+      // _this.refreshStagingChangesList();
       _this.deployFinished = true;
     }
   },
