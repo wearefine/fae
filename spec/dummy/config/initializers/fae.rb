@@ -25,7 +25,6 @@ Fae.setup do |config|
     site: 'fine-pss',
     site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
     api_base: 'https://api.netlify.com/api/v1/'
-    }
   }
 
 end

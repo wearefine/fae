@@ -1,6 +1,6 @@
 module Fae
   class PublishController < ApplicationController
-    before_action :super_admin_only
+    before_action :admin_only
 
     def index
       raise 'Fae.netlify configs are missing.' if Fae.netlify.blank?
