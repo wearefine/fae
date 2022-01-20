@@ -17,8 +17,6 @@ Fae.publish = {
     this.pollInterval             = 5000;
     this.idleStates               = ['ready', 'error']
 
-    // this.refreshProductionChangesList();
-    // this.refreshStagingChangesList();
     this.publishButtonListener();
     this.pollDeployStatus();
     this.notifyIdle();
@@ -45,18 +43,6 @@ Fae.publish = {
         _this.drawTables(data);
         _this.stateChecks(data);
       }
-    });
-  },
-
-  refreshProductionChangesList: function() {
-    $.get('/admin/publish/changes_list?env=production', function (data) {
-      $('.js-production-changes-list').html(data);
-    });
-  },
-
-  refreshStagingChangesList: function() {
-    $.get('/admin/publish/changes_list?env=staging', function (data) {
-      $('.js-staging-changes-list').html(data);
     });
   },
 
@@ -98,8 +84,6 @@ Fae.publish = {
     if (!_this.deployFinished) {
       _this.notifyIdle();
       _this.enableButtons();
-      // _this.refreshProductionChangesList();
-      // _this.refreshStagingChangesList();
       _this.deployFinished = true;
     }
   },

@@ -11,10 +11,6 @@ module Fae
       render json: Fae::NetlifyApi.new().get_deploys
     end
 
-    def changes_list
-      render partial: 'changes_list', locals: { changes: Fae::Change.since_last_deploy(params[:env]) }
-    end
-
     def publish_site
       if Fae::NetlifyApi.new().run_deploy(params['build_hook_type'], current_user)
         return render json: { success: true }

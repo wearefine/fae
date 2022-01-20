@@ -71,11 +71,8 @@ Fae.setup do |config|
   # config.netlify = {
   #   api_user: ENV['FINE_NETLIFY_API_USER'],
   #   api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-  #   site: 'nelson-global',
+  #   site: 'netlify-site-name',
   #   site_id: '',
-  #   api_base: 'https://api.netlify.com/api/v1/',
-  #   production_build_hook: '',
-  #   staging_build_hook: '',
-  #   development_build_hook: ''
+  #   api_base: 'https://api.netlify.com/api/v1/'
   # }
 end

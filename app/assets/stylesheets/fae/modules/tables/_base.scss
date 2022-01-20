@@ -16,10 +16,6 @@ tbody {
     &:first-child {
       border-left: 3px solid transparent; // this blends it in to the background
     }
-
-    &.state {
-      font-weight: bold;
-    }
   }
 
   tr {
