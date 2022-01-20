@@ -15,6 +15,7 @@ Fae.publish = {
     this.buttonsEnabled           = true;
     this.pollTimeout              = null;
     this.pollInterval             = 5000;
+    this.idleStates               = ['ready', 'error']
 
     // this.refreshProductionChangesList();
     // this.refreshStagingChangesList();
@@ -113,14 +114,16 @@ Fae.publish = {
   },
 
   getRunningDeploys: function(data) {
+    var _this = this;
     return data.filter(function(deploy) {
-      return $.inArray(deploy.state, ['ready', 'error']) === -1;
+      return $.inArray(deploy.state, _this.idleStates) === -1;
     });
   },
 
   getPastDeploys: function(data) {
+    var _this = this;
     return data.filter(function(deploy) {
-      return $.inArray(deploy.state, ['ready', 'error']) !== -1;
+      return $.inArray(deploy.state, _this.idleStates) !== -1;
     });
   },
 
@@ -132,9 +135,7 @@ Fae.publish = {
           $('<td>').text(deploy.commit_ref !== null ? 'FINE dev update' : deploy.title),
           $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
           $('<td>').text(_this.deployDuration(deploy)),
-          // $('<td>').text(deploy.branch),
           $('<td>').text(_this.deployEnvironment(deploy)),
-          // $('<td class="state">').text(deploy.state === 'ready' ? 'complete' : deploy.state),
           $('<td>').text(_this.valCheck(deploy.error_message)),
         ])
       );
@@ -157,9 +158,10 @@ Fae.publish = {
   },
 
   deployIsRunning: function(data) {
+    var _this = this;
     var running = false;
     $.each(data, function(i, deploy) {
-      if(['error', 'ready'].indexOf(deploy.state) === -1) {
+      if(_this.idleStates.indexOf(deploy.state) === -1) {
         running = true;
         return false;
       }
