@@ -92,8 +92,11 @@ Fae.form.select = {
         })
       });
 
-      // Add actions to wraper
-      $deselect_all_action.insertAfter($chosen);
+      // prevent duplicate link from being added when nested form re-renders on the page after saving
+      if (!$('.js-multiselect-action-deselect_all').length > 0) {
+        // Add actions to wraper
+        $deselect_all_action.insertAfter($chosen);
+      }
 
       // Add special "Select All" option and notify Chosen of new option
       addSelectAllOption($element)
