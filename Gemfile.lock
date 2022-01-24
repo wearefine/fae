@@ -368,6 +368,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.4.1)
   fae-rails!
   guard-rspec (~> 4.7.3)
+  mimemagic (~> 0.3.10)
   mysql2
   pry
   rails (~> 5.2.0)
@@ -383,4 +384,4 @@ DEPENDENCIES
   yarjuf
 
 BUNDLED WITH
-   1.17.0
+   1.17.3
