@@ -10,12 +10,12 @@ Fae.publish = {
 
   ready: function() {
     if (!$('body').hasClass('publish')) return false;
-    this.$publishButtons          = $('.js-run-build');
-    this.deployFinished           = true;
-    this.buttonsEnabled           = true;
-    this.pollTimeout              = null;
-    this.pollInterval             = 5000;
-    this.idleStates               = ['ready', 'error']
+    this.$publishButtons = $('.js-run-build');
+    this.deployFinished  = true;
+    this.buttonsEnabled  = true;
+    this.pollTimeout     = null;
+    this.pollInterval    = 5000;
+    this.idleStates      = ['ready', 'error']
 
     this.publishButtonListener();
     this.pollDeployStatus();
@@ -28,8 +28,7 @@ Fae.publish = {
     _this.$publishButtons.click(function(e) {
       e.preventDefault();
       _this.disableButtons();
-      var $button = $(this);
-      var build_hook_type = $button.data('build-hook-type');
+      var build_hook_type = $(this).data('build-hook-type');
       $.post( '/admin/publish/publish_site', { build_hook_type: build_hook_type }, function(data) {
         // Netlify returns nothing for deploy hook posts
       });
