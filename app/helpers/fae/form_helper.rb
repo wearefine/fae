@@ -50,7 +50,8 @@ module Fae
 
     def fae_checkbox(f, attribute, options={})
       options[:type] ||= 'stacked'
-      options.update(as: :check_boxes, wrapper_class: "checkbox-wrapper js-checkbox-wrapper #{options[:wrapper_class]} -#{options[:type]}", no_label_div: true)
+      options[:input_type] ||= :check_boxes
+      options.update(as: options[:input_type], wrapper_class: "input checkbox-wrapper js-checkbox-wrapper #{options[:wrapper_class]} -#{options[:type]}", no_label_div: true)
       association_or_input f, attribute, options
     end
 
