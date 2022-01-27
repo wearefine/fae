@@ -9,7 +9,7 @@ header.main-header#js-main-header
           li class=nav_active_class(item[:class_name], 0, idx)
             a href=item[:nested_path] = item[:text]
             - if item[:subitems].present?
-              ul
+              ul class=multi_column_nav_ul_class(item[:subitems])
                 - item[:subitems].each_with_index do |subitem, sub_idx|
                   li: a href=subitem[:nested_path] class=nav_active_class(subitem[:class_name], 1, sub_idx, idx) = subitem[:text]
 
