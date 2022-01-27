@@ -10,7 +10,6 @@ Fae.form.ajax = {
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
-    this.$nested_form = $('.nested-form');
 
     this.addEditLinks();
     this.addEditSubmission();
@@ -66,6 +65,8 @@ Fae.form.ajax = {
         $wrapper.html(data).css('height', '').find('.select select').fae_chosen();
         $wrapper.find('.input.file').fileinputer();
       }
+
+      this.$nested_form = $('.nested-form');
 
       // Bind validation to nested form fields added by AJAX
       Fae.form.validator.bindValidationEvents(this.$nested_form);
