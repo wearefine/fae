@@ -96,7 +96,7 @@ describe Fae::ViewHelper do
       item = FactoryGirl.create(:coach)
 
       # as a Rails path helper
-      expect( fae_delete_button(item, ['admin', item.team, item]) ).to match /\/admin\/teams\/\d+\/coaches\/\d+/
+      expect( fae_delete_button(item, [:admin, item.team, item]) ).to match /\/admin\/teams\/\d+\/coaches\/\d+/
 
       # as a string
       expect( fae_delete_button(item, '/admin/custom/route') ).to match /\/admin\/custom\/route/

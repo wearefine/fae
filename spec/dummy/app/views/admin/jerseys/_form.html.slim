@@ -1,4 +1,4 @@
-= simple_form_for(['admin', @item]) do |f|
+= simple_form_for([:admin, @item]) do |f|
   == render 'fae/shared/form_header', header: @klass_name
 
   main.content

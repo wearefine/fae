@@ -13,6 +13,10 @@ button[type=button],
   line-height: 1;
 }
 
+.publish .button {
+  margin-right: 10px;
+}
+
 // Dark buttons
 
 input[type=submit],
@@ -46,6 +50,13 @@ button[type=button],
 
   &:hover {
     background: $c-light-button-gradient-end;
+  }
+
+  &:disabled {
+    background: $c-light-button-gradient-end;
+    color: $c-mid-grey;
+    border-color: $c-grey;
+    cursor: wait;
   }
 }
 

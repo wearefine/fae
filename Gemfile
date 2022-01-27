@@ -14,7 +14,7 @@ gemspec
 # gem 'debugger'
 
 # Set the version of Rails for the dummy app
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 5.2.6'
 
 # Lock in Rake to a version compatible with rspec-rails 3.0
 gem 'rake', '< 12.0.0'
@@ -43,5 +43,3 @@ gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
 gem 'mysql2'
-
-gem 'mimemagic', '~> 0.3.10'

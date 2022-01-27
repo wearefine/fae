@@ -14,6 +14,9 @@ feature 'fae_nested_index_table' do
       fill_in 'Name', with: 'Fuzzball'
       click_button('Create Cat')
     end
+
+    sleep 5.seconds 
+
     expect(page.find('.cats .content table')).to have_content('Fuzzball')
   end
 
@@ -50,6 +53,8 @@ feature 'fae_nested_index_table' do
     expect(page.find('.cats .content table')).to have_content('Snowball McPuffypants')
 
     page.find("tr#cats_#{cat.id} .js-delete-link").click
+
+    sleep 5.seconds
 
     expect(page.find('.cats .content table')).to_not have_content('Snowball McPuffypants')
   end

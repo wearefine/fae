@@ -40,7 +40,7 @@ end
 In your form view nest the optional fields, and add some classes for js and sass. In this case we are looking at the project form.
 
 ```ruby
-= simple_form_for(['admin', @item]) do |f|
+= simple_form_for([:admin, @item]) do |f|
   ...
 
   .content

@@ -17,6 +17,7 @@ spec/dummy/public/uploads/*
 .rvmrc
 .ruby-gemset
 .ruby-version
+.rbenv-gemsets
 .DS_Store
 
 .rubocop.yml
@@ -24,3 +25,5 @@ spec/dummy/public/uploads/*
 *.gem
 
 /vendor
+
+docker-compose.override.yml

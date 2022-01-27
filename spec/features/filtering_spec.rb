@@ -21,7 +21,9 @@ feature 'filtering' do
     FactoryGirl.create(:release, name: 'Release 3', wine: white)
 
     admin_login
+
     visit admin_releases_path + "#?wine=#{red.id}"
+    sleep 5.seconds
     expect(page).to have_content 'Release 1'
     expect(page).to have_content 'Release 2'
     expect(page).to_not have_content 'Release 3'
@@ -46,6 +48,8 @@ feature 'filtering' do
 
     admin_login
     visit "#{fae.activity_log_path}#?start_date=#{URI.escape((now - 2.weeks).to_s)}"
+    sleep 5.seconds
+
     expect(page).to_not have_content 'Release 1'
     expect(page).to_not have_content 'Release 2'
     expect(page).to have_content 'Release 3'
