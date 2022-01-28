@@ -11,6 +11,7 @@
 ```ruby
 Fae.setup do |config|
 
+  ## Netlify configs
   # Environment variables are recommended for any sensitive Netlify configuration details.
   config.netlify = {
     api_user: 'netlify-api-user',
