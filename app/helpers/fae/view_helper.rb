@@ -40,9 +40,9 @@ module Fae
 
       link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do
         '<div class="slider-options">
-          <div class="slider-option slider-option-yes">Yes</div>
+          <div class="slider-option slider-option-yes" aria-live="polite">Yes</div>
           <div class="slider-option-selector"></div>
-          <div class="slider-option slider-option-no">No</div>
+          <div class="slider-option slider-option-no" aria-live="polite">No</div>
         </div>'.html_safe
       end
     end

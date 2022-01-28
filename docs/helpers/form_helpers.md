@@ -116,12 +116,13 @@ fae_checkbox
 | option | type | default | description |
 | ------ | ---- | ------- | ----------- |
 | type | 'stacked' or 'inline' | stacked | determines how multiple checkboxes are displayed |
+| input_type | :boolean or :check_boxes | :check_boxes | use :boolean for single true/false input
 
 **Examples**
 
-A single attribute checkbox
+A single attribute checkbox to save a boolean
 ```ruby
-fae_checkbox f, :active
+fae_checkbox f, :active, input_type: :boolean
 ```
 
 Inline has_many collection of checkboxes

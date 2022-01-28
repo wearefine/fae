@@ -1,0 +1,50 @@
+$col_width: 176px;
+$col_width_padding: 36px;
+
+header.main-header ul ul.multicol-nav {
+  min-height: auto;
+  max-height: 1024px!important;
+  left: -($col_width * .5);
+}
+.main-header-nav li:nth-of-type(n+5) ul.multicol-nav.three,
+.main-header-nav li ul.multicol-nav.four,
+.main-header-nav li:nth-of-type(n+7) ul.multicol-nav {
+  left: -($col_width * 0.75);
+}
+.main-header-nav li:nth-of-type(n+6) ul.multicol-nav.three,
+.main-header-nav li:nth-of-type(n+2) ul.multicol-nav.four,
+.main-header-nav li:nth-of-type(n+8) ul.multicol-nav {
+  left: -($col_width * 1);
+}
+
+.main-header-nav li:nth-of-type(n+7) ul.multicol-nav.three,
+.main-header-nav li:nth-of-type(n+3) ul.multicol-nav.four {
+  left: -($col_width * 1.25);
+}
+
+.main-header-nav li:nth-of-type(n+8) ul.multicol-nav.three,
+.main-header-nav li:nth-of-type(n+4) ul.multicol-nav.four {
+  left: -($col_width * 1.75);
+}
+
+.main-header-nav li:nth-of-type(n+5) ul.multicol-nav.four {
+  left: -($col_width * 2.25);
+}
+.main-header-nav li:nth-of-type(n+6) ul.multicol-nav.four {
+  left: -($col_width * 2.5);
+}
+.main-header-nav li:nth-of-type(n+7) ul.multicol-nav.four {
+  left: -($col_width * 3);
+}
+
+
+.multicol-nav {
+  display: grid;
+  grid-template-columns: $col_width $col_width;
+  &.three {
+    grid-template-columns: $col_width $col_width $col_width;
+  }
+  &.four {
+    grid-template-columns: $col_width $col_width $col_width $col_width;
+  }
+}
