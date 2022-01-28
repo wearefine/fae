@@ -1,25 +1,25 @@
 require 'spec_helper'
 
-feature 'Publish' do
+feature 'Deploy' do
 
   before(:each) do
     admin_login
-    FactoryGirl.create(:fae_publish_hook, environment: 'Production')
-    FactoryGirl.create(:fae_publish_hook, environment: 'Staging')
-    FactoryGirl.create(:fae_publish_hook, environment: 'Development')
+    FactoryGirl.create(:fae_deploy_hook, environment: 'Production')
+    FactoryGirl.create(:fae_deploy_hook, environment: 'Staging')
+    FactoryGirl.create(:fae_deploy_hook, environment: 'Development')
   end
 
   # test drawing both tables
 
   scenario 'draws buttons', js: true do
-    visit fae.publish_path
-    expect(page).to have_button('Publish Production', disabled: true)
-    expect(page).to have_button('Publish Staging', disabled: true)
-    expect(page).to have_button('Publish Development', disabled: true)
+    visit fae.deploy_path
+    expect(page).to have_button('Deploy Production', disabled: true)
+    expect(page).to have_button('Deploy Staging', disabled: true)
+    expect(page).to have_button('Deploy Development', disabled: true)
   end
 
   scenario 'draws deploying table', js: true do
-    visit fae.publish_path
+    visit fae.deploy_path
     expect(page).to have_content('DEPLOYING')
     expect(page).to have_content('Staging building')
     expect(page).to have_content('10/22/2021 2:57 pm')
@@ -27,7 +27,7 @@ feature 'Publish' do
   end
 
   scenario 'draws past deploys table', js: true do
-    visit fae.publish_path
+    visit fae.deploy_path
     expect(page).to have_content('PAST DEPLOYS')
     expect(page).to have_content('FINE dev update')
     expect(page).to have_content('FINE admin triggered a Staging build')
@@ -40,7 +40,7 @@ feature 'Publish' do
   #   old_beer = FactoryGirl.create(:beer, name: 'Old Beer')
   #   old_beer.tracked_changes.first.update_columns(updated_at: DateTime.new(2020, 10, 20))
 
-  #   visit fae.publish_path
+  #   visit fae.deploy_path
 
   #   within('#production_changes') do
   #     expect(page).to have_content('New Beer')

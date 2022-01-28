@@ -1,0 +1,7 @@
+= simple_form_for(@deploy_hook) do |f|
+  - title = "#{params[:action]} Deploy Hook".titleize
+  == render 'fae/shared/form_header', header: 'Deploy', title: title
+
+  main.content
+    = fae_input f, :environment
+    = fae_input f, :url

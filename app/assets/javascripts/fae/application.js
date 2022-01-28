@@ -58,7 +58,7 @@
 
 //= require fae/_modals
 //= require fae/_tables
-//= require fae/_publish
+//= require fae/_deploy
 
 //= require fae
 

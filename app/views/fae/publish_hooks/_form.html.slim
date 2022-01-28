@@ -1,7 +1,0 @@
-= simple_form_for(@publish_hook) do |f|
-  - title = "#{params[:action]} Publish Hook".titleize
-  == render 'fae/shared/form_header', header: 'User', title: title
-
-  main.content
-    = fae_input f, :environment
-    = fae_input f, :url

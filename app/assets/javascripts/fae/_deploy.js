@@ -2,42 +2,54 @@
 /* global Fae, modal, FCH */
 
 /**
- * Fae publish
+ * Fae deploy
  * @namespace
  */
 
-Fae.publish = {
+Fae.deploy = {
 
   ready: function() {
-    if (!$('body').hasClass('publish')) return false;
-    this.$publishButtons = $('.js-run-build');
+    if (!$('body').hasClass('deploy')) return false;
+    this.$deployButtons = $('.js-run-deploy');
     this.deployFinished  = true;
     this.buttonsEnabled  = true;
     this.pollTimeout     = null;
     this.pollInterval    = 5000;
     this.idleStates      = ['ready', 'error']
 
-    this.publishButtonListener();
     this.pollDeployStatus();
+    this.deployButtonListener();
+    this.documentFocusListener();
     this.notifyIdle();
     this.refreshDeploysListAndStatuses();
   },
 
-  publishButtonListener: function() {
+  deployButtonListener: function() {
     var _this = this;
-    _this.$publishButtons.click(function(e) {
+    _this.$deployButtons.click(function(e) {
       e.preventDefault();
       _this.disableButtons();
-      var build_hook_type = $(this).data('build-hook-type');
-      $.post( '/admin/publish/publish_site', { build_hook_type: build_hook_type }, function(data) {
+      var deploy_hook_type = $(this).data('build-hook-type');
+      $.post( '/admin/deploy/deploy_site', { deploy_hook_type: deploy_hook_type }, function(data) {
         // Netlify returns nothing for deploy hook posts
       });
     });
   },
 
+  documentFocusListener: function() {
+    var _this = this;
+    document.addEventListener('visibilitychange', function(ev) {
+      if (document.visibilityState === 'visible') {
+        _this.pollDeployStatus();
+      } else if (document.visibilityState === 'hidden') {
+        _this.destroyPoll();
+      }
+    });
+  },
+
   refreshDeploysListAndStatuses: function() {
     var _this = this;
-    $.get('/admin/publish/deploys_list', function (data) {
+    $.get('/admin/deploy/deploys_list', function (data) {
       if (data) {
         _this.drawTables(data);
         _this.stateChecks(data);
@@ -54,6 +66,10 @@ Fae.publish = {
     poll();
   },
 
+  destroyPoll: function() {
+    clearTimeout(this.pollTimeout);
+  },
+
   notifyRunning: function() {
     $('.deploying-heading').addClass('running');
   },
@@ -66,7 +82,7 @@ Fae.publish = {
     var _this = this;
     if (!_this.buttonsEnabled) {
       _this.buttonsEnabled = true;
-      _this.$publishButtons.prop('disabled', false);
+      _this.$deployButtons.prop('disabled', false);
     }
   },
 
@@ -74,7 +90,7 @@ Fae.publish = {
     var _this = this;
     if (_this.buttonsEnabled) {
       _this.buttonsEnabled = false;
-      _this.$publishButtons.prop('disabled', true);
+      _this.$deployButtons.prop('disabled', true);
     }
   },
 
