@@ -1,4 +1,4 @@
-# require 'devise'
+require 'devise'
 
 module Fae
   class Engine < ::Rails::Engine
