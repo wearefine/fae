@@ -1,4 +1,4 @@
-require 'devise'
+# require 'devise'
 require 'judge'
 require_relative 'validation_helper_collection'
 
