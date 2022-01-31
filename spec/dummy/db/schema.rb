@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_18_195219) do
+ActiveRecord::Schema.define(version: 2022_01_28_134117) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -118,6 +118,14 @@ ActiveRecord::Schema.define(version: 2022_01_18_195219) do
     t.index ["user_id"], name: "index_fae_changes_on_user_id"
   end
 
+  create_table "fae_deploy_hooks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "url"
+    t.string "environment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["environment"], name: "index_fae_deploy_hooks_on_environment"
+  end
+
   create_table "fae_files", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "asset"
@@ -174,14 +182,6 @@ ActiveRecord::Schema.define(version: 2022_01_18_195219) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
-  end
-
-  create_table "fae_publish_hooks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "url"
-    t.string "environment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["environment"], name: "index_fae_publish_hooks_on_environment"
   end
 
   create_table "fae_roles", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

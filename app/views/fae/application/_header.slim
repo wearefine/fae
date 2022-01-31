@@ -9,7 +9,7 @@ header.main-header#js-main-header
           li class=nav_active_class(item[:class_name], 0, idx)
             a href=item[:nested_path] = item[:text]
             - if item[:subitems].present?
-              ul
+              ul class=multi_column_nav_ul_class(item[:subitems])
                 - item[:subitems].each_with_index do |subitem, sub_idx|
                   li: a href=subitem[:nested_path] class=nav_active_class(subitem[:class_name], 1, sub_idx, idx) = subitem[:text]
 
@@ -30,9 +30,10 @@ header.main-header#js-main-header
             li: a href=fae.users_path = t('fae.navbar.users')
             li: a href=fae.activity_log_path = t('fae.navbar.activity_log')
           - if current_user.super_admin_or_admin? && Fae.netlify.present?
-            li: a href=fae.publish_path = t('fae.navbar.publish')
+            li: a href=fae.deploy_path = t('fae.navbar.deploy')
           - if current_user.super_admin?
-            li: a href=fae.publish_hooks_path = t('fae.navbar.publish_hooks')
+            li: a href=fae.option_path = t('fae.navbar.root_settings')
+            li: a href=fae.deploy_hooks_path = t('fae.navbar.deploy_hooks')
           - if @option.live_url.present?
             li: a href=@option.live_url target="_blank" = t('fae.application.live_site')
           - if @option.stage_url.present?

@@ -56,7 +56,7 @@ label.checkbox,
 
 label.checkbox.focused:before,
 .checkbox.focused label:before {
-  border-color: $c-notice-content;
+  border-color: $c-focus-border;
 }
 
 .checkbox-wrapper {

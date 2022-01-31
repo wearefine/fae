@@ -58,6 +58,7 @@ https://www.faecms.com/documentation
 * [Slugger](docs/features/slugger.md)
 * [Disabling Environments](docs/features/disable_envs.md)
 * [Form Field Label & Helper Text Manager](docs/features/form_manager.md)
+* [Netlify Deploy Monitor](docs/features/netlify.md)
 
 
 ### Tutorials

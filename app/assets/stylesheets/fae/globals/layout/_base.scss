@@ -33,8 +33,7 @@
     text-transform: uppercase;
     font-size: 14px;
     letter-spacing: .2em;
-    // counters the padding from .content
-    margin: 0 negate($content-buffer) 30px;
+    margin: 0 0 30px;
   }
 
   h3 {

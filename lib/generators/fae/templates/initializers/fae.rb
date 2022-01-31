@@ -67,12 +67,12 @@ Fae.setup do |config|
   # config.use_form_manager = true
 
   ## Netlify configs
-  # Environment variables are recommended for sensitive info.
-  # config.netlify = {
-  #   api_user: ENV['FINE_NETLIFY_API_USER'],
-  #   api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-  #   site: 'netlify-site-name',
-  #   site_id: '',
-  #   api_base: 'https://api.netlify.com/api/v1/'
-  # }
+  # Environment variables are recommended for any sensitive Netlify configuration details.
+  config.netlify = {
+    api_user: 'netlify-api-user',
+    api_token: 'netlify-api-token',
+    site: 'site-name-in-netlify',
+    site_id: 'site-id-in-netlify',
+    api_base: 'https://api.netlify.com/api/v1/'
+  }
 end

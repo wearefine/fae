@@ -1,5 +1,5 @@
 module Fae
-  class PublishHook < ApplicationRecord
+  class DeployHook < ApplicationRecord
     include Fae::BaseModelConcern
 
     default_scope { order(:environment) }
