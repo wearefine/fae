@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_134117) do
+ActiveRecord::Schema.define(version: 2022_02_02_153906) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -123,7 +123,9 @@ ActiveRecord::Schema.define(version: 2022_01_28_134117) do
     t.string "environment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["environment"], name: "index_fae_deploy_hooks_on_environment"
+    t.index ["position"], name: "index_fae_deploy_hooks_on_position"
   end
 
   create_table "fae_files", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
