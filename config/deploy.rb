@@ -38,6 +38,7 @@ namespace :deploy do
   desc 'Symlink secrets.yml'
   task :symlink_secrets do
     on roles(:app) do
+      execute "rm #{release_path}/spec/dummy/config/secrets.yml"
       execute "ln -s #{shared_path}/secrets.yml #{release_path}/spec/dummy/config/secrets.yml"
     end
   end
