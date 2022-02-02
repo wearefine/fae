@@ -2,15 +2,18 @@
 == render 'fae/shared/index_header', title: t('fae.navbar.deploy_hooks'), new_button: true, button_text: t('fae.deploy_hook.add_deploy_hook'), breadcrumbs: false
 
 main.content
-  table.js-sort-column
+  table.js-sort-row
     thead
       tr
+        th.th-sortable-handle
         th = t('fae.deploy_hooks.environment')
         th = t('fae.deploy_hooks.url')
         th.-action data-sorter="false"
     tbody
       - @deploy_hooks.each do |deploy_hook|
         tr id="fae_deploy_hook_#{deploy_hook.id}"
+          td.sortable-handle
+            i.icon-sort
           td: a href=edit_deploy_hook_path(deploy_hook) #{deploy_hook.environment}
           td = deploy_hook.url
           td = fae_delete_button deploy_hook, deploy_hook
