@@ -2,47 +2,63 @@
 .slider-wrapper {
   display: block;
   position: relative;
-  width: 60px;
-  border: 1px solid $c-mid-grey;
-  border-radius: 2px;
+  width: 50px;
+  border-radius: 15px;
+  height: 25px;
   font-size: 12px;
-  overflow: hidden;
   cursor: pointer;
   text-decoration: none;
-  background: $c-white;
-}
-
-.slider-options {
-  @include transition(left .2s);
-  position: relative;
-  left: -35px;
-  white-space: nowrap;
-
-  .slider-yes-selected & {
-    left: 0;
+  background: $c-light-grey;
+  transition: background-color 0.24s;
+  &:hover, &:focus {
+    background-color: $c-mid-grey;
+  }
+  &.slider-yes-selected {
+    background: $c-custom-highlight;
   }
 }
 
+.slider-options {
+  @include transition(left .24s);
+  white-space: nowrap;
+}
+
 .slider-option-selector {
-  display: inline-block;
-  width: 18px;
+  display: block;
+  position: absolute;
+  width: 50%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 100%;
+  border: 1px solid $c-mid-grey;
+  transition: left 0.24s;
+  .slider-yes-selected & {
+    left: 50%;
+  }
+  background: $c-white;
 }
 
 .slider-option-no,
 .slider-option-yes {
-  @include user-select(none);
-  display: inline-block;
-  width: 35px;
-  padding: 3px 4px;
-  text-align: center;
+  position: absolute;
+  height: 0;
+  width: 0;
+  left: -200vw;
 }
 
 .slider-option-no {
-  color: $c-slider-no-color;
-  background: $c-slider-no-bg;
+  display:block;
+  .slider-yes-selected & {
+    display: none;
+  }
 }
 
 .slider-option-yes {
-  color: $c-white;
-  background: $c-custom-highlight;
+  display: none;
+  .slider-yes-selected & {
+    display:block;
+  }
 }

@@ -11,6 +11,6 @@ textarea {
   border-radius: 2px;
 
   &:focus {
-    border-color: $c-notice-content;
+    border-color: $c-focus-border;
   }
 }

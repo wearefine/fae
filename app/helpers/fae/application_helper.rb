@@ -110,5 +110,15 @@ module Fae
       "#{item.class.name.underscore.gsub('/', '_').pluralize}_#{item.id}"
     end
 
+    def multi_column_nav_ul_class(item_count)
+      num = item_count.length
+      if num > 30
+        'multicol-nav four'
+      elsif num > 20
+        'multicol-nav three'
+      elsif num > 10
+        'multicol-nav'
+      end
+    end
   end
 end
