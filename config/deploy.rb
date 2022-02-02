@@ -38,7 +38,7 @@ namespace :deploy do
   desc 'Symlink secrets.yml'
   task :symlink_secrets do
     on roles(:app) do
-      execute "ln -s #{shared_path}/secrets.yml #{release_path}/config/secrets.yml"
+      execute "ln -s #{shared_path}/secrets.yml #{release_path}/spec/dummy/config/secrets.yml"
     end
   end
 
@@ -68,6 +68,7 @@ namespace :deploy do
     end
   end
 
+  after 'deploy:updating', 'deploy:symlink_secrets'
   after :finishing, 'deploy:cleanup'
 
 end
