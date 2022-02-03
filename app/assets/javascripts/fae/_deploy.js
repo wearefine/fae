@@ -110,6 +110,7 @@ Fae.deploy = {
     $('.js-deploys-list').find('tbody').find('tr').remove();
     _this.injectTableDeployData(runningDeploys, $('.js-deploys-list.running').find('tbody'));
     _this.injectTableDeployData(pastDeploys, $('.js-deploys-list.past').find('tbody'));
+    Fae.navigation.lockFooter();
   },
 
   getRunningDeploys: function(data) {

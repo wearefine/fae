@@ -88,15 +88,14 @@ en:
         model: 'Model'
     deploy:
         page:
-          heading: 'Deploy'
+          heading: 'Deployments'
         ctas:
           deploy: 'Deploy'
         table:
           past_heading: 'Past Deploys'
           deploying_heading: 'Deploying'
-          deploying_helper: 'Activity is updated on a five-second interval and will reflect deploys spawned from other places.'
-          title: 'Deploys'
-          deployed: 'Deployed'
+          title: 'Activity'
+          deployed: 'Date/Time'
           duration: 'Duration'
           branch: 'Branch'
           committer: 'Committer'
