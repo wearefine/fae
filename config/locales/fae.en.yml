@@ -94,6 +94,7 @@ en:
         table:
           past_heading: 'Past Deploys'
           deploying_heading: 'Deploying'
+          deploying_helper: "After you've made changes to content in this CMS, you'll need to click one of the buttons above to deploy the corresponding environment to incorporate your changes.<br><br>NOTE: Only after the deploy moves from the \"Deploying\" table to the \"Past Deploys\" table will your changes be live and ready to review. Activity is updated on a five-second interval, and will also reflect deploys made by FINE."
           title: 'Activity'
           deployed: 'Date/Time'
           duration: 'Duration'

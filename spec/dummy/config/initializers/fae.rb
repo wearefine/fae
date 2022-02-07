@@ -19,12 +19,21 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
-  config.netlify = {
-    api_user: Rails.application.secrets.fine_netlify_api_user,
-    api_token: Rails.application.secrets.fine_netlify_api_token,
-    site: 'fine-pss',
-    site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
-    api_base: 'https://api.netlify.com/api/v1/'
-  }
-
+  if Rails.env.development?
+    config.netlify = {
+      api_user: ENV['FINE_NETLIFY_API_USER'],
+      api_token: ENV['FINE_NETLIFY_API_TOKEN'],
+      site: 'fine-pss',
+      site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
+      api_base: 'https://api.netlify.com/api/v1/'
+    }
+  else
+    config.netlify = {
+      api_user: Rails.application.secrets.fine_netlify_api_user,
+      api_token: Rails.application.secrets.fine_netlify_api_token,
+      site: 'fine-pss',
+      site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
+      api_base: 'https://api.netlify.com/api/v1/'
+    }
+  end
 end

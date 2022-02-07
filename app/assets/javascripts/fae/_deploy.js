@@ -72,10 +72,12 @@ Fae.deploy = {
 
   notifyRunning: function() {
     $('.deploying-heading').addClass('running');
+    $('#js-deploying-section').removeClass('hidden');
   },
 
   notifyIdle: function() {
     $('.deploying-heading').removeClass('running');
+    $('#js-deploying-section').addClass('hidden');
   },
 
   enableButtons: function() {
