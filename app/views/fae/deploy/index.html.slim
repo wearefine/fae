@@ -10,9 +10,9 @@ section.content
       button.button.deploy-button.js-run-deploy data-build-hook-type=deploy_hook.environment href="#" = "#{t('fae.deploy.ctas.deploy')} #{deploy_hook.environment.to_s.titleize}"
 
 section.content
-  p = t('fae.deploy.table.deploying_helper')
+  p = t('fae.deploy.table.deploying_helper').html_safe
 
-section.content#deploying
+section.content#js-deploying-section
   h2.deploying-heading = t('fae.deploy.table.deploying_heading')
   .js-deploys-list.running
     table
