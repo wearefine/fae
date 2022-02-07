@@ -94,6 +94,7 @@ en:
         table:
           past_heading: 'Past Deploys'
           deploying_heading: 'Deploying'
+          deploying_helper: ''
           title: 'Activity'
           deployed: 'Date/Time'
           duration: 'Duration'
