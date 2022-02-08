@@ -4,7 +4,7 @@
     ```
     # place immediately after FROM definition
     RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-    RUN apt-get update && apt-get install xvfb -y 
+    RUN apt-get update && apt-get install xvfb -y
     ```
 
 ## Setup DB
@@ -22,7 +22,7 @@
     ```
 <br>
 
-## Running tests on dummy app gemset
+## Running tests on dummy app gemset.
 1. Start a bash shell in containers /app directory
     ```
     docker-compose run -w /app app /bin/bash
