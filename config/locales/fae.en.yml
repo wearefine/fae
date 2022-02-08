@@ -58,7 +58,7 @@ en:
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
       no_results: 'No Results'
-      deploy: 'Deploy'
+      deployments: 'Deployments'
       deploy_hooks: 'Deploy Hooks'
     changes:
       recent: 'Recent Changes'
@@ -119,6 +119,7 @@ en:
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:
+      activity_log_heading: 'Activity Log'
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
       view_site: 'View Site'

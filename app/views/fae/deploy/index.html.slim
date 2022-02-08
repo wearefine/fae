@@ -1,8 +1,11 @@
-== render 'fae/shared/index_header', title: t('fae.deploy.page.heading'), new_button: false
+header.content-header.js-content-header
+  h1 = t('fae.deploy.page.heading')
+
+== render 'flash_messages'
 
 main.content
 
-  h1 = t('fae.deploy.page.heading')
+  / h1 = t('fae.deploy.page.heading')
 
 section.content
   - if Fae.netlify.present? && @deploy_hooks.present?
