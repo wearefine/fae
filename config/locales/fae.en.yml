@@ -34,9 +34,13 @@ en:
       last_login: 'Last Logged In'
       active: 'Active'
       add_user: 'Add User'
-    publish_hook:
+    deploy_hook:
       environment: 'Environment'
-      add_publish_hook: 'Add Deploy Hook'
+      add_deploy_hook: 'Add Deploy Hook'
+      new_deploy_hook: 'New Deploy Hook'
+      edit_deploy_hook: 'Edit Deploy Hook'
+      section_heading: 'Deploy Hooks'
+      section_helper_text: ''
     page:
       title: 'Pages'
       disabled_title: 'Disabled Admin'

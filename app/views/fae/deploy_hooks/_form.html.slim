@@ -1,7 +1,18 @@
-= simple_form_for(@deploy_hook) do |f|
-  - title = "#{params[:action]} Deploy Hook".titleize
-  == render 'fae/shared/form_header', header: 'Deploy', title: title
+ruby:
+	form_options = {
+		html: {
+			multipart: true,
+			novalidate: true,
+			class: 'js-file-form',
+			remote: true,
+			data: {
+				type: "html"
+			}
+		}
+	}
+= simple_form_for(@deploy_hook, form_options) do |f|
+  = fae_input f, :environment
+  = fae_input f, :url, label: 'URL'
 
-  main.content
-    = fae_input f, :environment
-    = fae_input f, :url, label: 'URL'
+  = f.submit
+  = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'

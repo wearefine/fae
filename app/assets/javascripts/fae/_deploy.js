@@ -10,7 +10,7 @@ Fae.deploy = {
 
   ready: function() {
     if (!$('body').hasClass('deploy')) return false;
-    this.$deployButtons = $('.js-run-deploy');
+    this.$deployButtons  = $('.js-run-deploy');
     this.deployFinished  = true;
     this.buttonsEnabled  = true;
     this.pollTimeout     = null;

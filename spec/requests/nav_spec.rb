@@ -3,14 +3,13 @@ require 'rails_helper'
 describe 'Global nav' do
 
   context 'when user is super_admin' do
-    it 'should display users, publish hooks, and settings link' do
+    it 'should display users, and settings link' do
       super_admin_login
       get fae_path
 
       expect(response.body).to include('<a href="/admin/users">Users</a>')
       expect(response.body).to include('<a href="/admin/activity">Activity Log</a>')
       expect(response.body).to include('<a href="/admin/root">Root Settings</a>')
-      expect(response.body).to include('<a href="/admin/deploy_hooks">Deploy Hooks</a>')
     end
 
     it 'should display events top nav item' do
@@ -22,21 +21,20 @@ describe 'Global nav' do
   end
 
   context 'when user is admin' do
-    it 'should display users, publish and user activity' do
+    it 'should display users, deploy and user activity' do
       admin_login
       get fae_path
 
       expect(response.body).to include('<a href="/admin/users">Users</a>')
       expect(response.body).to include('<a href="/admin/activity">Activity Log</a>')
-      expect(response.body).to include('<a href="/admin/deploy">Deploy</a>')
+      expect(response.body).to include('<a href="/admin/deploy">Deployments</a>')
     end
 
-    it 'should not display root settings and publish hooks links' do
+    it 'should not display root settings' do
       admin_login
       get fae_path
 
       expect(response.body).to_not include('<a href="/admin/root">Root Settings</a>')
-      expect(response.body).to_not include('<a href="/admin/deploy_hooks">Deploy Hooks</a>')
     end
 
     it 'should display events top nav item' do

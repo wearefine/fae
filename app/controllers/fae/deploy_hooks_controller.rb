@@ -1,50 +1,57 @@
 module Fae
   class DeployHooksController < ApplicationController
+
     before_action :super_admin_only
     before_action :set_deploy_hook, only: [:show, :edit, :update, :destroy]
-    before_action :set_index_path, only: [:new, :edit]
+    layout false
 
     def index
-      @deploy_hooks = Fae::DeployHook.all
+      @deploy_hooks = DeployHook.all
     end
 
     def new
-      @deploy_hook = Fae::DeployHook.new
+      @deploy_hook = DeployHook.new
     end
 
     def edit
     end
 
     def create
-      @deploy_hook = Fae::DeployHook.new(deploy_hook_params)
+      @deploy_hook = DeployHook.new(deploy_hook_params)
 
       if @deploy_hook.save
-        redirect_to deploy_hooks_path, notice: t('fae.save_notice')
+        flash[:notice] = t('fae.save_notice')
+        @deploy_hooks = DeployHook.all
+        render template: table_template_path
       else
-        render action: 'new', error: t('fae.save_error')
+        render action: 'new'
       end
     end
 
     def update
       if @deploy_hook.update(deploy_hook_params)
-        redirect_to deploy_hooks_path, notice: t('fae.save_notice')
+        flash[:notice] = t('fae.save_notice')
+        @deploy_hooks = DeployHook.all
+        render template: table_template_path
       else
-        render action: 'edit', error: t('fae.save_error')
+        render action: 'edit'
       end
     end
 
     def destroy
-      @deploy_hook.destroy
-      respond_to do |format|
-        format.html { redirect_to deploy_hooks_url }
-        format.json { head :no_content }
+      if @deploy_hook.destroy
+        flash[:notice] = t('fae.delete_notice')
+      else
+        flash[:alert] = t('fae.delete_error')
       end
+      @deploy_hooks = DeployHook.all
+      render template: table_template_path
     end
 
     private
 
       def set_deploy_hook
-        @deploy_hook = Fae::DeployHook.find(params[:id])
+        @deploy_hook = DeployHook.find(params[:id])
       end
 
       def deploy_hook_params
@@ -54,6 +61,10 @@ module Fae
       def set_index_path
         # @index_path determines form's cancel btn path
         @index_path = deploy_hooks_path
+      end
+
+      def table_template_path
+        "fae/deploy_hooks/_table.html.slim"
       end
 
   end
