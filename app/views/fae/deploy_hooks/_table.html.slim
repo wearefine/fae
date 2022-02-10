@@ -1,0 +1,28 @@
+section.addedit-form.js-addedit-form
+  a.js-add-link.table-add-link.button.-small href=fae.new_deploy_hook_path = t('fae.deploy_hook.add_deploy_hook')
+  h2 = t('fae.deploy_hook.section_heading')
+  - if t('fae.deploy_hook.section_helper_text').present?
+    h6.table-helper-text = t('fae.deploy_hook.section_helper_text')
+  == render 'fae/application/flash_messages'
+  table.js-sort-row
+    thead
+      tr
+        th.th-sortable-handle
+        th = t('fae.deploy_hooks.environment')
+        th = t('fae.deploy_hooks.url')
+        th.-action
+    tbody
+      - if @deploy_hooks.present?
+        - @deploy_hooks.each do |item|
+          tr id=tr_id(item)
+            td.sortable-handle: i.icon-sort
+            td: a.js-edit-link href=edit_deploy_hook_path(item) #{item.environment}
+            td = item.url
+            td = fae_delete_button item, item, class: 'js-tooltip table-action js-delete-link', remote: true
+
+      - else
+        tr
+          - td_link = link_to 'add some', fae.new_deploy_hook_path, class: 'js-add-link'
+          td colspan="4" No #{t('fae.deploy_hook.section_heading')} yet, #{td_link}.
+
+  .js-addedit-form-wrapper

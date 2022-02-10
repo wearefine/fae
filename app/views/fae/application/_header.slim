@@ -31,7 +31,6 @@ header.main-header#js-main-header
             li: a href=fae.activity_log_path = t('fae.navbar.activity_log')
           - if current_user.super_admin?
             li: a href=fae.option_path = t('fae.navbar.root_settings')
-            li: a href=fae.deploy_hooks_path = t('fae.navbar.deploy_hooks')
           - if current_user.super_admin_or_admin? && Fae.netlify.present?
             li: a href=fae.deploy_path = t('fae.navbar.deployments')
           - if @option.live_url.present?
