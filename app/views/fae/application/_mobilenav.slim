@@ -40,6 +40,8 @@ nav.nav.mobilenav
             ul
               li: a href=fae.users_path Users
               li: a href=fae.activity_log_path Activity Log
+              - if current_user.super_admin_or_admin? && Fae.netlify.present?
+                li: a href=fae.deploy_path = t('fae.navbar.deployments')
               - if current_user.super_admin?
                 li: a href=fae.option_path Root Settings
 

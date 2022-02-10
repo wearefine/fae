@@ -23,9 +23,10 @@ Fae.setup do |config|
 
 end
 ```
-Two links have been added to the utility nav gear menu:
-1. "Deploy Hooks" - for management of the Netlify build hook URLs.
-2. "Deploy" - a page where deploys are executed, and status is monitored.
+
+Two things added for this:
+1. In the FAE options edit page, there is now a nested table to manage the deploy hooks.
+2. A new link in the gear menu, "Deployments" - a page where deploys are executed, and status is monitored.
 
 ## Upgrading
 After updating the FAE gem and bundling
