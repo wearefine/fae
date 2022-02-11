@@ -26,7 +26,7 @@ end
 
 Two things added for this:
 1. In the FAE options edit page, there is now a nested table to manage the deploy hooks.
-2. A new link in the gear menu, "Deployments" - a page where deploys are executed, and status is monitored.
+2. A new link in the main nav, "Deployments" - a page where deploys are executed, and status is monitored.
 
 ## Upgrading
 After updating the FAE gem and bundling
