@@ -87,7 +87,7 @@
   }
 }
 
-.main-header-nav {
+.main-header-nav, .utility-nav {
   @include transition(opacity .2s ease-in-out);
 
   a {

@@ -22,6 +22,10 @@ module Fae
       new_klass
     end
 
+    def deployments_active_class
+      '-parent-current -open' if params[:controller].split('/').last == 'deploy'
+    end
+
     def col_name_or_image(item, attribute)
       value = item.send(attribute)
       return if value.blank?
