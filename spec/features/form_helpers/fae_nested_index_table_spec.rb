@@ -15,9 +15,9 @@ feature 'fae_nested_index_table' do
       click_button('Create Cat')
     end
 
-    sleep 5.seconds 
-
-    expect(page.find('.cats .content table')).to have_content('Fuzzball')
+    eventually {
+      expect(page.find('.cats .content table')).to have_content('Fuzzball')
+    }
   end
 
   # scenario 'should allow editing existing item', js: true do
@@ -54,9 +54,9 @@ feature 'fae_nested_index_table' do
 
     page.find("tr#cats_#{cat.id} .js-delete-link").click
 
-    sleep 5.seconds
-
-    expect(page.find('.cats .content table')).to_not have_content('Snowball McPuffypants')
+    eventually {
+      expect(page.find('.cats .content table')).to_not have_content('Snowball McPuffypants')
+    }
   end
 
   scenario 'should allow strings and integers in cols', js: true do
