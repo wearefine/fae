@@ -27,7 +27,7 @@ describe 'Global nav' do
 
       expect(response.body).to include('<a href="/admin/users">Users</a>')
       expect(response.body).to include('<a href="/admin/activity">Activity Log</a>')
-      expect(response.body).to include('<a href="/admin/deploy">Deployments</a>')
+      expect(response.body).to include('<a href="/admin/deploy">Deploy</a>')
     end
 
     it 'should not display root settings' do
