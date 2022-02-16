@@ -62,7 +62,7 @@ en:
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
       no_results: 'No Results'
-      deployments: 'Deployments'
+      deployments: 'Deploy'
       deploy_hooks: 'Deploy Hooks'
     changes:
       recent: 'Recent Changes'
