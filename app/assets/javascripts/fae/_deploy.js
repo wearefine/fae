@@ -138,7 +138,7 @@ Fae.deploy = {
           $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
           $('<td>').text(_this.deployDuration(deploy)),
           $('<td>').text(_this.deployEnvironment(deploy)),
-          $('<td>').text(_this.valCheck(deploy.error_message)),
+          $('<td>').html(_this.errorMsg(deploy)),
         ])
       );
     });
@@ -184,6 +184,14 @@ Fae.deploy = {
       return 'Production';
     }
     return deploy.branch.charAt(0).toUpperCase() + deploy.branch.slice(1);
+  },
+
+  errorMsg: function(deploy) {
+    if (deploy.error_message) {
+      var out = 'An error occurred. Please contact your ';
+      out += '<a href="/admin/help">FINE team</a>.'
+      return out;
+    }
   }
 
 };

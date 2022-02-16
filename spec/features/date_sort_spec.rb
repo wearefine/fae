@@ -12,11 +12,10 @@ feature 'validations' do
 
     expect(page.find('tbody').text).to match(/Release 1.*Release 2.*Release 3/)
     page.find('th', text: /\AModified\z/).click
-    page.find('th', text: /\AModified\z/).click
 
-    sleep 10.seconds
-
-    expect(page.find('tbody').text).to match(/Release 2.*Release 3.*Release 1/)
+    eventually {
+      expect(page.find('tbody').text).to match(/Release 2.*Release 3.*Release 1/)
+    }
   end
 
 end

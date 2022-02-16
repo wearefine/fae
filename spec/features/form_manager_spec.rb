@@ -106,12 +106,6 @@ feature 'Form Manager' do
       expect(page).to have_content('Email edited')
       expect(page).to have_content('Email helper')
     }
-
-    visit fae.edit_content_block_path('contact_us')
-    eventually {
-      expect(page).to have_content('Email edited')
-      expect(page).to have_content('Email helper')
-    }
   end
 
   # Multi language inputs
@@ -125,10 +119,6 @@ feature 'Form Manager' do
     fill_in('ContactUsPage_hero_en_helper_input', with: 'Hero (en) helper')
 
     click_link('Submit')
-    expect(page).to have_content('Hero (en) edited')
-    expect(page).to have_content('Hero (en) helper')
-
-    visit fae.edit_content_block_path('contact_us')
     expect(page).to have_content('Hero (en) edited')
     expect(page).to have_content('Hero (en) helper')
   end
