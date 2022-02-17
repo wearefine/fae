@@ -31,7 +31,7 @@ feature 'Deploy' do
     expect(page).to have_content('PAST DEPLOYS')
     expect(page).to have_content('FINE dev update')
     expect(page).to have_content('FINE admin triggered a Staging build')
-    expect(page).to have_content('Error!')
+    expect(page).to have_content('An error occurred. Please contact your FINE team.')
   end
 
   # Feature TBD
