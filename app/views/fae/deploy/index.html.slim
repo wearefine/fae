@@ -4,11 +4,7 @@ header.content-header.js-content-header
 == render 'flash_messages'
 
 main.content
-
-  / h1 = t('fae.deploy.page.heading')
-
-section.content
-  - if Fae.netlify.present? && @deploy_hooks.present?
+  - if @deploy_hooks.present?
     - @deploy_hooks.each do |deploy_hook|
       button.button.deploy-button.js-run-deploy data-build-hook-type=deploy_hook.environment href="#" = "#{t('fae.deploy.ctas.deploy')} #{deploy_hook.environment.to_s.titleize}"
 
