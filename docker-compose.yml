@@ -18,8 +18,8 @@
       environment:
         - RAILS_ENV=development
         - DEV_MYSQL_HOST=db
-        # - FINE_NETLIFY_API_TOKEN=
-        # - FINE_NETLIFY_API_USER=
+        - FINE_NETLIFY_API_TOKEN=test
+        - FINE_NETLIFY_API_USER=test
     db:
       image: mariadb:10.2
       environment:
