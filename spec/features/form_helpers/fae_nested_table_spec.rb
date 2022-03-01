@@ -23,9 +23,11 @@ feature 'fae_nested_table' do
       click_button('Create Aroma')
     end
 
-    # form should add item and only one item
-    expect(page.find('#aromas table')).to have_content('My Brand New Smell!')
-    expect(Aroma.all.count).to eq(1)
+    eventually {
+      # form should add item and only one item
+      expect(page.find('#aromas table')).to have_content('My Brand New Smell!')
+      expect(Aroma.all.count).to eq(1)
+    }
   end
 
   scenario 'should allow editing existing item', js: true do
@@ -44,8 +46,11 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: 'Lavender'
       click_button('Update Aroma')
     end
-    expect(page.find('#aromas table')).to have_content('Lavender')
-    expect(page.find('#aromas table')).to_not have_content('Roses')
+
+    eventually {
+      expect(page.find('#aromas table')).to have_content('Lavender')
+      expect(page.find('#aromas table')).to_not have_content('Roses')
+    }
   end
 
   scenario 'should allow deletion of item', js: true do
@@ -59,7 +64,9 @@ feature 'fae_nested_table' do
 
     page.find("tr#aromas_#{aroma.id} .js-delete-link").click
 
-    expect(page.find('#aromas table')).to_not have_content('Roses')
+    eventually {
+      expect(page.find('#aromas table')).to_not have_content('Roses')
+    }
   end
 
   scenario 'should allow reordering of items', js: true do
@@ -100,8 +107,11 @@ feature 'fae_nested_table' do
       click_button('Create Winemaker')
     end
 
-    expect(page.find('#oregon_winemakers_section table')).to have_content('Portland Joe')
-    expect(page.find('#california_winemakers_section table')).to have_no_content('Portland Joe')
+    eventually {
+      expect(page.find('#oregon_winemakers_section table')).to have_content('Portland Joe')
+      expect(page.find('#california_winemakers_section table')).to have_no_content('Portland Joe')
+    }
+
   end
 
 end
