@@ -1,6 +1,6 @@
 # Netlify Deploy Monitor
 
-* [Enabling Deploys](#enabling)
+* [Enabling Deploys](#enabling-deploys)
 * [Upgrading](#upgrading)
 
 ---
