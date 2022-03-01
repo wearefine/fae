@@ -25,5 +25,4 @@ spec/dummy/public/uploads/*
 *.gem
 
 /vendor
-
 docker-compose.override.yml

@@ -15,6 +15,7 @@ feature 'fae_nested_index_table' do
       click_button('Create Cat')
     end
 
+
     eventually {
       expect(page.find('.cats .content table')).to have_content('Fuzzball')
     }

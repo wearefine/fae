@@ -3,7 +3,7 @@
 #   eventually { long_running_thing.result.should eq(5) }
 # end
 def eventually(options = {})
-  timeout = options[:timeout] || 5
+  timeout = options[:timeout] || 10
   interval = options[:interval] || 0.2
   time_limit = Time.now + timeout
   loop do
