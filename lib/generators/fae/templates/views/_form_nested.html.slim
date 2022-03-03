@@ -23,7 +23,10 @@ ruby:
   = fae_file_form f, :<%= attachment.name -%>
 <% end -%>
 <% end -%>
-<% if options.parent_model.present? %>
+<% if options.polymporphic.present? %>
+  = f.hidden_field :<%= @polymorphic_name %>_id
+  = f.hidden_field :<%= @polymorphic_name %>_type
+<% elsif options.parent_model.present? %>
   = f.hidden_field :<%= options.parent_model.underscore %>_id
 <% end -%>
 
