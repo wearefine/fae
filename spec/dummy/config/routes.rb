@@ -3,16 +3,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :poly_things
-    resources :poly_tinggs
-    resources :poly_tings
-    resources :poly_thingggggzaars
-    resources :poly_thingggggzaas
-    resources :poly_thingggggzas
-    resources :poly_thingggggzs
-    resources :poly_thingggggs
-    resources :poly_thinggggs
-    resources :poly_thingggs
-    resources :poly_thinggs
     resources :beers
     resources :article_categories
     resources :articles

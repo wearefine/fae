@@ -31,7 +31,7 @@ module Fae
           end
 
           if options.polymorphic
-            @@attributes_flat << "#{file_name.underscore}able:references{polymorphic}"
+            @@attributes_flat << "#{polymorphic_name}:references{polymorphic}"
           end
 
           if is_association(arg)
