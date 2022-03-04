@@ -271,15 +271,6 @@ ActiveRecord::Schema.define(version: 2022_03_04_182247) do
     t.index ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true
   end
 
-  create_table "fuckits", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name"
-    t.string "ph_level"
-    t.string "our_ceo"
-    t.string "seo_title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "jerseys", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "color"
