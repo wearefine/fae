@@ -4,7 +4,7 @@ module Fae
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
-    class_option :polymorphic, type: :boolean, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
+    class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
 
     @@attributes_flat = []
     @@attribute_names = []
@@ -30,7 +30,7 @@ module Fae
             @@attributes_flat << "#{arg.name}:#{arg.type}" + (arg.has_index? ? ":index" : "")
           end
 
-          if options.polymorphic.present?
+          if options.polymorphic
             @@attributes_flat << "#{file_name.underscore}able:references{polymorphic}"
           end
 
@@ -202,7 +202,7 @@ RUBY
     end
 
     def polymorphic_name
-      "#{file_name.unsderscore}able"
+      "#{file_name.underscore}able"
     end
 
   end
