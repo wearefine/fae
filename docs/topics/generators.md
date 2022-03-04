@@ -51,7 +51,7 @@ rails g fae:scaffold Person first_name last_name title body:text date_of_birth:d
 ## Nested Scaffold
 
 ```bash
-rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel] [--polyporphic=true]
+rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel] [--polymorphic=true]
 ```
 
 | option | description |
