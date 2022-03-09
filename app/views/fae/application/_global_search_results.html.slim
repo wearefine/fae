@@ -25,7 +25,7 @@ ul.search-results.js-search-results
       - records.each do |item|
         - begin
           - parent = item.respond_to?(:fae_parent) ? item.fae_parent : nil
-          - edit_path = edit_polymorphic_path([main_app, fae_scope, parent, item])
+          - edit_path = edit_polymorphic_path([main_app, fae_scope.to_sym, parent, item])
           li
             a href=edit_path
               span.search-record-label = item.class.name
