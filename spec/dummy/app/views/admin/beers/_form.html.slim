@@ -8,3 +8,10 @@
     = fae_input f, :seo_title
     = fae_input f, :seo_description
 
+- if params[:action] == 'edit'
+  section.content#poly_things
+    = render 'fae/shared/nested_table',
+      assoc: :poly_things,
+      parent_item: @item,
+      cols: [:name]
+

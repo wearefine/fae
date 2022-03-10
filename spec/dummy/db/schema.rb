@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_02_153906) do
+ActiveRecord::Schema.define(version: 2022_03_04_182247) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -314,6 +314,15 @@ ActiveRecord::Schema.define(version: 2022_02_02_153906) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "poly_things", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "poly_thingable_type"
+    t.bigint "poly_thingable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable_type_and_poly_thingable_id"
   end
 
   create_table "release_notes", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

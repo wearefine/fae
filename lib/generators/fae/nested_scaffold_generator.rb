@@ -21,10 +21,12 @@ module Fae
         inject_model_attachments
         inject_position_scope
         inject_parent_info if options.parent_model.present?
+        inject_polymorphic_info if options.polymorphic
       end
 
       def generate_nested_controller_file
         @attachments = @@attachments
+        @polymorphic_name = polymorphic_name
         template "controllers/nested_scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
       end
 
@@ -44,6 +46,17 @@ module Fae
   def fae_nested_parent
     :#{options.parent_model.underscore}
   end
+RUBY
+        end
+      end
+
+      def inject_polymorphic_info
+        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
+
+  def fae_nested_parent
+    :#{polymorphic_name}
+  end
+
 RUBY
         end
       end
