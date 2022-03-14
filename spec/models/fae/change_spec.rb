@@ -8,7 +8,7 @@ describe Fae::Change do
       FactoryGirl.create(:cat)
       FactoryGirl.create(:team)
       FactoryGirl.create(:fae_user)
-      release.update_attributes(name: 'something')
+      release.update(name: 'something')
 
       expect(Fae::Change.unique_changeable_types).to eq([['Cat','Cat'], ['User','Fae::User'], ['Release','Release'], ['Team','Team'], ['Wine','Wine']])
     end

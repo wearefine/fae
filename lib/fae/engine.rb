@@ -15,8 +15,10 @@ module Fae
     require 'slim'
     require 'kaminari'
     require 'fae/version'
+    require "sprockets/railtie"
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.eager_load_paths += %W(#{config.root}/app)
+    config.eager_load_paths += %W(#{config.root}/lib)
 
     config.to_prepare do
       # Require decorators from main application

@@ -26,6 +26,8 @@ RSpec.configure do |config|
   # Include named routes
   config.include Rails.application.routes.url_helpers
 
+  Capybara.server = :webrick
+
   # Use capybara-webkit as the JS driver
   Capybara.javascript_driver = :webkit
 

@@ -18,7 +18,7 @@ feature 'sortable' do
     handle.drag_to(target)
 
     eventually {
-      expect(Acclaim.order(:position)).to eq([acclaim_4, acclaim_1, acclaim_2, acclaim_3])
+      expect(Acclaim.all.order(:position).to_a).to eq([acclaim_4, acclaim_1, acclaim_2, acclaim_3])
     }
   end
 
