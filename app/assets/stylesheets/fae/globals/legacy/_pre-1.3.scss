@@ -80,7 +80,7 @@
 .main_content-section-title {
   padding: 17px 40px;
   color: pickForegroundColor($c-custom-highlight, $c-white, $c-black);
-  background: $c-custom-highlight;;
+  background: var(--highlight-color);  
   border-top: 1px solid $c-border;
   text-transform: uppercase;
   font-size: 14px;
@@ -166,7 +166,7 @@ tbody {
 
       &.active,
       &:hover {
-        background: $c-custom-highlight;
+        background: var(--highlight-color);
         color: $c-white;
       }
     }
@@ -341,7 +341,7 @@ tbody {
 
     &:hover {
       color: $c-text-heavy;
-      border-bottom-color: $c-custom-highlight;
+      border-bottom-color: var(--highlight-color);
     }
   }
 
@@ -358,7 +358,7 @@ tbody {
     &.-active {
       a {
         color: $c-text-heavy;
-        border-bottom-color: $c-custom-highlight;
+        border-bottom-color: var(--highlight-color);
       }
     }
   }
@@ -418,7 +418,7 @@ tbody {
   li {
     padding: 7px 20px;
     font-size: 14px;
-    color: $c-custom-highlight;
+    color: var(--highlight-color);
     cursor: pointer;
 
     &:hover {

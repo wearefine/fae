@@ -28,7 +28,7 @@
   h2 {
     padding: 17px $content-buffer;
     color: pickForegroundColor($c-custom-highlight, $c-white, $c-black);
-    background: $c-custom-highlight;
+    background: var(--highlight-color);
     border-top: 1px solid $c-border;
     text-transform: uppercase;
     font-size: 14px;

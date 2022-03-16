@@ -14,14 +14,9 @@ module Fae
       if @option.update(option_params)
         # add custom css and recompile assets to apply the custom highlight color if changed
         if option_params[:highlight_color].present?
-          css_text = "$c-custom-highlight: #{option_params[:highlight_color]};"
-          filepath = 'app/assets/stylesheets/fae.scss'
-          # opens the fae.scss file and substitues the new css string
-          IO.write(filepath, File.open(filepath) do |f|
-            f.read.gsub(/^.*c-custom-highlight.*/, css_text)
-          end)
-          # precompile assets so the css change is visible after updating
-          system 'rake assets:precompile RAILS_ENV=production'
+          hexcolor = option_params[:highlight_color]
+          # TODO need some AJAX to change the root: --highlight-color value like this:
+          # document.querySelector(':root').style.setProperty('--highlight-color', hexcolor)
         end
         flash[:notice] = 'Option was successfully updated.'
         redirect_to :action => :edit

@@ -22,7 +22,7 @@ tbody {
     &:hover {
       td {
         &:first-child {
-          border-left-color: $c-custom-highlight;
+          border-left-color: var(--highlight-color);
         }
       }
     }

@@ -1,6 +1,9 @@
 //////////////////////////////
 // Project Specific Variables
 //////////////////////////////
+:root {
+  --highlight-color: #9aa142;
+}
 
 // Empty variable for user-defined breakpoints
 $custom-breakpoints: () !default;
@@ -25,7 +28,7 @@ $header-border-width: 4px !default;
 $f-content: 'Lato', $f-sans !default;
 
 // Apps should declare $c-custom-highlight in their fae.scss file
-$c-custom-highlight: #9aa142 !default;
+$c-custom-highlight:  var(--highlight-color);
 
 // In order from dark to light
 // These are stacked in 10s so new colors can be easily inserted between if/when this list changes
