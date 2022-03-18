@@ -1,5 +1,5 @@
 class Acclaim < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   has_fae_file :pdf
 

@@ -9,7 +9,7 @@ GIT
 PATH
   remote: .
   specs:
-    fae-rails (2.2.0)
+    fae-rails (3.0.0)
       acts_as_list (~> 0.9.11)
       browser (~> 2.5.3)
       carrierwave

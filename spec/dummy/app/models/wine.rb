@@ -1,5 +1,5 @@
 class Wine < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   acts_as_list add_new_at: :top
 

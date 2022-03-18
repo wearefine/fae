@@ -3,6 +3,8 @@ require 'judge'
 require_relative 'validation_helper_collection'
 
 module Fae
+  # Error was throwing from calling mattr_accessor on a singleton, a no-no now.
+
   # configurable defaults
   # class << self
   #   mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager, :netlify
@@ -25,6 +27,7 @@ module Fae
   #   self.netlify                = {}
   # end
 
+  # configurable defaults
   mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager, :netlify
 
   self.devise_secret_key      = ''

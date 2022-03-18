@@ -1,5 +1,4 @@
 require 'devise'
-
 module Fae
   class Engine < ::Rails::Engine
     isolate_namespace Fae
@@ -18,7 +17,6 @@ module Fae
     require "sprockets/railtie"
 
     config.eager_load_paths += %W(#{config.root}/app)
-    config.eager_load_paths += %W(#{config.root}/lib)
 
     config.to_prepare do
       # Require decorators from main application
