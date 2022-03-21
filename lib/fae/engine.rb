@@ -20,7 +20,12 @@ module Fae
 
     config.to_prepare do
       # Require decorators from main application
-      Dir.glob(Rails.root.join('app', 'decorators', '**', '*_decorator.rb')).each do |decorator|
+      overrides = Rails.root.join('app', 'decorators', '**', '*_decorator.rb')
+      puts overrides
+      Rails.autoloaders.main.ignore(overrides)
+      Dir.glob(overrides).each do |decorator|
+        puts '--'
+        puts ::File.open(decorator).read
         Rails.configuration.cache_classes ? require(decorator) : load(decorator)
       end
 

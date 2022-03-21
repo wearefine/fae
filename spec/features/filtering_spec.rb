@@ -50,7 +50,7 @@ feature 'filtering' do
     Fae::Change.find_by_changeable_id_and_changeable_type(release_2.id, 'Release').update_columns(updated_at: (now - 1.month))
 
     admin_login
-    visit "#{fae.activity_log_path}#?start_date=#{URI.escape((now - 2.weeks).to_s)}"
+    visit "#{fae.activity_log_path}#?start_date=#{CGI.escape((now - 2.weeks).to_s)}"
 
 
     eventually {
@@ -59,12 +59,12 @@ feature 'filtering' do
       expect(page).to have_content 'Release 3'
     }
 
-    visit "#{fae.activity_log_path}#?end_date=#{URI.escape((now - 2.weeks).to_s)}"
+    visit "#{fae.activity_log_path}#?end_date=#{CGI.escape((now - 2.weeks).to_s)}"
     expect(page).to have_content 'Release 1'
     expect(page).to have_content 'Release 2'
     expect(page).to_not have_content 'Release 3'
 
-    visit "#{fae.activity_log_path}#?start_date=#{URI.escape((now - 5.weeks).to_s)}&end_date=#{URI.escape((now - 2.weeks).to_s)}"
+    visit "#{fae.activity_log_path}#?start_date=#{CGI.escape((now - 5.weeks).to_s)}&end_date=#{CGI.escape((now - 2.weeks).to_s)}"
     expect(page).to have_content 'Release 1'
     expect(page).to have_content 'Release 2'
     expect(page).to_not have_content 'Release 3'

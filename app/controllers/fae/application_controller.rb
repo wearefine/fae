@@ -60,7 +60,7 @@ module Fae
     end
 
     def show_404
-      render template: 'fae/pages/error404.html.slim', layout: 'fae/error.html.slim', status: :not_found
+      render 'fae/pages/error404', layout: 'fae/error', status: :not_found
     end
 
     def set_option
