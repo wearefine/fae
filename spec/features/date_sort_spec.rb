@@ -10,19 +10,11 @@ feature 'validations' do
 
     visit admin_releases_path
 
-    # TODO - this actually works, but the wildcard matching is falling down now
-
-    puts '============='
-    puts page.find('tbody').text
-
-    # expect(page.find('tbody').text).to match(/Release 1.*Release 2.*Release 3/)
+    expect(page.find('tbody').text.gsub("\n","")).to match(/Release 1.*Release 2.*Release 3/)
     page.find('th', text: /\AModified\z/).click
 
-    sleep 10
     eventually {
-      puts '============='
-      puts page.find('tbody').text
-      # expect(page.find('tbody').text).to match(/Release 2.*Release 3.*Release 1/)
+      expect(page.find('tbody').text.gsub("\n","")).to match(/Release 2.*Release 3.*Release 1/)
     }
   end
 
