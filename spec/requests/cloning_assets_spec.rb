@@ -4,9 +4,9 @@ describe 'cloning assets' do
 
   it 'should clone fae assets' do
 
-    release = FactoryGirl.create(:release, name: 'Ima Release')
-    bottle_shot = FactoryGirl.create(:fae_image, imageable_type: 'Release', imageable_id: release.id, attached_as: 'bottle_shot')
-    label_pdf = FactoryGirl.create(:fae_file, fileable_type: 'Release', fileable_id: release.id, attached_as: 'label_pdf')
+    release = FactoryBot.create(:release, name: 'Ima Release')
+    bottle_shot = FactoryBot.create(:fae_image, imageable_type: 'Release', imageable_id: release.id, attached_as: 'bottle_shot')
+    label_pdf = FactoryBot.create(:fae_file, fileable_type: 'Release', fileable_id: release.id, attached_as: 'label_pdf')
 
     admin_login
     post admin_releases_path(from_existing: release.id)

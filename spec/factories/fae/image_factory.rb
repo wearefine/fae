@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :fae_image, class: 'Fae::Image' do
     # https://github.com/docker/for-mac/issues/5570

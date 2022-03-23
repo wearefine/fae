@@ -25,7 +25,7 @@ end
 describe 'releases#edit' do
 
   it 'should return found' do
-    release = FactoryGirl.create(:release)
+    release = FactoryBot.create(:release)
     admin_login
     get edit_admin_release_path(release)
 
@@ -39,7 +39,7 @@ describe 'releases#create' do
   context 'when from_existing' do
 
     it 'should clone original item' do
-      release = FactoryGirl.create(:release, name: 'short')
+      release = FactoryBot.create(:release, name: 'short')
       admin_login
       post admin_releases_path(from_existing: release.id)
 
@@ -47,7 +47,7 @@ describe 'releases#create' do
     end
 
     it 'should modify cloned items name if length validation is triggered' do
-      release = FactoryGirl.create(:release, name: 'hey a long name')
+      release = FactoryBot.create(:release, name: 'hey a long name')
       admin_login
       post admin_releases_path(from_existing: release.id)
 
@@ -61,7 +61,7 @@ end
 describe 'releases#show' do
 
   it 'should return not found' do
-    release = FactoryGirl.create(:release)
+    release = FactoryBot.create(:release)
     admin_login
     get admin_release_path(release)
 

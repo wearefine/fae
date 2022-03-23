@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :release do
     sequence(:name) { |n| "Release Name #{n}" }

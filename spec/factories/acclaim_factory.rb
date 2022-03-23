@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :acclaim do
     sequence(:publication) { |n| "Publication Name #{n}" }

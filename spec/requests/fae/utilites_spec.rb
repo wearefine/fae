@@ -12,7 +12,7 @@ describe 'utilities#toggle' do
 
     it "shouldn't be able to toggle release's on_prod attr" do
       user_login
-      release = FactoryGirl.create(:release)
+      release = FactoryBot.create(:release)
       post "/admin/toggle/releases/#{release.id}/on_prod", as: :json
 
       expect(response.status).to eq(200)
@@ -20,7 +20,7 @@ describe 'utilities#toggle' do
 
     it "shouldn't be able to toggle non-boolean attrs" do
       user_login
-      release = FactoryGirl.create(:release)
+      release = FactoryBot.create(:release)
       post "/admin/toggle/releases/#{release.id}/wine_id", as: :json
 
       expect(response.status).to eq(401)
@@ -55,7 +55,7 @@ describe 'utilities#toggle' do
 
     it "shouldn't be able to toggle release's on_prod attr" do
       create_super_user
-      release = FactoryGirl.create(:release)
+      release = FactoryBot.create(:release)
 
       post "/admin/toggle/releases/#{release.id}/on_prod", as: :js
       follow_redirect!

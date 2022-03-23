@@ -33,7 +33,7 @@ end
 # feature 'Nested Form cancel button' do
 
 #   scenario 'when clicked with required', js: true do
-#     release = FactoryGirl.create(:release, name: 'Ima Release', vintage: '2012', price: 13, varietal_id: 2, show: Date.today)
+#     release = FactoryBot.create(:release, name: 'Ima Release', vintage: '2012', price: 13, varietal_id: 2, show: Date.today)
 #     admin_login
 #     visit edit_admin_release_path(release)
 

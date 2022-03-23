@@ -20,12 +20,7 @@ module Fae
 
     config.to_prepare do
       # Require decorators from main application
-      overrides = Rails.root.join('app', 'decorators', '**', '*_decorator.rb')
-      puts overrides
-      Rails.autoloaders.main.ignore(overrides)
-      Dir.glob(overrides).each do |decorator|
-        puts '--'
-        puts ::File.open(decorator).read
+      Dir.glob(Rails.root.join('app', 'decorators', '**', '*_decorator.rb')).each do |decorator|
         Rails.configuration.cache_classes ? require(decorator) : load(decorator)
       end
 
@@ -34,7 +29,7 @@ module Fae
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
-      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
       g.assets false
       g.helper false
     end

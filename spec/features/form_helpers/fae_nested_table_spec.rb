@@ -10,7 +10,7 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow adding new items', js: true do
-    release = FactoryGirl.create(:release)
+    release = FactoryBot.create(:release)
 
     admin_login
     visit edit_admin_release_path(release)
@@ -31,8 +31,8 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow editing existing item', js: true do
-    release = FactoryGirl.create(:release)
-    aroma   = FactoryGirl.create(:aroma, name: 'Roses', release: release)
+    release = FactoryBot.create(:release)
+    aroma   = FactoryBot.create(:aroma, name: 'Roses', release: release)
 
     admin_login
     visit edit_admin_release_path(release)
@@ -54,8 +54,8 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow deletion of item', js: true do
-    release = FactoryGirl.create(:release)
-    aroma   = FactoryGirl.create(:aroma, name: 'Roses', release: release)
+    release = FactoryBot.create(:release)
+    aroma   = FactoryBot.create(:aroma, name: 'Roses', release: release)
 
     admin_login
     visit edit_admin_release_path(release)
@@ -70,10 +70,10 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow reordering of items', js: true do
-    wine = FactoryGirl.create(:wine)
-    FactoryGirl.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
-    FactoryGirl.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
-    FactoryGirl.create(:winemaker, name: 'First', wine: wine, region_type: 1)
+    wine = FactoryBot.create(:wine)
+    FactoryBot.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
+    FactoryBot.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
+    FactoryBot.create(:winemaker, name: 'First', wine: wine, region_type: 1)
 
     admin_login
     visit edit_admin_wine_path(wine)
@@ -95,7 +95,7 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow adding new items w params', js: true do
-    wine = FactoryGirl.create(:wine)
+    wine = FactoryBot.create(:wine)
 
     admin_login
     visit edit_admin_wine_path(wine)

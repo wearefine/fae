@@ -25,7 +25,7 @@ end
 describe 'acclaims#edit' do
 
   it 'should return found' do
-    acclaim = FactoryGirl.create(:acclaim)
+    acclaim = FactoryBot.create(:acclaim)
     admin_login
     get edit_admin_acclaim_path(acclaim)
 

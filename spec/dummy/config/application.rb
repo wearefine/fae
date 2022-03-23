@@ -21,6 +21,8 @@ module Dummy
     config.i18n.available_locales = [:en, :cs, :zh]
 
     config.action_controller.include_all_helpers = false
+
+    config.active_record.legacy_connection_handling = false
   end
 end
 

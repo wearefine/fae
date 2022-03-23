@@ -5,14 +5,14 @@ describe Fae::Sortable do
   describe 'fae_sort' do
 
     before(:each) do
-      aroma1 = FactoryGirl.create(:aroma, name: 'lavendar')
-      aroma2 = FactoryGirl.create(:aroma, name: 'rose')
-      aroma3 = FactoryGirl.create(:aroma, name: 'mint')
+      aroma1 = FactoryBot.create(:aroma, name: 'lavendar')
+      aroma2 = FactoryBot.create(:aroma, name: 'rose')
+      aroma3 = FactoryBot.create(:aroma, name: 'mint')
 
-      @cat1 = FactoryGirl.create(:cat, name: 'Hairold', aroma: aroma2)
-      @cat2 = FactoryGirl.create(:cat, name: 'Whiskurt', aroma: aroma2)
-      @cat3 = FactoryGirl.create(:cat, name: 'Faline', aroma: aroma1)
-      @cat4 = FactoryGirl.create(:cat, name: 'Dud', aroma: aroma3)
+      @cat1 = FactoryBot.create(:cat, name: 'Hairold', aroma: aroma2)
+      @cat2 = FactoryBot.create(:cat, name: 'Whiskurt', aroma: aroma2)
+      @cat3 = FactoryBot.create(:cat, name: 'Faline', aroma: aroma1)
+      @cat4 = FactoryBot.create(:cat, name: 'Dud', aroma: aroma3)
 
       @default_order = [@cat1, @cat2, @cat3, @cat4]
     end

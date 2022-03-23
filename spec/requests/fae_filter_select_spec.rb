@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'fae_filter_select' do
 
   before(:each) do
-    FactoryGirl.create(:release)
+    FactoryBot.create(:release)
     admin_login
   end
 
@@ -18,14 +18,14 @@ describe 'fae_filter_select' do
 
   describe 'label_method option' do
     it 'should default to :fae_display_field' do
-      FactoryGirl.create(:wine, name_en: 'A Tasty Beverage')
+      FactoryBot.create(:wine, name_en: 'A Tasty Beverage')
       get admin_releases_path
 
       expect(response.body).to include('A Tasty Beverage')
     end
 
     it 'should be overridable' do
-      FactoryGirl.create(:acclaim, score: 'A Tasty Acclaim', publication: 'A Tasty Publication')
+      FactoryBot.create(:acclaim, score: 'A Tasty Acclaim', publication: 'A Tasty Publication')
       get admin_releases_path
 
       expect(response.body).to      include('A Tasty Acclaim')

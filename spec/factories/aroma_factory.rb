@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :aroma do
     sequence(:name) { |n| "Aroma Name #{n}" }
