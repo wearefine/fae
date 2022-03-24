@@ -98,7 +98,7 @@ en:
         table:
           past_heading: 'Past Deploys'
           deploying_heading: 'Deploying'
-          deploying_helper: "After making changes in the CMS, choose “Deploy Stage” or “Deploy Production” to push these changes to the respective front-end environment. Once your deployment posts to the “Past Deploys” table below, updates will be ready to review in the front-end environment.<br><br>Please note that Stage and Production are distinct environments and will need to be deployed separately."
+          deploying_helper: "After making changes in the CMS, click a deploy button above to push these changes to the respective front-end environment. Once your deployment posts to the “Past Deploys” table below, updates will be ready to review in the front-end environment.<br><br>Please note that each environment is distinct and will need to be deployed separately."
           title: 'Activity'
           deployed: 'Date/Time'
           duration: 'Duration'
