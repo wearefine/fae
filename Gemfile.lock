@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/thoughtbot/capybara-webkit.git
-  revision: f429d668568ff7349f5e23a085df7fcf1c431fa7
-  branch: master
-  specs:
-    capybara-webkit (1.15.1)
-      capybara (>= 2.3, < 4.0)
-      json
-
-GIT
   remote: https://github.com/wearefine/rails
   revision: 8250e29e4622ff60f8093dba92d52dbae9d26460
   specs:
@@ -146,6 +137,9 @@ GEM
     capybara-screenshot (1.0.26)
       capybara (>= 1.0, < 4)
       launchy
+    capybara-webkit (1.15.1)
+      capybara (>= 2.3, < 4.0)
+      json
     carrierwave (2.2.2)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -424,7 +418,7 @@ DEPENDENCIES
   capistrano-rails!
   capistrano-rvm
   capybara-screenshot
-  capybara-webkit!
+  capybara-webkit (~> 1.15.1)
   database_cleaner
   factory_bot_rails (~> 4.8.2)
   fae-rails!
