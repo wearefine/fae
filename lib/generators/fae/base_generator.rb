@@ -4,6 +4,7 @@ module Fae
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
+    class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
 
     @@attributes_flat = []
     @@attribute_names = []
@@ -27,6 +28,10 @@ module Fae
             @@attachments << arg
           else
             @@attributes_flat << "#{arg.name}:#{arg.type}" + (arg.has_index? ? ":index" : "")
+          end
+
+          if options.polymorphic
+            @@attributes_flat << "#{polymorphic_name}:references{polymorphic}"
           end
 
           if is_association(arg)
@@ -71,6 +76,7 @@ module Fae
       @attachments = @@attachments
       @has_position = @@has_position
       @display_field = @@display_field
+      @polymorphic_name = polymorphic_name
       template "views/index.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"
       template "views/_form.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
       copy_file "views/new.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
@@ -193,6 +199,10 @@ RUBY
 
     def is_attachment(arg)
       [:image,:file].include?(arg.type)
+    end
+
+    def polymorphic_name
+      "#{file_name.underscore}able"
     end
 
   end

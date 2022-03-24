@@ -76,12 +76,23 @@ module Fae
         begin
           return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
           parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
-          edit_path = edit_polymorphic_path([main_app, fae_scope.to_sym, parent, change.changeable])
+          edit_path = edit_polymorphic_path(
+            [main_app, fae_scope.to_sym, parent, change.changeable]
+          )
           return link_to text, edit_path
         rescue
           return text
         end
       end
+    end
+
+    def netlify_enabled?
+      Fae.netlify.present? &&
+      Fae.netlify[:api_user].present? &&
+      Fae.netlify[:api_token].present? &&
+      Fae.netlify[:site].present? &&
+      Fae.netlify[:site_id].present? &&
+      Fae.netlify[:api_base].present?
     end
 
     private

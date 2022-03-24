@@ -2,8 +2,10 @@ module Fae
   class DeployController < ApplicationController
     before_action :admin_only
 
+    include Fae::ApplicationHelper
+
     def index
-      raise 'Fae.netlify configs are missing.' if Fae.netlify.blank?
+      raise 'Fae.netlify configs are missing.' unless netlify_enabled?
       @deploy_hooks = DeployHook.all
     end
 

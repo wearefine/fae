@@ -24,6 +24,7 @@ feature 'filtering' do
 
     visit admin_releases_path + "#?wine=#{red.id}"
 
+
     eventually {
       expect(page).to have_content 'Release 1'
       expect(page).to have_content 'Release 2'
@@ -50,6 +51,7 @@ feature 'filtering' do
 
     admin_login
     visit "#{fae.activity_log_path}#?start_date=#{URI.escape((now - 2.weeks).to_s)}"
+
 
     eventually {
       expect(page).to_not have_content 'Release 1'

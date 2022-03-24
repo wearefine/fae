@@ -51,14 +51,17 @@ rails g fae:scaffold Person first_name last_name title body:text date_of_birth:d
 ## Nested Scaffold
 
 ```bash
-rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel]
+rails g fae:nested_scaffold [ModelName] [field:type] [field:type] [--parent-model=ParentModel] [--polymorphic=true]
 ```
 
 | option | description |
 | ------ | ----------- |
 | `[--parent-model=ParentModel]` | an optional flag that adds the association to the generated model.|
+| `[--polymorphic=true]` | an optional flag that makes this model and scaffolding polymorphic.|
 
 The nested_scaffold creates a nested model that is associated to a parent via a foreign key, and whose forms are meant to be nested in the parent model's form via the `nested_table` partial. The form has a hidden field containing the ID of the parent model. In practice the nested forms are usually only accessible when editing a parent model, not when creating one. Similar to the `fae:scaffold` generator, this generator creates a new model with CRUD functionality. The main differences are the automatic association to the parent model, and the views that are set up to serve the nested form. This generator creates a controller that inherits from Fae::NestedBaseController.
+
+If the `--polymorphic` option is set to `true`, the model and scaffolding will be configured to be polymorphic. A common example of this would be a `Comment` model being `commentable` that can belong to many different parent models.
 
 ## Nested Index Scaffold
 

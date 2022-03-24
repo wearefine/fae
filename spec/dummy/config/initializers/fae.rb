@@ -19,7 +19,7 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
-  if Rails.env.development?
+  if Rails.env.development? || Rails.env.test?
     config.netlify = {
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],
