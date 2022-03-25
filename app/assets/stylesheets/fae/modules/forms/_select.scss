@@ -32,7 +32,7 @@
     top: auto;
     bottom: 100%;
     margin-bottom: -1px;
-    border-top: 1px solid $c-notice-content;
+    border-top: 1px solid $c-focus-border;
     border-bottom: none;
     box-shadow: none;
     border-radius: 0;
@@ -41,7 +41,7 @@
 
 .chosen-container-active {
   .chosen-single {
-    border-color: $c-notice-content;
+    border-color: $c-focus-border;
     background: $c-chosen-gradient-end;
   }
 }
@@ -120,7 +120,7 @@
 .chosen-container-multi.chosen-container-active {
   .chosen-single,
   .chosen-choices {
-    border-color: $c-notice-content;
+    border-color: $c-focus-border;
   }
 }
 
@@ -159,7 +159,8 @@
   }
 
   .chosen-search {
-    display: none;
+    position: absolute;
+    left: -9999px;
   }
 }
 
@@ -185,7 +186,7 @@
 
 .chosen-container {
   .chosen-drop {
-    border-color: $c-notice-content;
+    border-color: $c-focus-border;
   }
 }
 
@@ -307,7 +308,7 @@
 
     &.ms-focus {
       outline: 0;
-      border-bottom: 4px solid $c-notice-content;
+      border-bottom: 4px solid $c-focus-border;
     }
   }
 

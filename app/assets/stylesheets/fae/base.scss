@@ -32,7 +32,8 @@
   'globals/navigation/sidenav',
   'globals/navigation/mobilenav',
   'globals/navigation/utility',
-  'globals/navigation/search'
+  'globals/navigation/search',
+  'globals/navigation/multi-col-subnav'
 ;
 
 // Tables
@@ -52,6 +53,7 @@
 @import
   'modules/buttons',
   'modules/modal',
+  'modules/deploy',
   'modules/toggles',
   'modules/alerts'
 ;

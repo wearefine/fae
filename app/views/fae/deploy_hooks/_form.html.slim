@@ -1,0 +1,18 @@
+ruby:
+	form_options = {
+		html: {
+			multipart: true,
+			novalidate: true,
+			class: 'js-file-form',
+			remote: true,
+			data: {
+				type: "html"
+			}
+		}
+	}
+= simple_form_for(@deploy_hook, form_options) do |f|
+  = fae_input f, :environment
+  = fae_input f, :url, label: 'URL'
+
+  = f.submit
+  = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'

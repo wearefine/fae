@@ -33,17 +33,13 @@ feature 'fae_input' do
   end
 
   scenario 'should hide label on hidden fields', js: true do
-    within('.release_created_at') do
-      expect(page).to_not have_content('Created at')
-    end
+    expect(page).to_not have_content('Created At')
   end
 
   scenario 'should have maximum characters on fields with maximum length validations', js: true do
-    within('.release_name') do
-      expect(page).to have_content('Maximum Characters: 15')
-      fill_in "release_name", with: "My Release"
-      expect(page).to have_content('Characters Left: 5')
-    end
+    expect(page).to have_content('Maximum Characters: 15')
+    fill_in "release_name", with: "My Release"
+    expect(page).to have_content('Characters Left: 5')
   end
 
   scenario 'should display markdown helper when markdown_supported: true', js: true do

@@ -9,12 +9,14 @@ base: &base
 
 development:
   <<: *base
+  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
 test:
   <<: *base
   database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
   username: <%= ENV['MYSQL_USER'] || 'root' %>
   password: <%= ENV['MYSQL_PASSWORD'] %>
+  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
 
 remote_development:

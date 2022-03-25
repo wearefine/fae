@@ -34,6 +34,13 @@ en:
       last_login: 'Last Logged In'
       active: 'Active'
       add_user: 'Add User'
+    deploy_hook:
+      environment: 'Environment'
+      add_deploy_hook: 'Add Deploy Hook'
+      new_deploy_hook: 'New Deploy Hook'
+      edit_deploy_hook: 'Edit Deploy Hook'
+      section_heading: 'Deploy Hooks'
+      section_helper_text: ''
     page:
       title: 'Pages'
       disabled_title: 'Disabled Admin'
@@ -55,6 +62,8 @@ en:
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
       no_results: 'No Results'
+      deployments: 'Deploy'
+      deploy_hooks: 'Deploy Hooks'
     changes:
       recent: 'Recent Changes'
       user: 'User'
@@ -72,6 +81,8 @@ en:
       last_day: 'Last Day'
       last_week: 'Last Week'
       last_month: 'Last Month'
+      on_prod: 'On Prod'
+      on_stage: 'On Stage'
       models:
         users: 'Users'
         types: 'Types'
@@ -79,6 +90,27 @@ en:
         user: 'User'
         type: 'Type'
         model: 'Model'
+    deploy:
+        page:
+          heading: 'Deploy'
+        ctas:
+          deploy: 'Deploy'
+        table:
+          past_heading: 'Past Deploys'
+          deploying_heading: 'Deploying'
+          deploying_helper: "After making changes in the CMS, click a deploy button above to push these changes to the respective front-end environment. Once your deployment posts to the “Past Deploys” table below, updates will be ready to review in the front-end environment.<br><br>Please note that each environment is distinct and will need to be deployed separately."
+          title: 'Activity'
+          deployed: 'Date/Time'
+          duration: 'Duration'
+          branch: 'Branch'
+          committer: 'Committer'
+          context: 'Environment'
+          state: 'State'
+          error_msg: 'Error Msg'
+          no_deploys: 'No deploys were found.'
+        changes:
+          production_heading: 'Changes since last production deploy'
+          staging_heading: 'Changes since last staging deploy'
     setup:
       prompt: 'Please create your super admin user.'
       password: 'Passwords must contain at least 8 characters.'
@@ -91,6 +123,7 @@ en:
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:
+      activity_log_heading: 'Activity Log'
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
       view_site: 'View Site'

@@ -40,9 +40,9 @@ module Fae
 
       link_to url, class: "slider-wrapper #{link_class}", method: :post, remote: true do
         '<div class="slider-options">
-          <div class="slider-option slider-option-yes">Yes</div>
+          <div class="slider-option slider-option-yes" aria-live="polite">Yes</div>
           <div class="slider-option-selector"></div>
-          <div class="slider-option slider-option-no">No</div>
+          <div class="slider-option slider-option-no" aria-live="polite">No</div>
         </div>'.html_safe
       end
     end
@@ -56,7 +56,11 @@ module Fae
 
     def fae_delete_button(item, delete_path = nil, *custom_attrs)
       return if item.blank?
-      delete_path ||= polymorphic_path([main_app, fae_scope, item.try(:fae_parent), item])
+
+      delete_path ||= polymorphic_path(
+        [main_app, fae_scope.to_sym, item.try(:fae_parent), item]
+      )
+
       attrs = { method: :delete, title: 'Delete', class: 'js-tooltip table-action', data: { confirm: t('fae.delete_confirmation') } }
       attrs.deep_merge!(custom_attrs[0]) if custom_attrs.present?
       link_to delete_path, attrs do

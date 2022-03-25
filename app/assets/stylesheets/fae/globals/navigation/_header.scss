@@ -6,7 +6,7 @@
   left: 0;
   width: 100%;
   background: $c-header-bg;
-  border-bottom: $header-border-width solid $c-custom-highlight;
+  border-top: $header-border-width solid $c-custom-highlight;
 
   @include bp(large) {
     padding: 0 $content-buffer;
@@ -87,7 +87,7 @@
   }
 }
 
-.main-header-nav {
+.main-header-nav, .utility-nav {
   @include transition(opacity .2s ease-in-out);
 
   a {

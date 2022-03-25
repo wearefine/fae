@@ -33,8 +33,7 @@
     text-transform: uppercase;
     font-size: 14px;
     letter-spacing: .2em;
-    // counters the padding from .content
-    margin: 0 negate($content-buffer) 30px;
+    margin: 0 0 30px;
   }
 
   h3 {
@@ -45,4 +44,10 @@
     color: $c-text-heavy;
     margin-bottom: 20px;
   }
+}
+
+p {
+  margin-bottom: 1.3em;
+  max-width: 80%;
+  line-height: 1.2em;
 }

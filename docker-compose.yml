@@ -1,0 +1,31 @@
+  version: '3.3'
+  volumes:
+    gems:
+  services:
+    app:
+      stdin_open: true
+      tty: true
+      build: .
+      working_dir: /app/spec/dummy
+      command: /bin/bash -c "bundle check || bundle install && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
+      volumes:
+        - gems:/gems
+        - .:/app
+      ports:
+        - '3000:3000'
+      depends_on:
+        - db
+      environment:
+        - RAILS_ENV=development
+        - DEV_MYSQL_HOST=db
+        - FINE_NETLIFY_API_TOKEN=test
+        - FINE_NETLIFY_API_USER=test
+    db:
+      image: mariadb:10.2
+      environment:
+        - MYSQL_ROOT_PASSWORD=
+        - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+      ports:
+        - '3307:3306'
+      volumes:
+        - /private/app/dbs:/var/lib/mysql

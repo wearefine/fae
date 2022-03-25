@@ -7,7 +7,7 @@ ruby:
       }
     }
   }
-= simple_form_for(['admin', @item], form_options) do |f|
+= simple_form_for([:admin, @item], form_options) do |f|
   - subnav_array = ['Attributes', 'Assets', 'Associations']
   - subnav_array.concat ['Aromas', 'Release Notes', 'Recent Changes'] if params[:action] == 'edit'
   = render 'fae/shared/form_header', header: @klass_name, f: f, item: @item, cloneable: true, subnav: subnav_array, languages: true
@@ -98,5 +98,11 @@ ruby:
       cols: [:title, :body],
       ordered: true,
       header: 'Release Notes'
+
+  section.content#poly_things
+    = render 'fae/shared/nested_table',
+      assoc: :poly_things,
+      parent_item: @item,
+      cols: [:name]
 
 = render 'fae/shared/recent_changes'

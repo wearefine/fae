@@ -11,8 +11,10 @@ Fae::Engine.routes.draw do
     get 'logout' => '/devise/sessions#destroy', as: :destroy_user_session
   end
   resources :users
+  resources :deploy_hooks
 
   get 'settings' => 'users#settings', as: 'settings'
+  get 'deploy' => 'deploy#index', as: 'deploy'
   get 'help' => 'pages#help', as: 'help'
   get 'activity' => 'pages#activity_log', as: 'activity_log'
   post 'activity/filter' => 'pages#activity_log_filter', as: 'activity_log_filter'
@@ -41,7 +43,10 @@ Fae::Engine.routes.draw do
   get 'form_managers/fields' => 'form_managers#fields', as: 'form_managers_fields'
   post 'form_managers/update' => 'form_managers#update', as: 'form_managers_update'
 
-  # catch all 404
+  get 'deploy/deploys_list' => 'deploy#deploys_list', as: 'deploy_deploys_list'
+  post 'deploy/deploy_site' => 'deploy#deploy_site', as: 'deploy_deploy_site'
+
+  ## catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]
 
 end

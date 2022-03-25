@@ -9,12 +9,15 @@ header.main-header#js-main-header
           li class=nav_active_class(item[:class_name], 0, idx)
             a href=item[:nested_path] = item[:text]
             - if item[:subitems].present?
-              ul
+              ul class=multi_column_nav_ul_class(item[:subitems])
                 - item[:subitems].each_with_index do |subitem, sub_idx|
                   li: a href=subitem[:nested_path] class=nav_active_class(subitem[:class_name], 1, sub_idx, idx) = subitem[:text]
 
   - if user_signed_in?
     ul.utility-nav#js-utility-nav
+      - if current_user.super_admin_or_admin? && netlify_enabled?
+      li class=deployments_active_class
+        a.deployments-nav-link href=fae.deploy_path = t('fae.navbar.deployments')
       li.utility-dropdown.js-utility-dropdown
         a.grabatar-link href="#"
           img.grabatar src=fae_avatar alt=current_user.full_name

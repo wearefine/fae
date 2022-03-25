@@ -22,6 +22,10 @@ module Fae
       new_klass
     end
 
+    def deployments_active_class
+      '-parent-current -open' if params[:controller].split('/').last == 'deploy'
+    end
+
     def col_name_or_image(item, attribute)
       value = item.send(attribute)
       return if value.blank?
@@ -72,12 +76,23 @@ module Fae
         begin
           return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
           parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
-          edit_path = edit_polymorphic_path([main_app, fae_scope, parent, change.changeable])
+          edit_path = edit_polymorphic_path(
+            [main_app, fae_scope.to_sym, parent, change.changeable]
+          )
           return link_to text, edit_path
         rescue
           return text
         end
       end
+    end
+
+    def netlify_enabled?
+      Fae.netlify.present? &&
+      Fae.netlify[:api_user].present? &&
+      Fae.netlify[:api_token].present? &&
+      Fae.netlify[:site].present? &&
+      Fae.netlify[:site_id].present? &&
+      Fae.netlify[:api_base].present?
     end
 
     private
@@ -110,5 +125,15 @@ module Fae
       "#{item.class.name.underscore.gsub('/', '_').pluralize}_#{item.id}"
     end
 
+    def multi_column_nav_ul_class(item_count)
+      num = item_count.length
+      if num > 30
+        'multicol-nav four'
+      elsif num > 20
+        'multicol-nav three'
+      elsif num > 10
+        'multicol-nav'
+      end
+    end
   end
 end

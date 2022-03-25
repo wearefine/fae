@@ -7,6 +7,7 @@ module Fae
       @option = Option.first || Option.instance
       @option.build_logo if @option.logo.blank?
       @option.build_favicon if @option.favicon.blank?
+      @deploy_hooks = DeployHook.all
     end
 
     # PATCH/PUT /options/1

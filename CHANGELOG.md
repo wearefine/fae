@@ -1,5 +1,36 @@
 # Fae Changelog
 
+## 2.2
+
+- enhancements
+    + New integration with Netlify to manager and trigger builds - [#560](https://github.com/wearefine/fae/pull/560)
+    + New modal form feature [#487](https://github.com/wearefine/fae/pull/487)
+    + New form manager feature [#504](https://github.com/wearefine/fae/pull/504)
+    + New `fae_redirect_to_form_on_create` option [#486](https://github.com/wearefine/fae/pull/486)
+    + New date select option for filters [#481](https://github.com/wearefine/fae/pull/481)
+    + New `--polymorphic=true` flag on `fae:nested_scaffold` - [#562](https://github.com/wearefine/fae/pull/562)
+    + #512 - Bump Devise to v4.8 [#555](https://github.com/wearefine/fae/pull/555)
+    + Add better support for long subnavs [#547](https://github.com/wearefine/fae/pull/547)
+    + Update toggle element styling [#544](https://github.com/wearefine/fae/pull/544)
+    + Nav and layout styles updates [#542](https://github.com/wearefine/fae/pull/542)
+    + Add docker setup for local development [#554](https://github.com/wearefine/fae/pull/554)
+    + Refactor Fae module [#550](https://github.com/wearefine/fae/pull/550)
+    + Update slugger special characters [#514](https://github.com/wearefine/fae/pull/514)
+    + Add support for adding db indexes via fae:scaffold generator [#503](https://github.com/wearefine/fae/pull/503)
+    + Make add button optional for nested tables [#497](https://github.com/wearefine/fae/pull/497)
+    + Make users active by default [#489](https://github.com/wearefine/fae/pull/489)
+- bugs
+    + Fix deselct bug in multi-select element [#557](https://github.com/wearefine/fae/pull/557)
+    + Fix issue with undefined value being passed into validator function [#549](https://github.com/wearefine/fae/pull/549)
+    + Make no-search dropdowns keyboard focusable [#546](https://github.com/wearefine/fae/pull/546)
+    + `fae_checkbox` form helper fixes [#540](https://github.com/wearefine/fae/pull/540)
+    + Fix flash alert for static page errors [#502](https://github.com/wearefine/fae/pull/502)
+    + Add styled user unlock form [#533](https://github.com/wearefine/fae/pull/533)
+    + Fix activity log pagination bug [#498](https://github.com/wearefine/fae/pull/498)
+    + Vertical privilege escalation, toggle abuse and brute-force protection [#488](https://github.com/wearefine/fae/pull/488)
+- documentation
+    + minor updates, typos and link fixes
+
 ## 2.1
 
 - enhancements

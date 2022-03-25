@@ -7,8 +7,8 @@ require 'capybara-screenshot/rspec'
 require 'yarjuf'
 require 'factory_girl_rails'
 require 'database_cleaner'
-require 'rspec/rails'
 require 'shoulda/matchers'
+require 'rspec/rails'
 require 'pry'
 
 # File.dirname(__FILE__) used because Rails.root is the dummy app
@@ -29,6 +29,13 @@ RSpec.configure do |config|
   # Use capybara-webkit as the JS driver
   Capybara.javascript_driver = :webkit
 
+  Capybara.default_max_wait_time = 5
+
+  # fixes an issue with factories not being registered when running appraisal tests
+  config.before(:all) do
+    FactoryGirl.reload
+  end
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -41,7 +48,6 @@ RSpec.configure do |config|
   # config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include FactoryGirl::Syntax::Methods
   FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-  FactoryGirl.find_definitions
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
