@@ -42,7 +42,7 @@ module Fae
           @logger.info "\n"
           @logger.info "Get returned non-success code: #{response.code}"
           @logger.info "Endpoint: #{endpoint}"
-          @logger.info response.body if response.body.present?
+          @logger.info "Body: #{response.body}" if response.body.present?
         end
       rescue Exception => e
         @logger.info "\n"
