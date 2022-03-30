@@ -35,7 +35,8 @@ table class=table_class
             td
               a.js-edit-link.js-tooltip.table-action title=t('fae.common.edit') href=self.send(edit_path, item)
                 i.icon-edit
-          td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
+          - unless hide_delete_button
+            td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
 
     - elsif !hide_add_button
       tr
