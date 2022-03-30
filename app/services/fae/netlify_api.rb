@@ -41,7 +41,7 @@ module Fae
         else
           @logger.info "\n"
           @logger.info "Get returned non-success code: #{response.code}"
-          @logger.info endpoint
+          @logger.info "Endpoint: #{endpoint}"
           @logger.info response.body if response.body.present?
         end
       rescue Exception => e
@@ -65,9 +65,9 @@ module Fae
           return JSON.parse(response.body) if response.body.present?
         else
           @logger.info "Post returned non-success code: #{response.code}"
-          @logger.info endpoint
-          @logger.info params
-          @logger.info response.body if response.body.present?
+          @logger.info "Endpoint: #{endpoint}"
+          @logger.info "Params: #{params}"
+          @logger.info "Body: #{response.body}" if response.body.present?
         end
       rescue Exception => e
         @logger.info "\n"
