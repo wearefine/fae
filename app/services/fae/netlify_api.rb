@@ -64,6 +64,7 @@ module Fae
         if response.is_a?(Net::HTTPSuccess)
           return JSON.parse(response.body) if response.body.present?
         else
+          @logger.info "\n"
           @logger.info "Post returned non-success code: #{response.code}"
           @logger.info "Endpoint: #{endpoint}"
           @logger.info "Params: #{params}"
