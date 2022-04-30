@@ -11,7 +11,7 @@ module Fae
     end
 
     def extension_whitelist
-      %w(jpg jpeg gif png ico)
+      %w(jpg jpeg gif png ico svg)
     end
 
     # Override the directory where uploaded files will be stored.
