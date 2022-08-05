@@ -19,7 +19,7 @@
 
     &:hover {
       color: $c-white;
-      background: $c-custom-highlight;
+      background: var(--highlight-color);
     }
   }
 
@@ -29,6 +29,6 @@
 
   .current {
     color: $c-white;
-    background: $c-custom-highlight;
+    background: var(--highlight-color);
   }
 }

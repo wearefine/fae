@@ -15,7 +15,7 @@
 }
 
 .login-area {
-  border-top: 10px solid $c-custom-highlight;
+  border-top: 10px solid var(--highlight-color);
   margin: auto;
   border-radius: 5px;
   box-shadow: 0 0 5px 0 $c-grey;
