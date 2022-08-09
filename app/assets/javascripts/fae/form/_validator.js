@@ -142,6 +142,8 @@ Fae.form.validator = {
     });
   },
 
+
+  // check for server side errors for images/files and display error bar with jump links on form re-render
   checkForSsrImageAndFileErrors: function() {
     const _this = this;
     let imageErrorFound = false;
