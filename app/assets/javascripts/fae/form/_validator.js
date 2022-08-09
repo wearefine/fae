@@ -11,6 +11,7 @@ Fae.form.validator = {
   validations_called: 0,
   validations_returned: 0,
   validation_test_count: 0,
+  errors: [],
 
   init: function () {
     // validate all forms except the login form
@@ -93,8 +94,11 @@ Fae.form.validator = {
             FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
           }
 
+          // display error messages grouped at top of form with jump links to invalid fields
+          _this._buildErrorLinks();
+
           if ($(".field_with_errors").length) {
-            $('.alert').slideDown('fast').delay(3000).slideUp('fast');
+            $('.errors-bar-wrapper').slideDown('fast')
           }
         }
 
@@ -166,9 +170,43 @@ Fae.form.validator = {
         if (messages.length) {
           _this.is_valid = false;
           _this._createOrReplaceError($input, messages);
+          _this.errors.push({
+            $input: $input,
+            messages: messages
+          })
         }
       }
     });
+  },
+
+  // builds jump links for all invalid fields to display at top of form
+  _buildErrorLinks: function() {
+    const $header = $('.js-content-header');
+    const headerHeight = $header[0].getBoundingClientRect().height;
+
+    const $errorLinks = this.errors.map((error) => {
+      let label = error.$input.prev().children('.label_inner').text();
+      let $wrapper = error.$input.parents('div.input');
+
+      // build clean label with name of field and error message
+      label = `${label.replace('*', '')} - ${error.messages.join(', ')}`;
+
+      let $errorLink = $('<a/>', {
+        class: 'errors-jump-link',
+        href: `#`,
+        html: label,
+      });
+
+      // smooth scroll invalid field right below header
+      $errorLink.click((e) => {
+        e.preventDefault;
+        FCH.smoothScroll($wrapper, 500, 100, headerHeight * -1);
+      });
+      return $errorLink
+    });
+
+    // append all links to error bar in form_header partial
+    $('.errors-bar').append($errorLinks);
   },
 
   /**
