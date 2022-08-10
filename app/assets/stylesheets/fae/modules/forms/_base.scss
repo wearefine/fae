@@ -98,3 +98,10 @@ input[type=email] {
     margin-bottom: 10px;
   }
 }
+
+.hero_image {
+
+  &.highlight {
+    border: 1px solid red;
+  }
+}
