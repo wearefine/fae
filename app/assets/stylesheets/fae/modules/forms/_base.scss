@@ -99,9 +99,10 @@ input[type=email] {
   }
 }
 
-.hero_image {
+.input.field {
 
   &.highlight {
-    border: 1px solid red;
+    outline: 2px dashed green;
+    outline-offset: 1px;
   }
 }
