@@ -45,7 +45,7 @@ RUN apt-get update -qq && \
 
 FROM build_deps as gems
 
-RUN gem install -N bundler -v ${BUNDLER_VERSION}
+RUN gem install -N bundler -v 2.3.9
 
 COPY Gemfile* ./
 COPY fae.gemspec* ./
