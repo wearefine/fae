@@ -81,12 +81,14 @@ ENV SECRET_KEY_BASE 1
 
 COPY . .
 
-WORKDIR /app/spec/dummy
+# WORKDIR /app/spec/dummy
 
 RUN bundle exec rails assets:precompile
 # RUN cd spec/dummy && bundle exec rails assets:precompile
 
 ENV PORT 8080
+
+WORKDIR /app/spec/dummy
 
 ARG SERVER_COMMAND="bundle exec puma -C config/puma.rb"
 ENV SERVER_COMMAND ${SERVER_COMMAND}
