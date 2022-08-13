@@ -53,8 +53,8 @@ RUN bundle install &&  rm -rf vendor/bundle/ruby/*/cache
 
 FROM build_deps as node_modules
 
-COPY package*json ./
-COPY yarn.* ./
+# COPY package*json ./
+# COPY yarn.* ./
 
 RUN if [ -f "yarn.lock" ]; then \
     yarn install; \
