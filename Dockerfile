@@ -83,13 +83,14 @@ COPY . .
 
 # WORKDIR /app/spec/dummy
 
-RUN bundle exec rails assets:precompile
+RUN bundle list
+# RUN bundle exec rails assets:precompile
 # RUN cd spec/dummy && bundle exec rails assets:precompile
 
-ENV PORT 8080
+# ENV PORT 8080
 
-# WORKDIR /app/spec/dummy
+# # WORKDIR /app/spec/dummy
 
-ARG SERVER_COMMAND="bundle exec puma -C config/puma.rb"
-ENV SERVER_COMMAND ${SERVER_COMMAND}
-CMD ${SERVER_COMMAND}
+# ARG SERVER_COMMAND="bundle exec puma -C config/puma.rb"
+# ENV SERVER_COMMAND ${SERVER_COMMAND}
+# CMD ${SERVER_COMMAND}
