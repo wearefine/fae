@@ -76,8 +76,8 @@ RUN apt-get update -qq && \
     ${PROD_PACKAGES} \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-COPY --from=gems /app /app
-COPY --from=node_modules /app/node_modules /app/node_modules
+# COPY --from=gems /app /app
+# COPY --from=node_modules /app/node_modules /app/node_modules
 
 ENV SECRET_KEY_BASE 1
 
