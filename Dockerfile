@@ -34,7 +34,7 @@ ENV PATH $VOLTA_HOME/bin:/usr/local/bin:$PATH
 
 RUN volta install node@${NODE_VERSION} && volta install yarn
 
-FROM base as build_deps
+# FROM base as build_deps
 
 ARG DEV_PACKAGES="git build-essential libpq-dev wget vim curl gzip xz-utils libsqlite3-dev imagemagick libmagickcore-dev libmagickwand-dev"
 ENV DEV_PACKAGES ${DEV_PACKAGES}
@@ -43,7 +43,7 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y ${DEV_PACKAGES} \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-FROM build_deps as gems
+# FROM build_deps as gems
 
 RUN gem install -N bundler -v 2.3.9
 
@@ -53,7 +53,7 @@ COPY Gemfile* ./
 COPY fae.gemspec* ./
 RUN bundle install &&  rm -rf vendor/bundle/ruby/*/cache
 
-FROM build_deps as node_modules
+# FROM build_deps as node_modules
 
 # COPY package*json ./
 # COPY yarn.* ./
@@ -66,7 +66,7 @@ RUN if [ -f "yarn.lock" ]; then \
     mkdir node_modules; \
     fi
 
-FROM base
+# FROM base
 
 ARG PROD_PACKAGES="postgresql-client file vim curl gzip libsqlite3-0 imagemagick libmagickcore-dev libmagickwand-dev"
 ENV PROD_PACKAGES=${PROD_PACKAGES}
