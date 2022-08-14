@@ -47,6 +47,8 @@ FROM build_deps as gems
 
 RUN gem install -N bundler -v 2.3.9
 
+RUN bundler -v
+
 COPY Gemfile* ./
 COPY fae.gemspec* ./
 RUN bundle install &&  rm -rf vendor/bundle/ruby/*/cache
