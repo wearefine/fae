@@ -89,7 +89,8 @@ RUN bundle list
 # RUN bundle exec rails assets:precompile
 # RUN cd spec/dummy && bundle exec rails assets:precompile
 
-ENV PORT 8080
+ENV PORT 80
+EXPOSE 80
 
 # WORKDIR /app/spec/dummy
 
