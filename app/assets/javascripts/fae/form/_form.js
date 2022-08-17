@@ -21,15 +21,17 @@ Fae.form = {
     this.filtering.init();
     this.slugger.init();
     this.formManager.init();
-
+    
     // input type=file customization
     // This doesn't work in IE. It's not worth figuring out why by this point. IE9 gets plain file uploader.
     if (!FCH.IE9) {
       $('.input.file').fileinputer();
     }
-
+    
     // make all the hint areas
     $('.hint').hinter();
+    
+    this.dragDrop.init();
   },
 
   makeTwoColumnLabels: function() {
