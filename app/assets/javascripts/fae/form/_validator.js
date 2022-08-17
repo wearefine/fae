@@ -282,7 +282,6 @@ Fae.form.validator = {
         FCH.smoothScroll($wrapper, 500, 100, headerHeight * -1);
       });
       return $errorLink;
->>>>>>> @{-1}
     });
 
     // append all links to error bar in form_header partial
