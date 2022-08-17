@@ -92,11 +92,17 @@ Fae.form.select = {
         })
       });
 
-      // Add actions to wraper
-      $deselect_all_action.insertAfter($chosen);
+      // prevent multiple deselect all actions from being added when nested forms are generated
+      if ($('.multiselect-action_wrap').length === 0) {
+        // Add actions to wraper
+        $deselect_all_action.insertAfter($chosen);
+      }
 
-      // Add special "Select All" option and notify Chosen of new option
-      addSelectAllOption($element)
+      // prevent multiple 'SELECT ALL' options from being added when nested forms are generated
+      if ($element[0].options[0].value != select_all_value) {
+        // Add special "Select All" option and notify Chosen of new option
+        addSelectAllOption($element)
+      }
 
       // Mark label wrapper as having multiselect actions for styling
       $label.addClass('has-multiselect-actions');
