@@ -117,6 +117,8 @@ en:
     options:
       project_name: 'Project Name'
       live_url: 'Live URL'
+      colorway: 'Highlight Color'
+      colorway_helper: 'Use hex code to set the highlight color. Omit the "#"'
       url_helper: 'Include http:// for external links.'
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'

@@ -60,6 +60,7 @@
 //= require fae/_modals
 //= require fae/_tables
 //= require fae/_deploy
+//= require fae/_contrast
 
 //= require fae
 

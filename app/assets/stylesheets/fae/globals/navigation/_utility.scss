@@ -73,7 +73,7 @@
   height: 40px;
   display: inline-block;
   vertical-align: middle;
-  background: $c-custom-highlight;
+  background: var(--highlight-color);
 }
 
 .grabatar-link {
