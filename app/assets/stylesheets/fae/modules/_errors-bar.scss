@@ -1,0 +1,18 @@
+.errors-bar-wrapper {
+  border-color: $c-error-content;
+  background: $c-error-bg;
+  color: $c-error-content;
+  width: 100%;
+  padding: 20px;
+  display: none;
+  
+  .errors-bar {
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+
+  .error-jump-link {
+    margin-right: 20px;
+  }
+}

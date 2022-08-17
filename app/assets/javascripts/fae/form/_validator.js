@@ -10,6 +10,7 @@ Fae.form.validator = {
   validations_called: 0,
   validations_returned: 0,
   validation_test_count: 0,
+  invalidFields: [],
 
   init: function () {
     // validate all forms except the login form
@@ -19,6 +20,7 @@ Fae.form.validator = {
       this.bindValidationEvents();
       this.formValidate();
       this.length_counter.init();
+      this.checkForSsrImageAndFileErrors();
     }
   },
 
@@ -92,8 +94,11 @@ Fae.form.validator = {
             FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
           }
 
+          // display error messages grouped at top of form with jump links to invalid fields
+          _this._buildErrorLinks();
+
           if ($('.field_with_errors').length) {
-            $('.alert').slideDown('fast').delay(3000).slideUp('fast');
+            $('.errors-bar-wrapper').slideDown('fast');
           }
         }
       } else {
@@ -171,6 +176,26 @@ Fae.form.validator = {
     return preventSave;
   },
 
+  // check for server side errors for images/files and display error bar with jump links on form re-render
+  checkForSsrImageAndFileErrors: function() {
+    const _this = this;
+    let imageErrorFound = false;
+
+    $('.input.file').each(function () {
+      $assetInput = $(this);
+      if ($assetInput.hasClass('field_with_errors')) {
+        const errorMessage = $assetInput.find('.error').text()
+        _this._addInvalidField($assetInput, [errorMessage])
+        imageErrorFound = true;
+      }
+    });
+
+    if (imageErrorFound) {
+      this._buildErrorLinks();
+      $('.errors-bar-wrapper').slideDown('fast');
+    }
+  },
+
   /**
    * Initialize Judge on a field
    * @protected
@@ -183,6 +208,7 @@ Fae.form.validator = {
       valid: function () {
         _this.validations_returned++;
         _this._createSuccessClass($input);
+        _this._clearInvalidField($input);
       },
       invalid: function (input, messages) {
         _this.validations_returned++;
@@ -190,9 +216,77 @@ Fae.form.validator = {
         if (messages.length) {
           _this.is_valid = false;
           _this._createOrReplaceError($input, messages);
+          _this._addInvalidField($input, messages);
         }
       },
     });
+  },
+
+  /**
+   * Add error to invalid fields array if it doesn't already exist
+   * @protected
+   * @param  {jQuery} $input - field to check if exists
+   */
+  _addInvalidField: function ($input, messages) {
+    const foundIndex = this.invalidFields.findIndex((item) => {
+      return item.$input[0] === $input[0];
+    });
+    if (foundIndex === -1) {
+      this.invalidFields.push({
+        $input: $input,
+        messages: messages,
+      });
+    }
+  },
+
+  /**
+   * Remove error from invalid fields array if exists
+   * @protected
+   * @param  {jQuery} $input - field to check if exists
+   */
+  _clearInvalidField: function ($input) {
+    const foundIndex = this.invalidFields.findIndex((item) => {
+      return item.$input[0] === $input[0];
+    });
+    if (foundIndex !== -1) {
+      this.invalidFields.splice(foundIndex, 1);
+    }
+  },
+
+  /**
+   * Builds jump links for all invalid fields to display at top of form
+   * @protected
+   */
+
+  _buildErrorLinks: function () {
+    const $header = $('.js-content-header');
+    const headerHeight = $header[0].getBoundingClientRect().height;
+
+    const $errorLinks = this.invalidFields.map((field) => {
+      const $wrapper = field.$input.parents('div.input');
+      let label = $wrapper.find('.label_inner').text();
+
+      // build clean label with name of field and error message
+      label = `${label.replace('*', '')} - ${field.messages.join(', ')}`;
+
+      // build jump link
+      let $errorLink = $('<a/>', {
+        class: 'error-jump-link',
+        href: `#`,
+        html: label,
+      });
+
+      // smooth scroll invalid field right below header
+      $errorLink.click((e) => {
+        e.preventDefault;
+        FCH.smoothScroll($wrapper, 500, 100, headerHeight * -1);
+      });
+      return $errorLink;
+>>>>>>> @{-1}
+    });
+
+    // append all links to error bar in form_header partial
+    $('.errors-bar').empty().append($errorLinks);
   },
 
   /**
