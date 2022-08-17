@@ -6,7 +6,6 @@
  * @memberof form
  */
 Fae.form.validator = {
-
   is_valid: '',
   validations_called: 0,
   validations_returned: 0,
@@ -29,14 +28,13 @@ Fae.form.validator = {
   formValidate: function ($scope) {
     var _this = this;
 
-    if (typeof($scope) === 'undefined'){
+    if (typeof $scope === 'undefined') {
       $scope = FCH.$document;
     }
     $scope.on('submit', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
       if ($this.data('passed_validation') !== 'true') {
-
         // pause form submission
         e.preventDefault();
 
@@ -62,9 +60,7 @@ Fae.form.validator = {
         });
 
         _this.testValidation($this, $scope);
-
       }
-
     });
   },
 
@@ -72,32 +68,34 @@ Fae.form.validator = {
    * Tests a forms validation after all validation checks have responded
    * Polls validations responses every 50ms to allow uniqueness AJAX calls to complete
    */
-  testValidation: function($this, $scope) {
+  testValidation: function ($this, $scope) {
     var _this = this;
     _this.validation_test_count++;
 
-    setTimeout(function(){
-
+    setTimeout(function () {
       // if all the validation checks have returned a response
       if (_this.validations_called === _this.validations_returned) {
-
         if (_this.is_valid) {
           // if form is valid, submit it
           $this.data('passed_validation', 'true');
+
+          // exit if trying to save parent form and nested form has unsaved content
+          if (typeof $scope === 'undefined' && _this._preventFormSaveDueToNestedForm()) {
+            return;
+          }
 
           $this.submit();
         } else {
           // otherwise scroll to the top to display alerts (unless in a nested form scope)
           Fae.navigation.language.checkForHiddenErrors();
-          if (typeof($scope) === 'undefined') {
+          if (typeof $scope === 'undefined') {
             FCH.smoothScroll($('#js-main-header'), 500, 100, 0);
           }
 
-          if ($(".field_with_errors").length) {
+          if ($('.field_with_errors').length) {
             $('.alert').slideDown('fast').delay(3000).slideUp('fast');
           }
         }
-
       } else {
         // check again if it hasn't run more than 50 times
         // (to prevent against infinite loop)
@@ -105,9 +103,7 @@ Fae.form.validator = {
           _this.testValidation($this);
         }
       }
-
     }, 50);
-
   },
 
   /**
@@ -116,7 +112,7 @@ Fae.form.validator = {
   bindValidationEvents: function ($scope) {
     var _this = this;
 
-    if (typeof($scope) === 'undefined'){
+    if (typeof $scope === 'undefined') {
       $scope = $('body');
     }
 
@@ -129,13 +125,13 @@ Fae.form.validator = {
           $this.blur(function () {
             _this._judgeIt($this);
           });
-
         } else if ($this.hasClass('hasDatepicker')) {
           // date pickers need a little delay
           $this.blur(function () {
-            setTimeout(function(){ _this._judgeIt($this); }, 500);
+            setTimeout(function () {
+              _this._judgeIt($this);
+            }, 500);
           });
-
         } else if ($this.is('select')) {
           // selects validate on change
           $this.change(function () {
@@ -146,6 +142,34 @@ Fae.form.validator = {
     });
   },
 
+  /**
+   * Detect if a nested form has content and alert user
+   * @protected
+   */
+  _preventFormSaveDueToNestedForm() {
+    let preventSave = false;
+    const $nestedFormWrapper = $('.js-addedit-form-wrapper:visible');
+    // exit if no nested objects
+    if ($nestedFormWrapper.length === 0) return false;
+
+    const $form = $nestedFormWrapper.find('form');
+    // exit if on edit form 
+    if ($form[0].id.includes('edit')) return false;
+
+    // get all form values without hidden fields. this omits utf encoding, csrf token, and parent item id fields
+    const formValues = $form.find(':input:not(:hidden)').serializeArray();
+
+    // detect if any fields have content
+    const formHasContent = formValues.some((item) => item.value !== '');
+
+    if (formHasContent) {
+      const formLabel = $nestedFormWrapper.siblings('h2').text();
+      // set to true if user decides not to continue
+      preventSave = !window.confirm(`${formLabel} has unsaved content. Changes will be lost if you continue`)
+    }
+
+    return preventSave;
+  },
 
   /**
    * Initialize Judge on a field
@@ -167,7 +191,7 @@ Fae.form.validator = {
           _this.is_valid = false;
           _this._createOrReplaceError($input, messages);
         }
-      }
+      },
     });
   },
 
@@ -208,7 +232,11 @@ Fae.form.validator = {
     var $styled_input = this._setTargetInput($input);
     $styled_input.addClass('valid').removeClass('invalid');
 
-    $input.parent().removeClass('field_with_errors').children('.error').remove();
+    $input
+      .parent()
+      .removeClass('field_with_errors')
+      .children('.error')
+      .remove();
   },
 
   /**
@@ -225,7 +253,9 @@ Fae.form.validator = {
     if ($wrapper.children('.error').length) {
       $wrapper.children('.error').text(messages.join(', '));
     } else {
-      $wrapper.addClass('field_with_errors').append("<span class='error'>" + messages.join(', ') + "</span>");
+      $wrapper
+        .addClass('field_with_errors')
+        .append("<span class='error'>" + messages.join(', ') + '</span>');
     }
   },
 
@@ -239,17 +269,18 @@ Fae.form.validator = {
     var $styled_input = $input;
 
     // If field is a chosen input
-    if ( $input.next('.chosen-container').length ) {
+    if ($input.next('.chosen-container').length) {
       if ($input.next('.chosen-container').find('.chosen-single').length) {
         $styled_input = $input.next('.chosen-container').find('.chosen-single');
-
-      } else if ($input.next('.chosen-container').find('.chosen-choices').length) {
-        $styled_input = $input.next('.chosen-container').find('.chosen-choices');
-
+      } else if (
+        $input.next('.chosen-container').find('.chosen-choices').length
+      ) {
+        $styled_input = $input
+          .next('.chosen-container')
+          .find('.chosen-choices');
       }
     } else if ($input.hasClass('mde-enabled')) {
       $styled_input = $input.siblings('.editor-toolbar, .CodeMirror-wrap');
-
     }
 
     return $styled_input;
@@ -260,13 +291,16 @@ Fae.form.validator = {
    * @param {jQuery} $field - Input fields
    * @param {String} kind - Type of validation (e.g. 'presence' or 'confirmation')
    */
-  stripValidation: function($field, kind) {
+  stripValidation: function ($field, kind) {
     var validations = $field.data('validate');
 
     for (var i = 0; i < validations.length; i++) {
       // validation items can be strings or JSON objects
       // let's convert the strings to JSON so we're dealing with consistent types
-      if (typeof validations[i] == 'string' || validations[i] instanceof String) {
+      if (
+        typeof validations[i] == 'string' ||
+        validations[i] instanceof String
+      ) {
         validations[i] = JSON.parse(validations[i]);
       }
 
@@ -289,14 +323,17 @@ Fae.form.validator = {
    * @memberof! validator
    */
   password_confirmation_validation: {
-    init: function() {
+    init: function () {
       var _this = this;
 
       _this.$password_field = $('#user_password');
       _this.$password_confirmation_field = $('#user_password_confirmation');
 
       if (_this.$password_confirmation_field.length) {
-        Fae.form.validator.stripValidation(_this.$password_field, 'confirmation');
+        Fae.form.validator.stripValidation(
+          _this.$password_field,
+          'confirmation'
+        );
         _this.addCustomValidation();
       }
     },
@@ -304,7 +341,7 @@ Fae.form.validator = {
     /**
      * Validate password on blur and form submit; halt form execution if invalid
      */
-    addCustomValidation: function() {
+    addCustomValidation: function () {
       var _this = this;
 
       /**
@@ -316,18 +353,24 @@ Fae.form.validator = {
       function validateConfirmation() {
         var validator = Fae.form.validator;
 
-        if (_this.$password_field.val() === _this.$password_confirmation_field.val()) {
+        if (
+          _this.$password_field.val() ===
+          _this.$password_confirmation_field.val()
+        ) {
           validator._createSuccessClass(_this.$password_confirmation_field);
         } else {
           var message = ['must match Password'];
           validator.is_valid = false;
-          validator._createOrReplaceError(_this.$password_confirmation_field, message);
+          validator._createOrReplaceError(
+            _this.$password_confirmation_field,
+            message
+          );
         }
       }
 
       this.$password_confirmation_field.on('blur', validateConfirmation);
 
-      $('form').on('submit', function(ev) {
+      $('form').on('submit', function (ev) {
         _this.is_valid = true;
         validateConfirmation();
 
@@ -335,13 +378,13 @@ Fae.form.validator = {
           ev.preventDefault();
         }
       });
-    }
+    },
   },
 
   /**
    * Judge always read the `on: :create` validations, so we need to strip the password presence validation on the user edit form
    */
-  passwordPresenceConditional: function() {
+  passwordPresenceConditional: function () {
     var $edit_user_password = $('.edit_user #user_password');
     if ($edit_user_password.length) {
       this.stripValidation($edit_user_password, 'presence');
@@ -354,25 +397,24 @@ Fae.form.validator = {
    * @memberof! validator
    */
   length_counter: {
-
-    init: function(){
+    init: function () {
       this.findLengthValidations();
     },
 
     /**
      * Add counter text to fields that validate based on character counts
      */
-    findLengthValidations: function() {
+    findLengthValidations: function () {
       var _this = this;
 
       $('[data-validate]').each(function () {
         var $this = $(this);
 
-        if ($this.data('validate').length ) {
+        if ($this.data('validate').length) {
           var validations = $this.data('validate');
 
-          $.grep(validations, function(item){
-            if (item.kind === 'length'){
+          $.grep(validations, function (item) {
+            if (item.kind === 'length') {
               $this.data('length-max', item.options.maximum);
               _this._setupCounter($this);
             }
@@ -386,17 +428,17 @@ Fae.form.validator = {
      * @access protected
      * @param {jQuery} $elem - Input field being counted
      */
-    _setupCounter: function($elem) {
+    _setupCounter: function ($elem) {
       var _this = this;
 
       _this._createCounterDiv($elem);
       _this.updateCounter($elem);
 
       $elem
-        .keyup(function() {
+        .keyup(function () {
           _this.updateCounter($elem);
         })
-        .keypress(function(e) {
+        .keypress(function (e) {
           if (_this._charactersLeft($elem) <= 0) {
             if (e.keyCode !== 8 && e.keyCode !== 46) {
               e.preventDefault();
@@ -410,17 +452,17 @@ Fae.form.validator = {
      * @protected
      * @param {jQuery} $elem - Input field to evaluate
      */
-    _createCounterDiv: function($elem) {
+    _createCounterDiv: function ($elem) {
       if ($elem.siblings('.counter').length === 0) {
-        var text = "Maximum Characters: " + $elem.data('length-max');
+        var text = 'Maximum Characters: ' + $elem.data('length-max');
         text += " / <span class='characters-left'></span>";
 
         var $counter_div = $('<div />', {
           class: 'counter',
-          html: '<p>' + text + '</p>'
+          html: '<p>' + text + '</p>',
         });
 
-        $elem.parent().append( $counter_div );
+        $elem.parent().append($counter_div);
       }
     },
 
@@ -428,7 +470,7 @@ Fae.form.validator = {
      * Updates the counter count and class
      * @param {jQuery} $elem - Input field to evaluate
      */
-    updateCounter: function($elem) {
+    updateCounter: function ($elem) {
       var $count_span = $elem.siblings('.counter').find('.characters-left');
       if ($count_span.length) {
         var current = this._charactersLeft($elem);
@@ -452,14 +494,13 @@ Fae.form.validator = {
      * @param {jQuery} $elem - Input field being counted
      * @return {integer} The number of characters left
      */
-    _charactersLeft: function($elem) {
+    _charactersLeft: function ($elem) {
       var input_value = $elem.val();
       var current = $elem.data('length-max') - input_value.length;
       // Rails counts a newline as two characters, so let's make up for it here
       current -= (input_value.match(/\n/g) || []).length;
 
       return current;
-    }
-  }
-
+    },
+  },
 };
