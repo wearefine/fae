@@ -34,6 +34,11 @@ Fae.form.validator = {
     $scope.on('submit', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
+      // wait for form to be valid and then check for unsaved nested changes
+      if ($this.data('passed_validation') === 'true' && _this._preventFormSaveDueToNestedForm()) {
+        e.preventDefault()
+      }
+
       if ($this.data('passed_validation') !== 'true') {
         // pause form submission
         e.preventDefault();
@@ -60,7 +65,7 @@ Fae.form.validator = {
         });
 
         _this.testValidation($this, $scope);
-      }
+      } 
     });
   },
 
@@ -78,11 +83,6 @@ Fae.form.validator = {
         if (_this.is_valid) {
           // if form is valid, submit it
           $this.data('passed_validation', 'true');
-
-          // exit if trying to save parent form and nested form has unsaved content
-          if (typeof $scope === 'undefined' && _this._preventFormSaveDueToNestedForm()) {
-            return;
-          }
 
           $this.submit();
         } else {
