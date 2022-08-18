@@ -1,3 +1,4 @@
+require_relative 'base_generator'
 module Fae
   class NestedScaffoldGenerator < Fae::BaseGenerator
     source_root ::File.expand_path('../templates', __FILE__)
