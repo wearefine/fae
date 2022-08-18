@@ -67,7 +67,11 @@ Fae.form.validator = {
         });
 
         _this.testValidation($this, $scope);
-      } 
+      } else {
+        // form is valid and can submit so update save button with saving indication
+        var $saveButton = $('.js-content-header').find('input[type="submit"]');
+        $saveButton.addClass('saving').val('Saving...');
+      }
     });
   },
 
