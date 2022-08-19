@@ -36,11 +36,6 @@ Fae.form.validator = {
     $scope.on('submit', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
-      // wait for form to be valid and then check for unsaved nested changes
-      if ($this.data('passed_validation') === 'true' && _this._preventFormSaveDueToNestedForm()) {
-        e.preventDefault()
-      }
-
       if ($this.data('passed_validation') !== 'true') {
         // pause form submission
         e.preventDefault();
@@ -67,10 +62,14 @@ Fae.form.validator = {
         });
 
         _this.testValidation($this, $scope);
+
+      } else if (_this._preventFormSaveDueToNestedForm()) {
+        // nested form has unsaved changes to prevent form submission
+        e.preventDefault();
+        
       } else {
-        // form is valid and can submit so update save button with saving indication
-        var $saveButton = $('.js-content-header').find('input[type="submit"]');
-        $saveButton.addClass('saving').val('Saving...');
+        // form is valid and can submit so set saving indication
+        _this._setSavingIndicator();
       }
     });
   },
@@ -152,18 +151,25 @@ Fae.form.validator = {
   },
 
   /**
+   * Sent indicator to let the user know the form is saving
+   * @protected
+   */
+  _setSavingIndicator: function () {
+    var $saveButton = $('.js-content-header').find('input[type="submit"]');
+    $saveButton.addClass('saving').val('Saving...');
+  },
+
+  /**
    * Detect if a nested form has content and alert user
    * @protected
    */
-  _preventFormSaveDueToNestedForm() {
+  _preventFormSaveDueToNestedForm: function () {
     let preventSave = false;
     const $nestedFormWrapper = $('.js-addedit-form-wrapper:visible');
     // exit if no nested objects
     if ($nestedFormWrapper.length === 0) return false;
 
     const $form = $nestedFormWrapper.find('form');
-    // exit if on edit form 
-    if ($form[0].id.includes('edit')) return false;
 
     // get all form values without hidden fields. this omits utf encoding, csrf token, and parent item id fields
     const formValues = $form.find(':input:not(:hidden)').serializeArray();
@@ -174,7 +180,9 @@ Fae.form.validator = {
     if (formHasContent) {
       const formLabel = $nestedFormWrapper.siblings('h2').text();
       // set to true if user decides not to continue
-      preventSave = !window.confirm(`${formLabel} has unsaved content. Changes will be lost if you continue`)
+      preventSave = !window.confirm(
+        `Are you sure you want to continue? ${formLabel} has unsaved content`
+      );
     }
 
     return preventSave;
