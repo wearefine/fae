@@ -15,18 +15,20 @@ Fae.form.dragDrop = {
   },
 
   bindListeners() {
-    this.fileInputs.forEach(input => {
+
+    Array.from(this.fileInputs).forEach(input => {
       const container = input.closest('.input.field');
 
       ['dragenter', 'dragover'].forEach((eventName) => {
         container.addEventListener(eventName, this.highlight.bind(container));
       });
-      
+
       ['dragleave', 'drop'].forEach((eventName) => {
         container.addEventListener(eventName, this.unhighlight.bind(container));
       });
 
-      container.addEventListener('drop', this.handleDrop.bind(this, container));
+      // This needed to be bound via jquery since tests have to use a simulated jquery event and native event listeners do not pickup on jquery events
+      $(container).on('drop', this.handleDrop.bind(this, container));
     })
   },
 
