@@ -5,7 +5,7 @@ feature 'Drag and drop uploads for file fields' do
   # uncomment to expose browser console error messages in terminal
   # very helpful for debugging as not all errors show up when page.driver.enable_logging is enabled
   # after(:each) do
-  #   errors = page.driver.browser.error_messages
+  #   errors = [page.driver.error_messages, page.driver.console_messages]
   #   if errors.present?
   #     puts '-----------------------------'
   #     puts errors
