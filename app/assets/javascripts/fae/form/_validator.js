@@ -98,7 +98,7 @@ Fae.form.validator = {
           }
 
           // display error messages grouped at top of form with jump links to invalid fields
-          _this._buildErrorLinks();
+          _this._buildErrorLinks($scope);
 
           if ($('.field_with_errors').length) {
             $('.errors-bar-wrapper').slideDown('fast');
@@ -189,15 +189,15 @@ Fae.form.validator = {
   },
 
   // check for server side errors for images/files and display error bar with jump links on form re-render
-  checkForSsrImageAndFileErrors: function() {
+  checkForSsrImageAndFileErrors: function () {
     const _this = this;
     let imageErrorFound = false;
 
     $('.input.file').each(function () {
       $assetInput = $(this);
       if ($assetInput.hasClass('field_with_errors')) {
-        const errorMessage = $assetInput.find('.error').text()
-        _this._addInvalidField($assetInput, [errorMessage])
+        const errorMessage = $assetInput.find('.error').text();
+        _this._addInvalidField($assetInput, [errorMessage]);
         imageErrorFound = true;
       }
     });
@@ -268,12 +268,31 @@ Fae.form.validator = {
   /**
    * Builds jump links for all invalid fields to display at top of form
    * @protected
+   * @param  {jQuery} $scope - form scope
    */
 
-  _buildErrorLinks: function () {
+  _buildErrorLinks: function ($scope) {
     const $header = $('.js-content-header');
     const headerHeight = $header[0].getBoundingClientRect().height;
 
+    if (typeof $scope === 'undefined') {
+      $scope = $('body');
+    }
+
+    // get all fields with non-empty validations
+    const fieldsWithValidation = Array.from(
+      $scope.find('[data-validate*="{"]')
+    );
+
+    // sort invalid fields to match ordering of fields within form
+    this.invalidFields.sort((a, b) => {
+      return (
+        fieldsWithValidation.indexOf(a.$input[0]) -
+        fieldsWithValidation.indexOf(b.$input[0])
+      );
+    });
+
+    // generate error links
     const $errorLinks = this.invalidFields.map((field) => {
       const $wrapper = field.$input.parents('div.input');
       let label = $wrapper.find('.label_inner').text();
