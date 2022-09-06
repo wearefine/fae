@@ -5,8 +5,9 @@ set -o errexit
 ls -la
 cd spec/dummy
 bundle install
-echo 'try this'
-bundle exec bin/rails db:migrate RAILS_ENV=production
-echo 'after'
 bundle exec rake assets:precompile
 bundle exec rake assets:clean
+echo 'try this'
+bundle exec rake db:schema:load
+bundle exec rake db:migrate
+echo 'after'
