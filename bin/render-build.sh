@@ -6,6 +6,7 @@ ls -la
 cd spec/dummy
 bundle install
 echo 'try this'
+cd ../../
 bundle exec bin/rails db:migrate RAILS_ENV=production
 echo 'after'
 bundle exec rake assets:precompile
