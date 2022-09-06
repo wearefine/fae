@@ -7,4 +7,5 @@ cd spec/dummy
 bundle install
 bundle exec rake assets:precompile
 bundle exec rake assets:clean
-bundle exec rake db:migrate
+echo 'hi there'
+bundle exec rake db:migrate RAILS_ENV=production
