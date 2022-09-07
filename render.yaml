@@ -1,18 +1,20 @@
-databases:
-  - name: fae_dummy
-    databaseName: fae_dummy
-    user: fae_dummy
+# Setup was created manually, still need to see how to add this after the fact
 
-services:
-  - type: web
-    name: fae_dummy
-    env: ruby
-    buildCommand: "./bin/render-build.sh"
-    startCommand: "bundle exec puma -C spec/dummy/config/puma.rb spec/dummy/config.ru"
-    envVars:
-      - key: DATABASE_URL
-        fromDatabase:
-          name: fae_dummy
-          property: connectionString
-      # - key: RAILS_MASTER_KEY
-      #   sync: false
+# databases:
+#   - name: fae_dummy
+#     databaseName: fae_dummy
+#     user: fae_dummy
+
+# services:
+#   - type: web
+#     name: fae_dummy
+#     env: ruby
+#     buildCommand: "./bin/render-build.sh"
+#     startCommand: "bundle exec puma -C spec/dummy/config/puma.rb spec/dummy/config.ru"
+#     envVars:
+#       - key: DATABASE_URL
+#         fromDatabase:
+#           name: fae_dummy
+#           property: connectionString
+#       # - key: RAILS_MASTER_KEY
+#       #   sync: false
