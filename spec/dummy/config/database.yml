@@ -24,6 +24,4 @@ default: &default
 #   database: fae_deploy_test_test
 
 production:
-  <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  host:
