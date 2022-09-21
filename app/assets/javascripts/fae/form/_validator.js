@@ -62,7 +62,7 @@ Fae.form.validator = {
         _this.testValidation($this, $scope);
 
       } else if (_this._preventFormSaveDueToNestedForm()) {
-        // nested form has unsaved changes to prevent form submission
+        // nested form has unsaved changes and user cancelled form submission
         e.preventDefault();
       } else {
         // form is valid and can submit so set saving indication
@@ -175,8 +175,12 @@ Fae.form.validator = {
       const formLabel = $nestedFormWrapper.siblings('h2').text();
       // set to true if user decides not to continue
       preventSave = !window.confirm(
-        `Are you sure you want to continue? ${formLabel} has unsaved content`
+        `${formLabel} has unsaved changes! To return to your draft, click “Cancel.” To proceed without saving, click “OK.”`
       );
+
+      if (preventSave) {
+        FCH.smoothScroll($nestedFormWrapper, 500, 100, -100);
+      }
     }
 
     return preventSave;
