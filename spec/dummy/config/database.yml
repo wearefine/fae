@@ -1,3 +1,5 @@
+# database.yml
+
 default: &default
   adapter: postgresql
   encoding: unicode
@@ -6,24 +8,13 @@ default: &default
   password: password
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
-# test:
-#   <<: *base
-#   database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
-#   username: <%= ENV['MYSQL_USER'] || 'root' %>
-#   password: <%= ENV['MYSQL_PASSWORD'] %>
-#   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+development:
+  <<: *default
+  database: fae_engine
 
-  # =======================================
-
-# development:
-#   <<: *default
-#   database: fae_engine
-
-# test:
-#   <<: *default
-#   database: fae_deploy_test_test
+test:
+  <<: *default
+  database: fae_engine_test
 
 production:
-  <<: *default
   url: <%= ENV['DATABASE_URL'] %>
-  host:

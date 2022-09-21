@@ -1,3 +1,4 @@
+# docker-compose.yml
   version: '3.3'
   volumes:
     gems:
@@ -30,10 +31,3 @@
         POSTGRES_PASSWORD: password
       ports:
         - "5432:5432"
-      environment:
-        - MYSQL_ROOT_PASSWORD=
-        - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
-      ports:
-        - '3307:3306'
-      volumes:
-        - /private/app/dbs:/var/lib/mysql
