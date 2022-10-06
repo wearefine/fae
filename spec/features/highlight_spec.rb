@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-feature 'Deploy Hooks' do
+feature 'Highlight Color' do
 
-  scenario 'when user leaves out email', js: true do
+  scenario 'when user changes highlight color', js: true do
 
     # Note: #8788EE is equal to rgb(135, 136,238)
 
     super_admin_login
-    
+
     visit fae.option_path
     fill_in 'option_colorway', with: '8788EE'
     fill_in 'option_title', with: 'Title'
