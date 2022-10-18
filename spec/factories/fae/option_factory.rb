@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :fae_option, class: 'Fae::Option' do
     title 'My FINE Admin'

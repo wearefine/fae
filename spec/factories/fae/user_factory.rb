@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :fae_user, class: 'Fae::User' do
     sequence(:first_name) { |n| "Andy#{n}" }

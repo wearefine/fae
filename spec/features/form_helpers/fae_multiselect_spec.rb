@@ -15,7 +15,7 @@ feature 'fae_multiselect' do
   end
 
   scenario 'should display two-pane when `two_pane: true`', js: true do
-    FactoryGirl.create(:selling_point, name: 'new one')
+    FactoryBot.create(:selling_point, name: 'new one')
 
     admin_login
     visit new_admin_release_path
@@ -32,7 +32,7 @@ feature 'fae_multiselect' do
   end
 
   scenario 'should use label_method if set' do
-    FactoryGirl.create(:acclaim, publication: 'Bathroom Reader Monthly')
+    FactoryBot.create(:acclaim, publication: 'Bathroom Reader Monthly')
 
     admin_login
     visit new_admin_release_path

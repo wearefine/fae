@@ -1,4 +1,3 @@
-require_relative 'base_generator'
 module Fae
   class ControllerGenerator < Fae::BaseGenerator
     source_root ::File.expand_path('../templates', __FILE__)

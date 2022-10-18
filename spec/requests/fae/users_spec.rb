@@ -71,7 +71,7 @@ end
 
 describe 'users#edit' do
 
-  let(:edit_user) { FactoryGirl.create(:fae_user) }
+  let(:edit_user) { FactoryBot.create(:fae_user) }
 
   context 'when role is super admin' do
     before do

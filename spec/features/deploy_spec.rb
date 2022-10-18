@@ -4,9 +4,9 @@ feature 'Deploy' do
 
   before(:each) do
     admin_login
-    FactoryGirl.create(:fae_deploy_hook, environment: 'Production')
-    FactoryGirl.create(:fae_deploy_hook, environment: 'Staging')
-    FactoryGirl.create(:fae_deploy_hook, environment: 'Development')
+    FactoryBot.create(:fae_deploy_hook, environment: 'Production')
+    FactoryBot.create(:fae_deploy_hook, environment: 'Staging')
+    FactoryBot.create(:fae_deploy_hook, environment: 'Development')
   end
 
   # test drawing both tables
@@ -36,8 +36,8 @@ feature 'Deploy' do
 
   # Feature TBD
   # scenario 'loads changes tables', js: true do
-  #   FactoryGirl.create(:beer, name: 'New Beer')
-  #   old_beer = FactoryGirl.create(:beer, name: 'Old Beer')
+  #   FactoryBot.create(:beer, name: 'New Beer')
+  #   old_beer = FactoryBot.create(:beer, name: 'Old Beer')
   #   old_beer.tracked_changes.first.update_columns(updated_at: DateTime.new(2020, 10, 20))
 
   #   visit fae.deploy_path

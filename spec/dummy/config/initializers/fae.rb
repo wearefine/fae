@@ -5,7 +5,7 @@ Fae.setup do |config|
   config.devise_mailer_sender = 'test@test.com'
 
   # models to exclude from dashboard list
-  config.dashboard_exclusions = %w( Aroma )
+  config.dashboard_exclusions = %w( Aroma PolyThing )
 
   # language support
   config.languages = {

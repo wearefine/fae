@@ -3,10 +3,10 @@ require 'spec_helper'
 feature 'Global search' do
 
   scenario 'user interacts with the search', js: true do
-    FactoryGirl.create(:release, name: '2012 Chardonnay')
-    FactoryGirl.create(:release, name: '2013 Chardonnay')
-    FactoryGirl.create(:release, name: '2012 Merlot')
-    FactoryGirl.create(:team, name: 'The Sandlot Cats')
+    FactoryBot.create(:release, name: '2012 Chardonnay')
+    FactoryBot.create(:release, name: '2013 Chardonnay')
+    FactoryBot.create(:release, name: '2012 Merlot')
+    FactoryBot.create(:team, name: 'The Sandlot Cats')
 
     admin_login
     visit fae_path
@@ -43,8 +43,8 @@ feature 'Global search' do
 
   # see dummy app's authorization concern for auth mapping used here
   # scenario "search results get authorized", js: true do
-  #   FactoryGirl.create(:release, name: '2012 Chardonnay')
-  #   FactoryGirl.create(:person, name: 'Rupert')
+  #   FactoryBot.create(:release, name: '2012 Chardonnay')
+  #   FactoryBot.create(:person, name: 'Rupert')
 
   #   user_login
   #   visit fae_path

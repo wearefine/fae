@@ -5,7 +5,6 @@ module <%= options.namespace.capitalize %>
     def new
       @item = @klass.new
       raise_undefined_parent if @item.fae_nested_foreign_key.blank?
-
       item_id = params[:item_id].to_i || nil
       item_class = params[:item_class] || nil
       @item.send("<%= @polymorphic_name %>_id=", item_id)
@@ -13,7 +12,6 @@ module <%= options.namespace.capitalize %>
       build_assets
     end
 <% end %>
-
 <% if @attachments.present? %>
     private
 

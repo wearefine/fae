@@ -25,7 +25,7 @@ end
 describe 'selling_points#edit' do
 
   it 'should return found' do
-    selling_point = FactoryGirl.create(:selling_point)
+    selling_point = FactoryBot.create(:selling_point)
     admin_login
     get edit_admin_selling_point_path(selling_point)
 

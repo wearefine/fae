@@ -34,11 +34,11 @@ module Fae
     private
 
     def show_404
-      render template: 'fae/pages/error404.html.slim', layout: 'fae/error.html.slim', status: :not_found
+      render 'fae/pages/error404', layout: 'fae/error', status: :not_found
     end
 
     def show_401
-      render template: 'fae/pages/error404.html.slim', layout: 'fae/error.html.slim', status: :unauthorized
+      render 'fae/pages/error404', layout: 'fae/error', status: :unauthorized
     end
 
     def user_params

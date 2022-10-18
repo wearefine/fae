@@ -10,8 +10,8 @@ module Fae
       model.file_size = file.size
     end
 
-    def extension_whitelist
-      %w(jpg jpeg gif png ico svg)
+    def extension_allowlist
+      %w(jpg jpeg gif png ico)
     end
 
     # Override the directory where uploaded files will be stored.

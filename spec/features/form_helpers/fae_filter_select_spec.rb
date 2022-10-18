@@ -3,12 +3,12 @@ require 'spec_helper'
 feature 'fae_filter_select' do
 
   before {
-    FactoryGirl.create(:release)
+    FactoryBot.create(:release)
   }
 
   scenario 'collection options defaults to Class.for_fae_index' do
-    FactoryGirl.create(:wine, name_en: 'Some Wine')
-    FactoryGirl.create(:wine, name_en: 'Another Wine')
+    FactoryBot.create(:wine, name_en: 'Some Wine')
+    FactoryBot.create(:wine, name_en: 'Another Wine')
 
     admin_login
     visit admin_releases_path
@@ -17,8 +17,8 @@ feature 'fae_filter_select' do
   end
 
   scenario 'options and collection options are assignable' do
-    FactoryGirl.create(:acclaim, score: 'Show Me')
-    FactoryGirl.create(:acclaim, score: '')
+    FactoryBot.create(:acclaim, score: 'Show Me')
+    FactoryBot.create(:acclaim, score: '')
 
     admin_login
     visit admin_releases_path

@@ -43,7 +43,7 @@ To retrieve the correct attribute on the front-end, list translated attributes *
 
 ```ruby
 class Person < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   fae_translate :name, :title, :intro
 end

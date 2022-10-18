@@ -9,13 +9,10 @@
  */
 (function() {
   'use strict';
-
   var codeMirrorEditor = function(instance) {
-
     if (!instance.getWrapperElement) {
       throw "Invalid CodeMirror object given";
     }
-
     this.codeMirror = instance;
   };
 
@@ -46,9 +43,13 @@
       inlineattach = new inlineAttachment(options, editor),
       el = codeMirror.getWrapperElement();
 
-    el.addEventListener('paste', function(e) {
-      inlineattach.onPaste(e);
-    }, false);
+    el.addEventListener(
+      'paste', 
+      function(e) {
+        inlineattach.onPaste(e);
+      }, 
+      false
+    );
 
     codeMirror.setOption('onDragEvent', function(data, e) {
       if (e.type === "drop") {
@@ -71,9 +72,13 @@
       inlineattach = new inlineAttachment(options, editor),
       el = codeMirror.getWrapperElement();
 
-    el.addEventListener('paste', function(e) {
-      inlineattach.onPaste(e);
-    }, false);
+    el.addEventListener(
+      'paste', 
+      function(e) {
+        inlineattach.onPaste(e);
+      }, 
+      false
+    );
 
     codeMirror.on('drop', function(data, e) {
       if (inlineattach.onDrop(e)) {
@@ -87,5 +92,4 @@
   };
 
   inlineAttachment.editors.codemirror4 = codeMirrorEditor4;
-
 })();

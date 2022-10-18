@@ -14,7 +14,7 @@ feature 'Form Manager' do
 
   before(:each) do
     admin_login
-    release = FactoryGirl.create(:release, name: '2012 Chardonnay')
+    release = FactoryBot.create(:release, name: '2012 Chardonnay')
     visit edit_admin_release_path(release.id)
   end
 
@@ -67,7 +67,7 @@ feature 'Form Manager' do
   # Nested forms
 
   scenario 'form manager works for nested forms', js: true do
-    release = FactoryGirl.create(:release, name: '2020 Vision')
+    release = FactoryBot.create(:release, name: '2020 Vision')
     visit edit_admin_release_path(release.id)
 
     click_link('Add Release Note')
@@ -126,7 +126,7 @@ feature 'Form Manager' do
   # ignore field functionality
 
   scenario 'form manager ignores fields flagged as show_form_manager: false', js: true do
-    release = FactoryGirl.create(:release, name: 'A Release')
+    release = FactoryBot.create(:release, name: 'A Release')
     visit edit_admin_release_path(release.id)
     expect(page).to have_content('Slug')
     expect(page).to have_content('Seo Title')

@@ -1,5 +1,5 @@
 class Cat < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   belongs_to :aroma
 

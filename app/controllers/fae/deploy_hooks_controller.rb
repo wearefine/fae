@@ -22,7 +22,7 @@ module Fae
       if @deploy_hook.save
         flash[:notice] = t('fae.save_notice')
         @deploy_hooks = DeployHook.all
-        render template: table_template_path
+        render partial: table_template_path
       else
         render action: 'new'
       end
@@ -32,7 +32,7 @@ module Fae
       if @deploy_hook.update(deploy_hook_params)
         flash[:notice] = t('fae.save_notice')
         @deploy_hooks = DeployHook.all
-        render template: table_template_path
+        render partial: table_template_path
       else
         render action: 'edit'
       end
@@ -45,7 +45,7 @@ module Fae
         flash[:alert] = t('fae.delete_error')
       end
       @deploy_hooks = DeployHook.all
-      render template: table_template_path
+      render partial: table_template_path
     end
 
     private
@@ -64,7 +64,7 @@ module Fae
       end
 
       def table_template_path
-        "fae/deploy_hooks/_table.html.slim"
+        "fae/deploy_hooks/table"
       end
 
   end

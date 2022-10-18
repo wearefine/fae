@@ -1,5 +1,4 @@
 require 'devise'
-
 module Fae
   class Engine < ::Rails::Engine
     isolate_namespace Fae
@@ -15,8 +14,9 @@ module Fae
     require 'slim'
     require 'kaminari'
     require 'fae/version'
+    require "sprockets/railtie"
 
-    config.autoload_paths += %W(#{config.root}/lib)
+    config.eager_load_paths += %W(#{config.root}/app)
 
     config.to_prepare do
       # Require decorators from main application
@@ -29,7 +29,7 @@ module Fae
 
     config.generators do |g|
       g.test_framework :rspec, fixture: false
-      g.fixture_replacement :factory_girl, dir: 'spec/factories'
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
       g.assets false
       g.helper false
     end

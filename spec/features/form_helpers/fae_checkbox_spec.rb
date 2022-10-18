@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'fae_checkbox' do
 
   scenario 'clicking label or checkbox should check box', js: true do
-    FactoryGirl.create(:event)
+    FactoryBot.create(:event)
     admin_login
     visit new_admin_release_path
 
@@ -17,8 +17,8 @@ feature 'fae_checkbox' do
   end
 
   scenario 'clicking label or checkbox should check box', js: true do
-    release = FactoryGirl.create(:release)
-    aroma = FactoryGirl.create(:aroma, release: release, live: true )
+    release = FactoryBot.create(:release)
+    aroma = FactoryBot.create(:aroma, release: release, live: true )
     admin_login
     visit edit_admin_release_path(release)
 
@@ -29,7 +29,7 @@ feature 'fae_checkbox' do
   end
 
   scenario 'clicking disabled checkbox has no effect', js: true do
-    person = FactoryGirl.create(:person)
+    person = FactoryBot.create(:person)
     admin_login
 
     visit edit_admin_person_path(person)

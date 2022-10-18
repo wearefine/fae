@@ -4,7 +4,7 @@ describe 'setup#first_user' do
 
   context 'when there are no super admins' do
     before :each do
-      FactoryGirl.create(:fae_role, name: 'super admin')
+      FactoryBot.create(:fae_role, name: 'super admin')
     end
 
     it 'should redirect you to setup#first_user' do
@@ -22,8 +22,8 @@ describe 'setup#first_user' do
 
   context 'when there are no active super admins' do
     before :each do
-      role = FactoryGirl.create(:fae_role, name: 'super admin')
-      FactoryGirl.create(:fae_user, first_name: 'SuperAdmin', role: role, active: false)
+      role = FactoryBot.create(:fae_role, name: 'super admin')
+      FactoryBot.create(:fae_user, first_name: 'SuperAdmin', role: role, active: false)
     end
 
     it 'should redirect you to setup#first_user' do
@@ -69,7 +69,7 @@ end
 describe 'setup#create_first_user' do
 
   it 'should redirect you to the dashboard after submission' do
-    FactoryGirl.create(:fae_role, name: 'super admin')
+    FactoryBot.create(:fae_role, name: 'super admin')
     user_params = {
       first_name: 'Super',
       last_name: 'Admin',
