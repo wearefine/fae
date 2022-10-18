@@ -30,7 +30,9 @@
 //= require fae/vendor/jquery.tablesorter
 //= require fae/vendor/js.cookie
 //= require fae/vendor/touch_punch
-//= require fae/vendor/simplemde.min
+//= require fae/vendor/simplemde/simplemde.min
+//= require fae/vendor/simplemde/inline-attachment
+//= require fae/vendor/simplemde/codemirror-4.inline-attachment
 
 //= require fae/admin
 
