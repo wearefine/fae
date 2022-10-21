@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_02_153906) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_04_182247) do
   create_table "acclaims", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -313,6 +313,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_02_153906) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "poly_things", charset: "utf8", force: :cascade do |t|
+    t.string "name"
+    t.string "poly_thingable_type"
+    t.bigint "poly_thingable_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
   create_table "release_notes", id: :integer, charset: "utf8", force: :cascade do |t|
