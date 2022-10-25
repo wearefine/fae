@@ -6,7 +6,7 @@
  * @memberof form
  */
 Fae.form.text = {
-  init: function() {
+  init: function () {
     this.overrideMarkdownDefaults();
     this.initMarkdown();
     this.initHTML();
@@ -16,7 +16,7 @@ Fae.form.text = {
    * Override SimpleMDE's preference for font-awesome icons and use a modal for the guide
    * @see {@link modals.markdownModal}
    */
-  overrideMarkdownDefaults: function() {
+  overrideMarkdownDefaults: function () {
     toolbarBuiltInButtons['bold'].className = 'icon-bold';
     toolbarBuiltInButtons['italic'].className = 'icon-italic';
     toolbarBuiltInButtons['heading'].className = 'icon-font';
@@ -40,20 +40,20 @@ Fae.form.text = {
    * Find all markdown fields and initialize them with a markdown GUI
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
-  initMarkdown: function() {
+  initMarkdown: function () {
     var inlineAttachmentConfig = {
       uploadUrl: '/admin/html_embedded_image',
       uploadFieldName: 'image',
       jsonFieldName: 'file',
       progressText: '![Uploading file...]()',
-      urlText: "![file]({filename})",
-      errorText: "Error uploading file, file may be too large",
+      urlText: '![file]({filename})',
+      errorText: 'Error uploading file, file may be too large',
       extraHeaders: {
         'X-CSRF-Token': $.rails.csrfToken()
       }
     }
 
-    $('.js-markdown-editor:not(.mde-enabled)').each(function() {
+    $('.js-markdown-editor:not(.mde-enabled)').each(function () {
       var $this = $(this);
 
       var editor = new SimpleMDE({
@@ -73,16 +73,16 @@ Fae.form.text = {
       $this.addClass('mde-enabled');
 
       // code mirror events to hook into current form element functions
-      editor.codemirror.on('change', function(){
+      editor.codemirror.on('change', function (){
         // updates the original textarea's value for JS validations
         $this.val(editor.value());
         // update length counter
         Fae.form.validator.length_counter.updateCounter($this);
       });
-      editor.codemirror.on('focus', function(){
+      editor.codemirror.on('focus', function (){
         $this.parent().addClass('mde-focus');
       });
-      editor.codemirror.on('blur', function(){
+      editor.codemirror.on('blur', function (){
         // trigger blur on the original textarea to trigger JS validations
         $this.blur();
         $this.parent().removeClass('mde-focus');
@@ -94,7 +94,7 @@ Fae.form.text = {
    * Find all HTML fields and initialize them with a wysiwyg GUI
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
-  initHTML: function() {
+  initHTML: function () {
     var $html_editors = $('.js-html-editor');
     if(!$html_editors.length) {
       return;
