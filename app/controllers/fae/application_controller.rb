@@ -1,17 +1,19 @@
 module Fae
   class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
-
+    
     include Fae::ApplicationControllerConcern
-
+    
     helper Fae::ViewHelper
     helper Fae::FormHelper
     helper Fae::NestedFormHelper
     helper Fae::FaeHelper
-
+    helper Fae::QrCodeHelper
+    
     before_action :check_disabled_environment
     before_action :first_user_redirect
     before_action :authenticate_user!
+    # before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :build_nav
     before_action :set_option
     before_action :detect_cancellation
@@ -139,6 +141,12 @@ module Fae
       return true if role_group_for_model.blank? || (role_group_for_model.present? && role_group_for_model.include?(users_role))
       false
     end
+
+    protected
+
+    # def configure_permitted_parameters
+    #   devise_parameter_sanitizer.permit(:sign_in, keys: [:otp_attempt])
+    # end
 
   end
 end

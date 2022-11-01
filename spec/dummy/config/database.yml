@@ -1,38 +1,57 @@
-base: &base
-  adapter: mysql2
-  encoding: utf8
-  collation: utf8_general_ci
-  database: fae_dummy
-  username: root
-  password:
-  host: localhost
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch('PGHOST') { 'db' } %>
+  username: postgres
+  password: password
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
-  <<: *base
-  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+  <<: *default
+  database: fae_engine
 
 test:
-  <<: *base
-  database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
-  username: <%= ENV['MYSQL_USER'] || 'root' %>
-  password: <%= ENV['MYSQL_PASSWORD'] %>
-  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
-
-
-remote_development:
-  <<: *base
-  database: fae_dev
-  username: fae
-  password: sh45&rEDnap
-
-stage:
-  <<: *base
-  database: fae_stage
-  username: fae
-  password: sh45&rEDnap
+  <<: *default
+  database: fae_engine_test
 
 production:
-  <<: *base
-  database: fae
-  username: fae
-  password: sh45&rEDnap
+  url: <%= ENV['DATABASE_URL'] %>
+
+# base: &base
+#   adapter: mysql2
+#   encoding: utf8
+#   collation: utf8_general_ci
+#   database: fae_dummy
+#   username: root
+#   password:
+#   host: localhost
+
+# development:
+#   <<: *base
+#   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+
+# test:
+#   <<: *base
+#   database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
+#   username: <%= ENV['MYSQL_USER'] || 'root' %>
+#   password: <%= ENV['MYSQL_PASSWORD'] %>
+#   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+
+
+# remote_development:
+#   <<: *base
+#   database: fae_dev
+#   username: fae
+#   password: sh45&rEDnap
+
+# stage:
+#   <<: *base
+#   database: fae_stage
+#   username: fae
+#   password: sh45&rEDnap
+
+# production:
+#   <<: *base
+#   database: fae
+#   username: fae
+#   password: sh45&rEDnap

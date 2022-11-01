@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_02_153906) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_27_165831) do
   create_table "acclaims", id: :integer, charset: "utf8", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -265,6 +265,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_02_153906) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "language"
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.text "otp_backup_codes"
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true

@@ -5,13 +5,15 @@ Fae::Engine.routes.draw do
   root 'pages#home'
 
   devise_for :users, class_name: "Fae::User", module: :devise, skip: [:sessions]
+  
   as :user do
-    get 'login' => '/devise/sessions#new', as: :new_user_session
-    post 'login' => '/devise/sessions#create', as: :user_session
-    get 'logout' => '/devise/sessions#destroy', as: :destroy_user_session
+    get 'login' => 'sessions#new', as: :new_user_session
+    post 'login' => 'sessions#create', as: :user_session
+    get 'logout' => 'sessions#destroy', as: :destroy_user_session
   end
   resources :users
   resources :deploy_hooks
+  resource :two_factor_settings, except: [:index, :show]
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'

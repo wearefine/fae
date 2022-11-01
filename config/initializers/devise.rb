@@ -1,6 +1,10 @@
 # Use this hook to configure devise mailer, warden hooks and so forth.
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
+  config.warden do |manager|
+    manager.default_strategies(:scope => :fae_user).unshift :two_factor_authenticatable
+  end
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
@@ -20,6 +24,8 @@ Devise.setup do |config|
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
   require 'devise/orm/active_record'
+  # require 'devise-two-factor'
+
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is

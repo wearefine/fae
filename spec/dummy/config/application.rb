@@ -23,6 +23,10 @@ module Dummy
     config.action_controller.include_all_helpers = false
 
     config.active_record.legacy_connection_handling = false
+
+    config.active_record.encryption.primary_key = ENV["PRIMARY_KEY"]
+    config.active_record.encryption.deterministic_key = ENV["DETERMINISTIC_KEY"]
+    config.active_record.encryption.key_derivation_salt = ENV["KEY_DERIVATION_SALT"]
   end
 end
 

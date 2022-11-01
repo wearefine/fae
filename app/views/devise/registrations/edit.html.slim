@@ -13,6 +13,14 @@ h2 Edit #{resource_name.to_s.titleize}
   .form-actions
     = f.button :submit, "Update"
 
+h3 Two factor authentication
+  - current_user.otp_required_for_login
+    p Two factor authentication is enabled.
+    = link_to('Disable Two Factor Authentication', two_factor_settings_path, class: 'btn btn-danger', method: :delete, data: {confirm: 'Are you sure you want to disable two factor authentication?'})
+  - else
+    p Two factor authentication is NOT enabled.
+    = link_to('Enable Two Factor Authentication', new_two_factor_settings_path, class: 'btn btn-primary')
+
 h3 Cancel my account
 
 p

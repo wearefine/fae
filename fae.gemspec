@@ -34,6 +34,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'remotipart', '~> 1.4.0'
   s.add_dependency 'simple_form', '<= 5.1'
   s.add_dependency 'slim'
+  s.add_dependency 'devise-two-factor'
+  s.add_dependency 'rqrcode'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'better_errors'

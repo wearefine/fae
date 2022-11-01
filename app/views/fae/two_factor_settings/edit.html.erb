@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Two Factor Authentication</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card-deck">
+        <div class="card">
+          <div class="card-header">
+            Backup Codes
+          </div>
+          <div class="card-body">
+            <p>Keep these backup codes safe in case you lose access to your authenticator app:</p>
+            <hr />
+            <% @backup_codes.each_slice(2) do |(code1, code2)| %>
+              <div class="row">
+                <div class="col-6 text-monospace strong"><%=code1 %></div>
+                <div class="col-6 text-monospace strong"><%=code2 %></div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            Two Factor Setup Complete
+          </div>
+          <div class="card-body">
+            <p>Two factor authentication has been successfully enabled.</p>
+            <%= link_to('Return to account settings', users_path, class: 'btn btn-primary') %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
