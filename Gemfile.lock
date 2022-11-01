@@ -249,7 +249,6 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
-    mysql2 (0.5.3)
     nenv (0.3.0)
     net-imap (0.2.3)
       digest
@@ -276,10 +275,13 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
+    pg (1.4.3)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
+    puma (5.6.4)
+      nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
     rack-test (1.1.0)
@@ -436,8 +438,9 @@ DEPENDENCIES
   factory_bot_rails (~> 4.8.2)
   fae-rails!
   guard-rspec
-  mysql2
+  pg
   pry
+  puma (~> 5.0)
   rails (~> 7.0.2)
   rails-controller-testing
   rails-perftest
