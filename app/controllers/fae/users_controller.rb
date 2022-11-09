@@ -28,7 +28,7 @@ module Fae
       @user = Fae::User.new(user_params)
 
       if @user.save
-        redirect_to users_path_path, notice: t('fae.save_notice')
+        redirect_to users_path, notice: t('fae.save_notice')
       else
         render action: 'new', error: t('fae.save_error')
       end
