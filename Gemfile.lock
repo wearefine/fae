@@ -303,6 +303,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
+    pg (1.4.4)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -464,6 +465,7 @@ DEPENDENCIES
   fog-aws
   guard-rspec
   mysql2
+  pg
   pry
   puma (~> 5.0)
   rails (~> 7.0.2)
