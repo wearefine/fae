@@ -46,7 +46,7 @@ gem 'capistrano',  '~> 3.1'
 gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
-gem 'pg'
+gem 'mysql2'
 gem "puma", "~> 5.0"
 
 gem "fog-aws"

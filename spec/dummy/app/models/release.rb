@@ -13,9 +13,9 @@ class Release < ActiveRecord::Base
   # validates :wine_id, presence: true
   validates :intro, length: { maximum: 100 }
   validates :release_date, presence: true
-  validates :acclaims, presence: true
+  # validates :acclaims, presence: true
   validates :wine, presence: true
-  validates :selling_points, presence: true
+  # validates :selling_points, presence: true
 
   belongs_to :wine
   belongs_to :varietal

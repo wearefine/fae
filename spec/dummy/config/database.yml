@@ -1,27 +1,38 @@
-default: &default
-  adapter: postgresql
-  encoding: unicode
-  host: <%= ENV.fetch('PGHOST') { 'db' } %>
-  username: postgres
-  password: password
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+base: &base
+  adapter: mysql2
+  encoding: utf8
+  collation: utf8_general_ci
+  database: fae_dummy
+  username: root
+  password:
+  host: localhost
 
-# test:
-#   <<: *base
-#   database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
-#   username: <%= ENV['MYSQL_USER'] || 'root' %>
-#   password: <%= ENV['MYSQL_PASSWORD'] %>
-#   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+development:
+  <<: *base
+  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
-  # =======================================
+test:
+  <<: *base
+  database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
+  username: <%= ENV['MYSQL_USER'] || 'root' %>
+  password: <%= ENV['MYSQL_PASSWORD'] %>
+  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
-# development:
-#   <<: *default
-#   database: fae_engine
 
-# test:
-#   <<: *default
-#   database: fae_deploy_test_test
+remote_development:
+  <<: *base
+  database: fae_dev
+  username: fae
+  password: sh45&rEDnap
+
+stage:
+  <<: *base
+  database: fae_stage
+  username: fae
+  password: sh45&rEDnap
 
 production:
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   url: <%= ENV['DATABASE_URL'] %>
