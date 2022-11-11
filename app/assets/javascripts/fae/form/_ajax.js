@@ -10,6 +10,7 @@ Fae.form.ajax = {
   init: function() {
     this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
     this.$filter_form = $('.js-filter-form');
+    this.$nested_form = $('.nested-form');
 
     this.addEditLinks();
     this.addEditSubmission();
@@ -82,7 +83,7 @@ Fae.form.ajax = {
       Fae.form.checkbox.setCheckboxAsActive();
       Fae.form.select.init();
       Fae.form.formManager.setupAllFields($wrapper.find('form'));
-      Fae.form.dragDrop.init();
+      Fae.tables.rowSorting();
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);
@@ -119,6 +120,11 @@ Fae.form.ajax = {
 
       var $target = $(evt.target);
 
+      // We need to target the form wrapper containing the target form to enable nesting
+      // multiple forms.
+      // Relying on $this will end up redrawing the top-most parent form with the returned table
+      var $theFormWrapper = $target.closest('.js-addedit-form');
+
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
         var $this = $(this);
@@ -134,13 +140,13 @@ Fae.form.ajax = {
         if ($html) {
           if($html.hasClass('js-addedit-form') || $html.hasClass( 'js-index-addedit-form' )) {
             // we're returning the table, replace everything
-            _this._addEditReplaceAndReinit($this, $html.html(), $target);
+            _this._addEditReplaceAndReinit($theFormWrapper, $html.html(), $target);
           } else if ($html.hasClass('nested-form')) {
 
             // we're returning the form due to an error, just replace the form
-            $this.find('.nested-form' ).replaceWith($html);
-            $this.find('.select select').fae_chosen();
-            $this.find('.input.file').fileinputer();
+            $theFormWrapper.find('.nested-form' ).replaceWith($html);
+            $theFormWrapper.find('.select select').fae_chosen();
+            $theFormWrapper.find('.input.file').fileinputer();
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();
@@ -275,7 +281,7 @@ Fae.form.ajax = {
 
         $parent.fadeOut(function(){
           $parent.next('.asset-inputs').fadeIn();
-          $parent.remove()
+          $parent.remove();
         });
       }
     });

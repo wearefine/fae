@@ -180,6 +180,20 @@ Update the elements you wish to appear in the nested form.
 
 Add the [nested table partial](helpers.md#nested_table) to the parent form. This partial should be below the actual form as you cannot nest form tags. This form should only appear on the edit page as you cannot associate content to an object that doesn't exist yet.
 
+## Double-nested Resources
+
+Have you ever wanted to place a nested resource in an already nested resource? Now you can. You will set this up just like the previous examples, but you'll be placing the nested table partial into a nested form, here's an example:
+
+```slim
+- if params[:action] == 'edit'
+  #sub_aromas.nested-form
+    == render 'fae/shared/nested_table',
+      assoc: :sub_aromas,
+      parent_item: @item,
+      cols: [:name]
+```
+
+You can reference the `SubAroma` setup in the dummy app for a fully working example of this.
 ## Recent Changes
 
 ```slim
