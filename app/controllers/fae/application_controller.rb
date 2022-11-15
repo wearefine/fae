@@ -20,6 +20,7 @@ module Fae
     before_action :set_change_user
     before_action :set_locale
     before_action :setup_form_manager
+    before_action :setup_mfa_redirect
 
     private
 
@@ -105,6 +106,15 @@ module Fae
 
     def first_user_redirect
       redirect_to fae.first_user_path if Fae::User.live_super_admins.blank?
+    end
+
+    def setup_mfa_redirect
+      if @option.mfa_enabled
+        unless request.path == new_two_factor_settings_path || request.path == two_factor_settings_path
+          redirect_to new_two_factor_settings_path if (current_user.present? &&  current_user.mfa_needs_setup)
+        end
+        # redirect_to fae.new_two_factor_settings_path if (current_user.present? && current_user.mfa_needs_setup)
+      end
     end
 
     def set_change_user

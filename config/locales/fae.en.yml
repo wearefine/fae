@@ -34,6 +34,7 @@ en:
       last_login: 'Last Logged In'
       active: 'Active'
       add_user: 'Add User'
+      mfa_active: 'MFA Active'
     deploy_hook:
       environment: 'Environment'
       add_deploy_hook: 'Add Deploy Hook'
@@ -120,6 +121,7 @@ en:
       url_helper: 'Include http:// for external links.'
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
+      mfa_enabled: 'Multi-Factor Authentication Enabled?'
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:

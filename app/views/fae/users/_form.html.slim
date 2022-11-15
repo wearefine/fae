@@ -11,11 +11,5 @@
     = fae_input f, :email
     = fae_input f, :password, helper_text: t('fae.user.password_hint')
     = fae_input f, :password_confirmation
-    - if @user.otp_required_for_login
-      p Two factor authentication is enabled.
-      = link_to('Disable Two Factor Authentication', two_factor_settings_path, class: 'js-cancel-nested cancel-nested-button', method: :delete, data: {confirm: 'Are you sure you want to disable two factor authentication?'})
-    - else
-      p Two factor authentication is NOT enabled.
-    = link_to('Enable Two Factor Authentication', new_two_factor_settings_path, class: 'js-cancel-nested cancel-nested-button')
     - if current_user.admin? || current_user.super_admin?
       = fae_association f, :role, collection: @role_collection, prompt: false

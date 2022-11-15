@@ -2,7 +2,8 @@
   = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { id: 'login_form' }) do |f|
     = f.input :email, required: false, autofocus: true
     = f.input :password, required: false
-    = f.input :otp_attempt, label: 'OTP'
+    - if @option.mfa_enabled
+      = f.input :otp_attempt, label: 'OTP'
     .login-form-actions
       = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
       = f.button :submit, "Submit", class: "login-form-actions-submit"

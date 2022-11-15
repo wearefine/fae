@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_27_165831) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_15_162479) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -185,6 +185,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_165831) do
     t.integer "singleton_guard"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.boolean "mfa_enabled", default: false
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
   end
 
@@ -272,6 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_27_165831) do
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
     t.text "otp_backup_codes", array: true
+    t.boolean "mfa_needs_setup"
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true

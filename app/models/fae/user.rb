@@ -74,15 +74,20 @@ module Fae
 
     # Ensure that the user is prompted for their OTP when they login
     def enable_two_factor!
-      update!(otp_required_for_login: true)
+      update!(
+        otp_required_for_login: true,
+        mfa_needs_setup: false
+      )
     end
 
     # Disable the use of OTP-based two-factor.
     def disable_two_factor!
       update!(
+          mfa_needs_setup: false,
           otp_required_for_login: false,
           otp_secret: nil,
-          otp_backup_codes: nil)
+          otp_backup_codes: nil
+        )
     end
 
     # URI for OTP two-factor QR code
@@ -97,5 +102,19 @@ module Fae
     def two_factor_backup_codes_generated?
       otp_backup_codes.present?
     end
+
+    class << self
+
+      def update_mfa(enabled)
+        if enabled == '1'
+          # update(otp_required_for_login: true, mfa_needs_setup: true)
+          update(mfa_needs_setup: true)
+        elsif enabled == '0'
+          update(otp_required_for_login: false, mfa_needs_setup: false)
+        end
+      end
+
+    end
+
   end
 end
