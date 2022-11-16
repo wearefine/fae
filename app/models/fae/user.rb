@@ -3,6 +3,9 @@ module Fae
     include Fae::BaseModelConcern
     include Fae::UserConcern
 
+    # after_save :empty_mfa, if: :saved_change_to_otp_required_for_login?
+    after_save :turn_off_mfa, if: :saved_change_to_user_mfa_enabled?
+
     # Include default devise modules. Others available are:
     # :registerable, :confirmable, :timeoutable and :omniauthable
     devise :recoverable, :rememberable, :trackable, :lockable
@@ -76,18 +79,40 @@ module Fae
     def enable_two_factor!
       update!(
         otp_required_for_login: true,
-        mfa_needs_setup: false
+        user_mfa_enabled: true
       )
     end
 
     # Disable the use of OTP-based two-factor.
     def disable_two_factor!
       update!(
-          mfa_needs_setup: false,
+          user_mfa_enabled: false,
           otp_required_for_login: false,
           otp_secret: nil,
           otp_backup_codes: nil
         )
+    end
+
+    # Mimics the destroy function in two_factor_settings_controler since we dont use that endpoint
+    # def empty_mfa
+    #   unless otp_required_for_login
+    #     update!(
+    #       user_mfa_enabled: false,
+    #       otp_secret: nil,
+    #       otp_backup_codes: nil
+    #     )
+    #   end
+    # end
+
+    # Fully disables mfa on change to false
+    def turn_off_mfa
+      unless user_mfa_enabled
+        update!(
+          otp_required_for_login: false,
+          otp_secret: nil,
+          otp_backup_codes: nil
+        )
+      end
     end
 
     # URI for OTP two-factor QR code
@@ -107,10 +132,10 @@ module Fae
 
       def update_mfa(enabled)
         if enabled == '1'
-          # update(otp_required_for_login: true, mfa_needs_setup: true)
-          update(mfa_needs_setup: true)
+          # update(otp_required_for_login: true, user_mfa_enabled: true)
+          update(user_mfa_enabled: true)
         elsif enabled == '0'
-          update(otp_required_for_login: false, mfa_needs_setup: false)
+          update(otp_required_for_login: false, user_mfa_enabled: false)
         end
       end
 

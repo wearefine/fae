@@ -12,7 +12,7 @@
     = fae_input f, :time_zone, wrapper_class: 'select'
     = fae_input f, :live_url, label: t('fae.options.live_url'), helper_text: t('fae.options.url_helper')
     = fae_input f, :stage_url, label: t('fae.options.stage_url'), helper_text: t('fae.options.url_helper')
-    = fae_input f, :mfa_enabled, label: t('fae.options.mfa_enabled')
+    = fae_input f, :site_mfa_enabled, label: t('fae.options.mfa_enabled'), helper_text: t('fae.options.mfa_helper')
     = fae_image_form f, :logo, helper_text: t('fae.options.logo_helper')
     = fae_image_form f, :favicon
 

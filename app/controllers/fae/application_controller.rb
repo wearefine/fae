@@ -109,11 +109,8 @@ module Fae
     end
 
     def setup_mfa_redirect
-      if @option.mfa_enabled
-        unless request.path == new_two_factor_settings_path || request.path == two_factor_settings_path
-          redirect_to new_two_factor_settings_path if (current_user.present? &&  current_user.mfa_needs_setup)
-        end
-        # redirect_to fae.new_two_factor_settings_path if (current_user.present? && current_user.mfa_needs_setup)
+      if @option.site_mfa_enabled && current_user.present? && current_user.user_mfa_enabled && !current_user.otp_required_for_login && request.path != new_two_factor_settings_path && request.path != two_factor_settings_path
+          redirect_to new_two_factor_settings_path
       end
     end
 

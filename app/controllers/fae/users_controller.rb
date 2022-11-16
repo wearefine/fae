@@ -26,7 +26,7 @@ module Fae
       authorize_role
 
       @user = Fae::User.new(user_params)
-      @user.mfa_needs_setup = @option.mfa_enabled
+      @user.user_mfa_enabled = @option.site_mfa_enabled
 
       if @user.save
         redirect_to users_path, notice: t('fae.save_notice')

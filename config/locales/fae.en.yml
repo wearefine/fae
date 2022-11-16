@@ -122,6 +122,7 @@ en:
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
       mfa_enabled: 'Multi-Factor Authentication Enabled?'
+      mfa_helper: 'Enabling will require you to IMMEDIATELY set up your MFA'
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:
