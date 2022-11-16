@@ -3,7 +3,6 @@ module Fae
     include Fae::BaseModelConcern
     include Fae::UserConcern
 
-    # after_save :empty_mfa, if: :saved_change_to_otp_required_for_login?
     after_save :turn_off_mfa, if: :saved_change_to_user_mfa_enabled?
 
     # Include default devise modules. Others available are:
@@ -92,17 +91,6 @@ module Fae
           otp_backup_codes: nil
         )
     end
-
-    # Mimics the destroy function in two_factor_settings_controler since we dont use that endpoint
-    # def empty_mfa
-    #   unless otp_required_for_login
-    #     update!(
-    #       user_mfa_enabled: false,
-    #       otp_secret: nil,
-    #       otp_backup_codes: nil
-    #     )
-    #   end
-    # end
 
     # Fully disables mfa on change to false
     def turn_off_mfa
