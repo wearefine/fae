@@ -43,15 +43,15 @@ module Fae
       current_user.save!
     end
 
-    def destroy
-      if current_user.disable_two_factor!
-        flash[:notice] = 'Successfully disabled two factor authentication.'
-        redirect_to users_path
-      else
-        flash[:alert] = 'Could not disable two factor authentication.'
-        redirect_back fallback_location: root_path
-      end
-    end
+    # def destroy
+    #   if current_user.disable_two_factor!
+    #     flash[:notice] = 'Successfully disabled two factor authentication.'
+    #     redirect_to users_path
+    #   else
+    #     flash[:alert] = 'Could not disable two factor authentication.'
+    #     redirect_back fallback_location: root_path
+    #   end
+    # end
 
     private
 
