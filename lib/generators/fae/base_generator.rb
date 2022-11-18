@@ -6,7 +6,7 @@ module Fae
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
 
-    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file']
+    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set']
 
     @@attributes_flat = []
     @@attribute_names = []
