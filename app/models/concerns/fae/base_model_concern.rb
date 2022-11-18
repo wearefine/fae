@@ -100,6 +100,14 @@ module Fae
         accepts_nested_attributes_for file_name_symbol, allow_destroy: true
       end
 
+      def has_fae_seo_set(set_name_symbol)
+        has_one set_name_symbol,
+          as: :seo_setable,
+          class_name: '::Fae::SeoSet',
+          dependent: :destroy
+        accepts_nested_attributes_for set_name_symbol, allow_destroy: true
+      end
+
     end
 
     private

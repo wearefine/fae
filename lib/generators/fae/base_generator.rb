@@ -24,8 +24,7 @@ module Fae
     def set_globals
       if attributes.present?
         attributes.each do |arg|
-          # :image and :file args get used to generate association defs and form elements
-          # we don't want them in attributes_flat or attribute_names as they are not real model generator field options
+          # prevent these from being in attributes_flat or attribute_names as they are not real model generator field options
           if is_attachment(arg)
             @@attachments << arg
           else
@@ -145,6 +144,12 @@ RUBY
   has_fae_image :#{attachment.name}\n
 RUBY
           end
+        elsif attachment.type == :seo_set
+            inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+              <<-RUBY
+    has_fae_seo_set :#{attachment.name}\n
+  RUBY
+            end
         elsif attachment.type == :file
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
             <<-RUBY
@@ -200,7 +205,7 @@ RUBY
     end
 
     def is_attachment(arg)
-      [:image,:file].include?(arg.type)
+      [:image, :file, :seo_set].include?(arg.type)
     end
 
     def polymorphic_name
