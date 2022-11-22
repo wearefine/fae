@@ -63,6 +63,7 @@ https://www.faecms.com/documentation
 
 ### Tutorials
 
+* [Setting Up SEO with Fae](docs/tutorials/seo.md)
 * [Setting Up GraphQL with Fae](docs/tutorials/graphql_support.md)
 * [Setting Up Images and Files](docs/tutorials/image_and_files.md)
 * [Adding Dynamic Relationships to Pages](docs/tutorials/dynamic_relationships_to_pages.md)

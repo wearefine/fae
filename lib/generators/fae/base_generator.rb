@@ -185,6 +185,8 @@ RUBY
         'Types::FaeImageType'
       when 'file'
         'Types::FaeFileType'
+      when 'seo_set'
+        'Types::FaeSeoSetType'
       else
         'String'
       end
