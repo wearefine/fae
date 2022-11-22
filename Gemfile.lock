@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/thoughtbot/capybara-webkit.git
+  revision: f429d668568ff7349f5e23a085df7fcf1c431fa7
+  branch: master
+  specs:
+    capybara-webkit (1.15.1)
+      capybara (>= 2.3, < 4.0)
+      json
+
+GIT
   remote: https://github.com/wearefine/rails
   revision: 8250e29e4622ff60f8093dba92d52dbae9d26460
   specs:
@@ -98,8 +107,8 @@ GEM
       tzinfo (~> 2.0)
     acts_as_list (0.9.19)
       activerecord (>= 3.0)
-    addressable (2.8.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     appraisal (2.4.1)
@@ -125,7 +134,7 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capybara (3.36.0)
+    capybara (3.38.0)
       addressable
       matrix
       mini_mime (>= 0.1.3)
@@ -137,9 +146,6 @@ GEM
     capybara-screenshot (1.0.26)
       capybara (>= 1.0, < 4)
       launchy
-    capybara-webkit (1.15.1)
-      capybara (>= 2.3, < 4.0)
-      json
     carrierwave (2.2.2)
       activemodel (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -228,7 +234,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (2.6.1)
+    json (2.6.2)
     judge (3.0.0)
       rails (>= 5.0)
     judge-simple_form (1.1.0)
@@ -295,9 +301,9 @@ GEM
       timeout
     net-ssh (6.1.0)
     nio4r (2.5.8)
-    nokogiri (1.13.3-aarch64-linux)
+    nokogiri (1.13.9-aarch64-linux)
       racc (~> 1.4)
-    nokogiri (1.13.3-x86_64-linux)
+    nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -307,13 +313,13 @@ GEM
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    public_suffix (4.0.6)
+    public_suffix (5.0.0)
     puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
-    rack (2.2.3)
-    rack-test (1.1.0)
-      rack (>= 1.0, < 3)
+    rack (2.2.4)
+    rack-test (2.0.2)
+      rack (>= 1.3)
     rails (7.0.2.3)
       actioncable (= 7.0.2.3)
       actionmailbox (= 7.0.2.3)
@@ -349,7 +355,7 @@ GEM
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    regexp_parser (2.2.1)
+    regexp_parser (2.6.1)
     remotipart (1.4.4)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -457,7 +463,7 @@ DEPENDENCIES
   capistrano-rails!
   capistrano-rvm
   capybara-screenshot
-  capybara-webkit (~> 1.15.1)
+  capybara-webkit!
   database_cleaner
   ddtrace
   factory_bot_rails (~> 4.8.2)
