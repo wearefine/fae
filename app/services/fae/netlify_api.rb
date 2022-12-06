@@ -28,7 +28,7 @@ module Fae
 
     private
 
-    def get(endpoint, params = nil)
+    def get(endpoint)
       begin
         uri = URI.parse(endpoint)
         request = Net::HTTP::Get.new(uri)
@@ -36,11 +36,18 @@ module Fae
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
           http.request(request)
         }
-        return JSON.parse(response.body) if response.present? && response.body.present?
+        if response.is_a?(Net::HTTPSuccess)
+          return JSON.parse(response.body) if response.body.present?
+        else
+          @logger.info "\n"
+          @logger.info "Get returned non-success code: #{response.code}"
+          @logger.info "Endpoint: #{endpoint}"
+          @logger.info "Body: #{response.body}" if response.body.present?
+        end
       rescue Exception => e
         @logger.info "\n"
-        @logger.info "Failed getting on #{DateTime.now} to #{endpoint}"
-        @logger.info "Params: #{params}"
+        @logger.info "Get failed"
+        @logger.info "Endpoint: #{endpoint}"
         @logger.info "Reason: #{e}"
       end
     end
@@ -54,10 +61,19 @@ module Fae
         response = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) {|http|
           http.request(request)
         }
-        return JSON.parse(response.body) if response.present? && response.body.present?
+        if response.is_a?(Net::HTTPSuccess)
+          return JSON.parse(response.body) if response.body.present?
+        else
+          @logger.info "\n"
+          @logger.info "Post returned non-success code: #{response.code}"
+          @logger.info "Endpoint: #{endpoint}"
+          @logger.info "Params: #{params}"
+          @logger.info "Body: #{response.body}" if response.body.present?
+        end
       rescue Exception => e
         @logger.info "\n"
-        @logger.info "Failed posting on #{DateTime.now} to #{endpoint}"
+        @logger.info "Post failed"
+        @logger.info "Endpoint: #{endpoint}"
         @logger.info "Params: #{params}"
         @logger.info "Reason: #{e}"
       end
