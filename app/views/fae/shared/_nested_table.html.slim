@@ -12,6 +12,7 @@ ruby:
   title               ||= assoc_name.titleize             # 'Restaurant Bars'
   add_button_text     ||= t('fae.common.add', title: title.singularize)
   hide_add_button     ||= false
+  hide_delete_button  ||= false
   ordered             ||= false
   has_thumb           ||= false
   edit_column         ||= false
@@ -34,7 +35,7 @@ ruby:
     new_path += "item_id=#{parent_item.id}&=item_class=#{parent_item.class.to_s}"
   end
 
-  options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, add_button_text: add_button_text, hide_add_button: hide_add_button, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
+  options_for_table = { index: index, assoc: assoc, assoc_name: assoc_name, title: title, add_button_text: add_button_text, hide_add_button: hide_add_button, hide_delete_button: hide_delete_button, ordered: ordered, has_thumb: has_thumb, edit_column: edit_column, cols: cols, assoc_name_singular: assoc_name_singular, new_path: new_path, edit_path: edit_path }
   options_for_table[:parent_item] = parent_item unless index
 
 section.addedit-form.js-addedit-form class="#{'content' if index}"
