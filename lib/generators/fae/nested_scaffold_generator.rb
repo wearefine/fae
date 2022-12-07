@@ -1,3 +1,4 @@
+require_relative 'base_generator'
 module Fae
   class NestedScaffoldGenerator < Fae::BaseGenerator
     source_root ::File.expand_path('../templates', __FILE__)
@@ -38,12 +39,12 @@ module Fae
 
       def inject_parent_info
         inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
-\n  belongs_to :#{options.parent_model.underscore}, touch: true
+        \n  belongs_to :#{options.parent_model.underscore}, touch: true
 
-  def fae_nested_parent
-    :#{options.parent_model.underscore}
-  end
-RUBY
+          def fae_nested_parent
+            :#{options.parent_model.underscore}
+          end
+        RUBY
         end
       end
 
