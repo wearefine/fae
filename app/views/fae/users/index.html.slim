@@ -10,7 +10,7 @@ main.content
         th = t('fae.user.role')
         th = t('fae.user.last_login')
         th.-action-wide data-sorter="false" = t('fae.user.active')
-        - if @option.site_mfa_enabled
+        - if @option.site_mfa_enabled && current_user.super_admin?
           th.-action-wide data-sorter="false" = t('fae.user.mfa_active')
         th.-action data-sorter="false"
 
@@ -22,6 +22,6 @@ main.content
           td = user.role.name
           td = fae_date_format user.last_sign_in_at if user.last_sign_in_at.present?
           td = fae_toggle user, :active unless current_user == user
-          - if @option.site_mfa_enabled
+          - if @option.site_mfa_enabled && current_user.super_admin?
             td = fae_toggle user, :user_mfa_enabled unless current_user == user
           td = fae_delete_button user, user unless current_user == user
