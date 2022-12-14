@@ -120,7 +120,6 @@ module Fae
 
       def update_mfa(enabled)
         if enabled == '1'
-          # update(otp_required_for_login: true, user_mfa_enabled: true)
           update(user_mfa_enabled: true)
         elsif enabled == '0'
           update(otp_required_for_login: false, user_mfa_enabled: false)

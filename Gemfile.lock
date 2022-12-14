@@ -249,6 +249,7 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.1.2)
     minitest (5.15.0)
+    mysql2 (0.5.3)
     nenv (0.3.0)
     net-imap (0.2.3)
       digest
@@ -438,6 +439,7 @@ DEPENDENCIES
   factory_bot_rails (~> 4.8.2)
   fae-rails!
   guard-rspec
+  mysql2
   pg
   pry
   puma (~> 5.0)
