@@ -4,8 +4,6 @@
     .content-header-buttons
       a.button#js-header-cancel href=fae.root_path(cancelled: true) = t('fae.form.cancel')
       input name="commit" type="submit" value=t('fae.form.save')
-      // swapped with a standard input since rails was automatically adding a data-disable-with=save attr that was preventing subsequent form submissions after fixing any client side errors
-      / = f.submit t('fae.form.save')
 
   == render 'flash_messages'
 
