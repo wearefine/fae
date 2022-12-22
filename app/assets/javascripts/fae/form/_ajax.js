@@ -275,7 +275,7 @@ Fae.form.ajax = {
 
         $parent.fadeOut(function(){
           $parent.next('.asset-inputs').fadeIn();
-          $parent.remove()
+          $parent.remove();
         });
       }
     });
