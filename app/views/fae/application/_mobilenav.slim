@@ -31,7 +31,7 @@ nav.nav.mobilenav
                       - thirditem[:path] ||= '#'
                       li: a href=thirditem[:path] = thirditem[:text]
 
-    - if current_user.super_admin_or_admin? && netlify_enabled?
+    - if current_user.super_admin_or_admin? && deploys_enabled?
       li: a href=fae.deploy_path = t('fae.navbar.deployments')
 
     - if current_user.super_admin_or_admin?

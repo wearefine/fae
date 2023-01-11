@@ -31,7 +31,7 @@ Fae.deploy = {
       _this.disableButtons();
       var deploy_hook_type = $(this).data('build-hook-type');
       $.post( '/admin/deploy/deploy_site', { deploy_hook_type: deploy_hook_type }, function(data) {
-        // Netlify returns nothing for deploy hook posts
+        // Nothing is returned for deploy hook requests
       });
     });
   },
@@ -134,10 +134,11 @@ Fae.deploy = {
     $.each(deploys, function(i, deploy) {
       $tbody.append(
         $('<tr>').append([
-          $('<td>').text(deploy.commit_ref !== null ? 'FINE dev update' : deploy.title),
+          $('<td>').text(_this.deployTitle(deploy)),
           $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
           $('<td>').text(_this.deployDuration(deploy)),
           $('<td>').text(_this.deployEnvironment(deploy)),
+          $('<td>').text(deploy.latest_stage),
           $('<td>').html(_this.errorMsg(deploy)),
         ])
       );
@@ -171,8 +172,16 @@ Fae.deploy = {
     return running;
   },
 
+  deployTitle: function(deploy) {
+    if (deploy.title) {
+      return deploy.title
+    } else {
+      return deploy.commit_ref !== null ? 'FINE dev update' : deploy.title
+    }
+  },
+
   deployDuration: function(deploy) {
-    if (deploy.deploy_time === null) {
+    if (deploy.deploy_time === null || deploy.state === 'running') {
       return '–';
     } else {
       return moment.utc(parseInt(deploy.deploy_time)*1000).format('HH:mm:ss');
@@ -180,6 +189,9 @@ Fae.deploy = {
   },
 
   deployEnvironment: function(deploy) {
+    if (deploy.environment) {
+      return deploy.environment;
+    }
     if (deploy.branch === 'master' || deploy.branch === 'main') {
       return 'Production';
     }
@@ -187,9 +199,9 @@ Fae.deploy = {
   },
 
   errorMsg: function(deploy) {
-    if (deploy.error_message) {
+    if (deploy.error_message || deploy.state == 'error') {
       var out = 'An error occurred. Please contact your ';
-      out += '<a href="/admin/help">FINE team</a>.'
+      out += '<a href="/admin/help">FINE team</a>.';
       return out;
     }
   }

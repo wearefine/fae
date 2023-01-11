@@ -84,13 +84,8 @@ module Fae
       end
     end
 
-    def netlify_enabled?
-      Fae.netlify.present? &&
-      Fae.netlify[:api_user].present? &&
-      Fae.netlify[:api_token].present? &&
-      Fae.netlify[:site].present? &&
-      Fae.netlify[:site_id].present? &&
-      Fae.netlify[:api_base].present?
+    def deploys_enabled?
+      Fae.deploys_to.present? && (Fae.netlify.present? || Fae.cloudflare.present?)
     end
 
     private

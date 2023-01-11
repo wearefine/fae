@@ -75,4 +75,13 @@ Fae.setup do |config|
     site_id: 'site-id-in-netlify',
     api_base: 'https://api.netlify.com/api/v1/'
   }
+
+  ## Cloudflare configs
+  # Environment variables are recommended for any sensitive Netlify configuration details.
+  config.cloudflare = {
+    account_id: 'cloudflare-account-id',
+    api_token: 'cloudflare-api-token',
+    project_name: 'test',
+    api_base: 'https://api.cloudflare.com/client/v4/'
+  }
 end

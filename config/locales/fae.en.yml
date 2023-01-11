@@ -106,6 +106,7 @@ en:
           committer: 'Committer'
           context: 'Environment'
           state: 'State'
+          stage: 'Stage'
           error_msg: 'Error Msg'
           no_deploys: 'No deploys were found.'
         changes:

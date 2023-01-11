@@ -22,13 +22,20 @@ Fae.setup do |config|
   config.use_form_manager = true
 
   # Removed for now to simplify render.com deploy
-  if Rails.env.test?
+  if Rails.env.test? || Rails.env.development?
+    config.deploys_to = 'Cloudflare'
     config.netlify = {
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],
       site: 'fine-pss',
       site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
       api_base: 'https://api.netlify.com/api/v1/'
+    }
+    config.cloudflare = {
+      account_id: ENV['CLOUDFLARE_ACCOUNT_ID'],
+      api_token: ENV['CLOUDFLARE_API_TOKEN'],
+      project_name: 'ivp-fe',
+      api_base: 'https://api.cloudflare.com/client/v4'
     }
   end
 end
