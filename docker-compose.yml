@@ -22,8 +22,8 @@
         - DEV_MYSQL_HOST=db
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
-        - CLOUDFLARE_ACCOUNT_ID=8459b4637ecbaff0a78c183fbef15448
-        - CLOUDFLARE_API_TOKEN=3L86oIefi0caZVdDBjtQDN2NAjzZj7qU8-s2p9Fp
+        - CLOUDFLARE_ACCOUNT_ID=test
+        - CLOUDFLARE_API_TOKEN=test
     db:
       # image: postgres
       # volumes:
