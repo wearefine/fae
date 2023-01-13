@@ -20,10 +20,8 @@
       environment:
         - RAILS_ENV=development
         - DEV_MYSQL_HOST=db
-        - FINE_NETLIFY_API_TOKEN=test
-        - FINE_NETLIFY_API_USER=test
-        - CLOUDFLARE_ACCOUNT_ID=test
-        - CLOUDFLARE_API_TOKEN=test
+      env_file:
+        - .env
     db:
       # image: postgres
       # volumes:

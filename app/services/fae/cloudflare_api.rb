@@ -118,23 +118,23 @@ module Fae
     end
 
     def get_deploys_env_response(path)
-      return get "#{@endpoint_base}#{path}" unless Rails.env.test?
+      #return get "#{@endpoint_base}#{path}" unless Rails.env.test?
       JSON.parse '{
         "result": [
           {
             "id": "a22ba3c8-5abd-4a76-a303-4ae995db04c5",
             "short_id": "a22ba3c8",
             "project_id": "b028b43f-61aa-423b-ba02-96e8326a8fb1",
-            "project_name": "ivp-fe",
+            "project_name": "the-project",
             "environment": "production",
-            "url": "https://a22ba3c8.ivp-fe.pages.dev",
+            "url": "https://a22ba3c8.the-project.pages.dev",
             "created_on": "2023-01-09T19:27:19.167091Z",
             "modified_on": "2023-01-09T19:30:39.82278Z",
             "latest_stage": {
               "name": "queued",
               "started_on": "2023-01-09T19:27:19.540553Z",
               "ended_on": "2023-01-09T19:30:39.82278Z",
-              "status": "canceled"
+              "status": "active"
             },
             "deployment_trigger": {
               "type": "deploy_hook",
@@ -188,7 +188,7 @@ module Fae
               "type": "github",
               "config": {
                 "owner": "wearefine",
-                "repo_name": "ivp-fe",
+                "repo_name": "the-project",
                 "production_branch": "main",
                 "pr_comments_enabled": false
               }
@@ -206,9 +206,9 @@ module Fae
             "id": "a53ea0d3-55b2-4e83-8e14-a0c56aaf8992",
             "short_id": "a53ea0d3",
             "project_id": "b028b43f-61aa-423b-ba02-96e8326a8fb1",
-            "project_name": "ivp-fe",
+            "project_name": "the-project",
             "environment": "production",
-            "url": "https://a53ea0d3.ivp-fe.pages.dev",
+            "url": "https://a53ea0d3.the-project.pages.dev",
             "created_on": "2023-01-06T23:22:43.872702Z",
             "modified_on": "2023-01-06T23:24:21.98746Z",
             "latest_stage": {
@@ -218,7 +218,7 @@ module Fae
               "status": "success"
             },
             "deployment_trigger": {
-              "type": "github:push",
+              "type": "deploy_hook",
               "metadata": {
                 "branch": "main",
                 "commit_hash": "4e59e7ced60950eb7f7c227ba9639df1f23f7f3c",
@@ -269,7 +269,7 @@ module Fae
               "type": "github",
               "config": {
                 "owner": "wearefine",
-                "repo_name": "ivp-fe",
+                "repo_name": "the-project",
                 "production_branch": "main",
                 "pr_comments_enabled": false
               }
@@ -287,9 +287,9 @@ module Fae
             "id": "dd44fde8-0e80-42d7-adef-9d07f061bcbe",
             "short_id": "dd44fde8",
             "project_id": "b028b43f-61aa-423b-ba02-96e8326a8fb1",
-            "project_name": "ivp-fe",
+            "project_name": "the-project",
             "environment": "production",
-            "url": "https://dd44fde8.ivp-fe.pages.dev",
+            "url": "https://dd44fde8.the-project.pages.dev",
             "created_on": "2023-01-04T20:45:47.639395Z",
             "modified_on": "2023-01-04T20:47:23.469307Z",
             "latest_stage": {
@@ -350,7 +350,7 @@ module Fae
               "type": "github",
               "config": {
                 "owner": "wearefine",
-                "repo_name": "ivp-fe",
+                "repo_name": "the-project",
                 "production_branch": "main",
                 "pr_comments_enabled": false
               }
@@ -368,9 +368,9 @@ module Fae
             "id": "3550bf9e-6e6c-4d9b-b511-78010a3fc0e7",
             "short_id": "3550bf9e",
             "project_id": "b028b43f-61aa-423b-ba02-96e8326a8fb1",
-            "project_name": "ivp-fe",
+            "project_name": "the-project",
             "environment": "production",
-            "url": "https://3550bf9e.ivp-fe.pages.dev",
+            "url": "https://3550bf9e.the-project.pages.dev",
             "created_on": "2023-01-04T18:10:49.467628Z",
             "modified_on": "2023-01-04T18:12:25.631178Z",
             "latest_stage": {
@@ -431,7 +431,7 @@ module Fae
               "type": "github",
               "config": {
                 "owner": "wearefine",
-                "repo_name": "ivp-fe",
+                "repo_name": "the-project",
                 "production_branch": "main",
                 "pr_comments_enabled": false
               }
@@ -449,9 +449,9 @@ module Fae
             "id": "fb2276cb-448e-4406-91fd-daf5eb4c67ac",
             "short_id": "fb2276cb",
             "project_id": "b028b43f-61aa-423b-ba02-96e8326a8fb1",
-            "project_name": "ivp-fe",
+            "project_name": "the-project",
             "environment": "production",
-            "url": "https://fb2276cb.ivp-fe.pages.dev",
+            "url": "https://fb2276cb.the-project.pages.dev",
             "created_on": "2023-01-04T18:08:28.91661Z",
             "modified_on": "2023-01-04T18:09:45.66599Z",
             "latest_stage": {
@@ -512,7 +512,7 @@ module Fae
               "type": "github",
               "config": {
                 "owner": "wearefine",
-                "repo_name": "ivp-fe",
+                "repo_name": "the-project",
                 "production_branch": "main",
                 "pr_comments_enabled": false
               }

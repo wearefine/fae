@@ -26,3 +26,5 @@ spec/dummy/public/uploads/*
 
 /vendor
 docker-compose.override.yml
+
+.env

@@ -66,22 +66,26 @@ Fae.setup do |config|
   # Defaults to false
   # config.use_form_manager = true
 
-  ## Netlify configs
-  # Environment variables are recommended for any sensitive Netlify configuration details.
-  config.netlify = {
-    api_user: 'netlify-api-user',
-    api_token: 'netlify-api-token',
-    site: 'site-name-in-netlify',
-    site_id: 'site-id-in-netlify',
-    api_base: 'https://api.netlify.com/api/v1/'
-  }
+  ## FE Deployment integration
+  # Values are Netlify or Cloudflare
+  # config.deploys_to = ''
 
-  ## Cloudflare configs
+  ## Netlify configs, use if config.deploys_to = 'Netlify'
   # Environment variables are recommended for any sensitive Netlify configuration details.
-  config.cloudflare = {
-    account_id: 'cloudflare-account-id',
-    api_token: 'cloudflare-api-token',
-    project_name: 'test',
-    api_base: 'https://api.cloudflare.com/client/v4/'
-  }
+  # config.netlify = {
+  #   api_user: 'netlify-api-user',
+  #   api_token: 'netlify-api-token',
+  #   site: 'site-name-in-netlify',
+  #   site_id: 'site-id-in-netlify',
+  #   api_base: 'https://api.netlify.com/api/v1/'
+  # }
+
+  ## Cloudflare configs, use if config.deploys_to = 'Cloudflare'
+  # Environment variables are recommended for any sensitive Cloudflare configuration details.
+  # config.cloudflare = {
+  #   account_id: 'cloudflare-account-id',
+  #   api_token: 'cloudflare-api-token',
+  #   project_name: 'name-in-cloudflare',
+  #   api_base: 'https://api.cloudflare.com/client/v4/'
+  # }
 end

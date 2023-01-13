@@ -132,15 +132,18 @@ Fae.deploy = {
   injectTableDeployData: function(deploys, $tbody) {
     var _this = this;
     $.each(deploys, function(i, deploy) {
+      var toAppend = [
+        $('<td>').text(_this.deployTitle(deploy)),
+        $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
+        $('<td>').text(_this.deployDuration(deploy)),
+        $('<td>').text(_this.deployEnvironment(deploy)),
+      ];
+      if (deploy.latest_stage) {
+        toAppend.push($('<td>').text(deploy.latest_stage));
+      }
+      toAppend.push($('<td>').html(_this.errorMsg(deploy)));
       $tbody.append(
-        $('<tr>').append([
-          $('<td>').text(_this.deployTitle(deploy)),
-          $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
-          $('<td>').text(_this.deployDuration(deploy)),
-          $('<td>').text(_this.deployEnvironment(deploy)),
-          $('<td>').text(deploy.latest_stage),
-          $('<td>').html(_this.errorMsg(deploy)),
-        ])
+        $('<tr>').append(toAppend)
       );
     });
   },
@@ -173,11 +176,16 @@ Fae.deploy = {
   },
 
   deployTitle: function(deploy) {
-    if (deploy.title) {
-      return deploy.title
+    if (deploy.commit_ref) {
+      return 'FINE dev update'
     } else {
-      return deploy.commit_ref !== null ? 'FINE dev update' : deploy.title
+      return deploy.title
     }
+    // if (deploy.title) {
+    //   return deploy.title
+    // } else {
+    //   return deploy.commit_ref !== null ? 'FINE dev update' : deploy.title
+    // }
   },
 
   deployDuration: function(deploy) {

@@ -1,4 +1,4 @@
-# Netlify Deploy Monitor
+# Cloudflare Deploy Monitor
 
 * [Enabling Deploys](#enabling-deploys)
 * [Upgrading](#upgrading)
@@ -11,15 +11,14 @@
 ```ruby
 Fae.setup do |config|
 
-  ## Netlify configs
-  # Environment variables are recommended for any sensitive Netlify configuration details.
-  config.deploys_to = 'Netlify'
-  config.netlify = {
-    api_user: 'netlify-api-user',
-    api_token: 'netlify-api-token',
-    site: 'site-name-in-netlify',
-    site_id: 'site-id-in-netlify',
-    api_base: 'https://api.netlify.com/api/v1/'
+  ## Cloudflare configs
+  # Environment variables are recommended for any sensitive Cloudflare configuration details.
+  config.deploys_to = 'Cloudflare'
+  config.cloudflare = {
+    account_id: 'cloudflare-account-id',
+    api_token: 'cloudflare-api-token',
+    project_name: 'name-in-cloudflare',
+    api_base: 'https://api.cloudflare.com/client/v4/'
   }
 
 end
