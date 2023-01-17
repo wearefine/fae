@@ -181,11 +181,6 @@ Fae.deploy = {
     } else {
       return deploy.title
     }
-    // if (deploy.title) {
-    //   return deploy.title
-    // } else {
-    //   return deploy.commit_ref !== null ? 'FINE dev update' : deploy.title
-    // }
   },
 
   deployDuration: function(deploy) {
@@ -197,13 +192,14 @@ Fae.deploy = {
   },
 
   deployEnvironment: function(deploy) {
+    var _this = this;
     if (deploy.environment) {
-      return deploy.environment;
+      return _this.ucWord(deploy.environment);
     }
     if (deploy.branch === 'master' || deploy.branch === 'main') {
       return 'Production';
     }
-    return deploy.branch.charAt(0).toUpperCase() + deploy.branch.slice(1);
+    return _this.ucWord(deploy.branch);
   },
 
   errorMsg: function(deploy) {
@@ -212,6 +208,10 @@ Fae.deploy = {
       out += '<a href="/admin/help">FINE team</a>.';
       return out;
     }
+  },
+
+  ucWord: function(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
   }
 
 };

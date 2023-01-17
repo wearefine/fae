@@ -34,7 +34,7 @@ Fae.setup do |config|
     config.cloudflare = {
       account_id: ENV['CLOUDFLARE_ACCOUNT_ID'],
       api_token: ENV['CLOUDFLARE_API_TOKEN'],
-      project_name: 'ivp-fe',
+      project_name: 'cloudflare-project',
       api_base: 'https://api.cloudflare.com/client/v4'
     }
   end

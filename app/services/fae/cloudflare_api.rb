@@ -118,7 +118,7 @@ module Fae
     end
 
     def get_deploys_env_response(path)
-      #return get "#{@endpoint_base}#{path}" unless Rails.env.test?
+      return get "#{@endpoint_base}#{path}" unless Rails.env.test?
       JSON.parse '{
         "result": [
           {
