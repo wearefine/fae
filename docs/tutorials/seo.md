@@ -1,4 +1,4 @@
-# Setting Up Images and Files
+# Setting Up SEO
 
 * [In the Model](#in-the-model)
 * [In the Controller](#in-the-controller)
