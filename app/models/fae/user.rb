@@ -118,11 +118,13 @@ module Fae
 
     class << self
 
-      def update_mfa(enabled)
+      def update_mfa(enabled, email)
         if enabled == '1'
           update(user_mfa_enabled: true)
+          Fae::Option.set_mfa_enabling_user(email)
         elsif enabled == '0'
           update(otp_required_for_login: false, user_mfa_enabled: false)
+          Fae::Option.set_mfa_enabling_user("")
         end
       end
 

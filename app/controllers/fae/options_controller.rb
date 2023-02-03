@@ -14,7 +14,7 @@ module Fae
     def update
       if @option.update(option_params)
         if @option.previous_changes.include?('site_mfa_enabled')
-          Fae::User.update_mfa(option_params['site_mfa_enabled'])
+          Fae::User.update_mfa(option_params['site_mfa_enabled'], current_user.email)
         end
         flash[:notice] = 'Option was successfully updated.'
         redirect_to :action => :edit

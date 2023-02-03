@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_15_162479) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -186,6 +186,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_15_162479) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.boolean "site_mfa_enabled", default: false
+    t.string "mfa_enabling_user"
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
   end
 

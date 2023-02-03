@@ -3,7 +3,7 @@
     = f.input :email, required: false, autofocus: true
     = f.input :password, required: false
     - if @option.site_mfa_enabled
-      = f.input :otp_attempt, label: 'OTP'
+      = fae_input f, :otp_attempt, label: 'MFA Code', helper_text: 'Contact an admin if you don’t have access to your multi-factor authentication code.'
     .login-form-actions
       = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
       = f.button :submit, "Submit", class: "login-form-actions-submit"

@@ -34,5 +34,17 @@ module Fae
 
       instance
     end
+
+    class << self
+
+      def set_mfa_enabling_user(email)
+        if email.present?
+          update(mfa_enabling_user: email)
+        else
+          update(mfa_enabling_user: "")
+        end
+      end
+      
+    end
   end
 end
