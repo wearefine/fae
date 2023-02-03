@@ -22,8 +22,8 @@ section.content
     br
     div.mfa-buttons
       = simple_form_for(:two_fa, url: two_factor_settings_path, method: :post) do |f|
-        = f.input :code, label: 'MFA Code'
-        = f.input :password, label: 'Enter your current password'
+        = f.input :code, label: 'MFA Code', input_html: {style: 'width: 400px'}
+        = f.input :password, label: 'Enter your current password', input_html: {style: 'width: 400px'}
         
         = f.button :submit, "Confirm and Enable Multi-Factor", class: "js-cancel-nested cancel-nested-button"
 
