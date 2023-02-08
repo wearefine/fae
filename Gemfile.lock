@@ -274,6 +274,7 @@ GEM
     minitest (5.15.0)
     msgpack (1.5.6)
     multi_json (1.15.0)
+    mysql2 (0.5.4)
     nenv (0.3.0)
     net-imap (0.2.3)
       digest
@@ -302,7 +303,7 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
-    pg (1.4.3)
+    pg (1.4.4)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -463,6 +464,7 @@ DEPENDENCIES
   fae-rails!
   fog-aws
   guard-rspec
+  mysql2
   pg
   pry
   puma (~> 5.0)
