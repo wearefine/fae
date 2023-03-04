@@ -155,3 +155,10 @@ en:
     apply_filters: 'Apply Filters'
     all_items: 'All %{items}'
     keyword_search: 'Search by Keyword'
+  activerecord:
+    errors:
+      models:
+        fae/image:
+          attributes:
+            asset:
+              size_too_big: 'size is too big'

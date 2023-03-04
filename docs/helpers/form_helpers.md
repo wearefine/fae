@@ -42,7 +42,7 @@ fae_method_name(f, attribute, options)
 | label | string | attribute.titleize | the form label |
 | helper_text | string | | helper text that appears under label |
 | hint | string | | text that appears in a hint modal |
-| markdown | boolean | false | adds markdown GUI toolbar |
+| markdown | boolean | false | adds markdown GUI toolbar. field will support inline attachments for images, just drop image onto field to upload. use eye icon to preview image |
 | markdown_supported | boolean | false | displays support text and hint for markdown |
 | input_class | string | | a class to add to the input element |
 | wrapper_class | string | | a class to add to the wrapper element |
