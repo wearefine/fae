@@ -149,11 +149,11 @@
 
 .ui-datepicker-calendar {
   .ui-state-hover {
-    color: $c-custom-highlight;
+    color: var(--highlight-color);
   }
 
   .ui-state-active {
-    background: $c-custom-highlight;
+    background: var(--highlight-color);
     color: $c-white;
     position: relative;
   }
@@ -323,12 +323,12 @@
 
         &.checked,
         &.toMonth.valid.checked {
-          background: $c-custom-highlight;
+          background: var(--highlight-color);
           color: $c-white;
         }
 
         &.real-today.checked {
-          background: $c-custom-highlight;
+          background: var(--highlight-color);
         }
       }
 
