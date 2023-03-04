@@ -49,6 +49,7 @@
 //= require fae/form/_form_manager
 //= require fae/form/fae_chosen
 //= require fae/form/fileinputer
+//= require fae/form/drag_drop
 
 //= require fae/navigation/sticky
 //= require fae/navigation/_navigation

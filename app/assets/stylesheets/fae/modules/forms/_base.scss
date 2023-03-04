@@ -98,3 +98,11 @@ input[type=email] {
     margin-bottom: 10px;
   }
 }
+
+.input.field {
+
+  &.highlight {
+    outline: 2px dashed green;
+    outline-offset: 1px;
+  }
+}
