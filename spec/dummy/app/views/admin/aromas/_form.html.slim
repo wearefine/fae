@@ -27,3 +27,10 @@ ruby:
 
   - if Fae.use_form_manager
     a.button.js-launch-form-manager href='#' = t('fae.form.launch_form_manager')
+
+- if params[:action] == 'edit'
+  #sub_aromas.nested-form
+    == render 'fae/shared/nested_table',
+      assoc: :sub_aromas,
+      parent_item: @item,
+      cols: [:name]
