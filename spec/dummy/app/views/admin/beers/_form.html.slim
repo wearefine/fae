@@ -1,10 +1,10 @@
 = simple_form_for([:admin, @item]) do |f|
-  header.content-header.js-content-header
-    == render 'fae/shared/form_header', header: @klass_name
-  == render 'fae/shared/errors'
+  == render 'fae/shared/form_header', header: @klass_name
 
   main.content
     = fae_input f, :name
-    = fae_input f, :seo_title
-    = fae_input f, :seo_description
+    = fae_image_form f, :image
+  section.content
+    h2 SEO
+    = fae_seo_set_form f, :seo
 

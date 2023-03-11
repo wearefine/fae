@@ -23,5 +23,7 @@ ruby:
     = fae_image_form f, :<%= attachment.name -%>
 <% elsif attachment.type == :file -%>
     = fae_file_form f, :<%= attachment.name -%>
+<% elsif attachment.type == :seo_set -%>
+    = fae_seo_set_form f, :<%= attachment.name -%>
 <% end -%>
 <% end -%>

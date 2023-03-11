@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_11_143428) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -190,6 +190,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_11_143428) do
     t.integer "position"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "fae_seo_sets", charset: "utf8mb3", force: :cascade do |t|
+    t.string "seo_title"
+    t.text "seo_description"
+    t.string "social_media_title"
+    t.text "social_media_description"
+    t.string "seo_setable_type"
+    t.bigint "seo_setable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["seo_setable_type", "seo_setable_id"], name: "index_fae_seo_sets_on_seo_setable"
   end
 
   create_table "fae_static_pages", id: :integer, charset: "utf8mb3", force: :cascade do |t|
