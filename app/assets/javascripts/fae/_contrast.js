@@ -11,7 +11,6 @@ Fae.contrast = {
 
     // exit if highlight color css var not found
     if (!this.highlightHex) {
-      console.debug('highlight color css var not found');
       return;
     }
     
@@ -22,7 +21,6 @@ Fae.contrast = {
 
     // exit if highlight color is not a valid hex color
     if (!this.hexRegex.test(this.highlightHex)) {
-      console.debug('invalid hex for highlight color var');
       return;
     }
 

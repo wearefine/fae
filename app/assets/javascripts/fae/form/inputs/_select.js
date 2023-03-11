@@ -101,7 +101,7 @@ Fae.form.select = {
       // prevent multiple 'SELECT ALL' options from being added when nested forms are generated
       if ($element[0].options[0].value != select_all_value) {
         // Add special "Select All" option and notify Chosen of new option
-        addSelectAllOption($element)
+        addSelectAllOption($element);
       }
 
       // Mark label wrapper as having multiselect actions for styling

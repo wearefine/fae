@@ -25,7 +25,7 @@ PATH
       devise
       jquery-rails (~> 4.3.1)
       jquery-ui-rails (~> 6.0.1)
-      judge (~> 3.0.0)
+      judge (~> 3.1.0)
       judge-simple_form (~> 1.1.0)
       kaminari
       mini_magick
@@ -235,7 +235,7 @@ GEM
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
     json (2.6.2)
-    judge (3.0.0)
+    judge (3.1.0)
       rails (>= 5.0)
     judge-simple_form (1.1.0)
       judge (>= 2.0)

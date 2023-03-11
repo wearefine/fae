@@ -47,7 +47,7 @@ Fae.form.dragDrop = {
   handleDrop(inputContainer, e) {
     // return the original event from the jquery event
     if (e.originalEvent) {
-      e = e.originalEvent
+      e = e.originalEvent;
     }
     const input = inputContainer.querySelector('input[type="file"]');
     const fileList = e.dataTransfer.files;
