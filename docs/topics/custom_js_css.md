@@ -25,12 +25,7 @@ Fae creates two files in your assets pipeline that allow custom JS and CSS in yo
 
 ## Fae SCSS
 
-`app/assets/stylesheets/fae.scss` compiles into `fae/application.css`. Styles added to this files will be declared before other Fae styles. This file also provide a SCSS variable for Fae's highlight color: `$c-custom-highlight` (which defaults to #31a7e6).
-
-```CSS
-// Do Not Delete this page! FAE depends on it in order to set its highlight color.
-// $c-custom-highlight: #000;
-```
+`app/assets/stylesheets/fae.scss` compiles into `fae/application.css`. Styles added to this files will be declared before other Fae styles.
 
 ## Custom Helpers
 

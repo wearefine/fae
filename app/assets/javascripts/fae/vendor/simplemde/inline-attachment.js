@@ -57,9 +57,9 @@
      * @param {String} previous Value which should be appended after the current content
      */
     appendInItsOwnLine: function (previous, appended) {
-      return (previous + '\n\n[[D]]' + appended)
-        .replace(/(\n{2,})\[\[D\]\]/, '\n\n')
-        .replace(/^(\n*)/, '');
+      return (previous + "\n\n[[D]]" + appended)
+        .replace(/(\n{2,})\[\[D\]\]/, "\n\n")
+        .replace(/^(\n*)/, "");
     },
 
     /**
@@ -106,7 +106,7 @@
         el.focus();
       }
       el.scrollTop = scrollPos;
-    },
+    }
   };
 
   /**
@@ -144,7 +144,12 @@
     /**
      * Allowed MIME types
      */
-    allowedTypes: ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'],
+    allowedTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/jpg',
+      'image/gif'
+    ],
 
     /**
      * Text which will be inserted when dropping or pasting a file.
@@ -208,7 +213,7 @@
     /**
      * When a file has succesfully been uploaded
      */
-    onFileUploaded: function () {},
+    onFileUploaded: function () {}
   };
 
   /**

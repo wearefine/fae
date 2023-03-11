@@ -2,6 +2,7 @@ ruby:
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb
+  colspan -= 1 if hide_delete_button
   table_class = ordered ? 'js-sort-row' : nil
 
   options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
