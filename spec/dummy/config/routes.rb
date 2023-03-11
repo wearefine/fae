@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :sub_aromas
+    resources :poly_things
     resources :beers
     resources :article_categories
     resources :articles

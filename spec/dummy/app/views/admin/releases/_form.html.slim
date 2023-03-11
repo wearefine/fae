@@ -100,4 +100,10 @@ ruby:
       hide_delete_button: true,
       header: 'Release Notes'
 
+  section.content#poly_things
+    = render 'fae/shared/nested_table',
+      assoc: :poly_things,
+      parent_item: @item,
+      cols: [:name]
+
 = render 'fae/shared/recent_changes'

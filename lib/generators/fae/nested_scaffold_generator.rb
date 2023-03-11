@@ -58,5 +58,16 @@ module Fae
         end
       end
 
+      def inject_polymorphic_info
+        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
+
+  def fae_nested_parent
+    :#{polymorphic_name}
+  end
+
+RUBY
+        end
+      end
+
   end
 end

@@ -10,10 +10,11 @@
 
 # To v2.2
 
-* 2.2 introduces the [Form Manager](../features/form_manager.md) feature
+* Introduction of the [Form Manager](../features/form_manager.md) and [Netlify](../features/netlify.md) integrations require installing and running new migrations
     1. run `rake fae:install:migrations`
     2. run `rake db:migrate`
-    3. Further usage and upgrading instructions can be found in the [documentation](../features/form_manager.md)
+* All instances of `= simple_form_for(['admin', @item]` have to be updated to `= simple_form_for([:admin, @item]`
+    - This is required due to Rails no longer allowing strings to be passed to `polymorphic_url` to patch [this CVE](https://github.com/advisories/GHSA-hjg4-8q5f-x6fm)
 
 # To v2.0
 

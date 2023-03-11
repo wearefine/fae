@@ -214,5 +214,9 @@ RUBY
       "#{file_name.underscore}able"
     end
 
+    def polymorphic_name
+      "#{file_name.underscore}able"
+    end
+
   end
 end

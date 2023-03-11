@@ -31,7 +31,7 @@ module Fae
       return if value.blank?
       # if item is an image
       if value.class.name == 'Fae::Image'
-        image_tag(value.asset.thumb.url) if value.asset.thumb.url.present?
+        image_tag(nested_table_thumb_url(value), class: 'addedit-form-thumb') if nested_table_thumb_url(value).present?
       # if item's attribute is an association
       elsif item.class.reflections.include?(attribute)
         value.try(:fae_display_field)
@@ -76,7 +76,9 @@ module Fae
         begin
           return link_to text, fae.edit_content_block_path(change.changeable.slug) if change.changeable_type == 'Fae::StaticPage'
           parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
-          edit_path = edit_polymorphic_path([main_app, fae_scope.to_sym, parent, change.changeable])
+          edit_path = edit_polymorphic_path(
+            [main_app, fae_scope.to_sym, parent, change.changeable]
+          )
           return link_to text, edit_path
         rescue
           return text
@@ -131,6 +133,15 @@ module Fae
         'multicol-nav three'
       elsif num > 10
         'multicol-nav'
+      end
+    end
+
+    def nested_table_thumb_url(image)
+      return unless image.asset.file
+      if image.asset.file.extension.downcase == 'svg'
+        image.asset.url
+      else
+        image.asset.thumb.url
       end
     end
   end

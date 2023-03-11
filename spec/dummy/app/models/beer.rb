@@ -3,6 +3,7 @@ class Beer < ApplicationRecord
 
   has_fae_image :image
   has_fae_seo_set :seo
+  has_many :poly_things, as: :poly_thingable
 
   def fae_display_field
     name

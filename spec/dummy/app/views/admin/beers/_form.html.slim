@@ -8,3 +8,10 @@
     h2 SEO
     = fae_seo_set_form f, :seo
 
+- if params[:action] == 'edit'
+  section.content#poly_things
+    = render 'fae/shared/nested_table',
+      assoc: :poly_things,
+      parent_item: @item,
+      cols: [:name]
+

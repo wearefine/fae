@@ -15,7 +15,7 @@ Fae.deploy = {
     this.buttonsEnabled  = true;
     this.pollTimeout     = null;
     this.pollInterval    = 5000;
-    this.idleStates      = ['ready', 'error']
+    this.idleStates      = ['ready', 'error', 'rejected']
 
     this.pollDeployStatus();
     this.deployButtonListener();
