@@ -1,5 +1,29 @@
 # Fae Changelog
 
+## 3.0
+
+- enhancments
+    + Add Rails 7 Support
+    + Add SEO Set Module [#592](https://github.com/wearefine/fae/pull/592)
+    + Add support for drag and drop image uploading [#574](https://github.com/wearefine/fae/pull/574)
+    + Upload images through the markdown editor [#261](https://github.com/wearefine/fae/pull/261)
+    + Highlight color is now managed in the user admin (vs CSS) [#572](https://github.com/wearefine/fae/pull/572)
+    + Add saving indication on form submit [#577](https://github.com/wearefine/fae/pull/577)
+    + Update Judge version with validation updates [#573](https://github.com/wearefine/fae/pull/573)
+    + Add support for double nested resources [#589](https://github.com/wearefine/fae/pull/589)
+    + Allow hiding of delete button on nested forms [#576](https://github.com/wearefine/fae/pull/576)
+    + Add local Docker support [#554](https://github.com/wearefine/fae/pull/554)
+    + Nav updates for large subnavs [#547](https://github.com/wearefine/fae/pull/547)
+    + Nav style updates [#542](https://github.com/wearefine/fae/pull/542)
+    + Update toggle form styling [#544](https://github.com/wearefine/fae/pull/544)
+    + Update dummy app hosting [#590](https://github.com/wearefine/fae/pull/590)
+- bugs
+    + Fix select/deselect bug [#571](https://github.com/wearefine/fae/pull/571)
+    + Fix form manager on nested forms [#580](https://github.com/wearefine/fae/pull/580)
+    + Fix nested form submit bug [#549](https://github.com/wearefine/fae/pull/549)
+    + Fix focusable on no-sarch dropdowns [#546](https://github.com/wearefine/fae/pull/546)
+
+
 ## 2.2
 
 - enhancements
