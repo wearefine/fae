@@ -7,7 +7,7 @@
 
 Like many Rails CMS engines, Fae delivers all the basics to get you up and running quickly: authentication, authorization, a sleek UI, form helpers, image processing and workflows. But unlike other engines, Fae's generated models, controllers, and views are built to customize and scale.
 
-Fae 2.0 supports Rails 5.0 to 5.2, support for Rails 4.x is deprecated as of Fae 2.0.
+Fae 3.x supports Rails 7. For legacy Rails support you can use Fae 2.x on Rails 5.0 to 5.2.
 
 ## Installation
 
