@@ -20,8 +20,15 @@ module Fae
       "system/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
 
-    version :thumb do
+    version :thumb, unless: :is_unprocessable? do
       process :resize_to_fill => [150,100]
+    end
+
+    protected
+    
+    def is_unprocessable?(new_file)
+      # ignore processing for gifs and svgs
+      ['image/gif', 'image/svg+xml'].include? new_file.content_type
     end
 
   end
