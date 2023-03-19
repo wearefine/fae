@@ -27,6 +27,7 @@ module Fae
     protected
     
     def is_unprocessable?(new_file)
+      raise 'the dead'
       # ignore processing for gifs and svgs
       ['image/gif', 'image/svg+xml'].include? new_file.content_type
     end
