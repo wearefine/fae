@@ -37,7 +37,8 @@ module Fae
           item('About Us', path: fae.edit_content_block_path('about_us')),
           item('About Us', path: fae.edit_content_block_path('about_us')),
           item('About Us', path: fae.edit_content_block_path('about_us'))
-        ])
+        ]),
+        # scaffold inject marker
       ]
     end
 

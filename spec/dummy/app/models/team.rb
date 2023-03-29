@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   has_many :coaches
   has_many :players

@@ -1,5 +1,5 @@
 class ValidationTester < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   validates :slug,
     uniqueness: true,

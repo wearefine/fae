@@ -10,7 +10,7 @@ describe 'recent_changes partial' do
   end
 
   it 'should display on edit forms' do
-    release = FactoryGirl.create(:release)
+    release = FactoryBot.create(:release)
 
     admin_login
     get edit_admin_release_path(release)

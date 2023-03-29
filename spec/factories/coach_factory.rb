@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :coach do
     sequence(:first_name) { |n| "First#{n}" }

@@ -33,7 +33,7 @@ body {
 
 a {
   @include transition(color .2s);
-  color: $c-custom-highlight;
+  color: var(--highlight-color);
   text-decoration: none;
 
   &:hover {

@@ -4,8 +4,10 @@ Fae.setup do |config|
 
   config.devise_mailer_sender = 'test@test.com'
 
+  config.max_image_upload_size = 1
+
   # models to exclude from dashboard list
-  config.dashboard_exclusions = %w( Aroma )
+  config.dashboard_exclusions = %w( Aroma PolyThing )
 
   # language support
   config.languages = {
@@ -19,18 +21,11 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
-  if Rails.env.development? || Rails.env.test?
+  # Removed for now to simplify render.com deploy
+  if Rails.env.test?
     config.netlify = {
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-      site: 'fine-pss',
-      site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
-      api_base: 'https://api.netlify.com/api/v1/'
-    }
-  else
-    config.netlify = {
-      api_user: Rails.application.secrets.fine_netlify_api_user,
-      api_token: Rails.application.secrets.fine_netlify_api_token,
       site: 'fine-pss',
       site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
       api_base: 'https://api.netlify.com/api/v1/'

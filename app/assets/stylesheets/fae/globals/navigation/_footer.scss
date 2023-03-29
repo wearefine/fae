@@ -32,7 +32,7 @@
 
     &:hover {
       path {
-        fill: $c-custom-highlight;
+        fill: var(--highlight-color);
       }
     }
   }

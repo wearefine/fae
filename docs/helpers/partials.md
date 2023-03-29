@@ -104,6 +104,7 @@ The nested_table should go after the main form ends and should only be placed on
 | title | string | assoc.to_s.titleize | the H3 directly above the form |
 | add_button_text | string | "Add #{title.singularize}" | the add button's text |
 | hide_add_button | boolean | false | Disables the Add button in the table header and the "add some" link in the table body |
+| hide_delete_button | boolean | false | Disables the ability to delete and removes trashcan icon |
 | ordered | boolean | false | allows list view to be sortable, which is saved to a `position` attribute |
 | has_thumb | boolean | false | displays a thumbnail in the list view (only applicable to `Fae::Image`)
 | edit_column | boolean | false | displays edit link
@@ -179,6 +180,20 @@ Update the elements you wish to appear in the nested form.
 
 Add the [nested table partial](helpers.md#nested_table) to the parent form. This partial should be below the actual form as you cannot nest form tags. This form should only appear on the edit page as you cannot associate content to an object that doesn't exist yet.
 
+## Double-nested Resources
+
+Have you ever wanted to place a nested resource in an already nested resource? Now you can. You will set this up just like the previous examples, but you'll be placing the nested table partial into a nested form, here's an example:
+
+```slim
+- if params[:action] == 'edit'
+  #sub_aromas.nested-form
+    == render 'fae/shared/nested_table',
+      assoc: :sub_aromas,
+      parent_item: @item,
+      cols: [:name]
+```
+
+You can reference the `SubAroma` setup in the dummy app for a fully working example of this.
 ## Recent Changes
 
 ```slim

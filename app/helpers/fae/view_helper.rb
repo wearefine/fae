@@ -25,6 +25,10 @@ module Fae
       render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options, show_form_manager: show_form_manager
     end
 
+    def fae_seo_set_form(f, seo_set_name)
+      render 'fae/application/seo_set_form', f: f, seo_set_name: seo_set_name
+    end
+
     def fae_index_image(image, path = nil)
       return if image.blank? || image.asset.blank? || image.asset.thumb.blank?
       content_tag :div, class: 'image-mat' do

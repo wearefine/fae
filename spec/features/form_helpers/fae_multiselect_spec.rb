@@ -15,7 +15,7 @@ feature 'fae_multiselect' do
   end
 
   scenario 'should display two-pane when `two_pane: true`', js: true do
-    FactoryGirl.create(:selling_point, name: 'new one')
+    FactoryBot.create(:selling_point, name: 'new one')
 
     admin_login
     visit new_admin_release_path
@@ -32,12 +32,35 @@ feature 'fae_multiselect' do
   end
 
   scenario 'should use label_method if set' do
-    FactoryGirl.create(:acclaim, publication: 'Bathroom Reader Monthly')
+    FactoryBot.create(:acclaim, publication: 'Bathroom Reader Monthly')
 
     admin_login
     visit new_admin_release_path
 
     expect(page).to have_content('Bathroom Reader Monthly')
+  end
+
+  scenario 'should only display a single "de-select all" option after rendering nested form', js: true do
+    wine = FactoryBot.create(:wine)
+    release = FactoryBot.create(:release, name: 'testy mctest') 
+    release = FactoryBot.create(:release, name: 'testy mctest 2') 
+
+    admin_login
+    visit edit_admin_wine_path(wine)
+
+    click_link 'Add Oregon Winemaker'
+    expect(page).to have_css('form#new_winemaker')
+
+
+    group = find 'div.select'
+    group.click
+    within(group) do
+      find('li', text: 'testy mctest 2').click
+    end
+
+    eventually {
+      expect(page).to have_selector('.js-multiselect-action-deselect_all', count: 1)
+    }
   end
 
 end

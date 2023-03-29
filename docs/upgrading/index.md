@@ -1,5 +1,6 @@
 # Upgrading Fae
 
+* [To v3.0](#to-v30)
 * [To v2.2](#to-v22)
 * [To v2.0](#to-v20)
 * [To v1.5](#to-v15)
@@ -7,6 +8,13 @@
 * [From v1.1 to v1.2](#from-v11-to-v12)
 
 ---
+
+# To v3.0
+
+* Fae 3.0 has additions to the base schema which require installing and running new migrations
+    1. run `rake fae:install:migrations`
+    2. run `rake db:migrate`
+* Fae 3.0 was built for Rails 7. Upgrading Fae on a previous version of Rails will require upgrading to Rails 7 as well.
 
 # To v2.2
 

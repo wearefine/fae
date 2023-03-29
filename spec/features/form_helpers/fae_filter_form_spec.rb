@@ -2,8 +2,8 @@ require 'spec_helper'
 
 feature 'fae_filter_form' do
   scenario 'can reset search after keyword search', js: true do
-    FactoryGirl.create(:release, name: 'Release 1')
-    FactoryGirl.create(:release, name: 'Release 2')
+    FactoryBot.create(:release, name: 'Release 1')
+    FactoryBot.create(:release, name: 'Release 2')
 
     admin_login
     visit admin_releases_path

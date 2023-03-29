@@ -1,0 +1,1 @@
+module Fae::SeoSetConcern; end

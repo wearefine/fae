@@ -72,7 +72,7 @@ describe Fae::ViewHelper do
 
   describe '#fae_avatar' do
     it 'should return a gravatar with the correct MD5 hash' do
-      user = FactoryGirl.create(:fae_user, email: 'fae_is_great@facts.com')
+      user = FactoryBot.create(:fae_user, email: 'fae_is_great@facts.com')
 
       expect( fae_avatar(user) ).to eq('https://secure.gravatar.com/avatar/d21c5b2c4ee9b417a9be23358ee14c91?s=80&d=mm')
     end
@@ -83,17 +83,17 @@ describe Fae::ViewHelper do
     include Fae::ApplicationHelper
 
     it 'should include a polymorphic path when fae_parent is present' do
-      item = FactoryGirl.create(:coach)
+      item = FactoryBot.create(:coach)
       expect( fae_delete_button(item) ).to match /\/admin\/teams\/\d+\/coaches\/\d+/
     end
 
     it 'should include a regular path when fae_parent is not present' do
-      item = FactoryGirl.create(:release)
+      item = FactoryBot.create(:release)
       expect( fae_delete_button(item) ).to match /\/admin\/releases\/\d+/
     end
 
     it 'should include a custom path when a second argument is supplied' do
-      item = FactoryGirl.create(:coach)
+      item = FactoryBot.create(:coach)
 
       # as a Rails path helper
       expect( fae_delete_button(item, [:admin, item.team, item]) ).to match /\/admin\/teams\/\d+\/coaches\/\d+/
@@ -103,7 +103,7 @@ describe Fae::ViewHelper do
     end
 
     it 'should allow custom attributes' do
-      item = FactoryGirl.create(:coach)
+      item = FactoryBot.create(:coach)
 
       expect( fae_delete_button(item, nil, custom_attribute: 'value') ).to match /custom_attribute="value"/
       # Supports deep_merge
@@ -114,17 +114,17 @@ describe Fae::ViewHelper do
 
   describe '#fae_sort_id' do
     it 'should return a formatted string for single word models' do
-      item = FactoryGirl.create(:varietal, id: 524)
+      item = FactoryBot.create(:varietal, id: 524)
       expect(fae_sort_id(item)).to eq('varietal_524')
     end
 
     it 'should return a formatted string for multiple word models' do
-      item = FactoryGirl.create(:selling_point, id: 235)
+      item = FactoryBot.create(:selling_point, id: 235)
       expect(fae_sort_id(item)).to eq('selling_point_235')
     end
 
     it 'should return a formatted string for scoped models' do
-      item = FactoryGirl.create(:fae_user, id: 143)
+      item = FactoryBot.create(:fae_user, id: 143)
       expect(fae_sort_id(item)).to eq('fae__user_143')
     end
   end
@@ -135,15 +135,15 @@ describe Fae::ViewHelper do
     end
 
     it 'should return an image tag without a link if an item but no path is provided' do
-      @release = FactoryGirl.create(:release)
-      FactoryGirl.create(:fae_image, imageable_type: 'Release', imageable_id: @release.id, attached_as: 'bottle_shot')
+      @release = FactoryBot.create(:release)
+      FactoryBot.create(:fae_image, imageable_type: 'Release', imageable_id: @release.id, attached_as: 'bottle_shot')
       expect(fae_index_image(@release.bottle_shot)).to include('<img')
       expect(fae_index_image(@release.bottle_shot)).to_not include('<a href')
     end
 
     it 'should return an image tag wrapped in a link when an item and a path are provided' do
-      @release = FactoryGirl.create(:release)
-      FactoryGirl.create(:fae_image, imageable_type: 'Release', imageable_id: @release.id, attached_as: 'bottle_shot')
+      @release = FactoryBot.create(:release)
+      FactoryBot.create(:fae_image, imageable_type: 'Release', imageable_id: @release.id, attached_as: 'bottle_shot')
       expect(fae_index_image(@release.bottle_shot, '/admin/custom/route')).to include('<img')
       expect(fae_index_image(@release.bottle_shot, '/admin/custom/route')).to include('<a href')
     end

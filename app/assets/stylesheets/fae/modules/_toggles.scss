@@ -14,7 +14,7 @@
     background-color: $c-mid-grey;
   }
   &.slider-yes-selected {
-    background: $c-custom-highlight;
+    background: var(--highlight-color);
   }
 }
 

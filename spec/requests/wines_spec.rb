@@ -25,8 +25,8 @@ end
 describe 'wines#create' do
 
   it 'acts_as_list should create wines with proper position attrs' do
-    wine1 = FactoryGirl.create(:wine)
-    wine2 = FactoryGirl.create(:wine)
+    wine1 = FactoryBot.create(:wine)
+    wine2 = FactoryBot.create(:wine)
     expect(wine1.reload.position).to eq(2)
     expect(wine2.reload.position).to eq(1)
   end
@@ -36,7 +36,7 @@ end
 describe 'wines#edit' do
 
   it 'should return found' do
-    wine = FactoryGirl.create(:wine)
+    wine = FactoryBot.create(:wine)
     admin_login
     get edit_admin_wine_path(wine)
 

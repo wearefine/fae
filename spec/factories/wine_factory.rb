@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :wine do
     sequence(:name_en) { |n| "English Name #{n}" }

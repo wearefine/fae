@@ -1,5 +1,4 @@
 require_relative 'base_generator'
-
 module Fae
   class PageGenerator < Fae::BaseGenerator
     desc 'Creates model with dependancies for Fae Static Pages'

@@ -5,7 +5,9 @@
     app:
       stdin_open: true
       tty: true
-      build: .
+      build:
+        context: .
+        dockerfile: ./Dockerfile.dev
       working_dir: /app/spec/dummy
       command: /bin/bash -c "bundle check || bundle install && bundle exec rails s -p 3000 -P /tmp/puma.pid -b 0.0.0.0"
       volumes:
@@ -21,7 +23,14 @@
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
     db:
-      image: mariadb:10.2
+      # image: postgres
+      # volumes:
+      #   - ./tmp/db:/var/lib/postgresql/data
+      # environment:
+      #   POSTGRES_PASSWORD: password
+      # ports:
+      #   - "5432:5432"
+      image: mariadb
       environment:
         - MYSQL_ROOT_PASSWORD=
         - MYSQL_ALLOW_EMPTY_PASSWORD='yes'

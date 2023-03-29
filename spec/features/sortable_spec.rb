@@ -3,10 +3,10 @@ require 'spec_helper'
 feature 'sortable' do
 
   scenario 'should allow reordering of items', js: true do
-    acclaim_1 = FactoryGirl.create(:acclaim, publication: 'acclaim one', position: 1)
-    acclaim_2 = FactoryGirl.create(:acclaim, publication: 'acclaim two', position: 2)
-    acclaim_3 = FactoryGirl.create(:acclaim, publication: 'acclaim three', position: 3)
-    acclaim_4 = FactoryGirl.create(:acclaim, publication: 'acclaim four', position: 4)
+    acclaim_1 = FactoryBot.create(:acclaim, publication: 'acclaim one', position: 1)
+    acclaim_2 = FactoryBot.create(:acclaim, publication: 'acclaim two', position: 2)
+    acclaim_3 = FactoryBot.create(:acclaim, publication: 'acclaim three', position: 3)
+    acclaim_4 = FactoryBot.create(:acclaim, publication: 'acclaim four', position: 4)
 
     admin_login
     visit admin_acclaims_path

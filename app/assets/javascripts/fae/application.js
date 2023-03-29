@@ -30,7 +30,9 @@
 //= require fae/vendor/jquery.tablesorter
 //= require fae/vendor/js.cookie
 //= require fae/vendor/touch_punch
-//= require fae/vendor/simplemde.min
+//= require fae/vendor/simplemde/simplemde.min
+//= require fae/vendor/simplemde/inline-attachment
+//= require fae/vendor/simplemde/codemirror-4.inline-attachment
 
 //= require fae/admin
 
@@ -49,6 +51,7 @@
 //= require fae/form/_form_manager
 //= require fae/form/fae_chosen
 //= require fae/form/fileinputer
+//= require fae/form/drag_drop
 
 //= require fae/navigation/sticky
 //= require fae/navigation/_navigation
@@ -59,6 +62,7 @@
 //= require fae/_modals
 //= require fae/_tables
 //= require fae/_deploy
+//= require fae/_contrast
 
 //= require fae
 

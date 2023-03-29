@@ -50,7 +50,7 @@ $content-header-padding: 16px;
 
     &:hover {
       color: $c-text-heavy;
-      border-bottom-color: $c-custom-highlight;
+      border-bottom-color: var(--highlight-color);
     }
   }
 
@@ -67,7 +67,7 @@ $content-header-padding: 16px;
     &.-active {
       a {
         color: $c-text-heavy;
-        border-bottom-color: $c-custom-highlight;
+        border-bottom-color: var(--highlight-color);
       }
     }
   }
@@ -86,6 +86,10 @@ $content-header-padding: 16px;
     &:last-child {
       margin-right: 0;
     }
+  }
+
+  input[type=submit].saving {
+    color: darkgray;
   }
 }
 

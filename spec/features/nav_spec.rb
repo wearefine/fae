@@ -15,7 +15,7 @@ feature 'Main Navigation' do
 
   scenario 'should include custom CSS classes' do
     admin_login
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
     visit admin_team_coaches_path(team)
 
     expect(page).to have_selector('.css-one-level-deep', text: 'Events')
@@ -52,7 +52,7 @@ feature 'Side Navigation' do
 
   scenario 'should highlight fourth level in sidebar', js: true do
     admin_login
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
     visit admin_team_coaches_path(team)
 
     within('.main-header-nav > .-parent-current') do
@@ -66,7 +66,7 @@ feature 'Side Navigation' do
 
   scenario 'should exist on a new page in a 3+ tier section', js: true do
     admin_login
-    team = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
     visit new_admin_team_coach_path(team)
 
     expect(page).to have_selector('#js-sidenav')
@@ -74,7 +74,7 @@ feature 'Side Navigation' do
 
   scenario 'should exist on an edit page in a 3+ tier section', js: true do
     admin_login
-    coach = FactoryGirl.create(:coach)
+    coach = FactoryBot.create(:coach)
     visit edit_admin_team_coach_path(coach.team, coach)
 
     expect(page).to have_selector('#js-sidenav')
@@ -89,7 +89,7 @@ feature 'Side Navigation' do
 
   scenario 'should not exist on an edit page in a <3 tier section', js: true do
     admin_login
-    wine = FactoryGirl.create(:wine)
+    wine = FactoryBot.create(:wine)
     visit edit_admin_wine_path(wine)
 
     expect(page).to_not have_selector('#js-sidenav')
@@ -97,8 +97,8 @@ feature 'Side Navigation' do
 
   scenario 'accordions should expand and collapse siblings when they are clicked', js: true do
     admin_login
-    team = FactoryGirl.create(:team)
-    team2 = FactoryGirl.create(:team)
+    team = FactoryBot.create(:team)
+    team2 = FactoryBot.create(:team)
     visit admin_team_coaches_path(team)
 
     # Ensure only one accordion is open on load

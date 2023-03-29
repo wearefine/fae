@@ -1,5 +1,5 @@
 class SellingPoint < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   def fae_display_field
     name

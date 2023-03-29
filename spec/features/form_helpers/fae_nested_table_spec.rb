@@ -10,7 +10,7 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow adding new items', js: true do
-    release = FactoryGirl.create(:release)
+    release = FactoryBot.create(:release)
 
     admin_login
     visit edit_admin_release_path(release)
@@ -31,8 +31,8 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow editing existing item', js: true do
-    release = FactoryGirl.create(:release)
-    aroma   = FactoryGirl.create(:aroma, name: 'Roses', release: release)
+    release = FactoryBot.create(:release)
+    aroma   = FactoryBot.create(:aroma, name: 'Roses', release: release)
 
     admin_login
     visit edit_admin_release_path(release)
@@ -54,8 +54,8 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow deletion of item', js: true do
-    release = FactoryGirl.create(:release)
-    aroma   = FactoryGirl.create(:aroma, name: 'Roses', release: release)
+    release = FactoryBot.create(:release)
+    aroma   = FactoryBot.create(:aroma, name: 'Roses', release: release)
 
     admin_login
     visit edit_admin_release_path(release)
@@ -70,31 +70,32 @@ feature 'fae_nested_table' do
   end
 
   scenario 'should allow reordering of items', js: true do
-    wine = FactoryGirl.create(:wine)
-    FactoryGirl.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
-    FactoryGirl.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
-    FactoryGirl.create(:winemaker, name: 'First', wine: wine, region_type: 1)
+    wine = FactoryBot.create(:wine)
+    FactoryBot.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
+    FactoryBot.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
+    FactoryBot.create(:winemaker, name: 'First', wine: wine, region_type: 1)
 
     admin_login
     visit edit_admin_wine_path(wine)
 
-    expect(page.body).to match(/First.*Middle.*Last/)
+    # expect(page.body).to match(/First.*Middle.*Last/)
+    expect(page.find('#oregon_winemakers_section tbody').text()).to match(/First.*Middle.*Last/)
 
     # within(:css, '#oregon_winemakers_section') do
     #   handle = all('tbody tr').last.find('.sortable-handle')
-    #   handle.drag_to(find('thead'))
+    #   handle.drag_to(all('tbody tr'))
     # end
     #
     # TODO - drag_to is triggering the SetupController, which is in turn raising a no roles found
     # Not sure why, think it has something to do with Capybara's synchronize method
     # Proper code is above; hack below
-    evaluate_script "$('#oregon_winemakers_section tbody').prepend( $('#oregon_winemakers_section tbody tr:last-child') ); $('#oregon_winemakers_section .sortable-handle:first-child').trigger('mousedown');"
+    execute_script "$('#oregon_winemakers_section tbody').prepend( $('#oregon_winemakers_section tbody tr:last-child') ); $('#oregon_winemakers_section .sortable-handle:first-child').trigger('mousedown');"
 
-    expect(page.body).to match(/Last.*First.*Middle/)
+    expect(page.find('#oregon_winemakers_section tbody').text()).to match(/Last.*First.*Middle/)
   end
 
   scenario 'should allow adding new items w params', js: true do
-    wine = FactoryGirl.create(:wine)
+    wine = FactoryBot.create(:wine)
 
     admin_login
     visit edit_admin_wine_path(wine)
@@ -111,7 +112,47 @@ feature 'fae_nested_table' do
       expect(page.find('#oregon_winemakers_section table')).to have_content('Portland Joe')
       expect(page.find('#california_winemakers_section table')).to have_no_content('Portland Joe')
     }
+  end
 
+  scenario 'should prevent parent form saving when user hits cancel on nested form unsaved changes alert', js: true do
+    release = FactoryBot.create(:release)
+
+    admin_login
+    visit edit_admin_release_path(release)
+
+    click_link 'Add Release Note'
+    expect(page).to have_css('form#new_release_note')
+
+
+    within(:css, 'form#new_release_note') do
+      fill_in 'Title', with: "I'm a release note"
+    end
+
+    click_button 'Save'
+    page.driver.browser.reject_js_confirms
+    
+    expect(page).to have_css('form#new_release_note')
+  end
+
+  scenario 'allows parent form saving when user hits continue on nested form unsaved changes alert', js: true do
+    release = FactoryBot.create(:release)
+
+    admin_login
+    visit edit_admin_release_path(release)
+
+    click_link 'Add Release Note'
+    expect(page).to have_css('form#new_release_note')
+
+    within(:css, 'form#new_release_note') do
+      fill_in 'Title', with: "I'm a release note"
+    end
+
+    click_button 'Save'
+    page.driver.browser.accept_js_confirms
+
+    eventually {
+      expect(current_path).to eq(admin_releases_path)
+    }
   end
 
 end

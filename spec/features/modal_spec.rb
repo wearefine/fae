@@ -3,8 +3,8 @@ require 'spec_helper'
 feature 'modal' do
 
   before(:each) do
-    release = FactoryGirl.create(:release)
-    aroma = FactoryGirl.create(:aroma, release: release, live: true )
+    release = FactoryBot.create(:release)
+    aroma = FactoryBot.create(:aroma, release: release, live: true )
     admin_login
     visit edit_admin_release_path(release)
     click_link(aroma.name)

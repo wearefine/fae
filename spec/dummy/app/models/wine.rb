@@ -1,5 +1,5 @@
 class Wine < ActiveRecord::Base
-  include Fae::Concerns::Models::Base
+  include Fae::BaseModelConcern
 
   acts_as_list add_new_at: :top
 
@@ -7,12 +7,10 @@ class Wine < ActiveRecord::Base
   has_many :winemakers
 
   has_many :oregon_winemakers, -> { where(region_type: 1) },
-    class_name: 'Winemaker',
-    source: :winemakers
+    class_name: 'Winemaker'
 
   has_many :california_winemakers, -> { where(region_type: 2) },
-    class_name: 'Winemaker',
-    source: :winemakers
+    class_name: 'Winemaker'
 
   validates :name_en, :name_zh, :name_ja, presence: true
 

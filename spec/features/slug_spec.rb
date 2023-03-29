@@ -27,7 +27,7 @@ feature 'slug' do
   context "when there's a selector slugger" do
     scenario 'should slug all sluggers', js: true do
       ## TODO: update Judge version
-      # varietal = FactoryGirl.create(:varietal, name: "Monkey")
+      # varietal = FactoryBot.create(:varietal, name: "Monkey")
       # admin_login
       # visit new_admin_release_path
 
@@ -42,7 +42,7 @@ feature 'slug' do
   # http://i.imgur.com/x0ml8.png
   # context "when there's a nested slugger" do
   #   scenario 'should allow adding slugs to nested items', js: true do
-  #     release = FactoryGirl.create(:release, name: 'something else', slug: 'release-name-slug')
+  #     release = FactoryBot.create(:release, name: 'something else', slug: 'release-name-slug')
 
   #     admin_login
   #     visit edit_admin_release_path(release)

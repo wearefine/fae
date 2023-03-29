@@ -42,8 +42,8 @@ feature 'Sign In' do
   end
 
   before :each do
-    role = FactoryGirl.create(:fae_role, name: 'admin')
-    @user = FactoryGirl.create(:fae_user,
+    role = FactoryBot.create(:fae_role, name: 'admin')
+    @user = FactoryBot.create(:fae_user,
       email: 'test@test.com',
       password: 'passord1',
       password_confirmation: 'passord1',

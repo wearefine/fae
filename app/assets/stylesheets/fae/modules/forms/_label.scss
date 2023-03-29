@@ -6,7 +6,7 @@ label {
   color: $c-text-heavy;
 
   abbr {
-    color: $c-custom-highlight;
+    color: var(--highlight-color);
   }
 
   h6 {
