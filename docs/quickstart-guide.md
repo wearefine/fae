@@ -1,11 +1,11 @@
 # Quickstart Guide
 
-This installation guide is for a Rails 5.2 application. We are currently working on support for Rails 5.1.
+This installation guide is for a Rails 7.0 application.
 
 If you are starting from scratch, install Rails via:
 
 ```bash
-gem install rails -v '~> 5.2.0'
+gem install rails -v '~> 7.0.0'
 ```
 
 ## Installation
