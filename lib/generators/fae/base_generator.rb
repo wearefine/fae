@@ -165,6 +165,13 @@ RUBY
       inject_into_file 'app/models/concerns/fae/navigation_concern.rb', line, before: '# scaffold inject marker'
     end
 
+    def inject_static_page_gql_query
+      return unless uses_graphql
+      inject_into_file 'app/graphql/types/query_type.rb', after: "class QueryType < Types::BaseObject\n" do
+        "    field :#{plural_file_name}, [Types::#{file_name.classify}Type], null: true\n"
+      end
+    end
+
     def graphql_object(arg)
       if is_association(arg)
         assoc_name = arg.name.gsub(/_id$/, '')
