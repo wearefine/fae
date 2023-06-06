@@ -23,18 +23,18 @@
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
     db:
-      # image: postgres
-      # volumes:
-      #   - ./tmp/db:/var/lib/postgresql/data
-      # environment:
-      #   POSTGRES_PASSWORD: password
-      # ports:
-      #   - "5432:5432"
-      image: mariadb
-      environment:
-        - MYSQL_ROOT_PASSWORD=
-        - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
-      ports:
-        - '3307:3306'
+      image: postgres
       volumes:
-        - /private/app/dbs:/var/lib/mysql
+        - ./tmp/db:/var/lib/postgresql/data
+      environment:
+        POSTGRES_PASSWORD: password
+      ports:
+        - "5432:5432"
+      # image: mariadb
+      # environment:
+      #   - MYSQL_ROOT_PASSWORD=
+      #   - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
+      # ports:
+      #   - '3307:3306'
+      # volumes:
+      #   - /private/app/dbs:/var/lib/mysql

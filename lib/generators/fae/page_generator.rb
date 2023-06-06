@@ -20,6 +20,7 @@ module Fae
       generate_static_page_model
       generate_graphql_type
       generate_static_page_view
+      inject_static_page_gql_query
     end
 
     private

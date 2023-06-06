@@ -41,6 +41,7 @@ module Fae
             @@attribute_names << arg.name
           end
           @@has_position = true if arg.name === 'position'
+          @@needs_livable = true if arg.name == 'on_prod'
 
           @@graphql_attributes << graphql_object(arg)
         end
@@ -165,13 +166,6 @@ RUBY
       inject_into_file 'app/models/concerns/fae/navigation_concern.rb', line, before: '# scaffold inject marker'
     end
 
-    def inject_static_page_gql_query
-      return unless uses_graphql
-      inject_into_file 'app/graphql/types/query_type.rb', after: "class QueryType < Types::BaseObject\n" do
-        "    field :#{plural_file_name}, [Types::#{file_name.classify}Type], null: true\n"
-      end
-    end
-
     def graphql_object(arg)
       if is_association(arg)
         assoc_name = arg.name.gsub(/_id$/, '')
@@ -223,6 +217,39 @@ RUBY
 
     def polymorphic_name
       "#{file_name.underscore}able"
+    end
+
+    ####################################################################
+    # FINE specific methods
+    ####################################################################
+
+    def inject_static_page_gql_query
+      # return unless uses_graphql
+      inject_into_file 'app/graphql/types/query_type.rb', after: "class QueryType < Types::BaseObject\n" do
+        <<-RUBY
+
+    field :#{file_name}_page, Types::#{file_name.classify}PageType, null: true do
+      description "Returns the #{file_name.classify} Page instance"
+    end
+
+    def #{file_name}_page
+      #{file_name.classify}Page.instance
+    end
+RUBY
+      end
+    end
+
+    # This assumes your app has the Livable concern in it.
+    # Which if you've started from our BE template, it should.
+    def inject_livable
+      if @@needs_livable
+        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern" do <<-RUBY
+
+  include Livable\n
+RUBY
+        end
+
+      end
     end
 
   end
