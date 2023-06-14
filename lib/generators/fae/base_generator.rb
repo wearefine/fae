@@ -15,6 +15,7 @@ module Fae
     @@graphql_attributes = []
     @@has_position = false
     @@display_field = ''
+    @@needs_livable = false
 
     def check_template_support
       supported_templates = ['slim']
