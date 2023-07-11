@@ -9,7 +9,7 @@ module Fae
       @site               = Fae.netlify[:site]
       @site_id            = Fae.netlify[:site_id]
       @endpoint_base      = Fae.netlify[:api_base]
-      @logger             = Logger.new(Rails.root.join('log', 'netlify_api.log'))
+      @logger             = Logger.new(ENV['RENDER'] ? STDOUT : Rails.root.join('log', 'netlify_api.log'))
     end
 
     def get_deploys
