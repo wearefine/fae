@@ -2,6 +2,9 @@ Fae::Engine.routes.draw do
 
   mount Judge::Engine => '/judge'
 
+  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "admin/api"
+  post "admin/api", to: "graphql#execute"
+
   root 'pages#home'
 
   devise_for :users, class_name: "Fae::User", module: :devise, skip: [:sessions]

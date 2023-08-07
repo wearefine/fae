@@ -15,6 +15,9 @@ module Fae
     require 'kaminari'
     require 'fae/version'
     require "sprockets/railtie"
+    require 'graphql'
+    require 'graphiql/rails'
+    require 'settingslogic'
 
     config.eager_load_paths += %W(#{config.root}/app)
 

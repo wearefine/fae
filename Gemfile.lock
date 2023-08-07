@@ -23,6 +23,8 @@ PATH
       browser (~> 2.5.3)
       carrierwave
       devise
+      graphiql-rails
+      graphql
       jquery-rails (~> 4.3.1)
       jquery-ui-rails (~> 6.0.1)
       judge (~> 3.1.0)
@@ -33,6 +35,7 @@ PATH
       remotipart (~> 1.4.0)
       sass (>= 3.4.0)
       sass-rails (>= 5.0.7)
+      settingslogic
       simple_form (<= 5.1)
       slim
       uglifier
@@ -208,6 +211,10 @@ GEM
     formatador (1.1.0)
     globalid (1.0.0)
       activesupport (>= 5.0)
+    graphiql-rails (1.9.0)
+      railties
+      sprockets-rails
+    graphql (2.0.24)
     guard (2.18.0)
       formatador (>= 0.2.4)
       listen (>= 2.7, < 4.0)
@@ -405,6 +412,7 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    settingslogic (2.0.9)
     shellany (0.0.1)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)

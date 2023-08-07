@@ -38,6 +38,7 @@ module Fae
           item('About Us', path: fae.edit_content_block_path('about_us')),
           item('About Us', path: fae.edit_content_block_path('about_us'))
         ]),
+        item('Gidgits', path: admin_gidgits_path),
         # scaffold inject marker
       ]
     end
