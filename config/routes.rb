@@ -2,8 +2,11 @@ Fae::Engine.routes.draw do
 
   mount Judge::Engine => '/judge'
 
-  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "admin/api"
-  post "admin/api", to: "graphql#execute"
+  # This ends up putting the graphiql at /fae-mount-point/graphiql
+  # Override this in your app route.rb if you want to change it to say, /graphiql
+  # Reference the dummy app route.rb for an example
+  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "api"
+  post "api", to: "graphql#execute"
 
   root 'pages#home'
 
