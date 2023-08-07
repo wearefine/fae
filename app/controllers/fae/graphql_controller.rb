@@ -18,8 +18,6 @@ module Fae
     http_basic_authenticate_with name: "fine", password: "fine", if: :should_set_env_flag_and_authenticate?
 
     def execute
-      Rails.logger.info '---------------------'
-      Rails.logger.info Settings.foo
       variables = prepare_variables(params[:variables])
       query = params[:query]
       operation_name = params[:operationName]

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api"
-  # post "/api", to: "graphql#execute"
+  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api"
+  post "/api", to: "fae/graphql#execute"
 
   root 'pages#home'
 
