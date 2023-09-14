@@ -15,6 +15,7 @@
     = fae_input f, :stage_url, label: t('fae.options.stage_url'), helper_text: t('fae.options.url_helper')
     = fae_image_form f, :logo, helper_text: t('fae.options.logo_helper')
     = fae_image_form f, :favicon
+    = fae_input f, :translate_language, label: t('fae.options.translate_language')
 
 section.content#deploy_hooks
   == render "fae/deploy_hooks/table"

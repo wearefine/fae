@@ -30,6 +30,7 @@ end
 
 group :test do
   gem 'webrick'
+  gem 'factory_girl', '~> 4.9'
   gem 'factory_bot_rails', '~> 4.8.2'
   # https://github.com/thoughtbot/capybara-webkit/issues/1065
   gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
@@ -52,3 +53,5 @@ gem "puma", "~> 5.0"
 
 gem "fog-aws"
 gem 'ddtrace', require: 'ddtrace/auto_instrument'
+
+# gem 'translator-text'

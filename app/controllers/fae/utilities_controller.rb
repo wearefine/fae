@@ -41,6 +41,15 @@ module Fae
       render partial: 'global_search_results', locals: search_locals
     end
 
+    def translate_text
+      en_text = params['translation_text']['en_text']
+      language = params['translation_text']['language']
+
+      resp = translate_request(language, en_text)
+
+      render json: [translated_text: resp.first['translations'].first['text']]
+    end
+
     private
 
     def can_toggle(klass, attribute)
@@ -59,6 +68,32 @@ module Fae
       return false unless klass.columns_hash[attribute].type == :boolean
 
       true
+    end
+
+    def translate_request(language, en_text)
+      subscription_key = ENV["TRANSLATOR_TEXT_SUBSCRIPTION_KEY"]
+      endpoint = ENV["TRANSLATOR_TEXT_ENDPOINT"]      
+      path = '/translate?api-version=3.0'
+      
+      language_params = "&to=#{language}"
+      
+      uri = URI (endpoint + path + language_params)
+      
+      content = '[{"Text" : "' + en_text + '"}]'
+
+      request = Net::HTTP::Post.new(uri)
+      request['Content-type'] = 'application/json'
+      request['Content-length'] = content.length
+      request['Ocp-Apim-Subscription-Key'] = subscription_key
+      request['Ocp-Apim-Subscription-Region'] = 'eastus2'
+      request['X-ClientTraceId'] = SecureRandom.uuid
+      request.body = content
+      
+      response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+          http.request (request)
+      end
+
+      JSON.parse(response.body.force_encoding("utf-8"))
     end
 
     def records_by_display_name(query)

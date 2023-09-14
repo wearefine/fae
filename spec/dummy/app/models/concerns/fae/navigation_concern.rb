@@ -27,7 +27,7 @@ module Fae
         item('Pages', path: fae.pages_path, subitems: [
           item('Home', path: fae.edit_content_block_path('home')),
           item('Contact Us', path: fae.edit_content_block_path('contact_us')),
-          item('About Us', path: fae.edit_content_block_path('about_us')),
+          item('Global', path: fae.edit_content_block_path('global_content')),
           item('About Us', path: fae.edit_content_block_path('about_us')),
           item('About Us', path: fae.edit_content_block_path('about_us')),
           item('About Us', path: fae.edit_content_block_path('about_us')),

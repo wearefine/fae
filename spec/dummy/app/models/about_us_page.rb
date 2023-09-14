@@ -6,10 +6,10 @@ class AboutUsPage < Fae::StaticPage
   def self.fae_fields
     {
       header: { type: Fae::TextField, validates: { presence: true } },
-      introduction: { type: Fae::TextArea },
+      introduction: { type: Fae::TextArea, languages: Fae.languages.keys },
       body: {
-        type: Fae::TextArea,
-        languages: [:en, :zh],
+        type: Fae::TextField,
+        languages: Fae.languages.keys,
         validates: {
           length: {
             maximum: 150

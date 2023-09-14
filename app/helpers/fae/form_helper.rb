@@ -3,16 +3,18 @@ module Fae
 
     def fae_input(f, attribute, options={})
       custom_options attribute, options
+      translate_button f, attribute, options
       language_support f, attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
       set_prompt f, attribute, options
-
+      
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
       add_input_class(options, 'js-html-editor') if options[:html].present?
-
+      # add_input_class(options, 'js-translate-button') if options[:translate].present? #maybe add button here
+      
       set_form_manager_container_attr(f, options, attribute) unless options[:show_form_manager] == false
-
+      
       set_maxlength(f, attribute, options)
 
       f.input attribute, options
@@ -132,11 +134,19 @@ module Fae
         label += content_tag :h6, class: 'helper_text' do
           concat(content_tag(:span, options[:helper_text], class: 'helper_text_text')) if options[:helper_text].present?
           concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown_supported].present?
+          # concat(content_tag(:span, 'Translate', class: "button js-translate-button", style: "position: absolute; margin-left: 10px;"))
         end
       end
       options[:label] = label.html_safe if label.present?
 
       options[:hint] = hint.html_safe if hint.present?
+    end
+
+    def translate_button(f, attribute, options)
+      if (Fae::Option.instance.translate_language && !attribute.to_s.include?('_en') && Fae.languages.keys.any? { |lang| attribute.to_s.include?(lang.to_s) })
+        translate = content_tag(:span, 'Translate', class: "button js-translate-button", style: "position: absolute; margin-left: 10px;")
+      end
+      options[:translate] = translate.html_safe if translate.present?
     end
 
     def label_translation(attribute)

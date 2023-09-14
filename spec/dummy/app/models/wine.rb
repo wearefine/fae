@@ -12,7 +12,7 @@ class Wine < ActiveRecord::Base
   has_many :california_winemakers, -> { where(region_type: 2) },
     class_name: 'Winemaker'
 
-  validates :name_en, :name_zh, :name_ja, presence: true
+  validates :name_en, presence: true
 
   fae_translate :name
 

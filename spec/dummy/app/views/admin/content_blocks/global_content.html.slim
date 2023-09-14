@@ -1,0 +1,27 @@
+ruby:
+  form_options = {
+    url: fae.update_content_block_path(slug: @item.slug),
+    method: :put,
+    html: {
+      data: {
+        form_manager_model: @item.fae_form_manager_model_name,
+        form_manager_model_id: @item.fae_form_manager_model_id,
+        form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+      }
+    }
+  }
+= simple_form_for @item, form_options do |f|
+  == render 'fae/shared/form_header', header: @item, languages: true
+
+  main.content
+    = fae_input f, :title
+    = fae_content_form f, :company_motto
+
+    = fae_content_form f, :website_name
+    = fae_content_form f, :default_seo_title
+    = fae_content_form f, :social_media_title
+    = fae_content_form f, :social_media_description
+    = fae_content_form f, :analytics_tag_manager
+    = fae_content_form f, :copyright_text
+    = fae_content_form f, :twitter_profile_link
+    = fae_content_form f, :linkedin_profile_link
