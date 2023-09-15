@@ -84,6 +84,8 @@ Fae.form.text = {
         hideIcons: ['image', 'side-by-side', 'fullscreen']
       });
 
+      $this.data({editor: editor});   
+      
       inlineAttachment.editors.codemirror4.attach(editor.codemirror, inlineAttachmentConfig);
 
       // Disable tabbing within editor
@@ -156,21 +158,27 @@ Fae.form.text = {
     initTranslation: function () {
       // var $translate_button = $('.js-translate-button');
       $('.js-translate-button').click(function(e) {
-        console.log('Button Clicked')
+        var $this = $(this);
         var translate_field;
+
+        // grab the field the button belongs to
         if (this.closest(".text")) {
           translate_field = this.closest(".text");
         } else  {
           translate_field = this.closest(".string");
         }
 
+        // grab language and model name from field
         var translate_language = translate_field.attributes['data-language'].value;
         var translate_model = translate_field.className.split(' ').pop();
 
+        // fix model name for static pages
         if (translate_model.lastIndexOf('content')) {
           var n = translate_model.lastIndexOf('content');
           translate_model = translate_model.slice(0, n) + translate_model.slice(n).replace('content', 'attributes_content');
         }
+
+        // set english model name and use that to get text from english field
         var english_model = translate_model.replace('_' + translate_language, '_en')
         var english_text = $('#' + english_model)[0].value 
 
@@ -179,32 +187,22 @@ Fae.form.text = {
           translate_language = `${translate_language.slice(0,2)}-${translate_language.slice(2)}`
         }
 
-        // console.log('Lang: ', translate_language)
-        // console.log('Eng Text: ', english_text)
-        console.log('Translate Model: ', translate_model)
-        console.log('En Model: ', english_model)
-
         $.ajax({
           url: Fae.path + '/translate_text',
           type: "post",
           data: { translation_text: { language: translate_language, en_text: english_text } },
           success: function(data) {
-            // console.log('data: ', data)
-            // console.log($('#' + translate_model))
-            // $('#' + translate_model).val(data[0].translated_text);
-            // const textArea = document.getElementById(translate_model)
-            // console.log('textarea: ', textArea)
-            // const editor = CodeMirror.fromTextArea(textArea);
-            // editor.getDoc().setValue(data[0].translated_text)
-            console.log('*')
-            // document.querySelector('.CodeMirror').CodeMirror.setValue(data[0].translated_text);
-            // var currentValue = myCodeMirrorObject.cm.getValue();
-            // var str = 'some new value';
-            myCodeMirrorObject.cm.setValue(data[0].translated_text);
-
+            // set translation text into tranlate model
+            if ($this.siblings('.CodeMirror').length) {
+              const textArea = document.getElementById(translate_model)
+              $(textArea).data('editor').value(data[0].translated_text)
+            } else {
+              $('#' + translate_model).val(data[0].translated_text);
+            }
           },
           error: function(data) {
-            console.log('4')
+            // Not sure what to put here
+            console.log(data)
           }
         })
       });
