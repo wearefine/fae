@@ -11,7 +11,6 @@ module Fae
       
       add_input_class(options, 'js-markdown-editor') if options[:markdown].present?
       add_input_class(options, 'js-html-editor') if options[:html].present?
-      # add_input_class(options, 'js-translate-button') if options[:translate].present? #maybe add button here
       
       set_form_manager_container_attr(f, options, attribute) unless options[:show_form_manager] == false
       

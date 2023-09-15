@@ -22,7 +22,7 @@
         - DEV_MYSQL_HOST=db
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
-        - TRANSLATOR_TEXT_SUBSCRIPTION_KEY=7b5272846f004faaa6d67d08ac4d2eed
+        - TRANSLATOR_TEXT_SUBSCRIPTION_KEY=test
         - TRANSLATOR_TEXT_ENDPOINT=https://api.cognitive.microsofttranslator.com
     db:
       # image: postgres

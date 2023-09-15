@@ -57,9 +57,9 @@ Fae.form.text = {
     $('.js-markdown-editor:not(.mde-enabled)').each(function () {
       var $this = $(this);
 
+      // set up translate button for markdown fields
       var translate_button = $this.siblings( '.js-translate-button' )
       if (translate_button.length) {
-        var label = $this.siblings( 'label' )
         var label_height = $this.siblings( 'label' ).height()
         $this.siblings( '.js-translate-button' ).closest(".input").css({
           'display': 'block',
@@ -84,6 +84,7 @@ Fae.form.text = {
         hideIcons: ['image', 'side-by-side', 'fullscreen']
       });
 
+      // added so we can access editor in translate text init
       $this.data({editor: editor});   
       
       inlineAttachment.editors.codemirror4.attach(editor.codemirror, inlineAttachmentConfig);
@@ -194,15 +195,13 @@ Fae.form.text = {
           success: function(data) {
             // set translation text into tranlate model
             if ($this.siblings('.CodeMirror').length) {
+              // this is for markdown fields
               const textArea = document.getElementById(translate_model)
               $(textArea).data('editor').value(data[0].translated_text)
             } else {
+              // this is for non markdown fields
               $('#' + translate_model).val(data[0].translated_text);
             }
-          },
-          error: function(data) {
-            // Not sure what to put here
-            console.log(data)
           }
         })
       });
