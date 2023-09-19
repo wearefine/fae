@@ -13,6 +13,9 @@
     // need for testing
     = fae_association f, :releases
 
+    = fae_image_form f, :image_en
+    = fae_image_form f, :image_frca
+
 - if params[:action] == 'edit'
   section.content#oregon_winemakers_section
     = render 'fae/shared/nested_table',

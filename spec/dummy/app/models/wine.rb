@@ -16,6 +16,9 @@ class Wine < ActiveRecord::Base
 
   fae_translate :name
 
+  has_fae_image :image_en
+  has_fae_image :image_frca
+
   def fae_display_field
     name_en
   end

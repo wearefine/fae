@@ -87,7 +87,6 @@ module Fae
       def fae_image_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
-            binding.pry
             if self.has_attribute?("#{attribute}_#{I18n.locale}")
               self.send "#{attribute}_#{I18n.locale}"
             else
@@ -96,7 +95,6 @@ module Fae
           end
 
           define_singleton_method "find_by_#{attribute}" do |val|
-            binding.pry
             if self.has_attribute?("#{attribute}_#{I18n.locale}")
               self.send("find_by_#{attribute}_#{I18n.locale}", val)
             else
