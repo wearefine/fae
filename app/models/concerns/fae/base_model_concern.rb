@@ -87,7 +87,7 @@ module Fae
       def fae_image_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
-            if self.has_attribute?("#{attribute}_#{I18n.locale}")
+            if self.respond_to?("#{attribute}_#{I18n.locale}") && asset_and_url_present?(self.send("#{attribute}_#{I18n.locale}"))
               self.send "#{attribute}_#{I18n.locale}"
             else
               self.send "#{attribute}_en"
@@ -131,6 +131,10 @@ module Fae
     end
 
     private
+
+    def asset_and_url_present?(obj)
+      obj.asset.present? && obj.asset.url.present?
+    end
 
     def fae_bust_navigation_caches
       Fae::Role.all.each do |role|

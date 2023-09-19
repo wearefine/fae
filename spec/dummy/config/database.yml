@@ -1,22 +1,21 @@
 base: &base
-  adapter: mysql2
-  encoding: utf8
-  collation: utf8_general_ci
-  database: fae_dummy
-  username: root
-  password:
-  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV.fetch('PGHOST') { 'db' } %>
+  username: postgres
+  password: password
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 20 } %>
 
 development:
   <<: *base
-  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+  database: fae_dummy
 
 test:
   <<: *base
-  database: <%= ENV['MYSQL_DATABASE'] || 'fae_dummy_test' %>
-  username: <%= ENV['MYSQL_USER'] || 'root' %>
-  password: <%= ENV['MYSQL_PASSWORD'] %>
-  host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
+  database: 'fae_dummy_test'
+  username: postgres
+  password: password
+  host: <%= ENV.fetch('PGHOST') { 'db' } %>
 
 
 remote_development:

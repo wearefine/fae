@@ -15,6 +15,7 @@ class Wine < ActiveRecord::Base
   validates :name_en, presence: true
 
   fae_translate :name
+  fae_image_translate :image
 
   has_fae_image :image_en
   has_fae_image :image_frca
