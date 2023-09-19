@@ -125,6 +125,8 @@ en:
       logo_helper: 'Used on login page, 300x300px .jpg'
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
+    markdown:
+      translate_helper: 'If machine translation is required, please click "Translate" button before applying any text formatting in markdown.'
     application:
       activity_log_heading: 'Activity Log'
       user_absent: 'user no longer exists'

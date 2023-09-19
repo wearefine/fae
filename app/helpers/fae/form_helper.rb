@@ -129,11 +129,12 @@ module Fae
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || label_translation(attribute) || attribute_name
+
       if options[:markdown_supported].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
           concat(content_tag(:span, options[:helper_text], class: 'helper_text_text')) if options[:helper_text].present?
           concat(content_tag(:span, 'Markdown Supported', class: 'markdown-support')) if options[:markdown_supported].present?
-          # concat(content_tag(:span, 'Translate', class: "button js-translate-button", style: "position: absolute; margin-left: 10px;"))
+
         end
       end
       options[:label] = label.html_safe if label.present?

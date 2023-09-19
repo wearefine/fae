@@ -69,6 +69,10 @@ ruby:
         options[:wrapper_html] = wrapper_html
         options[:wrapper_html].merge!({class: "#{form_manager_id}_alt_container"})
         options[:show_form_manager] = false
+        if (language.present? && Fae::Option.instance.translate_language && !form_manager_id.to_s.include?('_en'))
+          translate = content_tag(:span, 'Translate', class: "button js-translate-button", style: "position: absolute; margin-left: 10px;")
+          options[:translate] = translate.html_safe if translate.present?
+        end
 
       = fae_input i, :alt, options
 
