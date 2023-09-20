@@ -71,14 +71,14 @@ module Fae
     end
 
     def translate_request(language, en_text)
-      subscription_key = ENV["TRANSLATOR_TEXT_SUBSCRIPTION_KEY"]
-      endpoint = ENV["TRANSLATOR_TEXT_ENDPOINT"]      
+      subscription_key = ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY']
+      endpoint = ENV['TRANSLATOR_TEXT_ENDPOINT']
       path = '/translate?api-version=3.0'
-      
+
       language_params = "&to=#{language}"
-      
+
       uri = URI (endpoint + path + language_params)
-      
+
       content = '[{"Text" : "' + en_text + '"}]'
 
       request = Net::HTTP::Post.new(uri)
@@ -88,12 +88,12 @@ module Fae
       request['Ocp-Apim-Subscription-Region'] = 'eastus2'
       request['X-ClientTraceId'] = SecureRandom.uuid
       request.body = content
-      
+
       response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-          http.request (request)
+        http.request request
       end
 
-      JSON.parse(response.body.force_encoding("utf-8"))
+      JSON.parse(response.body.force_encoding('utf-8'))
     end
 
     def records_by_display_name(query)

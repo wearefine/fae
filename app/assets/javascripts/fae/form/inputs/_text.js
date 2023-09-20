@@ -192,13 +192,13 @@ Fae.form.text = {
         }
 
         // fix model name for static pages
-        if (translate_model.lastIndexOf('content')) {
-          var n = translate_model.lastIndexOf('content');
+        var n = translate_model.lastIndexOf('content');
+        if (n) {
           translate_model = translate_model.slice(0, n) + translate_model.slice(n).replace('content', 'attributes_content');
         }
         // fix model name for image alt text
-        if (translate_model.lastIndexOf('_alt')) {
-          var n = translate_model.lastIndexOf('_alt');
+        var n = translate_model.lastIndexOf('_alt');
+        if (n) {
           translate_model = translate_model.slice(0, n) + translate_model.slice(n).replace('_alt', '_attributes_alt');
         }
 
