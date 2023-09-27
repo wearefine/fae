@@ -153,10 +153,10 @@ module Fae
       try_translation attribute, 'fae.form.attribute'
     end
 
-    def try_translation(item, translation_path)
-      translation = t("#{translation_path}.#{item}")
-      translation =~ /translation_missing/ ? nil : translation
-    end
+    # def try_translation(item, translation_path)
+    #   translation = t("#{translation_path}.#{item}")
+    #   translation =~ /translation_missing/ ? nil : translation
+    # end
 
     def is_attribute_or_association?(f, attribute)
       f.object.has_attribute?(attribute) || is_association?(f, attribute)
