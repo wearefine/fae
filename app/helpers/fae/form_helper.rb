@@ -142,10 +142,9 @@ module Fae
     end
 
     def translate_button(f, attribute, options)
-      binding.pry
       if Fae::Option.instance.translate_language && !attribute.to_s.include?('_en') && Fae.languages.keys.any? { |lang| attribute.to_s.include?(lang.to_s) }
-        translate = content_tag(:span, 'Translate', class: 'button js-translate-button', style: 'position: absolute; margin-left: 10px;')
       end
+      translate = content_tag(:span, 'Translate', class: 'button js-translate-button', style: 'position: absolute; margin-left: 10px;')
       options[:translate] = translate.html_safe if translate.present?
     end
 
@@ -153,10 +152,10 @@ module Fae
       try_translation attribute, 'fae.form.attribute'
     end
 
-    # def try_translation(item, translation_path)
-    #   translation = t("#{translation_path}.#{item}")
-    #   translation =~ /translation_missing/ ? nil : translation
-    # end
+    def try_translation(item, translation_path)
+      translation = t("#{translation_path}.#{item}")
+      translation =~ /translation_missing/ ? nil : translation
+    end
 
     def is_attribute_or_association?(f, attribute)
       f.object.has_attribute?(attribute) || is_association?(f, attribute)

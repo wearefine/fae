@@ -1,16 +1,10 @@
-module SimpleForm
-  module Components
-    module Translation
-      def translation
-        if options[:translate].present?
-          translate = options[:translate]
-          # tooltip_content = tooltip.is_a?(String) ? tooltip : translate(:tooltips)
-          # tooltip_content.html_safe if tooltip_content
-          template.content_tag(:span, :class => 'button', :label => 'Translate')
-        end
-      end
+module Translation
+  def translation
+    if options[:translate].present?
+      options[:translate].html_safe
     end
   end
 end
 
-SimpleForm::Inputs::Base.send(:include, SimpleForm::Components::Translation)
+SimpleForm.include_component(Translation)
+# SimpleForm::Inputs::Base.send(:include, SimpleForm::Components::Translation)
