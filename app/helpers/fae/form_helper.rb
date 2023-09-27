@@ -153,6 +153,7 @@ module Fae
     end
 
     def try_translation(item, translation_path)
+      binding.pry
       translation = t("#{translation_path}.#{item}")
       translation =~ /translation_missing/ ? nil : translation
     end
