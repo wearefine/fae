@@ -142,6 +142,7 @@ module Fae
     end
 
     def translate_button(f, attribute, options)
+      binding.pry
       if Fae::Option.instance.translate_language && !attribute.to_s.include?('_en') && Fae.languages.keys.any? { |lang| attribute.to_s.include?(lang.to_s) }
         translate = content_tag(:span, 'Translate', class: 'button js-translate-button', style: 'position: absolute; margin-left: 10px;')
       end
@@ -153,7 +154,6 @@ module Fae
     end
 
     def try_translation(item, translation_path)
-      binding.pry
       translation = t("#{translation_path}.#{item}")
       translation =~ /translation_missing/ ? nil : translation
     end
