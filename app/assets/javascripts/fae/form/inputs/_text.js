@@ -57,23 +57,9 @@ Fae.form.text = {
     $('.js-markdown-editor:not(.mde-enabled)').each(function () {
       var $this = $(this);
 
-      // set up translate button for markdown fields and add helper text
+      // set up translate button for markdown fields
       var translate_button = $this.siblings( '.js-translate-button' )
       if (translate_button.length) {
-        var label = $this.siblings('.has_no_helper_text')
-        if (label.length) {
-          label.removeClass('has_no_helper_text')
-          var helper_class = jQuery('<h6>', {
-            class: 'helper_text',
-          })
-          jQuery('<span>', {
-            class: 'helper_text_text',
-            text: 'If machine translation is required, please click “Translate” button before applying any text formatting in markdown.'
-          }).appendTo(helper_class);
-
-          helper_class.appendTo(label)
-        }
-
         var label_height = $this.siblings( 'label' ).height()
         $this.siblings( '.js-translate-button' ).closest(".input").css({
           'display': 'block',
