@@ -118,6 +118,7 @@ module Fae
     def custom_options(attribute, options)
       add_input_class(options, options[:input_class]) if options[:input_class].present?
       add_input_class(options, 'slug') if attribute == :slug
+      add_input_class(options, 'slug') if attribute == :slug_en
       options.update(wrapper_class: "#{options[:wrapper_class]} input") if options[:wrapper_class].present?
       options.update(validate: true) unless options[:validate].present? && options[:validate] == false
     end
