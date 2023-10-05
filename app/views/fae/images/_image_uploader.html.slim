@@ -19,13 +19,21 @@ ruby:
 
 - if languages.present?
   - languages.each do |lang|
-    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", alt_label: "#{alt_label} (#{lang.to_s})", caption_label: "#{caption_label} (#{lang.to_s})", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: attached_as, language: lang, show_form_manager: show_form_manager
+    = render 'fae/images/image_uploader', f: f, item: item, image_name: "#{image_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", alt_label: "#{alt_label} (#{lang.to_s})", caption_label: "#{caption_label} (#{lang.to_s})", helper_text: helper_text, alt_helper_text: alt_helper_text, caption_helper_text: caption_helper_text, show_caption: show_caption, required: required, attached_as: "#{attached_as}_#{lang.to_s}", language: lang, show_form_manager: show_form_manager
 
 - else
   ruby:
+    if Fae.languages.keys.any? { |lang| image_name.to_s.end_with?(lang.to_s) } && !language.present?
+      label = label.split
+      lang_for_label = "(#{label.pop()})"
+      label = label.push(lang_for_label).join(" ")
+      wrapper_html = { data: { language: image_name.to_s.split("_").last.to_sym } }
+    elsif language.present?
+      wrapper_html = { data: { language: language } }
+    else
+      wrapper_html = {}
+    end
     form_manager_id = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
-    form_manager_id += "_#{language}" if language.present?
-  - wrapper_html = language.present? ? { data: { language: language } } : {}
   = f.simple_fields_for image_name, defaults: { wrapper_html: wrapper_html } do |i|
     .input.field.image*wrapper_html class="#{image_name}" data-form-manager-id=form_manager_id
       label class="#{'required' if required}"
@@ -70,7 +78,7 @@ ruby:
         options[:wrapper_html].merge!({class: "#{form_manager_id}_alt_container"})
         options[:show_form_manager] = false
 
-        if (Fae::Option.instance.translate_language &&!form_manager_id.to_s.end_with?('_en') && Fae.languages.keys.any? { |field| form_manager_id.to_s.include?(field.to_s) })
+        if (Fae::Option.instance.translate_language && !form_manager_id.to_s.end_with?('_en') && Fae.languages.keys.any? { |field| form_manager_id.to_s.include?(field.to_s) })
           translate = content_tag(:span, 'Translate', class: "button js-translate-button", style: "position: absolute; margin-left: 10px;")
           options[:translate] = translate.html_safe if translate.present?
         end
