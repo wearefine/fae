@@ -200,6 +200,7 @@ Fae.form.text = {
         $.ajax({
           url: Fae.path + '/translate_text',
           type: "post",
+          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
           data: { translation_text: { language: translate_language, en_text: english_text } },
           success: function(data) {
             // set translation text into tranlate model
