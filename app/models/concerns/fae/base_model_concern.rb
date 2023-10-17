@@ -75,7 +75,7 @@ module Fae
       def fae_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
-            if self.has_attribute?("#{attribute}_#{I18n.locale}") && self.try("#{attribute}_#{I18n.locale}").present?
+            if self.try("#{attribute}_#{I18n.locale}").present?
               self.send "#{attribute}_#{I18n.locale}"
             else
               self.send "#{attribute}_en"
