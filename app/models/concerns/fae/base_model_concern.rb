@@ -75,11 +75,19 @@ module Fae
       def fae_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
-            self.send "#{attribute}_#{I18n.locale}"
+            if self.has_attribute?("#{attribute}_#{I18n.locale}") && self.try("#{attribute}_#{I18n.locale}").present?
+              self.send "#{attribute}_#{I18n.locale}"
+            else
+              self.send "#{attribute}_en"
+            end
           end
 
           define_singleton_method "find_by_#{attribute}" do |val|
-            self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            if self.has_attribute?("#{attribute}_#{I18n.locale}")
+              self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            else
+              self.send("find_by_#{attribute}_en", val)
+            end
           end
         end
       end
