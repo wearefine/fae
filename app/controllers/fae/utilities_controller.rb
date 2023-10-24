@@ -85,7 +85,7 @@ module Fae
       request['Content-type'] = 'application/json'
       request['Content-length'] = content.length
       request['Ocp-Apim-Subscription-Key'] = subscription_key
-      request['Ocp-Apim-Subscription-Region'] = 'eastus2'
+      request['Ocp-Apim-Subscription-Region'] = 'centralus'
       request['X-ClientTraceId'] = SecureRandom.uuid
       request.body = content
 
