@@ -72,7 +72,8 @@ module Fae
 
     def translate_request(language, en_text)
       subscription_key = ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY']
-      endpoint = ENV['TRANSLATOR_TEXT_ENDPOINT']
+      region = ENV['TRANSLATOR_TEXT_REGION']
+      endpoint = 'https://api.cognitive.microsofttranslator.com'
       path = '/translate?api-version=3.0'
 
       language_params = "&to=#{language}"
@@ -85,7 +86,7 @@ module Fae
       request['Content-type'] = 'application/json'
       request['Content-length'] = content.length
       request['Ocp-Apim-Subscription-Key'] = subscription_key
-      request['Ocp-Apim-Subscription-Region'] = 'centralus'
+      request['Ocp-Apim-Subscription-Region'] = region
       request['X-ClientTraceId'] = SecureRandom.uuid
       request.body = content
 
