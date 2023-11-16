@@ -9,8 +9,8 @@ ruby:
   hint                ||= nil
   options             ||= {}
   input_options       ||= {}
+  translate            = translate == false ? false : true
   show_form_manager   ||= true
-  translate           ||= nil
 
   if has_label
     label_adjusted = required ? '<abbr title="required">*</abbr> ' : ''
