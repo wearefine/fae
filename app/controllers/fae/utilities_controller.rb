@@ -47,7 +47,11 @@ module Fae
 
       resp = translate_request(language, en_text)
 
-      render json: [translated_text: resp.first['translations'].first['text']]
+      if resp['error']
+        render json: [error_text: resp['error']['message']]
+      else
+        render json: [translated_text: resp.first['translations'].first['text']]
+      end
     end
 
     private
