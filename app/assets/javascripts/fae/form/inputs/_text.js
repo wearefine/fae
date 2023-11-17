@@ -203,11 +203,7 @@ Fae.form.text = {
           beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
           data: { translation_text: { language: translate_language, en_text: english_text } },
           success: function(data) {
-            console.log(data[0])
-
             if (data[0].error_text) {
-              console.log("a")
-              console.log(translate_field)
               $(translate_field)
                 .addClass('field_with_errors')
                 .append("<span class='error'>" + data[0].error_text + '</span>');

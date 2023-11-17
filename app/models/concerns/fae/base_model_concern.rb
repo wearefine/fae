@@ -112,6 +112,26 @@ module Fae
         end
       end
 
+      def fae_file_translate(*attributes)
+        attributes.each do |attribute|
+          define_method attribute.to_s do
+            if self.respond_to?("#{attribute}_#{I18n.locale}") && asset_and_url_present?(self.send("#{attribute}_#{I18n.locale}"))
+              self.send "#{attribute}_#{I18n.locale}"
+            else
+              self.send "#{attribute}_en"
+            end
+          end
+
+          define_singleton_method "find_by_#{attribute}" do |val|
+            if self.has_attribute?("#{attribute}_#{I18n.locale}")
+              self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            else
+              self.send("find_by_#{attribute}_en", val)
+            end
+          end
+        end
+      end
+
       def has_fae_image(image_name_symbol)
         has_one image_name_symbol, -> { where(attached_as: image_name_symbol.to_s) },
           as: :imageable,
