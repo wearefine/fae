@@ -161,7 +161,7 @@ Fae.form.text = {
 
         // grab language and model name from field, container logic is for image alt text
         var translateLanguage = translateField.attributes['data-language'].value;
-        var translateModel
+        var translateModel;
         if (translateField.className.includes("container")) {
           translateModel = translateField.className.split(' ').reverse()[1];
         } else {
