@@ -20,10 +20,17 @@ input[type=email] {
 
 .input {
   margin-bottom: 20px;
+  display: block;
+  position: relative;
 
   &.disabled {
     opacity: 0.5;
   }
+
+  // &.markdown-translate {
+  //   display: block;
+  //   position: relative;
+  // }
 }
 
 .addedit-form {
@@ -111,3 +118,16 @@ input[type=email] {
     outline-offset: 1px;
   }
 }
+
+.translate-button {
+  position: absolute;
+  margin-left: 10px;
+}
+
+.translate-markdown-button {
+  top: 10px;
+  position: absolute;
+  right: 0;
+  transform: translateX(calc(100% + 10px));
+}
+

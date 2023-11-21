@@ -58,20 +58,11 @@ Fae.form.text = {
       var $this = $(this);
 
       // set up translate button for markdown fields
-      var translate_button = $this.siblings( '.js-translate-button' )
-      if (translate_button.length) {
-        var label_height = $this.siblings( 'label' ).height()
-        $this.siblings( '.js-translate-button' ).closest(".input").css({
-          'display': 'block',
-          'position': 'relative'
-        });
-        $this.siblings( '.js-translate-button' ).first().css({
-          'top': `10px`,
-          'margin-top': label_height,
-          'position': 'absolute',
-          'margin-left': '10px',
-          'right': 0,
-          'transform': 'translateX(calc(100% + 10px'
+      var $translateButton = $this.siblings( '.js-translate-button' )
+      if ($translateButton.length > 0) {
+        var labelHeight = $this.siblings( 'label' ).height()
+        $this.siblings( '.js-translate-button' ).first().addClass('translate-markdown-button').css({
+          'margin-top': labelHeight,
         });
       }
 
@@ -159,63 +150,62 @@ Fae.form.text = {
       // var $translate_button = $('.js-translate-button');
       $('.js-translate-button').click(function(e) {
         var $this = $(this);
-        var translate_field;
+        var translateField;
 
         // grab the field the button belongs to
-        if (this.closest(".text")) {
-          translate_field = this.closest(".text");
+        if ($this.closest(".text").length > 0) {
+          translateField = this.closest(".text");
         } else  {
-          translate_field = this.closest(".string");
+          translateField = this.closest(".string");
         }
 
         // grab language and model name from field, container logic is for image alt text
-        var translate_language = translate_field.attributes['data-language'].value;
-        var translate_model
-        if (translate_field.className.includes("container")) {
-          translate_model = translate_field.className.split(' ').reverse()[1];
+        var translateLanguage = translateField.attributes['data-language'].value;
+        var translateModel
+        if (translateField.className.includes("container")) {
+          translateModel = translateField.className.split(' ').reverse()[1];
         } else {
-          translate_model = translate_field.className.split(' ').pop();
+          translateModel = translateField.className.split(' ').pop();
         }
 
         // fix model name for static pages
-        var n = translate_model.lastIndexOf('content');
+        var n = translateModel.lastIndexOf('content');
         if (n) {
-          translate_model = translate_model.slice(0, n) + translate_model.slice(n).replace('content', 'attributes_content');
+          translateModel = translateModel.slice(0, n) + translateModel.slice(n).replace('content', 'attributes_content');
         }
         // fix model name for image alt text
-        var n = translate_model.lastIndexOf('_alt');
+        var n = translateModel.lastIndexOf('_alt');
         if (n) {
-          translate_model = translate_model.slice(0, n) + translate_model.slice(n).replace('_alt', '_attributes_alt');
+          translateModel = translateModel.slice(0, n) + translateModel.slice(n).replace('_alt', '_attributes_alt');
         }
 
         // set english model name and use that to get text from english field
-        var english_model = translate_model.replace('_' + translate_language, '_en')
-        var english_text = $('#' + english_model)[0].value 
+        var englishModel = translateModel.replace('_' + translateLanguage, '_en')
+        var englishText = $('#' + englishModel)[0].value 
 
-        // get translate_language in correct format for request
-        if (translate_language.length == 4) {
-          translate_language = `${translate_language.slice(0,2)}-${translate_language.slice(2)}`
+        // get translateLanguage in correct format for request
+        if (translateLanguage.length == 4) {
+          translateLanguage = `${translateLanguage.slice(0,2)}-${translateLanguage.slice(2)}`
         }
 
         $.ajax({
           url: Fae.path + '/translate_text',
           type: "post",
           beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-          data: { translation_text: { language: translate_language, en_text: english_text } },
+          data: { translation_text: { language: translateLanguage, en_text: englishText } },
           success: function(data) {
-            if (data[0].error_text) {
-              $(translate_field)
-                .addClass('field_with_errors')
-                .append("<span class='error'>" + data[0].error_text + '</span>');
-            } else {
-              // set translation text into tranlate model
-              if ($this.siblings('.CodeMirror').length) {
-                // this is for markdown fields
-                const textArea = document.getElementById(translate_model)
+            if (data && data.length > 0) {
+              if (data[0].error_text) {
+                $(translateField)
+                  .addClass('field_with_errors')
+                  .append("<span class='error'>" + data[0].error_text + '</span>');
+              } else if ($this.siblings('.CodeMirror').length > 0) {
+                // set translation text into translate model for markdown fields
+                const textArea = document.getElementById(translateModel)
                 $(textArea).data('editor').value(data[0].translated_text)
               } else {
-                // this is for non markdown fields
-                $('#' + translate_model).val(data[0].translated_text);
+                // set translation text into translate model for non markdown fields
+                $('#' + translateModel).val(data[0].translated_text);
               }
             }
           }

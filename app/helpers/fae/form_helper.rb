@@ -144,7 +144,7 @@ module Fae
 
     def translate_button(f, attribute, options)
       if Fae::Option.instance.translate_language && !attribute.to_s.end_with?('_en') && Fae.languages.keys.any? { |lang| attribute.to_s.include?(lang.to_s) } && options[:translate] != false
-        translate = content_tag(:span, 'Translate', class: 'button js-translate-button', style: 'position: absolute; margin-left: 10px;')
+        translate = content_tag(:span, 'Translate', class: 'button js-translate-button translate-button')
       end
       options[:translate] = translate.html_safe if translate.present?
     end

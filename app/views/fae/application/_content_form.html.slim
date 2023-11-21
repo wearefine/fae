@@ -54,7 +54,7 @@ ruby:
     = f.simple_fields_for "#{attribute}_#{lang}".to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
       - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
       - unless(lang == :en || !Fae::Option.instance.translate_language || translate == false)
-        - translate_button = content_tag(:span, 'Translate', class: "button js-translate-button", style: "position: absolute; margin-left: 10px;")
+        - translate_button = content_tag(:span, 'Translate', class: "button js-translate-button translate-button")
         - options[:translate] = translate_button.html_safe if translate_button.present?
       = i.input :content, options
 

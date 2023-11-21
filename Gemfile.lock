@@ -189,8 +189,6 @@ GEM
     factory_bot_rails (4.8.2)
       factory_bot (~> 4.8.2)
       railties (>= 3.0.0)
-    factory_girl (4.9.0)
-      activesupport (>= 3.0.0)
     ffi (1.15.5)
     fog-aws (3.14.0)
       fog-core (~> 2.1)
