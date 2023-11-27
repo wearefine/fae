@@ -1,6 +1,6 @@
 # Multiple Language Support
 
-Fae support a language nav that makes managing content in multiple languages easy. The language nav will display all available languages. Clicking a specific language will only display fields specific to that language.
+Fae support a language nav that makes managing content in multiple languages easy. The language nav will display all available languages. Clicking English will only display the English fields. Clicking a different language will display the English and chosen language fields specific to that language.
 
 * [Configure](#configure)
 * [Database Column Naming](#database-column-naming)
@@ -17,11 +17,12 @@ To setup the language nav first define all languages Fae will be managing conten
 config.languages = {
   en: 'English',
   zh: 'Chinese',
-  ja: 'Japanese'
+  ja: 'Japanese',
+  frca: 'French Canadian'
 }
 ```
 
-The convention of this hash is important as the keys with have to match the database column suffixes of the specific language fields. The values will be used as the link text in the language nav.
+The convention of this hash is important as the keys with have to match the database column suffixes of the specific language fields. The values will be used as the link text in the language nav. If the language code has a dash "-" in it, remove the dash to make the kay (e.g. fr-ca should be frca).
 
 ## Database Column Naming
 
@@ -31,7 +32,7 @@ As mentioned above, the column names of fields supporting multiple languages wil
 "#{attribute_name}_#{language_abbreviation}`
 ```
 
-E.g. the english version of the title attribute would be `title_en`.
+E.g. the english version of the title attribute would be `title_en` and the french canadian would be 'title_frca'.
 
 Using Fae's generators let's quickly scaffold a model that supports multiple languages (columns without suffixes will be treated normally:
 
@@ -39,16 +40,20 @@ Using Fae's generators let's quickly scaffold a model that supports multiple lan
 $ rails g fae:scaffold Person name title_en title_zh title_ja intro_en:text intro_zh:text intro_ja:text
 ```
 
-To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `fae_translate` class method.
+To retrieve the correct attribute on the front-end, list translated attributes **without** their language abbreviation in the `fae_translate`, `fae_image_translate`, and `fae_file_translate` class methods.
 
 ```ruby
 class Person < ActiveRecord::Base
   include Fae::BaseModelConcern
 
   fae_translate :name, :title, :intro
+
+  fae_image_translate :hero_image
+
+  fae_file_translate :pdf
 end
 
-# i.e. if English is the locale, @person.name == @person.name_en
+# i.e. if English is the locale, @person.name == @person.name_en, @person.hero_image == person.hero_image_en, ect...
 ```
 
 International records can also be retrieved using `find_by_#{attribute}`:
@@ -100,7 +105,7 @@ class AboutPage < Fae::StaticPage
 end
 ```
 
-Utilizing `fae_translate` in a `Fae::StaticPage` will automatically use the set locale to determine which content to return.
+Utilizing `fae_translate`, `fae_image_translate`, and `fae_file_translate` in a `Fae::StaticPage` will automatically use the set locale to determine which content to return.
 
 ```ruby
 # set locale
@@ -118,7 +123,7 @@ Add `languages: true` to the page's `fae/shared/form_header` partial to utilize 
 To display the right translation, Rails needs to interpret the requested locale. This can be done with a simple ApplicationController method:
 
 ```ruby
-# app/controllers/application_controller
+# app/controllers/application_controllerThis
 class ApplicationController < ActionController::Base
   before_action :set_locale
 
