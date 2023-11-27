@@ -37,7 +37,9 @@ feature 'Language translation' do
     page.find('#js_language_chosen li', text: 'French Canadian').click
     fill_in 'home_page_header_en_attributes_content', with: 'Bob Ross is the man.'
     within(".home_page_header_frca_content")  { page.find('.js-translate-button').click }
+
     sleep 0.5
+
     expect(page).to have_field('Header (en)', with: "Bob Ross is the man.")
     expect(page).to have_field('Header (frca)', with: "Bob Ross est l'homme.")
   end
@@ -53,7 +55,9 @@ feature 'Language translation' do
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'French Canadian').click
     fill_in 'home_page_introduction_en_attributes_content', with: 'Bob Ross is the man.'
+
     sleep 0.5
+
     within(".home_page_introduction_frca_content")  { page.find('.js-translate-button').click }
     expect(page).to have_field('Introduction (en)', with: "Bob Ross is the man.")
     expect(page).to have_field('Introduction (frca)', with: "Bob Ross est l'homme.")
@@ -79,6 +83,7 @@ feature 'Language translation' do
 
     within(".home_page_introduction_2_frca_content")  { page.find('.js-translate-button').click }
     eventually {
+      within(".home_page_introduction_2_en_content") { expect(find('.CodeMirror-code')).to have_content("Bob Ross is the man.") }
       within(".home_page_introduction_2_frca_content") { expect(find('.CodeMirror-code')).to have_content("Bob Ross est l'homme.") }
     }
   end
