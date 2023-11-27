@@ -11,7 +11,7 @@ Fae supports translating text fields from English to any lanuage supported by Mi
 
 To set up the language translation first follow the set up for Multiple Language Support, as this feature depends on that set up.
 
-[Multi-Language Support](docs/features/multi_language.md)
+[Multi-Language Support](/docs/features/multi_language.md)
 
 After that is complete, add the following two ENV vars.
 
