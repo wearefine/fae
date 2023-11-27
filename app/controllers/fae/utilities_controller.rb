@@ -76,16 +76,20 @@ module Fae
 
     def translate_request(language, en_text)
       if Rails.env.test?
-        return [{
-                  "detectedLanguage" => {
-                    "language" => "en", 
-                    "score" => 1.0
-                  }, 
-                  "translations" => [{
-                    "text" => "Bob Ross est l'homme.", 
-                    "to" => "fr-CA"
-                    }]
-                  }]
+        return [
+                {
+                  'detectedLanguage' => {
+                    'language' => 'en',
+                    'score' => 1.0
+                  },
+                  'translations' => [
+                    {
+                      'text' => "Bob Ross est l'homme.",
+                      'to' => 'fr-CA'
+                    }
+                  ]
+                }
+              ]
       else
         subscription_key = ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY']
         region = ENV['TRANSLATOR_TEXT_REGION']
