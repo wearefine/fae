@@ -22,7 +22,7 @@ config.languages = {
 }
 ```
 
-The convention of this hash is important as the keys with have to match the database column suffixes of the specific language fields. The values will be used as the link text in the language nav. If the language code has a dash "-" in it, remove the dash to make the kay (e.g. fr-ca should be frca).
+The convention of this hash is important as the keys with have to match the database column suffixes of the specific language fields. The values will be used as the link text in the language nav. If the language code has a dash "-" in it, remove the dash to make the key (e.g. fr-ca should be frca).
 
 ## Database Column Naming
 

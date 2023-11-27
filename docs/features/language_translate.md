@@ -1,6 +1,6 @@
 # Language Translation
 
-Fae supports translating text fields from English to any lanuage supported by Microsoft Translator. Clicking translate button with take the corisponding english field and and output the translated text in the appropriate field.
+Fae supports translating text fields from English to any language supported by Microsoft Translator. Clicking the translate button will take the corresponding english field and output the translated text in the appropriate field.
 
 * [Configure](#configure)
 * [Internalization of Pages and Content Blocks](#internalization-of-pages-and-content-blocks)
@@ -9,7 +9,7 @@ Fae supports translating text fields from English to any lanuage supported by Mi
 
 ## Configure
 
-To set up the language translation first follow the set up for Multiple Language Support, as this feature depends on that set up.
+To set up the language translation, first follow the set up for Multiple Language Support as this feature depends on that set up.
 
 [Multi-Language Support](/docs/features/multi_language.md)
 
@@ -22,7 +22,7 @@ TRANSLATOR_TEXT_REGION
 
 Both values can be found in your Microsoft Translator account.
 
-Once all this is done, go to `/admin/root` and check the Enable Language Translations field and save. This should enable the translation feature (translateable fields will have a 'Translate' button that will call MS Translor and return the value in the non-english field).
+Once all this is done, go to `/admin/root` and check the 'Enable Language Translations' field and save. This should enable the translation feature (translateable fields will have a 'Translate' button that will call MS Translor and return the value in the non-english field).
 
 ## Internalization of Pages and Content Blocks
 
