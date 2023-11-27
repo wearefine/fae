@@ -38,7 +38,7 @@ feature 'Language translation' do
     fill_in 'home_page_header_en_attributes_content', with: 'Bob Ross is the man.'
     within(".home_page_header_frca_content")  { page.find('.js-translate-button').click }
 
-    sleep 0.5
+    sleep 0.5 # Needed to prevent race condition
 
     expect(page).to have_field('Header (en)', with: "Bob Ross is the man.")
     expect(page).to have_field('Header (frca)', with: "Bob Ross est l'homme.")
@@ -56,7 +56,7 @@ feature 'Language translation' do
     page.find('#js_language_chosen li', text: 'French Canadian').click
     fill_in 'home_page_introduction_en_attributes_content', with: 'Bob Ross is the man.'
 
-    sleep 0.5
+    sleep 0.5 # Needed to prevent race condition
 
     within(".home_page_introduction_frca_content")  { page.find('.js-translate-button').click }
     expect(page).to have_field('Introduction (en)', with: "Bob Ross is the man.")
@@ -79,7 +79,7 @@ feature 'Language translation' do
       $(textArea).data('editor').value('Bob Ross is the man.')
     JS
 
-    sleep 0.5
+    sleep 0.5 # Needed to prevent race condition
 
     within(".home_page_introduction_2_frca_content")  { page.find('.js-translate-button').click }
     eventually {
