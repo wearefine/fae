@@ -53,6 +53,7 @@ https://www.faecms.com/documentation
 * [Filtering, Pagination and Sorting](docs/features/filtering.md)
 * [Authorization](docs/features/authorization.md)
 * [Multi-Language Support](docs/features/multi_language.md)
+* [Language Translation](docs/features/language_translate.md)
 * [Cloning](docs/features/cloning.md)
 * [Change Tracker](docs/features/change_tracker.md)
 * [Slugger](docs/features/slugger.md)
