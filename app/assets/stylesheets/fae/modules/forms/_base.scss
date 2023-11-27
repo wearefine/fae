@@ -127,6 +127,7 @@ input[type=email] {
 .translate-markdown-button {
   top: 10px;
   position: absolute;
+  margin-left: 10px;
   right: 0;
   transform: translateX(calc(100% + 10px));
 }

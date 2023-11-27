@@ -143,6 +143,12 @@ module Fae
       end
     end
 
+    def language_translate_enabled?
+      Fae::Option.instance.translate_language &&
+      ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present? &&
+      ENV['TRANSLATOR_TEXT_REGION'].present?
+    end
+
     private
 
     def filter_search_field

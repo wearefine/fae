@@ -47,7 +47,7 @@ module Fae
 
       resp = translate_request(language, en_text)
 
-      if resp['error']
+      if !resp.kind_of?(Array) && resp['error']
         render json: [error_text: resp['error']['message']]
       else
         render json: [translated_text: resp.first['translations'].first['text']]
@@ -75,30 +75,43 @@ module Fae
     end
 
     def translate_request(language, en_text)
-      subscription_key = ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY']
-      region = ENV['TRANSLATOR_TEXT_REGION']
-      endpoint = 'https://api.cognitive.microsofttranslator.com'
-      path = '/translate?api-version=3.0'
+      if Rails.env.test?
+        return [{
+                  "detectedLanguage" => {
+                    "language" => "en", 
+                    "score" => 1.0
+                  }, 
+                  "translations" => [{
+                    "text" => "Bob Ross est l'homme.", 
+                    "to" => "fr-CA"
+                    }]
+                  }]
+      else
+        subscription_key = ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY']
+        region = ENV['TRANSLATOR_TEXT_REGION']
+        endpoint = 'https://api.cognitive.microsofttranslator.com'
+        path = '/translate?api-version=3.0'
 
-      language_params = "&to=#{language}"
+        language_params = "&to=#{language}"
 
-      uri = URI (endpoint + path + language_params)
+        uri = URI (endpoint + path + language_params)
 
-      content = '[{"Text" : "' + en_text + '"}]'
+        content = '[{"Text" : "' + en_text + '"}]'
 
-      request = Net::HTTP::Post.new(uri)
-      request['Content-type'] = 'application/json'
-      request['Content-length'] = content.length
-      request['Ocp-Apim-Subscription-Key'] = subscription_key
-      request['Ocp-Apim-Subscription-Region'] = region
-      request['X-ClientTraceId'] = SecureRandom.uuid
-      request.body = content
+        request = Net::HTTP::Post.new(uri)
+        request['Content-type'] = 'application/json'
+        request['Content-length'] = content.length
+        request['Ocp-Apim-Subscription-Key'] = subscription_key
+        request['Ocp-Apim-Subscription-Region'] = region
+        request['X-ClientTraceId'] = SecureRandom.uuid
+        request.body = content
 
-      response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-        http.request request
+        response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+          http.request request
+        end
+
+        JSON.parse(response.body.force_encoding('utf-8'))
       end
-
-      JSON.parse(response.body.force_encoding('utf-8'))
     end
 
     def records_by_display_name(query)
