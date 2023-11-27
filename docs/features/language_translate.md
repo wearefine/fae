@@ -3,7 +3,7 @@
 Fae supports translating text fields from English to any lanuage supported by Microsoft Translator. Clicking translate button with take the corisponding english field and and output the translated text in the appropriate field.
 
 * [Configure](#configure)
-* [Displaying the Language Nav](#internalization_of_pages_and_content_blocks)
+* [Internalization of Pages and Content Blocks](#internalization_of_pages_and_content_blocks)
 
 ---
 
