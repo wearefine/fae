@@ -7,7 +7,9 @@ class HomePage < Fae::StaticPage
     {
       header: {
         type: Fae::TextField,
-        languages: Fae.languages.keys
+        validates: {
+          presence: true
+          }
       },
       hero: Fae::TextField,
       email: {
@@ -26,16 +28,15 @@ class HomePage < Fae::StaticPage
       introduction: {
         type: Fae::TextArea,
         validates: {
-          length: { maximum: 100 }
-          },
-          languages: Fae.languages.keys
+          length: { maximum: 100 },
+          presence: true
+          }
         },
       introduction_2: {
         type: Fae::TextArea,
         validates: {
           length: { maximum: 100 }
-          },
-          languages: Fae.languages.keys
+          }
         },
       body: Fae::TextArea,
       hero_image: Fae::Image,

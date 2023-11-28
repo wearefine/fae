@@ -4,7 +4,7 @@ feature 'Language translation' do
 
   scenario 'translate button does not appear if options is not selected', js: true do
     admin_login
-    visit fae.edit_content_block_path('home')
+    visit fae.edit_content_block_path('privacy')
 
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'French Canadian').click
@@ -17,12 +17,12 @@ feature 'Language translation' do
     option = Fae::Option.instance
     option.translate_language = true
     option.save
-    visit fae.edit_content_block_path('home')
+    visit fae.edit_content_block_path('privacy')
 
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'French Canadian').click
 
-    within(".home_page_header_frca_content")  { expect( page.find('.js-translate-button')) }
+    within('.privacy_page_headline_frca_content')  { expect( page.find('.js-translate-button')) }
   end
 
   scenario 'text field translates', js: true do
@@ -31,17 +31,17 @@ feature 'Language translation' do
     option.translate_language = true
     option.save
 
-    visit fae.edit_content_block_path('home')
+    visit fae.edit_content_block_path('privacy')
 
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'French Canadian').click
-    fill_in 'home_page_header_en_attributes_content', with: 'Bob Ross is the man.'
-    within(".home_page_header_frca_content")  { page.find('.js-translate-button').click }
+    fill_in 'privacy_page_headline_en_attributes_content', with: 'Bob Ross is the man.'
+    within('.privacy_page_headline_frca_content')  { page.find('.js-translate-button').click }
 
     sleep 0.5 # Needed to prevent race condition
 
-    expect(page).to have_field('Header (en)', with: "Bob Ross is the man.")
-    expect(page).to have_field('Header (frca)', with: "Bob Ross est l'homme.")
+    expect(page).to have_field('Headline (en)', with: 'Bob Ross is the man.')
+    expect(page).to have_field('Headline (frca)', with: "Bob Ross est l'homme.")
   end
 
   scenario 'text area translates', js: true do
@@ -50,17 +50,17 @@ feature 'Language translation' do
     option.translate_language = true
     option.save
 
-    visit fae.edit_content_block_path('home')
+    visit fae.edit_content_block_path('privacy')
 
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'French Canadian').click
-    fill_in 'home_page_introduction_en_attributes_content', with: 'Bob Ross is the man.'
+    fill_in 'privacy_page_body_2_en_attributes_content', with: 'Bob Ross is the man.'
 
     sleep 0.5 # Needed to prevent race condition
 
-    within(".home_page_introduction_frca_content")  { page.find('.js-translate-button').click }
-    expect(page).to have_field('Introduction (en)', with: "Bob Ross is the man.")
-    expect(page).to have_field('Introduction (frca)', with: "Bob Ross est l'homme.")
+    within('.privacy_page_body_2_frca_content')  { page.find('.js-translate-button').click }
+    expect(page).to have_field('Body 2 (en)', with: 'Bob Ross is the man.')
+    expect(page).to have_field('Body 2 (frca)', with: "Bob Ross est l'homme.")
   end
 
   scenario 'text area with markdown translates', js: true do
@@ -69,22 +69,22 @@ feature 'Language translation' do
     option.translate_language = true
     option.save
 
-    visit fae.edit_content_block_path('home')
+    visit fae.edit_content_block_path('privacy')
 
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'French Canadian').click
 
     page.execute_script <<-JS
-      const textArea = document.getElementById('home_page_introduction_2_en_attributes_content')
+      const textArea = document.getElementById('privacy_page_body_en_attributes_content')
       $(textArea).data('editor').value('Bob Ross is the man.')
     JS
 
     sleep 0.5 # Needed to prevent race condition
 
-    within(".home_page_introduction_2_frca_content")  { page.find('.js-translate-button').click }
+    within('.privacy_page_body_frca_content')  { page.find('.js-translate-button').click }
     eventually {
-      within(".home_page_introduction_2_en_content") { expect(find('.CodeMirror-code')).to have_content("Bob Ross is the man.") }
-      within(".home_page_introduction_2_frca_content") { expect(find('.CodeMirror-code')).to have_content("Bob Ross est l'homme.") }
+      within('.privacy_page_body_en_content') { expect(find('.CodeMirror-code')).to have_content('Bob Ross is the man.') }
+      within('.privacy_page_body_frca_content') { expect(find('.CodeMirror-code')).to have_content("Bob Ross est l'homme.") }
     }
   end
 end

@@ -2,9 +2,12 @@ require 'spec_helper'
 
 feature 'page fields' do
 
-  scenario 'should include all language fields' do
+  scenario 'should include all language fields', js: true do
     admin_login
     visit fae.edit_content_block_path('about_us')
+
+    page.find('#js_language_chosen').click
+    page.find('#js_language_chosen li', text: 'Chinese').click
 
     expect(page).to have_selector('.about_us_page_body_zh_content')
     expect(page).to have_selector('.about_us_page_header_image_en_alt')
@@ -15,7 +18,10 @@ feature 'page fields' do
       admin_login
       visit fae.edit_content_block_path('about_us')
 
-      within('.about_us_page_introduction_content') do
+      page.find('#js_language_chosen').click
+      page.find('#js_language_chosen li', text: 'Chinese').click
+
+      within('.about_us_page_introduction_en_content') do
         expect(page).to have_selector('.CodeMirror')
       end
     end
@@ -23,6 +29,9 @@ feature 'page fields' do
     scenario 'should display markdown helper when markdown_supported: true', js: true do
       admin_login
       visit fae.edit_content_block_path('about_us')
+
+      page.find('#js_language_chosen').click
+      page.find('#js_language_chosen li', text: 'Chinese').click
 
       within('.about_us_page_body_en_content') do
         expect(page).to have_selector('label .helper_text .markdown-support')
