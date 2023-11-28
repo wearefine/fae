@@ -23,7 +23,7 @@
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
         - TRANSLATOR_TEXT_SUBSCRIPTION_KEY=test
-        - TRANSLATOR_TEXT_ENDPOINT=https://api.cognitive.microsofttranslator.com
+        - TRANSLATOR_TEXT_REGION=test
     db:
       image: postgres
       volumes:
