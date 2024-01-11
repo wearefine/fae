@@ -16,5 +16,8 @@
     = fae_image_form f, :logo, helper_text: t('fae.options.logo_helper')
     = fae_image_form f, :favicon
 
+    - if Fae.languages.keys.any? && ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present?
+      = fae_input f, :translate_language, label: t('fae.options.translate_language')
+
 section.content#deploy_hooks
   == render "fae/deploy_hooks/table"

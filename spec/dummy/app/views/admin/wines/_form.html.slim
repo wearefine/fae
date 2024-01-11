@@ -4,15 +4,19 @@
   main.content
     = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'
     = fae_input f, :name_zh
-    = fae_input f, :name_ja
+    = fae_input f, :name_frca
     = fae_input f, :description_en
     = fae_input f, :description_zh
-    = fae_input f, :description_ja
+    = fae_input f, :description_frca
     = fae_input f, :food_pairing_en
     = fae_input f, :food_pairing_zh
-    = fae_input f, :food_pairing_ja
     // need for testing
     = fae_association f, :releases
+
+    = fae_image_form f, :image_en
+    = fae_image_form f, :image_frca
+    = fae_file_form f, :pdf_en
+    = fae_file_form f, :pdf_frca
 
 - if params[:action] == 'edit'
   section.content#oregon_winemakers_section

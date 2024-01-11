@@ -24,7 +24,7 @@ header.content-header.js-content-header
       - selected = current_user.language || ''
 
       .content-header-select
-        = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown', prompt: 'All Languages'
+        = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown'
 
     - if Fae.use_form_manager
       a.button.js-launch-form-manager href='#' = launch_manager_text
@@ -39,6 +39,7 @@ header.content-header.js-content-header
       - subnav.each do |link, id_selector|
         - subnav_item = link.is_a?(Array) ? link : [link, link.parameterize(separator: '_')]
         li: a href="##{subnav_item[1]}" = subnav_item[0]
+
 
 - if show_flash_messages
   == render 'fae/shared/errors'

@@ -119,6 +119,7 @@ en:
       live_url: 'Live URL'
       colorway: 'Highlight Color'
       colorway_helper: 'Use 6 digit hex code to set the highlight color. Omit the "#"'
+      translate_language: 'Enable Language Translations'
       url_helper: 'Include http:// for external links.'
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
