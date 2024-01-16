@@ -13,6 +13,8 @@ Here is everything you need to know about Fae Images and Files:
 
 Fae provides models for images and files: `Fae::Image` and `Fae::File` respectively. These models come with their own attributes, validations and uploaders and can be polymorphically associated to your application models.
 
+:rotating_light: _Please do not name your image or file attachments as_ `image` or `file` _as this will lead to some unexpected behaviors._ E.g. don't do `has_fae_file :file` or `has_fae_image :image`.
+
 Here's a basic example:
 
 ```ruby
