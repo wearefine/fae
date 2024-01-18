@@ -4,6 +4,9 @@ module Fae
     argument :attributes, type: :array, default: [], banner: "field[:type][:index] field[:type][:index]"
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
+    class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
+
+    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set']
 
     @@attributes_flat = []
     @@attribute_names = []
@@ -21,12 +24,15 @@ module Fae
     def set_globals
       if attributes.present?
         attributes.each do |arg|
-          # :image and :file args get used to generate association defs and form elements
-          # we don't want them in attributes_flat or attribute_names as they are not real model generator field options
+          # prevent these from being in attributes_flat or attribute_names as they are not real model generator field options
           if is_attachment(arg)
             @@attachments << arg
           else
             @@attributes_flat << "#{arg.name}:#{arg.type}" + (arg.has_index? ? ":index" : "")
+          end
+
+          if options.polymorphic
+            @@attributes_flat << "#{polymorphic_name}:references{polymorphic}"
           end
 
           if is_association(arg)
@@ -71,6 +77,7 @@ module Fae
       @attachments = @@attachments
       @has_position = @@has_position
       @display_field = @@display_field
+      @polymorphic_name = polymorphic_name
       template "views/index.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"
       template "views/_form.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
       copy_file "views/new.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
@@ -137,6 +144,12 @@ RUBY
   has_fae_image :#{attachment.name}\n
 RUBY
           end
+        elsif attachment.type == :seo_set
+            inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+              <<-RUBY
+    has_fae_seo_set :#{attachment.name}\n
+  RUBY
+            end
         elsif attachment.type == :file
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
             <<-RUBY
@@ -172,6 +185,8 @@ RUBY
         'Types::FaeImageType'
       when 'file'
         'Types::FaeFileType'
+      when 'seo_set'
+        'Types::FaeSeoSetType'
       else
         'String'
       end
@@ -192,7 +207,15 @@ RUBY
     end
 
     def is_attachment(arg)
-      [:image,:file].include?(arg.type)
+      [:image, :file, :seo_set].include?(arg.type)
+    end
+
+    def polymorphic_name
+      "#{file_name.underscore}able"
+    end
+
+    def polymorphic_name
+      "#{file_name.underscore}able"
     end
 
   end

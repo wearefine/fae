@@ -273,6 +273,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.text "otp_backup_codes", size: :long, collation: "utf8mb4_bin"
     t.boolean "user_mfa_enabled"
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
+    t.index ["deploy_notifications"], name: "index_fae_users_on_deploy_notifications"
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_fae_users_on_role_id"
@@ -441,6 +442,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.text "food_pairing_en"
     t.text "food_pairing_zh"
     t.text "food_pairing_ja"
+    t.string "name_frca"
+    t.string "description_frca"
   end
 
   add_foreign_key "articles", "article_categories"

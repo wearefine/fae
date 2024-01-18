@@ -21,8 +21,12 @@ module Fae
       render 'fae/application/file_uploader', f: f, file_name: file_name, label: label, required: required, helper_text: helper_text, show_form_manager: show_form_manager
     end
 
-    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, input_options: nil, show_form_manager: true)
-      render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options, show_form_manager: show_form_manager
+    def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, input_options: nil, translate: nil, show_form_manager: true)
+      render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options, translate: translate, show_form_manager: show_form_manager
+    end
+
+    def fae_seo_set_form(f, seo_set_name)
+      render 'fae/application/seo_set_form', f: f, seo_set_name: seo_set_name
     end
 
     def fae_index_image(image, path = nil)
@@ -57,7 +61,9 @@ module Fae
     def fae_delete_button(item, delete_path = nil, *custom_attrs)
       return if item.blank?
 
-      delete_path ||= polymorphic_path([main_app, fae_scope.to_sym, item.try(:fae_parent), item])
+      delete_path ||= polymorphic_path(
+        [main_app, fae_scope.to_sym, item.try(:fae_parent), item]
+      )
 
       attrs = { method: :delete, title: 'Delete', class: 'js-tooltip table-action', data: { confirm: t('fae.delete_confirmation') } }
       attrs.deep_merge!(custom_attrs[0]) if custom_attrs.present?

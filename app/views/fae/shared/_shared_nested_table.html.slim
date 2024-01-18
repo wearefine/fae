@@ -2,6 +2,7 @@ ruby:
   colspan = cols.length + 1
   colspan += 1 if ordered
   colspan += 1 if has_thumb
+  colspan -= 1 if hide_delete_button
   table_class = ordered ? 'js-sort-row' : nil
 
   options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
@@ -17,7 +18,8 @@ table class=table_class
         = th_columns(col)
       - if edit_column
         th.-action data-sorter="false"
-      th.-action
+      - unless hide_delete_button
+        th.-action
   tbody
     - records = index ? @items : parent_item.send(assoc)
     - if records.present?
@@ -35,7 +37,8 @@ table class=table_class
             td
               a.js-edit-link.js-tooltip.table-action title=t('fae.common.edit') href=self.send(edit_path, item)
                 i.icon-edit
-          td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
+          - unless hide_delete_button
+            td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
 
     - elsif !hide_add_button
       tr

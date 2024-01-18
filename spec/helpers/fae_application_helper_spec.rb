@@ -18,6 +18,14 @@ describe Fae::ApplicationHelper do
       expect(col_name_or_image(@winemaker, :winemaker_image)).to include("<img")
       expect(col_name_or_image(@winemaker, :winemaker_image)).to include("/system/uploads/fae/image/asset/#{@winemaker_image.id}/thumb_test.jpg")
     end
+
+    it 'should display original image when filetype is svg' do
+      winemaker_svg = FactoryBot.build(:fae_image_svg, imageable_type: 'Winemaker', imageable_id: 1, attached_as: 'winemaker_image')
+      @winemaker = FactoryBot.create(:winemaker, winemaker_image: winemaker_svg)
+
+      expect(col_name_or_image(@winemaker, :winemaker_image)).to include("<img")
+      expect(col_name_or_image(@winemaker, :winemaker_image)).to include("/system/uploads/fae/image/asset/#{winemaker_svg.id}/test.svg")
+    end
   end
 
   describe "#change_item_link" do

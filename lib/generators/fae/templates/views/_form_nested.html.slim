@@ -23,9 +23,15 @@ ruby:
   = fae_file_form f, :<%= attachment.name -%>
 <% end -%>
 <% end -%>
-<% if options.parent_model.present? %>
+<% if options.polymorphic %>
+  = f.hidden_field :<%= @polymorphic_name %>_id
+  = f.hidden_field :<%= @polymorphic_name %>_type
+<% elsif options.parent_model.present? %>
   = f.hidden_field :<%= options.parent_model.underscore %>_id
 <% end -%>
 
   = f.submit
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
+
+  - if Fae.use_form_manager
+    a.button.js-launch-form-manager href='#' = t('fae.form.launch_form_manager')

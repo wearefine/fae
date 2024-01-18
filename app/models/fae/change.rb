@@ -9,6 +9,7 @@ module Fae
     serialize :updated_attributes
 
     class << self
+
       # writing current_user to thread for thread safety
       def current_user=(user)
         Thread.current[:current_user] = user

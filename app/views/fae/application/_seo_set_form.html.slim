@@ -1,0 +1,12 @@
+ruby:
+  require_locals ['f'], local_assigns
+  item            ||= f.object
+  seo_set_name    ||= :seo_set
+  the_seo_set       = item.send(seo_set_name)
+
+= f.simple_fields_for seo_set_name do |i|
+  = fae_input i, :seo_title, label: 'SEO Title'
+  = fae_input i, :seo_description, label: 'SEO Description'
+  = fae_input i, :social_media_title
+  = fae_input i, :social_media_description
+  = fae_image_form i, :social_media_image, helper_text: '1200 x 630 px., JPG'

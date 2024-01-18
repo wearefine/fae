@@ -6,4 +6,8 @@ FactoryBot.define do
     asset { Rack::Test::UploadedFile.new(file, 'image/jpeg', true, original_filename: 'test.jpg') }
   end
 
+  factory :fae_image_svg, class: 'Fae::Image' do
+    asset { Rack::Test::UploadedFile.new(File.join('spec', 'support', 'assets', 'test.svg')) }
+  end
+
 end

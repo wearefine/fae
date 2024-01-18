@@ -6,7 +6,7 @@
   left: 0;
   width: 100%;
   background: $c-header-bg;
-  border-top: $header-border-width solid $c-custom-highlight;
+  border-top: $header-border-width solid var(--highlight-color);
 
   @include bp(large) {
     padding: 0 $content-buffer;
@@ -107,7 +107,7 @@
 
     &.-parent-current {
       > a {
-        background: $c-custom-highlight;
+        background: var(--highlight-color);
       }
     }
 

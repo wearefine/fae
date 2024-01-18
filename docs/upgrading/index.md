@@ -1,5 +1,6 @@
 # Upgrading Fae
 
+* [To v3.0](#to-v30)
 * [To v2.2](#to-v22)
 * [To v2.0](#to-v20)
 * [To v1.5](#to-v15)
@@ -8,12 +9,20 @@
 
 ---
 
-# To v2.2
+# To v3.0
 
-* 2.2 introduces the [Form Manager](../features/form_manager.md) feature
+* Fae 3.0 has additions to the base schema which require installing and running new migrations
     1. run `rake fae:install:migrations`
     2. run `rake db:migrate`
-    3. Further usage and upgrading instructions can be found in the [documentation](../features/form_manager.md)
+* Fae 3.0 was built for Rails 7. Upgrading Fae on a previous version of Rails will require upgrading to Rails 7 as well.
+
+# To v2.2
+
+* Introduction of the [Form Manager](../features/form_manager.md) and [Netlify](../features/netlify.md) integrations require installing and running new migrations
+    1. run `rake fae:install:migrations`
+    2. run `rake db:migrate`
+* All instances of `= simple_form_for(['admin', @item]` have to be updated to `= simple_form_for([:admin, @item]`
+    - This is required due to Rails no longer allowing strings to be passed to `polymorphic_url` to patch [this CVE](https://github.com/advisories/GHSA-hjg4-8q5f-x6fm)
 
 # To v2.0
 

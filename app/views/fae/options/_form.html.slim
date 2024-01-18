@@ -3,17 +3,21 @@
     h1 Root Settings
     .content-header-buttons
       a.button#js-header-cancel href=fae.root_path(cancelled: true) = t('fae.form.cancel')
-      = f.submit t('fae.form.save')
+      input name="commit" type="submit" value=t('fae.form.save')
 
   == render 'flash_messages'
 
   main.content
     = fae_input f, :title, label: t('fae.options.project.name')
     = fae_input f, :time_zone, wrapper_class: 'select'
+    = fae_input f, :colorway, label: t('fae.options.colorway'), helper_text: t('fae.options.colorway_helper')
     = fae_input f, :live_url, label: t('fae.options.live_url'), helper_text: t('fae.options.url_helper')
     = fae_input f, :stage_url, label: t('fae.options.stage_url'), helper_text: t('fae.options.url_helper')
     = fae_image_form f, :logo, helper_text: t('fae.options.logo_helper')
     = fae_image_form f, :favicon
+
+    - if Fae.languages.keys.any? && ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present?
+      = fae_input f, :translate_language, label: t('fae.options.translate_language')
 
   section.content#multi_factor_authentication
     h2 MULTI-FACTOR AUTHENTICATION

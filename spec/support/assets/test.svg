@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg version="1.1"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns="http://www.w3.org/2000/svg"
+     xmlns:svg="http://www.w3.org/2000/svg" 
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:cc="http://creativecommons.org/ns#"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     viewBox="0 0 400 200">
+  <title id="title2">Test zero-length dashes</title>
+  <rect x="0" y="0" width="400" height="200" fill="pink"/>
+  <line x1="10" y1="100" x2="195" y2="100" stroke="red" stroke-width="10" stroke-dasharray="0 20" stroke-linecap="round" />
+  <circle cx="100" cy="100" r="60" fill="none" stroke="red" stroke-width="5" stroke-dasharray="0 20" stroke-linecap="round" />
+
+  <line x1="210" y1="100" x2="395" y2="100" stroke="blue" stroke-width="10" stroke-dasharray="0.1 19.9" stroke-linecap="round" />
+  <circle cx="300" cy="100" r="60" fill="none" stroke="blue" stroke-width="5" stroke-dasharray="0.1 19.9" stroke-linecap="round" />
+</svg>

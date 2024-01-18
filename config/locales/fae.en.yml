@@ -99,7 +99,7 @@ en:
         table:
           past_heading: 'Past Deploys'
           deploying_heading: 'Deploying'
-          deploying_helper: "After making changes in the CMS, choose “Deploy Stage” or “Deploy Production” to push these changes to the respective front-end environment. Once your deployment posts to the “Past Deploys” table below, updates will be ready to review in the front-end environment.<br><br>Please note that Stage and Production are distinct environments and will need to be deployed separately."
+          deploying_helper: "After making changes in the CMS, click a deploy button above to push these changes to the respective front-end environment. Once your deployment posts to the “Past Deploys” table below, updates will be ready to review in the front-end environment.<br><br>Please note that each environment is distinct and will need to be deployed separately."
           title: 'Activity'
           deployed: 'Date/Time'
           duration: 'Duration'
@@ -118,6 +118,9 @@ en:
     options:
       project_name: 'Project Name'
       live_url: 'Live URL'
+      colorway: 'Highlight Color'
+      colorway_helper: 'Use 6 digit hex code to set the highlight color. Omit the "#"'
+      translate_language: 'Enable Language Translations'
       url_helper: 'Include http:// for external links.'
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
@@ -156,3 +159,10 @@ en:
     apply_filters: 'Apply Filters'
     all_items: 'All %{items}'
     keyword_search: 'Search by Keyword'
+  activerecord:
+    errors:
+      models:
+        fae/image:
+          attributes:
+            asset:
+              size_too_big: 'size is too big'

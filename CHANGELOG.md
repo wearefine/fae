@@ -1,5 +1,53 @@
 # Fae Changelog
 
+## 3.0
+
+- enhancments
+    + Add Rails 7 Support
+    + Add SEO Set Module [#592](https://github.com/wearefine/fae/pull/592)
+    + Add support for drag and drop image uploading [#574](https://github.com/wearefine/fae/pull/574)
+    + Upload images through the markdown editor [#261](https://github.com/wearefine/fae/pull/261)
+    + Highlight color is now managed in the user admin (vs CSS) [#572](https://github.com/wearefine/fae/pull/572)
+    + Add saving indication on form submit [#577](https://github.com/wearefine/fae/pull/577)
+    + Update Judge version with validation updates [#573](https://github.com/wearefine/fae/pull/573)
+    + Add support for double nested resources [#589](https://github.com/wearefine/fae/pull/589)
+    + Allow hiding of delete button on nested forms [#576](https://github.com/wearefine/fae/pull/576)
+    + Update dummy app hosting [#590](https://github.com/wearefine/fae/pull/590)
+- bugs
+    + Fix select/deselect bug [#571](https://github.com/wearefine/fae/pull/571)
+    + Fix form manager on nested forms [#580](https://github.com/wearefine/fae/pull/580)
+
+## 2.2
+
+- enhancements
+    + New integration with Netlify to manager and trigger builds - [#560](https://github.com/wearefine/fae/pull/560)
+    + New modal form feature [#487](https://github.com/wearefine/fae/pull/487)
+    + New form manager feature [#504](https://github.com/wearefine/fae/pull/504)
+    + New `fae_redirect_to_form_on_create` option [#486](https://github.com/wearefine/fae/pull/486)
+    + New date select option for filters [#481](https://github.com/wearefine/fae/pull/481)
+    + New `--polymorphic=true` flag on `fae:nested_scaffold` - [#562](https://github.com/wearefine/fae/pull/562)
+    + #512 - Bump Devise to v4.8 [#555](https://github.com/wearefine/fae/pull/555)
+    + Add better support for long subnavs [#547](https://github.com/wearefine/fae/pull/547)
+    + Update toggle element styling [#544](https://github.com/wearefine/fae/pull/544)
+    + Nav and layout styles updates [#542](https://github.com/wearefine/fae/pull/542)
+    + Add docker setup for local development [#554](https://github.com/wearefine/fae/pull/554)
+    + Refactor Fae module [#550](https://github.com/wearefine/fae/pull/550)
+    + Update slugger special characters [#514](https://github.com/wearefine/fae/pull/514)
+    + Add support for adding db indexes via fae:scaffold generator [#503](https://github.com/wearefine/fae/pull/503)
+    + Make add button optional for nested tables [#497](https://github.com/wearefine/fae/pull/497)
+    + Make users active by default [#489](https://github.com/wearefine/fae/pull/489)
+- bugs
+    + Fix deselct bug in multi-select element [#557](https://github.com/wearefine/fae/pull/557)
+    + Fix issue with undefined value being passed into validator function [#549](https://github.com/wearefine/fae/pull/549)
+    + Make no-search dropdowns keyboard focusable [#546](https://github.com/wearefine/fae/pull/546)
+    + `fae_checkbox` form helper fixes [#540](https://github.com/wearefine/fae/pull/540)
+    + Fix flash alert for static page errors [#502](https://github.com/wearefine/fae/pull/502)
+    + Add styled user unlock form [#533](https://github.com/wearefine/fae/pull/533)
+    + Fix activity log pagination bug [#498](https://github.com/wearefine/fae/pull/498)
+    + Vertical privilege escalation, toggle abuse and brute-force protection [#488](https://github.com/wearefine/fae/pull/488)
+- documentation
+    + minor updates, typos and link fixes
+
 ## 2.1
 
 - enhancements

@@ -16,8 +16,8 @@ header.main-header#js-main-header
   - if user_signed_in?
     ul.utility-nav#js-utility-nav
       - if current_user.super_admin_or_admin? && netlify_enabled?
-      li class=deployments_active_class
-        a.deployments-nav-link href=fae.deploy_path = t('fae.navbar.deployments')
+        li class=deployments_active_class
+          a.deployments-nav-link href=fae.deploy_path = t('fae.navbar.deployments')
       li.utility-dropdown.js-utility-dropdown
         a.grabatar-link href="#"
           img.grabatar src=fae_avatar alt=current_user.full_name

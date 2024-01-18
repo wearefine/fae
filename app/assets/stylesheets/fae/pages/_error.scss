@@ -8,7 +8,7 @@
     min-width: 235px;
     height: 330px;
     padding: 35px;
-    border-top: 8px solid $c-custom-highlight;
+    border-top: 8px solid var(--highlight-color);
     border-radius: 4px;
     background: white;
     color: $c-mid-dark-grey;

@@ -1,5 +1,7 @@
 source "https://rubygems.org"
 
+ruby '3.1.1'
+
 # Declare your gem's dependencies in fae.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
@@ -30,7 +32,7 @@ group :test do
   gem 'webrick'
   gem 'factory_bot_rails', '~> 4.8.2'
   # https://github.com/thoughtbot/capybara-webkit/issues/1065
-  gem 'capybara-webkit', '~> 1.15.1'
+  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'capybara-screenshot'
   gem 'guard-rspec'
   gem 'selenium-webdriver'
@@ -44,6 +46,10 @@ gem 'capistrano',  '~> 3.1'
 gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
 gem 'capistrano-rvm'
 
-gem 'pg'
 gem 'mysql2'
+gem 'pg'
 gem "puma", "~> 5.0"
+
+gem "fog-aws"
+gem 'ddtrace', require: 'ddtrace/auto_instrument'
+
