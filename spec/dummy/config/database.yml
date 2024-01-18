@@ -1,3 +1,22 @@
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   host: <%= ENV.fetch('PGHOST') { 'db' } %>
+#   username: postgres
+#   password: password
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+# development:
+#   <<: *default
+#   database: fae_engine
+
+# test:
+#   <<: *default
+#   database: fae_engine_test
+
+# production:
+#   url: <%= ENV['DATABASE_URL'] %>
+
 base: &base
   adapter: postgresql
   encoding: unicode

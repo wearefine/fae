@@ -1,0 +1,17 @@
+= render 'fae/shared/index_header', title: 'Multi-Factor Authentication Backup Codes', breadcrumbs: false, new_button: false
+
+section.content
+  article.content
+    p
+      'The multi-factor authentication setup is complete. Save the following backup codes in a secure place in case you lose access to your authenticator app. Backup codes can be used as a one-time replacement MFA code.
+      br
+
+
+    - @backup_codes.each_slice(2) do |(code1, code2)|
+      div.mfa-section-content
+        div.mfa-backup-codes = code1
+        div.mfa-backup-codes = code2
+
+
+
+

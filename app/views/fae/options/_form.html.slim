@@ -19,5 +19,12 @@
     - if Fae.languages.keys.any? && ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present?
       = fae_input f, :translate_language, label: t('fae.options.translate_language')
 
+  section.content#multi_factor_authentication
+    h2 MULTI-FACTOR AUTHENTICATION
+    p This setting enables multi-factor authentication (MFA) globally. Please do not change this unless you know what you are doing!
+    p Enabling MFA will require finalizing setup immediately after saving. To do so you will need a multi-factor authentication app that accepts a link or QR code to connect. The app will then provide you a one time code to use with your email and password.
+    p Disabling MFA here will disable it for all users immediately. If you enable MFA after disabling you will be required to set it up again.
+    = fae_input f, :site_mfa_enabled, label: t('fae.options.mfa_enabled')
+
 section.content#deploy_hooks
   == render "fae/deploy_hooks/table"
