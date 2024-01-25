@@ -29,18 +29,11 @@
         - TRANSLATOR_TEXT_SUBSCRIPTION_KEY=test
         - TRANSLATOR_TEXT_REGION=test
     db:
-      image: postgres
-      volumes:
-        - ./tmp/db:/var/lib/postgresql/data
+      image: mariadb
       environment:
-        POSTGRES_PASSWORD: password
+        - MYSQL_ROOT_PASSWORD=
+        - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
       ports:
-        - "5432:5432"
-      # image: mariadb
-      # environment:
-      #   - MYSQL_ROOT_PASSWORD=
-      #   - MYSQL_ALLOW_EMPTY_PASSWORD='yes'
-      # ports:
-      #   - '3307:3306'
-      # volumes:
-      #   - /private/app/dbs:/var/lib/mysql
+        - '3307:3306'
+      volumes:
+        - /private/app/dbs:/var/lib/mysql

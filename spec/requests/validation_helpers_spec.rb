@@ -3,6 +3,9 @@ require 'rails_helper'
 describe 'validation_testers#new' do
 
   before(:each) do
+    def new_admin_validation_tester_path
+      Rails.application.routes.url_helpers.new_admin_validation_tester_path
+    end
     admin_login
     get new_admin_validation_tester_path
   end

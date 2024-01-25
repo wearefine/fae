@@ -22,7 +22,7 @@ PATH
       acts_as_list (~> 0.9.11)
       browser (~> 2.5.3)
       carrierwave
-      devise
+      devise (~> 4.0)
       devise-two-factor
       jquery-rails (~> 4.3.1)
       jquery-ui-rails (~> 6.0.1)
@@ -117,7 +117,7 @@ GEM
       bundler
       rake
       thor (>= 0.14.0)
-    bcrypt (3.1.16)
+    bcrypt (3.1.20)
     better_errors (2.9.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
@@ -159,7 +159,7 @@ GEM
     childprocess (4.1.0)
     chunky_png (1.4.0)
     coderay (1.1.3)
-    concurrent-ruby (1.1.9)
+    concurrent-ruby (1.2.3)
     crass (1.0.6)
     daemons (1.4.1)
     database_cleaner (2.0.1)
@@ -175,7 +175,7 @@ GEM
       msgpack
     debase-ruby_core_source (0.10.16)
     debug_inspector (1.1.0)
-    devise (4.8.1)
+    devise (4.9.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -188,7 +188,7 @@ GEM
       rotp (~> 6.0)
     diff-lcs (1.5.0)
     digest (3.1.0)
-    erubi (1.10.0)
+    erubi (1.12.0)
     eventmachine (1.2.7)
     excon (0.92.4)
     execjs (2.8.1)
@@ -230,7 +230,7 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
-    i18n (1.10.0)
+    i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
       mini_magick (>= 4.9.5, < 5)
@@ -271,9 +271,9 @@ GEM
     listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.14.0)
+    loofah (2.22.0)
       crass (~> 1.0.2)
-      nokogiri (>= 1.5.9)
+      nokogiri (>= 1.12.0)
     lumberjack (1.2.8)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
@@ -285,7 +285,7 @@ GEM
     mime-types-data (3.2022.0105)
     mini_magick (4.11.0)
     mini_mime (1.1.2)
-    minitest (5.15.0)
+    minitest (5.21.2)
     msgpack (1.5.6)
     multi_json (1.15.0)
     mysql2 (0.5.4)
@@ -309,9 +309,9 @@ GEM
       timeout
     net-ssh (6.1.0)
     nio4r (2.5.8)
-    nokogiri (1.13.9-aarch64-linux)
+    nokogiri (1.16.0-aarch64-linux)
       racc (~> 1.4)
-    nokogiri (1.13.9-x86_64-linux)
+    nokogiri (1.16.0-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -324,9 +324,9 @@ GEM
     public_suffix (5.0.0)
     puma (5.6.4)
       nio4r (~> 2.0)
-    racc (1.6.0)
-    rack (2.2.4)
-    rack-test (2.0.2)
+    racc (1.7.3)
+    rack (2.2.8)
+    rack-test (2.1.0)
       rack (>= 1.3)
     rails (7.0.2.3)
       actioncable (= 7.0.2.3)
@@ -346,11 +346,13 @@ GEM
       actionpack (>= 5.0.1.rc1)
       actionview (>= 5.0.1.rc1)
       activesupport (>= 5.0.1.rc1)
-    rails-dom-testing (2.0.3)
-      activesupport (>= 4.2.0)
+    rails-dom-testing (2.2.0)
+      activesupport (>= 5.0.0)
+      minitest
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.4.2)
-      loofah (~> 2.3)
+    rails-html-sanitizer (1.6.0)
+      loofah (~> 2.21)
+      nokogiri (~> 1.14)
     rails-perftest (0.0.7)
     railties (7.0.2.3)
       actionpack (= 7.0.2.3)
@@ -359,15 +361,15 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
       zeitwerk (~> 2.5)
-    rake (13.0.6)
+    rake (13.1.0)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.6.1)
     remotipart (1.4.4)
-    responders (3.0.1)
-      actionpack (>= 5.0)
-      railties (>= 5.0)
+    responders (3.1.1)
+      actionpack (>= 5.2)
+      railties (>= 5.2)
     rexml (3.2.5)
     rotp (6.2.0)
     rqrcode (2.1.2)
@@ -444,10 +446,10 @@ GEM
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
-    thor (1.2.1)
+    thor (1.3.0)
     tilt (2.0.10)
     timeout (0.2.0)
-    tzinfo (2.0.4)
+    tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
@@ -462,7 +464,7 @@ GEM
     yarjuf (2.0.0)
       builder
       rspec (~> 3)
-    zeitwerk (2.5.4)
+    zeitwerk (2.6.12)
 
 PLATFORMS
   aarch64-linux
@@ -485,7 +487,7 @@ DEPENDENCIES
   guard-rspec
   mysql2
   pg
-  pry
+  pry-nav
   puma (~> 5.0)
   rails (~> 7.0.2)
   rails-controller-testing
