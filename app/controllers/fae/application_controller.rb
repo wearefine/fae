@@ -13,7 +13,6 @@ module Fae
     before_action :check_disabled_environment
     before_action :first_user_redirect
     before_action :authenticate_user!
-    # before_action :configure_permitted_parameters, if: :devise_controller?
     before_action :build_nav
     before_action :set_option
     before_action :detect_cancellation
