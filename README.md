@@ -60,6 +60,7 @@ https://www.faecms.com/documentation
 * [Disabling Environments](docs/features/disable_envs.md)
 * [Form Field Label & Helper Text Manager](docs/features/form_manager.md)
 * [Netlify Deploy Monitor](docs/features/netlify.md)
+* [Multi-Factor Authentication via OTP](docs/features/mutli_factor_authentication.md)
 
 
 ### Tutorials
