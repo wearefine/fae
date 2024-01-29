@@ -50,6 +50,5 @@ or
 
 Once this is all done, go to '/admin/root' and check the `Multi-Factor Authentication Enabled?` field and save.  This will start the process of setting up mfa on your currently logged in account.
 
-
-Admins and Super Admins have the ability to toggle the mfa feature for other users.  Going to `/admin/users`, the toggle titled `MFA Active` can deactivate or reactivate the MFA login requirements for individual users.  (NOTE: deactivating/reactivating NFA for a user does NOT retain their previous set up, causing them to have to set it up from scatch again.)
+Admins and Super Admins have the ability to toggle the mfa feature for other users.  Going to `/admin/users`, the toggle titled `MFA Active` can deactivate or reactivate the MFA login requirements for individual users.  (NOTE: deactivating/reactivating MFA for a user does NOT retain their previous set up, causing them to have to set it up from scatch again.)
 
