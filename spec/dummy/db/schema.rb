@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_13_192940) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -184,6 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.datetime "updated_at", precision: nil
     t.boolean "site_mfa_enabled", default: false
     t.string "mfa_enabling_user"
+    t.boolean "translate_language"
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
   end
 
@@ -192,6 +193,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.integer "position"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "fae_seo_sets", charset: "utf8mb3", force: :cascade do |t|
+    t.string "seo_title"
+    t.text "seo_description"
+    t.string "social_media_title"
+    t.text "social_media_description"
+    t.string "seo_setable_type"
+    t.bigint "seo_setable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["seo_setable_type", "seo_setable_id"], name: "index_fae_seo_sets_on_seo_setable"
   end
 
   create_table "fae_static_pages", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -273,7 +286,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.text "otp_backup_codes", size: :long, collation: "utf8mb4_bin"
     t.boolean "user_mfa_enabled"
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
-    t.index ["deploy_notifications"], name: "index_fae_users_on_deploy_notifications"
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_fae_users_on_role_id"
@@ -322,6 +334,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "poly_things", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name_en"
+    t.string "poly_thingable_type"
+    t.bigint "poly_thingable_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "name_frca"
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
   create_table "release_notes", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -378,6 +400,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_02_161225) do
     t.integer "position"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "sub_aromas", charset: "utf8mb3", force: :cascade do |t|
+    t.string "name"
+    t.integer "aroma_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aroma_id"], name: "index_sub_aromas_on_aroma_id"
+    t.index ["name"], name: "index_sub_aromas_on_name"
   end
 
   create_table "teams", id: :integer, charset: "utf8mb3", force: :cascade do |t|
