@@ -175,7 +175,10 @@ Devise.setup do |config|
 
   # Number of authentication tries before locking an account if lock_strategy
   # is failed attempts.
-  config.maximum_attempts = 5
+  # Note, this was increased to 10 because devise two factor checks it twice, so every failed
+  # login attemp counts as two failed attemps.
+  # Issue https://github.com/devise-two-factor/devise-two-factor/issues/127
+  config.maximum_attempts = 10
 
   # Time interval to unlock the account if :time is enabled as unlock_strategy.
   config.unlock_in = 1.minute
