@@ -30,22 +30,12 @@ Next add these values as the following environmental varables:
   KEY_DERIVATION_SALT=Vgo7V3USqaODX1Vn5H9HyHJmFGo7yEOA
 ```
 
-Then add the following to config/application.rb
+Finally, add the following to config/application.rb
 
 ```ruby
   config.active_record.encryption.primary_key = ENV["PRIMARY_KEY"]
   config.active_record.encryption.deterministic_key = ENV["DETERMINISTIC_KEY"]
   config.active_record.encryption.key_derivation_salt = ENV["KEY_DERIVATION_SALT"]
-```
-
-Finally, add another environment varable called `OTP_SECRET_KEY`.  You can set this to be any value you want, either a random generated string, or something you come up with.  This value it used as another layer of encription.
-
-```ruby
-  OTP_SECRET_KEY=g79abf0887788c4d204d6e292c66c885
-```
-or
-```ruby
-  OTP_SECRET_KEY=bobrossisawesome
 ```
 
 Once this is all done, go to '/admin/root' and check the `Multi-Factor Authentication Enabled?` field and save.  This will start the process of setting up mfa on your currently logged in account.
