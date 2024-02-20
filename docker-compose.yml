@@ -15,6 +15,7 @@
         - .:/app
       ports:
         - '3000:3000'
+        - '3036:3036'
       depends_on:
         - db
       environment:
@@ -22,6 +23,7 @@
         - DEV_MYSQL_HOST=db
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
+        - VITE_RUBY_HOST=0.0.0.0
     db:
       # image: postgres
       # volumes:
@@ -37,4 +39,4 @@
       ports:
         - '3307:3306'
       volumes:
-        - /private/app/dbs:/var/lib/mysql
+        - ./mysql:/var/lib/mysql

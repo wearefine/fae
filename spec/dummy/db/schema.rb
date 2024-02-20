@@ -141,7 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.datetime "updated_at", precision: nil
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
-    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
+    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable"
   end
 
   create_table "fae_form_managers", charset: "utf8mb3", force: :cascade do |t|
@@ -170,7 +170,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.integer "file_size"
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_images_on_attached_as"
-    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id"
+    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable"
   end
 
   create_table "fae_options", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -246,7 +246,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["attached_as"], name: "index_fae_text_fields_on_attached_as"
-    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable_type_and_contentable_id"
+    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable"
     t.index ["on_prod"], name: "index_fae_text_fields_on_on_prod"
     t.index ["on_stage"], name: "index_fae_text_fields_on_on_stage"
     t.index ["position"], name: "index_fae_text_fields_on_position"
@@ -333,7 +333,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.bigint "poly_thingable_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable_type_and_poly_thingable_id"
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
   create_table "release_notes", id: :integer, charset: "utf8mb3", force: :cascade do |t|

@@ -7,6 +7,9 @@ html
       link href=@option.favicon.asset_url rel="shortcut icon"
     == stylesheet_link_tag 'fae/application', media: 'all'
     == javascript_include_tag 'fae/application'
+    / = vite_stylesheet_tag 'styles.scss'
+    = vite_client_tag
+    = vite_javascript_tag 'application'
     == csrf_meta_tags
 
   body class=body_class style=('--highlight-color:' + '#' + @option.colorway if @option.colorway.present?)
@@ -19,6 +22,7 @@ html
       == yield
 
       footer.main-footer#js-footer
+        div#app
         == render 'credit'
 
     == render 'markdown_helper'
