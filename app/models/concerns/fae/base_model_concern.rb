@@ -2,12 +2,38 @@ module Fae
   module BaseModelConcern
     extend ActiveSupport::Concern
     require 'csv'
+    require 'slack-notifier'
 
     attr_accessor :filter
 
     included do
       include Fae::Trackable if Fae.track_changes
       include Fae::Sortable
+      after_create :notify_initiation
+      before_save :notify_changes
+    end
+
+    def notify_changes
+      return unless notifiable_attributes.present?
+      notifiable_attributes.each do |field_name_symbol|
+        if self.send("#{field_name_symbol}_changed?") && self.send(field_name_symbol).present?
+          send_slack(field_name_symbol)
+        end
+      end
+    end
+
+    def notify_initiation
+      return unless notifiable_attributes.present?
+      notifiable_attributes.each do |field_name_symbol|
+        if self.send(field_name_symbol).present?
+          send_slack(field_name_symbol)
+        end
+      end
+    end
+
+    def notifiable_attributes
+      # override this method in your model
+      # array of attributes to notify if changed
     end
 
     def fae_display_field
@@ -34,6 +60,12 @@ module Fae
 
     def fae_form_manager_model_id
       self.id
+    end
+
+    def send_slack(field_name_symbol)
+      notifier = Slack::Notifier.new ENV["SLACK_WEBHOOK_URL"]
+      notifier.ping "#{Rails.application.class.module_parent_name} - #{name} (#{self.class.name.constantize}) - #{field_name_symbol.to_s} set to '#{self.send(field_name_symbol)}'"
+
     end
 
     module ClassMethods

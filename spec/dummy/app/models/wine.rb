@@ -24,4 +24,8 @@ class Wine < ActiveRecord::Base
     order(:position)
   end
 
+  def notifiable_attributes
+    [:on_stage, :on_prod, :description_en]
+  end
+
 end
