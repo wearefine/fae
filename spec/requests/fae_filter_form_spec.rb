@@ -2,6 +2,16 @@ require 'rails_helper'
 
 describe 'fae_filter_form' do
 
+  before(:each) do
+    def admin_releases_path
+      Rails.application.routes.url_helpers.admin_releases_path
+    end
+
+    def admin_locations_path
+      Rails.application.routes.url_helpers.admin_locations_path
+    end
+  end
+
   describe 'title option' do
 
     it 'should default to "Search Class Names"' do

@@ -2,6 +2,12 @@ require 'spec_helper'
 
 feature 'sortable' do
 
+  before do
+    def admin_acclaims_path
+      Rails.application.routes.url_helpers.admin_acclaims_path
+    end
+  end
+
   scenario 'should allow reordering of items', js: true do
     acclaim_1 = FactoryBot.create(:acclaim, publication: 'acclaim one', position: 1)
     acclaim_2 = FactoryBot.create(:acclaim, publication: 'acclaim two', position: 2)

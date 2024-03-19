@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe 'cloning assets' do
 
+  before do
+    def admin_releases_path(release)
+      Rails.application.routes.url_helpers.admin_releases_path(release)
+    end
+  end
+
   it 'should clone fae assets' do
 
     release = FactoryBot.create(:release, name: 'Ima Release')

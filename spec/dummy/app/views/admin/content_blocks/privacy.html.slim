@@ -1,0 +1,29 @@
+ruby:
+  form_options = {
+    url: fae.update_content_block_path(slug: @item.slug),
+    method: :put,
+    html: {
+      data: {
+        form_manager_model: @item.fae_form_manager_model_name,
+        form_manager_model_id: @item.fae_form_manager_model_id,
+        form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+      }
+    }
+  }
+= simple_form_for @item, form_options do |f|
+  - subnav = ['Page Metadata']
+  == render 'fae/shared/form_header', header: @klass_name, subnav: subnav, languages: true
+
+  main.content
+    = fae_input f, :title, wrapper_class: 'hide'
+
+    = fae_content_form f, :headline
+    = fae_content_form f, :body, markdown: true
+    = fae_content_form f, :body_2
+
+    h2#page_metadata Page Metadata
+    = fae_content_form f, :seo_title
+    = fae_content_form f, :seo_description
+    = fae_content_form f, :social_media_title
+    = fae_content_form f, :social_media_description
+    = fae_image_form f, :social_media_image
