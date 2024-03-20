@@ -61,9 +61,15 @@ module Fae
       self.id
     end
 
+    def slack_message(field_name_symbol)
+      # override this method in your model
+    end
+
     def format_and_send_slack(field_name_symbol)
-      message = "#{Rails.application.class.module_parent_name} - #{name} (#{self.class.name.constantize}) - #{field_name_symbol.to_s} set to '#{self.send(field_name_symbol)}'"
-      Fae::SlackNotification.new().send_slack(message: message)
+      message = slack_message(field_name_symbol)
+      if message.present?
+        Fae::SlackNotification.new().send_slack(message: message)
+      end
     end
 
     module ClassMethods
