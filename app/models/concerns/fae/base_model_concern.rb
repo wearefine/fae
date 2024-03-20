@@ -2,7 +2,6 @@ module Fae
   module BaseModelConcern
     extend ActiveSupport::Concern
     require 'csv'
-    require 'slack-notifier'
 
     attr_accessor :filter
 
@@ -17,7 +16,7 @@ module Fae
       return unless notifiable_attributes.present?
       notifiable_attributes.each do |field_name_symbol|
         if self.send("#{field_name_symbol}_changed?") && self.send(field_name_symbol).present?
-          send_slack(field_name_symbol)
+          format_and_send_slack(field_name_symbol)
         end
       end
     end
@@ -26,7 +25,7 @@ module Fae
       return unless notifiable_attributes.present?
       notifiable_attributes.each do |field_name_symbol|
         if self.send(field_name_symbol).present?
-          send_slack(field_name_symbol)
+          format_and_send_slack(field_name_symbol)
         end
       end
     end
@@ -62,10 +61,9 @@ module Fae
       self.id
     end
 
-    def send_slack(field_name_symbol)
-      notifier = Slack::Notifier.new ENV["SLACK_WEBHOOK_URL"]
-      notifier.ping "#{Rails.application.class.module_parent_name} - #{name} (#{self.class.name.constantize}) - #{field_name_symbol.to_s} set to '#{self.send(field_name_symbol)}'"
-
+    def format_and_send_slack(field_name_symbol)
+      message = "#{Rails.application.class.module_parent_name} - #{name} (#{self.class.name.constantize}) - #{field_name_symbol.to_s} set to '#{self.send(field_name_symbol)}'"
+      Fae::SlackNotification.new().send_slack(message: message)
     end
 
     module ClassMethods
