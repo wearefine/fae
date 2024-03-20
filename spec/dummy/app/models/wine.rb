@@ -32,4 +32,12 @@ class Wine < ActiveRecord::Base
     order(:position)
   end
 
+  def notifiable_attributes
+    [:on_stage, :on_prod, :description_en]
+  end
+
+  def slack_message(field_name_symbol)
+    "#{Rails.application.class.module_parent_name} - [#{name}](#{Rails.application.routes.url_helpers.edit_admin_wine_url(self)}) (#{self.class.name.constantize}) is live #{field_name_symbol.to_s.gsub('_',' ')}"
+  end
+
 end
