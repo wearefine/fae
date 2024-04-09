@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_22_170611) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -127,6 +127,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.index ["position"], name: "index_fae_deploy_hooks_on_position"
   end
 
+  create_table "fae_deploys", charset: "utf8mb3", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "environment"
+    t.string "deploy_id"
+    t.string "deploy_status"
+    t.boolean "notified"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deploy_id"], name: "index_fae_deploys_on_deploy_id"
+    t.index ["user_id"], name: "index_fae_deploys_on_user_id"
+  end
+
   create_table "fae_files", id: :integer, charset: "utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "asset"
@@ -141,7 +153,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.datetime "updated_at", precision: nil
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
-    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
+    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable"
   end
 
   create_table "fae_form_managers", charset: "utf8mb3", force: :cascade do |t|
@@ -170,7 +182,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.integer "file_size"
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_images_on_attached_as"
-    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id"
+    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable"
   end
 
   create_table "fae_options", id: :integer, charset: "utf8mb3", force: :cascade do |t|
@@ -246,7 +258,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["attached_as"], name: "index_fae_text_fields_on_attached_as"
-    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable_type_and_contentable_id"
+    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable"
     t.index ["on_prod"], name: "index_fae_text_fields_on_on_prod"
     t.index ["on_stage"], name: "index_fae_text_fields_on_on_stage"
     t.index ["position"], name: "index_fae_text_fields_on_position"
@@ -277,8 +289,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "language"
+    t.boolean "receive_deploy_notifications", default: false
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
+    t.index ["receive_deploy_notifications"], name: "index_fae_users_on_receive_deploy_notifications"
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_fae_users_on_role_id"
     t.index ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true
@@ -333,7 +347,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_18_192940) do
     t.bigint "poly_thingable_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable_type_and_poly_thingable_id"
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
   create_table "release_notes", id: :integer, charset: "utf8mb3", force: :cascade do |t|

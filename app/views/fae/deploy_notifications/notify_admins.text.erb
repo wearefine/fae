@@ -1,0 +1,15 @@
+<% if @deploy['branch'] == 'master' || @deploy['branch'] == 'main' %>
+  A deploy to the production environment has completed.
+  <%= @fae_options.live_url %>
+<% elsif @deploy['branch'] == 'staging' %>
+  A deploy to the Staging environment has completed.
+  <%= @fae_options.stage_url %>
+<% else %>
+  A deploy to the <%= @deploy['branch'] %> environment has completed. 
+<% end %>
+
+<% if @deploy['state'] == 'ready' %>
+  The deploy was successful.
+<% else %>
+  An error occurred. Please contact your FINE team.
+<% end %>

@@ -464,6 +464,10 @@ Fae.form.validator = {
         );
         _this.addCustomValidation();
       }
+      // See https://github.com/wearefine/fae/issues/409
+      // This was preventing the functionality of a checkbox field
+      // on the user form.
+      _this.$password_field.data('validate', '');
     },
 
     /**

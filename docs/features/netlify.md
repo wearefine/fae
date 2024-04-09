@@ -15,6 +15,8 @@ The deploy page will also display the status of the current deploy, along with a
 
 To enable this feature, make sure `config.netlify` is defined in your Fae initializer with all options set correctly.
 
+`notification_hook_signature` is only required if you will use incoming Netlify deploy notification webhooks.
+
 `config/initializers/fae.rb`
 ```ruby
 Fae.setup do |config|
@@ -26,7 +28,8 @@ Fae.setup do |config|
     api_token: 'netlify-api-token',
     site: 'site-name-in-netlify',
     site_id: 'site-id-in-netlify',
-    api_base: 'https://api.netlify.com/api/v1/'
+    api_base: 'https://api.netlify.com/api/v1/',
+    notification_hook_signature: 'netlify-notification-hook-signature'
   }
 
 end

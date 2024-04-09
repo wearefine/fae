@@ -14,7 +14,8 @@ module Fae
     require 'slim'
     require 'kaminari'
     require 'fae/version'
-    require "sprockets/railtie"
+    require 'sprockets/railtie'
+    require 'jwt'
 
     config.eager_load_paths += %W(#{config.root}/app)
 

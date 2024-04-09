@@ -45,6 +45,8 @@ Fae::Engine.routes.draw do
 
   get 'deploy/deploys_list' => 'deploy#deploys_list', as: 'deploy_deploys_list'
   post 'deploy/deploy_site' => 'deploy#deploy_site', as: 'deploy_deploy_site'
+  
+  post 'netlify_hooks/netlify_hook' => 'netlify_hooks#netlify_hook'
 
   ## catch all 404
   match "*path" => 'pages#error404', via: [:get, :post]

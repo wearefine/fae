@@ -1,5 +1,10 @@
 Fae.setup do |config|
 
+  ## deploy_notifications_mailer_sender
+  # This email address will get passed to Fae and
+  # used as the from address in the deploy notification emails.
+  # config.deploy_notifications_mailer_sender = 'change-me@example.com'
+
   ## devise_mailer_sender
   # This email address will get passed to Devise and
   # used as the from address in the password reset emails.
@@ -73,6 +78,7 @@ Fae.setup do |config|
   #   api_token: 'netlify-api-token',
   #   site: 'site-name-in-netlify',
   #   site_id: 'site-id-in-netlify',
-  #   api_base: 'https://api.netlify.com/api/v1/'
+  #   api_base: 'https://api.netlify.com/api/v1/',
+  #   notification_hook_signature: 'netlify-notification-hook-signature'
   # }
 end
