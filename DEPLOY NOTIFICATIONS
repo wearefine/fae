@@ -1,0 +1,41 @@
+DEPLOY NOTIFICATIONS
+Configure netlify to send a webhook to the app when a deploy finishes/fails
+We send all users who opt in to deploy notifications an email with the status
+  Issues
+    1. Accommodating an "additional emails" input on the deploy page is proving to
+    add more complexity than it might be worth - we have no way to "safely" get the deploy that the user
+    started off of the API, all we can use is position in the feed list, Netlify won't return
+    the ID for the deploy which would really be ideal. We also have to build in a layer of trying
+    to keep track of the deploy on our end so the additional emails can be attached to something.
+
+    2. We'd have to add a model for tracking deploys fae_deploys
+      environment
+      deploy ID from netlify
+      deploy status from netlify
+      have we notified this deploy?
+
+      A. User clicks deploy button
+          create fae_deploy for environment
+          get most recent deploy from api list
+            update fae_deploy with ID
+
+        a. On every list poll get status of most recent non-notified fae_deploy by ID match
+            when it's status is 'ready'
+              check if error_message present
+                if not, notify success deploy, else notify failed deploy
+  
+
+CONTENT COMPONENT IMPROVEMENTS
+
+1. FAE becomes GQL enabled by default.
+
+2. Content Component system is built-in.
+
+  1. Preview / Orientation Functionality
+    A. Basic graphic representation of what the component is
+      a. Image of basic component on FE.
+      b. Preview functionality with FE refresh / iframe? (Avery?)
+
+  2. Use FAE's modal setup instead of the typical nested form dropdown madness.
+    A. Needs some CSS work, longer forms don't flex or scroll.
+ 
