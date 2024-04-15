@@ -21,8 +21,7 @@ module Fae
         end
       end
 
-      body = JSON.parse(request.body.read)
-      DeployNotifications.notify_admins(body).deliver_now
+      DeployNotifications.notify_admins(request.body.read).deliver_now
       return head :ok
     end
   end
