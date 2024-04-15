@@ -4,6 +4,10 @@ module Fae
     layout 'layouts/fae/mailer'
 
     def notify_admins(body = nil, additional_emails = [])
+      if body.blank?
+        Rails.logger.info "DeployNotifications.notify_admins called without a body"
+        return
+      end
       body = JSON.parse(body)
 
       # Don't notify if the deploy is a code push
