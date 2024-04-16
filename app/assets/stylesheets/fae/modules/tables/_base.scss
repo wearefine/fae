@@ -24,6 +24,9 @@ tbody {
         &:first-child {
           border-left-color: var(--highlight-color);
         }
+        &.no-hover {
+          border-left-color: transparent;
+        }
       }
     }
 

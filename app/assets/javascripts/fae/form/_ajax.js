@@ -32,12 +32,14 @@ Fae.form.ajax = {
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
-      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
-
+      // var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
+      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.parents('tr');
+      var colspan = $parent.find('td').length;
+      $parent.after('<tr><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover"></td></tr>');
       // scroll to the last column of the tbody, where the form will start
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      // FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
 
-      _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
+      _this._addEditActions($this.attr('href'), $('.js-addedit-form-wrapper'));
     });
   },
 
