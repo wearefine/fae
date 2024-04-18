@@ -161,6 +161,13 @@ Fae.navigation = {
   },
 
   /**
+   * Hide alerts immediately
+   */
+  killNotices: function() {
+    $('.notice, .alert, .error, .warning').not('.input .error, .form_alert').hide();
+  },
+
+  /**
    * Stick the header in the content area
    * @param {Boolean} [just_headers=false] Only initialize stickiness for `.js-content-header`
    */

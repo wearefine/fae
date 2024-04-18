@@ -27,19 +27,30 @@ Fae.form.ajax = {
    * Click event listener for add and edit links applied to both index and nested forms
    */
   addEditLinks: function() {
+    console.log('addEditLinks')
     var _this = this;
 
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
-      // var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
-      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.parents('tr');
-      var colspan = $parent.find('td').length;
-      $parent.after('<tr><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover"></td></tr>');
-      // scroll to the last column of the tbody, where the form will start
-      // FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      // $('.js-nested-form-row').remove();
+      var $parent_table = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
+      console.log($parent_table)
+      var colspan = $parent_table.find('thead th').length;
+      console.log(colspan)
+      var form_container = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+      if ($this.hasClass('js-add-link')) {
+        var $tbody = $parent_table.find('tbody');
+        $tbody.prepend(form_container);
+      } else {
+        var $parent_row = $this.parents('tr');
+        $parent_row.after(form_container);
+      }
+      console.log($parent_row)
+      // scroll to the form
+      FCH.smoothScroll($parent_table.find('.js-nested-form-row'), 500, 450, -90);
 
-      _this._addEditActions($this.attr('href'), $('.js-addedit-form-wrapper'));
+      _this._addEditActions($this.attr('href'), $parent_table.find('.js-addedit-form-wrapper'));
     });
   },
 
@@ -90,6 +101,10 @@ Fae.form.ajax = {
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);
+
+      // Flash notices are showing up in the double-nested forms for the parent nested form.
+      // Get rid of any that stick around after save.
+      Fae.navigation.killNotices();
 
       $wrapper.find('.hint').hinter();
     });
@@ -192,6 +207,7 @@ Fae.form.ajax = {
    * @see addEditSubmission
    */
   _addEditReplaceAndReinit: function($el, html, $target) {
+    console.log('_addEditReplaceAndReinit')
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
     // Private function replaces parent element with HTML and reinits select and sorting
@@ -216,7 +232,7 @@ Fae.form.ajax = {
     }
 
     if (!$target.hasClass('js-delete-link')) {
-      FCH.smoothScroll($el.parent(), 500, 100, 120);
+      FCH.smoothScroll($el.parent(), 500, 100, -60);
     }
   },
 

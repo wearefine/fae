@@ -33,6 +33,9 @@ tbody {
     &:nth-of-type(even) {
       td {
         background-color: $c-table-tr-even;
+        &.no-background {
+          background-color: transparent;
+        }
       }
     }
 
