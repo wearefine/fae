@@ -33,8 +33,9 @@ Fae.form.ajax = {
       ev.preventDefault();
       var $this = $(this);
       var $parent_table = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
-      var colspan = $parent_table.find('thead th').length;
+      var colspan = $parent_table.find('thead').first().find('th').length;
       var form_container = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+      $parent_table.find('.js-nested-form-row').remove();
       if ($this.hasClass('js-add-link')) {
         var $tbody = $parent_table.find('tbody');
         $tbody.prepend(form_container);
@@ -113,11 +114,11 @@ Fae.form.ajax = {
     this.$addedit_form.on('click', '.js-cancel-nested', function(ev) {
       ev.preventDefault();
       var $this = $(this);
-      var $form_wrapper = $this.closest('.js-addedit-form-wrapper');
+      var $form_wrapper = $this.closest('.js-nested-form-row');
 
       if ($form_wrapper.length) {
         $form_wrapper.slideUp('normal', function(){
-          $form_wrapper.empty();
+          $form_wrapper.remove();
         });
       }
     });
