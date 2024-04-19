@@ -20,7 +20,7 @@ tbody {
 
   tr {
     &:hover {
-      td {
+      > td {
         &:first-child {
           border-left-color: var(--highlight-color);
         }
