@@ -7,7 +7,7 @@ ruby:
 
   options_for_td = { cols: cols, edit_path: edit_path, edit_column: edit_column }
 
-table class=table_class data-colspan=colspan
+table class=table_class
   thead
     tr
       - if ordered
@@ -48,5 +48,3 @@ table class=table_class data-colspan=colspan
     - else
       tr
         td colspan=colspan.to_s No #{title} yet.
-
-/ .js-addedit-form-wrapper

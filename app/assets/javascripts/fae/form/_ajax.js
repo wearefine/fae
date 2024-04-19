@@ -27,17 +27,13 @@ Fae.form.ajax = {
    * Click event listener for add and edit links applied to both index and nested forms
    */
   addEditLinks: function() {
-    console.log('addEditLinks')
     var _this = this;
 
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
-      // $('.js-nested-form-row').remove();
       var $parent_table = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
-      console.log($parent_table)
       var colspan = $parent_table.find('thead th').length;
-      console.log(colspan)
       var form_container = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
       if ($this.hasClass('js-add-link')) {
         var $tbody = $parent_table.find('tbody');
@@ -46,7 +42,7 @@ Fae.form.ajax = {
         var $parent_row = $this.parents('tr');
         $parent_row.after(form_container);
       }
-      console.log($parent_row)
+
       // scroll to the form
       FCH.smoothScroll($parent_table.find('.js-nested-form-row'), 500, 450, -90);
 
@@ -207,7 +203,6 @@ Fae.form.ajax = {
    * @see addEditSubmission
    */
   _addEditReplaceAndReinit: function($el, html, $target) {
-    console.log('_addEditReplaceAndReinit')
     var $form_wrapper = $el.find('.js-addedit-form-wrapper');
 
     // Private function replaces parent element with HTML and reinits select and sorting
