@@ -26,6 +26,12 @@ module Fae
       false
     end
 
+    def get_last_deploy_time
+      deploys = get_deploys
+      return Time.now if deploys.blank?
+      deploys.first['updated_at']
+    end
+
     private
 
     def get(endpoint)

@@ -28,8 +28,8 @@ Fae.setup do |config|
     config.netlify = {
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-      site: 'nuxt3-pss-deployment-refactor',
-      site_id: '6b73c3a4-dd29-4acf-b65a-c9745b0f08eb',
+      site: 'wearefine',
+      site_id: 'ed967e5e-a129-4b3d-85c9-67d955605792',
       api_base: 'https://api.netlify.com/api/v1/',
       notification_hook_signature: '123test'
     }

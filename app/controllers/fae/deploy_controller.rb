@@ -7,6 +7,7 @@ module Fae
     def index
       raise 'Fae.netlify configs are missing.' unless netlify_enabled?
       @deploy_hooks = DeployHook.all
+      @changes = Fae::Change.where('created_at > ?', Fae::NetlifyApi.new().get_last_deploy_time)
     end
 
     def deploys_list
