@@ -1,4 +1,4 @@
-FROM ruby:3.1.1
+FROM ruby:3.3.1
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN apt-get update -y

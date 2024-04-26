@@ -130,6 +130,7 @@ module Fae
         end
       end
 
+      puts "#{value}-#{suffix}"
       "#{value}-#{suffix}"
     end
   end
