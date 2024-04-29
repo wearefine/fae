@@ -4,33 +4,33 @@ feature 'Clone record' do
 
   context 'from an edit form' do
 
-    # scenario 'should duplicate the record and redirect to edit form', js: true do
-    #   release = FactoryBot.create(:release, name: 'Ima Release', vintage: '2012', price: 13, varietal_id: 2, show: Date.today)
-    #   admin_login
-    #   visit edit_admin_release_path(release)
-    #   click_link 'Clone'
+    scenario 'should duplicate the record and redirect to edit form', js: true do
+      release = FactoryBot.create(:release, name: 'Ima Release', vintage: '2012', price: 13, varietal_id: 2, show: Date.today)
+      admin_login
+      visit edit_admin_release_path(release)
+      click_link 'Clone'
 
-    #   # support/async_helper.rb
-    #   eventually {
-    #     cloned_release = Release.find_by_name('Ima Release-2')
-    #     expect(cloned_release).to_not be_nil
-    #     expect(current_path).to eq(edit_admin_release_path(cloned_release))
-    #     expect(find_field('release_name').value).to eq(cloned_release.name)
+      # support/async_helper.rb
+      eventually {
+        cloned_release = Release.find_by_name('Ima Release-2')
+        expect(cloned_release).to_not be_nil
+        expect(current_path).to eq(edit_admin_release_path(cloned_release))
+        expect(find_field('release_name').value).to eq(cloned_release.name)
 
-    #     # only whiteliested attributes should be cloned
-    #     expect(cloned_release.slug).to          eq(release.slug)
-    #     expect(cloned_release.intro).to         eq(release.intro)
-    #     expect(cloned_release.body).to          eq(release.body)
-    #     expect(cloned_release.wine_id).to       eq(release.wine_id)
-    #     expect(cloned_release.release_date).to  eq(release.release_date)
+        # only whiteliested attributes should be cloned
+        expect(cloned_release.slug).to          eq(release.slug)
+        expect(cloned_release.intro).to         eq(release.intro)
+        expect(cloned_release.body).to          eq(release.body)
+        expect(cloned_release.wine_id).to       eq(release.wine_id)
+        expect(cloned_release.release_date).to  eq(release.release_date)
 
-    #     # other's should not
-    #     expect(cloned_release.vintage).to     eq(nil)
-    #     expect(cloned_release.price).to       eq(nil)
-    #     expect(cloned_release.varietal_id).to eq(nil)
-    #     expect(cloned_release.show).to        eq(nil)
-    #   }
-    # end
+        # other's should not
+        expect(cloned_release.vintage).to     eq(nil)
+        expect(cloned_release.price).to       eq(nil)
+        expect(cloned_release.varietal_id).to eq(nil)
+        expect(cloned_release.show).to        eq(nil)
+      }
+    end
 
     scenario 'should clone associations', js: true do
       release = FactoryBot.create(:release, name: 'Ima Release')
@@ -39,7 +39,7 @@ feature 'Clone record' do
       event_2 = FactoryBot.create(:event)
       release.events << event_1
       release.events << event_2
-      puts release.events.inspect
+
       admin_login
       visit edit_admin_release_path(release)
       click_link 'Clone'
