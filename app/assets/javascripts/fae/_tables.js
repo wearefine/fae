@@ -200,16 +200,6 @@ Fae.tables = {
     var $collapsible = $('.collapsible');
     var $toggle = $('.collapsible-toggle');
 
-    // If there's only one table, don't bother with collapsing everything
-    // Also, remove the open/close all toggle and the table subheaders
-    if ($collapsible.length === 1) {
-      $collapsible.removeClass('collapsible');
-      $collapsible.find('h3').remove();
-      $toggle.remove();
-
-      return;
-    }
-
     $toggle.click(function() {
       var $this = $(this);
 

@@ -12,27 +12,28 @@ section.content
   p = t('fae.deploy.table.deploying_helper').html_safe
 
 section.content
-  h2.deploying-heading = t('fae.deploy.table.changes_table_heading')
-  table.js-results-table
-    thead
-      tr
-        th = t('fae.changes.user')
-        th = t('fae.changes.item')
-        th = t('fae.changes.type')
-        th = t('fae.changes.attrs')
-        th = t('fae.changes.modified')
-    tbody
-      - if @changes.present?
-        - @changes.each do |change|
+  .collapsible.active
+    h3 = t('fae.deploy.table.changes_table_heading')
+    table.js-results-table
+        thead
           tr
-            td = change.user.full_name if change.user.present?
-            td = change_item_link(change)
-            td = change.change_type
-            td = change.updated_attributes.join(', ') if change.updated_attributes.present?
-            td = fae_datetime_format(change.updated_at)
-      - else
-        tr
-          td colspan=5 = t('fae.changes.no_changes')
+            th = t('fae.changes.user')
+            th = t('fae.changes.item')
+            th = t('fae.changes.type')
+            th = t('fae.changes.attrs')
+            th = t('fae.changes.modified')
+        tbody
+          - if @changes.present?
+            - @changes.each do |change|
+              tr
+                td = change.user.full_name if change.user.present?
+                td = change_item_link(change)
+                td = change.change_type
+                td = change.updated_attributes.join(', ') if change.updated_attributes.present?
+                td = fae_datetime_format(change.updated_at)
+          - else
+            tr
+              td colspan=5 = t('fae.changes.no_changes') 
 
 section.content#js-deploying-section
   h2.deploying-heading = t('fae.deploy.table.deploying_heading')
