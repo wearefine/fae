@@ -29,5 +29,27 @@ module Fae
       asset.recreate_versions! if Fae.recreate_versions && asset.present?
     end
 
+    class << self
+
+      def for_fae_index
+        where('asset IS NOT NULL').order(updated_at: :desc)
+      end
+
+      def filter(params)
+        conditions = {}
+        conditions[:imageable_type] = params['parent_model'] if params['parent_model'].present?
+        conditions[:attached_as] = params['attached_as'] if params['attached_as'].present?
+        alt_text_conditions = []
+        case params['alt_text_presence']
+        when 'Present'
+          alt_text_conditions = ['alt IN (?)', ['', nil]]
+        when 'Missing'
+          alt_text_conditions = ['alt NOT IN (?)', ['', nil]]
+        end
+        for_fae_index.where(conditions).where(alt_text_conditions)
+      end
+
+    end
+
   end
 end
