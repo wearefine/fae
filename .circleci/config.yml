@@ -15,19 +15,18 @@ jobs:
       - checkout
 
       # Restore Cached Dependencies
-      - type: cache-restore
-        name: Restore bundle cache
-        key: fae-rails-{{ checksum "Gemfile.lock" }}
+      - restore_cache:
+          keys:
+            - fae-rails-{{ checksum "Gemfile.lock" }}
 
       # Bundle install dependencies
       - run: bundle install --path bin/bundle
 
       # Cache Dependencies
-      - type: cache-save
-        name: Store bundle cache
-        key: fae-rails-{{ checksum "Gemfile.lock" }}
-        paths:
-          - bin/bundle
+      - save_cache:
+          key: fae-rails-{{ checksum "Gemfile.lock" }}
+          paths:
+            - bin/bundle
 
       # Wait for DB
       - run: dockerize -wait tcp://localhost:5432 -timeout 1m
