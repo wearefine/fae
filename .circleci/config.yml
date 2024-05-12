@@ -20,6 +20,8 @@ jobs:
             - fae-rails-{{ checksum "Gemfile.lock" }}
 
       # Bundle install dependencies
+      - run: gem update --system
+      - run: gem install bundler
       - run: bundle install --path bin/bundle
 
       # Cache Dependencies
