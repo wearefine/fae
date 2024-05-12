@@ -6,7 +6,7 @@ jobs:
   build:
     working_directory: ~/fae-rails
     docker:
-      - image: circleci/ruby:2.4.1
+      - image: cimg/ruby:3.3.1
         environment:
           RAILS_ENV: test
       - image: cimg/mysql:8.0
@@ -20,8 +20,6 @@ jobs:
             - fae-rails-{{ checksum "Gemfile.lock" }}
 
       # Bundle install dependencies
-      - run: gem update --system
-      - run: gem install bundler
       - run: bundle install --path bin/bundle
 
       # Cache Dependencies
