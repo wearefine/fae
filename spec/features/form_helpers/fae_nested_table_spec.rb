@@ -69,6 +69,7 @@ feature 'fae_nested_table' do
     }
   end
 
+  # 2024-04-29 This test is flickering (and has been for a while). I've confirmed the behavior being tested is working as expected.
   scenario 'should allow reordering of items', js: true do
     wine = FactoryBot.create(:wine)
     FactoryBot.create(:winemaker, name: 'Last', wine: wine, region_type: 1)

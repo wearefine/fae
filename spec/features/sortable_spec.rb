@@ -1,5 +1,6 @@
 require 'spec_helper'
 
+# 2024-04-29 This test is flickering (and has been for a while). I've confirmed the behavior being tested is working as expected.
 feature 'sortable' do
 
   scenario 'should allow reordering of items', js: true do

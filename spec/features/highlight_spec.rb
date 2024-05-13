@@ -1,5 +1,12 @@
 require 'spec_helper'
 
+# 2024-04-29 This test is flickering. I've confirmed the behavior being tested is working as expected
+# in the dummy app. The database_cleaner is truncating the fae_users table in the middle of the test so
+# when the Save button is clicked, the `before_action :first_user_check` is getting hit and the 
+# Fae::Option record never saves.
+# Searching the web has revealed other people hitting this behavior with no functional solution that
+# I've been able to reproduce.
+
 feature 'Highlight Color' do
 
   scenario 'when user changes highlight color', js: true do

@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '3.1.1'
+ruby '3.3.1'
 
 # Declare your gem's dependencies in fae.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -51,4 +51,3 @@ gem 'pg'
 gem "puma", "~> 5.0"
 
 gem "fog-aws"
-gem 'ddtrace', require: 'ddtrace/auto_instrument'
