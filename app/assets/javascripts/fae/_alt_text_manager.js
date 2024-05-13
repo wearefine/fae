@@ -9,7 +9,6 @@
 Fae.altTextManager = {
 
   ready: function() {
-    console.log('alt text manager ready');
     var originalValue = null;
     var emptyLable = 'No alt text';
     var $altTextLabel = $('.alt_text_label');
