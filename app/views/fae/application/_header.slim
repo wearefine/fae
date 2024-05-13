@@ -32,7 +32,7 @@ header.main-header#js-main-header
           - if current_user.super_admin_or_admin?
             li: a href=fae.users_path = t('fae.navbar.users')
             li: a href=fae.activity_log_path = t('fae.navbar.activity_log')
-            li: a href=fae.alt_texts_path = t('fae.navbar.alt_text_manager')
+          li: a href=fae.alt_texts_path = t('fae.navbar.alt_text_manager')
           - if current_user.super_admin?
             li: a href=fae.option_path = t('fae.navbar.root_settings')
           - if @option.live_url.present?
