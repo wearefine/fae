@@ -37,7 +37,12 @@ class Wine < ActiveRecord::Base
   end
 
   def slack_message(field_name_symbol)
-    "#{Rails.application.class.module_parent_name} - [#{name}](#{Rails.application.routes.url_helpers.edit_admin_wine_url(self)}) (#{self.class.name.constantize}) is live #{field_name_symbol.to_s.gsub('_',' ')}"
+    msg = ''
+    msg += "#{Rails.application.class.module_parent_name} - "
+    msg += "[#{name}](#{Rails.application.routes.url_helpers.edit_admin_wine_url(self)}) "
+    msg += "(#{self.class.name.constantize}) is live "
+    msg += "#{field_name_symbol.to_s.gsub('_',' ')}"
+    msg
   end
 
 end

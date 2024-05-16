@@ -10,7 +10,7 @@ module Fae
       webhook.each do |wh|
         notifier = Slack::Notifier.new wh
         notifier.ping message
-      end
+      end if webhook.present?
     end
 
   end
