@@ -41,6 +41,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise-two-factor'
   s.add_dependency 'rqrcode'
   s.add_dependency 'ruby-openai'
+  s.add_dependency 'settingslogic'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'better_errors'

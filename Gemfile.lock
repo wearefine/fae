@@ -36,6 +36,7 @@ PATH
       ruby-openai
       sass (>= 3.4.0)
       sass-rails (>= 5.0.7)
+      settingslogic
       simple_form (<= 5.1)
       slim
       uglifier
@@ -442,6 +443,7 @@ GEM
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
+    settingslogic (2.0.9)
     shellany (0.0.1)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
