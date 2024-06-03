@@ -3,12 +3,12 @@ module Fae
     extend ActiveSupport::Concern
     
     def instance_says_what
-      'Fae::Image instance: what?'
+      'Fae::FlexComponent instance: what?'
     end
 
     module ClassMethods
       def class_says_what
-        'Fae::Image class: what?'
+        'Fae::FlexComponent class: what?'
       end
     end
   end

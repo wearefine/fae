@@ -10,7 +10,6 @@ module Fae
       generate_nested_controller_file
       generate_view_files
       add_route
-      generate_flex_component_union_type if options.flex_component
     end
 
     private
@@ -18,7 +17,6 @@ module Fae
       def generate_nested_model_file
         generate "model #{file_name} #{@@attributes_flat}"
         inject_concern
-        inject_flex_component_concern if options.flex_component
         inject_display_field_to_model
         inject_model_attachments
         inject_position_scope
@@ -53,48 +51,12 @@ module Fae
 
       def inject_polymorphic_info
         inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
-          def fae_nested_parent
-            :#{polymorphic_name}
-          end
-        RUBY
-        end
-      end
-
-      def inject_polymorphic_info
-        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
 
   def fae_nested_parent
     :#{polymorphic_name}
   end
 
 RUBY
-        end
-      end
-
-      def inject_flex_component_concern
-        inject_into_file "app/models/#{file_name}.rb", after: /(BaseModelConcern)\n/ do <<-RUBY
-  include Fae::FlexComponentConcern
-  has_flex_component name\n
-  RUBY
-        end
-      end
-
-      def generate_flex_component_union_type
-        return unless uses_graphql
-
-        # Add the flex_component_type.rb if it doesn't exist
-        file = "app/graphql/types/flex_component_type.rb"
-        unless ::File.exists?(Rails.root.join(file).to_s)
-          template 'graphql/flex_component_type.rb', file
-        end
-
-        # Set up the union type, inject the possible_type
-        file = "app/graphql/types/flex_component_union_type.rb"
-        if ::File.exists?(Rails.root.join(file).to_s)
-          inject_into_file "app/graphql/types/flex_component_union_type.rb", "Types::#{class_name}Type, ", after: 'possible_types('
-        else
-          template 'graphql/flex_component_union_type.rb', file
-          inject_into_file "app/graphql/types/flex_component_union_type.rb", "Types::#{class_name}Type, ", after: 'possible_types('
         end
       end
 

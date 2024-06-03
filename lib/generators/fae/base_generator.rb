@@ -5,7 +5,6 @@ module Fae
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
-    class_option :flex_component, type: :boolean, default: false, desc: 'Makes the model and scaffolding for a flex component. parent-model is ignored if passed.'
 
     Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set']
 

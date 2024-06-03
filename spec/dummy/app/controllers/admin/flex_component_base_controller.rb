@@ -1,4 +1,4 @@
-module Fae
+module Admin
   class FlexComponentBaseController < Fae::NestedBaseController
 
     def update
@@ -11,6 +11,6 @@ module Fae
         render action: 'edit'
       end
     end
-
+  
   end
 end

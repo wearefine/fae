@@ -11,5 +11,12 @@ module Types
     def test_field
       "Hello World!"
     end
+
+    field :component_page, Types::ComponentPagePageType, null: true do
+      
+    end
+    def component_page
+      ComponentPagePage.instance
+    end
   end
 end

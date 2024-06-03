@@ -4,9 +4,16 @@ ruby:
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
   title               ||= assoc_name.titleize             # 'Restaurant Bars'
-  parent_item_override_class_name ||= nil
-  new_path              = new_admin_flex_component_path(item_class: (parent_item_override_class_name || parent_item.class.name), item_id: parent_item.id)
+  
+  # Need to specifiy that the item_class is a StaticPage if the parent_item is a StaticPage
+  # or the flex_componentable_type field gets set wrong.
+  item_class = parent_item.class.name
+  item_class = 'Fae::StaticPage' if parent_item.class.ancestors.include?(Fae::StaticPage)
+  new_path = new_admin_flex_component_path(item_class: item_class, item_id: parent_item.id)
+  
+  # See _ajax.js for usage
   initial_create      ||= false
+  helper_text         ||= nil
 
 section.addedit-form.js-addedit-form
   a.js-add-link.table-add-link.button.-small href=new_path New Component

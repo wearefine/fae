@@ -12,7 +12,6 @@ Fae::Engine.routes.draw do
   end
   resources :users
   resources :deploy_hooks
-  resources :flex_components
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'
