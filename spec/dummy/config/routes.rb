@@ -4,6 +4,12 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resources :hero_componentttttts
+    resources :hero_componenttttts
+    resources :hero_componentttts
+    resources :hero_componenttts
+    resources :hero_componentts
+    resources :hero_components
     resources :sub_aromas
     resources :poly_things
     resources :beers
