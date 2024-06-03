@@ -1,4 +1,4 @@
-module Admin
+module Fae
   class FlexComponentsController < Fae::NestedBaseController
 
     def new
