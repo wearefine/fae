@@ -1,0 +1,49 @@
+ruby:
+  require_locals(['assoc', 'parent_item'], local_assigns)
+
+  # optional locals
+  assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
+  title               ||= assoc_name.titleize             # 'Restaurant Bars'
+  parent_item_override_class_name ||= nil
+  new_path              = new_admin_flex_component_path(item_class: (parent_item_override_class_name || parent_item.class.name), item_id: parent_item.id)
+  initial_create      ||= false
+
+section.addedit-form.js-addedit-form
+  a.js-add-link.table-add-link.button.-small href=new_path New Component
+  h2 = title
+  - if helper_text.present?
+    h6.table-helper-text = helper_text
+  == render 'fae/application/flash_messages'
+
+  table.js-sort-row data-initial-create="#{initial_create}"
+    thead
+      tr
+        th.th-sortable-handle
+        th Component Type
+        th Preview
+        th Image
+        th On Stage
+        th On Prod
+        th.-action
+    tbody
+      - records = parent_item.send(assoc)
+      - if records.present?
+        - records.each do |item|
+          tr id=tr_id(item)
+            td.sortable-handle: i.icon-sort
+            td: a.js-edit-link href=send("edit_admin_#{item.component_model.underscore}_path", item.component_id) = item.component_model_human
+            td = item.fae_display_field
+            td
+              - if item.preview_image_url.present?
+                img src=item.preview_image_url width="80"
+            td = fae_toggle item, :on_stage
+            td = fae_toggle item, :on_prod
+            td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
+
+      - else
+        tr
+          - td_link = link_to 'add some', new_path, class: 'js-add-link'
+
+          td colspan=4 No components yet, #{td_link}.
+
+  .js-addedit-form-wrapper

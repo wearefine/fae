@@ -5,6 +5,7 @@ module Fae
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
+    class_option :flex_component, type: :boolean, default: false, desc: 'Makes the model and scaffolding for a flex component. parent-model is ignored if passed.'
 
     Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set']
 
@@ -60,6 +61,7 @@ module Fae
     def generate_model
       generate "model #{file_name} #{@@attributes_flat}"
       inject_concern
+      inject_flex_component_concern
       inject_display_field_to_model
       inject_model_attachments
       inject_position_scope
@@ -105,6 +107,15 @@ RUBY
     def inject_concern
       inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do <<-RUBY
   include Fae::BaseModelConcern\n
+RUBY
+      end
+    end
+
+    def inject_flex_component_concern
+      return unless options.flex_component
+      inject_into_file "app/models/#{file_name}.rb", after: /(include Fae::BaseModelConcern)\n/ do <<-RUBY
+  include Fae::FlexComponentConcern\n
+  has_flex_component name\n
 RUBY
       end
     end
