@@ -12,6 +12,11 @@ Rails.application.routes.draw do
     resources :hero_componenttts
     resources :hero_componentts
     resources :hero_components
+    resources :hero_components
+    resources :flex_components
+    resources :flex_components
+    resources :flex_components
+    resources :text_components
     resources :sub_aromas
     resources :poly_things
     resources :beers

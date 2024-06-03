@@ -495,6 +495,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.datetime "updated_at", precision: nil
   end
 
+  create_table "text_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "slug"

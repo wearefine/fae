@@ -1,0 +1,21 @@
+ruby:
+	form_options = {
+		html: {
+			multipart: true,
+			novalidate: true,
+			class: 'js-file-form',
+			remote: true,
+			data: {
+				type: "html",
+				form_manager_model: @item.fae_form_manager_model_name,
+				form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+			}
+		}
+	}
+= simple_form_for([:admin, @item], form_options) do |f|
+	= fae_input f, :component_model, collection: FlexComponent.components_for(@item.flex_componentable_type)
+	= f.hidden_field :flex_componentable_type
+	= f.hidden_field :flex_componentable_id
+
+	= f.submit
+	= button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'

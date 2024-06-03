@@ -1,4 +1,4 @@
-module Fae
+module <%= options.namespace.capitalize %>
   class FlexComponentsController < Fae::NestedBaseController
 
     def new
@@ -7,15 +7,15 @@ module Fae
       @item.flex_componentable_type = params[:item_class]
       build_assets
     end
-
+  
     def create
       @item = @klass.new(permitted_params)
-
+  
       if @item.save
         component = @item.component_model.constantize.new
         component.save(validate: false)
         @item.update(component_id: component.id)
-
+  
         @parent_item = @item.flex_componentable
         flash[:notice] = t('fae.save_notice')
         render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
@@ -24,10 +24,10 @@ module Fae
         render action: 'new'
       end
     end
-
+  
     def destroy
       @parent_item = @item.flex_componentable
-
+  
       if @item.destroy
         flash[:notice] = t('fae.delete_notice')
       else
@@ -35,6 +35,6 @@ module Fae
       end
       render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item}
     end
-
-  end
+  
+  end  
 end
