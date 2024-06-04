@@ -49,8 +49,8 @@ RUBY
 
       def add_route
         inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do <<-RUBY
-      resources :#{plural_file_name}
-  RUBY
+    resources :#{plural_file_name}
+RUBY
         end
       end
 
@@ -66,9 +66,8 @@ RUBY
       end
 
       def add_to_flex_component_base_components
-        inject_into_file "app/models/flex_component.rb", before: "# base components inject marker" do <<-RUBY
-      "'#{class_name}'",\n\s\s\s\s\s\s\s
-RUBY
+        inject_into_file "app/models/flex_component.rb", after: "def base_components\n\s\s\s\s\s\s[" do
+          "'#{class_name}',\s"
         end
       end
 
