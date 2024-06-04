@@ -14,7 +14,6 @@ module Fae
       add_authorization_concern
       build_initializer
       build_judge_initializer
-      add_settingslogic_files
       rake 'fae:install:migrations'
       rake 'db:migrate'
       rake 'fae:seed_db'
@@ -43,11 +42,6 @@ RUBY
 
     def add_authorization_concern
       copy_file ::File.expand_path(::File.join(__FILE__, '../templates/models/concerns/authorization_concern.rb')), 'app/models/concerns/fae/authorization_concern.rb'
-    end
-
-    def add_settingslogic_files
-      copy_file ::File.expand_path(::File.join(__FILE__, '../templates/config/settings.yml')), 'config/settings.yml'
-      copy_file ::File.expand_path(::File.join(__FILE__, '../templates/models/settings.rb')), 'app/models/settings.rb'
     end
 
     def build_initializer

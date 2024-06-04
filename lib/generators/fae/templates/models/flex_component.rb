@@ -34,15 +34,15 @@ class FlexComponent < ApplicationRecord
   class << self
 
     def base_components
-      %w(
-        TextComponent
-      )
+      [
+
+        # base component inject marker
+      ]
     end
 
+    # Including this as an example of how to conditionally include components based on the model
     def page_components
-      %w(
-
-      )
+      []
     end
 
     def components_for(model)
