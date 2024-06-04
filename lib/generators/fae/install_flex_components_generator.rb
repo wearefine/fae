@@ -24,6 +24,10 @@ module Fae
       template 'controllers/flex_component_base_controller.rb', "app/controllers/#{options.namespace}/flex_component_base_controller.rb"
       template 'controllers/flex_components_controller.rb', "app/controllers/#{options.namespace}/flex_components_controller.rb"
       
+      template 'config/settings.yml', 'config/settings.yml'
+      template 'models/settings.rb', 'app/models/settings.rb'
+
+      template 'models/concerns/livable.rb', 'app/models/concerns/livable.rb'
       template 'models/concerns/flex_componentable_concern.rb', 'app/models/concerns/flex_componentable_concern.rb'
       template 'models/flex_component.rb', 'app/models/flex_component.rb'
 

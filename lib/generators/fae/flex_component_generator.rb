@@ -10,6 +10,7 @@ module Fae
       generate_view_files
       add_route
       generate_flex_component_union_type
+      add_to_flex_component_base_components
     end
 
     private
@@ -61,6 +62,13 @@ RUBY
         else
           template 'graphql/flex_component_union_type.rb', file
           inject_into_file "app/graphql/types/flex_component_union_type.rb", "Types::#{class_name}Type, ", after: 'possible_types('
+        end
+      end
+
+      def add_to_flex_component_base_components
+        inject_into_file "app/models/flex_component.rb", before: "# base components inject marker" do <<-RUBY
+      "'#{class_name}'",\n\s\s\s\s\s\s\s
+RUBY
         end
       end
 
