@@ -1,6 +1,6 @@
 class FlexComponent < ApplicationRecord
   include Fae::BaseModelConcern
-  include Fae::FlexComponentConcern
+  include Livable
 
   before_destroy :destroy_associated_component
 
@@ -34,10 +34,7 @@ class FlexComponent < ApplicationRecord
   class << self
 
     def base_components
-      [
-
-        # base component inject marker
-      ]
+      []
     end
 
     # Including this as an example of how to conditionally include components based on the model

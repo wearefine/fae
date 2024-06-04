@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_03_174802) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -300,6 +300,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_174802) do
     t.index ["on_prod"], name: "index_flex_components_on_on_prod"
     t.index ["on_stage"], name: "index_flex_components_on_on_stage"
     t.index ["position"], name: "index_flex_components_on_position"
+  end
+
+  create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "jerseys", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
