@@ -22,6 +22,8 @@ rails g fae:flex_component HeroComponent heading:string logo:image
 
 This will scaffold everything necessary for the new component, and make it available for selection in the component lists in forms.
 
+![Image upload](https://raw.githubusercontent.com/wearefine/fae/master/docs/images/flex_components_form.png)
+
 If your app is GraphQL enabled, it will also create a type and add the type class name to the `flex_component_union_type.rb` `possible_types` definition, so the new component will be available on the API without any manual code changes.
 
 ## Adding Flex Components to Models/Pages
