@@ -1,5 +1,5 @@
 module Admin
-  class HeroComponentsController < FlexComponentBaseController
+  class HeroComponentsController < Fae::FlexComponentBaseController
 
 
     private

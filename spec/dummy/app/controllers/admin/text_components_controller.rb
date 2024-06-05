@@ -1,5 +1,5 @@
 module Admin
-  class TextComponentsController < FlexComponentBaseController
+  class TextComponentsController < Fae::FlexComponentBaseController
 
   end
 end
