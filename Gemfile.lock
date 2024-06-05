@@ -33,7 +33,6 @@ PATH
       remotipart (~> 1.4.0)
       sass (>= 3.4.0)
       sass-rails (>= 5.0.7)
-      settingslogic
       simple_form (<= 5.1)
       slim
       uglifier
@@ -491,6 +490,7 @@ DEPENDENCIES
   ruby-prof
   sass
   selenium-webdriver
+  settingslogic
   shoulda-matchers
   thin
   webrick

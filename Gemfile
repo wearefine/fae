@@ -55,3 +55,4 @@ gem 'ddtrace', require: 'ddtrace/auto_instrument'
 
 gem 'graphql'
 gem 'graphiql-rails'
+gem 'settingslogic'
