@@ -30,7 +30,7 @@ If your app is GraphQL enabled, it will also create a type and add the type clas
 
 ### Models
 
-The installation added a model concern, `models/concerns/flex_componentable_concern.rb` which contains the association definitions. Include this in your models to give them Flex Components.
+The installation added a model concern, `models/concerns/flex_componentable_concern.rb` which contains the association definition. Include this in your models to give them Flex Components.
 
 ```ruby
 class Wine < ActiveRecord::Base
@@ -48,14 +48,9 @@ module Fae
     extend ActiveSupport::Concern
 
     included do
-
       has_many :flex_components, as: :flex_componentable, dependent: :restrict_with_error
-      has_many :active_flex_components, -> { active }, as: :flex_componentable, class_name: 'FlexComponent'
-
     end
 ```
-
-*Note in both cases this is adding an association that uses an `active` scope on the Flex Component model. The installation added another concern that contains this definition - `models/concerns/livable.rb`. If this is a sensible default for you then great, if not it can be removed and the association definitions customized to your usage.*
 
 ## Forms
 
@@ -81,7 +76,7 @@ In the form, Flex Components will behave like any other Fae nested scaffold. A n
 If your app is GraphQL enabled and you want a type to expose its Flex Components, add a field for them:
 
 ```ruby
-field :flex_components, [Types::FlexComponentType], null: true, method: :active_flex_components
+field :flex_components, [Types::FlexComponentType], null: true
 ```
 
 

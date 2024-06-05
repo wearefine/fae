@@ -23,7 +23,6 @@ module Fae
     def add_files
       template 'controllers/flex_components_controller.rb', "app/controllers/#{options.namespace}/flex_components_controller.rb"
 
-      template 'models/concerns/livable.rb', 'app/models/concerns/livable.rb'
       template 'models/concerns/flex_componentable_concern.rb', 'app/models/concerns/flex_componentable_concern.rb'
       template 'models/flex_component.rb', 'app/models/flex_component.rb'
 
