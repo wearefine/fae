@@ -1,5 +1,5 @@
 module <%= options.namespace.capitalize %>
-  class <%= class_name.pluralize %>Controller < FlexComponentBaseController
+  class <%= class_name.pluralize %>Controller < Fae::FlexComponentBaseController
 
 <% if @attachments.present? %>
     private

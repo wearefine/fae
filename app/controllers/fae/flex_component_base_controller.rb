@@ -1,4 +1,4 @@
-module Admin
+module Fae
   class FlexComponentBaseController < Fae::NestedBaseController
 
     def update
