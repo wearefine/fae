@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'FlexComponents management', type: :feature do
   scenario 'User can CRUD flex components on FAE pages', js: true do
     admin_login
-    visit fae.edit_content_block_path('component_page')
+    visit fae.edit_content_block_path('components')
     click_on 'New Component'
     expect(page).to have_content('New Flex Component')
     

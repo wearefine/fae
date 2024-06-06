@@ -84,7 +84,7 @@ Here's a brief example of a query utilizing Flex Components on a static page:
 
 ```GraphQL
 {
-  componentPage {
+  componentsPage {
     flexComponents {
       instance {
         __typename
