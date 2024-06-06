@@ -12,9 +12,9 @@ module Types
       "Hello World!"
     end
 
-    field :component_page, Types::ComponentPagePageType, null: true
-    def component_page
-      ComponentPagePage.instance
+    field :components_page, Types::ComponentsPageType, null: true
+    def components_page
+      ComponentsPage.instance
     end
   end
 end

@@ -1,6 +1,6 @@
-class Types::ComponentPagePageType < Types::BaseObject
+class Types::ComponentsPageType < Types::BaseObject
 
-  graphql_name 'ComponentPagePage'
+  graphql_name 'ComponentsPage'
 
   field :title, String, null: false
   field :name, String,

@@ -5,7 +5,7 @@ RSpec.describe 'ComponentPage Query', type: :request do
     post '/api', params: {
       query: <<-GRAPHQL
         {
-          componentPage {
+          componentsPage {
             flexComponents {
               instance {
                 __typename
@@ -27,14 +27,14 @@ RSpec.describe 'ComponentPage Query', type: :request do
     # Check that the response has the correct structure
     expect(json).to match({
       'data' => {
-        'componentPage' => {
+        'componentsPage' => {
           'flexComponents' => Array
         }
       }
     })
 
     # Check that each flexComponent has an instance with the correct fields
-    json['data']['componentPage']['flexComponents'].each do |flex_component|
+    json['data']['componentsPage']['flexComponents'].each do |flex_component|
       instance = flex_component['instance']
       expect(instance).to include('__typename')
 
