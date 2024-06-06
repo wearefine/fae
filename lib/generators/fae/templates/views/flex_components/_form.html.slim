@@ -13,7 +13,7 @@ ruby:
 		}
 	}
 = simple_form_for([:admin, @item], form_options) do |f|
-	= fae_input f, :component_model, collection: FlexComponent.components_for(@item.flex_componentable_type)
+	= fae_input f, :component_model, collection: Fae::FlexComponent.components_for(@item.flex_componentable_type)
 	= f.hidden_field :flex_componentable_type
 	= f.hidden_field :flex_componentable_id
 

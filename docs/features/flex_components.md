@@ -48,7 +48,7 @@ module Fae
     extend ActiveSupport::Concern
 
     included do
-      has_many :flex_components, as: :flex_componentable, dependent: :restrict_with_error
+      has_many :flex_components, as: :flex_componentable, dependent: :restrict_with_error, class_name: 'Fae::FlexComponent'
     end
 ```
 

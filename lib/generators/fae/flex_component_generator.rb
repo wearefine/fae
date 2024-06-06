@@ -65,7 +65,7 @@ RUBY
       end
 
       def add_to_flex_component_base_components
-        inject_into_file "app/models/flex_component.rb", after: "def base_components\n\s\s\s\s\s\s[" do
+        inject_into_file "app/models/concerns/fae/flex_component_concern.rb", after: "def base_components\n\s\s\s\s\s\s\s\s[" do
           "'#{class_name}',\s"
         end
       end

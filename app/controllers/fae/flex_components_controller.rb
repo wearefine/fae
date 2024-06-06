@@ -35,6 +35,19 @@ module Fae
       end
       render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item}
     end
+
+    private
+
+    def set_class_variables
+      @klass_name = 'Fae::FlexComponent'
+      @klass = @klass_name.classify.constantize
+      @klass_singular = @klass_name.singularize
+    end
   
+    # only allow trusted parameters, override to white-list
+    def permitted_params
+      params.require('flex_component').permit!
+    end
+
   end  
 end
