@@ -3,7 +3,7 @@ class Admin::ContentBlocksController < Fae::StaticPagesController
   private
 
   def fae_pages
-    [HomePage, AboutUsPage, ContactUsPage, ComponentPagePage]
+    [HomePage, AboutUsPage, ContactUsPage, ComponentsPage]
   end
 
   def use_pagination
