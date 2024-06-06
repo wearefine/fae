@@ -1,7 +1,7 @@
 # This migration comes from fae (originally 20240531185556)
-class CreateFlexComponents < ActiveRecord::Migration[7.0]
+class CreateFaeFlexComponents < ActiveRecord::Migration[7.0]
   def change
-    create_table :flex_components do |t|
+    create_table :fae_flex_components do |t|
       t.references :flex_componentable, polymorphic: true, null: false
       t.string :component_model, index: true
       t.integer :component_id, index: true

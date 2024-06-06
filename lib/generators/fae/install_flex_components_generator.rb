@@ -24,7 +24,7 @@ module Fae
       template 'controllers/flex_components_controller.rb', "app/controllers/#{options.namespace}/flex_components_controller.rb"
 
       template 'models/concerns/flex_componentable_concern.rb', 'app/models/concerns/flex_componentable_concern.rb'
-      template 'models/flex_component.rb', 'app/models/flex_component.rb'
+      template 'models/concerns/flex_component_concern.rb', 'app/models/concerns/fae/flex_component_concern.rb'
 
       template "views/flex_components/new.html.#{options.template}", "app/views/#{options.namespace}/flex_components/new.html.#{options.template}"
       template "views/flex_components/edit.html.#{options.template}", "app/views/#{options.namespace}/flex_components/edit.html.#{options.template}"

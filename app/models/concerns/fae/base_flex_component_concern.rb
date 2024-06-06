@@ -13,8 +13,8 @@ module Fae
     module ClassMethods
   
       def has_flex_component(model_name)
-        has_one :flex_component, -> { where('flex_components.component_model' => model_name) },
-                foreign_key: 'component_id'
+        has_one :flex_component, -> { where('fae_flex_components.component_model' => model_name) },
+                foreign_key: 'component_id', class_name: 'Fae::FlexComponent'
       end
   
     end
