@@ -9,7 +9,7 @@ ruby:
   # or the flex_componentable_type field gets set wrong.
   item_class = parent_item.class.name
   item_class = 'Fae::StaticPage' if parent_item.class.ancestors.include?(Fae::StaticPage)
-  new_path = new_admin_flex_component_path(item_class: item_class, item_id: parent_item.id)
+  new_path = fae.new_flex_component_path(item_class: item_class, item_id: parent_item.id)
   
   # See _ajax.js for usage
   initial_create      ||= false
@@ -38,7 +38,7 @@ section.addedit-form.js-addedit-form
         - records.each do |item|
           tr id=tr_id(item)
             td.sortable-handle: i.icon-sort
-            td: a.js-edit-link href=send("edit_admin_#{item.component_model.underscore}_path", item.component_id) = item.component_model_human
+            td: a.js-edit-link href=main_app.send("edit_#{fae_path}_#{item.component_model.underscore}_path", item.component_id) = item.component_model_human
             td = item.fae_display_field
             td
               - if item.preview_image_url.present?

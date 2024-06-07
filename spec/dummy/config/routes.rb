@@ -13,9 +13,6 @@ Rails.application.routes.draw do
     resources :hero_componentts
     resources :hero_components
     resources :hero_components
-    resources :flex_components
-    resources :flex_components
-    resources :flex_components
     resources :text_components
     resources :hero_components
     resources :sub_aromas
