@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
-    resources :flex_components
+    # resources :flex_components
     resources :text_components
     resources :hero_components
     resources :sub_aromas

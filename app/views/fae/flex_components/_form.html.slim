@@ -10,7 +10,8 @@ ruby:
 				form_manager_model: @item.fae_form_manager_model_name,
 				form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
 			}
-		}
+		},
+    url: fae.flex_components_path
 	}
 = simple_form_for([:admin, @item], form_options) do |f|
 	= fae_input f, :component_model, collection: Fae::FlexComponent.components_for(@item.flex_componentable_type)
