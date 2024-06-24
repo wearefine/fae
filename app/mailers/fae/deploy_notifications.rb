@@ -3,7 +3,8 @@ module Fae
     default from: Fae.devise_mailer_sender
     layout 'layouts/fae/mailer'
 
-    def notify_admins(body = nil, additional_emails = [])
+    def notify_admins(request_obj, additional_emails = [])
+      body = request_obj.body.read
       if body.blank?
         Rails.logger.info "DeployNotifications.notify_admins called without a body"
         return
@@ -18,6 +19,7 @@ module Fae
       end
 
       @deploy = body
+      @base_url = request_obj.base_url
       recipients = Fae::User.where(receive_deploy_notifications: true).pluck(:email)
       recipients += additional_emails
       @fae_options = Fae::Option.instance

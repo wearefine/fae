@@ -21,7 +21,7 @@ module Fae
         end
       end
 
-      DeployNotifications.notify_admins(request.body.read).deliver_now
+      DeployNotifications.notify_admins(request).deliver_now
       return head :ok
     end
   end
