@@ -4,11 +4,10 @@ require_relative 'validation_helper_collection'
 
 module Fae
   # configurable defaults
-  mattr_accessor :devise_secret_key, :devise_mailer_sender, :deploy_notifications_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager, :netlify
+  mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager, :netlify
 
   self.devise_secret_key                  = ''
   self.devise_mailer_sender               = 'change-me@example.com'
-  self.deploy_notifications_mailer_sender = 'change-me@example.com'
   self.dashboard_exclusions               = []
   self.max_image_upload_size              = 2
   self.max_file_upload_size               = 5

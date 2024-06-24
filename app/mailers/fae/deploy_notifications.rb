@@ -1,6 +1,6 @@
 module Fae
   class DeployNotifications < ActionMailer::Base
-    default from: Fae.deploy_notifications_mailer_sender
+    default from: Fae.devise_mailer_sender
     layout 'layouts/fae/mailer'
 
     def notify_admins(body = nil, additional_emails = [])

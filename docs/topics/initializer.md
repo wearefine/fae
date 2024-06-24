@@ -5,8 +5,7 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 | key | type | default | description |
 | --- | ---- | ------- | ----------- |
 | devise_secret_key | string | | unique Devise hash, generated on `rails g fae:install` |
-| devise_mailer_sender | string | "change-me@example.com" | This email address will get passed to Devise and used as the from address in the password reset emails. |
-| deploy_notifications_mailer_sender | string | "change-me@example.com" | This email address will get passed to Fae and used as the from address in the deploy notification emails. |
+| devise_mailer_sender | string | "change-me@example.com" | This email address will get passed to Devise and used as the from address in the password reset emails.
 | dashboard_exclusions | array | [] | The dashboard will show all objects with recent activity. |
 | max_image_upload_size | integer | 2 | This will set a file size limit on image uploads in MBs. |
 | max_file_upload_size | integer | 5 | This will set a file size limit on file uploads in MBs. |

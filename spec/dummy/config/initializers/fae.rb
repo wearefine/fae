@@ -4,8 +4,6 @@ Fae.setup do |config|
 
   config.devise_mailer_sender = 'test@test.com'
 
-  config.deploy_notifications_mailer_sender = 'test@test.com'
-
   config.max_image_upload_size = 1
 
   # models to exclude from dashboard list
