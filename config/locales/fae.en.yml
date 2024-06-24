@@ -30,6 +30,7 @@ en:
       edit: 'Edit'
     user:
       password_hint: 'To update your password, fill out the fields below. Otherwise leave blank. Passwords must contain at least 8 characters.'
+      receive_deploy_notifications_hint: 'Check to receive deploy notifications via email.'
       header: 'Your Settings'
       last_login: 'Last Logged In'
       active: 'Active'

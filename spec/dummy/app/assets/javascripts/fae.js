@@ -6,6 +6,7 @@
 //= require fae/vendor/trumbowyg
 
 $(document).ready(function(){
+  
   $('.login-body').addClass('test-class');
 
   $("body").on("modal:show", function (e) {

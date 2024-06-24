@@ -20,8 +20,8 @@
       environment:
         - RAILS_ENV=development
         - DEV_MYSQL_HOST=db
-        - FINE_NETLIFY_API_TOKEN=test
-        - FINE_NETLIFY_API_USER=test
+        - FINE_NETLIFY_API_TOKEN=abc123
+        - FINE_NETLIFY_API_USER=user@email.com
     db:
       # image: postgres
       # volumes:
@@ -37,4 +37,4 @@
       ports:
         - '3307:3306'
       volumes:
-        - /private/app/dbs:/var/lib/mysql
+        - ./mysql:/var/lib/mysql

@@ -1,0 +1,9 @@
+<% if @deploy['title'].present? %>
+  <%= @deploy['title'].gsub('+', ' ') %>
+<% end %>
+
+<% if @deploy['state'] == 'ready' %>
+  The deploy was successful.
+<% else %>
+  There was an issue with your deployment. Attempt to redeploy and if the issue persists contact your CMS administrator or see <%= @base_url %>/admin/help.
+<% end %>

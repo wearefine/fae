@@ -19,6 +19,5 @@ module Fae
       end
       render json: {success: false}
     end
-
   end
 end
