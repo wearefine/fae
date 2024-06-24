@@ -38,7 +38,7 @@ def slack_message(field_name_symbol)
     msg += "[#{name}](#{Rails.application.routes.url_helpers.edit_admin_wine_url(self)}) "
     msg += "(#{self.class.name.constantize}) is #{status} "
     msg += "#{field_name_symbol.to_s.gsub('_',' ')}"
-    msg
+    return msg
   when :slug
     # Different message for slug changes.
   end
