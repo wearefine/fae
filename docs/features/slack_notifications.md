@@ -9,7 +9,9 @@ after_create :notify_initiation
 before_save :notify_changes
 ```
 
-There are a couple of new instance methods to drive this in your models:
+Models created with FAE's scaffold generators include this concern by default so you shouldn't need to take any action here.
+
+However, there are a couple of new instance methods to drive this in your models:
 
 ```ruby
 def notifiable_attributes
@@ -18,7 +20,7 @@ def notifiable_attributes
 end
 ```
 
-You can customize the message(s) as you wish, e.g.:
+
 ```ruby
 def slack_message(field_name_symbol)
   case field_name_symbol
@@ -35,3 +37,5 @@ def slack_message(field_name_symbol)
   end
 end
 ```
+
+As illustrated, you can customize the messages as you wish.
