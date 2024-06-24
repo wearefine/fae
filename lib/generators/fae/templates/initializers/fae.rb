@@ -75,4 +75,8 @@ Fae.setup do |config|
   #   site_id: 'site-id-in-netlify',
   #   api_base: 'https://api.netlify.com/api/v1/'
   # }
+
+  ## slack_webhook_url
+  # Environment variable is recommended for any sensitive Slack configuration details.
+  config.slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
 end
