@@ -3,7 +3,7 @@ require 'slack-notifier'
 module Fae
   class SlackNotification
 
-    def send_slack(webhook: ENV["SLACK_WEBHOOK_URL"], message: nil)
+    def send_slack(webhook: Fae.slack_webhook_url, message: nil)
       if webhook.is_a?(String)
         webhook = webhook.split(',')
       end

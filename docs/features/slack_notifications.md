@@ -2,6 +2,13 @@
 
 Built around the `slack-notifier` gem, FAE now offers the ability to send a message to a Slack channel when an object is created or saved.
 
+Add the Slack webhook URL(s) to your `fae.rb` file. It can be a single value, or comma separated for multiple:
+
+```
+# fae.rb
+config.slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
+```
+
 FAE's `base_model_concern.rb` has two new callbacks:
 
 ```ruby
