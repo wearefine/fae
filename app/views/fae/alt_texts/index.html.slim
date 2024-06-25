@@ -27,7 +27,7 @@ main.content
                 img srcset=item.asset.url
             td = item.imageable_type
             td = item.imageable_id
-            td = item.attached_as.titleize
+            td = item.attached_as&.titleize
             td
               span.alt_text_label
                 = item.alt.present? ? item.alt : 'No alt text'
