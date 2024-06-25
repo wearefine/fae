@@ -3,6 +3,8 @@ class SubAroma < ApplicationRecord
 
   belongs_to :aroma, touch: true
 
+  default_scope { order(:name) }
+
   def fae_nested_parent
     :aroma
   end
