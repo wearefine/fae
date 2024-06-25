@@ -5,7 +5,7 @@ main.content
   == fae_filter_form search: false, title: t('fae.application.alt_texts_filter'), action: fae.alt_texts_filter_path do
     == fae_filter_select :alt_text_presence, options: ['Both', 'Missing', 'Present']
     == fae_filter_select :parent_model, options: Fae::Image.pluck(:imageable_type).uniq
-    == fae_filter_select :attached_as, options: Fae::Image.pluck(:attached_as).uniq.collect { |a| [a.titleize, a] }
+    == fae_filter_select :attached_as, options: Fae::Image.pluck(:attached_as).uniq.collect.compact { |a| [a.titleize, a] }
   table.js-sort-column
     thead
       tr
