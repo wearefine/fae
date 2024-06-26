@@ -41,3 +41,8 @@
       header: 'California Winemaker',
       title: 'California Winemakers'
 
+- if @item.persisted?
+	section.content#components
+		== render 'fae/shared/flex_components_table',
+			assoc: :flex_components,
+			parent_item: @item
