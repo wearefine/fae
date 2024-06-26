@@ -9,4 +9,8 @@ class HeroComponent < ApplicationRecord
     title
   end
 
+  def preview_image_url
+    image.present? ? image.asset.thumb.url : nil
+  end
+
 end
