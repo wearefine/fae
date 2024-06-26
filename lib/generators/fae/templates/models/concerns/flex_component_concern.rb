@@ -8,7 +8,7 @@ module Fae
       end
     
       def preview_image_url
-    
+        component_instance.preview_image_url
       end
     end
   
