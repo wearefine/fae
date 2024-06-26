@@ -42,7 +42,7 @@ section.addedit-form.js-addedit-form
             td = item.fae_display_field
             td
               - if item.preview_image_url.present?
-                img src=item.preview_image_url width="80"
+                img src=item.preview_image_url
             td = fae_toggle item, :on_stage
             td = fae_toggle item, :on_prod
             td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
