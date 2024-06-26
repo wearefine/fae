@@ -203,6 +203,12 @@ Fae.form.ajax = {
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
       }
+
+      // This is so flex components will open their forms after the initial
+      // selection of component type then save happens.
+      if ($el.find('table').data('initialCreate')) {
+        $el.find('.js-edit-link').last().trigger('click');
+      }
     }
 
     // if there's a form wrap, slide it up before replacing content

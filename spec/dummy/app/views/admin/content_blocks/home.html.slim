@@ -16,4 +16,9 @@
     = fae_image_form f, :hero_image
     = fae_file_form f, :welcome_pdf
 
+section.content#components
+  == render 'fae/shared/flex_components_table',
+    assoc: :flex_components,
+    parent_item: @item
+
 == render 'fae/shared/recent_changes'

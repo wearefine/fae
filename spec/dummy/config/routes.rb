@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api"
+  post "/api", to: "graphql#execute"
   root 'pages#home'
 
   namespace :admin do
+    # resources :flex_components
+    resources :text_components
+    resources :hero_components
     resources :sub_aromas
     resources :poly_things
     resources :beers
