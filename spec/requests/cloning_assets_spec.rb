@@ -20,10 +20,10 @@ describe 'cloning assets' do
     cloned_release = Release.find_by_name('Ima Release-2')
 
     expect(cloned_release.bottle_shot).to_not eq(bottle_shot)
-    expect(cloned_release.bottle_shot.asset.file.filename).to eq(bottle_shot.asset.file.filename)
+    expect(cloned_release.bottle_shot.asset.file.read).to eq(bottle_shot.asset.file.read)
 
     expect(cloned_release.label_pdf).to_not eq(label_pdf)
-    expect(cloned_release.label_pdf.asset.file.filename).to eq(label_pdf.asset.file.filename)
+    expect(cloned_release.label_pdf.asset.file.read).to eq(label_pdf.asset.file.read)
 
   end
 

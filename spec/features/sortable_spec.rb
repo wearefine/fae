@@ -19,8 +19,8 @@ feature 'sortable' do
 
     expect(Acclaim.order(:position)).to eq([acclaim_1, acclaim_2, acclaim_3, acclaim_4])
 
-    handle = find("#acclaim_#{acclaim_4.id} .sortable-handle")
-    target = find("#acclaim_#{acclaim_1.id} .sortable-handle")
+    handle = find("#acclaim_#{acclaim_4.id} .sortable-handle span")
+    target = find("#acclaim_#{acclaim_1.id} .sortable-handle span")
     handle.drag_to(target)
 
     eventually {

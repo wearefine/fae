@@ -18,11 +18,11 @@ GIT
 PATH
   remote: .
   specs:
-    fae-rails (3.0.0)
+    fae-rails (3.1.0)
       acts_as_list (~> 0.9.11)
       browser (~> 2.5.3)
       carrierwave
-      devise (~> 4.0)
+      devise
       devise-two-factor
       jquery-rails (~> 4.3.1)
       jquery-ui-rails (~> 6.0.1)
@@ -148,13 +148,12 @@ GEM
     capybara-screenshot (1.0.26)
       capybara (>= 1.0, < 4)
       launchy
-    carrierwave (2.2.2)
-      activemodel (>= 5.0.0)
-      activesupport (>= 5.0.0)
+    carrierwave (3.0.7)
+      activemodel (>= 6.0.0)
+      activesupport (>= 6.0.0)
       addressable (~> 2.6)
       image_processing (~> 1.1)
       marcel (~> 1.0.0)
-      mini_mime (>= 0.1.3)
       ssrf_filter (~> 1.0)
     childprocess (4.1.0)
     chunky_png (1.4.0)
@@ -175,7 +174,7 @@ GEM
       msgpack
     debase-ruby_core_source (0.10.16)
     debug_inspector (1.1.0)
-    devise (4.9.3)
+    devise (4.9.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -191,7 +190,7 @@ GEM
     erubi (1.12.0)
     eventmachine (1.2.7)
     excon (0.92.4)
-    execjs (2.8.1)
+    execjs (2.9.1)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
     factory_bot_rails (4.8.2)
@@ -283,7 +282,7 @@ GEM
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2022.0105)
-    mini_magick (4.11.0)
+    mini_magick (4.12.0)
     mini_mime (1.1.2)
     minitest (5.21.2)
     msgpack (1.5.6)
@@ -371,8 +370,8 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.2.5)
-    rotp (6.2.0)
-    rqrcode (2.1.2)
+    rotp (6.3.0)
+    rqrcode (2.2.0)
       chunky_png (~> 1.0)
       rqrcode_core (~> 1.0)
     rqrcode_core (1.2.0)
@@ -398,7 +397,7 @@ GEM
       rspec-support (~> 3.10)
     rspec-support (3.11.0)
     ruby-prof (1.4.3)
-    ruby-vips (2.1.4)
+    ruby-vips (2.2.1)
       ffi (~> 1.12)
     rubyzip (2.3.2)
     sass (3.7.4)
@@ -426,12 +425,12 @@ GEM
     simple_form (5.1.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
-    slim (4.1.0)
-      temple (>= 0.7.6, < 0.9)
-      tilt (>= 2.0.6, < 2.1)
-    sprockets (4.0.3)
+    slim (5.2.1)
+      temple (~> 0.10.0)
+      tilt (>= 2.1.0)
+    sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
+      rack (>= 2.2.4, < 4)
     sprockets-rails (3.4.2)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
@@ -439,15 +438,15 @@ GEM
     sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    ssrf_filter (1.0.7)
+    ssrf_filter (1.1.2)
     strscan (3.0.1)
-    temple (0.8.2)
+    temple (0.10.3)
     thin (1.8.1)
       daemons (~> 1.0, >= 1.0.9)
       eventmachine (~> 1.0, >= 1.0.4)
       rack (>= 1, < 3)
     thor (1.3.0)
-    tilt (2.0.10)
+    tilt (2.3.0)
     timeout (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -487,7 +486,7 @@ DEPENDENCIES
   guard-rspec
   mysql2
   pg
-  pry-nav
+  pry
   puma (~> 5.0)
   rails (~> 7.0.2)
   rails-controller-testing

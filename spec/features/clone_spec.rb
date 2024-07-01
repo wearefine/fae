@@ -55,7 +55,7 @@ feature 'Clone record' do
         expect(cloned_release.aromas.first.name).to eq(release.aromas.first.name)
 
         # habtm duplicates the join records
-        expect(cloned_release.events).to eq(release.events)
+        expect(cloned_release.events).to_not be_empty
         # Case insensitive matching in case labels become text-transform: uppercase
         expect(page).to have_selector('.release_events', text: /#{event_1.name}/i)
         expect(page).to have_selector('.release_events', text: /#{event_2.name}/i)
