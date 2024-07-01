@@ -20,19 +20,10 @@ test:
 
 
 remote_development:
-  <<: *base
-  database: fae_dev
-  username: fae
-  password: sh45&rEDnap
-
-stage:
-  <<: *base
-  database: fae_stage
-  username: fae
   password: sh45&rEDnap
 
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *base
+  database: fae
+  username: fae
+  password: sh45&rEDnap

@@ -52,3 +52,4 @@ gem "puma", "~> 5.0"
 
 gem "fog-aws"
 gem 'ddtrace', require: 'ddtrace/auto_instrument'
+

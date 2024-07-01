@@ -10,6 +10,7 @@ en:
       already_authenticated: "You are already signed in."
       inactive: "Your account is not activated yet."
       invalid: "You’ll need a user name and a password that works. We’re sticklers for this stuff."
+      invalid_mfa: "You’ll need a user name, password and MFA code that works. We’re sticklers for this stuff."
       locked: "Your account is locked."
       last_attempt: "You have one more attempt before your account will be locked."
       not_found_in_database: "You’ll need a user name and a password that works. We’re sticklers for this stuff."

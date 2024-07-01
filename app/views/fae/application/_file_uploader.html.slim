@@ -18,7 +18,16 @@ ruby:
   ruby:
     form_manager_id = show_form_manager ? "#{item.class.name}_#{file_name}" : nil
     form_manager_id += "_#{language}" if language.present?
-  - wrapper_html = language.present? ? { data: { language: language } } : {}
+    if Fae.languages.keys.any? { |lang| file_name.to_s.end_with?(lang.to_s) } && !language.present?
+      label = label.split
+      lang_for_label = "(#{label.pop()})"
+      label = label.push(lang_for_label).join(" ")
+      wrapper_html = { data: { language: file_name.to_s.split("_").last.to_sym } }
+    elsif language.present?
+      wrapper_html = { data: { language: language } }
+    else
+      wrapper_html = {}
+    end
   = f.simple_fields_for file_name, defaults: { wrapper_html: wrapper_html } do |i|
     .input.field class="#{file_name}" data-form-manager-id=form_manager_id
       = content_tag :label, class: ('required' if required) do

@@ -1,0 +1,34 @@
+= render 'fae/shared/index_header', title: 'Multi-Factor Authentication', breadcrumbs: false, new_button: false
+
+section.content
+  article.content
+  div.mfa-section-content
+    div 
+      strong 1. Scan QR Code
+      br
+      br
+      p Please scan the QR code using an MFA compatible app such as Google Authenticator or Authy.
+      p If you cannot scan, please enter the following code manually:
+      strong = current_user.otp_secret
+
+    = qr_code_as_svg(current_user.two_factor_qr_code_uri)
+
+    
+  
+  p
+    strong 2. Confirm MFA Code
+    br
+    p Please enter generated code below.
+    br
+    div.mfa-buttons
+      = simple_form_for(:two_fa, url: two_factor_settings_path, method: :post) do |f|
+        = f.input :code, label: 'MFA Code', input_html: {style: 'width: 400px'}
+        = f.input :password, label: 'Enter your current password', input_html: {style: 'width: 400px'}
+        
+        = f.button :submit, "Confirm and Enable Multi-Factor", class: "js-cancel-nested cancel-nested-button"
+
+      - if  @options.mfa_enabling_user == current_user.email && !current_user.otp_required_for_login
+        p.mfa-or -or-
+        = simple_form_for(:two_fa, url: two_factor_settings_path, method: :delete) do |f|
+
+          = f.button :submit, "Cancel", class: "js-cancel-nested cancel-nested-button"

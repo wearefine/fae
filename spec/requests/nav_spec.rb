@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe 'Global nav' do
 
+  before(:each) do
+    def fae_path
+      Rails.application.routes.url_helpers.fae_path
+    end
+  end
+
   context 'when user is super_admin' do
     it 'should display users, and settings link' do
       super_admin_login

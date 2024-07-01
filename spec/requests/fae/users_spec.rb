@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe 'users#index' do
 
+  before(:each) do
+    def admin_teams_path
+      Rails.application.routes.url_helpers.admin_teams_path
+    end
+  end
+
   context 'when role is super admin' do
     before do
       super_admin_login

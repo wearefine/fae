@@ -7,7 +7,9 @@ class HomePage < Fae::StaticPage
     {
       header: {
         type: Fae::TextField,
-        validates: { presence: true }
+        validates: {
+          presence: true
+          }
       },
       hero: Fae::TextField,
       email: {
@@ -26,14 +28,13 @@ class HomePage < Fae::StaticPage
       introduction: {
         type: Fae::TextArea,
         validates: {
-          presence: true,
-          length: { maximum: 100 }
+          length: { maximum: 100 },
+          presence: true
           }
         },
       introduction_2: {
         type: Fae::TextArea,
         validates: {
-          presence: true,
           length: { maximum: 100 }
           }
         },

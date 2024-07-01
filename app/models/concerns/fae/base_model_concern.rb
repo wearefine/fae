@@ -75,11 +75,59 @@ module Fae
       def fae_translate(*attributes)
         attributes.each do |attribute|
           define_method attribute.to_s do
-            self.send "#{attribute}_#{I18n.locale}"
+            if self.try("#{attribute}_#{I18n.locale}").present?
+              self.send "#{attribute}_#{I18n.locale}"
+            else
+              self.send "#{attribute}_en"
+            end
           end
 
           define_singleton_method "find_by_#{attribute}" do |val|
-            self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            if self.has_attribute?("#{attribute}_#{I18n.locale}")
+              self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            else
+              self.send("find_by_#{attribute}_en", val)
+            end
+          end
+        end
+      end
+
+      def fae_image_translate(*attributes)
+        attributes.each do |attribute|
+          define_method attribute.to_s do
+            if self.respond_to?("#{attribute}_#{I18n.locale}") && asset_and_url_present?(self.send("#{attribute}_#{I18n.locale}"))
+              self.send "#{attribute}_#{I18n.locale}"
+            else
+              self.send "#{attribute}_en"
+            end
+          end
+
+          define_singleton_method "find_by_#{attribute}" do |val|
+            if self.has_attribute?("#{attribute}_#{I18n.locale}")
+              self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            else
+              self.send("find_by_#{attribute}_en", val)
+            end
+          end
+        end
+      end
+
+      def fae_file_translate(*attributes)
+        attributes.each do |attribute|
+          define_method attribute.to_s do
+            if self.respond_to?("#{attribute}_#{I18n.locale}") && asset_and_url_present?(self.send("#{attribute}_#{I18n.locale}"))
+              self.send "#{attribute}_#{I18n.locale}"
+            else
+              self.send "#{attribute}_en"
+            end
+          end
+
+          define_singleton_method "find_by_#{attribute}" do |val|
+            if self.has_attribute?("#{attribute}_#{I18n.locale}")
+              self.send("find_by_#{attribute}_#{I18n.locale}", val)
+            else
+              self.send("find_by_#{attribute}_en", val)
+            end
           end
         end
       end
@@ -111,6 +159,10 @@ module Fae
     end
 
     private
+
+    def asset_and_url_present?(obj)
+      obj.asset.present? && obj.asset.url.present?
+    end
 
     def fae_bust_navigation_caches
       Fae::Role.all.each do |role|

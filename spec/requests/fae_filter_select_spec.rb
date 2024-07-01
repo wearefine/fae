@@ -3,6 +3,9 @@ require 'rails_helper'
 describe 'fae_filter_select' do
 
   before(:each) do
+    def admin_releases_path
+      Rails.application.routes.url_helpers.admin_releases_path
+    end
     FactoryBot.create(:release)
     admin_login
   end

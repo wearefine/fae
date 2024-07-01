@@ -5,6 +5,7 @@ FactoryBot.define do
     singleton_guard 0
     time_zone 'Pacific Time (US & Canada)'
     live_url 'http://google.com'
+    translate_language true
   end
 
 end

@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   # ------
   # Hardcoding the version for now, because the previous error is happening, likely do to something
   # Going wrong with the Zeitwerk autoloader...
-  s.version     = '3.0.0'
+  s.version     = '3.1.0'
   s.authors     = ['FINE']
   s.email       = ['fae@wearefine.com']
   s.homepage    = 'https://github.com/wearefine/fae'
@@ -57,6 +57,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'remotipart', '~> 1.4.0'
   s.add_dependency 'simple_form', '<= 5.1'
   s.add_dependency 'slim'
+  s.add_dependency 'devise-two-factor'
+  s.add_dependency 'rqrcode'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'better_errors'

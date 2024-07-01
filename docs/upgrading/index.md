@@ -9,6 +9,12 @@
 
 ---
 
+# To v3.1
+
+* Fae 3.1 has additions to the base schema which require installing and running new migrations
+    1. run `rake fae:install:migrations`
+    2. run `rake db:migrate`
+
 # To v3.0
 
 * Fae 3.0 has additions to the base schema which require installing and running new migrations
