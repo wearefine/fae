@@ -18,12 +18,13 @@ test:
   password: <%= ENV['MYSQL_PASSWORD'] %>
   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
+# There's no remote_development environment
+# Keep for reference if we need it
+# remote_development:
 
-remote_development:
-  password: sh45&rEDnap
-
+# Fae Dummy app on Render
 production:
-  <<: *base
-  database: fae
-  username: fae
-  password: sh45&rEDnap
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %>
