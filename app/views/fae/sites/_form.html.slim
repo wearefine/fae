@@ -16,3 +16,7 @@
     = fae_input f, :name
     = fae_input f, :netlify_site
     = fae_input f, :netlify_site_id
+
+- if @item.persisted?
+  section.content
+    == render "fae/site_deploy_hooks/table", parent_item: @item
