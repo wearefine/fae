@@ -34,6 +34,7 @@ header.main-header#js-main-header
             li: a href=fae.activity_log_path = t('fae.navbar.activity_log')
           - if current_user.super_admin?
             li: a href=fae.option_path = t('fae.navbar.root_settings')
+            li: a href=fae.sites_path = t('fae.navbar.sites')
           - if @option.live_url.present?
             li: a href=@option.live_url target="_blank" = t('fae.application.live_site')
           - if @option.stage_url.present?

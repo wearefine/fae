@@ -1,0 +1,18 @@
+= simple_form_for(@item) do |f|
+  header.content-header.js-content-header
+    = form_header 'Site'
+
+    .content-header-buttons
+      a.button#js-header-cancel href=@index_path = t('fae.form.cancel')
+      input name="commit" type="submit" value=t('fae.form.save')
+
+  == render 'fae/shared/errors'
+
+  .errors-bar-wrapper
+    h2 = t('fae.save_error')
+    .errors-bar
+
+  main.content
+    = fae_input f, :name
+    = fae_input f, :netlify_site
+    = fae_input f, :netlify_site_id

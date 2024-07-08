@@ -10,8 +10,8 @@ Fae::Engine.routes.draw do
     post 'login' => '/devise/sessions#create', as: :user_session
     get 'logout' => '/devise/sessions#destroy', as: :destroy_user_session
   end
+  resources :sites
   resources :users
-  resources :deploy_hooks
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'

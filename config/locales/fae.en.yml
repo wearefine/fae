@@ -64,6 +64,7 @@ en:
       no_results: 'No Results'
       deployments: 'Deploy'
       deploy_hooks: 'Deploy Hooks'
+      sites: 'Sites'
     changes:
       recent: 'Recent Changes'
       user: 'User'
