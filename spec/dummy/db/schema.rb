@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_08_133519) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -117,6 +117,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
     t.index ["user_id"], name: "index_fae_changes_on_user_id"
   end
 
+  create_table "fae_data_caches", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "key"
+    t.text "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_fae_data_caches_on_key"
+  end
+
   create_table "fae_deploy_hooks", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "url"
     t.string "environment"
@@ -142,6 +150,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
     t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
+  end
+
+  create_table "fae_flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "flex_componentable_type", null: false
+    t.bigint "flex_componentable_id", null: false
+    t.string "component_model"
+    t.integer "component_id"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_id"], name: "index_flex_components_on_component_id"
+    t.index ["component_model"], name: "index_flex_components_on_component_model"
+    t.index ["flex_componentable_type", "flex_componentable_id"], name: "index_flex_components_on_flex_componentable"
+    t.index ["on_prod"], name: "index_flex_components_on_on_prod"
+    t.index ["on_stage"], name: "index_flex_components_on_on_stage"
+    t.index ["position"], name: "index_flex_components_on_position"
   end
 
   create_table "fae_form_managers", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -182,6 +208,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
     t.integer "singleton_guard"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+    t.boolean "site_mfa_enabled", default: false
+    t.string "mfa_enabling_user"
+    t.boolean "translate_language"
     t.index ["singleton_guard"], name: "index_fae_options_on_singleton_guard", unique: true
   end
 
@@ -202,6 +231,26 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["seo_setable_type", "seo_setable_id"], name: "index_fae_seo_sets_on_seo_setable"
+  end
+
+  create_table "fae_site_deploy_hooks", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "environment"
+    t.string "url"
+    t.integer "position"
+    t.integer "site_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["position"], name: "index_fae_site_deploy_hooks_on_position"
+    t.index ["site_id"], name: "index_fae_site_deploy_hooks_on_site_id"
+  end
+
+  create_table "fae_sites", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "netlify_site"
+    t.string "netlify_site_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_fae_sites_on_name"
   end
 
   create_table "fae_static_pages", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -277,29 +326,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "language"
+    t.string "otp_secret"
+    t.integer "consumed_timestep"
+    t.boolean "otp_required_for_login"
+    t.text "otp_backup_codes", size: :long, collation: "utf8mb4_bin"
+    t.boolean "user_mfa_enabled"
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_fae_users_on_role_id"
     t.index ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true
-  end
-
-  create_table "flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "flex_componentable_type", null: false
-    t.bigint "flex_componentable_id", null: false
-    t.string "component_model"
-    t.integer "component_id"
-    t.integer "position"
-    t.boolean "on_stage", default: true
-    t.boolean "on_prod", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["component_id"], name: "index_flex_components_on_component_id"
-    t.index ["component_model"], name: "index_flex_components_on_component_model"
-    t.index ["flex_componentable_type", "flex_componentable_id"], name: "index_flex_components_on_flex_componentable"
-    t.index ["on_prod"], name: "index_flex_components_on_on_prod"
-    t.index ["on_stage"], name: "index_flex_components_on_on_stage"
-    t.index ["position"], name: "index_flex_components_on_position"
+    t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -353,10 +390,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
 
   create_table "poly_things", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
+    t.string "name_en"
     t.string "poly_thingable_type"
     t.bigint "poly_thingable_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "name_frca"
     t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable_type_and_poly_thingable_id"
   end
 
@@ -493,6 +532,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_06_03_200604) do
     t.text "food_pairing_en"
     t.text "food_pairing_zh"
     t.text "food_pairing_ja"
+    t.string "name_frca"
+    t.string "description_frca"
   end
 
   add_foreign_key "articles", "article_categories"

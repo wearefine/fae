@@ -16,8 +16,16 @@ header.main-header#js-main-header
   - if user_signed_in?
     ul.utility-nav#js-utility-nav
       - if current_user.super_admin_or_admin? && netlify_enabled?
-        li class=deployments_active_class
-          a.deployments-nav-link href=fae.deploy_path = t('fae.navbar.deployments')
+        - if Fae::Site.any?
+          li.utility-dropdown.js-utility-dropdown class=deployments_active_class
+            a href='#' = t('fae.navbar.deployments')
+            ul
+              - Fae::Site.all.each do |site|
+                li
+                  a href=fae.deploy_path(site_id: site.id) = site.name
+        - else
+          li class=deployments_active_class
+            a.deployments-nav-link href=fae.deploy_path = t('fae.navbar.deployments')
       li.utility-dropdown.js-utility-dropdown
         a.grabatar-link href="#"
           img.grabatar src=fae_avatar alt=current_user.full_name
@@ -35,6 +43,7 @@ header.main-header#js-main-header
           li: a href=fae.alt_texts_path = t('fae.navbar.alt_text_manager')
           - if current_user.super_admin?
             li: a href=fae.option_path = t('fae.navbar.root_settings')
+            li: a href=fae.sites_path = t('fae.navbar.sites')
           - if @option.live_url.present?
             li: a href=@option.live_url target="_blank" = t('fae.application.live_site')
           - if @option.stage_url.present?

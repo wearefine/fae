@@ -10,12 +10,14 @@ Fae::Engine.routes.draw do
     post 'login' => '/devise/sessions#create', as: :user_session
     get 'logout' => '/devise/sessions#destroy', as: :destroy_user_session
   end
-  resources :users
   resources :deploy_hooks
   post 'alt_texts/:id/update_alt' => 'alt_texts#update_alt'
   get 'alt_texts' => 'alt_texts#index', as: 'alt_texts'
   post 'alt_texts/filter' => 'alt_texts#filter', as: 'alt_texts_filter'
   resources :flex_components
+  resources :site_deploy_hooks
+  resources :sites
+  resources :users
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'
