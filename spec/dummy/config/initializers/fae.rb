@@ -22,7 +22,7 @@ Fae.setup do |config|
   config.use_form_manager = true
 
   # Removed for now to simplify render.com deploy
-  if Rails.env.test?
+  if Rails.env.test? || Rails.env.development?
     config.netlify = {
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],

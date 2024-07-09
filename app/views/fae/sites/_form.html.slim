@@ -14,8 +14,8 @@
 
   main.content
     = fae_input f, :name
-    = fae_input f, :netlify_site
-    = fae_input f, :netlify_site_id
+    = fae_input f, :netlify_site, label: 'Netlify Site Name'
+    = fae_input f, :netlify_site_id, label: 'Netlify Site ID'
 
 - if @item.persisted?
   section.content

@@ -3,11 +3,16 @@ require 'net/http'
 module Fae
   class NetlifyApi
 
-    def initialize()
+    def initialize(fae_site_id = nil)
       @netlify_api_user   = Fae.netlify[:api_user]
       @netlify_api_token  = Fae.netlify[:api_token]
       @site               = Fae.netlify[:site]
       @site_id            = Fae.netlify[:site_id]
+      if fae_site_id.present?
+        fae_site = Site.find_by_id(fae_site_id)
+        @site = fae_site.netlify_site
+        @site_id = fae_site.netlify_site_id
+      end
       @endpoint_base      = Fae.netlify[:api_base]
       @logger             = Logger.new(Rails.root.join('log', 'netlify_api.log'))
     end
