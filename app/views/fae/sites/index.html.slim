@@ -1,6 +1,7 @@
 == render 'fae/shared/index_header', title: @klass_humanized.pluralize.titleize, button_text: 'Add Site'
 
 main.content
+  p = t('fae.deploy.page.intro')
   table.js-sort-column
     thead
       tr
