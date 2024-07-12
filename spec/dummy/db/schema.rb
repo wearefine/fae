@@ -117,14 +117,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_08_133519) do
     t.index ["user_id"], name: "index_fae_changes_on_user_id"
   end
 
-  create_table "fae_data_caches", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "key"
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_fae_data_caches_on_key"
-  end
-
   create_table "fae_deploy_hooks", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "url"
     t.string "environment"
