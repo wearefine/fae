@@ -1,14 +1,15 @@
 module Fae
   class ApplicationController < ActionController::Base
     protect_from_forgery with: :exception
-
+    
     include Fae::ApplicationControllerConcern
-
+    
     helper Fae::ViewHelper
     helper Fae::FormHelper
     helper Fae::NestedFormHelper
     helper Fae::FaeHelper
-
+    helper Fae::QrCodeHelper
+    
     before_action :check_disabled_environment
     before_action :first_user_redirect
     before_action :authenticate_user!
@@ -18,6 +19,7 @@ module Fae
     before_action :set_change_user
     before_action :set_locale
     before_action :setup_form_manager
+    before_action :setup_mfa_redirect
 
     private
 
@@ -103,6 +105,12 @@ module Fae
 
     def first_user_redirect
       redirect_to fae.first_user_path if Fae::User.live_super_admins.blank?
+    end
+
+    def setup_mfa_redirect
+      if @option.site_mfa_enabled && current_user.present? && current_user.user_mfa_enabled && !current_user.otp_required_for_login && request.path != new_two_factor_settings_path && request.path != two_factor_settings_path
+          redirect_to new_two_factor_settings_path
+      end
     end
 
     def set_change_user

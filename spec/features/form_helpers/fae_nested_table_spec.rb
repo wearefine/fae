@@ -71,27 +71,22 @@ feature 'fae_nested_table' do
 
   scenario 'should allow reordering of items', js: true do
     wine = FactoryBot.create(:wine)
-    FactoryBot.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
-    FactoryBot.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
-    FactoryBot.create(:winemaker, name: 'First', wine: wine, region_type: 1)
+    winemaker_1 = FactoryBot.create(:winemaker, name: 'Last', wine: wine, region_type: 1)
+    winemaker_2 = FactoryBot.create(:winemaker, name: 'Middle', wine: wine, region_type: 1)
+    winemaker_3 = FactoryBot.create(:winemaker, name: 'First', wine: wine, region_type: 1)
 
     admin_login
     visit edit_admin_wine_path(wine)
 
-    # expect(page.body).to match(/First.*Middle.*Last/)
-    expect(page.find('#oregon_winemakers_section tbody').text()).to match(/First.*Middle.*Last/)
+    expect(Winemaker.order(:position)).to eq([winemaker_3, winemaker_2, winemaker_1])
 
-    # within(:css, '#oregon_winemakers_section') do
-    #   handle = all('tbody tr').last.find('.sortable-handle')
-    #   handle.drag_to(all('tbody tr'))
-    # end
-    #
-    # TODO - drag_to is triggering the SetupController, which is in turn raising a no roles found
-    # Not sure why, think it has something to do with Capybara's synchronize method
-    # Proper code is above; hack below
-    execute_script "$('#oregon_winemakers_section tbody').prepend( $('#oregon_winemakers_section tbody tr:last-child') ); $('#oregon_winemakers_section .sortable-handle:first-child').trigger('mousedown');"
+    handle = find("#winemakers_#{winemaker_1.id} .sortable-handle i")
+    target = find("#winemakers_#{winemaker_3.id} .sortable-handle i")
+    handle.drag_to(target)
 
-    expect(page.find('#oregon_winemakers_section tbody').text()).to match(/Last.*First.*Middle/)
+    eventually {
+      expect(Winemaker.order(:position)).to eq([winemaker_3, winemaker_1, winemaker_2])
+    }
   end
 
   scenario 'should allow adding new items w params', js: true do

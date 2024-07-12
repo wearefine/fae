@@ -41,6 +41,19 @@ module Fae
       render partial: 'global_search_results', locals: search_locals
     end
 
+    def translate_text
+      en_text = params['translation_text']['en_text']
+      language = params['translation_text']['language']
+
+      resp = translate_request(language, en_text)
+
+      if !resp.kind_of?(Array) && resp['error']
+        render json: [error_text: resp['error']['message']]
+      else
+        render json: [translated_text: resp.first['translations'].first['text']]
+      end
+    end
+
     private
 
     def can_toggle(klass, attribute)
@@ -59,6 +72,50 @@ module Fae
       return false unless klass.columns_hash[attribute].type == :boolean
 
       true
+    end
+
+    def translate_request(language, en_text)
+      if Rails.env.test?
+        return [
+                {
+                  'detectedLanguage' => {
+                    'language' => 'en',
+                    'score' => 1.0
+                  },
+                  'translations' => [
+                    {
+                      'text' => "Bob Ross est l'homme.",
+                      'to' => 'fr-CA'
+                    }
+                  ]
+                }
+              ]
+      else
+        subscription_key = ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY']
+        region = ENV['TRANSLATOR_TEXT_REGION']
+        endpoint = 'https://api.cognitive.microsofttranslator.com'
+        path = '/translate?api-version=3.0'
+
+        language_params = "&to=#{language}"
+
+        uri = URI (endpoint + path + language_params)
+
+        content = '[{"Text" : "' + en_text + '"}]'
+
+        request = Net::HTTP::Post.new(uri)
+        request['Content-type'] = 'application/json'
+        request['Content-length'] = content.length
+        request['Ocp-Apim-Subscription-Key'] = subscription_key
+        request['Ocp-Apim-Subscription-Region'] = region
+        request['X-ClientTraceId'] = SecureRandom.uuid
+        request.body = content
+
+        response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+          http.request request
+        end
+
+        JSON.parse(response.body.force_encoding('utf-8'))
+      end
     end
 
     def records_by_display_name(query)

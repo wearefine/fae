@@ -85,6 +85,7 @@ Fae.form.ajax = {
       Fae.form.formManager.setupAllFields($wrapper.find('form'));
       Fae.form.dragDrop.init();
       Fae.tables.rowSorting();
+      Fae.form.text.initTranslation();
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);

@@ -7,7 +7,8 @@ FactoryBot.define do
   end
 
   factory :fae_image_svg, class: 'Fae::Image' do
-    asset { Rack::Test::UploadedFile.new(File.join('spec', 'support', 'assets', 'test.svg')) }
+    file = File.open(File.join('spec', 'support', 'assets', 'test.svg'))
+    asset { Rack::Test::UploadedFile.new(file, 'image/svg+xml', true, original_filename: 'test.svg') }
   end
 
 end

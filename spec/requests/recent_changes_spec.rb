@@ -2,6 +2,16 @@ require 'rails_helper'
 
 describe 'recent_changes partial' do
 
+  before(:each) do
+    def new_admin_release_path
+      Rails.application.routes.url_helpers.new_admin_release_path
+    end
+
+    def edit_admin_release_path(release)
+      Rails.application.routes.url_helpers.edit_admin_release_path(release)
+    end
+  end
+
   it 'should not display on new forms' do
     admin_login
     get new_admin_release_path

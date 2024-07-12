@@ -69,11 +69,10 @@ Fae.navigation.language = {
       .fadeOut(speed)
       .promise()
       .done(function() {
-        if (lang) {
+        if (lang != 'en') {
           $('div[data-language='+lang+']').fadeIn(speed);
-        } else {
-          _this.el.$lang_divs.fadeIn(speed);
         }
+        $('div[data-language=en]').fadeIn(speed);
       });
   },
 

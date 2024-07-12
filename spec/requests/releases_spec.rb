@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe 'releases#index' do
 
+  before do
+    def admin_releases_path
+      Rails.application.routes.url_helpers.admin_releases_path
+    end
+  end
+
   it 'should return found' do
     admin_login
     get admin_releases_path
@@ -12,6 +18,12 @@ describe 'releases#index' do
 end
 
 describe 'releases#new' do
+
+  before do
+    def new_admin_release_path
+      Rails.application.routes.url_helpers.new_admin_release_path
+    end
+  end
 
   it 'should return found' do
     admin_login
@@ -24,6 +36,12 @@ end
 
 describe 'releases#edit' do
 
+  before do
+    def edit_admin_release_path(release)
+      Rails.application.routes.url_helpers.edit_admin_release_path(release)
+    end
+  end
+
   it 'should return found' do
     release = FactoryBot.create(:release)
     admin_login
@@ -35,6 +53,12 @@ describe 'releases#edit' do
 end
 
 describe 'releases#create' do
+
+  before do
+    def admin_releases_path(release)
+      Rails.application.routes.url_helpers.admin_releases_path(release)
+    end
+  end
 
   context 'when from_existing' do
 
@@ -59,6 +83,12 @@ describe 'releases#create' do
 end
 
 describe 'releases#show' do
+
+  before do
+    def admin_release_path(release)
+      Rails.application.routes.url_helpers.admin_release_path(release)
+    end
+  end
 
   it 'should return not found' do
     release = FactoryBot.create(:release)

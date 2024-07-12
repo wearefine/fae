@@ -26,7 +26,7 @@ module Fae
 
     def generate_static_page_controller
       file = "app/controllers/#{options.namespace}/content_blocks_controller.rb"
-      if ::File.exists?(Rails.root.join(file).to_s)
+      if ::File.exist?(Rails.root.join(file).to_s)
         inject_into_file "app/controllers/#{options.namespace}/content_blocks_controller.rb", ", #{class_name}Page", before: ']'
       else
         template 'controllers/static_pages_controller.rb', file

@@ -18,19 +18,11 @@ test:
   password: <%= ENV['MYSQL_PASSWORD'] %>
   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
+# There's no remote_development environment
+# Keep for reference if we need it
+# remote_development:
 
-remote_development:
-  <<: *base
-  database: fae_dev
-  username: fae
-  password: sh45&rEDnap
-
-stage:
-  <<: *base
-  database: fae_stage
-  username: fae
-  password: sh45&rEDnap
-
+# Fae Dummy app on Render
 production:
   adapter: postgresql
   encoding: unicode

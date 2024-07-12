@@ -9,6 +9,7 @@ ruby:
   hint                ||= nil
   options             ||= {}
   input_options       ||= {}
+  translate            = translate == false ? false : true
   show_form_manager   ||= true
 
   if has_label
@@ -52,6 +53,9 @@ ruby:
 
     = f.simple_fields_for "#{attribute}_#{lang}".to_sym, defaults: { wrapper_html: options[:wrapper_html] } do |i|
       - options[:input_html].merge! data: { validate: i.object.validation_json(f.object.class) }
+      - if(language_translate_enabled? && lang != :en && translate != false)
+        - translate_button = content_tag(:span, 'Translate', class: "button js-translate-button translate-button")
+        - options[:translate] = translate_button.html_safe if translate_button.present?
       = i.input :content, options
 
 - else

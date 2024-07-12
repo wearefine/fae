@@ -20,6 +20,8 @@ input[type=email] {
 
 .input {
   margin-bottom: 20px;
+  display: block;
+  position: relative;
 
   &.disabled {
     opacity: 0.5;
@@ -111,3 +113,21 @@ input[type=email] {
     outline-offset: 1px;
   }
 }
+
+.translate-button {
+  position: absolute;
+  margin-left: 10px;
+}
+
+.translate-markdown-button {
+  top: 10px;
+  position: absolute;
+  margin-left: 10px;
+  right: 0;
+  transform: translateX(calc(100% + 10px));
+}
+
+.hide { 
+  display: none !important 
+}
+
