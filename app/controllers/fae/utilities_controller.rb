@@ -64,7 +64,7 @@ module Fae
     def records_by_display_name(query)
       records = []
       all_models.each do |m|
-        records += m.fae_search(query)
+        records += m.fae_search(query) if m.respond_to?(:fae_search)
       end
       records
     end
