@@ -36,4 +36,6 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   config.action_mailer.default_url_options = { :host => 'localhost' }
+
+  config.hosts << "21b5-47-26-150-197.ngrok-free.app"
 end

@@ -22,13 +22,14 @@ Fae.setup do |config|
   config.use_form_manager = true
 
   # Removed for now to simplify render.com deploy
-  if Rails.env.test?
+  if Rails.env.test? || Rails.env.development?
     config.netlify = {
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-      site: 'fine-pss',
-      site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
-      api_base: 'https://api.netlify.com/api/v1/'
+      site: 'nuxt3-pss-deployment-refactor',
+      site_id: '6b73c3a4-dd29-4acf-b65a-c9745b0f08eb',
+      api_base: 'https://api.netlify.com/api/v1/',
+      notification_hook_signature: '123test'
     }
   end
 end
