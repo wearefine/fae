@@ -1,0 +1,49 @@
+---
+version: 2.1
+orbs:
+  slack: circleci/slack@4.9.3
+jobs:
+  build:
+    working_directory: ~/fae-rails
+    docker:
+      - image: cimg/ruby:3.1.1
+        environment:
+          RAILS_ENV: test
+      - image: cimg/mysql:8.0
+
+    steps:
+      - checkout
+
+      # Restore Cached Dependencies
+      - restore_cache:
+          keys:
+            - fae-rails-{{ checksum "Gemfile.lock" }}
+
+      # Bundle install dependencies
+      - run: bundle install --path bin/bundle
+
+      # Cache Dependencies
+      - save_cache:
+          key: fae-rails-{{ checksum "Gemfile.lock" }}
+          paths:
+            - bin/bundle
+
+      # Wait for DB
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+
+      # Setup the environment
+      # - run: cp .sample.env .env
+
+      # Setup the database
+      - run: bundle exec appraisal rake db:create
+      - run: bundle exec appraisal rake db:migrate
+
+      - run: mysql -e "CREATE DATABASE IF NOT EXISTS fae_dummy_test CHARACTER SET utf8 COLLATE utf8_general_ci;"
+      - run: cd spec/dummy
+      - run: bundle exec rake db:schema:load --trace
+      - run: cd ../../
+      - run: export DISPLAY=:99.0
+      - run: sh -e /etc/init.d/xvfb start
+
+      # Run the tests
+      - run: bundle exec appraisal rspec
