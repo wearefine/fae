@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "vite": "^5.3.4",
+    "vite-plugin-ruby": "^5.0.0"
+  },
+  "volta": {
+    "node": "20.15.1"
+  }
+}

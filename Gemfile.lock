@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/thoughtbot/capybara-webkit.git
-  revision: f429d668568ff7349f5e23a085df7fcf1c431fa7
-  branch: master
-  specs:
-    capybara-webkit (1.15.1)
-      capybara (>= 2.3, < 4.0)
-      json
-
-GIT
   remote: https://github.com/wearefine/rails
   revision: 8250e29e4622ff60f8093dba92d52dbae9d26460
   specs:
@@ -36,6 +27,7 @@ PATH
       simple_form (<= 5.1)
       slim
       uglifier
+      vite_rails
 
 GEM
   remote: https://rubygems.org/
@@ -180,6 +172,7 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.5.0)
     digest (3.1.0)
+    dry-cli (1.1.0)
     erubi (1.10.0)
     eventmachine (1.2.7)
     excon (0.92.4)
@@ -234,7 +227,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
-    json (2.6.2)
     judge (3.1.0)
       rails (>= 5.0)
     judge-simple_form (1.1.0)
@@ -254,9 +246,12 @@ GEM
     kaminari-core (1.2.2)
     launchy (2.5.0)
       addressable (~> 2.7)
+    libdatadog (0.7.0.1.1)
     libdatadog (0.7.0.1.1-aarch64-linux)
     libdatadog (0.7.0.1.1-x86_64-linux)
     libddwaf (1.3.0.2.0-aarch64-linux)
+      ffi (~> 1.0)
+    libddwaf (1.3.0.2.0-arm64-darwin)
       ffi (~> 1.0)
     libddwaf (1.3.0.2.0-x86_64-linux)
       ffi (~> 1.0)
@@ -303,6 +298,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.9-aarch64-linux)
       racc (~> 1.4)
+    nokogiri (1.13.9-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.13.9-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
@@ -318,6 +315,8 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.4)
+    rack-proxy (0.7.7)
+      rack
     rack-test (2.0.2)
       rack (>= 1.3)
     rails (7.0.2.3)
@@ -438,6 +437,13 @@ GEM
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    vite_rails (3.0.17)
+      railties (>= 5.1, < 8)
+      vite_ruby (~> 3.0, >= 3.2.2)
+    vite_ruby (3.7.0)
+      dry-cli (>= 0.7, < 2)
+      rack-proxy (~> 0.6, >= 0.6.1)
+      zeitwerk (~> 2.2)
     warden (1.2.9)
       rack (>= 2.0.9)
     webrick (1.7.0)
@@ -453,6 +459,7 @@ GEM
 
 PLATFORMS
   aarch64-linux
+  arm64-darwin-21
   x86_64-linux
 
 DEPENDENCIES
@@ -463,7 +470,6 @@ DEPENDENCIES
   capistrano-rails!
   capistrano-rvm
   capybara-screenshot
-  capybara-webkit!
   database_cleaner
   ddtrace
   factory_bot_rails (~> 4.8.2)
