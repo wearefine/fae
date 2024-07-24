@@ -7,5 +7,9 @@
   },
   "volta": {
     "node": "20.15.1"
+  },
+  "dependencies": {
+    "@vitejs/plugin-vue": "^5.1.0",
+    "vue": "^3.4.33"
   }
 }
