@@ -17,6 +17,7 @@ module Fae
     require 'fae/version'
     require "sprockets/railtie"
     require 'vite_rails'
+    require 'inertia_rails'
 
     def self.vite_ruby
       @vite_ruby ||= ViteRuby.new(root: root)

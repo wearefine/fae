@@ -1,8 +1,7 @@
 {
   "all": {
     "sourceCodeDir": "app/frontend",
-    "publicOutputDir": "fae-vite",
-    "watchAdditionalPaths": []
+    "publicOutputDir": "fae-vite"
   },
   "development": {
     "autoBuild": true,

@@ -1,13 +1,13 @@
 module Fae
   module ApplicationHelper
 
-      # Override: Returns the engine assets manifest.
-      def vite_manifest
-        Fae::Engine.vite_ruby.manifest
-      end
+    # Override: Retuns the engine assets manifest.
+    def vite_manifest
+      Fae::Engine.vite_ruby.manifest
+    end
 
     def form_header(name)
-      name = name.class.name.split('::').last unless name.is_a? String
+      name = name.class.name.split('::').last unless namee.is_a? String
       form_title = "#{params[:action]} #{name}".titleize
       form_title = form_title.singularize if params[:action] == 'edit'
       content_tag :h1, form_title

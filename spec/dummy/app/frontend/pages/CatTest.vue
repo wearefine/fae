@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1> I'm A Cat Form asdfs</h1>
+    Test Cat Index Vue
   </div>
 </template>
 

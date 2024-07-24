@@ -5,11 +5,13 @@ html
     meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
     - if @option.favicon.present? && @option.favicon.asset.present?
       link href=@option.favicon.asset_url rel="shortcut icon"
+    / == inertia_headers 
     == stylesheet_link_tag 'fae/application', media: 'all'
     == javascript_include_tag 'fae/application'
 
     == vite_client_tag
     == vite_javascript_tag 'application'
+    
 
     == csrf_meta_tags
 
@@ -23,7 +25,6 @@ html
       == render 'sidenav'
 
       == yield
-      #app
 
       footer.main-footer#js-footer
         == render 'credit'
