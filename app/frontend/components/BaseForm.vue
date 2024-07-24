@@ -1,7 +1,8 @@
 <template>
-  <div>
-    Test Cat Index Vue
-  </div>
+<div>
+  <h1>Base Form Component</h1>
+  <slot></slot>
+</div>
 </template>
 
 <script setup lang="ts">

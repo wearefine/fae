@@ -2,9 +2,9 @@ module Fae
   module ApplicationHelper
 
     # Override: Retuns the engine assets manifest.
-    def vite_manifest
-      Fae::Engine.vite_ruby.manifest
-    end
+    # def vite_manifest
+    #   Fae::Engine.vite_ruby.manifest
+    # end
 
     def form_header(name)
       name = name.class.name.split('::').last unless namee.is_a? String

@@ -10,12 +10,10 @@ html
     == javascript_include_tag 'fae/application'
 
     == vite_client_tag
-    == vite_javascript_tag 'application'
+    == vite_javascript_tag 'host-application'
     
 
     == csrf_meta_tags
-
-
 
   body class=body_class style=('--highlight-color:' + '#' + @option.colorway if @option.colorway.present?)
     == render 'mobilenav'
