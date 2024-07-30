@@ -1,0 +1,17 @@
+ruby:
+  require_locals ['f'], local_assigns
+  item               ||= f.object
+  cta_name           ||= :cta
+  attached_as        ||= cta_name.to_s
+  the_cta              = item.send(cta_name)
+  cta_label_label      = "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Label"
+  cta_link_label       = "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Link"
+  cta_alt_text_label   = "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Alt Text"
+  show_form_manager  ||= true
+  form_manager_id      = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+
+= f.simple_fields_for cta_name do |i|
+  = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
+  = fae_input i, :cta_label, label: cta_label_label
+  = fae_input i, :cta_link, as: :string, label: cta_link_label
+  = fae_input i, :cta_alt_text, label: cta_alt_text_label
