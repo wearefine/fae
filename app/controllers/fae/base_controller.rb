@@ -1,6 +1,7 @@
 module Fae
   class BaseController < ApplicationController
     include Fae::Cloneable
+    use_inertia_instance_props
 
     before_action :set_class_variables
     before_action :set_item, only: [:edit, :update, :destroy]
@@ -10,19 +11,31 @@ module Fae
 
     def index
       if use_pagination
-        @items = @klass.for_fae_index.page(params[:page])
+        items = @klass.for_fae_index.page(params[:page])
       else
-        @items = @klass.for_fae_index
+        items = @klass.for_fae_index
       end
       respond_to do |format|
         format.html
         format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_fs(:filename) + '.csv'  }
       end
+
+      @items = items.map do |item|
+        item.as_json.merge(
+          fae_delete_path: polymorphic_path([Fae::Engine.routes.find_script_name({}).gsub('/', '').to_sym, item.try(:fae_parent), item]),
+          fae_edit_path: send("edit_admin_#{@klass_singular}_path", item.id),
+          fae_display_field: item.fae_display_field
+        )
+      end
+
+      render inertia: "#{@klass_name}/Index"
     end
 
     def new
       @item = @klass.new
       build_assets
+
+      render inertia: "#{@klass_name}/Form"
     end
 
     def edit
@@ -35,15 +48,17 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        if @item.try(:fae_redirect_to_form_on_create)
-          redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
-        else
-          redirect_to @index_path, notice: t('fae.save_notice')
-        end
+        redirect_to @index_path, notice: t('fae.save_notice')
+        # render inertia: "#{@klass_name}/Index"
+        # if @item.try(:fae_redirect_to_form_on_create)
+        #   redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
+        # else
+        # end
       else
         build_assets
         flash[:alert] = t('fae.save_error')
-        render action: 'new'
+        redirect_to @new_path, inertia: { item: @item }
+        # render action: 'new'
       end
     end
 
@@ -59,9 +74,9 @@ module Fae
 
     def destroy
       if @item.destroy
-        redirect_to @index_path, notice: t('fae.delete_notice')
+        redirect_to @index_path, status: 303,  notice: t('fae.delete_notice')
       else
-        redirect_to @index_path, flash: { error: t('fae.delete_error') }
+        redirect_to @index_path, status: 303, flash: { error: t('fae.delete_error') }
       end
     end
 

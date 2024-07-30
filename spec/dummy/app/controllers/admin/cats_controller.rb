@@ -3,23 +3,16 @@ module Admin
     before_action :set_class_variables
     before_action :set_item, only: [:show, :edit, :update, :destroy]
 
-    # layout false, except: :index
+    layout false, except: :index
     helper Fae::ApplicationHelper
 
     def new
       @item = Cat.new
       @item.aroma_id = params[:item_id]
-
-      render inertia: 'cats/Form', props: {
-        cat: @item
-      }
     end
 
     def index
-      # @items = Cat.for_fae_index
-      render inertia: 'cats/Index', props: {
-        items: Cat.for_fae_index
-      }
+      @items = Cat.for_fae_index
     end
 
     def edit
@@ -29,16 +22,11 @@ module Admin
       @item = Cat.new(permitted_params)
 
       if @item.save
-        # @items = Cat.for_fae_index
-        # flash[:notice] = 'Item successfully created.'
-        # render template: 'admin/cats/index'
-        render inertia: 'cats/Index', props: {
-          items: Cat.for_fae_index
-        }
+        @items = Cat.for_fae_index
+        flash[:notice] = 'Item successfully created.'
+        render template: 'admin/cats/index'
       else
-        render inertia: 'cats/Form', props: {
-          cat: @item
-        }
+        render action: 'new'
       end
     end
 

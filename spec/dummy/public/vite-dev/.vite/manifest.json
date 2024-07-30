@@ -1,0 +1,11 @@
+{
+  "entrypoints/host-application.js": {
+    "file": "assets/host-application-BTJMiybH.js",
+    "name": "entrypoints/host-application.js",
+    "src": "entrypoints/host-application.js",
+    "isEntry": true,
+    "css": [
+      "assets/host-application-B3nZjuLM.css"
+    ]
+  }
+}

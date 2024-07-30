@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
+import '@fae/app/frontend/assets/stylesheets/global.css'
 
 
 console.log('host app')
@@ -8,7 +9,6 @@ console.log('host app')
 
   
 createInertiaApp({
-  id: 'app',
   resolve: name => {
     const pages = import.meta.glob('../pages/**/*.vue', { eager: true })
     return pages[`../pages/${name}.vue`]

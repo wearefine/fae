@@ -1,0 +1,16 @@
+:root {
+  --c-red: rgb(var(--c-red-rgb));
+  --c-black: rgb(var(--c-black-rgb));
+  --c-dark: rgb(var(--c-dark-rgb));
+  --c-grey: rgb(var(--c-grey-rgb));
+  --c-light: rgb(var(--c-light-rgb));
+  --c-white: rgb(var(--c-white-rgb));
+
+  /* Used to create Tailwind compatible colors */
+  --c-red-rgb: 169 52 57;
+  --c-black-rgb: 0 0 0;
+  --c-dark-rgb: 85 85 85;
+  --c-grey-rgb: 153 153 153;
+  --c-light-rgb: 204 204 204;
+  --c-white-rgb: 255 255 255;
+}
