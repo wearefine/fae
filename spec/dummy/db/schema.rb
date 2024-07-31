@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_30_180416) do
+ActiveRecord::Schema[7.0].define(version: 2024_07_30_200356) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -418,6 +418,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_30_180416) do
     t.datetime "updated_at", null: false
     t.index ["aroma_id"], name: "index_sub_aromas_on_aroma_id"
     t.index ["name"], name: "index_sub_aromas_on_name"
+  end
+
+  create_table "sub_spirits", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "spirit_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_sub_spirits_on_name"
+    t.index ["spirit_id"], name: "index_sub_spirits_on_spirit_id"
   end
 
   create_table "teams", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

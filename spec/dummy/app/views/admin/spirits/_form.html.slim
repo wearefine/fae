@@ -12,7 +12,12 @@ ruby:
 
   main.content
     = fae_input f, :name
-
-
     = fae_cta_form f, :website_cta
     = fae_cta_form f, :some_other_cta
+
+- if @item.persisted?
+  section.content
+    == render 'fae/shared/nested_table',
+      assoc: :sub_spirits,
+      parent_item: @item,
+      cols: [:name]

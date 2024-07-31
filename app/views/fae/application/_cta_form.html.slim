@@ -4,13 +4,30 @@ ruby:
   cta_name           ||= :cta
   attached_as        ||= cta_name.to_s
   the_cta              = item.send(cta_name)
-  cta_label_label      = "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Label"
-  cta_link_label       = "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Link"
-  cta_alt_text_label   = "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Alt Text"
+  cta_label_label    ||= "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Label"
+  cta_link_label     ||= "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Link"
+  cta_alt_text_label ||= "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Alt Text"
   show_form_manager  ||= true
-  form_manager_id      = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+  languages            = f.object.class.try(:fae_fields).try(:[], cta_name).try(:[], :languages)
+  language           ||= nil
 
-= f.simple_fields_for cta_name do |i|
+- if languages.present?
+  - languages.each do |lang|
+    = render 'fae/application/cta_form', \
+      f: f, item: item, \
+      cta_name: "#{cta_name}_#{lang}".to_sym, \
+      cta_label_label: "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Label #{lang}", \
+      cta_link_label: "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Link #{lang}", \
+      cta_alt_text_label: "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Alt Text #{lang}", \
+      attached_as: attached_as, \
+      show_form_manager: show_form_manager
+
+- else
+  ruby:
+    form_manager_id = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+    form_manager_id += "_#{language}" if language.present?
+  - wrapper_html = language.present? ? { data: { language: language } } : {}
+= f.simple_fields_for cta_name, defaults: { wrapper_html: wrapper_html } do |i|
   = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
   = fae_input i, :cta_label, label: cta_label_label
   = fae_input i, :cta_link, as: :string, label: cta_link_label
