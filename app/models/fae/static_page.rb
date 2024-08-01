@@ -88,6 +88,8 @@ module Fae
         return :imageable
       when 'Fae::File'
         return :fileable
+      when 'Fae::Cta'
+        return :ctaable
       end
     end
 
@@ -100,6 +102,8 @@ module Fae
         assoc_json = assoc_obj.as_json
         assoc_json['asset'] = assoc_obj.asset.as_json
         return assoc_json
+      when 'Fae::Cta'
+        return assoc_obj.as_json
       else
         return assoc_obj.as_json
       end
