@@ -6,7 +6,7 @@ module Fae
       if can_toggle(klass, params[:attr])
         klass = klass.constantize
         klass.find(params[:id]).toggle(params[:attr]).save(validate: false)
-        render body: nil
+        render json: { success: true }
       else
         render body: nil, status: :unauthorized
       end

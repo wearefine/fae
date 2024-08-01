@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue'
+import { computed, defineProps, onMounted, ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 const props = defineProps<{
@@ -17,18 +17,44 @@ const props = defineProps<{
   attrName: string
 }>()
 
+const token = ref(null)
+
+onMounted(() => {
+  token.value = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content')
+})
+
+
 const togglePath = computed(() => {
   return `toggle/${props.itemName}/${props.item.id}/${props.attrName}`
 })
 
-function handleChange() {
-  router.post(togglePath.value)
-  router.reload()
+async function handleChange() {
+  console.log('toggle')
+  // router.post(togglePath.value)
+
+  fetch(togglePath.value, {
+    method: 'POST',
+    credentials: "same-origin",
+    headers: {
+      "X-CSRF-Token": token.value || '',
+      "Content-Type": "application/json"
+    },
+  }).then(response => {
+    if (response.ok) {
+      console.log('ok')
+      router.reload()
+    } else {
+      console.log('Error:', response)
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error)
+  })
 }
 
 </script>
 
-<style scoped>
+<style>
 
 .switch {
   position: relative;

@@ -21,7 +21,7 @@
 import FaeForm from '@fae/app/frontend/components/form/FaeForm.vue'
 import FaeInput from '@fae/app/frontend/components/form/FaeInput.vue'
 
-import { useForm } from '@inertiajs/vue3'
+import { useForm } from '@fae/node_modules/@inertiajs/vue3'
 
 const props = defineProps<{
   item: any

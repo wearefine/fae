@@ -20,8 +20,11 @@
       </thead>
   
       <tbody>
-        <tr v-for="item in props.items">
-          <td>{{ item.name }}</td>
+        <tr v-for="item in props.items" :key='item.id'>
+          <td>
+            
+            {{ item.name }}
+          </td>
           <td>{{ item.updated_at }}</td>
           <td>
             <FaeToggle
@@ -51,7 +54,7 @@
 <script setup lang="ts">
 import FaeToggle from '@fae/app/frontend/components/form/FaeToggle.vue'
 import FaeDelete from '@fae/app/frontend/components/form/FaeDelete.vue'
-import { Link } from '@inertiajs/vue3'
+import { Link } from '@fae/node_modules/@inertiajs/vue3'
 
 const props = defineProps<{
   items: any[]
