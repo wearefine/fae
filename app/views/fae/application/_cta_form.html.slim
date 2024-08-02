@@ -1,0 +1,52 @@
+ruby:
+  require_locals ['f'], local_assigns
+  item               ||= f.object
+  cta_name           ||= :cta
+  attached_as        ||= cta_name.to_s
+  the_cta              = item.send(cta_name)
+  cta_label_label    ||= "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Label"
+  cta_link_label     ||= "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Link"
+  cta_alt_text_label ||= "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Alt Text"
+  show_form_manager  ||= true
+  languages            = f.object.class.try(:fae_fields).try(:[], cta_name).try(:[], :languages)
+  language           ||= nil
+
+- if languages.present?
+  - languages.each do |lang|
+    = render 'fae/application/cta_form', \
+      f: f, item: item, \
+      cta_name: "#{cta_name}_#{lang}".to_sym, \
+      cta_label_label: "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Label (#{lang})", \
+      cta_link_label: "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Link (#{lang})", \
+      cta_alt_text_label: "#{cta_name.to_s.titleize.gsub('Cta', 'CTA')} Alt Text (#{lang})", \
+      attached_as: "#{attached_as}_#{lang.to_s}", \
+      show_form_manager: show_form_manager
+
+- else
+  ruby:
+    if Fae.languages.keys.any? { |lang| cta_name.to_s.end_with?(lang.to_s) } && !language.present?
+      Fae.languages.keys.each do |lang|
+        lang_titleized = lang.to_s.titleize
+        if cta_label_label[" #{lang_titleized}"]
+          cta_label_label.gsub!(" #{lang_titleized}", '')
+          cta_label_label = "#{cta_label_label} (#{lang_titleized})"
+
+          cta_link_label.gsub!(" #{lang_titleized}", '')
+          cta_link_label = "#{cta_link_label} (#{lang_titleized})"
+
+          cta_alt_text_label.gsub!(" #{lang_titleized}", '')
+          cta_alt_text_label = "#{cta_alt_text_label} (#{lang_titleized})"
+        end
+      end
+      wrapper_html = { data: { language: cta_name.to_s.split("_").last.to_sym } }
+    elsif language.present?
+      wrapper_html = { data: { language: language } }
+    else
+      wrapper_html = {}
+    end
+    form_manager_id = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+= f.simple_fields_for cta_name, defaults: { wrapper_html: wrapper_html } do |i|
+  = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
+  = fae_input i, :cta_label, label: cta_label_label
+  = fae_input i, :cta_link, as: :string, label: cta_link_label, helper_text: 'Relative link to an internal page. For external links, include the https://'
+  = fae_input i, :cta_alt_text, label: cta_alt_text_label, helper_text: 'Descriptive link label text read by screen readers.'

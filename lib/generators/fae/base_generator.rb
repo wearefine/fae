@@ -6,7 +6,7 @@ module Fae
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
 
-    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set']
+    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set', 'cta']
 
     @@attributes_flat = []
     @@attribute_names = []
@@ -152,6 +152,12 @@ RUBY
     has_fae_seo_set :#{attachment.name}\n
   RUBY
             end
+          elsif attachment.type == :cta
+            inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+              <<-RUBY
+    has_fae_cta :#{attachment.name}\n
+  RUBY
+            end
         elsif attachment.type == :file
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
             <<-RUBY
@@ -189,6 +195,8 @@ RUBY
         'Types::FaeFileType'
       when 'seo_set'
         'Types::FaeSeoSetType'
+      when 'cta'
+        'Types::FaeCtaType'
       else
         'String'
       end
@@ -209,7 +217,7 @@ RUBY
     end
 
     def is_attachment(arg)
-      [:image, :file, :seo_set].include?(arg.type)
+      [:image, :file, :seo_set, :cta].include?(arg.type)
     end
 
     def polymorphic_name
