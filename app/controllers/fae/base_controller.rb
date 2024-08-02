@@ -39,7 +39,9 @@ module Fae
     end
 
     def edit
+      @edit = true
       build_assets
+      render inertia: "#{@klass_name}/Form"
     end
 
     def create
@@ -48,27 +50,25 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @index_path, notice: t('fae.save_notice')
-        # render inertia: "#{@klass_name}/Index"
-        # if @item.try(:fae_redirect_to_form_on_create)
-        #   redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
-        # else
-        # end
+        if @item.try(:fae_redirect_to_form_on_create)
+          redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
+        else
+          redirect_to @index_path, notice: t('fae.save_notice')
+        end
       else
         build_assets
         flash[:alert] = t('fae.save_error')
-        redirect_to @new_path, inertia: { item: @item }
-        # render action: 'new'
+        redirect_to @new_path, inertia: { errors: @item.errors }
       end
     end
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: t('fae.save_notice')
+        redirect_to @index_path, status: 303, notice: t('fae.save_notice')
       else
         build_assets
         flash[:alert] = t('fae.save_error')
-        render action: 'edit'
+        render inertia: "#{@klass_name}/Form"
       end
     end
 

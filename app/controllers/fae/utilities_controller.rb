@@ -6,7 +6,8 @@ module Fae
       if can_toggle(klass, params[:attr])
         klass = klass.constantize
         klass.find(params[:id]).toggle(params[:attr]).save(validate: false)
-        render json: { success: true }
+        # redirect back to referrer or the engine mount path
+        redirect_back_or_to(Fae::Engine.routes.find_script_name({}), status: 303)
       else
         render body: nil, status: :unauthorized
       end

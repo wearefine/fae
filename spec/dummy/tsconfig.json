@@ -1,11 +1,33 @@
-
 {
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "useDefineForClassFields": true,
     "strict": true,
+    "noImplicitThis": true,
+    "esModuleInterop": true,
     "types": [],
+    "verbatimModuleSyntax": true,
+    "allowJs": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "~": [
+        "./app/frontend"
+      ],
+    }
   },
+  "include": [
+    "./app/frontend/**/*",
+  ],
   "exclude": [
-    "./node_modules",
+    "../node_modules",
   ]
 }

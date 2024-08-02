@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
-import { createInertiaApp } from '@fae/node_modules/@inertiajs/vue3'
+import { createInertiaApp } from '@inertiajs/vue3'
+// import { createInertiaApp } from '@fae/node_modules/@inertiajs/vue3'
 import '@fae/app/frontend/assets/stylesheets/global.css'
 
 

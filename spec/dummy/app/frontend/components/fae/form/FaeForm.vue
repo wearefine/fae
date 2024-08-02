@@ -1,6 +1,6 @@
 <template>
 <div class="px-page-padding pt-l pr-[40vw]">
-  <form @submit.prevent="form.post(path)">
+  <form @submit.prevent="handleSubmit">
 
     <slot></slot>
 
@@ -22,7 +22,12 @@ const emit = defineEmits<{
 }>()
 
 function handleSubmit(e: Event) {
-  emit('submit', true)
+  if (props.edit) {
+    props.form.put(props.path)
+  } else {
+    props.form.post(props.path)
+  }
+  // emit('submit', true)
 }
 
 </script>

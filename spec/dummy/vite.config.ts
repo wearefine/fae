@@ -9,6 +9,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
+      '~/': './app/frontend',
       '@fae/': `${process.env.FAE_PATH}/`,
     },
   },
