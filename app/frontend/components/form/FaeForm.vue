@@ -1,5 +1,5 @@
 <template>
-<div class="px-page-padding pt-l pr-[40vw]">
+<div class="">
   <form @submit.prevent="form.post(path)">
 
     <slot></slot>

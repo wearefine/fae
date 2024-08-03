@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :events
     resources :people
     resources :aromas
+    resources :players
     resources :teams do
       post 'filter', on: :collection
       resources :coaches

@@ -27,21 +27,17 @@ module Fae
           fae_display_field: item.fae_display_field
         )
       end
-
-      render inertia: "#{@klass_name}/Index"
     end
 
     def new
       @item = @klass.new
       build_assets
-
-      render inertia: "#{@klass_name}/Form"
+      set_assoc_vars
     end
 
     def edit
-      @edit = true
       build_assets
-      render inertia: "#{@klass_name}/Form"
+      set_assoc_vars
     end
 
     def create
@@ -50,6 +46,11 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
+
+        if request.headers['X-FAE-INLINE']
+          return redirect_back(fallback_location: @index_path)
+        end
+
         if @item.try(:fae_redirect_to_form_on_create)
           redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
         else
@@ -119,6 +120,10 @@ module Fae
 
     # if model has images or files, build them here for nesting
     def build_assets
+    end
+
+    # if model has associations, set them here so there availabe in the Vue files
+    def set_assoc_vars
     end
 
     def authorize_user

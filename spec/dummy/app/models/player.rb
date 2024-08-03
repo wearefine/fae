@@ -3,9 +3,9 @@ class Player < ActiveRecord::Base
 
   belongs_to :team
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :team_id, presence: true
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
+  # validates :team_id, presence: true
 
   def fae_display_field
     full_name

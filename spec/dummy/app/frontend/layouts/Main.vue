@@ -8,7 +8,10 @@
         </li>
       </ul>
     </nav>
-    <slot></slot>
+
+    <div class="px-10 pt-10">
+      <slot></slot>
+    </div>
 
   </div>
 </template>
@@ -18,7 +21,7 @@ import { Link } from '@inertiajs/vue3';
 
 const navItems = [
   { name: 'Beers', link: '/admin/beers'},
-  { name: 'Cats', link: '/admin/cats'},
+  { name: 'Teams', link: '/admin/teams'},
 ]
 
 </script>
