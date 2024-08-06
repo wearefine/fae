@@ -3,8 +3,8 @@ class Coach < ActiveRecord::Base
 
   belongs_to :team
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  # validates :first_name, presence: true
+  # validates :last_name, presence: true
   validates :team_id, presence: true
 
   has_fae_image :image

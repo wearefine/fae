@@ -23,8 +23,14 @@ Rails.application.routes.draw do
     resources :events
     resources :people
     resources :aromas
-    resources :players
+    resources :players do
+      post 'inline-create', on: :collection
+    end
+    resources :coaches do
+      post 'inline-create', on: :collection
+    end
     resources :teams do
+      post 'inline-create', on: :collection
       post 'filter', on: :collection
       resources :coaches
       resources :players

@@ -1,47 +1,70 @@
 <template>
   <FaeForm :path="path" :form="form" :edit="props.edit">
 
-    <FaeInput  
-      label="Name" 
-      name="name" 
-      v-model="form.name" 
-    />
-    <FaeInput  
-      label="City" 
-      name="city" 
-      v-model="form.city" 
-    />
-    <FaeInput  
-      label="History" 
-      name="history" 
-      v-model="form.history" 
-    />
+    <template #default="{ errors }">
 
-    <label class="mt-s inline-block mr-m">
-      Players:
-      <select>
-        <option v-for="player in players"> {{ player.first_name }} {{ player.last_name }}</option>
-      </select>
-    </label>
+      <FaeInput  
+        label="Name" 
+        name="name" 
+        v-model="form.name" 
+      />
+      <FaeInput  
+        label="City" 
+        name="city" 
+        v-model="form.city" 
+      />
+      <FaeInput  
+        label="History" 
+        name="history" 
+        v-model="form.history" 
+      />
+  
+      <label class="mt-s inline-block mr-m">
+        Players:
+        <select>
+          <option v-for="player in players"> {{ player.first_name }} {{ player.last_name }}</option>
+        </select>
+      </label>
+  
+      <FaeModalForm name="player" path="/admin/players/new">
+        <template #default="{ formProps, on }">
+          <PlayersForm v-bind="formProps" v-on="on" path="/admin/players/inline-create" />
+        </template>
+      </FaeModalForm>
+  
+      
+      <div>
+        <FaeModalForm name="coach" path="/admin/coaches/new">
+          <template #default="{ formProps, on }">
+            <CoachForm 
+              v-bind="formProps" 
+              v-on="on" 
+              :parent_item="props.klass_singular"  
+              :parent_id="props.item.id"
+              path="/admin/coaches/inline-create"
+            />
+          </template>
+        </FaeModalForm>
+        <ul v-if="item.coaches && item.coaches.length > 0">
+          <li v-for="coach in item.coaches" :key="coach.id">
+            {{ coach.first_name }}
+          </li>
+        </ul>
+        <p v-else>No Coaches Yet</p>
+        <p>{{ item }}</p>
+      </div>
+      
+    </template>
 
-    <BaseModal :show="state.showModal" @update:show="handleModalToggle($event)">
-      <template #toggle="{ on, bind }">
-        <button class="bg-grey my-l p-4" v-bind="bind" v-on="on">Add Player</button>
-      </template>
-
-      <template #default="{ toggleOpen, isOpen }">
-        <div v-if="playerFormProps">
-          <PlayersForm v-bind="playerFormProps" @submit="toggleOpen(false)"/>
-        </div>
-      </template>
-    </BaseModal>
 
   </FaeForm>
 </template>
 
 <script setup lang="ts">
 import { computed, defineProps, ref, watch, reactive } from 'vue'
+import FaeModalForm from '~/components/fae/form/FaeModalForm.vue'
 import PlayersForm from '~/pages/admin/players/form.vue'
+import CoachForm from '~/pages/admin/coaches/form.vue'
 import BaseModal from '~/components/base/BaseModal.vue'
 import FaeForm from '~/components/fae/form/FaeForm.vue'
 import FaeInput from '~/components/fae/form/FaeInput.vue'
@@ -50,17 +73,15 @@ import FaeInput from '~/components/fae/form/FaeInput.vue'
 // import FaeInput from '@fae/app/frontend/components/form/FaeInput.vue'
 
 // import { useForm } from '@fae/node_modules/@inertiajs/vue3'
-import { useForm, router } from '@inertiajs/vue3'
-
-const state = reactive({
-  showModal: false
-})
+import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps<{
   players: any[]
   edit?: boolean
   item: any
+  klass_name: string
   index_path: string
+  klass_singular: string
 }>()
 
 const path = computed(() => {
@@ -73,33 +94,8 @@ const form = useForm({
   history: props.item.history
 })
 
-let playerFormProps = ref(null)
-
-function handleSubmit() {
-  state.showModal = false
-  console.log('handle submit')
-}
 
 
-async function handleModalToggle(isShowing: boolean) {
-
-  if (isShowing) {
-    // router.get('/admin/players/new')
-    state.showModal = true
-    try {
-      const response = await fetch('/admin/players/new', { headers: {'X-FAE-INLINE': 'true'}})
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-      const json = await response.json()
-      playerFormProps.value = json.props
-    } catch (error) {
-      console.error(error.message);
-    }
-    
-  }
-
-}
 
 
 

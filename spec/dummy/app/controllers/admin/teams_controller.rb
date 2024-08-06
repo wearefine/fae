@@ -6,7 +6,6 @@ module Admin
     def set_assoc_vars
       @coaches = Coach.all
       @players = Player.all
-      
     end
 
     def use_pagination

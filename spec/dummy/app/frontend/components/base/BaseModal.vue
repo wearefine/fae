@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 import BaseDialog from '~/components/base/BaseDialog.vue'
-import { reactive } from 'vue'
+import { reactive, watch } from 'vue'
 
 const props = defineProps<{
   show?: boolean
@@ -60,6 +60,10 @@ const emit = defineEmits(['update:show'])
 
 const state = reactive({
   internalShow: props.show,
+})
+
+watch(() => props.show, (value) => {
+  state.internalShow = value
 })
 
 function toggleOpen(value: boolean) {

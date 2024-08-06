@@ -20,7 +20,7 @@
     "allowSyntheticDefaultImports": true,
     "paths": {
       "~": [
-        "app/frontend"
+        "./app/frontend"
       ],
     }
   },

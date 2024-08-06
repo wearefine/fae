@@ -31,6 +31,7 @@ module Fae
 
     def new
       @item = @klass.new
+
       build_assets
       set_assoc_vars
     end
@@ -46,10 +47,6 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-
-        if request.headers['X-FAE-INLINE']
-          return redirect_back(fallback_location: @index_path)
-        end
 
         if @item.try(:fae_redirect_to_form_on_create)
           redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
@@ -96,6 +93,31 @@ module Fae
       show_404
     end
 
+
+    def inline_create
+      @item = @klass.new(item_params)
+      if @item.save
+        redirect_back(fallback_location: @index_path)
+      else
+        redirect_back(fallback_location: @index_path, inertia: { errors: @item.errors })
+      end
+    end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   private
 
     def set_class_variables(class_name = nil)
@@ -110,7 +132,7 @@ module Fae
 
     # use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = @klass.find(params[:id])
+      @item = @klass.find(params[:id]).as_json
     end
 
     # only allow trusted parameters, override to white-list
