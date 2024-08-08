@@ -32,6 +32,7 @@ async function handleSubmit(e: Event) {
   } else {
 
     props.form.post(props.path, { 
+      forceFormData: true,
       onSuccess: (page) => { 
         router.reload()
         emit('submit', true)

@@ -11,6 +11,10 @@ class Player < ActiveRecord::Base
     full_name
   end
 
+  def self.for_fae_index
+    order(:last_name)
+  end
+
   def fae_parent
     team
   end

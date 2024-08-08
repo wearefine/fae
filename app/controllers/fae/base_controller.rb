@@ -15,10 +15,11 @@ module Fae
       else
         items = @klass.for_fae_index
       end
-      respond_to do |format|
-        format.html
-        format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_fs(:filename) + '.csv'  }
-      end
+
+      # respond_to do |format|
+      #   format.html
+      #   format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_fs(:filename) + '.csv'  }
+      # end
 
       @items = items.map do |item|
         item.as_json.merge(
@@ -42,6 +43,7 @@ module Fae
     end
 
     def create
+      binding.pry
       return create_from_existing(params[:from_existing]) if params[:from_existing].present?
 
       @item = @klass.new(item_params)
@@ -105,19 +107,6 @@ module Fae
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   private
 
     def set_class_variables(class_name = nil)
@@ -132,7 +121,7 @@ module Fae
 
     # use callbacks to share common setup or constraints between actions.
     def set_item
-      @item = @klass.find(params[:id]).as_json
+      @item = @klass.find(params[:id])
     end
 
     # only allow trusted parameters, override to white-list

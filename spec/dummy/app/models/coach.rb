@@ -5,7 +5,7 @@ class Coach < ActiveRecord::Base
 
   # validates :first_name, presence: true
   # validates :last_name, presence: true
-  validates :team_id, presence: true
+  # validates :team_id, presence: true
 
   has_fae_image :image
 
@@ -19,6 +19,10 @@ class Coach < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def self.for_fae_index
+    order(:last_name)
   end
 
 end

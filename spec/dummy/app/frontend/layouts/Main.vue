@@ -21,6 +21,7 @@ import { Link } from '@inertiajs/vue3';
 
 const navItems = [
   { name: 'Beers', link: '/admin/beers'},
+  { name: 'Coaches', link: '/admin/coaches'},
   { name: 'Teams', link: '/admin/teams'},
 ]
 

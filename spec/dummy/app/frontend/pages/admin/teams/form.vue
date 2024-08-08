@@ -47,11 +47,10 @@
         </FaeModalForm>
         <ul v-if="item.coaches && item.coaches.length > 0">
           <li v-for="coach in item.coaches" :key="coach.id">
-            {{ coach.first_name }}
+            Coach Name: {{ coach.first_name }}
           </li>
         </ul>
         <p v-else>No Coaches Yet</p>
-        <p>{{ item }}</p>
       </div>
       
     </template>

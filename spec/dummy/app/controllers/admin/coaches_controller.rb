@@ -1,6 +1,13 @@
 module Admin
   class CoachesController < Fae::BaseController
 
+    private 
+
+    def set_item
+      item = @klass.find(params[:id])
+      @item = item.as_json.merge(image: item.image)
+    end
+
     # before_action :set_parent_context
 
     # def index
