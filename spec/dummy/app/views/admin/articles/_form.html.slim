@@ -1,8 +1,18 @@
 = simple_form_for([:admin, @item]) do |f|
-  == render 'fae/shared/form_header', header: @klass_name
+  == render 'fae/shared/form_header', header: @klass_name, languages: true
 
   main.content
     = fae_association f, :article_category
 
     = fae_input f, :title
     = fae_input f, :body
+    = fae_input f, :source_en
+    = fae_input f, :source_zh
+    = fae_input f, :source_frca
+
+- if @item.persisted?
+  section.content
+    == render 'fae/shared/nested_table',
+      assoc: :authors,
+      parent_item: @item,
+      cols: [:name_en, :name_zh, :name_frca]

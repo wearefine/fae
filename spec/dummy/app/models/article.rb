@@ -6,6 +6,8 @@ class Article < ApplicationRecord
 
   belongs_to :article_category
 
+  has_many :authors, dependent: :destroy
+
   validates :title, presence: true
   validates :article_category, presence: true
 
