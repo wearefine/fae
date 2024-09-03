@@ -161,7 +161,7 @@ module Fae
     private
 
     def asset_and_url_present?(obj)
-      obj.asset.present? && obj.asset.url.present?
+      obj.present? && obj.asset.present? && obj.asset.url.present?
     end
 
     def fae_bust_navigation_caches
