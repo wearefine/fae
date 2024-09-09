@@ -16,6 +16,7 @@ Fae.deploy = {
     this.pollTimeout     = null;
     this.pollInterval    = 5000;
     this.idleStates      = ['ready', 'error', 'rejected']
+    this.faeSiteId       = $('main.content').data('fae-site-id');
 
     this.pollDeployStatus();
     this.deployButtonListener();
@@ -49,7 +50,9 @@ Fae.deploy = {
 
   refreshDeploysListAndStatuses: function() {
     var _this = this;
-    $.get('/admin/deploy/deploys_list', function (data) {
+    var path = '/admin/deploy/deploys_list';
+    if (_this.faeSiteId) path += '?fae_site_id=' + _this.faeSiteId;
+    $.get(path, function (data) {
       if (data) {
         _this.drawTables(data);
         _this.stateChecks(data);
