@@ -51,7 +51,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'devise'
   s.add_dependency 'jquery-ui-rails', '~> 6.0.1'
   s.add_dependency 'mini_magick'
-  s.add_dependency 'judge', '~> 3.1.0'
+  s.add_dependency 'judge', '~> 3.0.0'
   s.add_dependency 'judge-simple_form', '~> 1.1.0'
   s.add_dependency 'kaminari'
   s.add_dependency 'remotipart', '~> 1.4.0'
