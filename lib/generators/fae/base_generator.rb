@@ -237,12 +237,12 @@ RUBY
       inject_into_file 'app/graphql/types/query_type.rb', after: "class QueryType < Types::BaseObject\n" do
         <<-RUBY
 
-    field :#{file_name}_page, Types::#{file_name.classify}PageType, null: true do
-      description "Returns the #{file_name.classify} Page instance"
+    field :#{file_name}_page, Types::#{file_name.titleize.gsub(' ','')}PageType, null: true do
+      description "Returns the #{file_name.titleize.gsub(' ','')} Page instance"
     end
 
     def #{file_name}_page
-      #{file_name.classify}Page.instance
+      #{file_name.titleize.gsub(' ','')}Page.instance
     end
 RUBY
       end
