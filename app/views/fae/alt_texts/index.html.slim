@@ -26,7 +26,7 @@ main.content
               - if item.asset.present? && item.asset.url.present?
                 img srcset=item.asset.url
             - if item.imageable_type == 'Fae::StaticPage'
-              td = item.imageable.title
+              td = "#{item.imageable.title} Page"
               td
             - else
               td = item.imageable_type
