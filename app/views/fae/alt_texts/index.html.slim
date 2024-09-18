@@ -25,8 +25,12 @@ main.content
             td
               - if item.asset.present? && item.asset.url.present?
                 img srcset=item.asset.url
-            td = item.imageable_type
-            td = item.imageable_id
+            - if item.imageable_type == 'Fae::StaticPage'
+              td = item.imageable.title
+              td
+            - else
+              td = item.imageable_type
+              td = item.imageable_id
             td = item.attached_as&.titleize
             td
               span.alt_text_label
