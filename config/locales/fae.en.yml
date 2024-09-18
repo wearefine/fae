@@ -58,6 +58,7 @@ en:
       your_settings: 'Your Settings'
       users: 'Users'
       activity_log: 'Activity Log'
+      alt_text_manager: 'Alt Text Manager'
       live_site: 'Live Site'
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
@@ -128,6 +129,8 @@ en:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:
       activity_log_heading: 'Activity Log'
+      alt_texts_heading: 'Alt Text Manager'
+      alt_texts_filter: 'Search Images'
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
       view_site: 'View Site'
