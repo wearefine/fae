@@ -27,6 +27,7 @@ module Fae
         hook = @site.site_deploy_hooks.find_by_environment(deploy_hook_type)
       else
         hook = Fae::DeployHook.find_by_environment(deploy_hook_type)
+      end
       if hook.present?
         post("#{hook.url}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{deploy_hook_type.titleize}+deploy")
         return true
