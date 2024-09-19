@@ -19,7 +19,7 @@ module Fae
     end
 
     def deploy_site
-      if Fae::NetlifyApi.new().run_deploy(params['deploy_hook_type'], current_user)
+      if Fae::NetlifyApi.new(params['fae_site_id']).run_deploy(params['deploy_hook_type'], current_user)
         return render json: { success: true }
       end
       render json: {success: false}

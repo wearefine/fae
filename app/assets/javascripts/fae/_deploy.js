@@ -30,8 +30,8 @@ Fae.deploy = {
     _this.$deployButtons.click(function(e) {
       e.preventDefault();
       _this.disableButtons();
-      var deploy_hook_type = $(this).data('build-hook-type');
-      $.post( '/admin/deploy/deploy_site', { deploy_hook_type: deploy_hook_type }, function(data) {
+      var deployHookType = $(this).data('build-hook-type');
+      $.post( '/admin/deploy/deploy_site', { deploy_hook_type: deployHookType, fae_site_id: _this.faeSiteId }, function(data) {
         // Netlify returns nothing for deploy hook posts
       });
     });
