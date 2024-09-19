@@ -23,8 +23,8 @@ module Fae
     end
 
     def run_deploy(deploy_hook_type, current_user)
-      if @site.present?
-        hook = @site.site_deploy_hooks.find_by_environment(deploy_hook_type)
+      if @fae_site.present?
+        hook = @fae_site.site_deploy_hooks.find_by_environment(deploy_hook_type)
       else
         hook = Fae::DeployHook.find_by_environment(deploy_hook_type)
       end
