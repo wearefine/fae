@@ -3,6 +3,14 @@ module Fae
 
     def index
       @items = Fae::Image.for_fae_index.page(params[:page])
+      @parent_model_options = []
+      Fae::StaticPage.all.each do |page|
+        @parent_model_options << ["#{page.title} Page", "Fae::StaticPage-#{page.id}"]
+      end
+      Fae::Image.pluck(:imageable_type).uniq.each do |model|
+        next if ['Fae::StaticPage', 'Fae::Option'].include?(model)
+        @parent_model_options << [model, model]
+      end
     end
 
     def update_alt

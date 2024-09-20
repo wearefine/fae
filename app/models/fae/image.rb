@@ -43,7 +43,15 @@ module Fae
 
       def filter(params)
         conditions = {}
-        conditions[:imageable_type] = params['parent_model'] if params['parent_model'].present?
+        if params['parent_model'].present?
+          if params['parent_model'].include?('-')
+            parent_model, parent_id = params['parent_model'].split('-')
+            conditions[:imageable_type] = parent_model
+            conditions[:imageable_id] = parent_id
+          else
+            conditions[:imageable_type] = params['parent_model']
+          end
+        end
         conditions[:attached_as] = params['attached_as'] if params['attached_as'].present?
         alt_text_conditions = []
         case params['alt_text_presence']
