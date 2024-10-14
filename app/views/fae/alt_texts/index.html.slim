@@ -29,7 +29,7 @@ main.content
               td = "#{item.imageable.title} Page"
               td
             - else
-              td = item.imageable_type
+              td = item.imageable_type.titleize
               td = item.imageable_id
             td = item.attached_as&.titleize
             td
