@@ -9,7 +9,7 @@ module Fae
       end
       Fae::Image.pluck(:imageable_type).uniq.each do |model|
         next if ['Fae::StaticPage', 'Fae::Option'].include?(model)
-        @parent_model_options << [model, model]
+        @parent_model_options << [model.titleize, model]
       end
     end
 
