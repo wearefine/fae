@@ -100,7 +100,8 @@ module Fae
 
         uri = URI (endpoint + path + language_params)
 
-        content = '[{"Text" : "' + en_text + '"}]'
+        # Unescaped double quotes are breaking the translation API
+        content = '[{"Text" : "' + en_text.gsub('"', '\"') + '"}]'
 
         request = Net::HTTP::Post.new(uri)
         request['Content-type'] = 'application/json'

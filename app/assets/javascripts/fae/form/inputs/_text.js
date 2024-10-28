@@ -203,6 +203,8 @@ Fae.form.text = {
                 // set translation text into translate model for markdown fields
                 const textArea = document.getElementById(translateModel)
                 $(textArea).data('editor').value(data[0].translated_text)
+                // Seeing an issue where the injected text is getting cut off in some cases, this appears to fix that.
+                $(textArea).data('editor').codemirror.refresh()
               } else {
                 // set translation text into translate model for non markdown fields
                 $('#' + translateModel).val(data[0].translated_text);
