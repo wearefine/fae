@@ -180,7 +180,9 @@ Fae.form.text = {
         }
 
         // set english model name and use that to get text from english field
-        var englishModel = translateModel.replace('_' + translateLanguage, '_en')
+        var modelParts = translateModel.split('_');
+        modelParts[modelParts.length - 1] = 'en';
+        var englishModel = modelParts.join('_');
         var englishText = $('#' + englishModel)[0].value 
 
         // get translateLanguage in correct format for request
