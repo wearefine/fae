@@ -71,7 +71,7 @@ ruby:
         options[:show_form_manager] = false
 
         if open_ai_enabled?
-          generate_alt = content_tag(:span, 'Generate Alt', class: "button js-generate-alt-button generate-alt-button", data: { image_name: "#{item.class.name.underscore}_#{image_name}" })
+          generate_alt = content_tag(:button, 'Generate Alt', class: "button js-generate-alt-button generate-alt-button", data: { image_name: "#{item.class.name.underscore}_#{image_name}" })
           options[:generate_alt] = generate_alt.html_safe if generate_alt.present?
         end
 

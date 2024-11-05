@@ -141,6 +141,8 @@ Fae.form.text = {
       var $fileInput = $(`#${image_input_id}`);
       var file = $fileInput[0].files[0];
       if (file) {
+        document.body.style.cursor = 'progress';
+        $this.prop('disabled', true);
         var reader = new FileReader();
         reader.onload = function (e) {
             $.ajax({
@@ -161,6 +163,8 @@ Fae.form.text = {
                   .addClass('field_with_errors')
                   .append("<span class='error'>" + response.message + '</span>');
               }
+              document.body.style.cursor = 'default';
+              $this.prop('disabled', false);
             }
           });
         };
