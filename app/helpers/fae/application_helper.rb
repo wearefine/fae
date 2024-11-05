@@ -95,6 +95,10 @@ module Fae
       Fae.netlify[:api_base].present?
     end
 
+    def open_ai_enabled?
+      Fae.open_ai_api_key.present?
+    end
+
     private
 
     def nav_path_current?(path)

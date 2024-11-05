@@ -1,3 +1,4 @@
+require 'mini_magick'
 module Fae
   class UtilitiesController < ApplicationController
 
@@ -39,6 +40,18 @@ module Fae
         search_locals = { show_nav: true }
       end
       render partial: 'global_search_results', locals: search_locals
+    end
+
+    def generate_alt
+      image_data = Base64.decode64(params[:image].split(',').last)
+      image = MiniMagick::Image.read(image_data)
+      image.resize "500x500"
+
+      resized_image_data = Base64.encode64(image.to_blob)
+      to_describe = "data:image/#{image.type.downcase};base64,#{resized_image_data}"
+      resp = Fae::OpenAiApi.new.describe_image(to_describe)
+      Rails.logger.info("Generated alt: #{resp}")
+      render json: resp
     end
 
     private

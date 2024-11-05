@@ -5,6 +5,8 @@ class Beer < ApplicationRecord
   has_fae_seo_set :seo
   has_many :poly_things, as: :poly_thingable
 
+  validates :name, presence: true
+
   def fae_display_field
     name
   end

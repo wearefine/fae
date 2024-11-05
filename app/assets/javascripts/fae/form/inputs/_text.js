@@ -10,6 +10,7 @@ Fae.form.text = {
     this.overrideMarkdownDefaults();
     this.initMarkdown();
     this.initHTML();
+    this.initGenerateAlt();
   },
 
   /**
@@ -127,6 +128,44 @@ Fae.form.text = {
         }
       },
       resetCss: true
+    });
+  },
+
+  initGenerateAlt: function () {
+    $('.js-generate-alt-button').on('click', function (e) {
+      e.preventDefault();
+      var $this = $(this);
+      var $altInput = $this.prev('input');
+      var image_input_id = $altInput.attr('id').replace('_attributes_alt', '') + '_attributes_asset';
+      console.log(image_input_id);
+      var $fileInput = $(`#${image_input_id}`);
+      var file = $fileInput[0].files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $.ajax({
+            url: `${Fae.path}/generate_alt`,
+            type: 'POST',
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            data: {
+              image: e.target.result
+            },
+            success: function (response) {
+              if (response.success) {
+                $altInput.val(response.content);
+              } else {
+                $altInput
+                  .parent()
+                  .addClass('field_with_errors')
+                  .append("<span class='error'>" + response.message + '</span>');
+              }
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+      }
     });
   }
 };

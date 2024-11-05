@@ -1,5 +1,7 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
+
+  Dir[Rails.root.join(Fae::Engine.config.root).join('lib/components/**/*.rb')].each { |f| require f }
   # Wrappers are used by the form builder to generate a
   # complete input. You can remove any component from the
   # wrapper, change the order or even add your own to the
@@ -43,6 +45,7 @@ SimpleForm.setup do |config|
 
     ## Inputs
     b.use :label_input
+    b.use :generate_alt
     b.use :hint,  wrap_with: { tag: :span, class: :hint }
     b.use :error, wrap_with: { tag: :span, class: :error }
   end

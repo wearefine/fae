@@ -269,5 +269,9 @@ module Fae
       end
     end
 
+    def open_ai_enabled?
+      Fae.open_ai_api_key.present?
+    end
+
   end
 end

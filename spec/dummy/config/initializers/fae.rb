@@ -31,4 +31,6 @@ Fae.setup do |config|
       api_base: 'https://api.netlify.com/api/v1/'
     }
   end
+
+  config.open_ai_api_key = ENV["OPEN_AI_API_KEY"]
 end
