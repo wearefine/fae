@@ -14,7 +14,7 @@ module Fae
   
     def describe_image(url = nil)
       messages = [
-        { "type": "text", "text": "Describe this image in one sentence." },
+        { "type": "text", "text": "Describe this image in one sentence. Avoid references to 'The image'." },
         { "type": "image_url",
           "image_url": {
             "url": "#{url}",

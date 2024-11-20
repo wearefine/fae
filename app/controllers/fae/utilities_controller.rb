@@ -43,8 +43,15 @@ module Fae
     end
 
     def generate_alt
-      image_data = Base64.decode64(params[:image].split(',').last)
-      image = MiniMagick::Image.read(image_data)
+      if params[:image_id].present?
+        path_or_url = :url
+        path_or_url = :path if Rails.env.development?
+        image = Fae::Image.find(params[:image_id])&.asset&.send(path_or_url)
+        image = MiniMagick::Image.open(image)
+      else
+        image_data = Base64.decode64(params[:image].split(',').last)
+        image = MiniMagick::Image.read(image_data)
+      end
       image.resize "500x500"
 
       resized_image_data = Base64.encode64(image.to_blob)

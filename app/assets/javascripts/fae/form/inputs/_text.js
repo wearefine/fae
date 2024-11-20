@@ -132,12 +132,11 @@ Fae.form.text = {
   },
 
   initGenerateAlt: function () {
-    $('.js-generate-alt-button').on('click', function (e) {
+    $('.js-generate-alt-button-on-form').on('click', function (e) {
       e.preventDefault();
       var $this = $(this);
       var $altInput = $this.prev('input');
       var image_input_id = $altInput.attr('id').replace('_attributes_alt', '') + '_attributes_asset';
-      console.log(image_input_id);
       var $fileInput = $(`#${image_input_id}`);
       var file = $fileInput[0].files[0];
       if (file) {
