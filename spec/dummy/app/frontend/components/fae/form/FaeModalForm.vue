@@ -29,7 +29,7 @@ async function getForm(isShowing: boolean) {
 
   if (isShowing) {
     try {
-      const response = await fetch(props.path, { headers: {'X-Inertia': 'true', 'X-FAE-INLINE': 'true'} })
+      const response = await fetch(props.path, { headers: {'X-Inertia': 'true'} })
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}`);
       }

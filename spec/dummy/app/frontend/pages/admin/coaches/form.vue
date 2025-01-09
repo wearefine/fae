@@ -3,31 +3,26 @@
 
     <FaeInput  
       label="First Name" 
-      name="coach[first_name]" 
       v-model="form.coach.first_name" 
     />
     <FaeInput  
       label="Last Name" 
-      name="coach[last_name]" 
       v-model="form.coach.last_name" 
     />
     <FaeInput  
       label="Role" 
-      name="coach[role]" 
       v-model="form.coach.role" 
     />
     <FaeInput  
       label="Bio" 
-      name="coach[bio]" 
       v-model="form.coach.bio" 
     />
 
-    <input 
-      v-if="props.parent_item && props.parent_id" 
+    <input
+      v-if="props.parentId"
       v-model="form.coach.team_id"
       type='hidden' 
-      :name="`${props.parent_item}_id`" 
-      :value="props.parent_id"
+      :value="props.parentId"
     >
 
     <img v-if="imageUrl" :src="imageUrl" alt="image" />
@@ -55,17 +50,17 @@ import FaeInput from '~/components/fae/form/FaeInput.vue'
 import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps<{
+  inline?: boolean
   edit?: boolean
   item: any
   index_path: string
-  parent_id?: number
-  parent_item?: string
+  parentId?: number
 }>()
 
 const path = computed(() => {
+  if (props.inline) return `${props.index_path}/inline-create`
   return props.edit ? `${props.index_path}/${props.item.id}` : props.index_path
 })
-
 
 const form = useForm({
   coach: {
@@ -73,8 +68,8 @@ const form = useForm({
     last_name: props.item.last_name,
     role: props.item.number,
     bio: props.item.bio,
-    image_attributes: props.item.image,
-    team_id: props.item.team_id || props.parent_id
+    image_attributes: props.item.image || {},
+    team_id: props.item.team_id || props.parentId
   }
 })
 

@@ -19,22 +19,22 @@
         v-model="form.history" 
       />
   
-      <label class="mt-s inline-block mr-m">
-        Players:
-        <select>
-          <option v-for="player in players"> {{ player.first_name }} {{ player.last_name }}</option>
-        </select>
-      </label>
+      <div class="flex items-center">
+        <label class="mt-s inline-block mr-m">
+          Players:
+          <select>
+            <option v-for="player in players"> {{ player.first_name }} {{ player.last_name }}</option>
+          </select>
+        </label>
+    
   
-      <FaeModalForm name="player" path="/admin/players/new">
-        <template #default="{ formProps, on }">
-          <PlayersForm v-bind="formProps" v-on="on" path="/admin/players/inline-create" />
-        </template>
-      </FaeModalForm>
+        <FaeModalFormV2 assoc="players" />
+      </div>
   
       
       <div>
-        <FaeModalForm name="coach" path="/admin/coaches/new">
+        <FaeModalFormV2 assoc="coaches" :parent-id="props.item.id"/>
+        <!-- <FaeModalForm name="coach" path="/admin/coaches/new">
           <template #default="{ formProps, on }">
             <CoachForm 
               v-bind="formProps" 
@@ -44,7 +44,7 @@
               path="/admin/coaches/inline-create"
             />
           </template>
-        </FaeModalForm>
+        </FaeModalForm> -->
         <ul v-if="item.coaches && item.coaches.length > 0">
           <li v-for="coach in item.coaches" :key="coach.id">
             Coach Name: {{ coach.first_name }}
@@ -61,6 +61,7 @@
 
 <script setup lang="ts">
 import { computed, defineProps, ref, watch, reactive } from 'vue'
+import FaeModalFormV2 from '~/components/fae/form/FaeModalFormV2.vue'
 import FaeModalForm from '~/components/fae/form/FaeModalForm.vue'
 import PlayersForm from '~/pages/admin/players/form.vue'
 import CoachForm from '~/pages/admin/coaches/form.vue'

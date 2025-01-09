@@ -4,22 +4,22 @@
     <FaeInput  
       label="First Name" 
       name="first_name" 
-      v-model="form.first_name" 
+      v-model="form.player.first_name" 
     />
     <FaeInput  
       label="Last Name" 
       name="last_name" 
-      v-model="form.last_name" 
+      v-model="form.player.last_name" 
     />
     <FaeInput  
       label="Number" 
       name="number" 
-      v-model="form.number" 
+      v-model="form.player.number" 
     />
     <FaeInput  
       label="Bio" 
       name="bio" 
-      v-model="form.bio" 
+      v-model="form.player.bio" 
     />
 
 
@@ -41,6 +41,7 @@ import FaeInput from '~/components/fae/form/FaeInput.vue'
 import { useForm } from '@inertiajs/vue3'
 
 const props = defineProps<{
+  inline?: boolean
   edit?: boolean
   item: any
   index_path: string
@@ -49,14 +50,17 @@ const props = defineProps<{
 
 const path = computed(() => {
   if (props.path) return props.path
+  if (props.inline) return `${props.index_path}/inline-create`
   return props.edit ? `${props.index_path}/${props.item.id}` : props.index_path
 })
 
 const form = useForm({
-  first_name: props.item.first_name,
-  last_name: props.item.last_name,
-  number: props.item.number,
-  bio: props.item.bio
+  player: {
+    first_name: props.item.first_name,
+    last_name: props.item.last_name,
+    number: props.item.number,
+    bio: props.item.bio
+  }
 })
 
 

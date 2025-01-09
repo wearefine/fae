@@ -32,7 +32,6 @@ module Fae
 
     def new
       @item = @klass.new
-
       build_assets
       set_assoc_vars
     end
@@ -43,7 +42,6 @@ module Fae
     end
 
     def create
-      binding.pry
       return create_from_existing(params[:from_existing]) if params[:from_existing].present?
 
       @item = @klass.new(item_params)
@@ -104,8 +102,6 @@ module Fae
         redirect_back(fallback_location: @index_path, inertia: { errors: @item.errors })
       end
     end
-
-
 
   private
 
