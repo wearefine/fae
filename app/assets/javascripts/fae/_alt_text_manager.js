@@ -8,12 +8,12 @@
 
 Fae.altTextManager = {
 
-  showBusy: function ($button) {
+  showBusy: function($button) {
     document.body.style.cursor = 'progress';
     $button.prop('disabled', true);
   },
   
-  showReady: function ($button) {
+  showReady: function($button) {
     document.body.style.cursor = 'default';
     $button.prop('disabled', false);
   },
@@ -27,6 +27,7 @@ Fae.altTextManager = {
     $saveButton.hide();
     $cancelButton.hide();
     $generateButton.hide();
+    
     $editButton.on('click', function() {
       $(this).siblings('.js-save-alt-button, .js-cancel-alt-button, .js-generate-alt-button-on-alt-manager').show();
       $(this).hide();
@@ -38,6 +39,7 @@ Fae.altTextManager = {
       $altTextLabel.hide();
       $altTextInput.show().focus();
     });
+    
     $cancelButton.on('click', function() {
       var $this = $(this);
       $this.siblings('.js-edit-alt-button').show();
@@ -48,6 +50,7 @@ Fae.altTextManager = {
       $altTextInput.hide();
       $altTextLabel.show();
     });
+    
     $saveButton.on('click', function() {
       var $this = $(this);
       var $altTextLabel = $this.siblings('.js-alt-text-label');
@@ -65,6 +68,7 @@ Fae.altTextManager = {
       $this.siblings('.js-save-alt-button, .js-generate-alt-button-on-alt-manager, .js-cancel-alt-button').hide();
       $this.siblings('.js-edit-alt-button').show();
     });
+    
     $generateButton.on('click', function (e) {
       e.preventDefault();
       var $this = $(this);
@@ -81,7 +85,7 @@ Fae.altTextManager = {
         },
         success: function (response) {
           if (response.success) {
-            $altTextInput.text(response.content);
+            $altTextInput.val(response.content);
           } else {
             alert(response.message);
           }
