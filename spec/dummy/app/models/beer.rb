@@ -3,6 +3,7 @@ class Beer < ApplicationRecord
 
   has_fae_image :image
   has_fae_seo_set :seo
+  has_fae_cta :test_cta
   has_many :poly_things, as: :poly_thingable
 
   validates :name, presence: true

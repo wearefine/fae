@@ -23,5 +23,7 @@ ruby:
     = fae_image_form f, :<%= attr %>
 <% elsif "Fae::File" == type -%>
     = fae_file_form f, :<%= attr %>
+<% elsif "Fae::Cta" == type -%>
+    = fae_cta_form f, :<%= attr %>
 <% end -%>
 <% end -%>

@@ -10,6 +10,7 @@ module Fae
       generate_view_files
       add_route
       inject_nav_item
+      inject_livable
     end
 
   end

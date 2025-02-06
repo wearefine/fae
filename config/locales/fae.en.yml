@@ -65,6 +65,7 @@ en:
       no_results: 'No Results'
       deployments: 'Deploy'
       deploy_hooks: 'Deploy Hooks'
+      sites: 'Sites'
     changes:
       recent: 'Recent Changes'
       user: 'User'
@@ -93,6 +94,7 @@ en:
         model: 'Model'
     deploy:
         page:
+          intro: "These are sensitive deployment configuration settings. Only make changes if you're sure of what you're doing."
           heading: 'Deploy'
         ctas:
           deploy: 'Deploy'

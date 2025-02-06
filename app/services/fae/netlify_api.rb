@@ -3,11 +3,16 @@ require 'net/http'
 module Fae
   class NetlifyApi
 
-    def initialize()
+    def initialize(fae_site_id = nil)
       @netlify_api_user   = Fae.netlify[:api_user]
       @netlify_api_token  = Fae.netlify[:api_token]
       @site               = Fae.netlify[:site]
       @site_id            = Fae.netlify[:site_id]
+      if fae_site_id.present?
+        @fae_site = Site.find_by_id(fae_site_id)
+        @site = @fae_site.netlify_site
+        @site_id = @fae_site.netlify_site_id
+      end
       @endpoint_base      = Fae.netlify[:api_base]
       @logger             = Logger.new(Rails.root.join('log', 'netlify_api.log'))
     end
@@ -18,7 +23,11 @@ module Fae
     end
 
     def run_deploy(deploy_hook_type, current_user)
-      hook = Fae::DeployHook.find_by_environment(deploy_hook_type)
+      if @fae_site.present?
+        hook = @fae_site.site_deploy_hooks.find_by_environment(deploy_hook_type)
+      else
+        hook = Fae::DeployHook.find_by_environment(deploy_hook_type)
+      end
       if hook.present?
         post("#{hook.url}?trigger_title=#{current_user.full_name.gsub(' ', '+')}+triggered+a+#{deploy_hook_type.titleize}+deploy")
         return true

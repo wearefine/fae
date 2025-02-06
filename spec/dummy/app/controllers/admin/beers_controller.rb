@@ -4,6 +4,7 @@ module Admin
     private
 
     def build_assets
+      @item.build_test_cta if @item.test_cta.blank?
       @item.build_image if @item.image.blank?
       if @item.seo.blank?
         @item.build_seo

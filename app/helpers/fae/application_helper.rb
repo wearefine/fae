@@ -90,8 +90,6 @@ module Fae
       Fae.netlify.present? &&
       Fae.netlify[:api_user].present? &&
       Fae.netlify[:api_token].present? &&
-      Fae.netlify[:site].present? &&
-      Fae.netlify[:site_id].present? &&
       Fae.netlify[:api_base].present?
     end
 
