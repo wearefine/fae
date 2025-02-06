@@ -20,6 +20,8 @@ input[type=email] {
 
 .input {
   margin-bottom: 20px;
+  display: block;
+  position: relative;
 
   &.disabled {
     opacity: 0.5;
@@ -110,4 +112,14 @@ input[type=email] {
     outline: 2px dashed green;
     outline-offset: 1px;
   }
+}
+
+.generate-alt-button {
+  position: absolute;
+  margin-left: 10px;
+  width: 105px;
+}
+
+.hide { 
+  display: none !important 
 }

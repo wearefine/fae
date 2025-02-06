@@ -75,4 +75,8 @@ Fae.setup do |config|
   #   site_id: 'site-id-in-netlify',
   #   api_base: 'https://api.netlify.com/api/v1/'
   # }
+
+  ## OpenAI API key
+  # Environment variables are recommended for any sensitive OpenAI configuration details.
+  # config.open_ai_api_key = 'api-key'
 end

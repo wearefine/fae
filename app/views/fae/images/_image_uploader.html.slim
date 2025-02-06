@@ -70,6 +70,11 @@ ruby:
         options[:wrapper_html].merge!({class: "#{form_manager_id}_alt_container"})
         options[:show_form_manager] = false
 
+        if open_ai_enabled?
+          generate_alt = content_tag(:button, 'Generate Alt', class: "button js-generate-alt-button-on-form generate-alt-button", data: { image_name: "#{item.class.name.underscore}_#{image_name}" })
+          options[:generate_alt] = generate_alt.html_safe if generate_alt.present?
+        end
+
       = fae_input i, :alt, options
 
     = i.hidden_field :required, value: required

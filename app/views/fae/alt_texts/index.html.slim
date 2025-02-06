@@ -14,7 +14,7 @@ main.content
         th Parent Model
         th Parent ID
         th Attached As
-        th.-alt-input Alt Text
+        th.-alt-text Alt Text
         th Size
         th Modified
     tbody
@@ -24,7 +24,7 @@ main.content
             td = item.id
             td
               - if item.asset.present? && item.asset.url.present?
-                img srcset=item.asset.url
+                img src=item.asset.url
             - if item.imageable_type == 'Fae::StaticPage'
               td = "#{item.imageable.title} Page"
               td
@@ -33,9 +33,13 @@ main.content
               td = item.imageable_id
             td = item.attached_as&.titleize
             td
-              span.alt_text_label
+              .js-alt-text-label.alt-text-label
                 = item.alt.present? ? item.alt : 'No alt text'
-              textarea.alt_text_input data-id=item.id
+              textarea.js-alt-text-input data-id=item.id
+              button.button.js-edit-alt-button.edit-alt Edit
+              button.button.js-save-alt-button.edit-alt Save
+              button.button.js-cancel-alt-button.edit-alt Cancel
+              button.button.js-generate-alt-button-on-alt-manager data-image-id=item.id Generate
             td = number_to_human_size(item.file_size)
             td = fae_date_format item.updated_at
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_07_30_200356) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -202,6 +202,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_07_30_200356) do
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_images_on_attached_as"
     t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable"
+  end
+
+  create_table "fae_open_ai_api_calls", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "call_type"
+    t.integer "tokens"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["call_type"], name: "index_fae_open_ai_api_calls_on_call_type"
+    t.index ["tokens"], name: "index_fae_open_ai_api_calls_on_tokens"
   end
 
   create_table "fae_options", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
