@@ -67,6 +67,7 @@ Fae.form.filtering = {
       Fae.tables.columnSorting();
       Fae.tables.rowSorting();
       Fae.navigation.lockFooter();
+      Fae.altTextManager.ready();
 
       _this.sortingSetup();
 
