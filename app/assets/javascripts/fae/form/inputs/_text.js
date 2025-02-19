@@ -144,7 +144,7 @@ Fae.form.text = {
         $this.prop('disabled', true);
         var reader = new FileReader();
         reader.onload = function (e) {
-            $.ajax({
+          $.ajax({
             url: `${Fae.path}/generate_alt`,
             type: 'POST',
             beforeSend: function(xhr) {
@@ -168,6 +168,31 @@ Fae.form.text = {
           });
         };
         reader.readAsDataURL(file);
+      } else {
+        document.body.style.cursor = 'progress';
+        $this.prop('disabled', true);
+        $.ajax({
+          url: `${Fae.path}/generate_alt`,
+          type: 'POST',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+          },
+          data: {
+            image_id: $this.data('image-id')
+          },
+          success: function (response) {
+            if (response.success) {
+              $altInput.val(response.content);
+            } else {
+              $altInput
+                .parent()
+                .addClass('field_with_errors')
+                .append("<span class='error'>" + response.message + '</span>');
+            }
+            document.body.style.cursor = 'default';
+            $this.prop('disabled', false);
+          }
+        });
       }
     });
   }
