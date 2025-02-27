@@ -7,7 +7,7 @@ module Fae
       Fae::StaticPage.all.each do |page|
         @parent_model_options << ["#{page.title} Page", "Fae::StaticPage-#{page.id}"]
       end
-      Fae::Image.pluck(:imageable_type).uniq.each do |model|
+      Fae::Image.pluck(:imageable_type).uniq.compact.each do |model|
         next if ['Fae::StaticPage', 'Fae::Option'].include?(model)
         @parent_model_options << [model.titleize, model]
       end
