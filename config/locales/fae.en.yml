@@ -59,12 +59,14 @@ en:
       your_settings: 'Your Settings'
       users: 'Users'
       activity_log: 'Activity Log'
+      alt_text_manager: 'Alt Text Manager'
       live_site: 'Live Site'
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
       no_results: 'No Results'
       deployments: 'Deploy'
       deploy_hooks: 'Deploy Hooks'
+      sites: 'Sites'
     changes:
       recent: 'Recent Changes'
       user: 'User'
@@ -93,6 +95,7 @@ en:
         model: 'Model'
     deploy:
         page:
+          intro: "These are sensitive deployment configuration settings. Only make changes if you're sure of what you're doing."
           heading: 'Deploy'
         ctas:
           deploy: 'Deploy'
@@ -130,6 +133,8 @@ en:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:
       activity_log_heading: 'Activity Log'
+      alt_texts_heading: 'Alt Text Manager'
+      alt_texts_filter: 'Search Images'
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
       view_site: 'View Site'

@@ -29,6 +29,10 @@ module Fae
       render 'fae/application/seo_set_form', f: f, seo_set_name: seo_set_name
     end
 
+    def fae_cta_form(f, cta_name)
+      render 'fae/application/cta_form', f: f, cta_name: cta_name
+    end
+
     def fae_index_image(image, path = nil)
       return if image.blank? || image.asset.blank? || image.asset.thumb.blank?
       content_tag :div, class: 'image-mat' do

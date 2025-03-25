@@ -35,4 +35,4 @@
       ports:
         - '3307:3306'
       volumes:
-        - /private/app/dbs:/var/lib/mysql
+        - ./mysql:/var/lib/mysql

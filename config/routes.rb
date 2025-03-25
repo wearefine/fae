@@ -11,9 +11,17 @@ Fae::Engine.routes.draw do
     post 'login' => 'sessions#create', as: :user_session
     get 'logout' => 'sessions#destroy', as: :destroy_user_session
   end
-  resources :users
   resources :deploy_hooks
+<<<<<<< HEAD
   resource :two_factor_settings, except: [:index, :show]
+=======
+  resources :site_deploy_hooks
+  resources :sites
+  resources :users
+  post 'alt_texts/:id/update_alt' => 'alt_texts#update_alt'
+  get 'alt_texts' => 'alt_texts#index', as: 'alt_texts'
+  post 'alt_texts/filter' => 'alt_texts#filter', as: 'alt_texts_filter'
+>>>>>>> @{-1}
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'
@@ -35,6 +43,7 @@ Fae::Engine.routes.draw do
   post 'search', to: 'utilities#global_search'
   post 'html_embedded_image', to: 'images#create_html_embedded'
   post 'translate_text', to: 'utilities#translate_text'
+  post 'generate_alt', to: 'utilities#generate_alt'
 
   get '/root' => 'options#edit', as: :option
   match '/root' => 'options#update', via: [:put, :patch]

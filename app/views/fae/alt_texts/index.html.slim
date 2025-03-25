@@ -1,0 +1,49 @@
+header.content-header.js-content-header
+  h1 = t('fae.application.alt_texts_heading')
+
+main.content
+  == fae_filter_form search: false, title: t('fae.application.alt_texts_filter'), action: fae.alt_texts_filter_path do
+    == fae_filter_select :alt_text_presence, options: ['Both', 'Missing', 'Present']
+    == fae_filter_select :parent_model, options: @parent_model_options
+    == fae_filter_select :attached_as, options: Fae::Image.pluck(:attached_as).uniq.collect.compact { |a| [a.titleize, a] }
+  table.js-sort-column
+    thead
+      tr
+        th ID
+        th data-sorter="false"
+        th Parent Model
+        th Parent ID
+        th Attached As
+        th.-alt-text Alt Text
+        th Size
+        th Modified
+    tbody
+      - if @items.present?
+        - @items.each do |item|
+          tr
+            td = item.id
+            td
+              - if item.asset.present? && item.asset.url.present?
+                img src=item.asset.url
+            - if item.imageable_type == 'Fae::StaticPage'
+              td = "#{item.imageable.title} Page"
+              td
+            - else
+              td = item.imageable_type.titleize
+              td = item.imageable_id
+            td = item.attached_as&.titleize
+            td
+              .js-alt-text-label.alt-text-label
+                = item.alt.present? ? item.alt : 'No alt text'
+              textarea.js-alt-text-input data-id=item.id
+              button.button.js-edit-alt-button.edit-alt Edit
+              button.button.js-save-alt-button.edit-alt Save
+              button.button.js-cancel-alt-button.edit-alt Cancel
+              button.button.js-generate-alt-button-on-alt-manager data-image-id=item.id Generate
+            td = number_to_human_size(item.file_size)
+            td = fae_date_format item.updated_at
+
+      - else
+        tr: td colspan="8" No items found
+
+  == fae_paginate @items

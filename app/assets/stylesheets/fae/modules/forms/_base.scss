@@ -127,7 +127,12 @@ input[type=email] {
   transform: translateX(calc(100% + 10px));
 }
 
+.generate-alt-button {
+  position: absolute;
+  margin-left: 10px;
+  width: 105px;
+}
+
 .hide { 
   display: none !important 
 }
-

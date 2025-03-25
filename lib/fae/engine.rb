@@ -17,6 +17,7 @@ module Fae
     require "sprockets/railtie"
     require 'devise-two-factor'
     require 'rqrcode'
+    require 'openai'
 
     config.eager_load_paths += %W(#{config.root}/app)
 

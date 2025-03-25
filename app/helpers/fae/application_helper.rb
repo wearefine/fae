@@ -90,9 +90,11 @@ module Fae
       Fae.netlify.present? &&
       Fae.netlify[:api_user].present? &&
       Fae.netlify[:api_token].present? &&
-      Fae.netlify[:site].present? &&
-      Fae.netlify[:site_id].present? &&
       Fae.netlify[:api_base].present?
+    end
+
+    def open_ai_enabled?
+      Fae.open_ai_api_key.present?
     end
 
     private

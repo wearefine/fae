@@ -45,6 +45,7 @@ SimpleForm.setup do |config|
     ## Inputs
     b.use :label_input
     b.use :translate
+    b.use :generate_alt
     b.use :hint,  wrap_with: { tag: :span, class: :hint }
     b.use :error, wrap_with: { tag: :span, class: :error }
   end

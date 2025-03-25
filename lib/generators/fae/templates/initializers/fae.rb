@@ -75,4 +75,12 @@ Fae.setup do |config|
   #   site_id: 'site-id-in-netlify',
   #   api_base: 'https://api.netlify.com/api/v1/'
   # }
+
+  ## OpenAI API key
+  # Environment variables are recommended for any sensitive OpenAI configuration details.
+  # config.open_ai_api_key = 'api-key'
+  
+  ## OpenAI API prompt
+  # This will override the default prompt for the OpenAI API image description.
+  # config.open_ai_describe_image_prompt = "Describe this image in 150 characters or less. Avoid references to 'The image'."
 end

@@ -40,7 +40,8 @@ class HomePage < Fae::StaticPage
         },
       body: Fae::TextArea,
       hero_image: Fae::Image,
-      welcome_pdf: Fae::File
+      welcome_pdf: Fae::File,
+      test_cta: Fae::Cta,
     }
   end
 
