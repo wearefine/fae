@@ -117,14 +117,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.index ["user_id"], name: "index_fae_changes_on_user_id"
   end
 
-  create_table "fae_data_caches", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "key"
-    t.text "value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["key"], name: "index_fae_data_caches_on_key"
-  end
-  
   create_table "fae_ctas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "cta_label"
     t.text "cta_link"
@@ -163,24 +155,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
     t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable"
-  end
-
-  create_table "fae_flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "flex_componentable_type", null: false
-    t.bigint "flex_componentable_id", null: false
-    t.string "component_model"
-    t.integer "component_id"
-    t.integer "position"
-    t.boolean "on_stage", default: true
-    t.boolean "on_prod", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["component_id"], name: "index_flex_components_on_component_id"
-    t.index ["component_model"], name: "index_flex_components_on_component_model"
-    t.index ["flex_componentable_type", "flex_componentable_id"], name: "index_flex_components_on_flex_componentable"
-    t.index ["on_prod"], name: "index_flex_components_on_on_prod"
-    t.index ["on_stage"], name: "index_flex_components_on_on_stage"
-    t.index ["position"], name: "index_flex_components_on_position"
   end
 
   create_table "fae_form_managers", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -361,12 +335,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
-  create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "jerseys", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "color"
@@ -411,15 +379,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
   end
 
   create_table "poly_things", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
     t.string "name_en"
     t.string "poly_thingable_type"
     t.bigint "poly_thingable_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
     t.string "name_frca"
-    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable_type_and_poly_thingable_id"
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
   create_table "release_notes", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -508,12 +474,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.text "history"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-  end
-
-  create_table "text_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

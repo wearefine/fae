@@ -20,5 +20,16 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
+  # Removed for now to simplify render.com deploy
+  if Rails.env.test?
+    config.netlify = {
+      api_user: ENV['FINE_NETLIFY_API_USER'],
+      api_token: ENV['FINE_NETLIFY_API_TOKEN'],
+      site: 'fine-pss',
+      site_id: 'a1b2c3d4',
+      api_base: 'https://api.netlify.com/api/v1/'
+    }
+  end
+
   config.open_ai_api_key = ENV["OPEN_AI_API_KEY"]
 end

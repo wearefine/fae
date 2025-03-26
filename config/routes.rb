@@ -12,16 +12,13 @@ Fae::Engine.routes.draw do
     get 'logout' => 'sessions#destroy', as: :destroy_user_session
   end
   resources :deploy_hooks
-<<<<<<< HEAD
   resource :two_factor_settings, except: [:index, :show]
-=======
   resources :site_deploy_hooks
   resources :sites
   resources :users
   post 'alt_texts/:id/update_alt' => 'alt_texts#update_alt'
   get 'alt_texts' => 'alt_texts#index', as: 'alt_texts'
   post 'alt_texts/filter' => 'alt_texts#filter', as: 'alt_texts_filter'
->>>>>>> @{-1}
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'

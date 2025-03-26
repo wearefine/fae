@@ -35,7 +35,7 @@ main.content
             td
               .js-alt-text-label.alt-text-label
                 = item.alt.present? ? item.alt : 'No alt text'
-              textarea.js-alt-text-input data-id=item.id
+              textarea.js-alt-text-input id="alt_text_input_#{item.id}" data-id=item.id
               button.button.js-edit-alt-button.edit-alt Edit
               button.button.js-save-alt-button.edit-alt Save
               button.button.js-cancel-alt-button.edit-alt Cancel
