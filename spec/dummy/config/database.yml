@@ -9,6 +9,7 @@ base: &base
 
 development:
   <<: *base
+  database: fae_dummy
   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
 test:
@@ -18,19 +19,7 @@ test:
   password: <%= ENV['MYSQL_PASSWORD'] %>
   host: <%= ENV['DEV_MYSQL_HOST'] || 'localhost' %>
 
-
-remote_development:
-  <<: *base
-  database: fae_dev
-  username: fae
-  password: sh45&rEDnap
-
-stage:
-  <<: *base
-  database: fae_stage
-  username: fae
-  password: sh45&rEDnap
-
+# Fae Dummy app on Render
 production:
   adapter: postgresql
   encoding: unicode

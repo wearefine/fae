@@ -73,6 +73,9 @@ feature 'page validations' do
     admin_login
     visit fae.edit_content_block_path('about_us')
 
+    page.find('#js_language_chosen').click
+    page.find('#js_language_chosen li', text: 'Chinese').click
+
     within('.about_us_page_body_en_content') do
       expect(page).to have_content('Maximum Characters: 150')
     end

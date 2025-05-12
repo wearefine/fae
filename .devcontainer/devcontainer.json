@@ -1,0 +1,16 @@
+{
+  "name": "Existing Docker Compose",
+  "dockerComposeFile": ["../docker-compose.yml", "../docker-compose.override.yml"],
+  "service": "app",
+  "workspaceFolder": "/app",
+  "forwardPorts": [3000, 3307],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "rubocop.vscode-rubocop",
+        "GraphQL.vscode-graphql"
+      ]
+    }
+  }
+}

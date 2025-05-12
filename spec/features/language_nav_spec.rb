@@ -20,13 +20,13 @@ feature 'Language nav' do
     page.find('#js_language_chosen').click
     page.find('#js_language_chosen li', text: 'English').click
     expect(page).to     have_selector('div[data-language=en]')
-    expect(page).to_not have_selector('div[data-language=ja]')
+    expect(page).to_not have_selector('div[data-language=zh]')
 
     # Open the chosen menu
     page.find('#js_language_chosen').click
-    page.find('#js_language_chosen li', text: 'Japanese').click
-    expect(page).to     have_selector('div[data-language=ja]')
-    expect(page).to_not have_selector('div[data-language=en]')
+    page.find('#js_language_chosen li', text: 'Chinese').click
+    expect(page).to     have_selector('div[data-language=zh]')
+    expect(page).to     have_selector('div[data-language=en]')
   end
 
   # spec is causing issues in appraisal, AJAX call to update current_user.language is not sticking

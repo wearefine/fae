@@ -14,7 +14,7 @@
     docker-compose run app rake db:create db:migrate
 
     # create test db
-    docker-compose run -e 'RAILS_ENV=test' app rake db:create db:migrate
+    docker-compose run -e 'RAILS_ENV=test' app rake db:drop db:create db:migrate
     ```
 3. Seed db
     ```

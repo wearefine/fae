@@ -10,6 +10,7 @@ module Fae
       generate_nested_controller_file
       generate_view_files
       add_route
+      inject_livable
     end
 
     private
