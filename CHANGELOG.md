@@ -4,17 +4,17 @@
 
 - enhancments
     + Support multi site deploys
-    + Add a native MFA option [#591] (https://github.com/wearefine/fae/pull/591)
-    + Add automatic launguage translation [#599] (https://github.com/wearefine/fae/pull/599)
-    + Add AI support for image alt text [#620] (https://github.com/wearefine/fae/pull/620)
-    + Add native CTA object [#615] (https://github.com/wearefine/fae/pull/615)
-    + Upgrade underscore and momentjs [#609] (https://github.com/wearefine/fae/pull/609)
-    + Update documentation [#603] (https://github.com/wearefine/fae/pull/603)
-    + Update documentation [#595] (https://github.com/wearefine/fae/pull/595)
+    + Add a native MFA option [#591](https://github.com/wearefine/fae/pull/591)
+    + Add automatic launguage translation [#599](https://github.com/wearefine/fae/pull/599)
+    + Add AI support for image alt text [#620](https://github.com/wearefine/fae/pull/620)
+    + Add native CTA object [#615](https://github.com/wearefine/fae/pull/615)
+    + Upgrade underscore and momentjs [#609](https://github.com/wearefine/fae/pull/609)
+    + Update documentation [#603](https://github.com/wearefine/fae/pull/603)
+    + Update documentation [#595](https://github.com/wearefine/fae/pull/595)
 - bugs
-    + Fix filter reset issue [#614] (https://github.com/wearefine/fae/pull/614)
-    + Page generator hotfix [#596] (https://github.com/wearefine/fae/pull/596)
-    + Global search hotfix [#597] (https://github.com/wearefine/fae/pull/597)
+    + Fix filter reset issue [#614](https://github.com/wearefine/fae/pull/614)
+    + Page generator hotfix [#596](https://github.com/wearefine/fae/pull/596)
+    + Global search hotfix [#597](https://github.com/wearefine/fae/pull/597)
 
 ## 3.0
 
