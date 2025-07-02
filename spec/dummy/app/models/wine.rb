@@ -6,6 +6,10 @@ class Wine < ActiveRecord::Base
   has_many :releases
   has_many :winemakers
 
+  has_fae_cta :test_cta_en
+  has_fae_cta :test_cta_zh
+  has_fae_cta :test_cta_ja
+
   has_many :oregon_winemakers, -> { where(region_type: 1) },
     class_name: 'Winemaker'
 

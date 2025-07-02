@@ -192,6 +192,14 @@ module Fae
         accepts_nested_attributes_for set_name_symbol, allow_destroy: true
       end
 
+      def has_fae_cta(cta_name_symbol)
+        has_one cta_name_symbol, -> { where(attached_as: cta_name_symbol.to_s) },
+          as: :ctaable,
+          class_name: '::Fae::Cta',
+          dependent: :destroy
+        accepts_nested_attributes_for cta_name_symbol, allow_destroy: true
+      end
+
     end
 
     private

@@ -7,4 +7,3 @@ module Translation
 end
 
 SimpleForm.include_component(Translation)
-# SimpleForm::Inputs::Base.send(:include, SimpleForm::Components::Translation)

@@ -67,6 +67,7 @@ Fae.form.filtering = {
       Fae.tables.columnSorting();
       Fae.tables.rowSorting();
       Fae.navigation.lockFooter();
+      Fae.altTextManager.ready();
 
       _this.sortingSetup();
 
@@ -103,9 +104,10 @@ Fae.form.filtering = {
         var $this = $(this);
         ev.preventDefault();
 
-        // reset params and form selects
+        // reset params and form selects/inputs
         _this.fry.merge({ page: '' }, true);
         $('#filter_search').val('');
+        $this.closest('form').find('.table-filter-group.text-input input').val('');
         $this.closest('form').find('select').val('').trigger('chosen:updated');
         $this.hide();
       })

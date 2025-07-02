@@ -26,10 +26,11 @@ Fae.setup do |config|
       api_user: ENV['FINE_NETLIFY_API_USER'],
       api_token: ENV['FINE_NETLIFY_API_TOKEN'],
       site: 'fine-pss',
-      site_id: 'bb32173b-9ff2-4d9d-860a-2683ae4e1e2b',
+      site_id: 'a1b2c3d4',
       api_base: 'https://api.netlify.com/api/v1/'
     }
   end
 
   config.slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
+  config.open_ai_api_key = ENV["OPEN_AI_API_KEY"]
 end

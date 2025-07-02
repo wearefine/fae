@@ -15,7 +15,7 @@
 //= require jquery.remotipart
 //= require jquery-ui/widgets/sortable
 //= require jquery-ui/widgets/datepicker
-//= require underscore
+//= require fae/vendor/underscore.min
 //= require json2
 //= require judge
 
@@ -63,6 +63,7 @@
 //= require fae/_tables
 //= require fae/_deploy
 //= require fae/_contrast
+//= require fae/_alt_text_manager
 
 //= require fae
 

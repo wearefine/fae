@@ -4,7 +4,7 @@ require_relative 'validation_helper_collection'
 
 module Fae
   # configurable defaults
-  mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager, :netlify, :slack_webhook_url
+  mattr_accessor :devise_secret_key, :devise_mailer_sender, :dashboard_exclusions, :max_image_upload_size, :max_file_upload_size, :languages, :recreate_versions, :validation_helpers, :track_changes, :tracker_history_length, :slug_separator, :disabled_environments, :per_page, :use_cache, :use_form_manager, :netlify, :slack_webhook_url, :open_ai_api_key, :open_ai_describe_image_prompt
 
   self.devise_secret_key      = ''
   self.devise_mailer_sender   = 'change-me@example.com'
@@ -23,6 +23,8 @@ module Fae
   self.use_form_manager       = false
   self.netlify                = {}
   self.slack_webhook_url      = ''
+  self.open_ai_api_key        = ''
+  self.open_ai_describe_image_prompt = "Describe this image in 150 characters or less. Avoid references to 'The image'."
 
   # this function maps the vars from your app into your engine
   def self.setup(&block)

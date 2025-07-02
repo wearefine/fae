@@ -1,9 +1,12 @@
 header.content-header.js-content-header
-  h1 = t('fae.deploy.page.heading')
+  - if @site.present?
+    h1 = "#{t('fae.deploy.page.heading')} - #{@site.name}"
+  - else
+    h1 = t('fae.deploy.page.heading')
 
 == render 'flash_messages'
 
-main.content
+main.content data-fae-site-id=@site&.id
   - if @deploy_hooks.present?
     - @deploy_hooks.each do |deploy_hook|
       button.button.deploy-button.js-run-deploy data-build-hook-type=deploy_hook.environment href="#" = "#{t('fae.deploy.ctas.deploy')} #{deploy_hook.environment.to_s.titleize}"
