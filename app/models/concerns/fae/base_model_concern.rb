@@ -9,7 +9,7 @@ module Fae
       include Fae::Trackable if Fae.track_changes
       include Fae::Sortable
       after_create :notify_initiation
-      before_save :notify_changes
+      after_save :notify_changes
     end
 
     def notify_changes
