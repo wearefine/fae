@@ -13,6 +13,7 @@ module Fae
     end
 
     def notify_changes
+      return unless self.persisted?
       return unless notifiable_attributes.present?
       notifiable_attributes.each do |field_name_symbol|
         if self.send("#{field_name_symbol}_changed?") && self.send(field_name_symbol).present?
