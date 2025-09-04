@@ -76,6 +76,9 @@ Fae.setup do |config|
   #   api_base: 'https://api.netlify.com/api/v1/'
   # }
 
+  ## slack_webhook_url
+  # Environment variable is recommended for any sensitive Slack configuration details.
+  # config.slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
   ## OpenAI API key
   # Environment variables are recommended for any sensitive OpenAI configuration details.
   # config.open_ai_api_key = 'api-key'

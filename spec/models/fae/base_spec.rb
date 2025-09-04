@@ -82,4 +82,27 @@ describe Fae::BaseModelConcern do
     end
   end
 
+  describe '#format_and_send_slack' do
+    it 'should send a slack notification if message is present' do
+      wine = FactoryBot.create(:wine)
+      field_name_symbol = :on_prod
+
+      test_message = "Dummy - [asdf](http://localhost/admin/wines/#{wine.id}/edit) (Wine) is live on prod"
+      allow(wine).to receive(:slack_message).with(field_name_symbol).and_return(test_message)
+      expect(Fae::SlackNotification).to receive(:new).and_return(double(send_slack: true))
+
+      wine.format_and_send_slack(field_name_symbol)
+    end
+
+    it 'should not send a slack notification if message is not present' do
+      wine = FactoryBot.create(:wine)
+      field_name_symbol = :name_en
+
+      allow(wine).to receive(:slack_message).with(field_name_symbol).and_return(nil)
+      expect(Fae::SlackNotification).not_to receive(:new)
+
+      wine.format_and_send_slack(field_name_symbol)
+    end
+  end
+
 end
