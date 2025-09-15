@@ -6,7 +6,7 @@ module Fae
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
 
-    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set']
+    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set', 'cta']
 
     @@attributes_flat = []
     @@attribute_names = []
@@ -15,6 +15,7 @@ module Fae
     @@graphql_attributes = []
     @@has_position = false
     @@display_field = ''
+    @@needs_livable = false
 
     def check_template_support
       supported_templates = ['slim']
@@ -41,6 +42,7 @@ module Fae
             @@attribute_names << arg.name
           end
           @@has_position = true if arg.name === 'position'
+          @@needs_livable = true if arg.name == 'on_prod'
 
           @@graphql_attributes << graphql_object(arg)
         end
@@ -150,6 +152,12 @@ RUBY
     has_fae_seo_set :#{attachment.name}\n
   RUBY
             end
+          elsif attachment.type == :cta
+            inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+              <<-RUBY
+    has_fae_cta :#{attachment.name}\n
+  RUBY
+            end
         elsif attachment.type == :file
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
             <<-RUBY
@@ -187,6 +195,8 @@ RUBY
         'Types::FaeFileType'
       when 'seo_set'
         'Types::FaeSeoSetType'
+      when 'cta'
+        'Types::FaeCtaType'
       else
         'String'
       end
@@ -207,7 +217,7 @@ RUBY
     end
 
     def is_attachment(arg)
-      [:image, :file, :seo_set].include?(arg.type)
+      [:image, :file, :seo_set, :cta].include?(arg.type)
     end
 
     def polymorphic_name
@@ -216,6 +226,39 @@ RUBY
 
     def polymorphic_name
       "#{file_name.underscore}able"
+    end
+
+    ####################################################################
+    # FINE specific methods
+    ####################################################################
+
+    def inject_static_page_gql_query
+      # return unless uses_graphql
+      inject_into_file 'app/graphql/types/query_type.rb', after: "class QueryType < Types::BaseObject\n" do
+        <<-RUBY
+
+    field :#{file_name}_page, Types::#{file_name.titleize.gsub(' ','')}PageType, null: true do
+      description "Returns the #{file_name.titleize.gsub(' ','')} Page instance"
+    end
+
+    def #{file_name}_page
+      #{file_name.titleize.gsub(' ','')}Page.instance
+    end
+RUBY
+      end
+    end
+
+    # This assumes your app has the Livable concern in it.
+    # Which if you've started from our BE template, it should.
+    def inject_livable
+      if @@needs_livable
+        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern" do <<-RUBY
+
+  include Livable\n
+RUBY
+        end
+
+      end
     end
 
   end

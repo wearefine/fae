@@ -61,10 +61,9 @@ module Fae
 
       if old_record.present?
         new_record = old_record.dup
-        if ['::Fae::Image','::Fae::File'].include?(type.options[:class_name])
+        if ['::Fae::Image','::Fae::File','::Fae::Cta'].include?(type.options[:class_name])
           new_record.send("#{type.options[:as]}_id" + '=', @cloned_item.id) if new_record.send("#{type.options[:as]}_id").present?
           new_record.send("#{type.options[:as]}_type" + '=', @cloned_item.class.name) if new_record.send("#{type.options[:as]}_type").present?
-          Fae::AssetCloner.new(old_record, new_record, :asset).set_file if old_record.asset.present? && old_record.asset.url.present?
           new_record.save
         else
           new_record.send("#{@klass_singular}_id" + '=', @cloned_item.id) if new_record.send("#{@klass_singular}_id").present?

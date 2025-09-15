@@ -22,14 +22,12 @@
         - DEV_MYSQL_HOST=db
         - FINE_NETLIFY_API_TOKEN=test
         - FINE_NETLIFY_API_USER=test
+        - PRIMARY_KEY=Qw25fZjaxhxdWOKFyHjyKyYvVq9uA0Ga
+        - DETERMINISTIC_KEY=FFSSjMQsRxWU4H1mH96JBW4o1HJF8wZ5
+        - KEY_DERIVATION_SALT=Vgo7V3USqaODX1Vn5H9HyHJmFGo7yEOA
+        - TRANSLATOR_TEXT_SUBSCRIPTION_KEY=test
+        - TRANSLATOR_TEXT_REGION=test
     db:
-      # image: postgres
-      # volumes:
-      #   - ./tmp/db:/var/lib/postgresql/data
-      # environment:
-      #   POSTGRES_PASSWORD: password
-      # ports:
-      #   - "5432:5432"
       image: mariadb
       environment:
         - MYSQL_ROOT_PASSWORD=
@@ -37,4 +35,4 @@
       ports:
         - '3307:3306'
       volumes:
-        - /private/app/dbs:/var/lib/mysql
+        - ./mysql:/var/lib/mysql

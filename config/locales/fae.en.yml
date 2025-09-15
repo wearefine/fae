@@ -34,6 +34,7 @@ en:
       last_login: 'Last Logged In'
       active: 'Active'
       add_user: 'Add User'
+      mfa_active: 'MFA Active'
     deploy_hook:
       environment: 'Environment'
       add_deploy_hook: 'Add Deploy Hook'
@@ -58,12 +59,14 @@ en:
       your_settings: 'Your Settings'
       users: 'Users'
       activity_log: 'Activity Log'
+      alt_text_manager: 'Alt Text Manager'
       live_site: 'Live Site'
       jump_to: 'Jump to...'
       root_settings: 'Root Settings'
       no_results: 'No Results'
       deployments: 'Deploy'
       deploy_hooks: 'Deploy Hooks'
+      sites: 'Sites'
     changes:
       recent: 'Recent Changes'
       user: 'User'
@@ -92,6 +95,7 @@ en:
         model: 'Model'
     deploy:
         page:
+          intro: "These are sensitive deployment configuration settings. Only make changes if you're sure of what you're doing."
           heading: 'Deploy'
         ctas:
           deploy: 'Deploy'
@@ -119,13 +123,18 @@ en:
       live_url: 'Live URL'
       colorway: 'Highlight Color'
       colorway_helper: 'Use 6 digit hex code to set the highlight color. Omit the "#"'
+      translate_language: 'Enable Language Translations'
       url_helper: 'Include http:// for external links.'
       stage_url: 'Stage URL'
       logo_helper: 'Used on login page, 300x300px .jpg'
+      mfa_enabled: 'Multi-Factor Authentication Enabled?'
+      mfa_helper: 'Enabling will require you to IMMEDIATELY set up your MFA'
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
     application:
       activity_log_heading: 'Activity Log'
+      alt_texts_heading: 'Alt Text Manager'
+      alt_texts_filter: 'Search Images'
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'
       view_site: 'View Site'

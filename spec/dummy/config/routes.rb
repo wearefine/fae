@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     # resources :flex_components
     resources :text_components
     resources :hero_components
+    resources :sub_spirits
+    resources :spirits
     resources :sub_aromas
     resources :poly_things
     resources :beers

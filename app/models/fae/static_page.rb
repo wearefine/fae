@@ -31,6 +31,26 @@ module Fae
 
   private
 
+  def self.fae_translate(*attributes)
+    attributes.each do |attribute|
+      define_method attribute.to_s do
+        if self.try("#{attribute}_#{I18n.locale}").content.present?
+          self.send "#{attribute}_#{I18n.locale}"
+        else
+          self.send "#{attribute}_en"
+        end
+      end
+
+      define_singleton_method "find_by_#{attribute}" do |val|
+        if self.has_attribute?("#{attribute}_#{I18n.locale}")
+          self.send("find_by_#{attribute}_#{I18n.locale}", val)
+        else
+          self.send("find_by_#{attribute}_en", val)
+        end
+      end
+    end
+  end
+
     def self.setup_dynamic_singleton
       return if @singleton_is_setup
 
@@ -88,6 +108,8 @@ module Fae
         return :imageable
       when 'Fae::File'
         return :fileable
+      when 'Fae::Cta'
+        return :ctaable
       end
     end
 
@@ -100,6 +122,8 @@ module Fae
         assoc_json = assoc_obj.as_json
         assoc_json['asset'] = assoc_obj.asset.as_json
         return assoc_json
+      when 'Fae::Cta'
+        return assoc_obj.as_json
       else
         return assoc_obj.as_json
       end

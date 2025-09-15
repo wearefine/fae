@@ -10,6 +10,8 @@ Fae.form.text = {
     this.overrideMarkdownDefaults();
     this.initMarkdown();
     this.initHTML();
+    this.initTranslation();
+    this.initGenerateAlt();
   },
 
   /**
@@ -56,6 +58,15 @@ Fae.form.text = {
     $('.js-markdown-editor:not(.mde-enabled)').each(function () {
       var $this = $(this);
 
+      // set up translate button for markdown fields
+      var $translateButton = $this.siblings( '.js-translate-button' )
+      if ($translateButton.length > 0) {
+        var labelHeight = $this.siblings( 'label' ).height()
+        $this.siblings( '.js-translate-button' ).first().addClass('translate-markdown-button').css({
+          'margin-top': labelHeight,
+        });
+      }
+
       var editor = new SimpleMDE({
         element: this,
         autoDownloadFontAwesome: false,
@@ -64,6 +75,9 @@ Fae.form.text = {
         hideIcons: ['image', 'side-by-side', 'fullscreen']
       });
 
+      // added so we can access editor in translate text init
+      $this.data({editor: editor});   
+      
       inlineAttachment.editors.codemirror4.attach(editor.codemirror, inlineAttachmentConfig);
 
       // Disable tabbing within editor
@@ -127,6 +141,141 @@ Fae.form.text = {
         }
       },
       resetCss: true
+    });
+  },
+
+  /**
+ * Find all translate fields and initialize them with button
+ */
+  initTranslation: function () {
+    // var $translate_button = $('.js-translate-button');
+    $('.js-translate-button').click(function(e) {
+      var $this = $(this);
+      var translateField;
+
+      // grab the field the button belongs to
+      if ($this.closest(".text").length > 0) {
+        translateField = this.closest(".text");
+      } else  {
+        translateField = this.closest(".string");
+      }
+
+      // grab language and model name from field, container logic is for image alt text
+      var translateLanguage = translateField.attributes['data-language'].value;
+      var translateModel;
+      if (translateField.className.includes("container")) {
+        translateModel = translateField.className.split(' ').reverse()[1];
+      } else {
+        translateModel = translateField.className.split(' ').pop();
+      }
+
+      // fix model name for static pages
+      var n = translateModel.lastIndexOf('content');
+      if (n) {
+        translateModel = translateModel.slice(0, n) + translateModel.slice(n).replace('content', 'attributes_content');
+      }
+      // fix model name for image alt text
+      var n = translateModel.lastIndexOf('_alt');
+      if (n) {
+        translateModel = translateModel.slice(0, n) + translateModel.slice(n).replace('_alt', '_attributes_alt');
+      }
+
+      // set english model name and use that to get text from english field
+      var englishModel = translateModel.replace('_' + translateLanguage, '_en')
+      var englishText = $('#' + englishModel)[0].value 
+
+      // get translateLanguage in correct format for request
+      if (translateLanguage.length == 4) {
+        translateLanguage = `${translateLanguage.slice(0,2)}-${translateLanguage.slice(2)}`
+      }
+
+      $.ajax({
+        url: Fae.path + '/translate_text',
+        type: "post",
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        data: { translation_text: { language: translateLanguage, en_text: englishText } },
+        success: function(data) {
+          if (data && data.length > 0) {
+            if (data[0].error_text) {
+              $(translateField)
+                .addClass('field_with_errors')
+                .append("<span class='error'>" + data[0].error_text + '</span>');
+            } else if ($this.siblings('.CodeMirror').length > 0) {
+              // set translation text into translate model for markdown fields
+              const textArea = document.getElementById(translateModel)
+              $(textArea).data('editor').value(data[0].translated_text)
+            } else {
+              // set translation text into translate model for non markdown fields
+              $('#' + translateModel).val(data[0].translated_text);
+            }
+          }
+        }
+      })
+    });
+  },
+  initGenerateAlt: function () {
+    $('.js-generate-alt-button-on-form').on('click', function (e) {
+      e.preventDefault();
+      var $this = $(this);
+      var $altInput = $this.prev('input');
+      var image_input_id = $altInput.attr('id').replace('_attributes_alt', '') + '_attributes_asset';
+      var $fileInput = $(`#${image_input_id}`);
+      var file = $fileInput[0].files[0];
+      if (file) {
+        document.body.style.cursor = 'progress';
+        $this.prop('disabled', true);
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $.ajax({
+            url: `${Fae.path}/generate_alt`,
+            type: 'POST',
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+            },
+            data: {
+              image: e.target.result
+            },
+            success: function (response) {
+              if (response.success) {
+                $altInput.val(response.content);
+              } else {
+                $altInput
+                  .parent()
+                  .addClass('field_with_errors')
+                  .append("<span class='error'>" + response.message + '</span>');
+              }
+              document.body.style.cursor = 'default';
+              $this.prop('disabled', false);
+            }
+          });
+        };
+        reader.readAsDataURL(file);
+      } else {
+        document.body.style.cursor = 'progress';
+        $this.prop('disabled', true);
+        $.ajax({
+          url: `${Fae.path}/generate_alt`,
+          type: 'POST',
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+          },
+          data: {
+            image_id: $this.data('image-id')
+          },
+          success: function (response) {
+            if (response.success) {
+              $altInput.val(response.content);
+            } else {
+              $altInput
+                .parent()
+                .addClass('field_with_errors')
+                .append("<span class='error'>" + response.message + '</span>');
+            }
+            document.body.style.cursor = 'default';
+            $this.prop('disabled', false);
+          }
+        });
+      }
     });
   }
 };

@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe 'pages#home' do
 
+  before(:each) do
+    def fae_path
+      Rails.application.routes.url_helpers.fae_path
+    end
+  end
+
   context 'when user is logged out' do
     it 'should redirect to the login page' do
       create_super_user

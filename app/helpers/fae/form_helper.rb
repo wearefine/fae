@@ -3,6 +3,7 @@ module Fae
 
     def fae_input(f, attribute, options={})
       custom_options attribute, options
+      translate_button f, attribute, options
       language_support f, attribute, options
       label_and_hint attribute, options
       list_order f, attribute, options
@@ -111,12 +112,19 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def language_translate_enabled?
+      Fae::Option.instance.translate_language &&
+      ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present? &&
+      ENV['TRANSLATOR_TEXT_REGION'].present?
+    end
+
 
     private
 
     def custom_options(attribute, options)
       add_input_class(options, options[:input_class]) if options[:input_class].present?
       add_input_class(options, 'slug') if attribute == :slug
+      add_input_class(options, 'slug') if attribute == :slug_en
       options.update(wrapper_class: "#{options[:wrapper_class]} input") if options[:wrapper_class].present?
       options.update(validate: true) unless options[:validate].present? && options[:validate] == false
     end
@@ -128,6 +136,7 @@ module Fae
 
       attribute_name = options[:as].to_s == 'hidden' ? '' : attribute.to_s.titleize
       label = options[:label] || label_translation(attribute) || attribute_name
+
       if options[:markdown_supported].present? || options[:helper_text].present?
         label += content_tag :h6, class: 'helper_text' do
           concat(content_tag(:span, options[:helper_text], class: 'helper_text_text')) if options[:helper_text].present?
@@ -137,6 +146,13 @@ module Fae
       options[:label] = label.html_safe if label.present?
 
       options[:hint] = hint.html_safe if hint.present?
+    end
+
+    def translate_button(f, attribute, options)
+      if language_translate_enabled? && !attribute.to_s.end_with?('_en') && Fae.languages.keys.any? { |lang| attribute.to_s.include?(lang.to_s) } && options[:translate] != false
+        translate = content_tag(:span, 'Translate', class: 'button js-translate-button translate-button')
+      end
+      options[:translate] = translate.html_safe if translate.present?
     end
 
     def label_translation(attribute)
@@ -267,6 +283,10 @@ module Fae
       else
        ''
       end
+    end
+
+    def open_ai_enabled?
+      Fae.open_ai_api_key.present?
     end
 
   end

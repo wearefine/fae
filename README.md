@@ -53,6 +53,7 @@ https://www.faecms.com/documentation
 * [Filtering, Pagination and Sorting](docs/features/filtering.md)
 * [Authorization](docs/features/authorization.md)
 * [Multi-Language Support](docs/features/multi_language.md)
+* [Language Translation](docs/features/language_translate.md)
 * [Cloning](docs/features/cloning.md)
 * [Change Tracker](docs/features/change_tracker.md)
 * [Slugger](docs/features/slugger.md)
@@ -60,6 +61,7 @@ https://www.faecms.com/documentation
 * [Form Field Label & Helper Text Manager](docs/features/form_manager.md)
 * [Netlify Deploy Monitor](docs/features/netlify.md)
 * [Flex Components](docs/features/flex_components.md)
+* [Multi-Factor Authentication via OTP](docs/features/mutli_factor_authentication.md)
 
 
 ### Tutorials

@@ -21,6 +21,8 @@ ruby:
   = fae_image_form f, :<%= attachment.name -%>
 <% elsif attachment.type == :file -%>
   = fae_file_form f, :<%= attachment.name -%>
+<% elsif attachment.type == :cta -%>
+  = fae_cta_form f, :<%= attachment.name -%>
 <% end -%>
 <% end -%>
 <% if options.polymorphic %>

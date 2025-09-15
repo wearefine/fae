@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe 'wines#index' do
 
+  before do
+    def admin_wines_path
+      Rails.application.routes.url_helpers.admin_wines_path
+    end
+  end
+
   it 'should return found' do
     admin_login
     get admin_wines_path
@@ -12,6 +18,12 @@ describe 'wines#index' do
 end
 
 describe 'wines#new' do
+
+  before do
+    def new_admin_wine_path
+      Rails.application.routes.url_helpers.new_admin_wine_path
+    end
+  end
 
   it 'should return found' do
     admin_login
@@ -34,6 +46,12 @@ describe 'wines#create' do
 end
 
 describe 'wines#edit' do
+
+  before do
+    def edit_admin_wine_path(wine)
+      Rails.application.routes.url_helpers.edit_admin_wine_path(wine)
+    end
+  end
 
   it 'should return found' do
     wine = FactoryBot.create(:wine)
