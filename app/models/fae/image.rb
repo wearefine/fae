@@ -6,6 +6,7 @@ module Fae
     include Fae::BaseModelConcern
     include Fae::ImageConcern
     include Fae::AssetsValidatable
+    include ActionView::Helpers::UrlHelper
 
     attr_accessor :redirect
     mount_uploader :asset, Fae::ImageUploader
@@ -21,6 +22,12 @@ module Fae
 
     def readonly?
       false
+    end
+
+    def edit_link
+      if imageable_type == 'Fae::StaticPage'
+        return link_to("#{imageable.title} Page", Fae::Engine.routes.url_helpers.edit_content_block_path(imageable))
+      end
     end
 
     private

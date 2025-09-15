@@ -12,7 +12,6 @@ main.content
         th ID
         th data-sorter="false"
         th Parent Model
-        th Parent ID
         th Attached As
         th.-alt-text Alt Text
         th Size
@@ -25,12 +24,7 @@ main.content
             td
               - if item.asset.present? && item.asset.url.present?
                 img src=item.asset.url
-            - if item.imageable_type == 'Fae::StaticPage'
-              td = "#{item.imageable.title} Page"
-              td
-            - else
-              td = item.imageable_type.titleize
-              td = item.imageable_id
+            td = item.edit_link
             td = item.attached_as&.titleize
             td
               .js-alt-text-label.alt-text-label
