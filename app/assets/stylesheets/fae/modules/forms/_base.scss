@@ -106,6 +106,34 @@ input[type=email] {
   }
 }
 
+.flex-component-controls {
+  position: relative;
+  float: right;
+  clear: both;
+  margin: 0;
+}
+
+.component-selector-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  z-index: 1000;
+  background: white;
+  border: 1px solid $c-border;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+
+  select {
+    border: none;
+    background: transparent;
+    padding: 8px 12px;
+    width: 100%;
+    outline: none;
+  }
+}
+
 .input.field {
 
   &.highlight {

@@ -27,7 +27,7 @@ module Fae
       def components_for(model)
         ret = base_components
         ret += page_components if model == 'Fae::StaticPage'
-        ret.sort.collect{ |c| [c.titleize.gsub('Component',''), c] }
+        ret.sort.collect{ |c| [c.titleize.gsub('Component','').strip, c] }
       end
     end
     

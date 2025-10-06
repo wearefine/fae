@@ -9,6 +9,10 @@ module Fae
     def component_type_name
       self.class.name.titleize
     end
+
+    def preview_image_url
+      nil
+    end
   
     module ClassMethods
   

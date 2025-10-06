@@ -10,7 +10,7 @@ class HeroComponent < ApplicationRecord
   end
 
   def preview_image_url
-    image.asset.present? && image.asset.url.present? ? image.asset.thumb.url : nil
+    image.present? && image.asset.present? && image.asset.url.present? ? image.asset.thumb.url : nil
   end
 
 end

@@ -12,6 +12,7 @@ Fae.form.ajax = {
     this.$filter_form = $('.js-filter-form');
     this.$nested_form = $('.nested-form');
 
+    this.addFlexComponentLink();
     this.addEditLinks();
     this.addEditSubmission();
 
@@ -21,6 +22,40 @@ Fae.form.ajax = {
     this.htmlListeners();
 
     this.deleteNoForm();
+  },
+
+  /**
+   * Click event listener for add and edit links applied to both index and nested forms
+   */
+  addFlexComponentLink: function() {
+    var _this = this;
+
+    this.$addedit_form.on('click', '.js-add-flex-component-link', function(ev) {
+      ev.preventDefault();
+      var $this = $(this);
+      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
+
+      var $createLink = $this.nextAll('.js-create-flex-component-link');
+      var $selectWrapper = $this.next('.js-component-selector-wrapper');
+      if ($selectWrapper.length) {
+        console.log('showing');
+        $selectWrapper.show();
+        $selectWrapper.find('.chosen-container').css('width', '300px');
+        var $select = $selectWrapper.find('.js-component-selector');
+        var component = null;
+        $select.on('change', function() {
+          component = $(this).val();
+          console.log('selected', component);
+          $this.hide();
+          $createLink.show();
+        });
+        $createLink.on('click', function(ev) {
+          console.log('creating');
+          ev.preventDefault();
+          _this._addEditActions($this.attr('href') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
+        });
+      }
+    });
   },
 
   /**
@@ -51,6 +86,7 @@ Fae.form.ajax = {
   _addEditActions: function(remote_url, $wrapper) {
 
     $.get(remote_url, function(data){
+      console.log('got data', data);
       // check to see if the content is hidden and slide it down if it is.
       if ($wrapper.is(':hidden')) {
         // replace the content of the form area and initiate the chosen and fileinputer
@@ -208,9 +244,9 @@ Fae.form.ajax = {
 
       // This is so flex components will open their forms after the initial
       // selection of component type then save happens.
-      if ($el.find('table').data('initialCreate')) {
-        $el.find('.js-edit-link').last().trigger('click');
-      }
+      // if ($el.find('table').data('initialCreate')) {
+      //   $el.find('.js-edit-link').last().trigger('click');
+      // }
     }
 
     // if there's a form wrap, slide it up before replacing content

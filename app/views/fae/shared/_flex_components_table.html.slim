@@ -16,7 +16,15 @@ ruby:
   helper_text         ||= nil
 
 section.addedit-form.js-addedit-form
-  a.js-add-link.table-add-link.button.-small href=new_path New Component
+  .flex-component-controls
+    a.js-add-flex-component-link.table-add-link.button.-small href=new_path New Component
+    .js-component-selector-wrapper.component-selector-dropdown style="display: none;"
+      select.js-component-selector
+        option value='' Select a component
+        - Fae::FlexComponent.components_for(item_class).each do |component|
+          option value=component[1] = component[0]
+    a.js-create-flex-component-link.table-add-link.button.-small style="display: none;" href=new_path Create Component
+
   h2 = title
   - if helper_text.present?
     h6.table-helper-text = helper_text
