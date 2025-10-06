@@ -12,6 +12,7 @@ Fae::Engine.routes.draw do
     get 'logout' => 'sessions#destroy', as: :destroy_user_session
   end
   resources :deploy_hooks
+  resources :flex_components
   resource :two_factor_settings, except: [:index, :show]
   resources :site_deploy_hooks
   resources :sites

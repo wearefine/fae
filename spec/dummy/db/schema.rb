@@ -353,6 +353,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
+  create_table "flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "flex_componentable_type", null: false
+    t.bigint "flex_componentable_id", null: false
+    t.string "component_model"
+    t.integer "component_id"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_id"], name: "index_flex_components_on_component_id"
+    t.index ["component_model"], name: "index_flex_components_on_component_model"
+    t.index ["flex_componentable_type", "flex_componentable_id"], name: "index_flex_components_on_flex_componentable"
+    t.index ["on_prod"], name: "index_flex_components_on_on_prod"
+    t.index ["on_stage"], name: "index_flex_components_on_on_stage"
+    t.index ["position"], name: "index_flex_components_on_position"
+  end
+
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -403,6 +421,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
   end
 
   create_table "poly_things", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
     t.string "name_en"
     t.string "poly_thingable_type"
     t.bigint "poly_thingable_id"
