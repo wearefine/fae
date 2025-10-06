@@ -17,7 +17,7 @@ module Fae
   
         @parent_item = @item.flex_componentable
         flash[:notice] = t('fae.save_notice')
-        render "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit"
+        redirect_to "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit"
         # render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
       else
         build_assets
