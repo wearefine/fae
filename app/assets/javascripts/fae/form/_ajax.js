@@ -28,18 +28,20 @@ Fae.form.ajax = {
    * Click event listener for add and edit links applied to both index and nested forms
    */
   addFlexComponentLink: function() {
+    console.log('adding flex component link');
     var _this = this;
 
     this.$addedit_form.on('click', '.js-add-flex-component-link', function(ev) {
       ev.preventDefault();
       var $this = $(this);
       var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
-
       var $createLink = $this.nextAll('.js-create-flex-component-link');
       var $selectWrapper = $this.next('.js-component-selector-wrapper');
+
       if ($selectWrapper.length) {
         console.log('showing');
         $selectWrapper.show();
+        $selectWrapper.find('select').fae_chosen({ width: '300px' });
         $selectWrapper.find('.chosen-container').css('width', '300px');
         var $select = $selectWrapper.find('.js-component-selector');
         var component = null;
@@ -53,6 +55,10 @@ Fae.form.ajax = {
           console.log('creating');
           ev.preventDefault();
           _this._addEditActions($this.attr('href') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
+          $select.val('').trigger('chosen:updated');
+          $selectWrapper.hide();
+          $createLink.hide();
+          $this.show();
         });
       }
     });
@@ -237,6 +243,7 @@ Fae.form.ajax = {
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
       Fae.navigation.fadeNotices();
+      Fae.form.ajax.addFlexComponentLink();
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
