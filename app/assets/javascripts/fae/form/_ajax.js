@@ -32,6 +32,7 @@ Fae.form.ajax = {
     var _this = this;
 
     this.$addedit_form.on('click', '.js-add-flex-component-link', function(ev) {
+      console.log('adding flex component');
       ev.preventDefault();
       var $this = $(this);
       var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
@@ -71,14 +72,32 @@ Fae.form.ajax = {
     var _this = this;
 
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
+      console.log('adding/editing');
       ev.preventDefault();
       var $this = $(this);
-      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
+      // var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
+      var $parentTable = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
+      var colspan = $parentTable.find('thead').first().find('th').length;
+      var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+      var $theFormContainer = null;
+      // $parentTable.find('.js-nested-form-row').remove();
+      if ($this.hasClass('js-add-link')) {
+        var $tbody = $parentTable.find('tbody');
+        $tbody.append(formContainer);
+        $theFormContainer = $parentTable.find('.js-addedit-form-wrapper')
+      } else {
+        var $parentRow = $this.parents('tr');
+        $parentRow.after(formContainer);
+        $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
+      }
+      console.log($(formContainer).find('.js-addedit-form-wrapper').length)
       // scroll to the last column of the tbody, where the form will start
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      // FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      // // scroll to the form
+      // FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
 
-      _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
+      _this._addEditActions($this.attr('href'), $theFormContainer);
     });
   },
 
@@ -93,8 +112,10 @@ Fae.form.ajax = {
 
     $.get(remote_url, function(data){
       console.log('got data', data);
+      console.log('$wrapper', $wrapper);
       // check to see if the content is hidden and slide it down if it is.
       if ($wrapper.is(':hidden')) {
+        console.log('was hidden');
         // replace the content of the form area and initiate the chosen and fileinputer
         $wrapper.html(data).find('.select select').fae_chosen({ width: '300px' });
         $wrapper.find('.input.file').fileinputer();
@@ -132,6 +153,10 @@ Fae.form.ajax = {
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);
+
+      // Flash notices are showing up in the double-nested forms for the parent nested form.
+      // Get rid of any that stick around after save.
+      // Fae.navigation.killNotices();
 
       $wrapper.find('.hint').hinter();
     });
@@ -243,7 +268,6 @@ Fae.form.ajax = {
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
       Fae.navigation.fadeNotices();
-      Fae.form.ajax.addFlexComponentLink();
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
@@ -257,6 +281,7 @@ Fae.form.ajax = {
     }
 
     // if there's a form wrap, slide it up before replacing content
+    console.log($form_wrapper.length);
     if ($form_wrapper.length) {
       $form_wrapper.slideUp(regenerateHTML);
 

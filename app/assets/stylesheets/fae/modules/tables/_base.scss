@@ -20,18 +20,24 @@ tbody {
 
   tr {
     &:hover {
-      td {
+      > td {
         &:first-child {
           border-left-color: var(--highlight-color);
+        }
+        &.no-hover {
+          border-left-color: transparent;
         }
       }
     }
 
-    &:nth-of-type(even) {
-      td {
-        background-color: $c-table-tr-even;
-      }
-    }
+    // &:nth-of-type(even) {
+    //   td {
+    //     background-color: $c-table-tr-even;
+    //     &.no-background {
+    //       background-color: transparent;
+    //     }
+    //   }
+    // }
 
     &:last-child {
       td {
