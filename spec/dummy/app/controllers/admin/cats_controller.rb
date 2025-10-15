@@ -23,7 +23,7 @@ module Admin
 
       if @item.save
         @items = Cat.for_fae_index
-        flash[:notice] = 'Item successfully created.'
+        flash.now[:notice] = 'Item successfully created.'
         render template: 'admin/cats/index'
       else
         render action: 'new'
@@ -33,7 +33,7 @@ module Admin
     def update
       if @item.update(permitted_params)
         @items = Cat.for_fae_index
-        flash[:notice] = 'Item successfully updated.'
+        flash.now[:notice] = 'Item successfully updated.'
         render template: 'admin/cats/index'
       else
         render action: 'edit'
@@ -42,9 +42,9 @@ module Admin
 
     def destroy
       if @item.destroy
-        flash[:notice] = 'Item successfully removed.'
+        flash.now[:notice] = 'Item successfully removed.'
       else
-        flash[:alert] = 'There was a problem removing your item.'
+        flash.now[:alert] = 'There was a problem removing your item.'
       end
       @items = Cat.for_fae_index
       render template: 'admin/cats/index'

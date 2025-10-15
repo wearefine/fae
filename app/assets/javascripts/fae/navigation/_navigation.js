@@ -8,7 +8,14 @@
 Fae.navigation = {
 
   ready: function() {
-    this.fadeNotices();
+    var _this = this;
+    
+    // Use setTimeout to ensure DOM is fully loaded and flash messages are rendered
+    setTimeout(function() {
+      _this.showToasts();
+    }, 100);
+    
+    // this.fadeNotices();
     this.openDrawer();
     this.clickBack();
     this.accordionClickEventListener();
@@ -158,6 +165,81 @@ Fae.navigation = {
    */
   fadeNotices: function() {
     $('.notice, .alert, .error, .warning').not('.input .error, .form_alert').delay(3000).slideUp('fast');
+    // Handle toast notifications
+    this.showToasts();
+  },
+
+  /**
+   * Hide alerts immediately
+   */
+  killNotices: function() {
+    $('.notice, .alert, .error, .warning').not('.input .error, .form_alert').hide();
+    // Also hide any existing toasts
+    $('.flash-toast').removeClass('show').addClass('hide');
+  },
+
+  /**
+   * Show toast notifications
+   */
+  showToasts: function() {
+    var _this = this;
+    
+    // Create toast container if it doesn't exist
+    if (!$('.toast-container').length) {
+      $('body').append('<div class="toast-container"></div>');
+    }
+    
+    var $container = $('.toast-container');
+    
+    // Clear any existing toasts first
+    $container.find('.flash-toast').remove();
+    
+    var $flashToasts = $('.flash-toast');
+    
+    // If no flash toasts found, return early
+    if (!$flashToasts.length) {
+      return;
+    }
+    
+    // Process each flash toast
+    $flashToasts.each(function(index) {
+      var $toast = $(this);
+      var message = $toast.data('message');
+      var type = $toast.attr('class').replace('flash-toast', '').trim();
+      
+      if (message && message.length > 0) {
+        // Create toast element
+        var $toastElement = $('<div class="flash-toast ' + type + '">' + message + '</div>');
+        
+        // Add to container
+        $container.append($toastElement);
+        
+        // Show toast with delay for staggered effect
+        setTimeout(function() {
+          $toastElement.addClass('show');
+        }, index * 100);
+        
+        // Auto-hide after 5 seconds
+        setTimeout(function() {
+          _this.hideToast($toastElement);
+        }, 5000 + (index * 100));
+      }
+      
+      // Remove the original flash-toast element
+      $toast.remove();
+    });
+  },
+
+  /**
+   * Hide a specific toast
+   */
+  hideToast: function($toast) {
+    $toast.removeClass('show').addClass('hide');
+    
+    // Remove from DOM after animation
+    setTimeout(function() {
+      $toast.remove();
+    }, 300);
   },
 
   /**

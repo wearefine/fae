@@ -18,6 +18,7 @@ module Fae
     require 'devise-two-factor'
     require 'rqrcode'
     require 'openai'
+    require 'settingslogic'
 
     config.eager_load_paths += %W(#{config.root}/app)
 

@@ -17,4 +17,9 @@
     = fae_file_form f, :welcome_pdf
     = fae_cta_form f, :test_cta
 
+section.content#components
+  == render 'fae/shared/flex_components_table',
+    assoc: :flex_components,
+    parent_item: @item
+
 == render 'fae/shared/recent_changes'

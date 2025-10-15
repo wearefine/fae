@@ -1,0 +1,64 @@
+ruby:
+  require_locals(['assoc', 'parent_item'], local_assigns)
+
+  # optional locals
+  assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
+  title               ||= assoc_name.titleize             # 'Restaurant Bars'
+  
+  # Need to specifiy that the item_class is a StaticPage if the parent_item is a StaticPage
+  # or the flex_componentable_type field gets set wrong.
+  item_class = parent_item.class.name
+  item_class = 'Fae::StaticPage' if parent_item.class.ancestors.include?(Fae::StaticPage)
+  new_path = fae.new_flex_component_path(item_class: item_class, item_id: parent_item.id)
+  
+  # See _ajax.js for usage
+  initial_create      ||= false
+  helper_text         ||= nil
+
+section.addedit-form.js-addedit-form
+  .flex-component-controls
+    a.js-add-flex-component-link.table-add-link.button.-small href=new_path New Component
+    .js-component-selector-wrapper.component-selector-dropdown style="display: none;"
+      select.js-component-selector
+        option value='' Select a component
+        - Fae::FlexComponent.components_for(item_class).each do |component|
+          option value=component[1] = component[0]
+    a.js-create-flex-component-link.table-add-link.button.-small style="display: none;" href=new_path Create Component
+
+  h2 = title
+  - if helper_text.present?
+    h6.table-helper-text = helper_text
+  == render 'fae/application/flash_messages'
+
+  table.js-sort-row data-initial-create="#{initial_create}"
+    thead
+      tr
+        th.th-sortable-handle
+        th Component Type
+        th Preview
+        th Image
+        th On Stage
+        th On Prod
+        th.-action
+    tbody
+      - records = parent_item.send(assoc)
+      - if records.present?
+        - records.each do |item|
+          tr id=tr_id(item)
+            td.sortable-handle: i.icon-sort
+            td: a.js-edit-link href=main_app.send("edit_#{fae_path}_#{item.component_model.underscore}_path", item.component_id) = item.component_model_human
+            td = item.fae_display_field
+            td
+              - if item.preview_image_url.present?
+                img src=item.preview_image_url
+            td = fae_toggle item, :on_stage
+            td = fae_toggle item, :on_prod
+            td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
+
+      - else
+        tr
+          - td_link = link_to 'add some', new_path, class: 'js-add-link'
+
+          td colspan=4 No components yet, #{td_link}.
+
+  .js-addedit-form-wrapper
