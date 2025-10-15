@@ -21,7 +21,7 @@
 // Toast Container
 .toast-container {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   right: 20px;
   z-index: 10000;
   pointer-events: none;
@@ -68,24 +68,6 @@
   &.hide {
     transform: translateX(100%);
     opacity: 0;
-  }
-
-  // Close button
-  &:after {
-    content: '×';
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    font-size: 20px;
-    line-height: 1;
-    cursor: pointer;
-    color: inherit;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-
-    &:hover {
-      opacity: 1;
-    }
   }
 }
 

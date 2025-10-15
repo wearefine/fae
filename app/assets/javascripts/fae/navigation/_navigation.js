@@ -223,11 +223,6 @@ Fae.navigation = {
         setTimeout(function() {
           _this.hideToast($toastElement);
         }, 5000 + (index * 100));
-        
-        // Click to close
-        $toastElement.on('click', function() {
-          _this.hideToast($toastElement);
-        });
       }
       
       // Remove the original flash-toast element
