@@ -234,7 +234,8 @@ Fae.form.ajax = {
           _this.filterSubmission();
         }
 
-        Fae.navigation.fadeNotices();
+        // Fae.navigation.fadeNotices();
+        Fae.navigation.showToasts();
 
       } else if ($target.hasClass('js-asset-delete')) {
         // handle remove asset links on nested forms
@@ -267,7 +268,8 @@ Fae.form.ajax = {
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
-      Fae.navigation.fadeNotices();
+      // Fae.navigation.fadeNotices();
+      Fae.navigation.showToasts();
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);

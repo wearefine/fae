@@ -18,7 +18,79 @@
   }
 }
 
-.notice {
+// Toast Container
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10000;
+  pointer-events: none;
+  
+  .sidenav ~ & {
+    @include bp(large) {
+      right: 20px; // Keep toasts in the same position regardless of sidebar
+    }
+  }
+}
+
+// Individual Toast
+.flash-toast {
+  display: none;
+  min-width: 300px;
+  max-width: 400px;
+  margin-bottom: 10px;
+  padding: 16px 20px;
+  border-radius: 4px;
+  border-left: 4px solid;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: auto;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.4;
+
+  &:before {
+    @include icon-stuff;
+    margin-right: 10px;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+
+  &.show {
+    display: block;
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &.hide {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  // Close button
+  &:after {
+    content: '×';
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.notice,
+.flash-toast.notice {
   border-color: $c-notice-content;
   background: $c-notice-bg;
   color: $c-notice-content;
@@ -28,7 +100,8 @@
   }
 }
 
-.warning {
+.warning,
+.flash-toast.warning {
   border-color: $c-warning-content;
   background: $c-warning-bg;
   color: $c-warning-content;
@@ -39,7 +112,9 @@
 }
 
 .flash-message.error,
-.alert {
+.alert,
+.flash-toast.error,
+.flash-toast.alert {
   border-color: $c-error-content;
   background: $c-error-bg;
   color: $c-error-content;
