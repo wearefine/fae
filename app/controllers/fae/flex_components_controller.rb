@@ -16,7 +16,7 @@ module Fae
         @item.update(component_id: component.id)
   
         @parent_item = @item.flex_componentable
-        flash[:notice] = t('fae.save_notice')
+        flash.now[:notice] = t('fae.save_notice')
         redirect_to "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit"
         # render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
       else
@@ -37,7 +37,7 @@ module Fae
         @item.update(component_id: component.id)
   
         @parent_item = @item.flex_componentable
-        flash[:notice] = t('fae.save_notice')
+        flash.now[:notice] = t('fae.save_notice')
         render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
       else
         build_assets
@@ -49,9 +49,9 @@ module Fae
       @parent_item = @item.flex_componentable
   
       if @item.destroy
-        flash[:notice] = t('fae.delete_notice')
+        flash.now[:notice] = t('fae.delete_notice')
       else
-        flash[:alert] = t('fae.delete_error')
+        flash.now[:alert] = t('fae.delete_error')
       end
       render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item}
     end
