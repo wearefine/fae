@@ -39,7 +39,8 @@ main.content
               button.button.js-edit-alt-button.edit-alt Edit
               button.button.js-save-alt-button.edit-alt Save
               button.button.js-cancel-alt-button.edit-alt Cancel
-              button.button.js-generate-alt-button-on-alt-manager data-image-id=item.id Generate
+              - if open_ai_enabled?
+                button.button.js-generate-alt-button-on-alt-manager data-image-id=item.id Generate
             td = number_to_human_size(item.file_size)
             td = fae_date_format item.updated_at
 
