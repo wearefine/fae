@@ -157,12 +157,10 @@ Fae.form.ajax = {
       var $componentSelect = $wrapper.closest('.js-addedit-form').find('.js-component-select');
       $componentSelect.prop('disabled', true).trigger('chosen:updated');
 
-      // Disable sortable functionality when form is open
-      var $sortableTable = $wrapper.closest('.js-addedit-form').find('.js-sort-row');
-      if ($sortableTable.length && $sortableTable.hasClass('ui-sortable')) {
-        $sortableTable.sortable('disable');
-        $sortableTable.find('.sortable-handle').addClass('disabled').css('opacity', '0.3').css('cursor', 'not-allowed');
-      }
+      // Hide sortable icons and disable clicking in the parent table only (not nested tables in forms)
+      var $parentTable = $wrapper.closest('.js-addedit-form').find('> table');
+      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').hide();
+      $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', 'none');
 
       _this.$nested_form = $('.nested-form');
 
@@ -209,17 +207,15 @@ Fae.form.ajax = {
         // Re-enable component select when form is closed
         var $componentSelect = $form_wrapper.closest('.js-addedit-form').find('.js-component-select');
         
+        // Show sortable icons and re-enable clicking in parent table only
+        var $parentTable = $form_wrapper.closest('.js-addedit-form').find('> table');
+        $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').show();
+        $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
+        
         $form_wrapper.slideUp('normal', function(){
           $form_wrapper.empty();
           // Re-enable and reset component select
           $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
-          
-          // Re-enable sortable functionality
-          var $sortableTable = $form_wrapper.closest('.js-addedit-form').find('.js-sort-row');
-          if ($sortableTable.length && $sortableTable.hasClass('ui-sortable')) {
-            $sortableTable.sortable('enable');
-            $sortableTable.find('.sortable-handle').removeClass('disabled').css('opacity', '').css('cursor', '');
-          }
         });
       }
     });
@@ -323,12 +319,10 @@ Fae.form.ajax = {
       var $componentSelect = $el.find('.js-component-select');
       $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
 
-      // Re-enable sortable functionality after successful form submission
-      var $sortableTable = $el.find('.js-sort-row');
-      if ($sortableTable.length && $sortableTable.hasClass('ui-sortable')) {
-        $sortableTable.sortable('enable');
-        $sortableTable.find('.sortable-handle').removeClass('disabled').css('opacity', '').css('cursor', '');
-      }
+      // Show sortable icons and re-enable clicking in parent table only
+      var $parentTable = $el.find('> table');
+      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').show();
+      $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
