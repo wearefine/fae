@@ -37,6 +37,17 @@ Fae.form.ajax = {
       var $this = $(this);
       var $parent = $this.closest('.js-addedit-form');
 
+      // Check if a form is already open
+      var $existingForm = $parent.find('.js-addedit-form-wrapper');
+      var hasOpenForm = $existingForm.length > 0 && $existingForm.is(':visible') && $existingForm.children().length > 0;
+      
+      if (hasOpenForm) {
+        console.log('Form already open, ignoring select change');
+        // Reset select to empty value
+        $this.val('').trigger('chosen:updated');
+        return false;
+      }
+
       component = $(this).val();
       console.log('selected', component);
       _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
@@ -102,6 +113,7 @@ Fae.form.ajax = {
    * @see addEditLinks
    */
   _addEditActions: function(remote_url, $wrapper) {
+    var _this = this;
 
     $.get(remote_url, function(data){
       console.log('got data', data);
@@ -127,10 +139,14 @@ Fae.form.ajax = {
         $wrapper.find('.input.file').fileinputer();
       }
 
-      this.$nested_form = $('.nested-form');
+      // Disable component select when form is open
+      var $componentSelect = $wrapper.closest('.js-addedit-form').find('.js-component-select');
+      $componentSelect.prop('disabled', true).trigger('chosen:updated');
+
+      _this.$nested_form = $('.nested-form');
 
       // Bind validation to nested form fields added by AJAX
-      Fae.form.validator.bindValidationEvents(this.$nested_form);
+      Fae.form.validator.bindValidationEvents(_this.$nested_form);
 
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
@@ -149,7 +165,7 @@ Fae.form.ajax = {
       Fae.altTextManager.ready();
 
       // validate nested form fields on submit
-      Fae.form.validator.formValidate(this.$nested_form);
+      Fae.form.validator.formValidate(_this.$nested_form);
 
       // Flash notices are showing up in the double-nested forms for the parent nested form.
       // Get rid of any that stick around after save.
@@ -169,8 +185,13 @@ Fae.form.ajax = {
       var $form_wrapper = $this.closest('.js-addedit-form-wrapper');
 
       if ($form_wrapper.length) {
+        // Re-enable component select when form is closed
+        var $componentSelect = $form_wrapper.closest('.js-addedit-form').find('.js-component-select');
+        
         $form_wrapper.slideUp('normal', function(){
           $form_wrapper.empty();
+          // Re-enable and reset component select
+          $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
         });
       }
     });
@@ -269,6 +290,10 @@ Fae.form.ajax = {
       Fae.navigation.showToasts();
       
       $('.js-component-select').fae_chosen();
+      
+      // Re-enable component select after successful form submission
+      var $componentSelect = $el.find('.js-component-select');
+      $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
