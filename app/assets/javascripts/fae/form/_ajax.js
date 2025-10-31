@@ -54,32 +54,41 @@ Fae.form.ajax = {
       console.log('adding/editing');
       ev.preventDefault();
       var $this = $(this);
-      // var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
       var $parentTable = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
-      var colspan = $parentTable.find('thead').first().find('th').length;
-      var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
       var $theFormContainer = null;
-      // $parentTable.find('.js-nested-form-row').remove();
-      if ($this.hasClass('js-add-link')) {
-        var $tbody = $parentTable.find('tbody');
-        $tbody.append(formContainer);
-        $theFormContainer = $parentTable.find('.js-addedit-form-wrapper')
+      
+      // Check if form container already exists
+      var $existingContainer = $parentTable.find('.js-addedit-form-wrapper');
+      
+      if ($existingContainer.length > 0) {
+        console.log('Using existing form container');
+        $theFormContainer = $existingContainer;
+        
+        // Don't clear content here - let _addEditActions handle it smoothly
       } else {
-        var $parentRow = $this.parents('tr');
-        $parentRow.after(formContainer);
-        $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
+        console.log('Creating new form container');
+        var colspan = $parentTable.find('thead').first().find('th').length;
+        var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+        
+        if ($this.hasClass('js-add-link')) {
+          var $tbody = $parentTable.find('tbody');
+          $tbody.append(formContainer);
+          $theFormContainer = $parentTable.find('.js-addedit-form-wrapper').last();
+        } else {
+          var $parentRow = $this.parents('tr');
+          $parentRow.after(formContainer);
+          $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
+        }
       }
-      console.log($(formContainer).find('.js-addedit-form-wrapper').length)
+      
+      console.log('Form container ready:', $theFormContainer.length);
+      
       if ($this.hasClass('js-add-link')) {
         FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
       } else {
         FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
       }
-      // scroll to the last column of the tbody, where the form will start
-      // FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
-      // scroll to the form
-      // FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
 
       _this._addEditActions($this.attr('href'), $theFormContainer);
     });
@@ -97,16 +106,20 @@ Fae.form.ajax = {
     $.get(remote_url, function(data){
       console.log('got data', data);
       console.log('$wrapper', $wrapper);
-      // check to see if the content is hidden and slide it down if it is.
-      if ($wrapper.is(':hidden')) {
-        console.log('was hidden');
+      
+      // Check if the wrapper is visible and has content
+      var isVisible = $wrapper.is(':visible');
+      var hasContent = $wrapper.children().length > 0;
+      
+      if (!isVisible || !hasContent) {
+        console.log('Container hidden or empty, sliding down');
         // replace the content of the form area and initiate the chosen and fileinputer
         $wrapper.html(data).find('.select select').fae_chosen({ width: '300px' });
         $wrapper.find('.input.file').fileinputer();
         $wrapper.slideDown();
-
       } else {
-        // if it is visible, replace its content by retaining height
+        console.log('Container visible with content, replacing smoothly');
+        // if it is visible and has content, replace its content by retaining height
         $wrapper.height($wrapper.height());
 
         // replace the content of the form area and then remove that height and then chosen and then fileinputer
