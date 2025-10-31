@@ -71,12 +71,27 @@ Fae.form.ajax = {
       
       // Check if form container already exists
       var $existingContainer = $parentTable.find('.js-addedit-form-wrapper');
+      var $parentRow = $this.hasClass('js-edit-link') ? $this.parents('tr') : null;
       
       if ($existingContainer.length > 0) {
-        console.log('Using existing form container');
-        $theFormContainer = $existingContainer;
+        // Check if the existing container is for a different row
+        var $existingRow = $existingContainer.closest('.js-nested-form-row').prev('tr');
+        var isDifferentRow = $parentRow && $existingRow.length > 0 && !$existingRow.is($parentRow);
         
-        // Don't clear content here - let _addEditActions handle it smoothly
+        if (isDifferentRow) {
+          console.log('Form open in different row, closing and moving');
+          // Remove the old container
+          $existingContainer.closest('.js-nested-form-row').remove();
+          
+          // Create new container in the correct position
+          var colspan = $parentTable.find('thead').first().find('th').length;
+          var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+          $parentRow.after(formContainer);
+          $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
+        } else {
+          console.log('Using existing form container in same location');
+          $theFormContainer = $existingContainer;
+        }
       } else {
         console.log('Creating new form container');
         var colspan = $parentTable.find('thead').first().find('th').length;
@@ -87,7 +102,6 @@ Fae.form.ajax = {
           $tbody.append(formContainer);
           $theFormContainer = $parentTable.find('.js-addedit-form-wrapper').last();
         } else {
-          var $parentRow = $this.parents('tr');
           $parentRow.after(formContainer);
           $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
         }
