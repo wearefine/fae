@@ -12,7 +12,7 @@ Fae.form.ajax = {
     this.$filter_form = $('.js-filter-form');
     this.$nested_form = $('.nested-form');
 
-    this.addFlexComponentLink();
+    this.addFlexComponentSelect();
     this.addEditLinks();
     this.addEditSubmission();
 
@@ -27,41 +27,45 @@ Fae.form.ajax = {
   /**
    * Click event listener for add and edit links applied to both index and nested forms
    */
-  addFlexComponentLink: function() {
+  addFlexComponentSelect: function() {
     console.log('adding flex component link');
     var _this = this;
 
-    this.$addedit_form.on('click', '.js-add-flex-component-link', function(ev) {
-      console.log('adding flex component');
+    this.$addedit_form.on('change', '.js-component-select', function(ev) {
+      console.log('changing');
       ev.preventDefault();
       var $this = $(this);
-      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
-      var $createLink = $this.nextAll('.js-create-flex-component-link');
-      var $selectWrapper = $this.next('.js-component-selector-wrapper');
+      var $parent = $this.closest('.js-addedit-form');
+      var $selectWrapper = $this.next('.js-component-select-wrapper');
 
-      if ($selectWrapper.length) {
-        console.log('showing');
-        $selectWrapper.show();
-        $selectWrapper.find('select').fae_chosen({ width: '300px' });
-        $selectWrapper.find('.chosen-container').css('width', '300px');
-        var $select = $selectWrapper.find('.js-component-selector');
-        var component = null;
-        $select.on('change', function() {
-          component = $(this).val();
-          console.log('selected', component);
-          $this.hide();
-          $createLink.show();
-        });
-        $createLink.on('click', function(ev) {
-          console.log('creating');
-          ev.preventDefault();
-          _this._addEditActions($this.attr('href') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
-          $select.val('').trigger('chosen:updated');
-          $selectWrapper.hide();
-          $createLink.hide();
-          $this.show();
-        });
-      }
+      component = $(this).val();
+      console.log('selected', component);
+      _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
+      // $select.val('').trigger('chosen:updated');
+      // $selectWrapper.hide();
+      // $this.show();
+      // Remove the click outside handler
+      // $(document).off('click.component-selector');
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+
+      // if ($selectWrapper.length) {
+      //   console.log('showing');
+      //   var $select = $selectWrapper.find('.js-component-select');
+      //   var component = null;
+      //   $select.on('change', function() {
+      //     console.log('changing');
+      //     component = $(this).val();
+      //     console.log('selected', component);
+      //     $this.hide();
+      //     _this._addEditActions($this.attr('href') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
+      //     $select.val('').trigger('chosen:updated');
+      //     $selectWrapper.hide();
+      //     $this.show();
+      //     // Remove the click outside handler
+      //     // $(document).off('click.component-selector');
+      //     FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      //   });
+      // }
     });
   },
 
@@ -92,9 +96,14 @@ Fae.form.ajax = {
         $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
       }
       console.log($(formContainer).find('.js-addedit-form-wrapper').length)
+      if ($this.hasClass('js-add-link')) {
+        FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
+      } else {
+        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
+      }
       // scroll to the last column of the tbody, where the form will start
-      // FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
-      // // scroll to the form
+      // FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
+      // scroll to the form
       // FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
 
       _this._addEditActions($this.attr('href'), $theFormContainer);

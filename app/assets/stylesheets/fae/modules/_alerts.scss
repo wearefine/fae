@@ -21,14 +21,16 @@
 // Toast Container
 .toast-container {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10000;
   pointer-events: none;
   
   .sidenav ~ & {
     @include bp(large) {
-      right: 20px; // Keep toasts in the same position regardless of sidebar
+      left: 50%;
+      transform: translateX(-50%);
     }
   }
 }

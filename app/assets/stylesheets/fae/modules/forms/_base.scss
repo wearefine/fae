@@ -53,10 +53,10 @@ input[type=email] {
 }
 
 .nested-form {
-  padding: $content-buffer $content-buffer $content-buffer 40px;
-  border: 1px solid $c-border;
+  padding: $content-buffer $content-buffer $content-buffer 20px;
+  // border: 1px solid $c-border;
   border-top: 0;
-  background: $c-form-table-bg;
+  // background: $c-form-table-bg;
 
   h2 {
     margin-bottom: 20px;
@@ -118,6 +118,7 @@ input[type=email] {
   top: 100%;
   right: 0;
   margin-top: 5px;
+  margin-right: 2px;
   z-index: 1000;
   background: white;
   border: 1px solid $c-border;
@@ -128,9 +129,11 @@ input[type=email] {
   select {
     border: none;
     background: transparent;
-    padding: 8px 12px;
+    padding: 4px 8px;
     width: 100%;
     outline: none;
+    font-size: 13px;
+    line-height: 1.2;
   }
 }
 
