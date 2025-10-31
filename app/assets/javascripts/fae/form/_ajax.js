@@ -228,9 +228,16 @@ Fae.form.ajax = {
   addEditSubmission: function() {
     var _this = this;
 
+    // Set wait cursor when remote form starts submitting
+    this.$addedit_form.on('ajax:before', 'form[data-remote=true]', function(evt) {
+      $('body').css('cursor', 'wait');
+    });
+
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 
       var $target = $(evt.target);
+
+      $('body').css('cursor', 'default');
 
       // We need to target the form wrapper containing the target form to enable nesting
       // multiple forms.
