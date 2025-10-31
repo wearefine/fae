@@ -157,6 +157,9 @@ Fae.form.validator = {
   _setSavingIndicator: function () {
     var $saveButton = $('.js-content-header').find('input[type="submit"]');
     $saveButton.addClass('saving').val('Saving...');
+    $('body').css('cursor', 'wait');
+    // Force cursor update by triggering a reflow
+    document.body.offsetHeight;
   },
 
   /**
