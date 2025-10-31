@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
+ActiveRecord::Schema[7.0].define(version: 2025_10_31_191531) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -353,22 +353,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
-  create_table "flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "flex_componentable_type", null: false
-    t.bigint "flex_componentable_id", null: false
-    t.string "component_model"
-    t.integer "component_id"
-    t.integer "position"
-    t.boolean "on_stage", default: true
-    t.boolean "on_prod", default: false
+  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["component_id"], name: "index_flex_components_on_component_id"
-    t.index ["component_model"], name: "index_flex_components_on_component_model"
-    t.index ["flex_componentable_type", "flex_componentable_id"], name: "index_flex_components_on_flex_componentable"
-    t.index ["on_prod"], name: "index_flex_components_on_on_prod"
-    t.index ["on_stage"], name: "index_flex_components_on_on_stage"
-    t.index ["position"], name: "index_flex_components_on_position"
   end
 
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -421,7 +409,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
   end
 
   create_table "poly_things", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
     t.string "name_en"
     t.string "poly_thingable_type"
     t.bigint "poly_thingable_id"
@@ -581,6 +568,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.text "food_pairing_ja"
     t.string "name_frca"
     t.string "description_frca"
+  end
+
+  create_table "zig_zag_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "zig_zag_items", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "heading"
+    t.text "body"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.integer "zig_zag_component_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["on_prod"], name: "index_zig_zag_items_on_on_prod"
+    t.index ["on_stage"], name: "index_zig_zag_items_on_on_stage"
+    t.index ["position"], name: "index_zig_zag_items_on_position"
+    t.index ["zig_zag_component_id"], name: "index_zig_zag_items_on_zig_zag_component_id"
   end
 
   add_foreign_key "articles", "article_categories"
