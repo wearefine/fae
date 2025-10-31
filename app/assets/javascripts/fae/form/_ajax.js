@@ -12,7 +12,7 @@ Fae.form.ajax = {
     this.$filter_form = $('.js-filter-form');
     this.$nested_form = $('.nested-form');
 
-    this.addFlexComponentSelect();
+    this.flexComponentSelect();
     this.addEditLinks();
     this.addEditSubmission();
 
@@ -27,7 +27,7 @@ Fae.form.ajax = {
   /**
    * Click event listener for add and edit links applied to both index and nested forms
    */
-  addFlexComponentSelect: function() {
+  flexComponentSelect: function() {
     console.log('adding flex component link');
     var _this = this;
 
@@ -36,36 +36,11 @@ Fae.form.ajax = {
       ev.preventDefault();
       var $this = $(this);
       var $parent = $this.closest('.js-addedit-form');
-      var $selectWrapper = $this.next('.js-component-select-wrapper');
 
       component = $(this).val();
       console.log('selected', component);
       _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
-      // $select.val('').trigger('chosen:updated');
-      // $selectWrapper.hide();
-      // $this.show();
-      // Remove the click outside handler
-      // $(document).off('click.component-selector');
       FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
-
-      // if ($selectWrapper.length) {
-      //   console.log('showing');
-      //   var $select = $selectWrapper.find('.js-component-select');
-      //   var component = null;
-      //   $select.on('change', function() {
-      //     console.log('changing');
-      //     component = $(this).val();
-      //     console.log('selected', component);
-      //     $this.hide();
-      //     _this._addEditActions($this.attr('href') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
-      //     $select.val('').trigger('chosen:updated');
-      //     $selectWrapper.hide();
-      //     $this.show();
-      //     // Remove the click outside handler
-      //     // $(document).off('click.component-selector');
-      //     FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
-      //   });
-      // }
     });
   },
 
@@ -279,16 +254,12 @@ Fae.form.ajax = {
       Fae.tables.rowSorting();
       // Fae.navigation.fadeNotices();
       Fae.navigation.showToasts();
+      
+      $('.js-component-select').fae_chosen();
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
       }
-
-      // This is so flex components will open their forms after the initial
-      // selection of component type then save happens.
-      // if ($el.find('table').data('initialCreate')) {
-      //   $el.find('.js-edit-link').last().trigger('click');
-      // }
     }
 
     // if there's a form wrap, slide it up before replacing content
