@@ -157,6 +157,13 @@ Fae.form.ajax = {
       var $componentSelect = $wrapper.closest('.js-addedit-form').find('.js-component-select');
       $componentSelect.prop('disabled', true).trigger('chosen:updated');
 
+      // Disable sortable functionality when form is open
+      var $sortableTable = $wrapper.closest('.js-addedit-form').find('.js-sort-row');
+      if ($sortableTable.length && $sortableTable.hasClass('ui-sortable')) {
+        $sortableTable.sortable('disable');
+        $sortableTable.find('.sortable-handle').addClass('disabled').css('opacity', '0.3').css('cursor', 'not-allowed');
+      }
+
       _this.$nested_form = $('.nested-form');
 
       // Bind validation to nested form fields added by AJAX
@@ -206,6 +213,13 @@ Fae.form.ajax = {
           $form_wrapper.empty();
           // Re-enable and reset component select
           $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
+          
+          // Re-enable sortable functionality
+          var $sortableTable = $form_wrapper.closest('.js-addedit-form').find('.js-sort-row');
+          if ($sortableTable.length && $sortableTable.hasClass('ui-sortable')) {
+            $sortableTable.sortable('enable');
+            $sortableTable.find('.sortable-handle').removeClass('disabled').css('opacity', '').css('cursor', '');
+          }
         });
       }
     });
@@ -308,6 +322,13 @@ Fae.form.ajax = {
       // Re-enable component select after successful form submission
       var $componentSelect = $el.find('.js-component-select');
       $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
+
+      // Re-enable sortable functionality after successful form submission
+      var $sortableTable = $el.find('.js-sort-row');
+      if ($sortableTable.length && $sortableTable.hasClass('ui-sortable')) {
+        $sortableTable.sortable('enable');
+        $sortableTable.find('.sortable-handle').removeClass('disabled').css('opacity', '').css('cursor', '');
+      }
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
