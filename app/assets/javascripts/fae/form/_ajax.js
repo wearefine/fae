@@ -51,7 +51,7 @@ Fae.form.ajax = {
       component = $(this).val();
       console.log('selected', component);
       _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      // FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
     });
   },
 
@@ -191,6 +191,7 @@ Fae.form.ajax = {
       // Fae.navigation.killNotices();
 
       $wrapper.find('.hint').hinter();
+      FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
     });
   },
 
