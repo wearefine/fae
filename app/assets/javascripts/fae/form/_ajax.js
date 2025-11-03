@@ -246,14 +246,8 @@ Fae.form.ajax = {
 
       var $target = $(evt.target);
 
-      // Reset cursor and button state
+      // Reset cursor only (keep button in saving state until form closes)
       $('body').css('cursor', 'default');
-      
-      if ($target.is('form')) {
-        var $submitButton = $target.find('input[type="submit"]');
-        var originalValue = $submitButton.data('original-value') || 'Save';
-        $submitButton.removeClass('saving').val(originalValue).prop('disabled', false);
-      }
 
       // We need to target the form wrapper containing the target form to enable nesting
       // multiple forms.
