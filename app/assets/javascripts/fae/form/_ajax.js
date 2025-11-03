@@ -233,8 +233,9 @@ Fae.form.ajax = {
       var $form = $(this);
       var $submitButton = $form.find('input[type="submit"]');
       
-      // Store original value and disable button
+      // Store original value, disable button, and track submission time
       $submitButton.data('original-value', $submitButton.val());
+      $submitButton.data('submit-time', Date.now());
       $submitButton.addClass('saving').val('Saving...').prop('disabled', true);
       
       $('body').css('cursor', 'wait');
@@ -246,13 +247,21 @@ Fae.form.ajax = {
 
       var $target = $(evt.target);
 
-      // Reset cursor only (keep button in saving state until form closes)
-      $('body').css('cursor', 'default');
+      // Calculate minimum delay to ensure "Saving..." is visible
+      var minDelay = 800; // minimum 800ms display time
+      var submitTime = $target.find('input[type="submit"]').data('submit-time') || 0;
+      var elapsed = Date.now() - submitTime;
+      var remainingDelay = Math.max(0, minDelay - elapsed);
 
-      // We need to target the form wrapper containing the target form to enable nesting
-      // multiple forms.
-      // Relying on $this will end up redrawing the top-most parent form with the returned table
-      var $theFormWrapper = $target.closest('.js-addedit-form');
+      // Process the response after ensuring minimum display time
+      setTimeout(function() {
+        // Reset cursor only (keep button in saving state until form closes)
+        $('body').css('cursor', 'default');
+
+        // We need to target the form wrapper containing the target form to enable nesting
+        // multiple forms.
+        // Relying on $this will end up redrawing the top-most parent form with the returned table
+        var $theFormWrapper = $target.closest('.js-addedit-form');
 
       // ignore calls not returning html
       if (data !== ' ' && $(data)[0]) {
@@ -307,6 +316,7 @@ Fae.form.ajax = {
       }
 
       Fae.navigation.lockFooter();
+      }, remainingDelay); // Close the setTimeout
     });
 
     // Reset button state on AJAX error
