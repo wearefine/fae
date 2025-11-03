@@ -25,10 +25,9 @@ Fae.form.ajax = {
   },
 
   /**
-   * Click event listener for add and edit links applied to both index and nested forms
+   * Change event listener for flex component select dropdown
    */
   flexComponentSelect: function() {
-    console.log('adding flex component link');
     var _this = this;
 
     this.$addedit_form.on('change', '.js-component-select', function(ev) {
@@ -67,6 +66,10 @@ Fae.form.ajax = {
       var $this = $(this);
 
       var $parentTable = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
+      if ($this.hasClass('js-index-add-link')) {
+        $parentTable = $('.js-addedit-form').find('> table');
+      }
+      console.log('Parent table found:', $parentTable.length);
       var $theFormContainer = null;
       
       // Check if form container already exists
@@ -228,26 +231,6 @@ Fae.form.ajax = {
    */
   addEditSubmission: function() {
     var _this = this;
-
-    // Set wait cursor when remote form starts submitting
-    // this.$addedit_form.on('ajax:before', 'form[data-remote=true]', function(evt) {
-    //   console.log('setting wait cursor');
-    //   var $form = $(this);
-    //   var $submitButton = $form.find('input[type="submit"]');
-      
-    //   console.log('Found submit button:', $submitButton.length);
-      
-    //   // Store original button text and change to "Saving..."
-    //   if ($submitButton.length) {
-    //     $submitButton.data('original-value', $submitButton.val());
-    //     $submitButton.val('Saving...');
-    //     console.log('Changed button to:', $submitButton.val());
-    //   }
-      
-    //   // $('body').css('cursor', 'wait');
-    //   // Force cursor update by triggering a reflow
-    //   // document.body.offsetHeight;
-    // });
 
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 

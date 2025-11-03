@@ -5,6 +5,7 @@ feature 'fae_filter_form' do
     FactoryBot.create(:release, name: 'Release 1')
     FactoryBot.create(:release, name: 'Release 2')
 
+    create_super_user
     admin_login
     visit admin_releases_path
     expect(page).to_not have_css('.js-reset-btn')
