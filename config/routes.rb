@@ -13,7 +13,8 @@ Fae::Engine.routes.draw do
   end
   resources :deploy_hooks
   resources :flex_components
-  resource :two_factor_settings, except: [:index, :show]
+  # resource :two_factor_settings, except: [:index, :show]
+  resource :two_factor_settings, except: [:show]
   resources :site_deploy_hooks
   resources :sites
   resources :users
