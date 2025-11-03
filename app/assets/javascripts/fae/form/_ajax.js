@@ -228,8 +228,15 @@ Fae.form.ajax = {
   addEditSubmission: function() {
     var _this = this;
 
-    // Set wait cursor when remote form starts submitting
+    // Set wait cursor and button state when remote form starts submitting
     this.$addedit_form.on('ajax:before', 'form[data-remote=true]', function(evt) {
+      var $form = $(this);
+      var $submitButton = $form.find('input[type="submit"]');
+      
+      // Store original value and disable button
+      $submitButton.data('original-value', $submitButton.val());
+      $submitButton.addClass('saving').val('Saving...').prop('disabled', true);
+      
       $('body').css('cursor', 'wait');
       // Force cursor update by triggering a reflow
       document.body.offsetHeight;
@@ -239,7 +246,14 @@ Fae.form.ajax = {
 
       var $target = $(evt.target);
 
+      // Reset cursor and button state
       $('body').css('cursor', 'default');
+      
+      if ($target.is('form')) {
+        var $submitButton = $target.find('input[type="submit"]');
+        var originalValue = $submitButton.data('original-value') || 'Save';
+        $submitButton.removeClass('saving').val(originalValue).prop('disabled', false);
+      }
 
       // We need to target the form wrapper containing the target form to enable nesting
       // multiple forms.
@@ -299,6 +313,16 @@ Fae.form.ajax = {
       }
 
       Fae.navigation.lockFooter();
+    });
+
+    // Reset button state on AJAX error
+    this.$addedit_form.on('ajax:error', 'form[data-remote=true]', function(evt) {
+      var $form = $(this);
+      var $submitButton = $form.find('input[type="submit"]');
+      var originalValue = $submitButton.data('original-value') || 'Save';
+      
+      $submitButton.removeClass('saving').val(originalValue).prop('disabled', false);
+      $('body').css('cursor', 'default');
     });
   },
 
