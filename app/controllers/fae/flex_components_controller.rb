@@ -2,8 +2,6 @@ module Fae
   class FlexComponentsController < Fae::NestedBaseController
 
     def new
-      Rails.logger.info '---------------------'
-      Rails.logger.info params
       @item = @klass.new({
         flex_componentable_type: params[:item_class],
         flex_componentable_id: params[:item_id],
@@ -18,7 +16,6 @@ module Fae
         @parent_item = @item.flex_componentable
         flash.now[:notice] = t('fae.save_notice')
         redirect_to "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit"
-        # render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
       else
         build_assets
         render action: 'new'
@@ -26,9 +23,6 @@ module Fae
     end
   
     def create
-      Rails.logger.info '---------------------'
-      Rails.logger.info params
-      raise up
       @item = @klass.new(permitted_params)
   
       if @item.save

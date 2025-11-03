@@ -10,9 +10,6 @@ ruby:
   item_class = parent_item.class.name
   item_class = 'Fae::StaticPage' if parent_item.class.ancestors.include?(Fae::StaticPage)
   new_path = fae.new_flex_component_path(item_class: item_class, item_id: parent_item.id)
-  
-  # See _ajax.js for usage
-  initial_create      ||= false
   helper_text         ||= nil
 
 section.addedit-form.js-addedit-form
@@ -30,7 +27,7 @@ section.addedit-form.js-addedit-form
     h6.table-helper-text = helper_text
   == render 'fae/application/flash_messages'
 
-  table.js-sort-row data-initial-create="#{initial_create}"
+  table.js-sort-row
     thead
       tr
         th.th-sortable-handle

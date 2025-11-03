@@ -16,7 +16,7 @@ ruby:
   = fae_input f, :title
 
   = fae_image_form f, :image
-  = f.submit
+  = f.button :submit, data: { disable_with: "Saving..." }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
 
   - if Fae.use_form_manager

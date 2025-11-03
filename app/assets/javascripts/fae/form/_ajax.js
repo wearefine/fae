@@ -229,40 +229,35 @@ Fae.form.ajax = {
     var _this = this;
 
     // Set wait cursor when remote form starts submitting
-    this.$addedit_form.on('ajax:before', 'form[data-remote=true]', function(evt) {
-      console.log('setting wait cursor');
-      var $form = $(evt.target);
-      var $submitButton = $form.find('input[type="submit"], button[type="submit"]');
+    // this.$addedit_form.on('ajax:before', 'form[data-remote=true]', function(evt) {
+    //   console.log('setting wait cursor');
+    //   var $form = $(this);
+    //   var $submitButton = $form.find('input[type="submit"]');
       
-      // Store original button text and change to "Saving..."
-      if ($submitButton.length) {
-        if ($submitButton.is('input')) {
-          $submitButton.data('original-value', $submitButton.val());
-          $submitButton.val('Saving...');
-        } else {
-          $submitButton.data('original-text', $submitButton.text());
-          $submitButton.text('Saving...');
-        }
-      }
+    //   console.log('Found submit button:', $submitButton.length);
       
-      $('body').css('cursor', 'wait');
-      // Force cursor update by triggering a reflow
-      // document.body.offsetHeight;
-    });
+    //   // Store original button text and change to "Saving..."
+    //   if ($submitButton.length) {
+    //     $submitButton.data('original-value', $submitButton.val());
+    //     $submitButton.val('Saving...');
+    //     console.log('Changed button to:', $submitButton.val());
+    //   }
+      
+    //   // $('body').css('cursor', 'wait');
+    //   // Force cursor update by triggering a reflow
+    //   // document.body.offsetHeight;
+    // });
 
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 
       var $target = $(evt.target);
       
       // Restore original button text
-      // var $submitButton = $target.find('input[type="submit"], button[type="submit"]');
-      // if ($submitButton.length) {
-      //   if ($submitButton.is('input') && $submitButton.data('original-value')) {
-      //     $submitButton.val($submitButton.data('original-value'));
-      //   } else if ($submitButton.data('original-text')) {
-      //     $submitButton.text($submitButton.data('original-text'));
-      //   }
-      // }
+      var $submitButton = $target.find('input[type="submit"]');
+      if ($submitButton.length && $submitButton.data('original-value')) {
+        $submitButton.removeClass('saving').val($submitButton.data('original-value'));
+        console.log('Restored button to:', $submitButton.val());
+      }
 
       $('body').css('cursor', 'default');
 
