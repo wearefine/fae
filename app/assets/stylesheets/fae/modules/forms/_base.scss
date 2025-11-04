@@ -120,11 +120,12 @@ input[type=email] {
   margin-top: 5px;
   margin-right: 2px;
   z-index: 1000;
-  background: white;
-  border: 1px solid $c-border;
+  background: --highlight-color;
+  // border: 1px solid $c-border;
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 200px;
+  padding: 6px 0 0 0;
 
   select {
     border: none;
@@ -132,8 +133,18 @@ input[type=email] {
     padding: 4px 8px;
     width: 100%;
     outline: none;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.2;
+  }
+
+  .chosen-container {
+    font-size: 12px;
+    
+    .chosen-single {
+      padding: 4px 8px;
+      height: auto;
+      line-height: 1.2;
+    }
   }
 }
 

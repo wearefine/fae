@@ -16,11 +16,10 @@ section.addedit-form.js-addedit-form
   .flex-component-controls
     / a.js-add-flex-component-link.table-add-link.button.-small style="display: none;" href=new_path New Component
     .js-component-select-wrapper.component-selector-dropdown 
-      select.js-component-select.small_pulldown data-path=new_path
-        option value='' + Add Component
+      select.js-component-select.small_pulldown data-path=new_path data-placeholder='+ Add Component'
+        option value=''
         - Fae::FlexComponent.components_for(item_class).each do |component|
           option value=component[1] = component[0]
-    a.js-create-flex-component-link.table-add-link.button.-small style="display: none;" href=new_path Create Component
 
   h2 = title
   - if helper_text.present?
