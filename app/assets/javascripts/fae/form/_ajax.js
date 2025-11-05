@@ -31,26 +31,12 @@ Fae.form.ajax = {
     var _this = this;
 
     this.$addedit_form.on('change', '.js-component-select', function(ev) {
-      console.log('changing');
       ev.preventDefault();
       var $this = $(this);
       var $parent = $this.closest('.js-addedit-form');
-
-      // Check if a form is already open
-      var $existingForm = $parent.find('.js-addedit-form-wrapper');
-      var hasOpenForm = $existingForm.length > 0 && $existingForm.is(':visible') && $existingForm.children().length > 0;
-      
-      if (hasOpenForm) {
-        console.log('Form already open, ignoring select change');
-        // Reset select to empty value
-        $this.val('').trigger('chosen:updated');
-        return false;
-      }
-
       component = $(this).val();
       console.log('selected', component);
       _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
-      // FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
     });
   },
 
@@ -137,8 +123,6 @@ Fae.form.ajax = {
     var _this = this;
 
     $.get(remote_url, function(data){
-      // console.log('got data', data);
-      // console.log('$wrapper', $wrapper);
       
       // Check if the wrapper is visible and has content
       var isVisible = $wrapper.is(':visible');
@@ -193,10 +177,6 @@ Fae.form.ajax = {
       // validate nested form fields on submit
       Fae.form.validator.formValidate(_this.$nested_form);
 
-      // Flash notices are showing up in the double-nested forms for the parent nested form.
-      // Get rid of any that stick around after save.
-      // Fae.navigation.killNotices();
-
       $wrapper.find('.hint').hinter();
       FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
     });
@@ -239,15 +219,6 @@ Fae.form.ajax = {
     this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
 
       var $target = $(evt.target);
-      
-      // Restore original button text
-      var $submitButton = $target.find('input[type="submit"]');
-      if ($submitButton.length && $submitButton.data('original-value')) {
-        $submitButton.removeClass('saving').val($submitButton.data('original-value'));
-        console.log('Restored button to:', $submitButton.val());
-      }
-
-      $('body').css('cursor', 'default');
 
       // We need to target the form wrapper containing the target form to enable nesting
       // multiple forms.
@@ -293,7 +264,6 @@ Fae.form.ajax = {
           _this.filterSubmission();
         }
 
-        // Fae.navigation.fadeNotices();
         Fae.navigation.showToasts();
 
       } else if ($target.hasClass('js-asset-delete')) {

@@ -42,11 +42,8 @@ table class=table_class
 
     - elsif !hide_add_button
       tr
-        - td_link = link_to 'add some', new_path, class: 'js-add-link'
-
-        td colspan=colspan.to_s No #{title} yet, #{td_link}.
+        td colspan=colspan.to_s No #{title} yet.
     - else
       tr
         td colspan=colspan.to_s No #{title} yet.
 
-/ .js-addedit-form-wrapper

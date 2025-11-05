@@ -30,15 +30,6 @@ tbody {
       }
     }
 
-    // &:nth-of-type(even) {
-    //   td {
-    //     background-color: $c-table-tr-even;
-    //     &.no-background {
-    //       background-color: transparent;
-    //     }
-    //   }
-    // }
-
     &:last-child {
       td {
         border-bottom: 0;

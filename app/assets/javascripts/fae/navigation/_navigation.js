@@ -170,15 +170,6 @@ Fae.navigation = {
   },
 
   /**
-   * Hide alerts immediately
-   */
-  killNotices: function() {
-    $('.notice, .alert, .error, .warning').not('.input .error, .form_alert').hide();
-    // Also hide any existing toasts
-    $('.flash-toast').removeClass('show').addClass('hide');
-  },
-
-  /**
    * Show toast notifications
    */
   showToasts: function() {

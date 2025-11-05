@@ -14,5 +14,5 @@ ruby:
   = fae_input f, :environment
   = fae_input f, :url, label: 'URL'
 
-  = f.submit
+  = f.button :submit, data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'

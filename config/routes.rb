@@ -13,7 +13,6 @@ Fae::Engine.routes.draw do
   end
   resources :deploy_hooks
   resources :flex_components
-  # resource :two_factor_settings, except: [:index, :show]
   resource :two_factor_settings, except: [:show]
   resources :site_deploy_hooks
   resources :sites
@@ -21,7 +20,6 @@ Fae::Engine.routes.draw do
   post 'alt_texts/:id/update_alt' => 'alt_texts#update_alt'
   get 'alt_texts' => 'alt_texts#index', as: 'alt_texts'
   post 'alt_texts/filter' => 'alt_texts#filter', as: 'alt_texts_filter'
-  resources :flex_components
 
   get 'settings' => 'users#settings', as: 'settings'
   get 'deploy' => 'deploy#index', as: 'deploy'

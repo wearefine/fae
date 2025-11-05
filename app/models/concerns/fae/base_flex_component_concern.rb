@@ -1,6 +1,10 @@
 module Fae
   module BaseFlexComponentConcern
     extend ActiveSupport::Concern
+
+    included do
+      has_flex_component self.name
+    end
   
     def parent_object
       flex_component.flex_componentable

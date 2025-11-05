@@ -10,6 +10,7 @@ en:
     exceeded_upload_limit: "Let's aim for smaller. This asset is larger than the ### MB limit. Got another?"
     form:
       save: 'Save'
+      saving: 'Saving ...'
       cancel: 'Cancel'
       clone: 'Clone'
       launch_form_manager: 'Manage Form'

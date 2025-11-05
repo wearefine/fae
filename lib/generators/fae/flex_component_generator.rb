@@ -41,7 +41,7 @@ module Fae
         inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do <<-RUBY
   include Fae::BaseModelConcern\n
   include Fae::BaseFlexComponentConcern\n
-  has_flex_component name\n
+  # has_flex_component name\n
 RUBY
         end
       end

@@ -15,7 +15,7 @@ ruby:
 = simple_form_for([:admin, @item], form_options) do |f|
   = fae_input f, :name
 
-  = f.button :submit, data: { disable_with: "Saving..." }
+  = f.button :submit, data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
 
   - if Fae.use_form_manager
