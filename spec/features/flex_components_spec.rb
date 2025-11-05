@@ -4,15 +4,10 @@ RSpec.feature 'FlexComponents management', type: :feature do
   scenario 'User can CRUD flex components on FAE pages', js: true do
     admin_login
     visit fae.edit_content_block_path('components')
-    click_on 'New Component'
-    expect(page).to have_content('New Flex Component')
     
-    # Enable the actual select element so we can test this stuff, trying to get the fancy select to work
-    # with native Capybara methods isn't flying.
-    page.execute_script("$('#flex_component_component_model').css({display: 'block', visibility: 'visible', position: 'static'}) ")
+    # Select from the component dropdown (using Chosen)
+    find('.js-component-select', visible: false).find(:option, 'Text', visible: false).select_option
     
-    select 'Text', from: 'flex_component_component_model'
-    click_on 'Create Flex component'
     expect(page).to have_content('Edit Text Component')
     fill_in 'text_component_name', with: 'Test Component'
     click_on 'Update Text component'
@@ -40,15 +35,10 @@ RSpec.feature 'FlexComponents management', type: :feature do
     admin_login
     red = FactoryBot.create(:wine, name_en: 'Red')
     visit edit_admin_wine_path(red)
-    click_on 'New Component'
-    expect(page).to have_content('New Flex Component')
     
-    # Enable the actual select element so we can test this stuff, trying to get the fancy select to work
-    # with native Capybara methods isn't flying.
-    page.execute_script("$('#flex_component_component_model').css({display: 'block', visibility: 'visible', position: 'static'}) ")
+    # Select from the component dropdown (using Chosen)
+    find('.js-component-select', visible: false).find(:option, 'Text', visible: false).select_option
     
-    select 'Text', from: 'flex_component_component_model'
-    click_on 'Create Flex component'
     expect(page).to have_content('Edit Text Component')
     fill_in 'text_component_name', with: 'Test Component'
     click_on 'Update Text component'

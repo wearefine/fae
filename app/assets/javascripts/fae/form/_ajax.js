@@ -77,6 +77,7 @@ Fae.form.ajax = {
       var $parentRow = $this.hasClass('js-edit-link') ? $this.parents('tr') : null;
       
       if ($existingContainer.length > 0) {
+        console.log('Existing form container found:', $existingContainer.length);
         // Check if the existing container is for a different row
         var $existingRow = $existingContainer.closest('.js-nested-form-row').prev('tr');
         var isDifferentRow = $parentRow && $existingRow.length > 0 && !$existingRow.is($parentRow);
@@ -101,16 +102,19 @@ Fae.form.ajax = {
         var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
         
         if ($this.hasClass('js-add-link')) {
+          console.log('js-add-link');
           var $tbody = $parentTable.find('tbody');
           $tbody.append(formContainer);
           $theFormContainer = $parentTable.find('.js-addedit-form-wrapper').last();
         } else {
+          console.log('js-edit-link');
           $parentRow.after(formContainer);
           $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
         }
       }
       
       console.log('Form container ready:', $theFormContainer.length);
+      console.log($theFormContainer);
       
       if ($this.hasClass('js-add-link')) {
         FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
@@ -118,7 +122,7 @@ Fae.form.ajax = {
         FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
       }
 
-      _this._addEditActions($this.attr('href'), $theFormContainer);
+      _this._addEditActions($this.attr('href'), $theFormContainer.first());
     });
   },
 
@@ -133,8 +137,8 @@ Fae.form.ajax = {
     var _this = this;
 
     $.get(remote_url, function(data){
-      console.log('got data', data);
-      console.log('$wrapper', $wrapper);
+      // console.log('got data', data);
+      // console.log('$wrapper', $wrapper);
       
       // Check if the wrapper is visible and has content
       var isVisible = $wrapper.is(':visible');
