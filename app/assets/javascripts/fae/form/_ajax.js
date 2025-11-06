@@ -87,6 +87,7 @@ Fae.form.ajax = {
       Fae.tables.rowSorting();
       Fae.form.text.initTranslation();
       Fae.altTextManager.ready();
+      Fae.form.text.initGenerateAlt();
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(this.$nested_form);
