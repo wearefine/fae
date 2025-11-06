@@ -108,7 +108,7 @@ ruby:
 
 Then at the bottom of the form, after
 ```slim
-= f.button :submit, data: { disable_with: t('fae.form.saving') }
+= f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
 = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
 ```
 Add
@@ -136,7 +136,7 @@ ruby:
   = fae_input f, :name, input_class: 'slugger'
   = fae_input f, :slug, helper_text: 'default'
 
-  = f.button :submit, data: { disable_with: t('fae.form.saving') }
+  = f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
   - if Fae.use_form_manager
     a.button.js-launch-form-manager href='#' = t('fae.form.launch_form_manager')

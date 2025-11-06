@@ -56,12 +56,12 @@ th {
 
 td {
   padding: 8px 10px;
-  background-color: $c-table-td;
+  background-color: $c-nested-table-td;
 }
 
 .js-addedit-form-wrapper {
   border-left: 1px solid $c-grey;
   border-right: 1px solid $c-grey;
   border-bottom: 1px solid $c-grey;
-  background: $c-table-th;
+  background: $c-table-form-row-bg;
 }

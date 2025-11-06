@@ -14,6 +14,7 @@ Fae.form.ajax = {
 
     this.flexComponentSelect();
     this.addEditLinks();
+    this.clickableRows();
     this.addEditSubmission();
 
     this.addCancelLinks();
@@ -113,6 +114,25 @@ Fae.form.ajax = {
   },
 
   /**
+   * Make table rows clickable to trigger edit links, but allow other interactive elements to work
+   */
+  clickableRows: function() {
+    // this.$addedit_form.on('click', 'tbody tr', function(ev) {
+    //   // Don't trigger if clicking on a link, button, input, or other interactive element
+    //   if ($(ev.target).closest('a, button, input, select, label, .sortable-handle').length) {
+    //     return;
+    //   }
+      
+    //   // Find the edit link in this row and trigger it
+    //   var $editLink = $(this).find('.js-edit-link');
+    //   if ($editLink.length) {
+    //     ev.preventDefault();
+    //     $editLink.trigger('click');
+    //   }
+    // });
+  },
+
+  /**
    * Once add or edit is clicked, load remote data, add it to the DOM and initialize listeners on the new create form
    * @protected
    * @param {String} remote_url - Remote page to load form from
@@ -148,9 +168,9 @@ Fae.form.ajax = {
       var $componentSelect = $wrapper.closest('.js-addedit-form').find('.js-component-select');
       $componentSelect.prop('disabled', true).trigger('chosen:updated');
 
-      // Hide sortable icons and disable clicking in the parent table only (not nested tables in forms)
+      // Reduce opacity of sortable icons and disable clicking in the parent table only (not nested tables in forms)
       var $parentTable = $wrapper.closest('.js-addedit-form').find('> table');
-      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').hide();
+      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '0.3');
       $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', 'none');
 
       _this.$nested_form = $('.nested-form');
@@ -196,9 +216,9 @@ Fae.form.ajax = {
         // Re-enable component select when form is closed
         var $componentSelect = $form_wrapper.closest('.js-addedit-form').find('.js-component-select');
         
-        // Show sortable icons and re-enable clicking in parent table only
+        // Restore sortable icons opacity and re-enable clicking in parent table only
         var $parentTable = $form_wrapper.closest('.js-addedit-form').find('> table');
-        $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').show();
+        $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '');
         $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
         
         $form_wrapper.slideUp('normal', function(){
@@ -307,9 +327,9 @@ Fae.form.ajax = {
       var $componentSelect = $el.find('.js-component-select');
       $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
 
-      // Show sortable icons and re-enable clicking in parent table only
+      // Restore sortable icons opacity and re-enable clicking in parent table only
       var $parentTable = $el.find('> table');
-      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').show();
+      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '');
       $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
 
       if ($el.find('.js-content-header').length) {

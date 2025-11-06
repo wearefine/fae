@@ -79,5 +79,5 @@ Lastly, in the object form be sure to add the `static_page_id` as a hidden field
 = simple_form_for([:admin, @item], html: {multipart: true, novalidate: true, class: 'js-file-form'}, remote: true, data: {type: "html"}) do |f|
   = f.hidden_field :static_page_id
 
-  = f.button :submit, data: { disable_with: t('fae.form.saving') }
+  = f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
 ```
