@@ -34,6 +34,7 @@ section.addedit-form.js-addedit-form
         th Image
         th On Stage
         th On Prod
+        th.-action data-sorter="false"
         th.-action
     tbody
       - records = parent_item.send(assoc)
@@ -48,6 +49,9 @@ section.addedit-form.js-addedit-form
                 img src=item.preview_image_url
             td = fae_toggle item, :on_stage
             td = fae_toggle item, :on_prod
+            td
+              a.js-edit-link.js-tooltip.table-action title=t('fae.common.edit') href=main_app.send("edit_#{fae_path}_#{item.component_model.underscore}_path", item.component_id)
+                i.icon-edit
             td = fae_delete_button item, "/#{fae_path}/#{assoc_name}/#{item.id.to_s}", class: 'js-tooltip table-action js-delete-link', remote: true
 
       - else

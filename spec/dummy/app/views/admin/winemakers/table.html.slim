@@ -5,7 +5,6 @@
   assoc_name_singular: 'winemaker',
   cols: [:name, :winemaker_image, :table_image],
   ordered: true,
-  edit_column: true,
   new_path: "/admin/winemakers/new?region_type=#{@item.region_type}",
   header: 'Winemaker',
   title: "#{@item.association_type.to_s.humanize.titleize}"

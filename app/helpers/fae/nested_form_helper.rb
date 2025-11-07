@@ -22,7 +22,7 @@ module Fae
       attribute = (attribute.is_a?(Hash) && attribute[:attr]) ? attribute[:attr] : attribute
       first_attribute = (attributes.first.kind_of?(Hash) && attributes.first[:attr]) ? attributes.first[:attr] : attributes.first
 
-      if attribute == first_attribute && !params[:edit_column]
+      if attribute == first_attribute
         content_tag(:td) do
           content_tag(:a, class: 'js-edit-link', href: self.send(params[:edit_path], item)) do
             col_name_or_image(item, attribute)
