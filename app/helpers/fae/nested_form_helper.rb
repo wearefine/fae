@@ -29,7 +29,7 @@ module Fae
           end
         end
       elsif item.class.columns_hash[attribute.to_s].present? && item.class.columns_hash[attribute.to_s].type == :boolean
-        content_tag(:td, fae_toggle(item, attribute))
+        content_tag(:td, fae_toggle(item, attribute), class: '-action-wide')
       else
         content_tag(:td, col_name_or_image(item, attribute))
       end
