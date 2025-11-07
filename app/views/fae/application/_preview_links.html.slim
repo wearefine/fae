@@ -1,0 +1,23 @@
+ruby: 
+  item ||= nil
+  options = Fae::Option.instance
+  return unless item.present? && item.detail_path.present? && (options.stage_url.present? || options.live_url.present?)
+  parts = []
+  if options.stage_url.present? && item.detail_path.present?
+    stage_base_url = options.stage_url.to_s.sub(/\/$/, '')
+    stage_full_url = "#{stage_base_url}#{item.detail_path}"
+    parts << link_to('View on stage', stage_full_url, target: '_blank')
+  end
+  if options.stage_url.present? && options.live_url.present?
+    parts << '|'
+  end
+  if options.live_url.present? && item.detail_path.present?
+    prod_base_url = options.live_url.to_s.sub(/\/$/, '')
+    prod_full_url = "#{prod_base_url}#{item.detail_path}"
+    parts << link_to('View on prod', prod_full_url, target: '_blank')
+  end
+
+- if parts.present?
+  .preview-links
+    == parts.join(' ').html_safe
+
