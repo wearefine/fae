@@ -137,7 +137,7 @@ Fae.deploy = {
     $.each(deploys, function(i, deploy) {
       $tbody.append(
         $('<tr>').append([
-          $('<td>').text(deploy.commit_ref !== null ? 'FINE dev update' : deploy.title),
+          $('<td>').text(deploy.committer !== null ? 'FINE dev update' : deploy.title),
           $('<td>').text(moment(deploy.updated_at).format('MM/DD/YYYY h:mm a')),
           $('<td>').text(_this.deployDuration(deploy)),
           $('<td>').text(_this.deployEnvironment(deploy)),
