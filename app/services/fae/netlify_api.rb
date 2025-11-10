@@ -143,7 +143,7 @@ module Fae
           "published_at"=>nil,
           "context"=>"branch-deploy",
           "deploy_time"=>93,
-          "committer"=>nil,
+          "committer"=>'string',
           "skipped_log"=>nil,
           "manual_deploy"=>false,
         },
