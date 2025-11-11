@@ -38,6 +38,8 @@ module Fae
 
     def detail_path
       # override this method in your model
+      # include the leading slash
+      # e.g. /wines/#{slug}
     end
 
     module ClassMethods
