@@ -13,12 +13,11 @@ ruby:
   helper_text         ||= nil
 
 section.addedit-form.js-addedit-form
-  .flex-component-controls
-    .js-component-select-wrapper.component-selector-dropdown 
-      select.js-component-select.small_pulldown data-path=new_path data-placeholder='+ Add Component'
-        option value=''
-        - Fae::FlexComponent.components_for(item_class).each do |component|
-          option value=component[1] = component[0]
+  .js-component-select-wrapper.component-selector-dropdown 
+    select.js-component-select.small_pulldown data-path=new_path data-placeholder='+ Add Component'
+      option value=''
+      - Fae::FlexComponent.components_for(item_class).each do |component|
+        option value=component[1] = component[0]
 
   h2 = title
   - if helper_text.present?
@@ -56,6 +55,6 @@ section.addedit-form.js-addedit-form
 
       - else
         tr
-          td colspan=4 No components yet.
+          td.no-items colspan=8 No components yet.
 
   .js-addedit-form-wrapper

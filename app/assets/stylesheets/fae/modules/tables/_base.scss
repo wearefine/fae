@@ -57,6 +57,10 @@ th {
 td {
   padding: 8px 10px;
   background-color: $c-nested-table-td;
+
+  &.no-items {
+    padding-left: 32px;
+  }
 }
 
 .js-addedit-form-wrapper {

@@ -1,5 +1,5 @@
 ruby:
-  colspan = cols.length + 1
+  colspan = cols.length + 2
   colspan += 1 if ordered
   colspan += 1 if has_thumb
   colspan -= 1 if hide_delete_button
@@ -41,8 +41,8 @@ table class=table_class
 
     - elsif !hide_add_button
       tr
-        td colspan=colspan.to_s No #{title} yet.
+        td.no-items colspan=colspan.to_s No #{title} yet.
     - else
       tr
-        td colspan=colspan.to_s No #{title} yet.
+        td.no-items colspan=colspan.to_s No #{title} yet.
 
