@@ -222,7 +222,7 @@ Fae.form.ajax = {
         $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
         
         $form_wrapper.slideUp('normal', function(){
-          $form_wrapper.empty();
+          $form_wrapper.parent().remove();
           // Re-enable and reset component select
           $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
         });
