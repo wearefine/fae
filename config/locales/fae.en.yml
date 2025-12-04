@@ -12,7 +12,7 @@ en:
       save: 'Save'
       cancel: 'Cancel'
       clone: 'Clone'
-      launch_form_manager: 'Manage Form'
+      launch_form_manager: 'Edit Form'
       save_form_manager: 'Save Changes'
       cancel_form_manager: 'Cancel'
       attribute:

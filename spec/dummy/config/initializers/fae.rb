@@ -11,9 +11,9 @@ Fae.setup do |config|
 
   # language support
   config.languages = {
-    en: 'English',
-    zh: 'Chinese',
-    frca: "French Canadian"
+    en: 'EN',
+    zh: 'ZH',
+    frca: "FRCA"
   }
 
   config.per_page = 5
