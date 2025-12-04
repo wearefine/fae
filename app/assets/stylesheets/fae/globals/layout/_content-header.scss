@@ -13,7 +13,7 @@ $content-header-padding: 16px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
 
   &.-dashboard {
@@ -74,12 +74,12 @@ $content-header-padding: 16px;
 }
 
 .content-header-buttons {
-  position: absolute;
-  height: 100%;
-  top: 0;
   display: flex;
   align-items: center;
-  right: 30px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  padding: 5px 0;
+  
   a {
     margin-right: 5px;
 
@@ -105,5 +105,15 @@ $content-header-padding: 16px;
   .chosen-container-single .chosen-single {
     padding-top: 6px;
     padding-bottom: 5px;
+  }
+}
+
+.preview-links {
+  width: 100%;
+  text-align: right;
+  padding: 5px 0;
+  
+  a:first-child {
+    margin-right: 0;
   }
 }

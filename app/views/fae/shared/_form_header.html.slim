@@ -26,8 +26,6 @@ header.content-header.js-content-header
       .content-header-select
         = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown'
 
-    == render 'fae/application/preview_links', item: @item
-
     - if Fae.use_form_manager
       a.button.js-launch-form-manager href='#' = launch_manager_text
 
@@ -35,6 +33,8 @@ header.content-header.js-content-header
     - if cloneable.present? && params[:id].present?
       a.button#js-header-clone data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
     input name="commit" type="submit" value=save_button_text
+
+  == render 'fae/application/preview_links', item: @item
 
   - if subnav.present?
     ul.content-header-subnav#js-content-header-subnav
