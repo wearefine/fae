@@ -34,6 +34,8 @@ header.content-header.js-content-header
       a.button#js-header-clone data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
     input name="commit" type="submit" value=save_button_text
 
+  == render 'fae/application/preview_links', item: @item
+
   - if subnav.present?
     ul.content-header-subnav#js-content-header-subnav
       - subnav.each do |link, id_selector|
