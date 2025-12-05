@@ -17,8 +17,8 @@ feature 'Preview Links' do
 
     visit edit_admin_wine_path(wine)
 
-    expect(page).to have_link('View on stage', href: "https://stage.example.com/wines/#{wine.id}")
-    expect(page).to have_link('View on prod', href: "https://www.example.com/wines/#{wine.id}")
+    expect(page).to have_link('Stage', href: "https://stage.example.com/wines/#{wine.id}")
+    expect(page).to have_link('Prod', href: "https://www.example.com/wines/#{wine.id}")
   end
 
   scenario 'handles trailing slashes on URLs correctly', js: true do
@@ -33,7 +33,7 @@ feature 'Preview Links' do
     visit edit_admin_wine_path(wine)
 
     # Should not have double slashes
-    expect(page).to have_link('View on stage', href: "https://stage.example.com/wines/#{wine.id}")
+    expect(page).to have_link('Stage', href: "https://stage.example.com/wines/#{wine.id}")
     expect(page).to have_link('View on prod', href: "https://www.example.com/wines/#{wine.id}")
   end
 
@@ -47,8 +47,8 @@ feature 'Preview Links' do
 
     visit edit_admin_wine_path(wine)
 
-    expect(page).to_not have_link('View on stage')
-    expect(page).to have_link('View on prod', href: "https://www.example.com/wines/#{wine.id}")
+    expect(page).to_not have_link('Stage')
+    expect(page).to have_link('Prod', href: "https://www.example.com/wines/#{wine.id}")
   end
 
   scenario 'does not display preview links when item has no detail_path method', js: true do
