@@ -10,7 +10,9 @@ RSpec.feature 'FlexComponents management', type: :feature do
     
     expect(page).to have_content('Edit Text Component')
     fill_in 'text_component_name', with: 'Test Component'
-    click_on 'Update Text component'
+    within("form#edit_text_component_#{Fae::FlexComponent.first.id}") do
+      click_on 'Save'
+    end
     expect(page).to have_content('Test Component')
 
     # Edit/Update
@@ -19,7 +21,9 @@ RSpec.feature 'FlexComponents management', type: :feature do
     end
     expect(page).to have_content('Edit Text Component')
     fill_in 'text_component_name', with: 'Updated Component'
-    click_on 'Update Text component'
+    within("form#edit_text_component_#{Fae::FlexComponent.first.id}") do
+      click_on 'Save'
+    end
     expect(page).to have_content('Updated Component')
 
     # Destroy
@@ -41,7 +45,9 @@ RSpec.feature 'FlexComponents management', type: :feature do
     
     expect(page).to have_content('Edit Text Component')
     fill_in 'text_component_name', with: 'Test Component'
-    click_on 'Update Text component'
+    within("form#edit_text_component_#{Fae::FlexComponent.first.id}") do
+      click_on 'Save'
+    end
     expect(page).to have_content('Test Component')
 
     # Edit/Update
@@ -50,7 +56,9 @@ RSpec.feature 'FlexComponents management', type: :feature do
     end
     expect(page).to have_content('Edit Text Component')
     fill_in 'text_component_name', with: 'Updated Component'
-    click_on 'Update Text component'
+    within("form#edit_text_component_#{Fae::FlexComponent.first.id}") do
+      click_on 'Save'
+    end
     expect(page).to have_content('Updated Component')
 
     # Destroy

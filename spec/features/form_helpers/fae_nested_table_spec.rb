@@ -20,7 +20,7 @@ feature 'fae_nested_table' do
 
     within(:css, 'form#new_aroma') do
       fill_in 'Name', with: 'My Brand New Smell!'
-      click_button('Create Aroma')
+      click_button('Save')
     end
 
     eventually {
@@ -44,7 +44,7 @@ feature 'fae_nested_table' do
 
     within(:css, "form#edit_aroma_#{aroma.id}") do
       fill_in 'Name', with: 'Lavender'
-      click_button('Update Aroma')
+      click_button('Save')
     end
 
     eventually {
@@ -100,7 +100,7 @@ feature 'fae_nested_table' do
 
     within(:css, 'form#new_winemaker') do
       fill_in 'Name', with: 'Portland Joe'
-      click_button('Create Winemaker')
+      click_button('Save')
     end
 
     eventually {
@@ -123,7 +123,9 @@ feature 'fae_nested_table' do
       fill_in 'Title', with: "I'm a release note"
     end
 
-    click_button 'Save'
+    within(:css, '.content-header') do
+      click_button 'Save'
+    end
     page.driver.browser.reject_js_confirms
     
     expect(page).to have_css('form#new_release_note')
@@ -142,7 +144,9 @@ feature 'fae_nested_table' do
       fill_in 'Title', with: "I'm a release note"
     end
 
-    click_button 'Save'
+    within(:css, '.content-header') do
+      click_button 'Save'
+    end
     page.driver.browser.accept_js_confirms
 
     eventually {

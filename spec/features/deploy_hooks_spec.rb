@@ -14,7 +14,9 @@ feature 'Deploy Hooks' do
       expect(page).to have_content('New Deploy Hook')
       fill_in('deploy_hook_environment', with: 'Test')
       fill_in('deploy_hook_url', with: 'test.com')
-      click_button('Create Deploy hook')
+      within("form#new_deploy_hook") do
+        click_button 'Save'
+      end
       eventually {
         within('#deploy_hooks') do
           expect(page).to have_content('Test')

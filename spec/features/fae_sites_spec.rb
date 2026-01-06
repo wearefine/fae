@@ -27,7 +27,9 @@ feature 'Fae Sites' do
           eventually {
             fill_in('site_deploy_hook_environment', with: 'Test Environment')
             fill_in('site_deploy_hook_url', with: 'https://test.com')
-            click_button('Create Site deploy hook')
+            within("form#new_site_deploy_hook") do
+              click_button 'Save'
+            end
             eventually {
               within('table') do
                 expect(page).to have_content('Test Environment')
