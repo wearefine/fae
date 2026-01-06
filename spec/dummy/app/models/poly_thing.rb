@@ -3,6 +3,8 @@ class PolyThing < ApplicationRecord
 
   belongs_to :poly_thingable, polymorphic: true
 
+  has_fae_image :image
+
   validates :name_en, presence: true
 
   def fae_nested_parent

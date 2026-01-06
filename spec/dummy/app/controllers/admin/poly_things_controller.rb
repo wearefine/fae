@@ -13,6 +13,12 @@ module Admin
       build_assets
     end
 
+    private
+
+    def build_assets
+      @item.build_image unless @item.image.present?
+    end
+
 
 
   end

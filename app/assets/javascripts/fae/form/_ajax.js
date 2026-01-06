@@ -16,6 +16,7 @@ Fae.form.ajax = {
     this.addEditLinks();
     this.clickableRows();
     this.addEditSubmission();
+    this.nestedFormSubmission();
 
     this.addCancelLinks();
 
@@ -144,6 +145,15 @@ Fae.form.ajax = {
 
     $.get(remote_url, function(data){
       
+      // Check if the wrapper is inside a parent form - if so, we need to convert
+      // the nested form to a div to avoid invalid HTML (nested forms)
+      var isInsideForm = $wrapper.closest('form').length > 0;
+      
+      if (isInsideForm) {
+        // Convert form elements to divs with data attributes before inserting
+        data = _this._convertNestedFormToDiv(data);
+      }
+      
       // Check if the wrapper is visible and has content
       var isVisible = $wrapper.is(':visible');
       var hasContent = $wrapper.children().length > 0;
@@ -188,7 +198,7 @@ Fae.form.ajax = {
       Fae.form.text.initHTML();
       Fae.form.checkbox.setCheckboxAsActive();
       Fae.form.select.init();
-      Fae.form.formManager.setupAllFields($wrapper.find('form'));
+      Fae.form.formManager.setupAllFields($wrapper.find('.js-nested-form-container, form'));
       Fae.form.dragDrop.init();
       Fae.tables.rowSorting();
       Fae.form.text.initTranslation();
@@ -231,6 +241,103 @@ Fae.form.ajax = {
   },
 
   /**
+   * Handle nested form submissions when forms are loaded inside a parent form.
+   * Since nested <form> elements are invalid HTML and browsers strip them,
+   * we convert forms to divs with data attributes and handle submission manually via AJAX.
+   */
+  nestedFormSubmission: function() {
+    var _this = this;
+
+    // Listen for clicks on submit buttons inside converted nested form containers
+    this.$addedit_form.on('click', '.js-nested-form-container input[type="submit"], .js-nested-form-container button[type="submit"]', function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      var $submitBtn = $(this);
+      var $container = $submitBtn.closest('.js-nested-form-container');
+      
+      if (!$container.length) {
+        console.warn('Nested form submission: Could not find .js-nested-form-container');
+        return;
+      }
+
+      var formAction = $container.data('action');
+      var formMethod = ($container.data('method') || 'POST').toUpperCase();
+      
+      if (!formAction) {
+        console.warn('Nested form submission: No action URL found');
+        return;
+      }
+
+      // Collect all form inputs within the container
+      var formData = new FormData();
+      
+      // Add all input fields
+      $container.find('input, select, textarea').each(function() {
+        var $input = $(this);
+        var name = $input.attr('name');
+        
+        if (!name) return;
+        
+        if ($input.is(':checkbox')) {
+          if ($input.is(':checked')) {
+            formData.append(name, $input.val() || '1');
+          }
+        } else if ($input.is(':radio')) {
+          if ($input.is(':checked')) {
+            formData.append(name, $input.val());
+          }
+        } else if ($input.is('select[multiple]')) {
+          $input.find('option:selected').each(function() {
+            formData.append(name, $(this).val());
+          });
+        } else if ($input.is(':file')) {
+          var files = $input[0].files;
+          for (var i = 0; i < files.length; i++) {
+            formData.append(name, files[i]);
+          }
+        } else if ($input.attr('type') !== 'submit') {
+          formData.append(name, $input.val());
+        }
+      });
+
+      // Store original button text and disable
+      var originalText = $submitBtn.val() || $submitBtn.text();
+      var disableWith = $submitBtn.data('disable-with') || 'Saving...';
+      $submitBtn.prop('disabled', true);
+      if ($submitBtn.is('input')) {
+        $submitBtn.val(disableWith);
+      } else {
+        $submitBtn.text(disableWith);
+      }
+
+      $.ajax({
+        url: formAction,
+        type: formMethod,
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'html',
+        success: function(data) {
+          // Trigger the same ajax:success handling that Rails UJS would
+          // We trigger on the container's parent .js-addedit-form so existing handlers work
+          var $addeditForm = $container.closest('.js-addedit-form');
+          $addeditForm.trigger('ajax:success', [data, 'success', null]);
+        },
+        error: function(xhr, status, error) {
+          console.error('Nested form submission error:', error);
+          $submitBtn.prop('disabled', false);
+          if ($submitBtn.is('input')) {
+            $submitBtn.val(originalText);
+          } else {
+            $submitBtn.text(originalText);
+          }
+        }
+      });
+    });
+  },
+
+  /**
    * Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
    * @fires {@link navigation.fadeNotices}
    */
@@ -263,9 +370,16 @@ Fae.form.ajax = {
             // we're returning the table, replace everything
             _this._addEditReplaceAndReinit($theFormWrapper, $html.html(), $target);
           } else if ($html.hasClass('nested-form')) {
-
             // we're returning the form due to an error, just replace the form
-            $theFormWrapper.find('.nested-form' ).replaceWith($html);
+            
+            // Check if we're inside a parent form - if so, convert nested forms to divs
+            var isInsideForm = $theFormWrapper.closest('form').length > 0;
+            if (isInsideForm) {
+              var convertedHtml = _this._convertNestedFormToDiv($html[0].outerHTML);
+              $html = $(convertedHtml);
+            }
+            
+            $theFormWrapper.find('.nested-form').replaceWith($html);
             $theFormWrapper.find('.select select').fae_chosen();
             $theFormWrapper.find('.input.file').fileinputer();
 
@@ -537,6 +651,44 @@ Fae.form.ajax = {
           }
         }
       });
+  },
+
+  /**
+   * Convert form elements in HTML string to divs with data attributes.
+   * This prevents invalid nested form HTML when loading forms via AJAX into a parent form.
+   * @param {String} html - HTML string containing form elements
+   * @returns {String} - Modified HTML with forms converted to divs
+   */
+  _convertNestedFormToDiv: function(html) {
+    var $temp = $('<div>').html(html);
+    
+    $temp.find('form').each(function() {
+      var $form = $(this);
+      var $div = $('<div>')
+        .addClass('js-nested-form-container')
+        .attr('data-action', $form.attr('action'))
+        .attr('data-method', $form.attr('method') || 'post')
+        .attr('data-remote', 'true');
+      
+      // Copy over other relevant attributes
+      if ($form.attr('enctype')) {
+        $div.attr('data-enctype', $form.attr('enctype'));
+      }
+      if ($form.attr('class')) {
+        $div.addClass($form.attr('class'));
+      }
+      if ($form.data('type')) {
+        $div.attr('data-type', $form.data('type'));
+      }
+      
+      // Move form contents into the div
+      $div.html($form.html());
+      
+      // Replace the form with the div
+      $form.replaceWith($div);
+    });
+    
+    return $temp.html();
   }
 
 };

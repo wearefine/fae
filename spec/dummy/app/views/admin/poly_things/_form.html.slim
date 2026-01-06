@@ -15,6 +15,7 @@ ruby:
 = simple_form_for([:admin, @item], form_options) do |f|
   = fae_input f, :name_en
   = fae_input f, :name_frca
+  = fae_image_form f, :image
 
   = f.hidden_field :poly_thingable_id
   = f.hidden_field :poly_thingable_type
