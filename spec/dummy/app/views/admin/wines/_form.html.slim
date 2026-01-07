@@ -41,9 +41,10 @@
     // need for testing
     = fae_association f, :releases
 
-    == render 'fae/shared/flex_components_table',
-			assoc: :flex_components,
-			parent_item: @item
+    section.content#components
+      == render 'fae/shared/flex_components_table',
+        assoc: :flex_components,
+        parent_item: @item
 
     = fae_image_form f, :image_en
     = fae_image_form f, :image_frca
