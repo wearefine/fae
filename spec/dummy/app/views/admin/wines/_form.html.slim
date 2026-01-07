@@ -4,16 +4,17 @@
   main.content
     = fae_input f, :name_en, wrapper_html: { data: { test: 'do not overwrite me' } }, wrapper_class: 'test-class'
     
-    = render 'fae/shared/nested_table',
-      assoc: :oregon_winemakers,
-      assoc_name: 'winemakers',
-      assoc_name_singular: 'winemaker',
-      parent_item: @item,
-      cols: [:name, :winemaker_image, :table_image],
-      new_path: "/admin/winemakers/new?region_type=1",
-      ordered: true,
-      header: 'Oregon Winemaker',
-      title: 'Oregon Winemakers'
+    section.content#oregon_winemakers_section
+      = render 'fae/shared/nested_table',
+        assoc: :oregon_winemakers,
+        assoc_name: 'winemakers',
+        assoc_name_singular: 'winemaker',
+        parent_item: @item,
+        cols: [:name, :winemaker_image, :table_image],
+        new_path: "/admin/winemakers/new?region_type=1",
+        ordered: true,
+        header: 'Oregon Winemaker',
+        title: 'Oregon Winemakers'
     
     = fae_input f, :name_zh
     = fae_input f, :name_frca
@@ -24,16 +25,17 @@
     = fae_input f, :food_pairing_zh
     = fae_input f, :food_pairing_ja
 
-    = render 'fae/shared/nested_table',
-      assoc: :california_winemakers,
-      assoc_name: 'winemakers',
-      assoc_name_singular: 'winemaker',
-      parent_item: @item,
-      cols: [:name, :winemaker_image, :table_image],
-      new_path: "/admin/winemakers/new?region_type=2",
-      ordered: true,
-      header: 'California Winemaker',
-      title: 'California Winemakers'
+    section.content#california_winemakers_section
+      = render 'fae/shared/nested_table',
+        assoc: :california_winemakers,
+        assoc_name: 'winemakers',
+        assoc_name_singular: 'winemaker',
+        parent_item: @item,
+        cols: [:name, :winemaker_image, :table_image],
+        new_path: "/admin/winemakers/new?region_type=2",
+        ordered: true,
+        header: 'California Winemaker',
+        title: 'California Winemakers'
 
     = fae_cta_form f, :test_cta_en
     = fae_cta_form f, :test_cta_zh

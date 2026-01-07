@@ -666,6 +666,7 @@ Fae.form.ajax = {
       var $form = $(this);
       var $div = $('<div>')
         .addClass('js-nested-form-container')
+        .attr('id', $form.attr('id'))
         .attr('data-action', $form.attr('action'))
         .attr('data-method', $form.attr('method') || 'post')
         .attr('data-remote', 'true');

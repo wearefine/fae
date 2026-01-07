@@ -96,9 +96,9 @@ feature 'fae_nested_table' do
     visit edit_admin_wine_path(wine)
 
     click_link 'Add Oregon Winemaker'
-    expect(page).to have_css('form#new_winemaker')
+    expect(page).to have_css('#new_winemaker')
 
-    within(:css, 'form#new_winemaker') do
+    within(:css, '#new_winemaker') do
       fill_in 'Name', with: 'Portland Joe'
       click_button('Save')
     end
