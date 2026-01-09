@@ -12,7 +12,7 @@ feature 'fae_nested_index_table' do
 
     within(:css, 'form#new_cat') do
       fill_in 'Name', with: 'Fuzzball'
-      click_button('Create Cat')
+      click_button('Save')
     end
 
 

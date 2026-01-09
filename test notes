@@ -1,0 +1,8 @@
+problematic tests due to capybara-webkit crashes?
+
+./spec/features/form_helpers/fae_input_spec.rb:61 # fae_input should display HTML WYSIWYG when html: true
+Verified functional in browser.
+
+./spec/features/form_manager_spec.rb:30 # Form Manager form manager goes away and things show their new values
+./spec/features/form_manager_spec.rb:23 # Form Manager form manager displays when launched, hides things, shows inputs
+Flickering; Verified functional in browser.
