@@ -7,6 +7,8 @@ module Fae
       has_many :flex_components, as: :flex_componentable, dependent: :restrict_with_error, class_name: 'Fae::FlexComponent'
       has_many :active_flex_components, -> { active }, as: :flex_componentable, class_name: 'Fae::FlexComponent'
 
+      has_many :list_items
+
     end
 
     def instance_says_what

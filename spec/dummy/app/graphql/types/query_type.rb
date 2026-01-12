@@ -2,6 +2,14 @@
 
 module Types
   class QueryType < Types::BaseObject
+
+    field :nested_tables_in_form_page, Types::NestedTablesInFormPageType, null: true do
+      description "Returns the NestedTablesInForm Page instance"
+    end
+
+    def nested_tables_in_form_page
+      NestedTablesInFormPage.instance
+    end
     # Add root-level fields here.
     # They will be entry points for queries on your schema.
 
