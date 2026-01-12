@@ -47,16 +47,27 @@ Fae.form.validator = {
         _this.validation_test_count = 0;
 
         // Scope the data-validation only to the form submitted
+        // Exclude inputs inside nested form containers (they have their own validation)
         $('[data-validate]', $this).each(function () {
-          if ($(this).data('validate').length) {
+          var $input = $(this);
+          // Skip inputs that are inside a nested form container
+          if ($input.closest('.js-nested-form-container').length) {
+            return;
+          }
+          if ($input.data('validate').length) {
             _this.validations_called++;
-            _this._judgeIt($(this));
+            _this._judgeIt($input);
           }
         });
 
         // Catch visible errors for image/file inputs hitting the fae config file size limiter
+        // Exclude file inputs inside nested form containers
         $('.input.file', $this).each(function () {
-          if ($(this).hasClass('field_with_errors')) {
+          var $fileInput = $(this);
+          if ($fileInput.closest('.js-nested-form-container').length) {
+            return;
+          }
+          if ($fileInput.hasClass('field_with_errors')) {
             _this.is_valid = false;
           }
         });

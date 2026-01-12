@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resources :sub_list_items
     resources :list_items
     resources :zig_zag_items
     resources :zig_zag_components

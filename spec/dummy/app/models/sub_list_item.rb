@@ -1,21 +1,17 @@
-class ListItem < ApplicationRecord
+class SubListItem < ApplicationRecord
   include Fae::BaseModelConcern
   include Livable
         
-  belongs_to :static_page, touch: true, class_name: 'Fae::StaticPage'
+  belongs_to :list_item, touch: true
 
   acts_as_list add_new_at: :top
   default_scope { order(:position) }
 
-  has_many :sub_list_items, dependent: :destroy
-
-  has_fae_image :image
-
   validates :name, presence: true
-  validates :people, presence: true
+  validates :body, presence: true, length: { maximum: 500 }
 
   def fae_nested_parent
-    :static_page
+    :list_item
   end
 
   def fae_display_field

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_09_211710) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_12_195852) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -353,6 +353,12 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_09_211710) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
+  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -492,6 +498,17 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_09_211710) do
     t.datetime "updated_at", null: false
     t.index ["aroma_id"], name: "index_sub_aromas_on_aroma_id"
     t.index ["name"], name: "index_sub_aromas_on_name"
+  end
+
+  create_table "sub_list_items", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "body"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.integer "position"
+    t.integer "list_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sub_spirits", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

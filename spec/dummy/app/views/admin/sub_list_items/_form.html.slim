@@ -13,22 +13,13 @@ ruby:
 		}
 	}
 = simple_form_for([:admin, @item], form_options) do |f|
-  = fae_input f, :name
-  = fae_input f, :people, collection: ['Alice', 'Bob', 'Charlie', 'Diana']
+  = fae_input f, :name, helper_text: 'The name of the sub list item.'
+  = fae_input f, :body
 
-  = fae_image_form f, :image, required: true
-  = f.hidden_field :static_page_id
+  = f.hidden_field :list_item_id
 
   = f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button'
 
   - if Fae.use_form_manager
     a.button.js-launch-form-manager href='#' = t('fae.form.launch_form_manager')
-
-- if @item.persisted?
-  .nested-form 
-    == render 'fae/shared/nested_table',
-      assoc: :sub_list_items,
-      parent_item: @item,
-      cols: [:name, :on_stage, :on_prod],
-      ordered: true

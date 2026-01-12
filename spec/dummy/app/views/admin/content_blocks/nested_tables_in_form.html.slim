@@ -15,8 +15,9 @@ ruby:
 
   main.content
     = fae_input f, :title
+
   section.content#list
-    h2 Content List
+    h2 List
     = fae_content_form f, :list_header
     = fae_content_form f, :list_introduction
     section.content#list_items
@@ -25,12 +26,16 @@ ruby:
         parent_item: @item,
         cols: [:name, :people, :on_stage, :on_prod],
         ordered: true
+    
+  section.content#components
+    h2 Components
     = fae_content_form f, :flex_header
     = fae_content_form f, :flex_introduction
     section.content#components
       == render 'fae/shared/flex_components_table',
         assoc: :flex_components,
         parent_item: @item
+  
   section.content#seo
     h2 SEO
     = fae_content_form f, :seo_title
