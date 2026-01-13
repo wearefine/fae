@@ -11,9 +11,9 @@ ruby:
 		}
 	}
 = simple_form_for @item, form_options do |f|
-  == render 'fae/shared/form_header', header: @item
+  == render 'fae/shared/form_header', header: @item, subnav: ['Top', 'List', 'Components', 'SEO']
 
-  main.content
+  main.content#top
     = fae_input f, :title
 
   section.content#list
