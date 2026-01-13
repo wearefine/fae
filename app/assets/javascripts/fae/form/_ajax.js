@@ -231,10 +231,15 @@ Fae.form.ajax = {
         $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '');
         $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
         
+        // Get the section to scroll to before removing the form
+        var $scrollTarget = $form_wrapper.closest('.js-addedit-form');
+        
         $form_wrapper.slideUp('normal', function(){
           $form_wrapper.parent().remove();
           // Re-enable and reset component select
           $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
+          // Scroll to show the table section
+          FCH.smoothScroll($scrollTarget, 500, 100, -150);
         });
       }
     });
@@ -391,7 +396,7 @@ Fae.form.ajax = {
             Fae.form.text.initMarkdown();
             Fae.form.text.initHTML();
 
-            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
+            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, -100);
           }
         }
 
@@ -461,7 +466,8 @@ Fae.form.ajax = {
     }
 
     if (!$target.hasClass('js-delete-link')) {
-      FCH.smoothScroll($el.parent(), 500, 100, 120);
+      // Scroll higher to show the table section after form closes
+      FCH.smoothScroll($el, 500, 100, -150);
     }
   },
 
