@@ -36,6 +36,15 @@
     margin: 0 0 30px;
   }
 
+  // Remove background from h2 in nested .content sections
+  .content h2 {
+    background: none;
+    border-top: none;
+    padding-left: 0;
+    color: $c-text-heavy;
+    font-weight: bold;
+  }
+
   h3 {
     display: block;
     margin-bottom: 10px;
