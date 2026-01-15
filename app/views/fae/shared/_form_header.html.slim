@@ -11,7 +11,7 @@ ruby:
   title                     ||= "#{params[:action]} #{header_as_string}".titleize
   breadcrumb                = !local_assigns[:breadcrumbs].eql?(false)
   languages                 ||= false
-  show_flash_messages       = !local_assigns[:show_flash_messages].eql?(false)
+  show_flash_messages       = local_assigns[:show_flash_messages].eql?(true)
 
 header.content-header.js-content-header
   - if breadcrumb

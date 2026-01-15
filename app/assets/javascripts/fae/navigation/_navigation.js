@@ -192,32 +192,48 @@ Fae.navigation = {
       return;
     }
     
-    // Process each flash toast
-    $flashToasts.each(function(index) {
+    // Collect unique messages to avoid duplicates
+    var uniqueMessages = {};
+    
+    $flashToasts.each(function() {
       var $toast = $(this);
       var message = $toast.data('message');
       var type = $toast.attr('class').replace('flash-toast', '').trim();
       
       if (message && message.length > 0) {
-        // Create toast element
-        var $toastElement = $('<div class="flash-toast ' + type + '">' + message + '</div>');
-        
-        // Add to container
-        $container.append($toastElement);
-        
-        // Show toast with delay for staggered effect
-        setTimeout(function() {
-          $toastElement.addClass('show');
-        }, index * 100);
-        
-        // Auto-hide after 5 seconds
-        setTimeout(function() {
-          _this.hideToast($toastElement);
-        }, 5000 + (index * 100));
+        // Use message + type as key to track uniqueness
+        var key = type + '::' + message;
+        if (!uniqueMessages[key]) {
+          uniqueMessages[key] = { message: message, type: type };
+        }
       }
       
       // Remove the original flash-toast element
       $toast.remove();
+    });
+    
+    // Display unique messages
+    var index = 0;
+    Object.keys(uniqueMessages).forEach(function(key) {
+      var data = uniqueMessages[key];
+      
+      // Create toast element
+      var $toastElement = $('<div class="flash-toast ' + data.type + '">' + data.message + '</div>');
+      
+      // Add to container
+      $container.append($toastElement);
+      
+      // Show toast with delay for staggered effect
+      setTimeout(function() {
+        $toastElement.addClass('show');
+      }, index * 100);
+      
+      // Auto-hide after 5 seconds
+      setTimeout(function() {
+        _this.hideToast($toastElement);
+      }, 5000 + (index * 100));
+      
+      index++;
     });
   },
 

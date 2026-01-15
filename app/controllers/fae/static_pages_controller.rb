@@ -17,7 +17,7 @@ module Fae
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: t('fae.save_notice')
+        redirect_to fae.edit_content_block_path(@item.slug), notice: t('fae.save_notice')
       else
         build_assocs
         flash.now[:alert] = t('fae.save_error')

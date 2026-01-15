@@ -35,11 +35,7 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        if @item.try(:fae_redirect_to_form_on_create)
-          redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
-        else
-          redirect_to @index_path, notice: t('fae.save_notice')
-        end
+        redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
       else
         build_assets
         flash.now[:alert] = t('fae.save_error')
@@ -49,7 +45,7 @@ module Fae
 
     def update
       if @item.update(item_params)
-        redirect_to @index_path, notice: t('fae.save_notice')
+        redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
       else
         build_assets
         flash.now[:alert] = t('fae.save_error')
