@@ -22,7 +22,8 @@ module Fae
 
     def new
       @item = @klass.new
-      build_assets
+      @item.save(validate: false)
+      redirect_to send("edit_admin_#{@klass_singular}_path", @item.id)
     end
 
     def edit
@@ -35,21 +36,51 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
+        respond_to do |format|
+          format.html { redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice') }
+          format.js do
+            flash.now[:notice] = t('fae.save_notice')
+            build_assets
+            render template: "admin/#{@klass_name}/edit", layout: false
+          end
+        end
       else
         build_assets
-        flash.now[:alert] = t('fae.save_error')
-        render action: 'new'
+        respond_to do |format|
+          format.html do
+            flash.now[:alert] = t('fae.save_error')
+            render action: 'new'
+          end
+          format.js do
+            flash.now[:alert] = t('fae.save_error')
+            render action: 'new', layout: false
+          end
+        end
       end
     end
 
     def update
       if @item.update(item_params)
-        redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
+        respond_to do |format|
+          format.html { redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice') }
+          format.js do
+            flash.now[:notice] = t('fae.save_notice')
+            build_assets
+            render action: 'edit', layout: false
+          end
+        end
       else
         build_assets
-        flash.now[:alert] = t('fae.save_error')
-        render action: 'edit'
+        respond_to do |format|
+          format.html do
+            flash.now[:alert] = t('fae.save_error')
+            render action: 'edit'
+          end
+          format.js do
+            flash.now[:alert] = t('fae.save_error')
+            render action: 'edit', layout: false
+          end
+        end
       end
     end
 

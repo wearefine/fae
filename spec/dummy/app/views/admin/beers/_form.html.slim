@@ -4,10 +4,11 @@
   main.content
     = fae_input f, :name
     = fae_image_form f, :image
-    = render 'fae/shared/nested_table',
-      assoc: :poly_things,
-      parent_item: @item,
-      cols: [:name_en, :image]
+    section.content#poly_things
+      = render 'fae/shared/nested_table',
+        assoc: :poly_things,
+        parent_item: @item,
+        cols: [:name_en, :image]
     = fae_cta_form f, :test_cta
   section.content
     h2 SEO
