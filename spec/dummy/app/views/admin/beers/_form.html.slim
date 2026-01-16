@@ -2,6 +2,8 @@
   == render 'fae/shared/form_header', header: @klass_name
 
   main.content
+    = fae_input f, :on_stage
+    = fae_input f, :on_prod
     = fae_input f, :name
     = fae_image_form f, :image
     section.content#poly_things
