@@ -106,7 +106,7 @@ Fae.form.ajax = {
       if ($this.hasClass('js-add-link')) {
         FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
       } else {
-        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
+        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -50);
       }
 
       _this._addEditActions($this.attr('href'), $theFormContainer.first());

@@ -14,7 +14,6 @@ class PrivacyPage < Fae::StaticPage
 
       seo_title: { type: Fae::TextField },
       seo_description: { type: Fae::TextArea },
-
       social_media_image: { type: Fae::Image },
       social_media_title: { type: Fae::TextField },
       social_media_description: { type: Fae::TextArea },

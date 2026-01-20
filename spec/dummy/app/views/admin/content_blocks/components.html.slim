@@ -18,6 +18,13 @@ ruby:
 
     = fae_content_form f, :name
 
+    h2#page_metadata Page Metadata
+    = fae_content_form f, :seo_title
+    = fae_content_form f, :seo_description
+    = fae_content_form f, :social_media_title
+    = fae_content_form f, :social_media_description
+    = fae_image_form f, :social_media_image
+
 section.content#components
   == render 'fae/shared/flex_components_table',
     assoc: :flex_components,
