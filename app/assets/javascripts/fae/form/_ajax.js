@@ -104,9 +104,8 @@ Fae.form.ajax = {
       console.log($theFormContainer);
       
       if ($this.hasClass('js-add-link')) {
-        FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
-      } else {
-        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -50);
+        console.log('Scrolling to last child row for add link');
+        FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -180);
       }
 
       _this._addEditActions($this.attr('href'), $theFormContainer.first());
@@ -199,7 +198,8 @@ Fae.form.ajax = {
       Fae.form.validator.formValidate(_this.$nested_form);
 
       $wrapper.find('.hint').hinter();
-      FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
+      // Scroll to the form wrapper itself, not the last row
+      FCH.smoothScroll($wrapper, 500, 450, -120);
     });
   },
 
