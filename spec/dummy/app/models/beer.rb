@@ -5,6 +5,10 @@ class Beer < ApplicationRecord
   has_fae_seo_set :seo
   has_fae_cta :test_cta
   has_many :poly_things, as: :poly_thingable
+  
+  # Join model for ranked aromas
+  has_many :beer_aromas, -> { order(:position) }, dependent: :destroy
+  has_many :aromas, through: :beer_aromas
 
   validates :name, presence: true
 

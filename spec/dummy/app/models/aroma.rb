@@ -4,6 +4,10 @@ class Aroma < ActiveRecord::Base
   belongs_to :release
   has_many :cats
   has_many :sub_aromas, dependent: :destroy
+  
+  # Join model for ranked aromas on beers
+  has_many :beer_aromas, dependent: :destroy
+  has_many :beers, through: :beer_aromas
 
   acts_as_list add_new_at: :top, scope: :release
   default_scope { order(:position) }

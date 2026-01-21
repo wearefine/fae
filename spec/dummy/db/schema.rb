@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_12_195852) do
+ActiveRecord::Schema[7.0].define(version: 2026_01_21_000000) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -51,6 +51,17 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_12_195852) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.index ["article_category_id"], name: "index_articles_on_article_category_id"
+  end
+
+  create_table "beer_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "beer_id"
+    t.integer "aroma_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aroma_id"], name: "index_beer_aromas_on_aroma_id"
+    t.index ["beer_id"], name: "index_beer_aromas_on_beer_id"
+    t.index ["position"], name: "index_beer_aromas_on_position"
   end
 
   create_table "beers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -351,6 +362,12 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_12_195852) do
     t.index ["role_id"], name: "index_fae_users_on_role_id"
     t.index ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
+  end
+
+  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

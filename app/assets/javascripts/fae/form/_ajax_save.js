@@ -93,6 +93,9 @@ Fae.form.ajaxSave = {
    */
   handleSuccess: function(html, $form) {
     var _this = this;
+    
+    // Save current scroll position before DOM manipulation
+    var scrollTop = $(window).scrollTop();
 
     // Parse the returned HTML
     var $newContent = $(html);
@@ -112,9 +115,15 @@ Fae.form.ajaxSave = {
 
       // Show toast notifications
       Fae.navigation.showToasts();
-
-      // Scroll to top of form
-      FCH.smoothScroll($('.js-content-header'), 500, 100, 0);
+      
+      // Restore scroll position after DOM replacement and reinitialization
+      // Use requestAnimationFrame + setTimeout to ensure it happens after 
+      // all DOM calculations, layout reflows, and sticky header setup
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          $(window).scrollTop(scrollTop);
+        }, 50);
+      });
     } else {
       // Fallback: replace body content if we can't find the form
       var $mainContent = $('#js-main-content');
@@ -122,6 +131,13 @@ Fae.form.ajaxSave = {
         $mainContent.html($newContent);
         _this.reinitializeForm($mainContent.find('form').first());
         Fae.navigation.showToasts();
+        
+        // Restore scroll position after DOM replacement
+        requestAnimationFrame(function() {
+          setTimeout(function() {
+            $(window).scrollTop(scrollTop);
+          }, 50);
+        });
       }
     }
 
@@ -197,6 +213,9 @@ Fae.form.ajaxSave = {
     
     // Reinitialize AJAX module (for nested tables, component select, etc.)
     Fae.form.ajax.init();
+    
+    // Reinitialize ranked select
+    Fae.form.rankedSelect.init();
 
     // Reinitialize hints
     $form.find('.hint').hinter();

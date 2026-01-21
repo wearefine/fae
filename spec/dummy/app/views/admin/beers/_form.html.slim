@@ -6,11 +6,19 @@
     = fae_input f, :on_prod
     = fae_input f, :name
     = fae_image_form f, :image
-    section.content#poly_things
-      = render 'fae/shared/nested_table',
-        assoc: :poly_things,
-        parent_item: @item,
-        cols: [:name_en, :image]
+    
+    h2 Aromas
+    p.content-helper-text Select aromas and drag to rank them in order of prominence.
+    = fae_ranked_select f, :aromas, 
+        join_model: :beer_aromas,
+        ranking_title: 'Aroma Ranking',
+        ranking_helper_text: 'Drag to reorder aromas by prominence'
+    
+  section.content#poly_things
+    = render 'fae/shared/nested_table',
+      assoc: :poly_things,
+      parent_item: @item,
+      cols: [:name_en, :image]
     = fae_cta_form f, :test_cta
   section.content
     h2 SEO

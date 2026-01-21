@@ -112,6 +112,69 @@ module Fae
       fae_input f, attribute, options
     end
 
+    def fae_ranked_select(f, attribute, options={})
+      raise "Fae::MissingRequiredOption: fae_ranked_select requires the 'join_model' option." if options[:join_model].blank?
+      raise "Fae::'#{attribute}' must be an association of #{f.object}" if !is_association?(f, attribute)
+      
+      join_model = options.delete(:join_model)
+      ranking_title = options.delete(:ranking_title) || "#{attribute.to_s.titleize} Ranking"
+      ranking_helper_text = options.delete(:ranking_helper_text)
+      display_field = options.delete(:display_field) || :fae_display_field
+      
+      # Generate a unique ID for linking the select to the ranking table
+      parent_item = f.object
+      ranking_table_id = "ranking_table_#{attribute}_#{parent_item.class.name.underscore}_#{parent_item.id || 'new'}"
+      
+      # Get the join model records for the ranking table, ordered by position
+      # We need the join records (not the associated items) so tr_id generates correct IDs for sorting
+      join_records = parent_item.send(join_model).order(:position)
+      
+      # The attribute name tells us what association to access on each join record for display
+      associated_item_name = attribute.to_s.singularize.to_sym
+      
+      # Get the associated model class name for the AJAX endpoint
+      associated_model = attribute.to_s.classify
+      
+      # Get the collection for building the options data
+      collection = options[:collection] || associated_model.constantize.for_fae_index
+      
+      # Add data attributes to link select to ranking table and for AJAX
+      options[:input_html] ||= {}
+      options[:input_html][:data] ||= {}
+      options[:input_html][:data][:ranking_table] = ranking_table_id
+      options[:input_html][:data][:parent_model] = parent_item.class.name
+      options[:input_html][:data][:parent_id] = parent_item.id
+      options[:input_html][:data][:join_model] = join_model.to_s.classify
+      options[:input_html][:data][:associated_model] = associated_model
+      options[:input_html][:class] = "#{options[:input_html][:class]} js-ranked-select".strip
+      
+      # Build the association select
+      association_html = fae_association(f, attribute, options)
+      
+      # Build the ranking table
+      ranking_html = render(
+        partial: 'fae/shared/ranking_table',
+        locals: {
+          join_records: join_records,
+          associated_item_name: associated_item_name,
+          title: ranking_title,
+          helper_text: ranking_helper_text,
+          display_field: display_field,
+          ranking_table_id: ranking_table_id,
+          join_model: join_model.to_s.classify,
+          associated_model: associated_model,
+          parent_model: parent_item.class.name,
+          parent_id: parent_item.id,
+          collection: collection
+        }
+      )
+      
+      # Wrap in a container and combine both elements
+      content_tag(:div, class: 'js-ranked-select-container', data: { attribute: attribute }) do
+        (association_html.to_s + ranking_html.to_s).html_safe
+      end
+    end
+
     def language_translate_enabled?
       Fae::Option.instance.translate_language &&
       ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present? &&

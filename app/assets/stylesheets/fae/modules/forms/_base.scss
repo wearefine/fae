@@ -167,3 +167,21 @@ input[type=email] {
 .hide { 
   display: none !important 
 }
+// Ranking table for fae_ranked_select
+.ranking-table {
+  padding-top: 0;
+  
+  .table-helper-text {
+    margin-bottom: 15px;
+    margin-top: -20px;
+  }
+  
+  table {
+    margin-bottom: 0;
+  }
+  
+  .ranking-table-empty-row td {
+    color: $c-text-sub;
+    font-style: italic;
+  }
+}

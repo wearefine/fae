@@ -8,7 +8,9 @@ ruby:
   subnav                    ||= []
   header_as_string          = header.is_a?(String) ? header : header.class.name.split('::').last
   header_as_string          = header_as_string.singularize
-  title                     ||= "#{params[:action]} #{header_as_string}".titleize
+  # Map update/create actions to edit/new for display purposes (e.g., after AJAX save)
+  display_action            = { 'update' => 'edit', 'create' => 'new' }.fetch(params[:action], params[:action])
+  title                     ||= "#{display_action} #{header_as_string}".titleize
   breadcrumb                = !local_assigns[:breadcrumbs].eql?(false)
   languages                 ||= false
   show_flash_messages       = local_assigns[:show_flash_messages].eql?(true)

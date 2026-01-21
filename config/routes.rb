@@ -36,6 +36,7 @@ Fae::Engine.routes.draw do
 
   post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
   post 'sort/:object', to: 'utilities#sort', as: 'sort'
+  post 'ranked_item', to: 'utilities#ranked_item', as: 'ranked_item'
   post 'language_preference/:language', to: 'utilities#language_preference'
   post 'search/:query', to: 'utilities#global_search'
   post 'search', to: 'utilities#global_search'
