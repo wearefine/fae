@@ -23,7 +23,7 @@ module Fae
     def new
       @item = @klass.new
       @item.save(validate: false)
-      redirect_to send("edit_admin_#{@klass_singular}_path", @item.id)
+      redirect_to send("edit_admin_#{@klass_singular}_path", @item.id, draft: true)
     end
 
     def edit

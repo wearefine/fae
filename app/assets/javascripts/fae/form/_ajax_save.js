@@ -116,6 +116,9 @@ Fae.form.ajaxSave = {
       // Show toast notifications
       Fae.navigation.showToasts();
       
+      // Remove draft param from URL after successful save (no longer a draft)
+      _this.removeDraftParam();
+      
       // Restore scroll position after DOM replacement and reinitialization
       // Use requestAnimationFrame + setTimeout to ensure it happens after 
       // all DOM calculations, layout reflows, and sticky header setup
@@ -298,6 +301,18 @@ Fae.form.ajaxSave = {
         }, 300);
       }
     }, 5000);
+  },
+
+  /**
+   * Remove draft param from URL after successful save
+   * This ensures the cancel button won't delete the record after it's been saved
+   */
+  removeDraftParam: function() {
+    var url = new URL(window.location.href);
+    if (url.searchParams.has('draft')) {
+      url.searchParams.delete('draft');
+      window.history.replaceState(null, null, url.pathname + url.search);
+    }
   }
 
 };
