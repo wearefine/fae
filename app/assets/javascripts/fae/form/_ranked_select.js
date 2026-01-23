@@ -94,8 +94,12 @@ Fae.form.rankedSelect = {
     added.forEach(function(associatedId) {
       _this.addItem($select, $rankingTable, associatedId);
     });
-    
-    // Update empty row visibility
+  },
+  
+  /**
+   * Update the visibility of the empty row placeholder
+   */
+  updateEmptyRowVisibility: function($rankingTable) {
     var $tbody = $rankingTable.find('tbody');
     var $emptyRow = $tbody.find('.js-ranking-empty-row');
     if ($tbody.find('.js-ranking-row').length > 0) {
@@ -139,6 +143,7 @@ Fae.form.rankedSelect = {
           // Add row to table with the real join record ID
           _this.addRowToTable($rankingTable.find('tbody'), item, response.join_record_id, associatedId);
           _this.reinitializeSortable($rankingTable);
+          _this.updateEmptyRowVisibility($rankingTable);
         }
       },
       error: function(xhr) {
@@ -146,6 +151,7 @@ Fae.form.rankedSelect = {
         // Still add to table visually, will be created on form save
         _this.addRowToTable($rankingTable.find('tbody'), item, null, associatedId);
         _this.reinitializeSortable($rankingTable);
+        _this.updateEmptyRowVisibility($rankingTable);
       }
     });
   },
@@ -154,6 +160,7 @@ Fae.form.rankedSelect = {
    * Remove an item - destroy join record via AJAX and remove from table
    */
   removeItem: function($select, $rankingTable, associatedId) {
+    var _this = this;
     var $tbody = $rankingTable.find('tbody');
     
     // Find and remove the row
@@ -163,6 +170,9 @@ Fae.form.rankedSelect = {
         $(this).remove();
       }
     });
+    
+    // Update empty row visibility after removing
+    _this.updateEmptyRowVisibility($rankingTable);
     
     // Get AJAX params from data attributes
     var parentModel = $select.data('parent-model');

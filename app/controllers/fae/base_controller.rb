@@ -22,8 +22,13 @@ module Fae
 
     def new
       @item = @klass.new
+      assign_parent_to_item
       @item.save(validate: false)
-      redirect_to send("edit_admin_#{@klass_singular}_path", @item.id, draft: true)
+      if @item.is_a?(Fae::Site)
+        redirect_to fae.edit_site_path(draft: true)
+      else
+        redirect_to build_edit_path(@item, draft: true)
+      end
     end
 
     def edit
@@ -36,51 +41,21 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        respond_to do |format|
-          format.html { redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice') }
-          format.js do
-            flash.now[:notice] = t('fae.save_notice')
-            build_assets
-            render template: "admin/#{@klass_name}/edit", layout: false
-          end
-        end
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        respond_to do |format|
-          format.html do
-            flash.now[:alert] = t('fae.save_error')
-            render action: 'new'
-          end
-          format.js do
-            flash.now[:alert] = t('fae.save_error')
-            render action: 'new', layout: false
-          end
-        end
+        flash.now[:alert] = t('fae.save_error')
+        render action: 'new'
       end
     end
 
     def update
       if @item.update(item_params)
-        respond_to do |format|
-          format.html { redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice') }
-          format.js do
-            flash.now[:notice] = t('fae.save_notice')
-            build_assets
-            render action: 'edit', layout: false
-          end
-        end
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        respond_to do |format|
-          format.html do
-            flash.now[:alert] = t('fae.save_error')
-            render action: 'edit'
-          end
-          format.js do
-            flash.now[:alert] = t('fae.save_error')
-            render action: 'edit', layout: false
-          end
-        end
+        flash.now[:alert] = t('fae.save_error')
+        render action: 'edit'
       end
     end
 
@@ -142,6 +117,34 @@ module Fae
     # allows this controller to use pagination
     def use_pagination
       false
+    end
+
+    # Detect parent resource from params (e.g., team_id for nested coaches)
+    def parent_resource_param
+      params.keys.find { |key| key.to_s.end_with?('_id') && key.to_s != 'id' }
+    end
+
+    # Get the parent resource name (e.g., 'team' from 'team_id')
+    def parent_resource_name
+      parent_resource_param&.to_s&.sub(/_id$/, '')
+    end
+
+    # Assign parent association to item for nested resources
+    def assign_parent_to_item
+      if parent_resource_param && @item.respond_to?("#{parent_resource_name}_id=")
+        @item.send("#{parent_resource_name}_id=", params[parent_resource_param])
+      end
+    end
+
+    # Build the edit path, handling nested resources
+    def build_edit_path(item, options = {})
+      if parent_resource_param
+        # Nested resource: e.g., edit_admin_team_coach_path(team_id, coach_id)
+        send("edit_admin_#{parent_resource_name}_#{@klass_singular}_path", params[parent_resource_param], item.id, options)
+      else
+        # Non-nested resource: e.g., edit_admin_person_path(id)
+        send("edit_admin_#{@klass_singular}_path", item.id, options)
+      end
     end
 
   end

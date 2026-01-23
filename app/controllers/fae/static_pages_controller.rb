@@ -17,28 +17,11 @@ module Fae
 
     def update
       if @item.update(item_params)
-        respond_to do |format|
-          format.html { redirect_to fae.edit_content_block_path(@item.slug), notice: t('fae.save_notice') }
-          format.js do
-            flash.now[:notice] = t('fae.save_notice')
-            build_assocs
-            params[:static_page] = true
-            render params[:slug], layout: false
-          end
-        end
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assocs
-        respond_to do |format|
-          format.html do
-            flash.now[:alert] = t('fae.save_error')
-            render template: "#{fae.root_path.gsub('/', '')}/content_blocks/#{params[:slug]}"
-          end
-          format.js do
-            flash.now[:alert] = t('fae.save_error')
-            params[:static_page] = true
-            render params[:slug], layout: false
-          end
-        end
+        flash.now[:alert] = t('fae.save_error')
+        render template: "#{fae.root_path.gsub('/', '')}/content_blocks/#{params[:slug]}"
       end
     end
 

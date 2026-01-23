@@ -16,7 +16,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, slug: 'validation-tester-1')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -32,7 +32,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, email: 'test@testsite.com')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -48,7 +48,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, url: 'http://poop.bike/')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -64,7 +64,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, zip: '97214')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -80,7 +80,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, youtube_url: 'ZwBRX_h3U1U')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -96,7 +96,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester)
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -112,7 +112,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, second_email: 'email@test.com')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -128,7 +128,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, second_url: 'http://poop.bike/')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -144,7 +144,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, second_zip: '97214')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do
@@ -160,7 +160,7 @@ describe 'validation_testers#new' do
     it 'should not throw error' do
       FactoryBot.create(:validation_tester, second_youtube_url: 'ZwBRX_h3U1U')
 
-      expect(response.status).to eq(200)
+      expect(response.status).to eq(302)
     end
 
     it 'should throw error' do

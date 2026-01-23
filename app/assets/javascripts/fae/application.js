@@ -47,7 +47,6 @@
 //= require fae/form/_validator
 //= require fae/form/_cancel
 //= require fae/form/_ajax
-//= require fae/form/_ajax_save
 //= require fae/form/_ranked_select
 //= require fae/form/_filtering
 //= require fae/form/_form_manager

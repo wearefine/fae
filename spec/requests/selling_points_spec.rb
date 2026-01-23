@@ -29,7 +29,7 @@ describe 'selling_points#new' do
     admin_login
     get new_admin_selling_point_path
 
-    expect(response.status).to eq(200)
+    expect(response.status).to eq(302)
   end
 
 end
