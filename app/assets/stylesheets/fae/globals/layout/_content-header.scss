@@ -2,7 +2,7 @@ $content-header-padding: 16px;
 
 // content header
 .content-header {
-  z-index: 1020; // Must be higher than Chosen dropdown (1010)
+  @include stack($fae-nav-stack);
   width: 100%;
   padding: $content-header-padding $content-buffer;
   background: $c-content-header-bg;
