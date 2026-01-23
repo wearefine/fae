@@ -15,7 +15,7 @@ module Fae
   
         @parent_item = @item.flex_componentable
         flash.now[:notice] = t('fae.save_notice')
-        redirect_to "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit"
+        redirect_to "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit?draft=true"
       else
         build_assets
         render action: 'new'

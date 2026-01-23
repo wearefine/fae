@@ -234,8 +234,36 @@ Fae.form.ajax = {
         // Get the section to scroll to before removing the form
         var $scrollTarget = $form_wrapper.closest('.js-addedit-form');
         
+        // Check if parent is a nested form row (for regular nested tables) or direct child of section (for flex components)
+        var $parentRow = $form_wrapper.closest('.js-nested-form-row');
+        
         $form_wrapper.slideUp('normal', function(){
-          $form_wrapper.parent().remove();
+          if ($parentRow.length) {
+            // Regular nested table - remove the whole row
+            $parentRow.remove();
+          } else {
+            // Flex component - just empty the wrapper, don't remove parent
+            console.log($this.data('draft'));
+            console.log($this.data('delete-path'));
+            if ( $this.data('draft') === true && $this.data('delete-path') ) {
+              console.log('Deleting draft record');
+              // If it's a draft, send DELETE request to remove the draft record
+              $.ajax({
+                url: $this.data('delete-path'),
+                type: 'DELETE',
+                success: function() {
+                  $form_wrapper.empty();
+                },
+                error: function() {
+                  console.error('Failed to delete draft record');
+                  $form_wrapper.empty();
+                }
+              });
+            } else {
+              console.log('Not a draft, just removing form');
+              $form_wrapper.empty();
+            }
+          }
           // Re-enable and reset component select
           $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
           // Scroll to show the table section
