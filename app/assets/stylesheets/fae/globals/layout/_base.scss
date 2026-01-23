@@ -45,6 +45,12 @@
     font-weight: bold;
   }
 
+  // Nested .content sections should have less top padding and more bottom margin
+  .content {
+    padding-top: 10px;
+    margin-bottom: 30px;
+  }
+
   h3 {
     display: block;
     margin-bottom: 10px;
