@@ -16,7 +16,7 @@ module Fae
   
     class_methods do
       def base_components
-        ['ZigZagComponent', 'HeroComponent', 'TextComponent', ]
+        ['Knob', 'ZigZagComponent', 'HeroComponent', 'TextComponent', ]
       end
   
       # Including this as an example of how to conditionally include components based on the model

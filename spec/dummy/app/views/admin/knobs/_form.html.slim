@@ -13,24 +13,7 @@ ruby:
 		}
 	}
 = simple_form_for([:admin, @item], form_options) do |f|
-<% @form_attrs.each do |attr| -%>
-  = fae_input f, :<%= attr %>
-<% end -%>
-<% @attachments.each do |attachment| %>
-<% if attachment.type == :image -%>
-  = fae_image_form f, :<%= attachment.name -%>
-<% elsif attachment.type == :file -%>
-  = fae_file_form f, :<%= attachment.name -%>
-<% elsif attachment.type == :cta -%>
-  = fae_cta_form f, :<%= attachment.name -%>
-<% end -%>
-<% end -%>
-<% if options.polymorphic %>
-  = f.hidden_field :<%= @polymorphic_name %>_id
-  = f.hidden_field :<%= @polymorphic_name %>_type
-<% elsif options.parent_model.present? %>
-  = f.hidden_field :<%= options.parent_model.underscore %>_id
-<% end -%>
+  = fae_input f, :title
 
   = f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button', data: { draft: (params[:draft] == 'true' ? 'true' : nil), delete_path: (@item.persisted? && @item.try(:flex_component).present? ? fae.flex_component_path(@item.flex_component) : nil) }
