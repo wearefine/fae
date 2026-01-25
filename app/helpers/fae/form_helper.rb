@@ -121,6 +121,10 @@ module Fae
       ranking_helper_text = options.delete(:ranking_helper_text)
       display_field = options.delete(:display_field) || :fae_display_field
       
+      # Extract select-specific label and helper text options
+      options[:label] = options.delete(:select_label) if options[:select_label].present?
+      options[:helper_text] = options.delete(:select_helper_text) if options[:select_helper_text].present?
+      
       # Generate a unique ID for linking the select to the ranking table
       parent_item = f.object
       ranking_table_id = "ranking_table_#{attribute}_#{parent_item.class.name.underscore}_#{parent_item.id || 'new'}"

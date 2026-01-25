@@ -167,6 +167,14 @@ input[type=email] {
 .hide { 
   display: none !important 
 }
+
+// Ranked select container for fae_ranked_select
+.js-ranked-select-container {
+  > .input {
+    margin-bottom: 0;
+  }
+}
+
 // Ranking table for fae_ranked_select
 .ranking-table {
   padding-top: 0;

@@ -7,13 +7,12 @@
     = fae_input f, :name
     = fae_image_form f, :image
     
-    h2 Aromas
-    p.content-helper-text Select aromas and drag to rank them in order of prominence.
-    
     = fae_ranked_select f, :aromas, 
-        join_model: :beer_aromas,
-        ranking_title: 'Aroma Ranking',
-        ranking_helper_text: 'Drag to reorder aromas by prominence'
+      join_model: :beer_aromas,
+      select_label: 'Aromas',
+      select_helper_text: 'Select aromas and drag to rank them in order of prominence.',
+      ranking_title: 'Aroma Ranking',
+      ranking_helper_text: 'Drag to reorder aromas by prominence'
     
   section.content#poly_things
     = render 'fae/shared/nested_table',
