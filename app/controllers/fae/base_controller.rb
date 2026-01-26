@@ -25,7 +25,7 @@ module Fae
       assign_parent_to_item
       @item.save(validate: false)
       if @item.is_a?(Fae::Site)
-        redirect_to fae.edit_site_path(draft: true)
+        redirect_to fae.edit_site_path(id: @item.id, draft: true)
       else
         redirect_to build_edit_path(@item, draft: true)
       end
