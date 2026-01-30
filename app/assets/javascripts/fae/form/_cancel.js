@@ -42,36 +42,32 @@ Fae.form.cancel = {
    */
   handleDraftCancel: function() {
     var $cancel_btn = $('#js-header-cancel');
-    var isDraft = $cancel_btn.data('draft');
+    var isDraft = $cancel_btn.attr('data-draft');
     
-    // Check for both boolean true and string 'true'
-    if (isDraft !== true && isDraft !== 'true') {
+    // Check for string 'true' (data attributes are always strings via attr())
+    if (isDraft !== 'true') {
       return;
+    }
+    
+    var deletePath = $cancel_btn.attr('data-delete-path');
+    var indexPath = $cancel_btn.attr('href').split('?')[0];
+
+    // If we have a delete path, set up the link to use rails-ujs DELETE method
+    if (deletePath && deletePath.length > 0) {
+      $cancel_btn.attr('href', deletePath);
+      $cancel_btn.attr('data-method', 'delete');
+      // Store the index path to redirect to after delete
+      $cancel_btn.attr('data-index-path', indexPath);
     }
 
     $cancel_btn.on('click', function(e) {
-      e.preventDefault();
-      
-      var deletePath = $cancel_btn.data('delete-path');
-      var indexPath = $cancel_btn.attr('href').split('?')[0]; // Remove any query params
-      
-      if (confirm('You will lose any changes to this draft. Are you sure you want to cancel?')) {
-        if (deletePath) {
-          $.ajax({
-            url: deletePath,
-            type: 'DELETE',
-            success: function() {
-              window.location.href = indexPath;
-            },
-            error: function() {
-              // If delete fails, still navigate away
-              window.location.href = indexPath;
-            }
-          });
-        } else {
-          window.location.href = indexPath;
-        }
+      if (!confirm('You will lose any changes to this draft. Are you sure you want to cancel?')) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
       }
+      // If confirmed, let rails-ujs handle the DELETE via data-method
+      // The controller should redirect to index after destroy
     });
   }
 

@@ -78,14 +78,19 @@ feature 'fae_nested_table' do
     admin_login
     visit edit_admin_wine_path(wine)
 
-    expect(Winemaker.order(:position)).to eq([winemaker_3, winemaker_2, winemaker_1])
+    # With acts_as_list add_new_at: :top, newest items get lowest positions
+    [winemaker_1, winemaker_2, winemaker_3].each(&:reload)
+    expect(Winemaker.where(wine: wine).order(:position).to_a).to eq([winemaker_3, winemaker_2, winemaker_1])
 
+    # Drag winemaker_1 (Last, at bottom) to winemaker_3's position (First, at top)
     handle = find("#winemakers_#{winemaker_1.id} .sortable-handle i")
     target = find("#winemakers_#{winemaker_3.id} .sortable-handle i")
     handle.drag_to(target)
 
+    # winemaker_1 takes the top position, others shift down
     eventually {
-      expect(Winemaker.order(:position)).to eq([winemaker_3, winemaker_1, winemaker_2])
+      [winemaker_1, winemaker_2, winemaker_3].each(&:reload)
+      expect(Winemaker.where(wine: wine).order(:position).to_a).to eq([winemaker_1, winemaker_3, winemaker_2])
     }
   end
 

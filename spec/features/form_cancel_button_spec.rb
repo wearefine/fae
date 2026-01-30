@@ -4,14 +4,39 @@ feature 'Form cancel button' do
 
   before(:each) do
     admin_login
-    visit new_admin_release_path
   end
 
   scenario 'when clicked before changes', js: true do
+    # Use an existing record to avoid draft behavior
+    release = FactoryBot.create(:release, name: 'Test Release')
+    visit edit_admin_release_path(release)
+    
     click_link 'Cancel'
 
     expect(page.current_path).to eq(admin_releases_path)
     expect(page).to_not have_content('Your changes were not saved.')
+  end
+
+  scenario 'when clicked on new draft record', js: true do
+    visit new_admin_release_path
+    
+    # The new action creates a draft and redirects to edit with draft=true
+    # Clicking cancel on a draft shows a confirmation dialog and deletes the draft
+
+    # puts page.find('#js-header-cancel')['outerHTML']
+    
+    # # Debug: check what JS handlers see
+    # page.execute_script("console.log('deletePath:', $('#js-header-cancel').attr('data-delete-path'));")
+    # page.execute_script("console.log('isDraft:', $('#js-header-cancel').attr('data-draft'));")
+
+    accept_confirm do
+      click_link 'Cancel'
+    end
+
+    # Wait for AJAX delete and navigation to complete
+    eventually {
+      expect(page.current_path).to eq(admin_releases_path)
+    }
   end
 
   scenario 'when clicked after changes', js: true do

@@ -5,9 +5,13 @@ def super_admin_login
 end
 
 def admin_login
+  # Clean up in a way that's safe for concurrent database connections
+  Fae::User.destroy_all
+  Fae::Role.destroy_all
+
   create_super_user
 
-  role = FactoryBot.create(:fae_role, name: 'admin')
+  role = Fae::Role.find_or_create_by!(name: 'admin')
   user = FactoryBot.create(:fae_user, first_name: 'Admin', role: role)
 
   login(user)
@@ -16,7 +20,7 @@ end
 def user_login
   create_super_user
 
-  role = FactoryBot.create(:fae_role, name: 'user')
+  role = Fae::Role.find_or_create_by!(name: 'user')
   user = FactoryBot.create(:fae_user, first_name: 'User', role: role)
 
   login(user)
@@ -26,8 +30,15 @@ end
 # which is required for the admin to function properly
 # without a super admin most pages will redirect to a fae.first_user_path
 def create_super_user
-  role = FactoryBot.create(:fae_role, name: 'super admin')
-  FactoryBot.create(:fae_user, first_name: 'SuperAdmin', role: role)
+  role = Fae::Role.find_or_create_by!(name: 'super admin')
+  Fae::User.find_or_create_by!(email: 'superadmin@test.com') do |user|
+    user.first_name = 'SuperAdmin'
+    user.last_name = 'User'
+    user.role = role
+    user.password = 'password'
+    user.password_confirmation = 'password'
+    user.active = true
+  end
 end
 
 module SignInControllerHelper

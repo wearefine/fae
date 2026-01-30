@@ -39,6 +39,7 @@ Fae.form.ajax = {
       component = $(this).val();
       console.log('selected', component);
       _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -50);
     });
   },
 
@@ -105,9 +106,11 @@ Fae.form.ajax = {
       console.log($theFormContainer);
       
       if ($this.hasClass('js-add-link')) {
+        console.log('Scrolling to bottom for add link');
         FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
       } else {
-        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -90);
+        console.log('Scrolling to edited row');
+        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -110);
       }
 
       _this._addEditActions($this.attr('href'), $theFormContainer.first());
@@ -209,7 +212,8 @@ Fae.form.ajax = {
       Fae.form.validator.formValidate(_this.$nested_form);
 
       $wrapper.find('.hint').hinter();
-      FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
+      console.log('Final scroll check');
+      // FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -50);
     });
   },
 
