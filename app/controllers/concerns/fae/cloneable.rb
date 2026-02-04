@@ -7,6 +7,7 @@ module Fae
     def create_from_existing(id)
       @item = @klass.find(id)
       @cloned_item = @item.dup
+      @cloned_item.is_clone = true
       update_cloned_attributes(@cloned_item)
       @cloned_item.on_prod = false if @item.respond_to?(:on_prod)
 

@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'slim'
   s.add_dependency 'devise-two-factor'
   s.add_dependency 'rqrcode'
+  s.add_dependency 'slack-notifier'
   s.add_dependency 'ruby-openai'
 
   s.add_development_dependency 'appraisal'

@@ -82,4 +82,60 @@ describe Fae::BaseModelConcern do
     end
   end
 
+  describe '#format_and_send_slack' do
+    it 'should send a slack notification if message is present' do
+      wine = FactoryBot.create(:wine)
+      field_name_symbol = :on_prod
+
+      test_message = "Dummy - [asdf](http://localhost/admin/wines/#{wine.id}/edit) (Wine) is live on prod"
+      allow(wine).to receive(:slack_message).with(field_name_symbol).and_return(test_message)
+      expect(Fae::SlackNotification).to receive(:new).and_return(double(send_slack: true))
+
+      wine.format_and_send_slack(field_name_symbol)
+    end
+
+    it 'should not send a slack notification if message is not present' do
+      wine = FactoryBot.create(:wine)
+      field_name_symbol = :name_en
+
+      allow(wine).to receive(:slack_message).with(field_name_symbol).and_return(nil)
+      expect(Fae::SlackNotification).not_to receive(:new)
+
+      wine.format_and_send_slack(field_name_symbol)
+    end
+  end
+
+  describe '#is_clone' do
+    it 'should skip notify_initiation when is_clone is true' do
+      expect_any_instance_of(Wine).not_to receive(:notify_initiation)
+
+      wine = Wine.new(name_en: 'Cloned Wine')
+      wine.is_clone = true
+      wine.save!
+    end
+
+    it 'should skip notify_changes when is_clone is true' do
+      wine = FactoryBot.create(:wine)
+      wine.is_clone = true
+
+      expect(wine).not_to receive(:format_and_send_slack)
+
+      wine.update!(on_prod: true)
+    end
+
+    it 'should call notify_initiation when is_clone is false or nil' do
+      expect_any_instance_of(Wine).to receive(:notify_initiation).and_call_original
+
+      Wine.create!(name_en: 'Normal Wine')
+    end
+
+    it 'should call notify_changes when is_clone is false or nil' do
+      wine = FactoryBot.create(:wine)
+
+      expect(wine).to receive(:notify_changes).and_call_original
+
+      wine.update!(description_en: 'Updated description')
+    end
+  end
+
 end

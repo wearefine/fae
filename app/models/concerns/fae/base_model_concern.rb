@@ -3,11 +3,37 @@ module Fae
     extend ActiveSupport::Concern
     require 'csv'
 
-    attr_accessor :filter
+    attr_accessor :filter, :is_clone
 
     included do
       include Fae::Trackable if Fae.track_changes
       include Fae::Sortable
+      after_create :notify_initiation, unless: :is_clone
+      after_save :notify_changes, unless: :is_clone
+    end
+
+    def notify_changes
+      return unless self.persisted?
+      return unless notifiable_attributes.present?
+      notifiable_attributes.each do |field_name_symbol|
+        if self.send("#{field_name_symbol}_changed?") && self.send(field_name_symbol).present?
+          format_and_send_slack(field_name_symbol)
+        end
+      end
+    end
+
+    def notify_initiation
+      return unless notifiable_attributes.present?
+      notifiable_attributes.each do |field_name_symbol|
+        if self.send(field_name_symbol).present?
+          format_and_send_slack(field_name_symbol)
+        end
+      end
+    end
+
+    def notifiable_attributes
+      # override this method in your model
+      # array of attributes to notify if changed
     end
 
     def fae_display_field
@@ -34,6 +60,17 @@ module Fae
 
     def fae_form_manager_model_id
       self.id
+    end
+
+    def slack_message(field_name_symbol)
+      # override this method in your model
+    end
+
+    def format_and_send_slack(field_name_symbol)
+      message = slack_message(field_name_symbol)
+      if message.present?
+        Fae::SlackNotification.new().send_slack(message: message)
+      end
     end
 
     module ClassMethods

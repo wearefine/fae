@@ -49,7 +49,7 @@ That's all for basic set-up.
 
 If you want complete control over which attributes and associations are cloned, we wouldn't call you a control freak. We've baked in some nice simple methods to make this possible.
 
-**Note:** Asset cloning is supported.
+**Note:** Asset cloning is not currently supported, so if you try to pass in those associations, cloning will fail.
 
 ## Whitelisting Attributes
 
@@ -69,11 +69,13 @@ end
 
 Belongs_to associations are automatically copied over, unless you are whitelisting attributes and forget to/ purposely don't add it there. For the rest of the associations you may have (i.e. has_one, has_many, has_and_belongs_to_many, has_many_through), you may use the `associations_for_cloning` method by passing in array of symbols.
 
+**Note:** Any images or files you have will **not** be copied along, if you have included those relationships.
+
 **Example**
 
 ```ruby
 def associations_for_cloning
-  [:aromas, :events, :bottle_shot_image]
+  [:aromas, :events]
 end
 ```
 

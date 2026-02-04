@@ -31,5 +31,6 @@ Fae.setup do |config|
     }
   end
 
+  config.slack_webhook_url = ENV['SLACK_WEBHOOK_URL']
   config.open_ai_api_key = ENV["OPEN_AI_API_KEY"]
 end
