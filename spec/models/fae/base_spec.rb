@@ -105,4 +105,37 @@ describe Fae::BaseModelConcern do
     end
   end
 
+  describe '#is_clone' do
+    it 'should skip notify_initiation when is_clone is true' do
+      expect_any_instance_of(Wine).not_to receive(:notify_initiation)
+
+      wine = Wine.new(name_en: 'Cloned Wine')
+      wine.is_clone = true
+      wine.save!
+    end
+
+    it 'should skip notify_changes when is_clone is true' do
+      wine = FactoryBot.create(:wine)
+      wine.is_clone = true
+
+      expect(wine).not_to receive(:format_and_send_slack)
+
+      wine.update!(on_prod: true)
+    end
+
+    it 'should call notify_initiation when is_clone is false or nil' do
+      expect_any_instance_of(Wine).to receive(:notify_initiation).and_call_original
+
+      Wine.create!(name_en: 'Normal Wine')
+    end
+
+    it 'should call notify_changes when is_clone is false or nil' do
+      wine = FactoryBot.create(:wine)
+
+      expect(wine).to receive(:notify_changes).and_call_original
+
+      wine.update!(description_en: 'Updated description')
+    end
+  end
+
 end

@@ -3,13 +3,13 @@ module Fae
     extend ActiveSupport::Concern
     require 'csv'
 
-    attr_accessor :filter
+    attr_accessor :filter, :is_clone
 
     included do
       include Fae::Trackable if Fae.track_changes
       include Fae::Sortable
-      after_create :notify_initiation
-      after_save :notify_changes
+      after_create :notify_initiation, unless: :is_clone
+      after_save :notify_changes, unless: :is_clone
     end
 
     def notify_changes
