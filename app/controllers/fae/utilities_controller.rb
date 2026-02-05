@@ -78,13 +78,21 @@ module Fae
     # Used by fae_ranked_select to persist selections before form save
     def ranked_item
       join_class = params[:join_model].classify.constantize
-      parent_class = params[:parent_model].classify.constantize
+      
+      # Handle StaticPage specially - the actual class is Fae::StaticPage
+      parent_class = if params[:parent_model] == 'StaticPage'
+        Fae::StaticPage
+      else
+        params[:parent_model].classify.constantize
+      end
+      
       associated_class = params[:associated_model].classify.constantize
       
       parent = parent_class.find(params[:parent_id])
       associated_item = associated_class.find(params[:associated_id])
       
       # Determine the foreign key names
+      # For StaticPage, the key is still 'static_page_id' (not 'fae_static_page_id')
       parent_key = "#{params[:parent_model].underscore}_id"
       associated_key = "#{params[:associated_model].underscore}_id"
       

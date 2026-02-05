@@ -4,6 +4,14 @@
   main.content
     = fae_input f, :title
     = fae_content_form f, :header
+
+    = fae_ranked_select f, :aromas, 
+      join_model: :static_page_aromas,
+      select_label: 'Aromas',
+      select_helper_text: 'Select aromas and drag to rank them in order of prominence.',
+      ranking_title: 'Aroma Ranking',
+      ranking_helper_text: 'Drag to reorder aromas by prominence'
+
     = fae_content_form f, :hero
     = fae_content_form f, :email
     = fae_content_form f, :phone

@@ -9,6 +9,10 @@ module Fae
 
       has_many :list_items
 
+      has_many :static_page_aromas
+      has_many :aromas, through: :static_page_aromas
+      has_many :active_aromas, -> { active }, through: :static_page_aromas, source: :aroma
+
     end
 
     def instance_says_what

@@ -9,6 +9,8 @@ class Aroma < ActiveRecord::Base
   has_many :beer_aromas, dependent: :destroy
   has_many :beers, through: :beer_aromas
 
+  has_many :static_page_aromas, dependent: :destroy
+
   acts_as_list add_new_at: :top, scope: :release
   default_scope { order(:position) }
 

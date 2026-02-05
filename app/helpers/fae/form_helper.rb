@@ -127,6 +127,15 @@ module Fae
       
       # Generate a unique ID for linking the select to the ranking table
       parent_item = f.object
+      
+      # For StaticPage subclasses, use 'StaticPage' as the parent model name
+      # since the polymorphic association points to Fae::StaticPage, not the subclass
+      parent_model_name = if parent_item.class.superclass.name == 'Fae::StaticPage'
+        'StaticPage'
+      else
+        parent_item.class.name
+      end
+      
       ranking_table_id = "ranking_table_#{attribute}_#{parent_item.class.name.underscore}_#{parent_item.id || 'new'}"
       
       # Get the join model records for the ranking table, ordered by position
@@ -146,7 +155,7 @@ module Fae
       options[:input_html] ||= {}
       options[:input_html][:data] ||= {}
       options[:input_html][:data][:ranking_table] = ranking_table_id
-      options[:input_html][:data][:parent_model] = parent_item.class.name
+      options[:input_html][:data][:parent_model] = parent_model_name
       options[:input_html][:data][:parent_id] = parent_item.id
       options[:input_html][:data][:join_model] = join_model.to_s.classify
       options[:input_html][:data][:associated_model] = associated_model
@@ -167,7 +176,7 @@ module Fae
           ranking_table_id: ranking_table_id,
           join_model: join_model.to_s.classify,
           associated_model: associated_model,
-          parent_model: parent_item.class.name,
+          parent_model: parent_model_name,
           parent_id: parent_item.id,
           collection: collection
         }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_01_23_204411) do
+ActiveRecord::Schema[7.0].define(version: 2026_02_05_190523) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -364,6 +364,12 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_23_204411) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
+  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
@@ -500,6 +506,17 @@ ActiveRecord::Schema[7.0].define(version: 2026_01_23_204411) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "static_page_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "static_page_id"
+    t.integer "aroma_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aroma_id"], name: "index_static_page_aromas_on_aroma_id"
+    t.index ["position"], name: "index_static_page_aromas_on_position"
+    t.index ["static_page_id"], name: "index_static_page_aromas_on_static_page_id"
   end
 
   create_table "sub_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
