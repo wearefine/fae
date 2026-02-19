@@ -365,6 +365,12 @@ ActiveRecord::Schema[7.0].define(version: 2026_02_19_000000) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
+  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
