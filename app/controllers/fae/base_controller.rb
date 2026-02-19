@@ -23,6 +23,7 @@ module Fae
     def new
       @item = @klass.new
       assign_parent_to_item
+      @item.draft = true if @klass.has_fae_draft_support?
       @item.save(validate: false)
       if @item.is_a?(Fae::Site)
         redirect_to fae.edit_site_path(id: @item.id, draft: true)
@@ -50,6 +51,7 @@ module Fae
     end
 
     def update
+      @item.draft = false if @klass.has_fae_draft_support?
       if @item.update(item_params)
         redirect_to @index_path, notice: t('fae.save_notice')
       else

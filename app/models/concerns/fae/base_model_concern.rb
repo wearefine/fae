@@ -38,7 +38,14 @@ module Fae
 
     module ClassMethods
       def for_fae_index
-        order(order_method)
+        scope = order(order_method)
+        scope = scope.where(draft: false) if has_fae_draft_support?
+        scope
+      end
+
+      # Check if the model has a 'draft' column for draft support
+      def has_fae_draft_support?
+        column_names.include?('draft')
       end
 
       def order_method

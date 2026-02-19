@@ -11,6 +11,7 @@ Fae.form.cancel = {
     this.detectCancelledUrls();
     this.addCancelParam();
     this.handleDraftCancel();
+    this.handleDraftBeforeUnload();
   },
 
   /**
@@ -66,8 +67,40 @@ Fae.form.cancel = {
         e.stopPropagation();
         return false;
       }
+      // User confirmed cancellation - allow navigation without beforeunload warning
+      Fae.form.cancel.allowUnload = true;
       // If confirmed, let rails-ujs handle the DELETE via data-method
       // The controller should redirect to index after destroy
+    });
+  },
+
+  /**
+   * Warn users when navigating away from a draft form (closing tab, clicking links, etc.)
+   */
+  handleDraftBeforeUnload: function() {
+    var $cancel_btn = $('#js-header-cancel');
+    var isDraft = $cancel_btn.attr('data-draft');
+
+    // Only apply to draft forms
+    if (isDraft !== 'true') {
+      return;
+    }
+
+    // Track if we should allow unload (set when user confirms via cancel button or form submit)
+    this.allowUnload = false;
+
+    // Allow unload on successful form submission
+    $('form').on('submit', function() {
+      Fae.form.cancel.allowUnload = true;
+    });
+
+    window.addEventListener('beforeunload', function(e) {
+      if (Fae.form.cancel.allowUnload) {
+        return;
+      }
+      // Standard way to trigger the browser's confirmation dialog
+      e.preventDefault();
+      e.returnValue = '';
     });
   }
 
