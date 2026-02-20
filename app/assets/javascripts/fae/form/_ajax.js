@@ -207,6 +207,7 @@ Fae.form.ajax = {
       Fae.form.text.initTranslation();
       Fae.form.text.initGenerateAlt();
       Fae.altTextManager.ready();
+      Fae.form.rankedSelect.init();
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(_this.$nested_form);
@@ -469,6 +470,7 @@ Fae.form.ajax = {
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
+      Fae.form.rankedSelect.init();
       // Fae.navigation.fadeNotices();
       Fae.navigation.showToasts();
       

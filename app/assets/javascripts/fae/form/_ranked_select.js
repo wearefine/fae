@@ -8,7 +8,33 @@
 Fae.form.rankedSelect = {
 
   init: function() {
+    this.initializeChosenSelects();
     this.bindRankedSelects();
+    this.initializeSortables();
+  },
+
+  /**
+   * Initialize Chosen on any ranked select elements that don't already have it
+   */
+  initializeChosenSelects: function() {
+    $('.js-ranked-select').each(function() {
+      var $select = $(this);
+      // Check if Chosen is already initialized (look for the chosen container)
+      var chosenId = $select.attr('id') + '_chosen';
+      if ($('#' + chosenId).length === 0 && typeof $.fn.fae_chosen !== 'undefined') {
+        $select.fae_chosen();
+      }
+    });
+  },
+
+  /**
+   * Initialize sortable on all ranking tables
+   */
+  initializeSortables: function() {
+    var _this = this;
+    $('.js-ranking-table').each(function() {
+      _this.reinitializeSortable($(this));
+    });
   },
 
   /**
