@@ -42,23 +42,26 @@ module Fae
       end
 
       def inject_parent_info
-        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
-        \n  belongs_to :#{options.parent_model.underscore}, touch: true
-          def fae_nested_parent
-            :#{options.parent_model.underscore}
-          end
-        RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do
+          <<~RUBY.indent(2)
+
+            belongs_to :#{options.parent_model.underscore}, touch: true
+            def fae_nested_parent
+              :#{options.parent_model.underscore}
+            end
+          RUBY
         end
       end
 
       def inject_polymorphic_info
-        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do
+          <<~RUBY.indent(2)
 
-  def fae_nested_parent
-    :#{polymorphic_name}
-  end
+            def fae_nested_parent
+              :#{polymorphic_name}
+            end
 
-RUBY
+          RUBY
         end
       end
 

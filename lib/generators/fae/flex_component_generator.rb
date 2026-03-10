@@ -38,17 +38,20 @@ module Fae
       end
 
       def inject_concerns
-        inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do <<-RUBY
-  include Fae::BaseModelConcern\n
-  include Fae::BaseFlexComponentConcern\n
-RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do
+          <<~RUBY.indent(2)
+            include Fae::BaseModelConcern
+            include Fae::BaseFlexComponentConcern
+
+          RUBY
         end
       end
 
       def add_route
-        inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do <<-RUBY
-    resources :#{plural_file_name}
-RUBY
+        inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do
+          <<~RUBY.indent(4)
+            resources :#{plural_file_name}
+          RUBY
         end
       end
 
