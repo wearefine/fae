@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   # # #17 0.692 [!] There was an error while loading `fae.gemspec`: cannot load such file -- fae/version. Bundler cannot continue.
   # Hardcoding the version for now, because the previous error is happening, likely do to something
   # Going wrong with the Zeitwerk autoloader...
-  s.version     = '3.1.0'
+  s.version     = '4.0'
   s.authors     = ['FINE']
   s.email       = ['fae@wearefine.com']
   s.homepage    = 'https://github.com/wearefine/fae'
