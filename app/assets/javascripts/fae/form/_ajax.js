@@ -156,6 +156,23 @@ Fae.form.ajax = {
         // Convert form elements to divs with data attributes before inserting
         data = _this._convertNestedFormToDiv(data);
       }
+
+      // Pre-hide non-active language fields before inserting into DOM to prevent flash
+      var $langSelect = Fae.navigation.language.el.$select;
+      if ($langSelect && $langSelect.length) {
+        var currentLang = $langSelect.val();
+        var $data = $('<div>').html(data);
+        $data.find('div[data-language]').each(function() {
+          var fieldLang = $(this).attr('data-language');
+          if (fieldLang !== 'en' && fieldLang !== currentLang) {
+            $(this).css('display', 'none');
+          }
+          if (!currentLang && fieldLang !== 'en') {
+            $(this).css('display', 'none');
+          }
+        });
+        data = $data.html();
+      }
       
       // Check if the wrapper is visible and has content
       var isVisible = $wrapper.is(':visible');
@@ -208,6 +225,9 @@ Fae.form.ajax = {
       Fae.form.text.initGenerateAlt();
       Fae.altTextManager.ready();
       Fae.form.rankedSelect.init();
+
+      // Refresh cached language divs to include newly loaded nested form fields
+      Fae.navigation.language.el.$lang_divs = $('div[data-language]');
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(_this.$nested_form);

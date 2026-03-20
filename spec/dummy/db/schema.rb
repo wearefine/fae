@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_02_19_000000) do
+ActiveRecord::Schema[7.0].define(version: 2026_03_19_182713) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -41,6 +41,17 @@ ActiveRecord::Schema[7.0].define(version: 2026_02_19_000000) do
     t.integer "position"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "name_zh"
+    t.string "name_frca"
+  end
+
+  create_table "article_subcategories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "name_zh"
+    t.string "name_frca"
+    t.integer "article_category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "articles", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -561,6 +572,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_02_19_000000) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name_zh"
+    t.string "name_frca"
   end
 
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

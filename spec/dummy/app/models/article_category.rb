@@ -1,8 +1,11 @@
 class ArticleCategory < ApplicationRecord
   include Fae::BaseModelConcern
+  include FlexComponentableConcern
 
   acts_as_list add_new_at: :top
   default_scope { order(:position) }
+
+  has_many :article_subcategories, dependent: :destroy
 
   has_many :articles
 

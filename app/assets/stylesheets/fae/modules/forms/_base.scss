@@ -148,6 +148,11 @@ input[type=email] {
 .translate-button {
   position: absolute;
   margin-left: 10px;
+
+  &.translating {
+    opacity: 0.5;
+    cursor: wait;
+  }
 }
 
 .translate-markdown-button {

@@ -16,8 +16,9 @@ ruby:
   = fae_input f, :name
   = fae_input f, :name_zh
   = fae_input f, :name_frca
-  p draft
-  p = params[:draft]
+
+  = f.hidden_field :article_category_id
+
   = f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button', data: { draft: (params[:draft] == 'true' ? 'true' : nil), delete_path: (@item.persisted? && @item.try(:flex_component).present? ? fae.flex_component_path(@item.flex_component) : nil) }
 
