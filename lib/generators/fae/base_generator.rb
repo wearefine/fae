@@ -5,8 +5,6 @@ module Fae
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
-    class_option :draft, type: :boolean, default: false, desc: 'Adds draft support to filter incomplete records from index views'
-
     Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set', 'cta']
 
     @@attributes_flat = []
@@ -54,8 +52,8 @@ module Fae
         @@graphql_attributes.uniq!
       end
 
-      # Add draft field if --draft option is specified (outside the if block so it works even with no attributes)
-      @@attributes_flat << "draft:boolean" if options.draft
+      # Always add an indexed draft boolean column for scaffold-generated objects
+      @@attributes_flat << "draft:boolean:index"
 
       @@attributes_flat = @@attributes_flat.uniq.join(' ')
     end
