@@ -1,11 +1,11 @@
 = simple_form_for([:admin, @item]) do |f|
-  == render 'fae/shared/form_header', header: @klass_name
+  == render 'fae/shared/form_header', header: @klass_name, subnav: ['SEO', 'Poly Things'], languages: true, cloneable: true
 
   main.content
     = fae_input f, :name
     = fae_image_form f, :image
     = fae_cta_form f, :test_cta
-  section.content
+  section.content#seo
     h2 SEO
     = fae_seo_set_form f, :seo
 

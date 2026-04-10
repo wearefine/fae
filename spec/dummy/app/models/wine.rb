@@ -36,4 +36,8 @@ class Wine < ActiveRecord::Base
     order(:position)
   end
 
+  def detail_path
+    "/wines/#{id}"
+  end
+
 end
