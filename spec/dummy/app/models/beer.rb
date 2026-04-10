@@ -20,4 +20,7 @@ class Beer < ApplicationRecord
     true
   end
 
+  def detail_path
+    "/beers/#{id}"
+  end
 end

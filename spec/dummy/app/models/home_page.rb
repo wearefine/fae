@@ -2,6 +2,10 @@ class HomePage < Fae::StaticPage
 
   @slug = 'home'
 
+  def detail_path
+    '/'
+  end
+
   # required to set the has_one associations, Fae::StaticPage will build these associations dynamically
   def self.fae_fields
     {

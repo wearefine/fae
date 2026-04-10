@@ -224,6 +224,7 @@ Fae.form.ajax = {
       Fae.form.text.initTranslation();
       Fae.form.text.initGenerateAlt();
       Fae.altTextManager.ready();
+      Fae.form.text.initGenerateAlt();
       Fae.form.rankedSelect.init();
 
       // Refresh cached language divs to include newly loaded nested form fields

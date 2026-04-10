@@ -36,7 +36,14 @@ module Fae
       self.id
     end
 
+    def detail_path
+      # override this method in your model
+      # include the leading slash
+      # e.g. /wines/#{slug}
+    end
+
     module ClassMethods
+
       def for_fae_index
         scope = order(order_method)
         scope = scope.where(draft: false) if has_fae_draft_support?
