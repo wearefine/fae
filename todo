@@ -1,0 +1,3 @@
+through class inheritance or injection?
+  all relevant objects get FieldFailoverable inclusion and failover_seo_title
+  all relevant object types implements Types::BaseSeoFields
