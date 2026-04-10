@@ -11,6 +11,7 @@ module Fae
       generate_view_files
       add_route
       inject_livable
+      generate_flex_component_union_type if options.flex_component
     end
 
     private
@@ -45,15 +46,6 @@ module Fae
         \n  belongs_to :#{options.parent_model.underscore}, touch: true
           def fae_nested_parent
             :#{options.parent_model.underscore}
-          end
-        RUBY
-        end
-      end
-
-      def inject_polymorphic_info
-        inject_into_file "app/models/#{file_name}.rb", after: "BaseModelConcern\n" do <<-RUBY
-          def fae_nested_parent
-            :#{polymorphic_name}
           end
         RUBY
         end

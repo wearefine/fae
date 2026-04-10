@@ -33,7 +33,7 @@ body {
 
 a {
   @include transition(color .2s);
-  color: var(--highlight-color);
+  color: $c-darkest-grey;
   text-decoration: none;
 
   &:hover {

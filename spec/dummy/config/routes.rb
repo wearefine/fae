@@ -1,9 +1,21 @@
 Rails.application.routes.draw do
+  mount GraphiQL::Rails::Engine, at: "/graphiql", graphql_path: "/api"
+  post "/api", to: "graphql#execute"
   root 'pages#home'
 
   namespace :admin do
+    resources :article_subcategories
+    resources :knobs
+    resources :sub_list_items
+    resources :list_items
+    resources :zig_zag_items
+    resources :zig_zag_components
+    resources :text_components
+    resources :hero_components
     resources :sub_spirits
     resources :spirits
+    resources :text_components
+    resources :hero_components
     resources :sub_aromas
     resources :poly_things
     resources :beers

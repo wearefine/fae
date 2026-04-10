@@ -11,7 +11,7 @@ feature 'Fae Sites' do
     expect(page).to have_content('Add Site')
     click_link('Add Site')
     eventually {
-      expect(page).to have_content('New Site')
+      expect(page).to have_content('Edit Site')
       fill_in('site_name', with: 'Test Site')
       fill_in('site_netlify_site', with: 'testsite')
       fill_in('site_netlify_site_id', with: 'abc123')
@@ -27,7 +27,9 @@ feature 'Fae Sites' do
           eventually {
             fill_in('site_deploy_hook_environment', with: 'Test Environment')
             fill_in('site_deploy_hook_url', with: 'https://test.com')
-            click_button('Create Site deploy hook')
+            within("form#new_site_deploy_hook") do
+              click_button 'Save'
+            end
             eventually {
               within('table') do
                 expect(page).to have_content('Test Environment')

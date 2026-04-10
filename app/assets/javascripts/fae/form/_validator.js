@@ -47,16 +47,27 @@ Fae.form.validator = {
         _this.validation_test_count = 0;
 
         // Scope the data-validation only to the form submitted
+        // Exclude inputs inside nested form containers (they have their own validation)
         $('[data-validate]', $this).each(function () {
-          if ($(this).data('validate').length) {
+          var $input = $(this);
+          // Skip inputs that are inside a nested form container
+          if ($input.closest('.js-nested-form-container').length) {
+            return;
+          }
+          if ($input.data('validate').length) {
             _this.validations_called++;
-            _this._judgeIt($(this));
+            _this._judgeIt($input);
           }
         });
 
         // Catch visible errors for image/file inputs hitting the fae config file size limiter
+        // Exclude file inputs inside nested form containers
         $('.input.file', $this).each(function () {
-          if ($(this).hasClass('field_with_errors')) {
+          var $fileInput = $(this);
+          if ($fileInput.closest('.js-nested-form-container').length) {
+            return;
+          }
+          if ($fileInput.hasClass('field_with_errors')) {
             _this.is_valid = false;
           }
         });
@@ -169,7 +180,9 @@ Fae.form.validator = {
     // exit if no nested objects
     if ($nestedFormWrapper.length === 0) return false;
 
-    const $form = $nestedFormWrapper.find('form');
+    // Find the form element - could be a real <form> or a converted .js-nested-form-container div
+    const $form = $nestedFormWrapper.find('form, .js-nested-form-container').first();
+    if ($form.length === 0) return false;
 
     // get all form values without hidden fields. this omits utf encoding, csrf token, and parent item id fields
     const formValues = $form.find(':input:not(:hidden)').serializeArray();
@@ -181,10 +194,26 @@ Fae.form.validator = {
       const formLabel = $nestedFormWrapper.siblings('h2').text();
       // set to true if user decides not to continue
       preventSave = !window.confirm(
-        `${formLabel} has unsaved changes! To return to your draft, click “Cancel.” To proceed without saving, click “OK.”`
+        `A nested form has unsaved changes! To return to your draft, click “Cancel.” To proceed without saving, click “OK.”`
       );
 
       if (preventSave) {
+        // Re-enable the nested form's submit button (it was disabled by Rails UJS data-disable-with
+        // when the main form was submitted, since the nested form lives inside the main form)
+        // Use setTimeout to ensure this runs after Rails UJS has finished disabling buttons
+        setTimeout(function() {
+          const $nestedSubmitBtn = $nestedFormWrapper.find('input[type="submit"], button[type="submit"]');
+          $nestedSubmitBtn.each(function() {
+            const $btn = $(this);
+            $btn.prop('disabled', false);
+            if ($btn.is('input')) {
+              $btn.val('Save');
+            } else {
+              $btn.text('Save');
+            }
+          });
+        }, 1);
+
         FCH.smoothScroll($nestedFormWrapper, 500, 100, -100);
       }
     }

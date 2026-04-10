@@ -1,0 +1,1 @@
+module Fae::FlexComponentConcern; end

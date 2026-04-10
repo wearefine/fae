@@ -49,7 +49,7 @@ feature 'fae_multiselect' do
     visit edit_admin_wine_path(wine)
 
     click_link 'Add Oregon Winemaker'
-    expect(page).to have_css('form#new_winemaker')
+    expect(page).to have_css('div#new_winemaker')
 
 
     group = find 'div.select'

@@ -74,6 +74,61 @@ module Fae
       render json: resp
     end
 
+    # Manage ranked association items (create/destroy join records)
+    # Used by fae_ranked_select to persist selections before form save
+    def ranked_item
+      join_class = params[:join_model].classify.constantize
+      
+      # Handle StaticPage specially - the actual class is Fae::StaticPage
+      parent_class = if params[:parent_model] == 'StaticPage'
+        Fae::StaticPage
+      else
+        params[:parent_model].classify.constantize
+      end
+      
+      associated_class = params[:associated_model].classify.constantize
+      
+      parent = parent_class.find(params[:parent_id])
+      associated_item = associated_class.find(params[:associated_id])
+      
+      # Determine the foreign key names
+      # For StaticPage, the key is still 'static_page_id' (not 'fae_static_page_id')
+      parent_key = "#{params[:parent_model].underscore}_id"
+      associated_key = "#{params[:associated_model].underscore}_id"
+      
+      if params[:action_type] == 'add'
+        # Find or create the join record
+        join_record = join_class.find_or_create_by!(
+          parent_key => parent.id,
+          associated_key => associated_item.id
+        )
+        # Set position to end of list
+        max_position = join_class.where(parent_key => parent.id).maximum(:position) || 0
+        join_record.update(position: max_position + 1) if join_record.position.nil? || join_record.position == 0
+        
+        render json: { 
+          success: true, 
+          join_record_id: join_record.id,
+          position: join_record.position
+        }
+      elsif params[:action_type] == 'remove'
+        # Find and destroy the join record
+        join_record = join_class.find_by(
+          parent_key => parent.id,
+          associated_key => associated_item.id
+        )
+        join_record&.destroy
+        
+        render json: { success: true }
+      else
+        render json: { success: false, error: 'Invalid action_type' }, status: :unprocessable_entity
+      end
+    rescue ActiveRecord::RecordNotFound => e
+      render json: { success: false, error: e.message }, status: :not_found
+    rescue => e
+      render json: { success: false, error: e.message }, status: :unprocessable_entity
+    end
+
     private
 
     def can_toggle(klass, attribute)

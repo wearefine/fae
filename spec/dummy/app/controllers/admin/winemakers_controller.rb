@@ -21,7 +21,7 @@ module Admin
 
       if @item.save
         @parent_item = @item.wine
-        flash[:notice] = 'Item successfully created.'
+        flash.now[:notice] = 'Item successfully created.'
         render template: 'admin/winemakers/table'
       else
         build_assets
@@ -32,7 +32,7 @@ module Admin
     def update
       if @item.update(permitted_params)
         @parent_item = @item.wine
-        flash[:notice] = 'Item successfully updated.'
+        flash.now[:notice] = 'Item successfully updated.'
         render template: 'admin/winemakers/table'
       else
         build_assets
@@ -44,9 +44,9 @@ module Admin
       @parent_item = @item.wine
 
       if @item.destroy
-        flash[:notice] = 'Item successfully removed.'
+        flash.now[:notice] = 'Item successfully removed.'
       else
-        flash[:alert] = 'There was a problem removing your item.'
+        flash.now[:alert] = 'There was a problem removing your item.'
       end
       render template: 'admin/winemakers/table'
     end

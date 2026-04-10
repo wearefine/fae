@@ -4,6 +4,9 @@ describe Fae::Role do
 
   describe 'default_scope' do
     it 'should order by position' do
+      # Clear any existing roles first to ensure clean test state
+      Fae::Role.destroy_all
+      
       role3 = FactoryBot.create(:fae_role)
       role1 = FactoryBot.create(:fae_role)
       role2 = FactoryBot.create(:fae_role)
@@ -18,6 +21,9 @@ describe Fae::Role do
 
   describe '#public_roles' do
     it 'should return all roles not "super admin"' do
+      # Clear any existing roles first to ensure clean test state
+      Fae::Role.destroy_all
+      
       super_admin = FactoryBot.create(:fae_role, name: 'super admin', position: 0)
       admin = FactoryBot.create(:fae_role, name: 'admin', position: 1)
       user = FactoryBot.create(:fae_role, name: 'user', position: 2)

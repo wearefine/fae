@@ -26,7 +26,7 @@ module Fae
 
       if @item.save
         @parent_item = @item.send(nested_parent)
-        flash[:notice] = t('fae.save_notice')
+        flash.now[:notice] = t('fae.save_notice')
         render template: table_template_path
       else
         build_assets
@@ -39,7 +39,7 @@ module Fae
 
       if @item.update(permitted_params)
         @parent_item = @item.send(nested_parent)
-        flash[:notice] = t('fae.save_notice')
+        flash.now[:notice] = t('fae.save_notice')
         render template: table_template_path
       else
         build_assets
@@ -52,9 +52,9 @@ module Fae
       @parent_item = @item.send(nested_parent)
 
       if @item.destroy
-        flash[:notice] = t('fae.delete_notice')
+        flash.now[:notice] = t('fae.delete_notice')
       else
-        flash[:alert] = t('fae.delete_error')
+        flash.now[:alert] = t('fae.delete_error')
       end
       render template: table_template_path
     end

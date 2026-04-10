@@ -50,7 +50,7 @@
   .chosen-single {
     @include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
     height: auto;
-    padding: 7px 15px;
+    padding: 6px 15px;
     border-radius: 2px;
     box-shadow: none;
     border-color: $c-mid-grey;

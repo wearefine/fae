@@ -5,7 +5,6 @@ module Fae
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
-
     Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set', 'cta']
 
     @@attributes_flat = []
@@ -47,12 +46,16 @@ module Fae
           @@graphql_attributes << graphql_object(arg)
         end
 
-        @@attributes_flat = @@attributes_flat.uniq.join(' ')
         @@association_names.uniq!
         @@attribute_names.uniq!
         @@attachments.uniq!
         @@graphql_attributes.uniq!
       end
+
+      # Always add an indexed draft boolean column for scaffold-generated objects
+      @@attributes_flat << "draft:boolean:index"
+
+      @@attributes_flat = @@attributes_flat.uniq.join(' ')
     end
 
   private

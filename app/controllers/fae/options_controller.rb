@@ -16,7 +16,7 @@ module Fae
         if @option.previous_changes.include?('site_mfa_enabled')
           Fae::User.update_mfa(option_params['site_mfa_enabled'], current_user.email)
         end
-        flash[:notice] = 'Option was successfully updated.'
+        flash.now[:notice] = 'Option was successfully updated.'
         redirect_to :action => :edit
       else
         render :edit
@@ -27,7 +27,7 @@ module Fae
 
       # Only allow a trusted parameter "white list" through.
       def option_params
-        params.require(:option).permit(:title, :time_zone, :colorway, :site_mfa_enabled, :stage_url, :live_url, logo_attributes: [:id, :asset, :asset_cache, :attached_as, :alt], favicon_attributes: [:id, :asset, :asset_cache, :attached_as, :alt])
+        params.require(:option).permit(:title, :time_zone, :colorway, :site_mfa_enabled, :stage_url, :live_url, :translate_language, logo_attributes: [:id, :asset, :asset_cache, :attached_as, :alt, :imageable_type, :required], favicon_attributes: [:id, :asset, :asset_cache, :attached_as, :alt, :imageable_type, :required])
       end
   end
 end

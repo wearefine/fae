@@ -36,6 +36,21 @@
     margin: 0 0 30px;
   }
 
+  // Remove background from h2 in nested .content sections
+  .content h2 {
+    background: none;
+    border-top: none;
+    padding-left: 0;
+    color: $c-text-heavy;
+    font-weight: bold;
+  }
+
+  // Nested .content sections should have less top padding and more bottom margin
+  .content {
+    padding-top: 10px;
+    margin-bottom: 30px;
+  }
+
   h3 {
     display: block;
     margin-bottom: 10px;

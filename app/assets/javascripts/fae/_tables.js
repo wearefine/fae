@@ -261,11 +261,12 @@ Fae.tables = {
    * Add extra space if the last item in a form is a select menu so the dropdown doesn't run off the screen or section
    */
   endingSelectShim: function() {
-    $('form .content:last-of-type').each(function() {
-      var $last_item = $(this).find('.input:last-of-type');
+    $('form').each(function() {
+      var $lastContent = $(this).find('.content').last();
+      var $last_item = $lastContent.find('.input:last-of-type');
 
-      if( $last_item.hasClass('select') ) {
-        $(this).addClass('-bottom-shim');
+      if ($last_item.hasClass('select')) {
+        $lastContent.addClass('-bottom-shim');
       }
     });
   },

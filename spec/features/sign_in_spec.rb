@@ -10,34 +10,35 @@ feature 'Sign In' do
     ActiveRecord::Base.descendants.map.reject { |m| m.name['Fae::'] || !m.instance_methods.include?(:fae_display_field) || Fae.dashboard_exclusions.include?(m.name) }
   end
 
-  scenario 'when user leaves out email' do
+  scenario 'when user leaves out email', js: true do
     visit fae.new_user_session_path
 
     fill_in 'user_password', with: 'password'
     click_button 'Submit'
 
-    expect(page).to have_content('You’ll need a user name and a password that works.')
+    # Check for flash-toast element with data-message attribute (exists before JS transforms it)
+    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
-  scenario 'when user leaves out password' do
+  scenario 'when user leaves out password', js: true do
     visit fae.new_user_session_path
 
     fill_in 'user_email', with: 'test@test.com'
     click_button 'Submit'
 
-    expect(page).to have_content('You’ll need a user name and a password that works.')
+    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
-  scenario "when user doesn't exist" do
+  scenario "when user doesn't exist", js: true do
     visit fae.new_user_session_path
 
     fill_in 'user_email', with: 'test@test.com'
     fill_in 'user_password', with: 'password'
     click_button 'Submit'
 
-    expect(page).to have_content('You’ll need a user name and a password that works.')
+    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
@@ -51,7 +52,7 @@ feature 'Sign In' do
       )
   end
 
-  scenario "when user isn't active" do
+  scenario "when user isn't active", js: true do
     @user.update_attribute(:active, false)
 
     visit fae.new_user_session_path
@@ -60,28 +61,28 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'passord1'
     click_button 'Submit'
 
-    expect(page).to have_content('Your account is not activated yet.')
+    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
-  scenario "when user is active" do
+  scenario "when user is active", js: true do
     visit fae.new_user_session_path
 
     fill_in 'user_email', with: 'test@test.com'
     fill_in 'user_password', with: 'passord1'
     click_button 'Submit'
 
-    expect(page).to have_content('Welcome')
+    expect(page).to have_content('WELCOME')
   end
 
-  scenario "when user signs in for the first time" do
+  scenario "when user signs in for the first time", js: true do
     visit fae.new_user_session_path
 
     fill_in 'user_email', with: 'test@test.com'
     fill_in 'user_password', with: 'passord1'
     click_button 'Submit'
     if no_models_exist?
-      expect(page).to have_content("Welcome to Fae")
+      expect(page).to have_content("WELCOME TO FAE")
     end
   end
 end

@@ -8,10 +8,12 @@ ruby:
   subnav                    ||= []
   header_as_string          = header.is_a?(String) ? header : header.class.name.split('::').last
   header_as_string          = header_as_string.singularize
-  title                     ||= "#{params[:action]} #{header_as_string}".titleize
+  # Map update/create actions to edit/new for display purposes (e.g., after AJAX save)
+  display_action            = { 'update' => 'edit', 'create' => 'new' }.fetch(params[:action], params[:action])
+  title                     ||= "#{display_action} #{header_as_string}".titleize
   breadcrumb                = !local_assigns[:breadcrumbs].eql?(false)
   languages                 ||= false
-  show_flash_messages       = !local_assigns[:show_flash_messages].eql?(false)
+  show_flash_messages       = local_assigns[:show_flash_messages].eql?(true)
 
 header.content-header.js-content-header
   - if breadcrumb
@@ -29,7 +31,11 @@ header.content-header.js-content-header
     - if Fae.use_form_manager
       a.button.js-launch-form-manager href='#' = launch_manager_text
 
-    a.button#js-header-cancel href=@index_path = cancel_button_text
+    - # For static pages (Fae::StaticPage descendants), don't set draft/delete attributes - they're singletons
+    - is_static_page = defined?(@item) && @item.is_a?(Fae::StaticPage)
+    - draft_value = !is_static_page && params[:draft] == 'true' ? 'true' : nil
+    - delete_path = !is_static_page && defined?(@item) && @item.persisted? ? "#{@index_path}/#{@item.id}" : nil
+    a.button#js-header-cancel href=@index_path data-draft=draft_value data-delete-path=delete_path = cancel_button_text
     - if cloneable.present? && params[:id].present?
       a.button#js-header-clone data-method="post" href="#{@index_path}?from_existing=#{params[:id]}" = clone_button_text
     input name="commit" type="submit" value=save_button_text

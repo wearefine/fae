@@ -18,17 +18,73 @@
   }
 }
 
-.notice {
+// Toast Container
+.toast-container {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  pointer-events: none;
+  
+  .sidenav ~ & {
+    @include bp(large) {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+// Individual Toast
+.flash-toast {
+  display: none;
+  min-width: 300px;
+  max-width: 400px;
+  margin-bottom: 10px;
+  padding: 16px 20px;
+  border-radius: 4px;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  pointer-events: auto;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.4;
+
+  &:before {
+    @include icon-stuff;
+    margin-right: 10px;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+
+  &.show {
+    display: block;
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &.hide {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.notice,
+.flash-toast.notice {
   border-color: $c-notice-content;
   background: $c-notice-bg;
   color: $c-notice-content;
 
   &:before {
-    content: fae-icon(check);
+    content: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M-3.2959e-06 9C-3.2959e-06 4.02943 4.02943 0 9 0C13.9705 0 18 4.02943 18 9C18 13.9705 13.9705 18 9 18C4.02943 18 -3.2959e-06 13.9705 -3.2959e-06 9ZM12.3364 6.5636C12.6878 6.91508 12.6878 7.48494 12.3364 7.83639L9.02187 11.1509C8.51274 11.66 7.68726 11.66 7.17811 11.1509L5.6636 9.63639C5.31213 9.28494 5.31213 8.71506 5.6636 8.36361C6.01507 8.01216 6.58492 8.01216 6.9364 8.36361L8.1 9.52722L11.0636 6.5636C11.4151 6.21213 11.9849 6.21213 12.3364 6.5636Z' fill='%234D874D'/%3E%3C/svg%3E");
   }
 }
 
-.warning {
+.warning,
+.flash-toast.warning {
   border-color: $c-warning-content;
   background: $c-warning-bg;
   color: $c-warning-content;
@@ -39,7 +95,9 @@
 }
 
 .flash-message.error,
-.alert {
+.alert,
+.flash-toast.error,
+.flash-toast.alert {
   border-color: $c-error-content;
   background: $c-error-bg;
   color: $c-error-content;

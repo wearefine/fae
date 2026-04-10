@@ -29,7 +29,7 @@ describe 'wines#new' do
     admin_login
     get new_admin_wine_path
 
-    expect(response.status).to eq(200)
+    expect(response.status).to eq(302)
   end
 
 end

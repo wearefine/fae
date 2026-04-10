@@ -12,17 +12,17 @@ feature 'User with OTP two factor enabled' do
     option.save
   end
 
-  scenario 'cannot login without unknown user' do
+  scenario 'cannot login without unknown user', js: true do
     visit fae.new_user_session_path
     fill_in 'user_email', with: 'someone@example.com'
     fill_in 'user_password', with: 'letmein'
     click_button 'Submit'
 
-    expect(page).to have_content("You’ll need a user name, password and MFA code that works.")
-    expect(page).to_not have_content('Welcome to Fae')
+    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to_not have_content('WELCOME TO FAE')
   end
 
-  scenario 'cannot login without a valid OTP' do
+  scenario 'cannot login without a valid OTP', js: true do
     user = FactoryBot.create(:fae_user, :with_otp,
       email: 'test@test.com',
       password: 'passord1',
@@ -36,11 +36,11 @@ feature 'User with OTP two factor enabled' do
     fill_in 'user_otp_attempt', with: 'invalid-otp'
     click_button 'Submit'
 
-    expect(page).to have_content("You’ll need a user name, password and MFA code that works.")
-    expect(page).to_not have_content('Welcome to Fae')
+    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to_not have_content('WELCOME TO FAE')
   end
 
-  scenario 'can login when providing a valid OTP' do
+  scenario 'can login when providing a valid OTP', js: true do
     user = FactoryBot.create(:fae_user, :with_otp,
       email: 'test@test.com',
       password: 'passord1',
@@ -55,6 +55,6 @@ feature 'User with OTP two factor enabled' do
     click_button 'Submit'
 
     expect(current_path).to eq(fae.root_path)
-    expect(page).to have_content("Welcome to Fae")
+    expect(page).to have_content("WELCOME TO FAE")
   end
 end

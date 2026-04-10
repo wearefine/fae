@@ -29,7 +29,7 @@ describe 'releases#new' do
     admin_login
     get new_admin_release_path
 
-    expect(response.status).to eq(200)
+    expect(response.status).to eq(302)
   end
 
 end

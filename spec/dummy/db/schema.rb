@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
+ActiveRecord::Schema[7.0].define(version: 2026_03_19_182713) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -41,6 +41,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.integer "position"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.string "name_zh"
+    t.string "name_frca"
+  end
+
+  create_table "article_subcategories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "name_zh"
+    t.string "name_frca"
+    t.integer "article_category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "articles", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -53,6 +64,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.index ["article_category_id"], name: "index_articles_on_article_category_id"
   end
 
+  create_table "beer_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "beer_id"
+    t.integer "aroma_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aroma_id"], name: "index_beer_aromas_on_aroma_id"
+    t.index ["beer_id"], name: "index_beer_aromas_on_beer_id"
+    t.index ["position"], name: "index_beer_aromas_on_position"
+  end
+
   create_table "beers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "seo_title"
@@ -61,6 +83,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.boolean "on_prod"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.boolean "draft", default: false
   end
 
   create_table "cats", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -155,6 +178,24 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
     t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable"
+  end
+
+  create_table "fae_flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "flex_componentable_type", null: false
+    t.bigint "flex_componentable_id", null: false
+    t.string "component_model"
+    t.integer "component_id"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["component_id"], name: "index_fae_flex_components_on_component_id"
+    t.index ["component_model"], name: "index_fae_flex_components_on_component_model"
+    t.index ["flex_componentable_type", "flex_componentable_id"], name: "index_fae_flex_components_on_flex_componentable"
+    t.index ["on_prod"], name: "index_fae_flex_components_on_on_prod"
+    t.index ["on_stage"], name: "index_fae_flex_components_on_on_stage"
+    t.index ["position"], name: "index_fae_flex_components_on_position"
   end
 
   create_table "fae_form_managers", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -335,11 +376,40 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
+  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "jerseys", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "color"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "knobs", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "list_items", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "people"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.integer "position"
+    t.integer "static_page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "locations", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -450,6 +520,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "static_page_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "static_page_id"
+    t.integer "aroma_id"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["aroma_id"], name: "index_static_page_aromas_on_aroma_id"
+    t.index ["position"], name: "index_static_page_aromas_on_position"
+    t.index ["static_page_id"], name: "index_static_page_aromas_on_static_page_id"
+  end
+
   create_table "sub_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.integer "aroma_id"
@@ -457,6 +538,17 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.datetime "updated_at", null: false
     t.index ["aroma_id"], name: "index_sub_aromas_on_aroma_id"
     t.index ["name"], name: "index_sub_aromas_on_name"
+  end
+
+  create_table "sub_list_items", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.text "body"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.integer "position"
+    t.integer "list_item_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sub_spirits", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -474,6 +566,14 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.text "history"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "text_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name_zh"
+    t.string "name_frca"
   end
 
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -532,6 +632,27 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_01_145909) do
     t.text "food_pairing_ja"
     t.string "name_frca"
     t.string "description_frca"
+  end
+
+  create_table "zig_zag_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "zig_zag_items", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "heading"
+    t.text "body"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.integer "zig_zag_component_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["on_prod"], name: "index_zig_zag_items_on_on_prod"
+    t.index ["on_stage"], name: "index_zig_zag_items_on_on_stage"
+    t.index ["position"], name: "index_zig_zag_items_on_position"
+    t.index ["zig_zag_component_id"], name: "index_zig_zag_items_on_zig_zag_component_id"
   end
 
   add_foreign_key "articles", "article_categories"

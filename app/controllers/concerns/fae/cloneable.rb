@@ -15,7 +15,7 @@ module Fae
         redirect_to @index_path + '/' + @cloned_item.id.to_s + '/edit'
       else
         build_assets
-        flash[:alert] = @cloned_item.errors.full_messages
+        flash.now[:alert] = @cloned_item.errors.full_messages
         render action: 'edit'
       end
     end

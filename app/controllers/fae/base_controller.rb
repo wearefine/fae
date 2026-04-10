@@ -22,7 +22,14 @@ module Fae
 
     def new
       @item = @klass.new
-      build_assets
+      assign_parent_to_item
+      @item.draft = true if @klass.has_fae_draft_support?
+      @item.save(validate: false)
+      if @item.is_a?(Fae::Site)
+        redirect_to fae.edit_site_path(id: @item.id, draft: true)
+      else
+        redirect_to build_edit_path(@item, draft: true)
+      end
     end
 
     def edit
@@ -35,24 +42,21 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        if @item.try(:fae_redirect_to_form_on_create)
-          redirect_to send("edit_admin_#{@klass_singular}_path", @item.id), notice: t('fae.save_notice')
-        else
-          redirect_to @index_path, notice: t('fae.save_notice')
-        end
+        redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        flash[:alert] = t('fae.save_error')
+        flash.now[:alert] = t('fae.save_error')
         render action: 'new'
       end
     end
 
     def update
+      @item.draft = false if @klass.has_fae_draft_support?
       if @item.update(item_params)
         redirect_to @index_path, notice: t('fae.save_notice')
       else
         build_assets
-        flash[:alert] = t('fae.save_error')
+        flash.now[:alert] = t('fae.save_error')
         render action: 'edit'
       end
     end
@@ -115,6 +119,34 @@ module Fae
     # allows this controller to use pagination
     def use_pagination
       false
+    end
+
+    # Detect parent resource from params (e.g., team_id for nested coaches)
+    def parent_resource_param
+      params.keys.find { |key| key.to_s.end_with?('_id') && key.to_s != 'id' }
+    end
+
+    # Get the parent resource name (e.g., 'team' from 'team_id')
+    def parent_resource_name
+      parent_resource_param&.to_s&.sub(/_id$/, '')
+    end
+
+    # Assign parent association to item for nested resources
+    def assign_parent_to_item
+      if parent_resource_param && @item.respond_to?("#{parent_resource_name}_id=")
+        @item.send("#{parent_resource_name}_id=", params[parent_resource_param])
+      end
+    end
+
+    # Build the edit path, handling nested resources
+    def build_edit_path(item, options = {})
+      if parent_resource_param
+        # Nested resource: e.g., edit_admin_team_coach_path(team_id, coach_id)
+        send("edit_admin_#{parent_resource_name}_#{@klass_singular}_path", params[parent_resource_param], item.id, options)
+      else
+        # Non-nested resource: e.g., edit_admin_person_path(id)
+        send("edit_admin_#{@klass_singular}_path", item.id, options)
+      end
     end
 
   end

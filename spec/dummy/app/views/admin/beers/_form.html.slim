@@ -2,17 +2,32 @@
   == render 'fae/shared/form_header', header: @klass_name, subnav: ['SEO', 'Poly Things'], languages: true, cloneable: true
 
   main.content
+    = fae_input f, :on_stage
+    = fae_input f, :on_prod
     = fae_input f, :name
     = fae_image_form f, :image
+    
+    = fae_ranked_select f, :aromas, 
+      join_model: :beer_aromas,
+      select_label: 'Aromas',
+      select_helper_text: 'Select aromas and drag to rank them in order of prominence.',
+      ranking_title: 'Aroma Ranking',
+      ranking_helper_text: 'Drag to reorder aromas by prominence'
+    
+  section.content#poly_things
+    = render 'fae/shared/nested_table',
+      assoc: :poly_things,
+      parent_item: @item,
+      cols: [:name_en, :image]
     = fae_cta_form f, :test_cta
   section.content#seo
     h2 SEO
     = fae_seo_set_form f, :seo
 
-- if params[:action] == 'edit'
-  section.content#poly_things
-    = render 'fae/shared/nested_table',
-      assoc: :poly_things,
-      parent_item: @item,
-      cols: [:name]
+/ - if params[:action] == 'edit'
+/   section.content#poly_things
+/     = render 'fae/shared/nested_table',
+/       assoc: :poly_things,
+/       parent_item: @item,
+/       cols: [:name]
 

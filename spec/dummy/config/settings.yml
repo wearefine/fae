@@ -1,0 +1,16 @@
+production:
+  env_flag: 'on_prod'
+  # fe_production_base_url: ''
+  # fe_staging_base_url: ''
+
+remote_development:
+  env_flag: 'on_stage'
+  # fe_remote_development_base_url: ''
+
+development:
+  env_flag: 'on_prod'
+  foo: 'bar'
+  # fe_development_base_url: ''
+
+test:
+  env_flag: 'on_stage'

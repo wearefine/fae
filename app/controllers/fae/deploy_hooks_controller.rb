@@ -20,7 +20,7 @@ module Fae
       @deploy_hook = DeployHook.new(deploy_hook_params)
 
       if @deploy_hook.save
-        flash[:notice] = t('fae.save_notice')
+        flash.now[:notice] = t('fae.save_notice')
         @deploy_hooks = DeployHook.all
         render partial: table_template_path
       else
@@ -30,7 +30,7 @@ module Fae
 
     def update
       if @deploy_hook.update(deploy_hook_params)
-        flash[:notice] = t('fae.save_notice')
+        flash.now[:notice] = t('fae.save_notice')
         @deploy_hooks = DeployHook.all
         render partial: table_template_path
       else
@@ -40,9 +40,9 @@ module Fae
 
     def destroy
       if @deploy_hook.destroy
-        flash[:notice] = t('fae.delete_notice')
+        flash.now[:notice] = t('fae.delete_notice')
       else
-        flash[:alert] = t('fae.delete_error')
+        flash.now[:alert] = t('fae.delete_error')
       end
       @deploy_hooks = DeployHook.all
       render partial: table_template_path

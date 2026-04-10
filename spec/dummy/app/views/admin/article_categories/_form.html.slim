@@ -1,6 +1,19 @@
 = simple_form_for([:admin, @item]) do |f|
-  == render 'fae/shared/form_header', header: @klass_name
+  == render 'fae/shared/form_header', header: @klass_name, languages: true
 
   main.content
     = fae_input f, :name
+    = fae_input f, :name_zh
+    = fae_input f, :name_frca
+
+  section.content
+    == render 'fae/shared/nested_table',
+      assoc: :article_subcategories,
+      parent_item: @item,
+      cols: [:name]
+
+  section.content#components
+    == render 'fae/shared/flex_components_table',
+      assoc: :flex_components,
+      parent_item: @item
 

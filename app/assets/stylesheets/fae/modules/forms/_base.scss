@@ -53,10 +53,8 @@ input[type=email] {
 }
 
 .nested-form {
-  padding: $content-buffer $content-buffer $content-buffer 40px;
-  border: 1px solid $c-border;
+  padding: $content-buffer $content-buffer $content-buffer 25px;
   border-top: 0;
-  background: $c-form-table-bg;
 
   h2 {
     margin-bottom: 20px;
@@ -103,6 +101,39 @@ input[type=email] {
   &.table-add-link {
     margin-top: 13px;
     margin-bottom: 10px;
+    margin-right: 17px;
+  }
+}
+
+.component-selector-dropdown {
+  position: relative;
+  float: right;
+  clear: both;
+  margin: 12px 17px 0 0;
+  z-index: 1;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  padding: 0 0 0 0;
+
+  select {
+    border: none;
+    background: transparent;
+    padding: 4px 8px;
+    width: 100%;
+    outline: none;
+    font-size: 12px;
+    line-height: 1.2;
+  }
+
+  .chosen-container {
+    font-size: 12px;
+    
+    .chosen-single {
+      padding: 4px 8px;
+      height: auto;
+      line-height: 1.2;
+    }
   }
 }
 
@@ -117,6 +148,11 @@ input[type=email] {
 .translate-button {
   position: absolute;
   margin-left: 10px;
+
+  &.translating {
+    opacity: 0.5;
+    cursor: wait;
+  }
 }
 
 .translate-markdown-button {
@@ -135,4 +171,34 @@ input[type=email] {
 
 .hide { 
   display: none !important 
+}
+
+// Ranked select container for fae_ranked_select
+.js-ranked-select-container {
+  > .input {
+    margin-bottom: 0;
+  }
+}
+
+// Ranking table for fae_ranked_select
+.ranking-table {
+  padding-top: 0;
+  
+  .table-helper-text {
+    margin-bottom: 15px;
+    margin-top: -20px;
+  }
+  
+  table {
+    margin-bottom: 0;
+  }
+  
+  .ranking-table-empty-row td {
+    color: $c-text-sub;
+    font-style: italic;
+  }
+
+  h2 {
+    padding-bottom: 0;
+  }
 }

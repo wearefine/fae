@@ -1,0 +1,41 @@
+ruby:
+  join_records ||= []
+  associated_item_name ||= nil
+  title ||= 'Ranking'
+  helper_text ||= nil
+  display_field ||= :fae_display_field
+  ranking_table_id ||= nil
+  join_model ||= nil
+  associated_model ||= nil
+  parent_model ||= nil
+  parent_id ||= nil
+  collection ||= []
+
+section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-model=join_model data-associated-model=associated_model data-parent-model=parent_model data-parent-id=parent_id data-display-field=display_field data-associated-item=associated_item_name
+  h2 = title
+  - if helper_text.present?
+    h6.table-helper-text = helper_text
+  table.js-sort-row
+    thead
+      tr
+        th.th-sortable-handle
+        th Name
+    tbody
+      - if join_records.present?
+        - join_records.each do |join_record|
+          - associated_item = associated_item_name ? join_record.send(associated_item_name) : nil
+          - display_name = associated_item&.respond_to?(display_field) ? associated_item.send(display_field) : join_record.to_s
+          tr.js-ranking-row id=tr_id(join_record) data-id=join_record.id data-associated-id=(associated_item&.id)
+            td.sortable-handle: i.icon-sort
+            td = display_name
+      - else
+        tr.ranking-table-empty-row.js-ranking-empty-row
+          td
+          td No items selected
+  
+  /! Store collection data for JavaScript to use when adding new items
+  script type="application/json" class="js-ranking-collection"
+    - collection_data = collection.map do |c|
+      - name = c.respond_to?(display_field) ? c.send(display_field) : c.to_s
+      - { id: c.id, name: name }
+    = collection_data.to_json.html_safe

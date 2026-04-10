@@ -1,5 +1,6 @@
 class Wine < ActiveRecord::Base
   include Fae::BaseModelConcern
+  include FlexComponentableConcern
 
   acts_as_list add_new_at: :top
 

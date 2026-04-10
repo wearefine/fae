@@ -20,7 +20,7 @@ feature 'fae_nested_table' do
 
     within(:css, 'form#new_aroma') do
       fill_in 'Name', with: 'My Brand New Smell!'
-      click_button('Create Aroma')
+      click_button('Save')
     end
 
     eventually {
@@ -44,7 +44,7 @@ feature 'fae_nested_table' do
 
     within(:css, "form#edit_aroma_#{aroma.id}") do
       fill_in 'Name', with: 'Lavender'
-      click_button('Update Aroma')
+      click_button('Save')
     end
 
     eventually {
@@ -78,14 +78,19 @@ feature 'fae_nested_table' do
     admin_login
     visit edit_admin_wine_path(wine)
 
-    expect(Winemaker.order(:position)).to eq([winemaker_3, winemaker_2, winemaker_1])
+    # With acts_as_list add_new_at: :top, newest items get lowest positions
+    [winemaker_1, winemaker_2, winemaker_3].each(&:reload)
+    expect(Winemaker.where(wine: wine).order(:position).to_a).to eq([winemaker_3, winemaker_2, winemaker_1])
 
+    # Drag winemaker_1 (Last, at bottom) to winemaker_3's position (First, at top)
     handle = find("#winemakers_#{winemaker_1.id} .sortable-handle i")
     target = find("#winemakers_#{winemaker_3.id} .sortable-handle i")
     handle.drag_to(target)
 
+    # winemaker_1 takes the top position, others shift down
     eventually {
-      expect(Winemaker.order(:position)).to eq([winemaker_3, winemaker_1, winemaker_2])
+      [winemaker_1, winemaker_2, winemaker_3].each(&:reload)
+      expect(Winemaker.where(wine: wine).order(:position).to_a).to eq([winemaker_1, winemaker_3, winemaker_2])
     }
   end
 
@@ -96,11 +101,11 @@ feature 'fae_nested_table' do
     visit edit_admin_wine_path(wine)
 
     click_link 'Add Oregon Winemaker'
-    expect(page).to have_css('form#new_winemaker')
+    expect(page).to have_css('#new_winemaker')
 
-    within(:css, 'form#new_winemaker') do
+    within(:css, '#new_winemaker') do
       fill_in 'Name', with: 'Portland Joe'
-      click_button('Create Winemaker')
+      click_button('Save')
     end
 
     eventually {
@@ -123,7 +128,9 @@ feature 'fae_nested_table' do
       fill_in 'Title', with: "I'm a release note"
     end
 
-    click_button 'Save'
+    within(:css, '.content-header') do
+      click_button 'Save'
+    end
     page.driver.browser.reject_js_confirms
     
     expect(page).to have_css('form#new_release_note')
@@ -142,7 +149,9 @@ feature 'fae_nested_table' do
       fill_in 'Title', with: "I'm a release note"
     end
 
-    click_button 'Save'
+    within(:css, '.content-header') do
+      click_button 'Save'
+    end
     page.driver.browser.accept_js_confirms
 
     eventually {

@@ -22,14 +22,14 @@ module Fae
       attribute = (attribute.is_a?(Hash) && attribute[:attr]) ? attribute[:attr] : attribute
       first_attribute = (attributes.first.kind_of?(Hash) && attributes.first[:attr]) ? attributes.first[:attr] : attributes.first
 
-      if attribute == first_attribute && !params[:edit_column]
+      if attribute == first_attribute
         content_tag(:td) do
           content_tag(:a, class: 'js-edit-link', href: self.send(params[:edit_path], item)) do
             col_name_or_image(item, attribute)
           end
         end
       elsif item.class.columns_hash[attribute.to_s].present? && item.class.columns_hash[attribute.to_s].type == :boolean
-        content_tag(:td, fae_toggle(item, attribute))
+        content_tag(:td, fae_toggle(item, attribute), class: '-action-wide')
       else
         content_tag(:td, col_name_or_image(item, attribute))
       end

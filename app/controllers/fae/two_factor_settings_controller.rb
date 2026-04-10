@@ -4,7 +4,7 @@ module Fae
 
     def new
       if current_user.otp_required_for_login
-        flash[:alert] = 'Multi-Factor Authentication is already enabled.'
+        flash.now[:alert] = 'Multi-Factor Authentication is already enabled.'
         return redirect_to users_path
       end
 
@@ -21,7 +21,7 @@ module Fae
       if current_user.validate_and_consume_otp!(enable_2fa_params[:code])
         current_user.enable_two_factor!
 
-        flash[:notice] = 'Successfully enabled multi-factor authentication, please make note of your backup codes.'
+        flash.now[:notice] = 'Successfully enabled multi-factor authentication, please make note of your backup codes.'
         redirect_to edit_two_factor_settings_path
       else
         flash.now[:alert] = 'Incorrect Code'
@@ -31,12 +31,12 @@ module Fae
 
     def edit
       unless current_user.otp_required_for_login
-        flash[:alert] = 'Please enable multi-factor authentication first.'
+        flash.now[:alert] = 'Please enable multi-factor authentication first.'
         return redirect_to new_two_factor_settings_path
       end
 
       if current_user.two_factor_backup_codes_generated?
-        flash[:alert] = 'You have already seen your backup codes.'
+        flash.now[:alert] = 'You have already seen your backup codes.'
         return redirect_to users_path
       end
 
@@ -48,7 +48,7 @@ module Fae
       Fae::User.update_mfa('0', '')
       Fae::Option.instance.update(site_mfa_enabled: false)
 
-      flash[:notice] = 'Successfully canceled multi-factor authentication.'
+      flash.now[:notice] = 'Successfully canceled multi-factor authentication.'
       redirect_to option_path
     end
 

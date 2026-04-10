@@ -22,7 +22,7 @@ module <%= options.namespace.capitalize %>
 
       if @item.save
         @items = <%= class_name %>.for_fae_index
-        flash[:notice] = 'Item successfully created.'
+        flash.now[:notice] = 'Item successfully created.'
         render template: '<%= options.namespace %>/<%= plural_file_name %>/index'
       else
         render action: 'new'
@@ -32,7 +32,7 @@ module <%= options.namespace.capitalize %>
     def update
       if @item.update(permitted_params)
         @items = <%= class_name %>.for_fae_index
-        flash[:notice] = 'Item successfully updated.'
+        flash.now[:notice] = 'Item successfully updated.'
         render template: '<%= options.namespace %>/<%= plural_file_name %>/index'
       else
         render action: 'edit'
@@ -41,9 +41,9 @@ module <%= options.namespace.capitalize %>
 
     def destroy
       if @item.destroy
-        flash[:notice] = 'Item successfully removed.'
+        flash.now[:notice] = 'Item successfully removed.'
       else
-        flash[:alert] = 'There was a problem removing your item.'
+        flash.now[:alert] = 'There was a problem removing your item.'
       end
       @items = <%= class_name %>.for_fae_index
       render template: '<%= options.namespace %>/<%= plural_file_name %>/index'

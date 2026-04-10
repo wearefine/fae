@@ -182,12 +182,20 @@ Fae.form.text = {
 
       // set english model name and use that to get text from english field
       var englishModel = translateModel.replace('_' + translateLanguage, '_en')
-      var englishText = $('#' + englishModel)[0].value 
+      var $englishField = $('#' + englishModel);
+      // fall back to field without any language suffix if _en version doesn't exist
+      if (!$englishField.length) {
+        englishModel = translateModel.replace('_' + translateLanguage, '');
+        $englishField = $('#' + englishModel);
+      }
+      var englishText = $englishField[0].value 
 
       // get translateLanguage in correct format for request
       if (translateLanguage.length == 4) {
         translateLanguage = `${translateLanguage.slice(0,2)}-${translateLanguage.slice(2)}`
       }
+
+      $this.prop('disabled', true).addClass('translating');
 
       $.ajax({
         url: Fae.path + '/translate_text',
@@ -209,6 +217,9 @@ Fae.form.text = {
               $('#' + translateModel).val(data[0].translated_text);
             }
           }
+        },
+        complete: function() {
+          $this.prop('disabled', false).removeClass('translating');
         }
       })
     });

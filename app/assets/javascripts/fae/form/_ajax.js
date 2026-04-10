@@ -12,8 +12,11 @@ Fae.form.ajax = {
     this.$filter_form = $('.js-filter-form');
     this.$nested_form = $('.nested-form');
 
+    this.flexComponentSelect();
     this.addEditLinks();
+    this.clickableRows();
     this.addEditSubmission();
+    this.nestedFormSubmission();
 
     this.addCancelLinks();
 
@@ -24,21 +27,113 @@ Fae.form.ajax = {
   },
 
   /**
+   * Change event listener for flex component select dropdown
+   */
+  flexComponentSelect: function() {
+    var _this = this;
+
+    this.$addedit_form.on('change', '.js-component-select', function(ev) {
+      ev.preventDefault();
+      var $this = $(this);
+      var $parent = $this.closest('.js-addedit-form');
+      component = $(this).val();
+      console.log('selected', component);
+      _this._addEditActions($this.data('path') + '&component=' + component, $parent.find('.js-addedit-form-wrapper'));
+      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -50);
+    });
+  },
+
+  /**
    * Click event listener for add and edit links applied to both index and nested forms
    */
   addEditLinks: function() {
     var _this = this;
 
     this.$addedit_form.on('click', '.js-add-link, .js-edit-link', function(ev) {
+      console.log('adding/editing');
       ev.preventDefault();
       var $this = $(this);
-      var $parent = $this.hasClass('js-index-add-link') ? $('.js-addedit-form') : $this.closest('.js-addedit-form');
 
-      // scroll to the last column of the tbody, where the form will start
-      FCH.smoothScroll($parent.find('tbody tr:last-child'), 500, 450, -20);
+      var $parentTable = $this.hasClass('js-add-link') ? $this.nextAll('table').first() : $this.closest('table');
+      if ($this.hasClass('js-index-add-link')) {
+        $parentTable = $('.js-addedit-form').find('> table');
+      }
+      console.log('Parent table found:', $parentTable.length);
+      var $theFormContainer = null;
+      
+      // Check if form container already exists
+      var $existingContainer = $parentTable.find('.js-addedit-form-wrapper');
+      var $parentRow = $this.hasClass('js-edit-link') ? $this.parents('tr') : null;
+      
+      if ($existingContainer.length > 0) {
+        console.log('Existing form container found:', $existingContainer.length);
+        // Check if the existing container is for a different row
+        var $existingRow = $existingContainer.closest('.js-nested-form-row').prev('tr');
+        var isDifferentRow = $parentRow && $existingRow.length > 0 && !$existingRow.is($parentRow);
+        
+        if (isDifferentRow) {
+          console.log('Form open in different row, closing and moving');
+          // Remove the old container
+          $existingContainer.closest('.js-nested-form-row').remove();
+          
+          // Create new container in the correct position
+          var colspan = $parentTable.find('thead').first().find('th').length;
+          var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+          $parentRow.after(formContainer);
+          $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
+        } else {
+          console.log('Using existing form container in same location');
+          $theFormContainer = $existingContainer;
+        }
+      } else {
+        console.log('Creating new form container');
+        var colspan = $parentTable.find('thead').first().find('th').length;
+        var formContainer = '<tr class="js-nested-form-row"><td colspan="'+colspan+'" class="js-addedit-form-wrapper no-hover no-background"></td></tr>';
+        
+        if ($this.hasClass('js-add-link')) {
+          console.log('js-add-link');
+          var $tbody = $parentTable.find('tbody');
+          $tbody.append(formContainer);
+          $theFormContainer = $parentTable.find('.js-addedit-form-wrapper').last();
+        } else {
+          console.log('js-edit-link');
+          $parentRow.after(formContainer);
+          $theFormContainer = $parentRow.next().find('.js-addedit-form-wrapper');
+        }
+      }
+      
+      console.log('Form container ready:', $theFormContainer.length);
+      console.log($theFormContainer);
+      
+      if ($this.hasClass('js-add-link')) {
+        console.log('Scrolling to bottom for add link');
+        FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -20);
+      } else {
+        console.log('Scrolling to edited row');
+        FCH.smoothScroll($parentTable.find('.js-nested-form-row'), 500, 450, -110);
+      }
 
-      _this._addEditActions($this.attr('href'), $parent.find('.js-addedit-form-wrapper'));
+      _this._addEditActions($this.attr('href'), $theFormContainer.first());
     });
+  },
+
+  /**
+   * Make table rows clickable to trigger edit links, but allow other interactive elements to work
+   */
+  clickableRows: function() {
+    // this.$addedit_form.on('click', 'tbody tr', function(ev) {
+    //   // Don't trigger if clicking on a link, button, input, or other interactive element
+    //   if ($(ev.target).closest('a, button, input, select, label, .sortable-handle').length) {
+    //     return;
+    //   }
+      
+    //   // Find the edit link in this row and trigger it
+    //   var $editLink = $(this).find('.js-edit-link');
+    //   if ($editLink.length) {
+    //     ev.preventDefault();
+    //     $editLink.trigger('click');
+    //   }
+    // });
   },
 
   /**
@@ -49,17 +144,49 @@ Fae.form.ajax = {
    * @see addEditLinks
    */
   _addEditActions: function(remote_url, $wrapper) {
+    var _this = this;
 
     $.get(remote_url, function(data){
-      // check to see if the content is hidden and slide it down if it is.
-      if ($wrapper.is(':hidden')) {
+      
+      // Check if the wrapper is inside a parent form - if so, we need to convert
+      // the nested form to a div to avoid invalid HTML (nested forms)
+      var isInsideForm = $wrapper.closest('form').length > 0;
+      
+      if (isInsideForm) {
+        // Convert form elements to divs with data attributes before inserting
+        data = _this._convertNestedFormToDiv(data);
+      }
+
+      // Pre-hide non-active language fields before inserting into DOM to prevent flash
+      var $langSelect = Fae.navigation.language.el.$select;
+      if ($langSelect && $langSelect.length) {
+        var currentLang = $langSelect.val();
+        var $data = $('<div>').html(data);
+        $data.find('div[data-language]').each(function() {
+          var fieldLang = $(this).attr('data-language');
+          if (fieldLang !== 'en' && fieldLang !== currentLang) {
+            $(this).css('display', 'none');
+          }
+          if (!currentLang && fieldLang !== 'en') {
+            $(this).css('display', 'none');
+          }
+        });
+        data = $data.html();
+      }
+      
+      // Check if the wrapper is visible and has content
+      var isVisible = $wrapper.is(':visible');
+      var hasContent = $wrapper.children().length > 0;
+      
+      if (!isVisible || !hasContent) {
+        console.log('Container hidden or empty, sliding down');
         // replace the content of the form area and initiate the chosen and fileinputer
         $wrapper.html(data).find('.select select').fae_chosen({ width: '300px' });
         $wrapper.find('.input.file').fileinputer();
         $wrapper.slideDown();
-
       } else {
-        // if it is visible, replace its content by retaining height
+        console.log('Container visible with content, replacing smoothly');
+        // if it is visible and has content, replace its content by retaining height
         $wrapper.height($wrapper.height());
 
         // replace the content of the form area and then remove that height and then chosen and then fileinputer
@@ -67,10 +194,19 @@ Fae.form.ajax = {
         $wrapper.find('.input.file').fileinputer();
       }
 
-      this.$nested_form = $('.nested-form');
+      // Disable component select when form is open
+      var $componentSelect = $wrapper.closest('.js-addedit-form').find('.js-component-select');
+      $componentSelect.prop('disabled', true).trigger('chosen:updated');
+
+      // Reduce opacity of sortable icons and disable clicking in the parent table only (not nested tables in forms)
+      var $parentTable = $wrapper.closest('.js-addedit-form').find('> table');
+      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '0.3');
+      $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', 'none');
+
+      _this.$nested_form = $('.nested-form');
 
       // Bind validation to nested form fields added by AJAX
-      Fae.form.validator.bindValidationEvents(this.$nested_form);
+      Fae.form.validator.bindValidationEvents(_this.$nested_form);
 
       // Reinitialize form elements
       Fae.form.dates.initDatepicker();
@@ -82,17 +218,24 @@ Fae.form.ajax = {
       Fae.form.text.initHTML();
       Fae.form.checkbox.setCheckboxAsActive();
       Fae.form.select.init();
-      Fae.form.formManager.setupAllFields($wrapper.find('form'));
+      Fae.form.formManager.setupAllFields($wrapper.find('.js-nested-form-container, form'));
       Fae.form.dragDrop.init();
       Fae.tables.rowSorting();
       Fae.form.text.initTranslation();
+      Fae.form.text.initGenerateAlt();
       Fae.altTextManager.ready();
       Fae.form.text.initGenerateAlt();
+      Fae.form.rankedSelect.init();
+
+      // Refresh cached language divs to include newly loaded nested form fields
+      Fae.navigation.language.el.$lang_divs = $('div[data-language]');
 
       // validate nested form fields on submit
-      Fae.form.validator.formValidate(this.$nested_form);
+      Fae.form.validator.formValidate(_this.$nested_form);
 
       $wrapper.find('.hint').hinter();
+      console.log('Final scroll check');
+      // FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -50);
     });
   },
 
@@ -106,10 +249,150 @@ Fae.form.ajax = {
       var $form_wrapper = $this.closest('.js-addedit-form-wrapper');
 
       if ($form_wrapper.length) {
+        // Re-enable component select when form is closed
+        var $componentSelect = $form_wrapper.closest('.js-addedit-form').find('.js-component-select');
+        
+        // Restore sortable icons opacity and re-enable clicking in parent table only
+        var $parentTable = $form_wrapper.closest('.js-addedit-form').find('> table');
+        $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '');
+        $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
+        
+        // Get the section to scroll to before removing the form
+        var $scrollTarget = $form_wrapper.closest('.js-addedit-form');
+        
+        // Check if parent is a nested form row (for regular nested tables) or direct child of section (for flex components)
+        var $parentRow = $form_wrapper.closest('.js-nested-form-row');
+        
         $form_wrapper.slideUp('normal', function(){
-          $form_wrapper.empty();
+          if ($parentRow.length) {
+            // Regular nested table - remove the whole row
+            $parentRow.remove();
+          } else {
+            // Flex component - just empty the wrapper, don't remove parent
+            console.log($this.data('draft'));
+            console.log($this.data('delete-path'));
+            if ( $this.data('draft') === true && $this.data('delete-path') ) {
+              console.log('Deleting draft record');
+              // If it's a draft, send DELETE request to remove the draft record
+              $.ajax({
+                url: $this.data('delete-path'),
+                type: 'DELETE',
+                success: function() {
+                  $form_wrapper.empty();
+                },
+                error: function() {
+                  console.error('Failed to delete draft record');
+                  $form_wrapper.empty();
+                }
+              });
+            } else {
+              console.log('Not a draft, just removing form');
+              $form_wrapper.empty();
+            }
+          }
+          // Re-enable and reset component select
+          $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
+          // Scroll to show the table section
+          FCH.smoothScroll($scrollTarget, 500, 100, -150);
         });
       }
+    });
+  },
+
+  /**
+   * Handle nested form submissions when forms are loaded inside a parent form.
+   * Since nested <form> elements are invalid HTML and browsers strip them,
+   * we convert forms to divs with data attributes and handle submission manually via AJAX.
+   */
+  nestedFormSubmission: function() {
+    var _this = this;
+
+    // Listen for clicks on submit buttons inside converted nested form containers
+    this.$addedit_form.on('click', '.js-nested-form-container input[type="submit"], .js-nested-form-container button[type="submit"]', function(ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      var $submitBtn = $(this);
+      var $container = $submitBtn.closest('.js-nested-form-container');
+      
+      if (!$container.length) {
+        console.warn('Nested form submission: Could not find .js-nested-form-container');
+        return;
+      }
+
+      var formAction = $container.data('action');
+      var formMethod = ($container.data('method') || 'POST').toUpperCase();
+      
+      if (!formAction) {
+        console.warn('Nested form submission: No action URL found');
+        return;
+      }
+
+      // Collect all form inputs within the container
+      var formData = new FormData();
+      
+      // Add all input fields
+      $container.find('input, select, textarea').each(function() {
+        var $input = $(this);
+        var name = $input.attr('name');
+        
+        if (!name) return;
+        
+        if ($input.is(':checkbox')) {
+          if ($input.is(':checked')) {
+            formData.append(name, $input.val() || '1');
+          }
+        } else if ($input.is(':radio')) {
+          if ($input.is(':checked')) {
+            formData.append(name, $input.val());
+          }
+        } else if ($input.is('select[multiple]')) {
+          $input.find('option:selected').each(function() {
+            formData.append(name, $(this).val());
+          });
+        } else if ($input.is(':file')) {
+          var files = $input[0].files;
+          for (var i = 0; i < files.length; i++) {
+            formData.append(name, files[i]);
+          }
+        } else if ($input.attr('type') !== 'submit') {
+          formData.append(name, $input.val());
+        }
+      });
+
+      // Store original button text and disable
+      var originalText = $submitBtn.val() || $submitBtn.text();
+      var disableWith = $submitBtn.data('disable-with') || 'Saving...';
+      $submitBtn.prop('disabled', true);
+      if ($submitBtn.is('input')) {
+        $submitBtn.val(disableWith);
+      } else {
+        $submitBtn.text(disableWith);
+      }
+
+      $.ajax({
+        url: formAction,
+        type: formMethod,
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'html',
+        success: function(data) {
+          // Trigger the same ajax:success handling that Rails UJS would
+          // We trigger on the container's parent .js-addedit-form so existing handlers work
+          var $addeditForm = $container.closest('.js-addedit-form');
+          $addeditForm.trigger('ajax:success', [data, 'success', null]);
+        },
+        error: function(xhr, status, error) {
+          console.error('Nested form submission error:', error);
+          $submitBtn.prop('disabled', false);
+          if ($submitBtn.is('input')) {
+            $submitBtn.val(originalText);
+          } else {
+            $submitBtn.text(originalText);
+          }
+        }
+      });
     });
   },
 
@@ -146,9 +429,16 @@ Fae.form.ajax = {
             // we're returning the table, replace everything
             _this._addEditReplaceAndReinit($theFormWrapper, $html.html(), $target);
           } else if ($html.hasClass('nested-form')) {
-
             // we're returning the form due to an error, just replace the form
-            $theFormWrapper.find('.nested-form' ).replaceWith($html);
+            
+            // Check if we're inside a parent form - if so, convert nested forms to divs
+            var isInsideForm = $theFormWrapper.closest('form').length > 0;
+            if (isInsideForm) {
+              var convertedHtml = _this._convertNestedFormToDiv($html[0].outerHTML);
+              $html = $(convertedHtml);
+            }
+            
+            $theFormWrapper.find('.nested-form').replaceWith($html);
             $theFormWrapper.find('.select select').fae_chosen();
             $theFormWrapper.find('.input.file').fileinputer();
 
@@ -160,7 +450,7 @@ Fae.form.ajax = {
             Fae.form.text.initMarkdown();
             Fae.form.text.initHTML();
 
-            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, 120);
+            FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, -100);
           }
         }
 
@@ -168,7 +458,7 @@ Fae.form.ajax = {
           _this.filterSubmission();
         }
 
-        Fae.navigation.fadeNotices();
+        Fae.navigation.showToasts();
 
       } else if ($target.hasClass('js-asset-delete')) {
         // handle remove asset links on nested forms
@@ -201,7 +491,20 @@ Fae.form.ajax = {
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
       Fae.tables.rowSorting();
-      Fae.navigation.fadeNotices();
+      Fae.form.rankedSelect.init();
+      // Fae.navigation.fadeNotices();
+      Fae.navigation.showToasts();
+      
+      $('.js-component-select').fae_chosen();
+      
+      // Re-enable component select after successful form submission
+      var $componentSelect = $el.find('.js-component-select');
+      $componentSelect.prop('disabled', false).val('').trigger('chosen:updated');
+
+      // Restore sortable icons opacity and re-enable clicking in parent table only
+      var $parentTable = $el.find('> table');
+      $parentTable.find('> tbody > tr > .sortable-handle .icon-sort').css('opacity', '');
+      $parentTable.find('> tbody > tr > .sortable-handle').css('pointer-events', '');
 
       if ($el.find('.js-content-header').length) {
         Fae.navigation.stickyHeaders(true);
@@ -209,6 +512,7 @@ Fae.form.ajax = {
     }
 
     // if there's a form wrap, slide it up before replacing content
+    console.log($form_wrapper.length);
     if ($form_wrapper.length) {
       $form_wrapper.slideUp(regenerateHTML);
 
@@ -217,7 +521,8 @@ Fae.form.ajax = {
     }
 
     if (!$target.hasClass('js-delete-link')) {
-      FCH.smoothScroll($el.parent(), 500, 100, 120);
+      // Scroll higher to show the table section after form closes
+      FCH.smoothScroll($el, 500, 100, -150);
     }
   },
 
@@ -407,6 +712,45 @@ Fae.form.ajax = {
           }
         }
       });
+  },
+
+  /**
+   * Convert form elements in HTML string to divs with data attributes.
+   * This prevents invalid nested form HTML when loading forms via AJAX into a parent form.
+   * @param {String} html - HTML string containing form elements
+   * @returns {String} - Modified HTML with forms converted to divs
+   */
+  _convertNestedFormToDiv: function(html) {
+    var $temp = $('<div>').html(html);
+    
+    $temp.find('form').each(function() {
+      var $form = $(this);
+      var $div = $('<div>')
+        .addClass('js-nested-form-container')
+        .attr('id', $form.attr('id'))
+        .attr('data-action', $form.attr('action'))
+        .attr('data-method', $form.attr('method') || 'post')
+        .attr('data-remote', 'true');
+      
+      // Copy over other relevant attributes
+      if ($form.attr('enctype')) {
+        $div.attr('data-enctype', $form.attr('enctype'));
+      }
+      if ($form.attr('class')) {
+        $div.addClass($form.attr('class'));
+      }
+      if ($form.data('type')) {
+        $div.attr('data-type', $form.data('type'));
+      }
+      
+      // Move form contents into the div
+      $div.html($form.html());
+      
+      // Replace the form with the div
+      $form.replaceWith($div);
+    });
+    
+    return $temp.html();
   }
 
 };

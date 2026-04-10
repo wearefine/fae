@@ -2,6 +2,43 @@ require 'rails_helper'
 
 describe Fae::BaseModelConcern do
 
+  describe '.has_fae_draft_support?' do
+    context 'when model has draft column' do
+      it 'returns true' do
+        expect(Beer.has_fae_draft_support?).to be true
+      end
+    end
+
+    context 'when model does not have draft column' do
+      it 'returns false' do
+        expect(Release.has_fae_draft_support?).to be false
+      end
+    end
+  end
+
+  describe '.for_fae_index' do
+    context 'when model has draft support' do
+      it 'excludes draft records' do
+        draft_beer = FactoryBot.create(:beer, name: 'Draft Beer', draft: true)
+        published_beer = FactoryBot.create(:beer, name: 'Published Beer', draft: false)
+
+        items = Beer.for_fae_index
+
+        expect(items).to include(published_beer)
+        expect(items).not_to include(draft_beer)
+      end
+    end
+
+    context 'when model does not have draft support' do
+      it 'returns all records' do
+        release = FactoryBot.create(:release, release_date: Date.today)
+        items = Release.for_fae_index
+
+        expect(items).to include(release)
+      end
+    end
+  end
+
   describe '#to_csv' do
     context 'when to_csv is run' do
       it 'it should return a csv with the correct data items' do

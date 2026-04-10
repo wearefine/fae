@@ -17,7 +17,7 @@ feature 'fae_nested_table' do
 
     within(:css, 'form#new_sub_aroma') do
       fill_in 'Name', with: 'My Brand New Sub Smell!'
-      click_button('Create Sub aroma')
+      click_button('Save')
     end
 
     eventually {
@@ -43,7 +43,7 @@ feature 'fae_nested_table' do
 
     within(:css, "form#edit_sub_aroma_#{sub_aroma.id}") do
       fill_in 'Name', with: 'Lavender'
-      click_button('Update Sub aroma')
+      click_button('Save')
     end
 
     eventually {
@@ -85,7 +85,9 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: "Sub Aroma"
     end
 
-    click_button 'Save'
+    within(:css, '.content-header') do
+      click_button 'Save'
+    end
     page.driver.browser.reject_js_confirms
 
     expect(page).to have_css('form#new_sub_aroma')
@@ -107,7 +109,9 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: "Sub Aroma"
     end
 
-    click_button 'Save'
+    within(:css, '.content-header') do
+      click_button 'Save'
+    end
     page.driver.browser.accept_js_confirms
 
     eventually {

@@ -26,7 +26,8 @@ module Fae
     private
 
     def current_section
-      @current_path.gsub(/\/new$|\/\d+\/edit/, '')
+      # Strip /new, /\d+/edit, and /\d+ (for update/create paths) to get base path
+      @current_path.gsub(/\/new$|\/\d+\/edit$|\/\d+$/, '')
     end
 
     def find_current_hash(array_of_items)
