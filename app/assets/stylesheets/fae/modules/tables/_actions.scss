@@ -4,15 +4,19 @@ th {
   }
 
   &.-action-wide {
-    width: 85px
+    width: 85px;
   }
 
   &.-action-narrow {
-    width: 100px
+    width: 100px;
   }
 
   &.-thumb {
     width: 150px;
+  }
+
+  &.-display-field {
+    width: 250px;
   }
 }
 

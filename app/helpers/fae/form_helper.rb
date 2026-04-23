@@ -117,6 +117,7 @@ module Fae
       raise "Fae::'#{attribute}' must be an association of #{f.object}" if !is_association?(f, attribute)
       
       join_model = options.delete(:join_model)
+      preview_image = options.delete(:preview_image)
       ranking_title = options.delete(:ranking_title) || "#{attribute.to_s.titleize} Ranking"
       ranking_helper_text = options.delete(:ranking_helper_text)
       display_field = options.delete(:display_field) || :fae_display_field
@@ -178,7 +179,8 @@ module Fae
           associated_model: associated_model,
           parent_model: parent_model_name,
           parent_id: parent_item.id,
-          collection: collection
+          collection: collection,
+          preview_image: preview_image
         }
       )
       

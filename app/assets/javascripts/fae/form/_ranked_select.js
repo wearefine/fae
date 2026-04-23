@@ -257,7 +257,9 @@ Fae.form.rankedSelect = {
    * Add a new row to the ranking table
    */
   addRowToTable: function($tbody, item, joinRecordId, associatedId) {
-    var joinModel = $tbody.closest('.js-ranking-table').data('join-model');
+    var $rankingTable = $tbody.closest('.js-ranking-table');
+    var joinModel = $rankingTable.data('join-model');
+    var showPreviewImage = String($rankingTable.data('preview-image')) === 'true';
     // Convert CamelCase to snake_case and pluralize (e.g., BeerAroma -> beer_aromas)
     var snakeCaseModel = joinModel.replace(/([A-Z])/g, function(match, p1, offset) {
       return (offset > 0 ? '_' : '') + p1.toLowerCase();
@@ -265,11 +267,21 @@ Fae.form.rankedSelect = {
     var pluralModel = snakeCaseModel + 's';
     var rowId = joinRecordId ? pluralModel + '_' + joinRecordId : null;
     var dataId = joinRecordId || associatedId;
+    var previewCell = '';
+
+    if (showPreviewImage) {
+      previewCell = '<td>';
+      if (item.preview_image_url) {
+        previewCell += '<img src="' + this.escapeHtml(item.preview_image_url) + '" />';
+      }
+      previewCell += '</td>';
+    }
     
     var $row = $('<tr class="js-ranking-row" data-id="' + dataId + '" data-associated-id="' + associatedId + '"' + 
       (rowId ? ' id="' + rowId + '"' : '') + '>' +
       '<td class="sortable-handle"><i class="icon-sort"></i></td>' +
       '<td>' + this.escapeHtml(item.name) + '</td>' +
+      previewCell +
       '</tr>');
     
     // Insert before empty row if it exists, otherwise append

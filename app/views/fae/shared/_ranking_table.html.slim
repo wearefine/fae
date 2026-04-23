@@ -10,8 +10,9 @@ ruby:
   parent_model ||= nil
   parent_id ||= nil
   collection ||= []
+  preview_image ||= nil
 
-section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-model=join_model data-associated-model=associated_model data-parent-model=parent_model data-parent-id=parent_id data-display-field=display_field data-associated-item=associated_item_name
+section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-model=join_model data-associated-model=associated_model data-parent-model=parent_model data-parent-id=parent_id data-display-field=display_field data-associated-item=associated_item_name data-preview-image=(preview_image.present?)
   h2 = title
   - if helper_text.present?
     h6.table-helper-text = helper_text
@@ -19,23 +20,37 @@ section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-mod
     thead
       tr
         th.th-sortable-handle
-        th Name
+        th.-display-field Display Field
+        - if preview_image.present?
+          th
     tbody
       - if join_records.present?
         - join_records.each do |join_record|
           - associated_item = associated_item_name ? join_record.send(associated_item_name) : nil
           - display_name = associated_item&.respond_to?(display_field) ? associated_item.send(display_field) : join_record.to_s
+          - preview_image_url = nil
+          - if preview_image.present? && associated_item&.respond_to?(preview_image)
+            - preview_image_url = nested_table_thumb_url(associated_item.send(preview_image))
           tr.js-ranking-row id=tr_id(join_record) data-id=join_record.id data-associated-id=(associated_item&.id)
             td.sortable-handle: i.icon-sort
             td = display_name
+            - if preview_image.present?
+              td
+                - if preview_image_url.present?
+                  = image_tag(preview_image_url)
       - else
         tr.ranking-table-empty-row.js-ranking-empty-row
           td
           td No items selected
+          - if preview_image.present?
+            td
   
   /! Store collection data for JavaScript to use when adding new items
   script type="application/json" class="js-ranking-collection"
     - collection_data = collection.map do |c|
       - name = c.respond_to?(display_field) ? c.send(display_field) : c.to_s
-      - { id: c.id, name: name }
+      - preview_image_url = nil
+      - if preview_image.present? && c.respond_to?(preview_image)
+        - preview_image_url = nested_table_thumb_url(c.send(preview_image))
+      - { id: c.id, name: name, preview_image_url: preview_image_url }
     = collection_data.to_json.html_safe

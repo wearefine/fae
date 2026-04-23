@@ -19,7 +19,7 @@ Fae.form.slugger = {
     var _this = this;
 
     $('.slug').each(function() {
-      var $form = $(this).closest('form');
+      var $form = $(this).closest('form, .js-nested-form-container');
       var $sluggers = $form.find('.slugger');
       var $slug = $form.find('.slug');
       var $select_slugger = $('.select.slugger');

@@ -41,13 +41,14 @@
     background: none;
     border-top: none;
     padding-left: 0;
+    padding-bottom: 0;
     color: $c-text-heavy;
     font-weight: bold;
   }
 
   // Nested .content sections should have less top padding and more bottom margin
   .content {
-    padding-top: 10px;
+    padding: 10px 0 20px 0px;
     margin-bottom: 30px;
   }
 
