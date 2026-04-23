@@ -12,7 +12,7 @@ ruby:
   collection ||= []
   preview_image ||= nil
 
-section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-model=join_model data-associated-model=associated_model data-parent-model=parent_model data-parent-id=parent_id data-display-field=display_field data-associated-item=associated_item_name data-preview-image=(preview_image.present?)
+section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-model=join_model data-associated-model=associated_model data-parent-model=parent_model data-parent-id=parent_id data-display-field=display_field data-associated-item=associated_item_name data-preview-image=preview_image
   h2 = title
   - if helper_text.present?
     h6.table-helper-text = helper_text
@@ -20,7 +20,7 @@ section.content.ranking-table.js-ranking-table id=ranking_table_id data-join-mod
     thead
       tr
         th.th-sortable-handle
-        th.-display-field Display Field
+        th Display Field
         - if preview_image.present?
           th
     tbody
