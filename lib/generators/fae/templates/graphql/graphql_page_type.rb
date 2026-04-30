@@ -14,4 +14,5 @@ class Types::<%= class_name %>PageType < Types::BaseObject
 <% end -%>
 <% end -%>
 <% end -%>
+  field :updated_at, String, null: false
 end
