@@ -8,7 +8,7 @@ module Fae
     acts_as_list add_new_at: :bottom, scope: [:flex_componentable_type, :flex_componentable_id]
     default_scope { order(:position) }
   
-    belongs_to :flex_componentable, polymorphic: true
+    belongs_to :flex_componentable, polymorphic: true, touch: true
   
     validates :component_model, presence: true
   
