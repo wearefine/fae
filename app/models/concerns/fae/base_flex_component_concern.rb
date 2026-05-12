@@ -4,10 +4,15 @@ module Fae
 
     included do
       has_flex_component self.name
+
+      after_commit :touch_parent_object
+      def touch_parent_object
+        parent_object.touch if parent_object.present?
+      end
     end
   
     def parent_object
-      flex_component.flex_componentable
+      flex_component&.flex_componentable
     end
   
     def component_type_name
