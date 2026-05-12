@@ -121,6 +121,10 @@ module Fae
       ranking_title = options.delete(:ranking_title) || "#{attribute.to_s.titleize} Ranking"
       ranking_helper_text = options.delete(:ranking_helper_text)
       display_field = options.delete(:display_field) || :fae_display_field
+      has_group_select_labels = options.key?(:group_select_labels)
+      has_grouped_select_options = options.key?(:grouped_select_options)
+      group_select_labels = options.delete(:group_select_labels)
+      grouped_select_options = options.delete(:grouped_select_options)
       
       # Extract select-specific label and helper text options
       options[:label] = options.delete(:select_label) if options[:select_label].present?
@@ -162,8 +166,17 @@ module Fae
       options[:input_html][:data][:associated_model] = associated_model
       options[:input_html][:class] = "#{options[:input_html][:class]} js-ranked-select".strip
       
-      # Build the association select
-      association_html = fae_association(f, attribute, options)
+      # Build the select input. Use grouped select when group options are provided.
+      association_html = if has_group_select_labels || has_grouped_select_options
+        if group_select_labels.blank? || grouped_select_options.blank?
+          raise "Fae::MissingRequiredOption: fae_ranked_select requires both 'group_select_labels' and 'grouped_select_options' when using grouped select."
+        end
+
+        grouped_select_params = options.merge(labels: group_select_labels, groups: grouped_select_options)
+        fae_grouped_select(f, attribute, grouped_select_params)
+      else
+        fae_association(f, attribute, options)
+      end
       
       # Build the ranking table
       ranking_html = render(
