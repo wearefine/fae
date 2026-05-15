@@ -188,7 +188,6 @@ module Fae
         response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
           http.request request
         end
-
         JSON.parse(response.body.force_encoding('utf-8'))
       end
     end

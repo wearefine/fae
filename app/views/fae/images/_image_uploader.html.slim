@@ -78,12 +78,12 @@ ruby:
         options[:wrapper_html].merge!({class: "#{form_manager_id}_alt_container"})
         options[:show_form_manager] = false
 
+        # If it's an _en alt text field, show the translate button
+        # If it's a non-_en alt text field, show the translate button if translation is enabled
         if (Fae::Option.instance.translate_language && !form_manager_id.to_s.end_with?('_en') && Fae.languages.keys.any? { |field| form_manager_id.to_s.include?(field.to_s) })
           translate = content_tag(:span, 'Translate', class: "button js-translate-button translate-button")
           options[:translate] = translate.html_safe if translate.present?
-        end 
-        
-        if open_ai_enabled?
+        elsif open_ai_enabled?
           button_options = {
             class: "button js-generate-alt-button-on-form generate-alt-button", 
             data: { 
@@ -94,6 +94,8 @@ ruby:
           generate_alt = content_tag(:button, 'Generate Alt', button_options)
           options[:generate_alt] = generate_alt.html_safe if generate_alt.present?
         end
+        
+        
 
       = fae_input i, :alt, options
 
