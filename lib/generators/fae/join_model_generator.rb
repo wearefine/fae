@@ -33,11 +33,11 @@ module Fae
     end
 
     def owner_reference_attribute
-      "#{owner_association_name}:references:index"
+      "#{owner_association_name}_id:integer:index"
     end
 
     def joined_reference_attribute
-      "#{joined_association_name}:references:index"
+      "#{joined_association_name}_id:integer:index"
     end
 
     def owner_association_name
