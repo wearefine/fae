@@ -25,6 +25,7 @@ module Fae
         @form_attrs = set_form_attrs
         @association_names = @@association_names
         @attachments = @@attachments
+        @markdown_attribute_names = @@markdown_attribute_names
         @has_position = @@has_position
         @display_field = @@display_field
         template "views/index_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"

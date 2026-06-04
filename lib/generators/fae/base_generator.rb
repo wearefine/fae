@@ -5,13 +5,14 @@ module Fae
     class_option :namespace, type: :string, default: 'admin', desc: 'Sets the namespace of the generator'
     class_option :template, type: :string, default: 'slim', desc: 'Sets the template engine of the generator'
     class_option :polymorphic, type: :boolean, default: false, desc: 'Makes the model and scaffolding polymorphic. parent-model is ignored if passed.'
-    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set', 'cta']
+    Rails::Generators::GeneratedAttribute::DEFAULT_TYPES += ['image', 'file', 'seo_set', 'cta', 'markdown']
 
     @@attributes_flat = []
     @@attribute_names = []
     @@association_names = []
     @@attachments = []
     @@graphql_attributes = []
+    @@markdown_attribute_names = []
     @@has_position = false
     @@display_field = ''
     @@needs_livable = false
@@ -39,6 +40,7 @@ module Fae
             @@association_names << arg.name.gsub(/_id$/, '')
           elsif !is_attachment(arg)
             @@attribute_names << arg.name
+            @@markdown_attribute_names << arg.name if markdown_attribute?(arg)
           end
           @@has_position = true if arg.name === 'position'
           @@needs_livable = true if arg.name == 'on_prod'
@@ -50,6 +52,7 @@ module Fae
         @@attribute_names.uniq!
         @@attachments.uniq!
         @@graphql_attributes.uniq!
+        @@markdown_attribute_names.uniq!
       end
 
       # Always add an indexed draft boolean column for scaffold-generated objects
@@ -84,6 +87,7 @@ module Fae
       @attachments = @@attachments
       @has_position = @@has_position
       @display_field = @@display_field
+      @markdown_attribute_names = @@markdown_attribute_names
       @polymorphic_name = polymorphic_name
       template "views/index.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/index.html.#{options.template}"
       template "views/_form.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
@@ -285,6 +289,10 @@ RUBY
     def format_attribute(arg)
       type = arg.type.to_s
 
+      if type == 'markdown'
+        return "#{arg.name}:text" + (arg.has_index? ? ':index' : '')
+      end
+
       if arg.name == 'on_stage' && type == 'boolean'
         return 'on_stage:boolean:index'
       end
@@ -319,6 +327,10 @@ RUBY
 
     def polymorphic_name
       "#{file_name.underscore}able"
+    end
+
+    def markdown_attribute?(arg)
+      arg.type.to_s == 'markdown'
     end
 
     def polymorphic_name

@@ -18,7 +18,11 @@ ruby:
 
 <% @attributes.each do |attr, type| -%>
 <% if ["Fae::TextArea", "Fae::TextField"].include? type -%>
+<% if @markdown_attributes.include?(attr) -%>
+	= fae_content_form f, :<%= attr %>, markdown: true
+<% else -%>
     = fae_content_form f, :<%= attr %>
+<% end -%>
 <% elsif "Fae::Image" == type -%>
     = fae_image_form f, :<%= attr %>
 <% elsif "Fae::File" == type -%>

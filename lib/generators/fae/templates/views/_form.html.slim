@@ -12,7 +12,11 @@ ruby:
 
   main.content
 <% @form_attrs.each do |attr| -%>
+<% if @markdown_attribute_names.include?(attr) -%>
+	= fae_input f, :<%= attr %>, markdown: true
+<% else -%>
     = fae_input f, :<%= attr %>
+<% end -%>
 <% end -%>
 
 <% @association_names.each do |attr| -%>

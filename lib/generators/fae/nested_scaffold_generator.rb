@@ -36,6 +36,7 @@ module Fae
       def generate_view_files
         @form_attrs = set_form_attrs
         @attachments = @@attachments
+        @markdown_attribute_names = @@markdown_attribute_names
         template "views/table_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/table.html.#{options.template}"
         template "views/_form_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
         template "views/new_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"

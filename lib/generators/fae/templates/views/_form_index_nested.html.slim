@@ -14,7 +14,11 @@ ruby:
 	}
 = simple_form_for(['<%= options.namespace %>', @item], form_options) do |f|
 <% @form_attrs.each do |attr| -%>
+<% if @markdown_attribute_names.include?(attr) -%>
+	= fae_input f, :<%= attr %>, markdown: true
+<% else -%>
   = fae_input f, :<%= attr %>
+<% end -%>
 <% end -%>
 <% @attachments.each do |attachment| %>
 <% if attachment.type == :image -%>

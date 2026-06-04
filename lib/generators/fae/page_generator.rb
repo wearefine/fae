@@ -5,13 +5,16 @@ module Fae
     source_root ::File.expand_path('../templates', __FILE__)
 
     @@attributes = {}
+    @@markdown_attributes = []
 
     def set_globals
       if attributes.present?
         attributes.each do |attr|
           @@attributes[attr.name.to_sym] = convert_attr_type(attr.type)
+          @@markdown_attributes << attr.name.to_sym if attr.type.to_s == 'markdown'
           @@graphql_attributes << graphql_object(attr)
         end
+        @@markdown_attributes.uniq!
       end
     end
 
@@ -49,6 +52,7 @@ module Fae
 
     def generate_static_page_view
       @attributes = @@attributes
+      @markdown_attributes = @@markdown_attributes
       template "views/static_page_form.html.#{options.template}", "app/views/#{options.namespace}/content_blocks/#{file_name}.html.#{options.template}"
     end
 
@@ -62,6 +66,8 @@ module Fae
       when "string"
         connect_object "Fae::TextField"
       when "text"
+        connect_object "Fae::TextArea"
+      when "markdown"
         connect_object "Fae::TextArea"
       when "image"
         connect_object "Fae::Image"
