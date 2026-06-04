@@ -28,7 +28,7 @@ module Fae
           if is_attachment(arg)
             @@attachments << arg
           else
-            @@attributes_flat << "#{arg.name}:#{arg.type}" + (arg.has_index? ? ":index" : "")
+            @@attributes_flat << format_attribute(arg)
           end
 
           if options.polymorphic
@@ -64,9 +64,11 @@ module Fae
 
     def generate_model
       generate "model #{file_name} #{@@attributes_flat}"
+      apply_special_defaults_to_latest_migration(file_name)
       inject_concern
       inject_display_field_to_model
       inject_model_attachments
+      inject_field_failoverable
       inject_position_scope
     end
 
@@ -171,6 +173,21 @@ RUBY
       end
     end
 
+    def inject_field_failoverable
+      return unless needs_field_failoverable?
+
+      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+        <<-RUBY
+  include FieldFailoverable
+
+  def failover_seo_title
+    #{failover_seo_title_body}
+  end
+
+RUBY
+      end
+    end
+
     def inject_nav_item
       line = "item('#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path),\n\s\s\s\s\s\s\s\s"
       inject_into_file 'app/models/concerns/fae/navigation_concern.rb', line, before: '# scaffold inject marker'
@@ -209,6 +226,7 @@ RUBY
       return unless uses_graphql
       @graphql_attributes = @@graphql_attributes
       template "graphql/graphql_type.rb", "app/graphql/types/#{file_name}_type.rb"
+      inject_base_seo_fields_to_graphql_type
     end
 
     def uses_graphql
@@ -221,6 +239,82 @@ RUBY
 
     def is_attachment(arg)
       [:image, :file, :seo_set, :cta].include?(arg.type)
+    end
+
+    def needs_field_failoverable?
+      @@attribute_names.include?('seo_title') && field_failoverable_available?
+    end
+
+    def field_failoverable_available?
+      ::File.exist?(Rails.root.join('app/models/concerns/field_failoverable.rb'))
+    end
+
+    def failover_seo_title_body
+      if @@attribute_names.include?('name')
+        'name'
+      elsif @@attribute_names.include?('title')
+        'title'
+      else
+        '#TODO'
+      end
+    end
+
+    def inject_base_seo_fields_to_graphql_type
+      return unless needs_base_seo_fields_in_graphql?
+
+      graphql_type_file = "app/graphql/types/#{file_name}_type.rb"
+      return unless ::File.exist?(Rails.root.join(graphql_type_file))
+      return if ::File.read(Rails.root.join(graphql_type_file)).include?('implements Types::BaseSeoFields')
+
+      inject_into_file graphql_type_file, after: "class Types::#{class_name}Type < Types::BaseObject\n" do
+        <<-RUBY
+  implements Types::BaseSeoFields
+
+RUBY
+      end
+    end
+
+    def needs_base_seo_fields_in_graphql?
+      @@attribute_names.include?('seo_title') && base_seo_fields_available?
+    end
+
+    def base_seo_fields_available?
+      ::File.exist?(Rails.root.join('app/graphql/types/base_seo_fields.rb'))
+    end
+
+    def format_attribute(arg)
+      type = arg.type.to_s
+
+      if arg.name == 'on_stage' && type == 'boolean'
+        return 'on_stage:boolean:index'
+      end
+
+      if arg.name == 'on_prod' && type == 'boolean'
+        return 'on_prod:boolean:index'
+      end
+
+      if arg.name == 'position' && type == 'integer'
+        return 'position:integer:index'
+      end
+
+      if arg.name == 'slug' && type == 'string'
+        return 'slug:string:index'
+      end
+
+      if arg.name == 'static_page_id' && type == 'integer'
+        return 'static_page_id:integer:index'
+      end
+
+      "#{arg.name}:#{arg.type}" + (arg.has_index? ? ':index' : '')
+    end
+
+    def apply_special_defaults_to_latest_migration(model_name)
+      migration_pattern = Rails.root.join('db/migrate', "*_create_#{model_name.pluralize}.rb").to_s
+      migration_file = Dir.glob(migration_pattern).max
+      return unless migration_file && ::File.exist?(migration_file)
+
+      gsub_file migration_file, /^(\s*)t\.boolean :on_stage(?:,.*)?$/, '\1t.boolean :on_stage, default: true'
+      gsub_file migration_file, /^(\s*)t\.boolean :on_prod(?:,.*)?$/, '\1t.boolean :on_prod, default: false'
     end
 
     def polymorphic_name

@@ -18,6 +18,7 @@ module Fae
 
       def generate_nested_model_file
         generate "model #{file_name} #{@@attributes_flat}"
+        apply_special_defaults_to_latest_migration(file_name)
         inject_concern
         inject_display_field_to_model
         inject_model_attachments
