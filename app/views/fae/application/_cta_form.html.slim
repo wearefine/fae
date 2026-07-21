@@ -45,8 +45,8 @@ ruby:
       wrapper_html = {}
     end
     form_manager_id = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
-= f.simple_fields_for cta_name, defaults: { wrapper_html: wrapper_html } do |i|
-  = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
-  = fae_input i, :cta_label, label: cta_label_label
-  = fae_input i, :cta_link, as: :string, label: cta_link_label, helper_text: 'Relative link to an internal page. For external links, include the https://'
-  = fae_input i, :cta_alt_text, label: cta_alt_text_label, helper_text: 'Descriptive link label text read by screen readers.'
+  = f.simple_fields_for cta_name, defaults: { wrapper_html: wrapper_html } do |i|
+    = i.input :attached_as, as: :hidden, input_html: { value: attached_as }
+    = fae_input i, :cta_label, label: cta_label_label
+    = fae_input i, :cta_link, as: :string, label: cta_link_label, helper_text: 'Relative link to an internal page. For external links, include the https://'
+    = fae_input i, :cta_alt_text, label: cta_alt_text_label, helper_text: 'Descriptive link label text read by screen readers.'
