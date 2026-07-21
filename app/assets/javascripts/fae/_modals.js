@@ -28,18 +28,47 @@ Fae.modals = {
     $('#js-main-content').on('click', '.js-image-modal', function(e) {
       e.preventDefault();
       var $this = $(this);
-
-      // create invisi-image to get natural width/height
       var image = new Image();
-      image.src = $this.attr('src');
-      var image_width = image.width + 55;
-      var image_height = image.height + 55;
 
-      $this.modal({
-        minHeight: image_height,
-        minWidth: image_width,
-        overlayClose: true
-      });
+      function openImageModal(width, height) {
+        var modalPadding = 55;
+        var viewportMargin = 60;
+        var maxModalWidth = Math.max(FCH.$window.width() - viewportMargin, 220);
+        var maxModalHeight = Math.max(FCH.$window.height() - viewportMargin, 220);
+        var imageWidth = width || 1;
+        var imageHeight = height || 1;
+        var availableWidth = maxModalWidth - modalPadding;
+        var availableHeight = maxModalHeight - modalPadding;
+        var widthRatio = availableWidth / imageWidth;
+        var heightRatio = availableHeight / imageHeight;
+        var scale = Math.min(widthRatio, heightRatio, 1);
+        var modalWidth = Math.max(Math.round((imageWidth * scale) + modalPadding), 220);
+        var modalHeight = Math.max(Math.round((imageHeight * scale) + modalPadding), 220);
+
+        $this.modal({
+          minHeight: modalHeight,
+          minWidth: modalWidth,
+          maxHeight: maxModalHeight,
+          maxWidth: maxModalWidth,
+          overlayClose: true,
+          containerCss: { overflow: 'hidden' }
+        });
+      }
+
+      // Wait for natural dimensions so large images can be constrained to the viewport.
+      image.onload = function() {
+        openImageModal(image.naturalWidth || image.width, image.naturalHeight || image.height);
+      };
+
+      image.onerror = function() {
+        openImageModal($this.width(), $this.height());
+      };
+
+      image.src = $this.attr('src');
+
+      if (image.complete) {
+        image.onload();
+      }
     });
   },
 
