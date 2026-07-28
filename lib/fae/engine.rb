@@ -19,6 +19,8 @@ module Fae
     require 'rqrcode'
     require 'openai'
     require 'settingslogic'
+    require 'inertia_rails'
+    require 'vite_rails'
 
     config.eager_load_paths += %W(#{config.root}/app)
 

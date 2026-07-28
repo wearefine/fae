@@ -29,8 +29,9 @@ RSpec.configure do |config|
 
   Capybara.server = :webrick
 
-  # Use capybara-webkit as the JS driver
-  Capybara.javascript_driver = :webkit
+  # capybara-webkit is abandoned and its Qt5 build deps were dropped in Debian
+  # bookworm, which the Vite toolchain requires. Headless Chromium instead.
+  Capybara.javascript_driver = :selenium_chrome_headless
 
   Capybara.default_max_wait_time = 5
 

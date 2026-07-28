@@ -29,3 +29,8 @@ docker-compose.override.yml
 .env
 mysql
 node_modules
+
+# Vite build output
+spec/dummy/public/vite
+spec/dummy/public/vite-dev
+spec/dummy/public/vite-test

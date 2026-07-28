@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= page_title %></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <% if @option.favicon.present? && @option.favicon.asset.present? %>
+      <link href="<%= @option.favicon.asset_url %>" rel="shortcut icon">
+    <% end %>
+    <%= csrf_meta_tags %>
+    <%= inertia_ssr_head %>
+    <%= vite_client_tag %>
+    <%= vite_javascript_tag 'fae' %>
+  </head>
+
+  <body class="<%= body_class %>">
+    <%= yield %>
+  </body>
+</html>

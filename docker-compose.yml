@@ -1,6 +1,9 @@
-  version: '3.3'
   volumes:
     gems:
+    # Shadows the ./:/app bind mount so container-installed node_modules never
+    # land on the host. rollup/esbuild ship platform-native binaries, so sharing
+    # node_modules between a macOS host and the linux container corrupts both.
+    node_modules:
   services:
     app:
       stdin_open: true
@@ -13,6 +16,7 @@
       volumes:
         - gems:/gems
         - .:/app
+        - node_modules:/app/spec/dummy/node_modules
       ports:
         - '3000:3000'
       depends_on:
@@ -28,6 +32,23 @@
         - TRANSLATOR_TEXT_SUBSCRIPTION_KEY=test
         - TRANSLATOR_TEXT_REGION=test
         - OPEN_AI_API_KEY=test
+        # Rails must reach the Vite dev server by service name, not localhost.
+        - VITE_RUBY_HOST=vite
+    vite:
+      build:
+        context: .
+        dockerfile: ./Dockerfile.dev
+      working_dir: /app/spec/dummy
+      command: /bin/bash -c "npm install && npx vite --host 0.0.0.0 --port 3036"
+      volumes:
+        - .:/app
+        - node_modules:/app/spec/dummy/node_modules
+      ports:
+        # Published so the browser can load modules and reach the HMR websocket.
+        - '3036:3036'
+      environment:
+        - RAILS_ENV=development
+        - VITE_RUBY_HOST=0.0.0.0
     db:
       image: mariadb
       environment:

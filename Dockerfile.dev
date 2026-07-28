@@ -1,15 +1,17 @@
-FROM ruby:3.1.1
+FROM ruby:3.1.7-bookworm
 
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN apt-get update -y
 RUN apt-get install -y \
-      libqt5webkit5-dev \
       build-essential \
-      qtbase5-dev \
-      qtchooser \
-      qt5-qmake \
-      qtbase5-dev-tools \
+      chromium \
+      chromium-driver \
       xvfb
+
+# Node is required for the Vite/Vue frontend build (Fae 5+).
+ARG NODE_MAJOR=22
+RUN curl -fsSL https://deb.nodesource.com/setup_${NODE_MAJOR}.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV app /app
 ENV BUNDLE_PATH /gems

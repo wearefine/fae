@@ -25,6 +25,10 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails', '>= 5.0.7'
   s.add_dependency 'uglifier'
 
+  # Fae 5 frontend: Inertia-rendered Vue, built by Vite in the host app.
+  s.add_dependency 'inertia_rails', '~> 3.22'
+  s.add_dependency 'vite_rails', '~> 3.0'
+
   # other dependencies
   s.add_dependency 'acts_as_list', '~> 0.9.11'
   s.add_dependency 'browser', '~> 2.5.3'

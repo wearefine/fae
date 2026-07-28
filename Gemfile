@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '3.1.1'
+ruby '3.1.7'
 
 # Declare your gem's dependencies in fae.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -31,8 +31,6 @@ end
 group :test do
   gem 'webrick'
   gem 'factory_bot_rails', '~> 4.8.2'
-  # https://github.com/thoughtbot/capybara-webkit/issues/1065
-  gem 'capybara-webkit', github: 'thoughtbot/capybara-webkit', branch: 'master'
   gem 'capybara-screenshot'
   gem 'guard-rspec'
   gem 'selenium-webdriver'
