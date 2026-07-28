@@ -90,9 +90,10 @@ module Fae
     end
 
     def add_route
-      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do <<-RUBY
-    resources :#{plural_file_name}
-RUBY
+      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do
+        <<~RUBY.indent(4)
+          resources :#{plural_file_name}
+        RUBY
       end
     end
 
@@ -108,9 +109,11 @@ RUBY
     end
 
     def inject_concern
-      inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do <<-RUBY
-  include Fae::BaseModelConcern\n
-RUBY
+      inject_into_file "app/models/#{file_name}.rb", after: /(ActiveRecord::Base|ApplicationRecord)\n/ do
+        <<~RUBY.indent(2)
+          include Fae::BaseModelConcern
+
+        RUBY
       end
     end
 
@@ -121,21 +124,24 @@ RUBY
         @@display_field = 'title'
       end
 
-      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do <<-RUBY
-  def fae_display_field
-    #{@@display_field}
-  end
-RUBY
+      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+        <<~RUBY.indent(2)
+          def fae_display_field
+            #{@@display_field}
+          end
+        RUBY
       end
-
     end
 
     def inject_position_scope
       if @@has_position
-        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do <<-RUBY
-\n  acts_as_list add_new_at: :top
-  default_scope { order(:position) }\n
-RUBY
+        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+          <<~RUBY.indent(2)
+
+            acts_as_list add_new_at: :top
+            default_scope { order(:position) }
+
+          RUBY
         end
       end
     end
@@ -145,27 +151,31 @@ RUBY
       @@attachments.each do |attachment|
         if attachment.type == :image
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
-            <<-RUBY
-  has_fae_image :#{attachment.name}\n
-RUBY
+            <<~RUBY.indent(2)
+              has_fae_image :#{attachment.name}
+
+            RUBY
           end
         elsif attachment.type == :seo_set
-            inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
-              <<-RUBY
-    has_fae_seo_set :#{attachment.name}\n
-  RUBY
-            end
-          elsif attachment.type == :cta
-            inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
-              <<-RUBY
-    has_fae_cta :#{attachment.name}\n
-  RUBY
-            end
+          inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+            <<~RUBY.indent(2)
+              has_fae_seo_set :#{attachment.name}
+
+            RUBY
+          end
+        elsif attachment.type == :cta
+          inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
+            <<~RUBY.indent(2)
+              has_fae_cta :#{attachment.name}
+
+            RUBY
+          end
         elsif attachment.type == :file
           inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
-            <<-RUBY
-  has_fae_file :#{attachment.name}\n
-RUBY
+            <<~RUBY.indent(2)
+              has_fae_file :#{attachment.name}
+
+            RUBY
           end
         end
       end
@@ -237,30 +247,33 @@ RUBY
 
     def inject_static_page_gql_query
       # return unless uses_graphql
+      model_name = file_name.titleize.gsub(' ', '')
+
       inject_into_file 'app/graphql/types/query_type.rb', after: "class QueryType < Types::BaseObject\n" do
-        <<-RUBY
+        <<~RUBY.indent(4)
 
-    field :#{file_name}_page, Types::#{file_name.titleize.gsub(' ','')}PageType, null: true do
-      description "Returns the #{file_name.titleize.gsub(' ','')} Page instance"
-    end
+          field :#{file_name}_page, Types::#{model_name}PageType, null: true do
+            description "Returns the #{model_name} Page instance"
+          end
 
-    def #{file_name}_page
-      #{file_name.titleize.gsub(' ','')}Page.instance
-    end
-RUBY
+          def #{file_name}_page
+            #{model_name}Page.instance
+          end
+        RUBY
       end
     end
 
     # This assumes your app has the Livable concern in it.
     # Which if you've started from our BE template, it should.
     def inject_livable
-      if @@needs_livable
-        inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern" do <<-RUBY
+      return unless @@needs_livable
 
-  include Livable\n
-RUBY
-        end
+      inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern" do
+        <<~RUBY.indent(2)
 
+          include Livable
+
+        RUBY
       end
     end
 

@@ -14,9 +14,10 @@ module Fae
   private
 
     def add_route
-      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do <<-RUBY
-    resources :flex_components
-  RUBY
+      inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do
+        <<~RUBY.indent(4)
+          resources :flex_components
+        RUBY
       end
     end
 

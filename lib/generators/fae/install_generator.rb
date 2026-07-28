@@ -22,12 +22,15 @@ module Fae
   private
 
     def add_route
-      inject_into_file "config/routes.rb", after: "routes.draw do\n" do <<-RUBY
-\n  namespace :#{options.namespace} do
-  end
-  # mount Fae below your admin namespec
-  mount Fae::Engine => '/#{options.namespace}'\n
-RUBY
+      inject_into_file "config/routes.rb", after: "routes.draw do\n" do
+        <<~RUBY.indent(2)
+
+          namespace :#{options.namespace} do
+          end
+          # mount Fae below your admin namespec
+          mount Fae::Engine => '/#{options.namespace}'
+
+        RUBY
       end
     end
 
@@ -47,9 +50,12 @@ RUBY
     def build_initializer
       init_source = options.fine ? "../templates/initializers/fae_fine.rb" : "../templates/initializers/fae.rb"
       copy_file ::File.expand_path(::File.join(__FILE__, init_source)), "config/initializers/fae.rb"
-      inject_into_file "config/initializers/fae.rb", after: "Fae.setup do |config|\n" do <<-RUBY
-\n  config.devise_secret_key = '#{SecureRandom.hex(64)}'\n
-RUBY
+      inject_into_file "config/initializers/fae.rb", after: "Fae.setup do |config|\n" do
+        <<~RUBY.indent(2)
+
+          config.devise_secret_key = '#{SecureRandom.hex(64)}'
+
+        RUBY
       end
     end
 
