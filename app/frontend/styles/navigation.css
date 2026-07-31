@@ -1,0 +1,250 @@
+/*
+ * Navigation.
+ *
+ * Fae has one navigation tree rendered across two regions: levels 1-2 sit in
+ * the header (FaeTopNav.vue), levels 3-4 in the left rail (FaeSideNav.vue).
+ * Levels 1 and 3 mark the branch containing the current page with `-open`;
+ * levels 2 and 4 mark the page itself with `-current`. That mirrors the
+ * -parent-current/-current pair the legacy nav_active_class helper emits.
+ *
+ * Both regions now sit on the light `chrome` surface rather than the old dark
+ * bars, so every colour here comes from the shared semantic tokens and the
+ * dark theme needs no navigation-specific rules at all.
+ */
+
+/* Top nav (levels 1-2) --------------------------------------------------- */
+
+.fae-topnav {
+  flex: 1 1 auto;
+  min-width: 0;
+  align-self: stretch;
+}
+
+.fae-topnav__list {
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-2xs);
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fae-topnav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.fae-topnav__link {
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-xs);
+  padding: var(--fae-space-xs) var(--fae-space-md);
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-base);
+  font-weight: var(--fae-weight-medium);
+  white-space: nowrap;
+  border-radius: var(--fae-radius);
+  transition: color var(--fae-transition), background-color var(--fae-transition);
+}
+
+.fae-topnav__item:hover > .fae-topnav__link {
+  color: var(--fae-text-strong);
+  background: var(--fae-surface-hover);
+  text-decoration: none;
+}
+
+/* The ancestor of the current page. A tinted pill rather than the old solid
+   olive bar -- the header is a light surface now, so a full-strength fill
+   would be the loudest thing on the page. */
+.fae-topnav__item.-open > .fae-topnav__link {
+  color: var(--fae-accent-text);
+  background: var(--fae-accent-soft);
+}
+
+.fae-topnav__item.-open:hover > .fae-topnav__link {
+  background: var(--fae-accent-soft-hover);
+}
+
+/* Caret, drawn only for items that actually have a dropdown. */
+.fae-topnav__item:has(.fae-topnav__dropdown) > .fae-topnav__link::after {
+  content: "";
+  width: 5px;
+  height: 5px;
+  margin-top: -3px;
+  border-right: 1.5px solid currentcolor;
+  border-bottom: 1.5px solid currentcolor;
+  border-radius: 1px;
+  opacity: 0.6;
+  transform: rotate(45deg);
+  transition: transform var(--fae-transition);
+}
+
+/* Dropdown (level 2) */
+
+.fae-topnav__dropdown {
+  position: absolute;
+  top: calc(100% - var(--fae-space-sm));
+  left: 0;
+  z-index: 40;
+
+  /* Long lists wrap into columns; the count is set inline by the component so
+     the thresholds stay in one place. */
+  display: grid;
+  grid-template-columns: repeat(var(--fae-topnav-columns, 1), minmax(150px, max-content));
+  gap: var(--fae-space-2xs) var(--fae-space-xs);
+
+  padding: var(--fae-space-xs);
+  margin: 0;
+  list-style: none;
+  background: var(--fae-surface-raised);
+  border: 1px solid var(--fae-border);
+  border-radius: var(--fae-radius-lg);
+  box-shadow: var(--fae-shadow-lg);
+
+  /* Hidden rather than removed so the reveal can animate and so keyboard
+     focus can still reach the links. */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity var(--fae-transition), transform var(--fae-transition),
+    visibility var(--fae-transition);
+}
+
+.fae-topnav__item:hover > .fae-topnav__dropdown,
+.fae-topnav__item:focus-within > .fae-topnav__dropdown {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fae-topnav__sublink {
+  display: block;
+  padding: var(--fae-space-xs) var(--fae-space-sm);
+  color: var(--fae-text);
+  font-size: var(--fae-text-sm);
+  white-space: nowrap;
+  border-radius: var(--fae-radius-sm);
+  transition: color var(--fae-transition), background-color var(--fae-transition);
+}
+
+.fae-topnav__sublink:hover {
+  color: var(--fae-text-strong);
+  background: var(--fae-surface-hover);
+  text-decoration: none;
+}
+
+.fae-topnav__sublink.-current {
+  color: var(--fae-accent-text);
+  background: var(--fae-accent-soft);
+  font-weight: var(--fae-weight-medium);
+}
+
+/* Side nav (levels 3-4) -------------------------------------------------- */
+
+.fae-sidenav {
+  position: sticky;
+  top: var(--fae-header-height);
+  flex: none;
+  width: var(--fae-sidenav-width);
+  height: calc(100vh - var(--fae-header-height));
+  height: calc(100dvh - var(--fae-header-height));
+  padding: var(--fae-space-lg) var(--fae-space-md);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--fae-chrome);
+  border-right: 1px solid var(--fae-border);
+}
+
+.fae-sidenav__list,
+.fae-sidenav__sublist {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.fae-sidenav__item + .fae-sidenav__item {
+  margin-top: var(--fae-space-2xs);
+}
+
+.fae-sidenav__link {
+  display: block;
+  width: 100%;
+  padding: var(--fae-space-sm) var(--fae-space-md);
+  color: var(--fae-text);
+  font-size: var(--fae-text-sm);
+  font-weight: var(--fae-weight-medium);
+  text-align: left;
+  border-radius: var(--fae-radius);
+  transition: color var(--fae-transition), background-color var(--fae-transition);
+}
+
+.fae-sidenav__link:hover {
+  color: var(--fae-text-strong);
+  background: var(--fae-surface-hover);
+  text-decoration: none;
+}
+
+.fae-sidenav__item.-open > .fae-sidenav__link {
+  color: var(--fae-text-strong);
+}
+
+/* Accordion header for a level-3 item that groups level-4 links. */
+.fae-sidenav__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fae-space-sm);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.fae-sidenav__toggle::after {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  margin-right: 2px;
+  border-right: 1.5px solid currentcolor;
+  border-bottom: 1.5px solid currentcolor;
+  border-radius: 1px;
+  opacity: 0.55;
+  transform: rotate(-45deg);
+  transition: transform var(--fae-transition);
+}
+
+.fae-sidenav__toggle.-expanded::after {
+  transform: rotate(45deg);
+}
+
+/* Level 4. Indented with a hairline guide instead of padding alone so a long
+   list of siblings still reads as one group when it scrolls. */
+.fae-sidenav__sublist {
+  padding-left: var(--fae-space-md);
+  margin: var(--fae-space-2xs) 0 var(--fae-space-sm);
+  border-left: 1px solid var(--fae-border);
+}
+
+.fae-sidenav__sublink {
+  display: block;
+  padding: var(--fae-space-xs) var(--fae-space-md);
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+  border-radius: var(--fae-radius-sm);
+  transition: color var(--fae-transition), background-color var(--fae-transition);
+}
+
+.fae-sidenav__sublink:hover {
+  color: var(--fae-text-strong);
+  background: var(--fae-surface-hover);
+  text-decoration: none;
+}
+
+.fae-sidenav__sublink.-current {
+  color: var(--fae-accent-text);
+  background: var(--fae-accent-soft);
+  font-weight: var(--fae-weight-medium);
+}

@@ -1,0 +1,239 @@
+/*
+ * Fae 5 design tokens.
+ *
+ * Everything else in this directory styles itself exclusively from these
+ * custom properties, so a host app rebrands the admin by redeclaring any of
+ * them on :root -- no Sass, no build configuration, no forking the engine.
+ * This is the CSS counterpart to the `createFaeApp({ pages })` seam.
+ *
+ * Two layers:
+ *   1. PRIMITIVES (--fae-neutral-*, --fae-brand-*, ...) are raw palette
+ *      values. They never change between light and dark.
+ *   2. SEMANTICS (--fae-bg, --fae-text, --fae-accent, ...) describe a role,
+ *      not a colour. Every rule in this directory uses these and only these.
+ *
+ * Light and dark are expressed with the CSS light-dark() function, so each
+ * semantic token is declared exactly once instead of being duplicated inside
+ * a `prefers-color-scheme` block plus a `[data-fae-theme]` block. Which arm
+ * wins is decided entirely by the used `color-scheme`, which means the manual
+ * theme override at the bottom of this file is three lines rather than a
+ * second copy of the palette. Requires a 2024+ browser (Baseline 2024); this
+ * only ever ships to the admin, not to a public site.
+ *
+ * Host apps that override a semantic token can pass a flat colour -- it just
+ * applies to both modes -- or use light-dark() themselves to stay adaptive.
+ */
+
+:root {
+  /* --------------------------------------------------------------------- */
+  /* Primitives                                                            */
+  /* --------------------------------------------------------------------- */
+
+  /* Neutrals, light to dark. Very slightly cool so they read as "interface"
+     rather than "print" next to the warm olive brand colour. */
+  --fae-neutral-0: #fff;
+  --fae-neutral-25: #fbfcfd;
+  --fae-neutral-50: #f6f8fa;
+  --fae-neutral-100: #eef1f4;
+  --fae-neutral-200: #e3e7ec;
+  --fae-neutral-300: #cfd6dd;
+  --fae-neutral-400: #a8b3bf;
+  --fae-neutral-500: #7d8994;
+  --fae-neutral-600: #5b6672;
+  --fae-neutral-700: #414a54;
+  --fae-neutral-800: #2b333b;
+  --fae-neutral-850: #222930;
+  --fae-neutral-900: #1a2026;
+  --fae-neutral-950: #11161a;
+
+  /* Brand. --fae-brand-500 is Fae's historic highlight (#9aa142); the rest of
+     the ramp is derived from it so hover/active/subtle states are available
+     in both modes. Rebranding usually means redeclaring 400, 500 and 600. */
+  --fae-brand-50: #f7f8ed;
+  --fae-brand-100: #eceed4;
+  --fae-brand-200: #d9dcab;
+  --fae-brand-300: #c2c87c;
+  --fae-brand-400: #aab357;
+  --fae-brand-500: #9aa142;
+  --fae-brand-600: #7d8435;
+  --fae-brand-700: #61662a;
+  --fae-brand-800: #4a4f22;
+  --fae-brand-900: #383c1c;
+
+  /* Status ramps, three stops each: a light-mode tint, the solid colour, and
+     a dark-mode-friendly lift. */
+  --fae-green-100: #dff3e6;
+  --fae-green-500: #2e9e5b;
+  --fae-green-600: #1f7a45;
+  --fae-green-300: #74d19a;
+
+  --fae-red-100: #fce9e9;
+  --fae-red-500: #d64545;
+  --fae-red-600: #b32d2d;
+  --fae-red-300: #f09a9a;
+
+  --fae-amber-100: #fdf0da;
+  --fae-amber-500: #cf8a09;
+  --fae-amber-600: #a76e05;
+  --fae-amber-300: #f0c169;
+
+  --fae-blue-100: #e6eefd;
+  --fae-blue-500: #2f6feb;
+  --fae-blue-600: #1f56c4;
+  --fae-blue-300: #8fb2f6;
+
+  /* --------------------------------------------------------------------- */
+  /* Semantics                                                             */
+  /* --------------------------------------------------------------------- */
+
+  /* Follow the OS unless [data-fae-theme] says otherwise. Also tells the
+     browser which way to render scrollbars, form controls and caret colour,
+     which is why native widgets need no styling of their own to fit in. */
+  color-scheme: light dark;
+
+  /* Surfaces, back to front. `bg` is the page, `surface` is a card sitting on
+     it, `chrome` is the header and side rail. In dark mode the order flips --
+     the page is darker than the cards -- which light-dark() handles per
+     token, so no rule downstream has to know which mode it is in. */
+  --fae-bg: light-dark(var(--fae-neutral-50), var(--fae-neutral-950));
+  --fae-bg-sunken: light-dark(var(--fae-neutral-100), #0c1013);
+  --fae-surface: light-dark(var(--fae-neutral-0), var(--fae-neutral-900));
+  --fae-surface-raised: light-dark(var(--fae-neutral-0), var(--fae-neutral-850));
+  --fae-surface-hover: light-dark(var(--fae-neutral-50), #232a31);
+  --fae-surface-active: light-dark(var(--fae-neutral-100), var(--fae-neutral-800));
+  --fae-chrome: light-dark(var(--fae-neutral-0), var(--fae-neutral-900));
+
+  /* Borders. `subtle` separates rows inside a surface, the default outlines
+     the surface itself, `strong` is for controls that must read as editable. */
+  --fae-border-subtle: light-dark(var(--fae-neutral-100), #242b32);
+  --fae-border: light-dark(var(--fae-neutral-200), #2f373f);
+  --fae-border-strong: light-dark(var(--fae-neutral-300), #414a54);
+
+  /* Text */
+  --fae-text: light-dark(var(--fae-neutral-700), #c4ccd4);
+  --fae-text-strong: light-dark(var(--fae-neutral-900), #f1f4f7);
+  --fae-text-muted: light-dark(var(--fae-neutral-500), #8b96a2);
+  --fae-text-inverse: light-dark(var(--fae-neutral-0), var(--fae-neutral-950));
+
+  /* Accent. `accent` is the solid fill, `accent-text` is the same hue pushed
+     to a legible contrast ratio against a surface -- they are different
+     values on purpose, since the raw olive fails contrast as body-sized text
+     on white. */
+  --fae-accent: light-dark(var(--fae-brand-500), var(--fae-brand-400));
+  --fae-accent-hover: light-dark(var(--fae-brand-600), var(--fae-brand-300));
+  --fae-accent-active: light-dark(var(--fae-brand-700), var(--fae-brand-200));
+  --fae-accent-text: light-dark(var(--fae-brand-700), var(--fae-brand-300));
+  --fae-accent-contrast: light-dark(var(--fae-neutral-0), var(--fae-neutral-950));
+  --fae-accent-soft: light-dark(var(--fae-brand-50), color-mix(in srgb, var(--fae-brand-400) 16%, transparent));
+  --fae-accent-soft-hover: light-dark(var(--fae-brand-100), color-mix(in srgb, var(--fae-brand-400) 24%, transparent));
+
+  /* Text selection needs far more contrast than `accent-soft`, which is tuned
+     to sit behind a focus ring rather than behind body text. */
+  --fae-selection-bg: light-dark(var(--fae-brand-200), color-mix(in srgb, var(--fae-brand-400) 42%, transparent));
+  --fae-selection-text: light-dark(var(--fae-neutral-900), var(--fae-neutral-0));
+
+  /* Status */
+  --fae-success: light-dark(var(--fae-green-600), var(--fae-green-300));
+  --fae-success-soft: light-dark(var(--fae-green-100), color-mix(in srgb, var(--fae-green-500) 18%, transparent));
+  --fae-danger: light-dark(var(--fae-red-600), var(--fae-red-300));
+  --fae-danger-soft: light-dark(var(--fae-red-100), color-mix(in srgb, var(--fae-red-500) 18%, transparent));
+  --fae-warning: light-dark(var(--fae-amber-600), var(--fae-amber-300));
+  --fae-warning-soft: light-dark(var(--fae-amber-100), color-mix(in srgb, var(--fae-amber-500) 18%, transparent));
+  --fae-info: light-dark(var(--fae-blue-600), var(--fae-blue-300));
+  --fae-info-soft: light-dark(var(--fae-blue-100), color-mix(in srgb, var(--fae-blue-500) 18%, transparent));
+
+  /* --------------------------------------------------------------------- */
+  /* Typography                                                            */
+  /* --------------------------------------------------------------------- */
+
+  /* A system stack by design: the webfonts in the legacy Sass are wired
+     through Sprockets' font-url(), which Vite cannot resolve. */
+  --fae-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --fae-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --fae-text-xs: 0.6875rem; /* 11px */
+  --fae-text-sm: 0.8125rem; /* 13px */
+  --fae-text-base: 0.875rem; /* 14px */
+  --fae-text-md: 1rem; /* 16px */
+  --fae-text-lg: 1.125rem; /* 18px */
+  --fae-text-xl: 1.375rem; /* 22px */
+
+  --fae-font-size: var(--fae-text-base);
+  --fae-line-height: 1.55;
+  --fae-line-height-tight: 1.25;
+
+  --fae-weight-normal: 400;
+  --fae-weight-medium: 500;
+  --fae-weight-semibold: 600;
+
+  /* --------------------------------------------------------------------- */
+  /* Space, shape, motion                                                  */
+  /* --------------------------------------------------------------------- */
+
+  --fae-space-2xs: 2px;
+  --fae-space-xs: 4px;
+  --fae-space-sm: 8px;
+  --fae-space-md: 12px;
+  --fae-space-lg: 16px;
+  --fae-space-xl: 24px;
+  --fae-space-2xl: 32px;
+  --fae-space-3xl: 48px;
+
+  --fae-radius-sm: 4px;
+  --fae-radius: 6px;
+  --fae-radius-lg: 10px;
+  --fae-radius-full: 999px;
+
+  /* Shadows are built from a colour token rather than being colours
+     themselves, so dark mode can deepen them without redefining each shadow.
+     Elevation is carried mostly by borders in dark mode -- large soft shadows
+     are close to invisible on a near-black canvas. */
+  --fae-shadow-color: light-dark(220deg 20% 40%, 220deg 60% 2%);
+  --fae-shadow-sm: 0 1px 2px hsl(var(--fae-shadow-color) / 8%);
+  --fae-shadow: 0 1px 2px hsl(var(--fae-shadow-color) / 6%),
+    0 4px 12px hsl(var(--fae-shadow-color) / 8%);
+  --fae-shadow-lg: 0 2px 4px hsl(var(--fae-shadow-color) / 6%),
+    0 12px 28px hsl(var(--fae-shadow-color) / 14%);
+
+  --fae-focus-ring: 0 0 0 2px var(--fae-bg), 0 0 0 4px var(--fae-accent);
+  --fae-transition: 120ms ease;
+  /* For motion the eye is meant to follow rather than just register, such as a
+     toast entering or leaving. Matches the legacy 0.3s toast animation. */
+  --fae-transition-slow: 300ms ease-in-out;
+
+  /* --------------------------------------------------------------------- */
+  /* Layout                                                                */
+  /* --------------------------------------------------------------------- */
+
+  --fae-header-height: 56px;
+  --fae-sidenav-width: 244px;
+  --fae-content-max: 1400px;
+}
+
+/*
+ * Manual theme override, set on <html> by composables/useTheme.js (and, before
+ * Vue boots, by the inline script in layouts/fae/inertia.html.erb so the first
+ * paint is already correct). Absence of the attribute means "follow the OS".
+ * Flipping color-scheme is all it takes -- every light-dark() above re-resolves
+ * from it.
+ */
+[data-fae-theme="light"] {
+  color-scheme: light;
+}
+
+[data-fae-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Legacy aliases. The first pass of this stylesheet named tokens after the
+   Sass palette (--fae-grey-*, --fae-highlight); keep the handful that host
+   apps may already have overridden pointing at their semantic replacements. */
+:root {
+  --fae-highlight: var(--fae-accent);
+  --fae-highlight-contrast: var(--fae-accent-contrast);
+  --fae-body-bg: var(--fae-bg);
+  --fae-text-heavy: var(--fae-text-strong);
+  --fae-text-sub: var(--fae-text-muted);
+  --fae-radius-legacy: var(--fae-radius-sm);
+}

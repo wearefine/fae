@@ -9,6 +9,21 @@
     <% end %>
     <%= csrf_meta_tags %>
     <%= inertia_ssr_head %>
+    <%#
+      Applies the saved light/dark preference before the first paint. This has
+      to be inline and blocking: Vite's tags below are modules, so they run
+      after the document renders, and the page would flash the system theme
+      before app/frontend/composables/useTheme.js could correct it. Absence of
+      the attribute means "follow the OS", which is the CSS default.
+    %>
+    <%= javascript_tag nonce: true do %>
+      try {
+        var faeTheme = window.localStorage.getItem('fae:theme');
+        if (faeTheme === 'light' || faeTheme === 'dark') {
+          document.documentElement.setAttribute('data-fae-theme', faeTheme);
+        }
+      } catch (e) {}
+    <% end %>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'fae' %>
   </head>

@@ -1,0 +1,734 @@
+/*
+ * Shared pieces used across converted screens.
+ *
+ * These are deliberately class-based rather than element-based so host apps
+ * can drop their own markup into an overridden page without inheriting
+ * layout it did not ask for.
+ *
+ * Variants use a `-modifier` class alongside the base class rather than the
+ * BEM `__block--modifier` form, matching the `-current`/`-open` convention the
+ * navigation already inherits from the legacy nav_active_class helper.
+ */
+
+/* Page header ----------------------------------------------------------- */
+
+.fae-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fae-space-md);
+  margin-bottom: var(--fae-space-xl);
+}
+
+.fae-page-header__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--fae-space-md);
+  min-width: 0;
+}
+
+.fae-page-header__count {
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.fae-page-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-sm);
+}
+
+/* Panel ----------------------------------------------------------------- */
+
+.fae-panel {
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  border-radius: var(--fae-radius-lg);
+  box-shadow: var(--fae-shadow-sm);
+}
+
+/* Buttons --------------------------------------------------------------- */
+
+.fae-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fae-space-xs);
+  padding: 0 var(--fae-space-md);
+  height: 32px;
+  background: var(--fae-accent);
+  color: var(--fae-accent-contrast);
+  font-size: var(--fae-text-sm);
+  font-weight: var(--fae-weight-medium);
+  line-height: 1;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: var(--fae-radius);
+  cursor: pointer;
+  transition: background-color var(--fae-transition), color var(--fae-transition),
+    border-color var(--fae-transition);
+}
+
+.fae-button:hover {
+  background: var(--fae-accent-hover);
+  color: var(--fae-accent-contrast);
+  text-decoration: none;
+}
+
+.fae-button:active {
+  background: var(--fae-accent-active);
+}
+
+.fae-button[disabled],
+.fae-button.-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.fae-button.-secondary {
+  background: var(--fae-surface);
+  color: var(--fae-text);
+  border-color: var(--fae-border-strong);
+}
+
+.fae-button.-secondary:hover {
+  background: var(--fae-surface-hover);
+  color: var(--fae-text-strong);
+}
+
+.fae-button.-ghost {
+  background: transparent;
+  color: var(--fae-text-muted);
+}
+
+.fae-button.-ghost:hover {
+  background: var(--fae-surface-hover);
+  color: var(--fae-text-strong);
+}
+
+.fae-button.-danger {
+  background: transparent;
+  color: var(--fae-danger);
+}
+
+.fae-button.-danger:hover {
+  background: var(--fae-danger-soft);
+  color: var(--fae-danger);
+}
+
+.fae-button.-sm {
+  height: 26px;
+  padding: 0 var(--fae-space-sm);
+  font-size: var(--fae-text-xs);
+}
+
+/* Square button sized for a lone icon (the theme toggle, row actions). */
+.fae-button.-icon {
+  width: 32px;
+  padding: 0;
+}
+
+.fae-button.-icon.-sm {
+  width: 26px;
+}
+
+.fae-button svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+/* Tables ---------------------------------------------------------------- */
+
+/*
+ * The wrapper exists for two reasons: it clips the table's square corners to
+ * the card radius (border-collapse defeats border-radius on the table itself),
+ * and it gives a wide table its own horizontal scroller so it never widens the
+ * whole page.
+ */
+.fae-table-wrap {
+  overflow-x: auto;
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  border-radius: var(--fae-radius-lg);
+  box-shadow: var(--fae-shadow-sm);
+}
+
+.fae-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.fae-table th {
+  padding: var(--fae-space-sm) var(--fae-space-lg);
+  background: var(--fae-surface);
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-xs);
+  font-weight: var(--fae-weight-semibold);
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--fae-border);
+}
+
+.fae-table td {
+  padding: var(--fae-space-md) var(--fae-space-lg);
+  border-bottom: 1px solid var(--fae-border-subtle);
+  vertical-align: middle;
+}
+
+.fae-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.fae-table tbody tr {
+  transition: background-color var(--fae-transition);
+}
+
+.fae-table tbody tr:hover td {
+  background: var(--fae-surface-hover);
+}
+
+/* The first cell links to the record, so it carries the emphasis instead of
+   being tinted like an ordinary link in a sea of them. In a nested table it is
+   a <button> that opens the row's form rather than an anchor, so the UA button
+   chrome is stripped here rather than at each call site. */
+.fae-table__link {
+  padding: 0;
+  color: var(--fae-text-strong);
+  font-weight: var(--fae-weight-medium);
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.fae-table__link:hover {
+  color: var(--fae-accent-text);
+}
+
+/* Right-aligned column reserved for row actions. */
+.fae-table__actions {
+  width: 1%;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Row actions stay hidden until the row is hovered or something inside them
+   has focus, so a long list reads as data rather than as a wall of buttons.
+   Touch and keyboard users are covered by the focus-within and coarse-pointer
+   rules below. */
+.fae-table tbody tr .fae-table__actions .fae-button {
+  opacity: 0;
+  transition: opacity var(--fae-transition);
+}
+
+.fae-table tbody tr:hover .fae-table__actions .fae-button,
+.fae-table tbody tr:focus-within .fae-table__actions .fae-button {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .fae-table tbody tr .fae-table__actions .fae-button {
+    opacity: 1;
+  }
+}
+
+.fae-table__empty {
+  padding: var(--fae-space-3xl) var(--fae-space-lg);
+  color: var(--fae-text-muted);
+  text-align: center;
+}
+
+/* Drag-to-reorder ------------------------------------------------------- */
+
+/* Narrow leading column holding the drag handle. */
+.fae-table__handle {
+  width: 1%;
+  padding-right: 0;
+}
+
+.fae-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--fae-space-2xs);
+  color: var(--fae-text-muted);
+  background: none;
+  border: 0;
+  border-radius: var(--fae-radius-sm);
+  cursor: grab;
+  /* Same reveal-on-hover treatment as the row actions, so a long list is not
+     fenced in by grips. */
+  opacity: 0;
+  transition: opacity var(--fae-transition), color var(--fae-transition);
+}
+
+.fae-drag-handle svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.fae-table tbody tr:hover .fae-drag-handle,
+.fae-table tbody tr:focus-within .fae-drag-handle {
+  opacity: 1;
+}
+
+.fae-drag-handle:hover,
+.fae-drag-handle:focus-visible {
+  color: var(--fae-text);
+  opacity: 1;
+}
+
+.fae-drag-handle:active {
+  cursor: grabbing;
+}
+
+@media (hover: none) {
+  .fae-drag-handle {
+    opacity: 1;
+  }
+}
+
+/*
+ * The row stays in the table while it is dragged -- the list reorders live
+ * underneath the cursor -- so it is dimmed rather than hidden, marking which
+ * row the browser's drag image belongs to.
+ */
+.fae-table tbody tr.-dragging td {
+  background: var(--fae-surface-hover);
+  opacity: 0.5;
+}
+
+/* Badges ---------------------------------------------------------------- */
+
+.fae-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fae-space-xs);
+  padding: 1px var(--fae-space-sm);
+  background: var(--fae-surface-active);
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-xs);
+  font-weight: var(--fae-weight-medium);
+  border-radius: var(--fae-radius-full);
+}
+
+.fae-badge.-success {
+  background: var(--fae-success-soft);
+  color: var(--fae-success);
+}
+
+.fae-badge.-danger {
+  background: var(--fae-danger-soft);
+  color: var(--fae-danger);
+}
+
+/* Alerts ---------------------------------------------------------------- */
+
+.fae-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--fae-space-sm);
+  padding: var(--fae-space-md) var(--fae-space-lg);
+  margin-bottom: var(--fae-space-lg);
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-sm);
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  border-radius: var(--fae-radius);
+}
+
+.fae-alert::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 7px;
+  background: currentcolor;
+  border-radius: var(--fae-radius-full);
+}
+
+.fae-alert.-notice {
+  background: var(--fae-success-soft);
+  border-color: transparent;
+  color: var(--fae-success);
+}
+
+.fae-alert.-alert {
+  background: var(--fae-danger-soft);
+  border-color: transparent;
+  color: var(--fae-danger);
+}
+
+/* Flash toasts ---------------------------------------------------------- */
+
+/*
+ * Transient counterpart to .fae-alert, which stays on the page. Position and
+ * timing mirror the legacy jQuery toasts: pinned to the bottom centre, sliding
+ * in from the right, gone after five seconds.
+ */
+.fae-toasts {
+  position: fixed;
+  bottom: var(--fae-space-3xl);
+  left: 50%;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--fae-space-sm);
+  transform: translateX(-50%);
+  /* The stack spans the viewport so stacked toasts stay centred on each other;
+     it must not swallow clicks on the page underneath. */
+  pointer-events: none;
+}
+
+.fae-toast {
+  min-width: 300px;
+  max-width: 400px;
+  padding: var(--fae-space-md) var(--fae-space-lg);
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-sm);
+  line-height: var(--fae-line-height);
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  border-left: 3px solid var(--fae-text-muted);
+  border-radius: var(--fae-radius);
+  box-shadow: var(--fae-shadow-lg);
+  pointer-events: auto;
+}
+
+.fae-toast.-notice {
+  border-left-color: var(--fae-success);
+  color: var(--fae-success);
+}
+
+.fae-toast.-warning {
+  border-left-color: var(--fae-warning);
+  color: var(--fae-warning);
+}
+
+/* Rails' flash key for a failed action is :error in some places and :alert in
+   others; both read as the same thing to a user. */
+.fae-toast.-alert,
+.fae-toast.-error {
+  border-left-color: var(--fae-danger);
+  color: var(--fae-danger);
+}
+
+.fae-toast-enter-active,
+.fae-toast-leave-active {
+  transition: opacity var(--fae-transition-slow), transform var(--fae-transition-slow);
+}
+
+.fae-toast-enter-from,
+.fae-toast-leave-to {
+  opacity: 0;
+  transform: translateX(100%);
+}
+
+/* Keeps the remaining toasts from jumping when one above them is removed. */
+.fae-toast-leave-active {
+  position: absolute;
+}
+
+.fae-toast-move {
+  transition: transform var(--fae-transition-slow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fae-toast-enter-from,
+  .fae-toast-leave-to {
+    transform: none;
+  }
+}
+
+/* Grouped index -------------------------------------------------------- */
+
+/*
+ * A sectioned index, one collapsible section per group. The whole header is
+ * the toggle so the hit target matches its width, and it is a <button> rather
+ * than a heading with a click handler so it is reachable by keyboard.
+ */
+.fae-index-group + .fae-index-group {
+  margin-top: var(--fae-space-xl);
+}
+
+.fae-index-group__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-sm);
+  width: 100%;
+  padding: var(--fae-space-sm) 0;
+  color: var(--fae-text-strong);
+  text-align: left;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.fae-index-group__toggle h2 {
+  margin: 0;
+  font-size: var(--fae-text-md);
+  font-weight: var(--fae-weight-semibold);
+}
+
+.fae-index-group__count {
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.fae-index-group__chevron {
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: var(--fae-text-muted);
+  transition: transform var(--fae-transition);
+}
+
+.fae-index-group__chevron.-collapsed {
+  transform: rotate(-90deg);
+}
+
+/* Forms ----------------------------------------------------------------- */
+
+.fae-form {
+  display: grid;
+  gap: var(--fae-space-xl);
+  padding: var(--fae-space-xl);
+}
+
+.fae-field {
+  display: grid;
+  gap: var(--fae-space-xs);
+}
+
+.fae-field__label {
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-sm);
+  font-weight: var(--fae-weight-medium);
+}
+
+.fae-field__required {
+  color: var(--fae-danger);
+  text-decoration: none;
+}
+
+.fae-field__control {
+  width: 100%;
+  padding: var(--fae-space-sm) var(--fae-space-md);
+  color: var(--fae-text-strong);
+  font: inherit;
+  font-size: var(--fae-text-base);
+  background: var(--fae-bg);
+  border: 1px solid var(--fae-border-strong);
+  border-radius: var(--fae-radius);
+  transition: border-color var(--fae-transition), box-shadow var(--fae-transition);
+}
+
+/* Single-line controls match the button height; textarea keeps its rows. */
+input.fae-field__control,
+select.fae-field__control {
+  height: 34px;
+}
+
+textarea.fae-field__control {
+  min-height: 120px;
+  line-height: var(--fae-line-height);
+  resize: vertical;
+}
+
+.fae-field__control:focus {
+  outline: none;
+  border-color: var(--fae-accent);
+  box-shadow: 0 0 0 3px var(--fae-accent-soft);
+}
+
+.fae-field.-invalid .fae-field__control {
+  border-color: var(--fae-danger);
+}
+
+/* The checkbox reads as a control followed by its label, so the label is
+   moved after it rather than markup order being flipped per type. */
+.fae-field.-checkbox {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--fae-space-sm);
+}
+
+.fae-field.-checkbox .fae-field__label {
+  order: 2;
+}
+
+.fae-field__checkbox {
+  order: 1;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--fae-accent);
+}
+
+.fae-field__hint {
+  margin: 0;
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+}
+
+.fae-field__error {
+  margin: 0;
+  color: var(--fae-danger);
+  font-size: var(--fae-text-sm);
+}
+
+/* Nested tables ---------------------------------------------------------- */
+
+/*
+ * A has_many association listed among its parent's inputs. It reads as its own
+ * block rather than as another panel, because it saves on its own schedule.
+ */
+.fae-nested-table {
+  margin-top: var(--fae-space-xl);
+}
+
+/* Panels and nested tables alternate inside the form, so every block after
+   the first needs the same separation. */
+.fae-form + .fae-form,
+.fae-nested-table + .fae-form {
+  margin-top: var(--fae-space-xl);
+}
+
+.fae-nested-table__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fae-space-md);
+  margin-bottom: var(--fae-space-md);
+}
+
+.fae-nested-table__header h2 {
+  margin: 0;
+  font-size: var(--fae-text-md);
+  font-weight: var(--fae-weight-semibold);
+}
+
+.fae-nested-table__helper {
+  margin: calc(var(--fae-space-md) * -1) 0 var(--fae-space-md);
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+}
+
+/* The open form occupies a row of the table, so it must not pick up the row
+   hover or the cell padding that a data row wants. */
+.fae-nested-table__form-row td {
+  padding: 0;
+  background: var(--fae-chrome);
+}
+
+.fae-nested-table__form-row:hover td {
+  background: var(--fae-chrome);
+}
+
+/* Ties the form to the record above it. */
+.fae-table tbody tr.-editing td {
+  background: var(--fae-surface-hover);
+  border-bottom-color: transparent;
+}
+
+.fae-nested-form {
+  display: grid;
+  gap: var(--fae-space-lg);
+  padding: var(--fae-space-lg);
+  border-left: 3px solid var(--fae-accent);
+}
+
+.fae-nested-form__fields {
+  display: grid;
+  gap: var(--fae-space-lg);
+}
+
+.fae-nested-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--fae-space-sm);
+}
+
+/* Markdown editor -------------------------------------------------------- */
+
+/* The toolbar and the textarea read as one control, so the border and focus
+   ring live on the wrapper instead of on the input itself. */
+.fae-markdown {
+  overflow: hidden;
+  background: var(--fae-bg);
+  border: 1px solid var(--fae-border-strong);
+  border-radius: var(--fae-radius);
+  transition: border-color var(--fae-transition), box-shadow var(--fae-transition);
+}
+
+.fae-markdown:focus-within {
+  border-color: var(--fae-accent);
+  box-shadow: 0 0 0 3px var(--fae-accent-soft);
+}
+
+.fae-markdown.-invalid {
+  border-color: var(--fae-danger);
+}
+
+.fae-markdown__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--fae-space-xs);
+  padding: var(--fae-space-xs);
+  background: var(--fae-chrome);
+  border-bottom: 1px solid var(--fae-border);
+}
+
+.fae-markdown__tool {
+  min-width: 28px;
+  height: 28px;
+  padding: 0 var(--fae-space-xs);
+  color: var(--fae-text-muted);
+  font: inherit;
+  font-size: var(--fae-text-sm);
+  background: none;
+  border: 0;
+  border-radius: var(--fae-radius-sm);
+  cursor: pointer;
+  transition: background var(--fae-transition), color var(--fae-transition);
+}
+
+.fae-markdown__tool:hover {
+  color: var(--fae-text-strong);
+  background: var(--fae-surface-hover);
+}
+
+.fae-markdown__tool.-bold {
+  font-weight: var(--fae-weight-semibold);
+}
+
+.fae-markdown__tool.-italic {
+  font-style: italic;
+}
+
+/* Monospaced so the source lines up the way the rendered output will. */
+.fae-markdown__input {
+  display: block;
+  width: 100%;
+  min-height: 200px;
+  padding: var(--fae-space-md);
+  color: var(--fae-text-strong);
+  font-family: var(--fae-font-mono);
+  font-size: var(--fae-text-base);
+  line-height: var(--fae-line-height);
+  background: none;
+  border: 0;
+  resize: vertical;
+}
+
+.fae-markdown__input:focus {
+  outline: none;
+}

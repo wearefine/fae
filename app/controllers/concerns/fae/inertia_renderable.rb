@@ -6,6 +6,7 @@ module Fae
   # same app.
   module InertiaRenderable
     extend ActiveSupport::Concern
+    include Fae::InertiaErrors
 
     included do
       inertia_config layout: 'fae/inertia'
@@ -13,24 +14,128 @@ module Fae
       inertia_share do
         {
           currentUser: fae_inertia_current_user,
-          flash: { notice: flash[:notice], alert: flash[:alert] }.compact,
+          flash: fae_inertia_flash,
           nav: fae_inertia_nav
         }
       end
     end
 
+    # The write actions below only diverge from Fae::BaseController when the
+    # request actually came from Inertia. A controller can therefore have a Vue
+    # index and a Slim form at the same time -- the Slim form posts a normal
+    # HTML request and falls straight through to super. That is the state
+    # article_categories is in, and it must keep working.
+
+    def create
+      return super unless request.inertia?
+      return super if params[:from_existing].present?
+
+      @item = @klass.new(item_params)
+
+      if @item.save
+        redirect_to @index_path, notice: t('fae.save_notice')
+      else
+        # Only reachable for a model that overrides #new to stop creating a
+        # draft; the standard flow always PUTs to an already-persisted record.
+        # Redirecting to #new re-enters the draft flow, and the user's input is
+        # preserved client-side because the page component does not remount.
+        redirect_to @new_path, inertia: { errors: fae_inertia_errors(@item) },
+                               flash: { alert: t('fae.save_error') }
+      end
+    end
+
+    def update
+      return super unless request.inertia?
+
+      @item.draft = false if @klass.has_fae_draft_support?
+
+      if @item.update(item_params)
+        redirect_to @index_path, notice: t('fae.save_notice')
+      else
+        # Redirect rather than re-render: Inertia's protocol has no equivalent
+        # of `render action: 'edit'`, and the errors survive the redirect in
+        # the session (see inertia_rails' capture_inertia_session_options).
+        # `draft` is carried through so cancelling still deletes the record the
+        # #new action created.
+        redirect_to build_edit_path(@item, fae_inertia_draft_param),
+                    inertia: { errors: fae_inertia_errors(@item) },
+                    flash: { alert: t('fae.save_error') }
+      end
+    end
+
     private
+
+    # Every flash key, not a hardcoded notice/alert pair: Fae also sets
+    # flash[:error] (a failed destroy, an unauthorized redirect), and the Slim
+    # partial this replaces iterated the whole hash too. Keys stay strings so
+    # they map straight onto the toast's modifier class.
+    def fae_inertia_flash
+      flash.to_hash.reject { |_type, message| message.blank? }
+    end
+
+    # #new persists the record immediately and redirects to #edit with
+    # ?draft=true, so a failed save has to put the flag back on the URL or the
+    # Cancel button would stop offering to delete the record it created.
+    def fae_inertia_draft_param
+      params[:draft] == 'true' ? { draft: true } : {}
+    end
 
     def fae_inertia_current_user
       return nil if current_user.blank?
 
-      { id: current_user.id, name: current_user.try(:fae_display_field).to_s }
+      # fae_display_field is host-overridable and often left unset, and
+      # full_name is blank for an account created without a name, so fall all
+      # the way back to the email rather than shipping an empty label to the
+      # header chip.
+      name = current_user.try(:fae_display_field).presence ||
+             current_user.try(:full_name).to_s.strip.presence ||
+             current_user.email
+
+      { id: current_user.id, name: name }
     end
 
-    # @fae_topnav_items is built by ApplicationController#build_nav.
+    # Fae's navigation is a single tree, split across two chrome regions:
+    # levels 1-2 render as the top nav, levels 3-4 as the side nav. Both are
+    # built by ApplicationController#build_nav, and Fae::Navigation#side_nav
+    # returns nil until the current path is at least three levels deep.
     def fae_inertia_nav
-      Array(@fae_topnav_items).map do |item|
-        { title: item[:text], path: item[:path] }
+      {
+        topnav: fae_inertia_nav_level(@fae_topnav_items, 0, :nested_path, :subitems),
+        sidenav: fae_inertia_nav_level(@fae_sidenav_items, 2, :path, :sublinks)
+      }
+    end
+
+    # Serializes one nav region: a list of items plus their immediate children.
+    #
+    # `level` is the item's depth in the tree, which is what
+    # Fae::Navigation#coordinates indexes, so the top nav starts at 0 and the
+    # side nav at 2. The two regions also disagree on which path to link:
+    # the top nav uses :nested_path so a parent deep-links to its first
+    # reachable child, while the side nav uses :path.
+    def fae_inertia_nav_level(items, level, path_key, children_key)
+      coordinates = Array(@fae_navigation&.coordinates)
+
+      Array(items).each_with_index.map do |item, index|
+        # Matches the -parent-current/-open state from nav_active_class: the
+        # item is not itself the destination, it merely contains it.
+        open = coordinates[level] == index
+
+        children = Array(item[children_key]).each_with_index.map do |child, child_index|
+          {
+            text: child[:text],
+            path: child[path_key],
+            className: child[:class_name],
+            current: open && coordinates[level + 1] == child_index
+          }
+        end
+
+        {
+          text: item[:text],
+          path: item[path_key],
+          className: item[:class_name],
+          open: open,
+          children: children
+        }
       end
     end
 
@@ -38,13 +143,116 @@ module Fae
     # itself model-agnostic, so the Vue page is driven purely by props.
     #
     #   render_fae_index(@klass.for_fae_index, columns: { name: 'Name' })
-    def render_fae_index(items, columns:)
+    #
+    # Pass sortable: false to suppress drag-to-reorder on a model that has a
+    # position column but is being listed in some other order.
+    #
+    # Pass `groups:` instead of `items` for a sectioned index -- the shape the
+    # articles screen has always had, where the list is split by category and
+    # each section reorders independently:
+    #
+    #   render_fae_index(groups: categories.map { |c| { title: c.name, items: c.articles } },
+    #                    columns: { title: 'Title' })
+    def render_fae_index(items = nil, columns:, groups: nil, sortable: nil, inertia_links: false)
+      sortable = fae_inertia_sortable? if sortable.nil?
+      keys = columns.keys
+
       render inertia: 'Fae/Index', props: {
         title: @klass_humanized.pluralize.titleize,
         newPath: @new_path,
         columns: columns.map { |key, label| { key: key.to_s, label: label } },
-        rows: items.map { |item| fae_inertia_index_row(item, columns.keys) }
+        rows: Array(items).map { |item| fae_inertia_index_row(item, keys) },
+        groups: groups&.map do |group|
+          {
+            title: group[:title],
+            rows: Array(group[:items]).map { |item| fae_inertia_index_row(item, keys) }
+          }
+        end,
+        sortable: sortable,
+        # Reordering posts to the same Fae::UtilitiesController#sort action the
+        # Slim screens use, so both variants persist positions identically.
+        sortPath: (fae.sort_path(fae_inertia_sort_object) if sortable),
+        sortParam: (fae_inertia_sort_object if sortable),
+        # Only true once this resource's form is converted too -- see the note
+        # in pages/Fae/Index.vue about <Link> and Slim targets.
+        inertiaLinks: inertia_links
       }
+    end
+
+    # Renders the generic Fae form, the Vue counterpart of a resource's
+    # _form.html.slim plus fae/shared/_form_header.
+    #
+    #   render_fae_form(fields: [
+    #     { name: :article_category_id, type: :select, collection: [...] },
+    #     { name: :title, type: :text, required: true }
+    #   ])
+    #
+    # Every field is a plain hash rather than a builder call, because the props
+    # have to survive serialization to JSON -- this is the seam that replaces
+    # fae_input/fae_association.
+    #
+    # An entry keyed `nested_table:` renders a has_many table instead of an
+    # input, and takes the same options fae/shared/_nested_table did. The list
+    # is a single ordered one because the Slim form is a linear document: a
+    # nested table belongs in its own place among the inputs, not swept to the
+    # bottom of the page.
+    #
+    #   fields: [
+    #     { name: :name, type: :text, required: true },
+    #     { nested_table: :sub_spirits, cols: [:name] },
+    #     { name: :content, type: :textarea, markdown: true }
+    #   ]
+    def render_fae_form(item = @item, fields:, title: nil)
+      # Fae::BaseController#new saves the record before redirecting here, so
+      # "new" is really an edit of an unsaved-looking row. The draft flag is
+      # what tells the Vue form that cancelling should delete it again.
+      draft = params[:draft] == 'true'
+
+      # The flag has to survive the round trip: it lives only in the query
+      # string, and a failed save redirects back here off the submit URL.
+      submit_path = item.persisted? ? "#{@index_path}/#{item.id}" : @index_path
+      submit_path += '?draft=true' if draft
+
+      render inertia: 'Fae/Form', props: {
+        title: title || "#{draft ? 'New' : 'Edit'} #{@klass_humanized}".titleize,
+        indexPath: @index_path,
+        # Both verbs are supported so this still works for a model that opts
+        # out of the draft-on-new behaviour by overriding #new.
+        submitPath: submit_path,
+        submitMethod: item.persisted? ? 'put' : 'post',
+        paramKey: @klass_singular,
+        blocks: fae_inertia_form_blocks(item, fields, draft),
+        draft: draft,
+        deletePath: (item.persisted? ? "#{@index_path}/#{item.id}" : nil)
+      }
+    end
+
+    # Flattens the form's declaration into an ordered list the page renders
+    # top to bottom, so a nested table keeps its position among the inputs.
+    def fae_inertia_form_blocks(item, fields, draft)
+      fields.filter_map do |entry|
+        if entry[:nested_table].present?
+          # An unsaved parent has nothing to hang children off, the same reason
+          # the Slim form wrapped its nested tables in `if @item.persisted?`.
+          next unless item.persisted?
+
+          { kind: 'nestedTable', table: fae_inertia_nested_table(item, entry, draft) }
+        else
+          { kind: 'field', field: fae_inertia_form_field(item, entry) }
+        end
+      end
+    end
+
+    # Matches the generator, which makes an index sortable when the scaffolded
+    # model has a position attribute.
+    def fae_inertia_sortable?
+      @klass.column_names.include?('position')
+    end
+
+    # The :object segment of Fae's sort route, and the key the ids arrive under.
+    # Namespaced models double the underscore, mirroring fae_sort_id.
+    def fae_inertia_sort_object
+      @klass.name.underscore.gsub('/', '__')
     end
 
     def fae_inertia_index_row(item, keys)
@@ -66,6 +274,109 @@ module Fae
       else
         value.to_s
       end
+    end
+
+    # Normalizes one field descriptor into props for FaeFormField.
+    #
+    # `label` defaults the way simple_form's did, off the human attribute name,
+    # so a converted form only has to spell out the labels it wants to change.
+    # `collection` accepts either [[label, value], ...] or an array of records,
+    # matching what fae_association was usually handed.
+    def fae_inertia_form_field(item, field)
+      name = field[:name].to_s
+      type = (field[:type] || :text).to_s
+
+      {
+        name: name,
+        type: type,
+        label: field[:label] || item.class.human_attribute_name(name),
+        hint: field[:hint],
+        required: field.fetch(:required, false),
+        value: fae_inertia_field_value(item, name, type),
+        # Opts a textarea into the markdown editor, as `fae_input ... markdown: true` did.
+        markdown: field[:markdown].presence,
+        collection: (fae_inertia_collection(field[:collection]) if type == 'select')
+      }.compact
+    end
+
+    def fae_inertia_field_value(item, name, type)
+      value = item.public_send(name)
+
+      # Everything but a checkbox round-trips as a string: a <select> matches
+      # its options by string value, and Rails casts on the way back in, so
+      # keeping one representation avoids a nil id selecting the first option.
+      type == 'checkbox' ? !!value : value.to_s
+    end
+
+    def fae_inertia_collection(collection)
+      Array(collection).map do |option|
+        if option.is_a?(Array)
+          { label: option[0].to_s, value: option[1] }
+        elsif option.respond_to?(:fae_display_field)
+          { label: option.fae_display_field.to_s, value: option.id }
+        else
+          { label: option.to_s, value: option }
+        end
+      end
+    end
+
+    # Serializes one has_many table for the parent's form -- the Vue
+    # counterpart of fae/shared/_nested_table.
+    #
+    # Everything a row's form needs travels with the page, so revealing it is
+    # instant rather than the GET-and-splice form/_ajax.js had to do. The rows
+    # are small (a nested table lists a handful of columns) and it removes the
+    # entire class of bugs that came from injecting server-rendered markup into
+    # a live form.
+    def fae_inertia_nested_table(parent, table, draft = false)
+      assoc = table[:nested_table].to_s
+      records = parent.public_send(assoc)
+      klass = records.klass
+      cols = Array(table[:cols])
+      fields = table[:fields] || fae_inertia_nested_controller(assoc).fae_form_fields
+      title = table[:title] || assoc.titleize
+
+      # Nested resources are routed as siblings of the parent, which is what
+      # _nested_table assumed too when it derived new_/edit_#{assoc}_path.
+      base_path = "#{@index_path.rpartition('/').first}/#{assoc}"
+      # Carried so a save on a draft parent redirects back to a form that still
+      # knows it is a draft.
+      query = draft ? '?draft=true' : ''
+
+      {
+        title: title,
+        addButtonText: table[:add_button_text] || t('fae.common.add', title: title.singularize),
+        helperText: table[:helper_text],
+        hideAddButton: table.fetch(:hide_add_button, false),
+        hideDeleteButton: table.fetch(:hide_delete_button, false),
+        paramKey: assoc.singularize,
+        # Names the Inertia error bag for this table, so a failed nested save
+        # cannot light up the parent form's fields (or a sibling table's).
+        errorBag: assoc.singularize,
+        createPath: "#{base_path}#{query}",
+        columns: cols.map { |col| { key: col.to_s, label: klass.human_attribute_name(col) } },
+        # The association column, sent with every save the way the hidden
+        # field in the Slim nested form did.
+        parentKey: parent.class.reflect_on_association(assoc).foreign_key.to_s,
+        parentId: parent.id,
+        newFields: fields.map { |field| fae_inertia_form_field(klass.new, field) },
+        rows: records.map do |record|
+          {
+            id: record.id,
+            label: record.fae_display_field.to_s,
+            path: "#{base_path}/#{record.id}#{query}",
+            cells: cols.index_with { |col| fae_inertia_cell(record, col) },
+            fields: fields.map { |field| fae_inertia_form_field(record, field) }
+          }
+        end
+      }
+    end
+
+    # The nested resource's own controller declares its form fields, so a table
+    # is described by nothing more than its association name -- the same
+    # convention _nested_table used to derive its paths.
+    def fae_inertia_nested_controller(assoc)
+      "#{self.class.name.deconstantize}::#{assoc.camelize}Controller".constantize
     end
   end
 end

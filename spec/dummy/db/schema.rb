@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
+ActiveRecord::Schema[7.0].define(version: 2026_07_31_115506) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -519,6 +519,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
   end
 
   create_table "static_page_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

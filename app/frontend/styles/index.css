@@ -1,0 +1,20 @@
+/*
+ * Fae 5 stylesheet.
+ *
+ * Imported by createFaeApp(), so every host app gets it from Vite with no
+ * extra wiring. Intentionally has no relationship to app/assets/stylesheets:
+ * that Sass bundle is Sprockets-only (it calls asset-url/font-url, which Vite
+ * cannot resolve) and it still serves the unconverted Slim screens. The two
+ * never load on the same page, because Fae 5 screens render through
+ * app/views/layouts/fae/inertia.html.erb.
+ *
+ * Plain CSS on purpose -- no preprocessor means no build step for host apps
+ * to configure. Customization goes through the custom properties in
+ * tokens.css.
+ */
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./layout.css";
+@import "./navigation.css";
+@import "./components.css";

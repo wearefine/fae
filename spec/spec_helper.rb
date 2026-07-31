@@ -81,10 +81,6 @@ RSpec.configure do |config|
   end
 end
 
-Capybara::Webkit.configure do |config|
-  config.allow_url("secure.gravatar.com")
-end
-
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec

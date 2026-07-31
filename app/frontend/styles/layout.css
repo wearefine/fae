@@ -1,0 +1,119 @@
+/*
+ * App chrome: header, sidenav, and main content region.
+ * Markup lives in layouts/FaeLayout.vue.
+ *
+ * The header and the side rail are both sticky, so long index tables scroll
+ * under fixed navigation instead of pushing it off screen. That is the reason
+ * .fae-app is a plain block rather than a flex column with an internal
+ * scroller: keeping the document itself as the scroll container is what lets
+ * position: sticky work without a nested overflow context.
+ */
+
+.fae-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Header ---------------------------------------------------------------- */
+
+.fae-app__header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-lg);
+  height: var(--fae-header-height);
+  padding: 0 var(--fae-space-xl);
+  background: var(--fae-chrome);
+  border-bottom: 1px solid var(--fae-border);
+}
+
+.fae-app__brand {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--fae-space-sm);
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-md);
+  font-weight: var(--fae-weight-semibold);
+  letter-spacing: -0.02em;
+}
+
+.fae-app__brand:hover {
+  color: var(--fae-text-strong);
+  text-decoration: none;
+}
+
+.fae-app__brand-mark {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  background: var(--fae-accent);
+  color: var(--fae-accent-contrast);
+  font-size: var(--fae-text-sm);
+  font-weight: var(--fae-weight-semibold);
+  border-radius: var(--fae-radius);
+}
+
+/* Everything right of the nav: theme toggle, current user, sign out. */
+.fae-app__tools {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--fae-space-sm);
+  margin-left: auto;
+}
+
+.fae-app__user {
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-sm);
+  padding-left: var(--fae-space-sm);
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+  white-space: nowrap;
+}
+
+.fae-app__avatar {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  background: var(--fae-accent-soft);
+  color: var(--fae-accent-text);
+  font-size: var(--fae-text-xs);
+  font-weight: var(--fae-weight-semibold);
+  text-transform: uppercase;
+  border-radius: var(--fae-radius-full);
+}
+
+/* Body ------------------------------------------------------------------ */
+
+.fae-app__body {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* Main ------------------------------------------------------------------ */
+
+.fae-app__main {
+  flex: 1 1 auto;
+  /* Without this a wide table stretches the flex item instead of scrolling
+     inside its own wrapper. */
+  min-width: 0;
+  width: 100%;
+  max-width: var(--fae-content-max);
+  padding: var(--fae-space-xl);
+}
+
+@media (width <= 900px) {
+  .fae-app__header {
+    padding: 0 var(--fae-space-lg);
+  }
+
+  .fae-app__main {
+    padding: var(--fae-space-lg);
+  }
+}

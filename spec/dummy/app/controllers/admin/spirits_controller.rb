@@ -1,5 +1,30 @@
 module Admin
   class SpiritsController < Fae::BaseController
+    # Fae 5 spike: index and form both render via Inertia + Vue. This is the
+    # first converted screen with a nested table -- see nested_tables below and
+    # Admin::SubSpiritsController.
+    include Fae::InertiaRenderable
+
+    def index
+      render_fae_index(
+        @klass.for_fae_index,
+        columns: { name: 'Name', updated_at: 'Modified' },
+        inertia_links: true
+      )
+    end
+
+    def edit
+      render_fae_form(
+        fields: [
+          { name: :name, type: :text, required: true },
+          # The sub-spirit form's fields are declared by its own controller, so
+          # this only names the association and the columns to list. It sits
+          # between the inputs here because that is where the form declares it.
+          { nested_table: :sub_spirits, cols: [:name] },
+          { name: :description, type: :textarea, markdown: true }
+        ]
+      )
+    end
 
     private
 

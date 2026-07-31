@@ -1,5 +1,8 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
+import { computed, ref } from 'vue'
+import { Link } from '@inertiajs/vue3'
+
+import FaeIndexTable from '../../components/FaeIndexTable.vue'
 
 // Inertia passes shared props (currentUser, flash, nav) to every page. This
 // page reads none of them, and its template has multiple root nodes, so
@@ -8,55 +11,114 @@ defineOptions({ inheritAttrs: false })
 
 // Fae::BaseController#index is generic across every model, so this page is
 // driven entirely by props rather than being generated per-resource.
-defineProps({
+const props = defineProps({
   title: { type: String, required: true },
   newPath: { type: String, default: null },
   columns: { type: Array, default: () => [] },
   rows: { type: Array, default: () => [] },
+  // A sectioned index: [{ title, rows }]. When present it replaces `rows`, and
+  // every section gets its own independently reorderable table -- the shape
+  // the articles screen has always had, grouped by category.
+  groups: { type: Array, default: null },
+  // Set by the controller when the model has a position column, matching the
+  // js-sort-row tables on the Slim screens.
+  sortable: { type: Boolean, default: false },
+  sortPath: { type: String, default: null },
+  sortParam: { type: String, default: null },
+  // False while this resource's form still renders Slim -- see FaeIndexTable.
+  inertiaLinks: { type: Boolean, default: false },
 })
 
-function destroy(row) {
-  if (!window.confirm(`Delete "${row.label}"? This cannot be undone.`)) return
-  router.delete(row.deletePath, { preserveScroll: true })
+const count = computed(() =>
+  props.groups
+    ? props.groups.reduce((total, group) => total + group.rows.length, 0)
+    : props.rows.length
+)
+
+// Collapsed sections, keyed by group title. The legacy grouped index shipped a
+// "Close All" control over the same accordions.
+const collapsed = ref(new Set())
+const allCollapsed = computed(
+  () => !!props.groups?.length && collapsed.value.size === props.groups.length
+)
+
+function toggle(title) {
+  const next = new Set(collapsed.value)
+  if (next.has(title)) next.delete(title)
+  else next.add(title)
+  collapsed.value = next
+}
+
+function toggleAll() {
+  collapsed.value = allCollapsed.value
+    ? new Set()
+    : new Set(props.groups.map((group) => group.title))
 }
 </script>
 
 <template>
-  <!--
-    These use plain anchors rather than Inertia's <Link> on purpose. The new
-    and edit screens still render Slim, and <Link> performs an XHR visit that
-    expects an Inertia JSON response -- pointing it at a Slim page pops
-    Inertia's error modal. Swap these to <Link> as each target is converted.
-  -->
-  <div class="content-header">
-    <h1>{{ title }}</h1>
-    <a v-if="newPath" :href="newPath" class="button">Add {{ title }}</a>
+  <div class="fae-page-header">
+    <div class="fae-page-header__title">
+      <h1>{{ title }}</h1>
+      <span v-if="count" class="fae-page-header__count">{{ count }}</span>
+    </div>
+
+    <div class="fae-page-header__actions">
+      <button v-if="groups?.length" type="button" class="fae-button -secondary" @click="toggleAll">
+        {{ allCollapsed ? 'Open all' : 'Close all' }}
+      </button>
+
+      <component :is="inertiaLinks ? Link : 'a'" v-if="newPath" :href="newPath" class="fae-button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        Add {{ title }}
+      </component>
+    </div>
   </div>
 
-  <main class="content">
-    <table>
-      <thead>
-        <tr>
-          <th v-for="col in columns" :key="col.key">{{ col.label }}</th>
-          <th class="-action"></th>
-        </tr>
-      </thead>
+  <template v-if="groups">
+    <section v-for="group in groups" :key="group.title" class="fae-index-group">
+      <button
+        type="button"
+        class="fae-index-group__toggle"
+        :aria-expanded="!collapsed.has(group.title)"
+        @click="toggle(group.title)"
+      >
+        <svg
+          class="fae-index-group__chevron"
+          :class="{ '-collapsed': collapsed.has(group.title) }"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+        <h2>{{ group.title }}</h2>
+        <span class="fae-index-group__count">{{ group.rows.length }}</span>
+      </button>
 
-      <tbody>
-        <tr v-for="row in rows" :key="row.id">
-          <td v-for="(col, i) in columns" :key="col.key">
-            <a v-if="i === 0" :href="row.editPath">{{ row.cells[col.key] }}</a>
-            <template v-else>{{ row.cells[col.key] }}</template>
-          </td>
-          <td class="-action">
-            <button type="button" @click="destroy(row)">Delete</button>
-          </td>
-        </tr>
+      <!-- v-show, not v-if: collapsing must not throw away a table's local
+           drag state, and these lists are small. -->
+      <FaeIndexTable
+        v-show="!collapsed.has(group.title)"
+        :rows="group.rows"
+        :columns="columns"
+        :sortable="sortable"
+        :sort-path="sortPath"
+        :sort-param="sortParam"
+        :inertia-links="inertiaLinks"
+      />
+    </section>
+  </template>
 
-        <tr v-if="!rows.length">
-          <td :colspan="columns.length + 1">No items found</td>
-        </tr>
-      </tbody>
-    </table>
-  </main>
+  <FaeIndexTable
+    v-else
+    :rows="rows"
+    :columns="columns"
+    :sortable="sortable"
+    :sort-path="sortPath"
+    :sort-param="sortParam"
+    :inertia-links="inertiaLinks"
+  />
 </template>

@@ -2,6 +2,12 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import FaeLayout from './layouts/FaeLayout.vue'
 
+// Fae 5's own stylesheet, built by Vite. Deliberately unrelated to the
+// Sprockets Sass bundle that styles the remaining Slim screens -- see
+// styles/index.css. Host apps restyle by overriding the custom properties in
+// styles/tokens.css, not by importing anything from here.
+import './styles/index.css'
+
 // Pages shipped by the engine itself.
 const enginePages = import.meta.glob('./pages/**/*.vue')
 
