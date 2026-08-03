@@ -1,17 +1,22 @@
 module Fae
   class SetupController < ActionController::Base
 
+    include Fae::InertiaAuthenticatable
+
+    # Not a Fae::ApplicationController subclass, so the engine's helpers are
+    # not picked up automatically -- the Inertia layout needs page_title and
+    # body_class from ApplicationHelper.
+    helper Fae::ApplicationHelper
     helper Fae::FormHelper
 
     before_action :check_roles
-
-    layout 'devise'
 
     def first_user
       @option = Fae::Option.instance
       return show_404 if Fae::User.live_super_admins.present?
 
       @user = Fae::User.new
+      render_first_user
     end
 
     def create_first_user
@@ -26,12 +31,29 @@ module Fae
         sign_in(@user)
         redirect_to fae.root_path
       else
-        @option = Fae::Option.instance
-        render action: 'first_user', error: t('fae.save_error')
+        redirect_to fae.first_user_path,
+                    inertia: { errors: fae_inertia_errors(@user) },
+                    flash: { alert: t('fae.save_error') }
       end
     end
 
     private
+
+    def render_first_user
+      render_fae_auth 'Fae/Auth/FirstUser',
+        title: 'Welcome to Fae',
+        intro: t('fae.setup.prompt'),
+        submit_path: fae.first_user_path,
+        submit_text: t('fae.form.save'),
+        fields: [
+          { name: :first_name, required: true, autocomplete: 'given-name' },
+          { name: :last_name, autocomplete: 'family-name' },
+          { name: :email, type: :email, required: true, autocomplete: 'username' },
+          { name: :password, type: :password, required: true, autocomplete: 'new-password',
+            helper_text: t('fae.setup.password') },
+          { name: :password_confirmation, type: :password, required: true, autocomplete: 'new-password' }
+        ]
+    end
 
     def show_404
       render 'fae/pages/error404', layout: 'fae/error', status: :not_found

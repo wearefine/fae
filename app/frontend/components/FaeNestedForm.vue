@@ -1,7 +1,10 @@
 <script setup>
+import { toRef } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 
 import FaeFormField from './FaeFormField.vue'
+import { assetSubmitOptions, useAssetFields } from '../composables/useAssetFields.js'
+import { registerUnsavedChanges } from '../composables/useUnsavedChanges.js'
 
 /**
  * The add/edit form that opens inside a nested table.
@@ -33,9 +36,18 @@ const form = useForm({
   ...(props.parentKey ? { [props.parentKey]: props.parentId } : {}),
 })
 
+const { hasAssets, toParams } = useAssetFields(toRef(props, 'fields'))
+
+// Open forms only: closing one unmounts it, which is also how the user
+// discards it, so the parent stops counting it.
+registerUnsavedChanges(() => form.isDirty)
+
 function submit() {
-  form.transform((data) => ({ [props.paramKey]: data }))[props.method](props.action, {
+  const { method, extraParams, forceFormData } = assetSubmitOptions(hasAssets.value, props.method)
+
+  form.transform((data) => ({ [props.paramKey]: toParams(data), ...extraParams }))[method](props.action, {
     preserveScroll: true,
+    forceFormData,
     // Load-bearing rather than incidental: the response re-renders the parent
     // screen, and remounting it would throw away whatever the user had typed
     // into the parent form before opening this one.

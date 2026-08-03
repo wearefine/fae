@@ -1,0 +1,103 @@
+/*
+ * Signed-out screens: sign in, password reset, unlock, first-user setup.
+ * Markup lives in layouts/FaeAuthLayout.vue and components/FaeAuthForm.vue.
+ *
+ * The legacy .login-* rules put the logo and the form side by side above
+ * 700px. That split existed to fill a fixed-width card; here the card sizes to
+ * its content, so the logo stacks above the form at every width and the whole
+ * panel stays centred in the viewport.
+ */
+
+.fae-auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--fae-space-lg);
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: var(--fae-space-xl);
+}
+
+.fae-auth__panel {
+  width: 100%;
+  max-width: 420px;
+}
+
+.fae-auth__brand {
+  display: grid;
+  justify-items: center;
+  margin-bottom: var(--fae-space-xl);
+}
+
+/* Fae::Option's logo is documented as 300x300, but nothing enforces it --
+   cap it and let it keep its aspect ratio. */
+.fae-auth__logo {
+  max-width: 220px;
+  max-height: 140px;
+}
+
+.fae-auth__title {
+  margin: 0;
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-xl);
+  font-weight: var(--fae-weight-semibold);
+  text-align: center;
+}
+
+.fae-auth__card {
+  padding: var(--fae-space-xl);
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  /* The accent stripe the legacy .login-area carried on its top edge. */
+  border-top: 4px solid var(--fae-accent);
+  border-radius: var(--fae-radius-lg);
+  box-shadow: var(--fae-shadow);
+}
+
+.fae-auth__form {
+  display: grid;
+  gap: var(--fae-space-lg);
+}
+
+.fae-auth__heading {
+  margin: 0;
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-lg);
+  font-weight: var(--fae-weight-semibold);
+}
+
+.fae-auth__intro {
+  margin: calc(var(--fae-space-md) * -1) 0 0;
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+}
+
+/* Full width, because it is the only action on the screen. */
+.fae-auth__form .fae-button {
+  justify-content: center;
+  width: 100%;
+}
+
+.fae-auth__footer {
+  display: grid;
+  justify-items: center;
+  gap: var(--fae-space-xs);
+  width: 100%;
+  max-width: 420px;
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+  text-align: center;
+}
+
+.fae-auth__links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--fae-space-md);
+}
+
+.fae-auth__credit {
+  margin: 0;
+  font-size: var(--fae-text-xs);
+}

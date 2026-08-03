@@ -1,9 +1,0 @@
-.login-form
-  h2 Resend unlock instructions
-
-  = simple_form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post, id: 'login_form' }) do |f|
-
-    = f.input :email, :required => true, :autofocus => true
-
-    .login-form-actions
-      = f.button :submit, "Resend unlock instructions", class: "login-form-actions-submit"

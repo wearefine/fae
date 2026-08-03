@@ -12,6 +12,7 @@ ruby:
 
   main.content
     = fae_input f, :name
+    = fae_image_form f, :logo
 
     section.content
       == render 'fae/shared/nested_table',
@@ -21,6 +22,7 @@ ruby:
 
   section.content 
     = fae_input f, :description, markdown: true
+    = fae_file_form f, :pdf_upload
 
     / = fae_cta_form f, :website_cta
     / = fae_cta_form f, :some_other_cta

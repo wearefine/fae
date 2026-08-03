@@ -1,8 +1,11 @@
 import { onBeforeUnmount, onMounted } from 'vue'
 import { router } from '@inertiajs/vue3'
 
-const CONFIRM_MESSAGE =
+const DRAFT_MESSAGE =
   'You will lose any changes to this draft. Are you sure you want to cancel?'
+
+const UNSAVED_MESSAGE =
+  'You have unsaved changes. Are you sure you want to leave this page?'
 
 /**
  * Cancel + unload behaviour for a Fae form.
@@ -14,6 +17,10 @@ const CONFIRM_MESSAGE =
  * Backing out of that form therefore has to delete the record, or every
  * abandoned "New" click would leave a blank row behind.
  *
+ * An existing record is guarded too, but only once something has actually been
+ * typed: leaving it costs the edits rather than stranding a row, so there is
+ * nothing to delete and nothing to warn about on an untouched form.
+ *
  * Two escape routes are covered:
  *   - Cancel, which confirms and then DELETEs the draft.
  *   - Navigating away by any other means, which warns first. beforeunload
@@ -21,8 +28,10 @@ const CONFIRM_MESSAGE =
  *     visits, which beforeunload never sees.
  *
  * @param {object} props the Fae/Form page props (draft, deletePath, indexPath)
+ * @param {() => boolean} hasUnsavedChanges the form's own dirty state, plus any
+ *   nested form's -- see useUnsavedChanges
  */
-export function useDraftGuard(props) {
+export function useFormGuard(props, hasUnsavedChanges = () => false) {
   // Set once the user has either saved or confirmed they want to discard, so
   // the resulting navigation is not itself challenged.
   let unloadAllowed = false
@@ -32,22 +41,26 @@ export function useDraftGuard(props) {
   }
 
   function guarding() {
-    return props.draft && !unloadAllowed
+    if (unloadAllowed) return false
+
+    // A draft is worth challenging even untouched: walking away from one
+    // strands the record #new created.
+    return props.draft || hasUnsavedChanges()
+  }
+
+  function confirmMessage() {
+    return props.draft ? DRAFT_MESSAGE : UNSAVED_MESSAGE
   }
 
   function cancel() {
-    if (!guarding()) {
-      router.visit(props.indexPath)
-      return
-    }
-
-    if (!window.confirm(CONFIRM_MESSAGE)) return
+    if (guarding() && !window.confirm(confirmMessage())) return
 
     allowUnload()
 
-    // Fae::BaseController#destroy redirects to the index, so there is nothing
-    // to follow up with here.
-    if (props.deletePath) router.delete(props.deletePath)
+    // Only a draft is deleted on the way out; an existing record is left as it
+    // was last saved. Fae::BaseController#destroy redirects to the index, so
+    // there is nothing to follow up with here.
+    if (props.draft && props.deletePath) router.delete(props.deletePath)
     else router.visit(props.indexPath)
   }
 
@@ -71,7 +84,7 @@ export function useDraftGuard(props) {
       // lands back on this same screen.
       if (event.detail.visit.method !== 'get') return
       if (!guarding()) return
-      return window.confirm(CONFIRM_MESSAGE)
+      return window.confirm(confirmMessage())
     })
   })
 

@@ -14,6 +14,7 @@ defineOptions({ inheritAttrs: false })
 const props = defineProps({
   title: { type: String, required: true },
   newPath: { type: String, default: null },
+  newButtonText: { type: String, default: 'Add' },
   columns: { type: Array, default: () => [] },
   rows: { type: Array, default: () => [] },
   // A sectioned index: [{ title, rows }]. When present it replaces `rows`, and
@@ -73,7 +74,7 @@ function toggleAll() {
           stroke-linecap="round" aria-hidden="true">
           <path d="M12 5v14M5 12h14" />
         </svg>
-        Add {{ title }}
+        {{ newButtonText }}
       </component>
     </div>
   </div>

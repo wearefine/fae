@@ -4,7 +4,12 @@ class Spirit < ApplicationRecord
   # has_fae_cta :some_other_cta
   # has_fae_cta :website_cta
 
+  has_fae_image :logo
+  has_fae_file :pdf_upload
+
   has_many :sub_spirits, dependent: :destroy
+
+  validates :name, presence: true
 
   def fae_display_field
     name

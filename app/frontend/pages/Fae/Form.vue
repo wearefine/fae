@@ -4,7 +4,15 @@ import { useForm } from '@inertiajs/vue3'
 
 import FaeFormField from '../../components/FaeFormField.vue'
 import FaeNestedTable from '../../components/FaeNestedTable.vue'
-import { useDraftGuard } from '../../composables/useDraftGuard.js'
+import { assetSubmitOptions, useAssetFields } from '../../composables/useAssetFields.js'
+import { useFormGuard } from '../../composables/useFormGuard.js'
+import { provideUnsavedChanges } from '../../composables/useUnsavedChanges.js'
+
+// Saving the parent would leave a half-filled nested form behind, so it is
+// worth interrupting for. Wording kept from _validator.js.
+const NESTED_UNSAVED_MESSAGE =
+  'A nested form has unsaved changes! To return to your draft, click “Cancel.” ' +
+  'To proceed without saving, click “OK.”'
 
 // Inertia passes shared props (currentUser, flash, nav) to every page, and
 // this template has multiple root nodes.
@@ -25,7 +33,7 @@ const props = defineProps({
   // place the form declared it rather than after every input.
   blocks: { type: Array, default: () => [] },
   // True when the record was created by Fae::BaseController#new and has not
-  // been deliberately saved yet -- see useDraftGuard.
+  // been deliberately saved yet -- see useFormGuard.
   draft: { type: Boolean, default: false },
   deletePath: { type: String, default: null },
 })
@@ -56,17 +64,30 @@ const form = useForm(
   Object.fromEntries(fields.value.map((field) => [field.name, field.value]))
 )
 
-const { cancel, allowUnload } = useDraftGuard(props)
+const { hasAssets, toParams } = useAssetFields(fields)
+
+// Nested tables open forms of their own inside this one, and their input is
+// not part of this form's data -- it has to be accounted for separately both
+// here and in the navigation guard.
+const nestedUnsavedChanges = provideUnsavedChanges()
+const { cancel, allowUnload } = useFormGuard(
+  props,
+  () => form.isDirty || nestedUnsavedChanges()
+)
 
 function submit() {
+  if (nestedUnsavedChanges() && !window.confirm(NESTED_UNSAVED_MESSAGE)) return
+
   allowUnload()
 
+  const { method, extraParams, forceFormData } = assetSubmitOptions(hasAssets.value, props.submitMethod)
+
   form
-    .transform((data) => ({ [props.paramKey]: data }))
+    .transform((data) => ({ [props.paramKey]: toParams(data), ...extraParams }))
     // A failed save redirects back to this same URL, so the component is not
     // remounted and the user's input survives in `form` while the errors
     // arrive as page props.
-    [props.submitMethod](props.submitPath, { preserveScroll: true, preserveState: true })
+    [method](props.submitPath, { preserveScroll: true, preserveState: true, forceFormData })
 }
 </script>
 

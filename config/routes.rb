@@ -4,7 +4,8 @@ Fae::Engine.routes.draw do
 
   root 'pages#home'
 
-  devise_for :users, class_name: "Fae::User", module: :devise, skip: [:sessions]
+  devise_for :users, class_name: "Fae::User", module: :devise, skip: [:sessions],
+    controllers: { passwords: 'fae/passwords', unlocks: 'fae/unlocks' }
   
   as :user do
     get 'login' => 'sessions#new', as: :new_user_session

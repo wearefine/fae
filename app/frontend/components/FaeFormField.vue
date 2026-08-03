@@ -1,6 +1,7 @@
 <script setup>
 import { computed, useId } from 'vue'
 
+import FaeAssetField from './FaeAssetField.vue'
 import FaeMarkdownEditor from './FaeMarkdownEditor.vue'
 
 /**
@@ -13,7 +14,7 @@ import FaeMarkdownEditor from './FaeMarkdownEditor.vue'
  */
 const props = defineProps({
   field: { type: Object, required: true },
-  modelValue: { type: [String, Number, Boolean, null], default: '' },
+  modelValue: { type: [String, Number, Boolean, Object, null], default: '' },
   error: { type: String, default: null },
 })
 
@@ -26,6 +27,7 @@ const uid = useId()
 const inputId = computed(() => `${uid}-${props.field.name}`)
 const describedBy = computed(() => {
   const ids = []
+  if (props.field.helperText) ids.push(`${inputId.value}-helper`)
   if (props.field.hint) ids.push(`${inputId.value}-hint`)
   if (props.error) ids.push(`${inputId.value}-error`)
   return ids.join(' ') || undefined
@@ -39,11 +41,29 @@ const inputType = computed(() =>
 </script>
 
 <template>
-  <div class="fae-field" :class="{ '-invalid': !!error, '-checkbox': field.type === 'checkbox' }">
+  <FaeAssetField
+    v-if="field.asset"
+    :field="field"
+    :model-value="modelValue"
+    :error="error"
+    @update:model-value="$emit('update:modelValue', $event)"
+  />
+
+  <div
+    v-else
+    class="fae-field"
+    :class="{ '-invalid': !!error, '-checkbox': field.type === 'checkbox' }"
+  >
     <label class="fae-field__label" :for="inputId">
       {{ field.label }}
       <abbr v-if="field.required" class="fae-field__required" title="required">*</abbr>
     </label>
+
+    <!-- Above the control, where the Slim label's h6.helper_text sat. `hint`
+         is the separate, below-the-control note simple_form rendered. -->
+    <p v-if="field.helperText" :id="`${inputId}-helper`" class="fae-field__helper">
+      {{ field.helperText }}
+    </p>
 
     <FaeMarkdownEditor
       v-if="field.type === 'textarea' && field.markdown"
@@ -59,6 +79,8 @@ const inputType = computed(() =>
       :id="inputId"
       class="fae-field__control"
       rows="8"
+      :name="field.inputName"
+      :autocomplete="field.autocomplete"
       :value="modelValue"
       :aria-invalid="!!error"
       :aria-describedby="describedBy"
@@ -69,6 +91,7 @@ const inputType = computed(() =>
       v-else-if="field.type === 'select'"
       :id="inputId"
       class="fae-field__control"
+      :name="field.inputName"
       :value="modelValue"
       :aria-invalid="!!error"
       :aria-describedby="describedBy"
@@ -85,6 +108,8 @@ const inputType = computed(() =>
       :id="inputId"
       class="fae-field__checkbox"
       type="checkbox"
+      :name="field.inputName"
+      value="1"
       :checked="modelValue"
       :aria-invalid="!!error"
       :aria-describedby="describedBy"
@@ -96,6 +121,8 @@ const inputType = computed(() =>
       :id="inputId"
       class="fae-field__control"
       :type="inputType"
+      :name="field.inputName"
+      :autocomplete="field.autocomplete"
       :value="modelValue"
       :aria-invalid="!!error"
       :aria-describedby="describedBy"

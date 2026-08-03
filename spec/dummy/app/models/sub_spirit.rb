@@ -5,6 +5,8 @@ class SubSpirit < ApplicationRecord
 
   belongs_to :spirit
 
+  validates :name, presence: true
+
   def fae_display_field
     name
   end

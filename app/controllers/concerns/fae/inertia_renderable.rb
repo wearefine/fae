@@ -7,6 +7,11 @@ module Fae
   module InertiaRenderable
     extend ActiveSupport::Concern
     include Fae::InertiaErrors
+    include Fae::InertiaSharedProps
+
+    # Field types backed by a has_one Fae::Image / Fae::File rather than a
+    # column, so they submit as nested attributes.
+    ASSET_FIELD_TYPES = %w[image file].freeze
 
     included do
       inertia_config layout: 'fae/inertia'
@@ -64,14 +69,6 @@ module Fae
     end
 
     private
-
-    # Every flash key, not a hardcoded notice/alert pair: Fae also sets
-    # flash[:error] (a failed destroy, an unauthorized redirect), and the Slim
-    # partial this replaces iterated the whole hash too. Keys stay strings so
-    # they map straight onto the toast's modifier class.
-    def fae_inertia_flash
-      flash.to_hash.reject { |_type, message| message.blank? }
-    end
 
     # #new persists the record immediately and redirects to #edit with
     # ?draft=true, so a failed save has to put the flag back on the URL or the
@@ -156,10 +153,13 @@ module Fae
     def render_fae_index(items = nil, columns:, groups: nil, sortable: nil, inertia_links: false)
       sortable = fae_inertia_sortable? if sortable.nil?
       keys = columns.keys
+      title = @klass_humanized.pluralize.titleize
 
       render inertia: 'Fae/Index', props: {
-        title: @klass_humanized.pluralize.titleize,
+        title: title,
         newPath: @new_path,
+        # The button adds one record, so it names one -- as _index_header did.
+        newButtonText: t('fae.common.add', title: title.singularize),
         columns: columns.map { |key, label| { key: key.to_s, label: label } },
         rows: Array(items).map { |item| fae_inertia_index_row(item, keys) },
         groups: groups&.map do |group|
@@ -202,6 +202,12 @@ module Fae
     #     { nested_table: :sub_spirits, cols: [:name] },
     #     { name: :content, type: :textarea, markdown: true }
     #   ]
+    #
+    # Types :image and :file are the fae_image_form / fae_file_form
+    # counterparts. They take the same options those helpers did -- :show_alt,
+    # :show_caption, :alt_label, :caption_label, :alt_helper_text,
+    # :caption_helper_text -- and submit through the association that
+    # has_fae_image / has_fae_file declared.
     def render_fae_form(item = @item, fields:, title: nil)
       # Fae::BaseController#new saves the record before redirecting here, so
       # "new" is really an edit of an unsaved-looking row. The draft flag is
@@ -285,27 +291,125 @@ module Fae
     def fae_inertia_form_field(item, field)
       name = field[:name].to_s
       type = (field[:type] || :text).to_s
+      label = field[:label] || item.class.human_attribute_name(name)
 
       {
         name: name,
         type: type,
-        label: field[:label] || item.class.human_attribute_name(name),
+        label: label,
         hint: field[:hint],
-        required: field.fetch(:required, false),
+        # The h6.helper_text the Slim label carried. Every field type honours
+        # it, not just the ones a fae_* helper happened to expose it on.
+        helperText: field[:helper_text],
+        required: field.fetch(:required) { fae_inertia_required?(item, name) },
         value: fae_inertia_field_value(item, name, type),
         # Opts a textarea into the markdown editor, as `fae_input ... markdown: true` did.
         markdown: field[:markdown].presence,
-        collection: (fae_inertia_collection(field[:collection]) if type == 'select')
+        collection: (fae_inertia_collection(field[:collection]) if type == 'select'),
+        asset: (fae_inertia_asset(item, field, name, type, label) if ASSET_FIELD_TYPES.include?(type))
       }.compact
     end
 
+    # Whether the label gets an asterisk. simple_form derived this from the
+    # model's validators, so a Slim form never restated it; `required:` on a
+    # descriptor is an override for what no validator covers -- an asset
+    # field's requirement is a column on the Fae::Image/Fae::File, not a
+    # validation on the parent.
+    def fae_inertia_required?(item, name)
+      klass = item.class
+      return false unless klass.respond_to?(:validators_on)
+
+      # A belongs_to declares its presence validator on the association, while
+      # the field is the foreign key.
+      association = klass.reflect_on_all_associations(:belongs_to)
+                         .find { |reflection| reflection.foreign_key.to_s == name }
+
+      [name, association&.name].compact.any? do |attribute|
+        klass.validators_on(attribute).any? do |validator|
+          next false unless validator.kind == :presence
+          # A conditional validator cannot be resolved without running it.
+          next false if validator.options.key?(:if) || validator.options.key?(:unless)
+
+          case validator.options[:on]
+          when nil, :save then true
+          when :create then !item.persisted?
+          when :update then item.persisted?
+          else false
+          end
+        end
+      end
+    end
+
     def fae_inertia_field_value(item, name, type)
+      return fae_inertia_asset_value(item, name, type) if ASSET_FIELD_TYPES.include?(type)
+
       value = item.public_send(name)
 
       # Everything but a checkbox round-trips as a string: a <select> matches
       # its options by string value, and Rails casts on the way back in, so
       # keeping one representation avoids a nil id selecting the first option.
       type == 'checkbox' ? !!value : value.to_s
+    end
+
+    # The editable half of an asset field -- what gets submitted back as
+    # <name>_attributes. `asset` is filled in client-side with the chosen File;
+    # null means "leave whatever is stored alone", which is how the Slim form's
+    # empty file input behaved.
+    def fae_inertia_asset_value(item, name, type)
+      record = item.public_send(name)
+
+      value = { id: record&.id, asset: nil }
+      value.merge!(alt: record&.alt.to_s, caption: record&.caption.to_s) if type == 'image'
+      value
+    end
+
+    # The read-only half: the current attachment plus everything the uploader
+    # needs to police an upload before it is sent.
+    def fae_inertia_asset(item, field, name, type, label)
+      image = type == 'image'
+      record = item.public_send(name)
+      limit = image ? Fae.max_image_upload_size : Fae.max_file_upload_size
+
+      {
+        kind: type,
+        # has_fae_image/has_fae_file declare accepts_nested_attributes_for, so
+        # the asset saves with its parent rather than through its own request.
+        paramKey: "#{name}_attributes",
+        maxSize: limit,
+        # ### is the placeholder the shared locale string uses for the limit.
+        maxSizeMessage: t('fae.exceeded_upload_limit').sub('###', limit.to_s),
+        accept: fae_inertia_asset_accept(record),
+        deleteConfirmation: t('fae.delete_confirmation'),
+        showAlt: image && field.fetch(:show_alt, true),
+        showCaption: image && field.fetch(:show_caption, false),
+        altLabel: field[:alt_label] || "#{label} Alt Text",
+        captionLabel: field[:caption_label] || "#{label} Caption",
+        altHelperText: field.fetch(:alt_helper_text) { t('fae.images.alt_helper') },
+        captionHelperText: field[:caption_helper_text],
+        current: fae_inertia_stored_asset(record, image)
+      }.compact
+    end
+
+    def fae_inertia_stored_asset(record, image)
+      return nil if record.blank? || record.asset.blank?
+
+      {
+        url: record.asset.url,
+        # Deleting only strips the asset, keeping the row, so re-uploading
+        # updates the same record -- see Fae::ImagesController#delete_image.
+        deletePath: (image ? fae.delete_image_path(record.id) : fae.delete_file_path(record.id)),
+        thumbUrl: (record.asset.thumb.url if image && record.asset.thumb.present?),
+        filename: record.asset.file&.filename
+      }.compact
+    end
+
+    # Read off the mounted uploader rather than hardcoded, so an app that
+    # overrides Fae::ImageUploader gets its own allowlist in the file picker.
+    def fae_inertia_asset_accept(record)
+      extensions = record.try(:asset).try(:extension_allowlist)
+      return nil if extensions.blank?
+
+      extensions.map { |extension| ".#{extension}" }.join(',')
     end
 
     def fae_inertia_collection(collection)

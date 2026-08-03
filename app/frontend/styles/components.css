@@ -244,6 +244,22 @@
   text-align: center;
 }
 
+/* Shown in place of a table when there is nothing to list at all, as opposed
+   to .fae-table__empty which is a row inside an otherwise real table. */
+.fae-empty-state {
+  padding: var(--fae-space-3xl) var(--fae-space-lg);
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  border-radius: var(--fae-radius-lg);
+  text-align: center;
+}
+
+.fae-empty-state p {
+  margin-top: var(--fae-space-md);
+  color: var(--fae-text-muted);
+  line-height: 1.6;
+}
+
 /* Drag-to-reorder ------------------------------------------------------- */
 
 /* Narrow leading column holding the drag handle. */
@@ -578,10 +594,219 @@ textarea.fae-field__control {
   font-size: var(--fae-text-sm);
 }
 
+/* Sits between the label and its control, where the Slim label's
+   h6.helper_text did. */
+.fae-field__helper {
+  margin: calc(var(--fae-space-xs) * -1) 0 0;
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+}
+
+/* The checkbox row is a two-column grid, so helper text needs its own row. */
+.fae-field.-checkbox .fae-field__helper {
+  order: 3;
+  grid-column: 1 / -1;
+  margin-top: 0;
+}
+
 .fae-field__error {
   margin: 0;
   color: var(--fae-danger);
   font-size: var(--fae-text-sm);
+}
+
+/* Asset fields ----------------------------------------------------------- */
+
+/*
+ * Image and file uploaders. The field stacks preview, drop zone and (for an
+ * image) its alt and caption inputs, so it inherits .fae-field's grid.
+ */
+.fae-asset-field__preview {
+  display: flex;
+  align-items: center;
+  gap: var(--fae-space-md);
+  padding: var(--fae-space-sm);
+  background: var(--fae-surface-hover);
+  border: 1px solid var(--fae-border);
+  border-radius: var(--fae-radius);
+}
+
+.fae-asset-field__zoom {
+  flex: none;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: var(--fae-radius-sm);
+  cursor: zoom-in;
+}
+
+.fae-asset-field__zoom:focus-visible {
+  outline: 2px solid var(--fae-accent);
+  outline-offset: 2px;
+}
+
+.fae-asset-field__thumb {
+  display: block;
+  width: 90px;
+  height: 60px;
+  object-fit: cover;
+  background: var(--fae-bg);
+  border-radius: var(--fae-radius-sm);
+}
+
+.fae-asset-field__filename {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--fae-text);
+  font-size: var(--fae-text-sm);
+}
+
+.fae-asset-field__delete {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-lg);
+  line-height: 1;
+  background: none;
+  border: 1px solid var(--fae-border-strong);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color var(--fae-transition), border-color var(--fae-transition);
+}
+
+.fae-asset-field__delete:hover:not(:disabled) {
+  color: var(--fae-danger);
+  border-color: var(--fae-danger);
+}
+
+.fae-asset-field__dropzone {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fae-space-md);
+  padding: var(--fae-space-md);
+  border: 1px dashed var(--fae-border-strong);
+  border-radius: var(--fae-radius);
+  transition: border-color var(--fae-transition), background var(--fae-transition);
+}
+
+/* The legacy .highlight state, applied while a file is over the field. */
+.fae-asset-field__dropzone.-dragging {
+  background: var(--fae-accent-soft);
+  border-color: var(--fae-accent);
+}
+
+.fae-asset-field__input {
+  font-size: var(--fae-text-sm);
+}
+
+.fae-asset-field__input::file-selector-button {
+  margin-right: var(--fae-space-sm);
+  padding: var(--fae-space-xs) var(--fae-space-md);
+  color: var(--fae-text-strong);
+  font: inherit;
+  font-size: var(--fae-text-sm);
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border-strong);
+  border-radius: var(--fae-radius);
+  cursor: pointer;
+  transition: background var(--fae-transition), border-color var(--fae-transition);
+}
+
+.fae-asset-field__input::file-selector-button:hover {
+  background: var(--fae-surface-hover);
+  border-color: var(--fae-accent);
+}
+
+.fae-asset-field__input:focus-visible {
+  outline: 2px solid var(--fae-accent);
+  outline-offset: 2px;
+}
+
+.fae-asset-field__prompt {
+  margin: 0;
+  color: var(--fae-text-muted);
+  font-size: var(--fae-text-sm);
+}
+
+.fae-asset-field__limit {
+  opacity: 0.75;
+}
+
+.fae-asset-field__undo {
+  padding: 0;
+  color: var(--fae-accent);
+  font: inherit;
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.fae-asset-field.-invalid .fae-asset-field__dropzone {
+  border-color: var(--fae-danger);
+}
+
+/* Alt and caption are sub-fields of the same .fae-field grid, so they need
+   their own separation from the uploader above them. */
+.fae-asset-field .fae-field__label:not(:first-child) {
+  margin-top: var(--fae-space-md);
+}
+
+/* Image preview modal ---------------------------------------------------- */
+
+/*
+ * The dialog carries no padding and shrink-wraps the image (a <dialog> is
+ * width/height: fit-content), so the modal box IS the image box -- its aspect
+ * ratio matches without measuring anything. The caps below are what stop a
+ * large upload filling the viewport; the image is never scaled up past its
+ * natural size because no width or height is set.
+ */
+.fae-image-modal {
+  max-width: 90vw;
+  max-height: 85vh;
+  padding: 0;
+  overflow: visible;
+  background: none;
+  border: none;
+}
+
+.fae-image-modal::backdrop {
+  background: rgb(0 0 0 / 60%);
+}
+
+.fae-image-modal__image {
+  display: block;
+  max-width: 90vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  background: var(--fae-surface);
+  border-radius: var(--fae-radius);
+  box-shadow: var(--fae-shadow-lg);
+}
+
+.fae-image-modal__close {
+  position: absolute;
+  top: calc(var(--fae-space-sm) * -1);
+  right: calc(var(--fae-space-sm) * -1);
+  width: 32px;
+  height: 32px;
+  color: var(--fae-text-strong);
+  font-size: var(--fae-text-lg);
+  line-height: 1;
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border-strong);
+  border-radius: 50%;
+  box-shadow: var(--fae-shadow);
+  cursor: pointer;
+}
+
+.fae-image-modal__close:hover {
+  color: var(--fae-danger);
+  border-color: var(--fae-danger);
 }
 
 /* Nested tables ---------------------------------------------------------- */

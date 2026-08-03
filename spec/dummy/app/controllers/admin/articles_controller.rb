@@ -32,10 +32,9 @@ module Admin
           name: :article_category_id,
           type: :select,
           label: 'Article Category',
-          required: true,
           collection: ArticleCategory.order(:name)
         },
-        { name: :title, type: :text, required: true },
+        { name: :title, type: :text },
         { name: :body, type: :textarea }
       ]
     end
