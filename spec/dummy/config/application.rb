@@ -27,6 +27,8 @@ module Dummy
     config.active_record.encryption.primary_key = ENV["PRIMARY_KEY"]
     config.active_record.encryption.deterministic_key = ENV["DETERMINISTIC_KEY"]
     config.active_record.encryption.key_derivation_salt = ENV["KEY_DERIVATION_SALT"]
+
+    config.hosts << 'bd7e-96-35-119-64.ngrok-free.app'
   end
 end
 

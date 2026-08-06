@@ -57,11 +57,22 @@ module Fae
     
     def generate_alt
       if params[:image_id].present?
-        path_or_url = :url
-        path_or_url = :path if Rails.env.development?
-        image = Fae::Image.find(params[:image_id])&.asset&.send(path_or_url)
-        image = MiniMagick::Image.open(image)
+        fae_image = Fae::Image.find_by(id: params[:image_id])
+        uploader = fae_image&.asset
+        source = uploader&.path.presence || uploader&.url.presence
+
+        if source.blank?
+          render json: { success: false, message: 'Please upload an image before generating alt text.' }, status: :unprocessable_entity
+          return
+        end
+
+        image = MiniMagick::Image.open(source)
       else
+        if params[:image].blank?
+          render json: { success: false, message: 'No image payload provided.' }, status: :unprocessable_entity
+          return
+        end
+
         image_data = Base64.decode64(params[:image].split(',').last)
         image = MiniMagick::Image.read(image_data)
       end

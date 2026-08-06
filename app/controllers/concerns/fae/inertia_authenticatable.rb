@@ -24,7 +24,8 @@ module Fae
       inertia_share do
         {
           flash: fae_inertia_flash,
-          branding: fae_inertia_branding
+          branding: fae_inertia_branding,
+          theme: fae_inertia_theme
         }
       end
     end

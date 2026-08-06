@@ -108,6 +108,10 @@ function destroy(row) {
             </td>
 
             <td class="fae-table__actions">
+              <component :is="linkTag" class="fae-button -secondary -sm" :href="row.editPath">
+                Edit
+              </component>
+
               <button type="button" class="fae-button -danger -sm" @click="destroy(row)">
                 Delete
               </button>

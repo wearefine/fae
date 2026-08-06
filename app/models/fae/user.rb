@@ -3,7 +3,10 @@ module Fae
     include Fae::BaseModelConcern
     include Fae::UserConcern
 
+    THEMES = %w[light dark indigo darkstar].freeze
+
     after_save :turn_off_mfa, if: :saved_change_to_user_mfa_enabled?
+    before_validation :set_default_theme
 
     # Include default devise modules. Others available are:
     # :registerable, :confirmable, :timeoutable and :omniauthable
@@ -24,9 +27,12 @@ module Fae
       }
     validates :password,
       presence: { on: :create },
-      confirmation: { message: "does not match Password"},
       length: { minimum: 8, allow_blank: true }
+    validates :password,
+      confirmation: { message: "does not match Password" },
+      if: -> { password.present? && password_confirmation.present? }
     validates :role_id, presence: true
+    validates :theme, inclusion: { in: THEMES }
 
     default_scope { order(:first_name, :last_name) }
 
@@ -115,7 +121,32 @@ module Fae
       otp_backup_codes.present?
     end
 
+    def normalized_theme
+      THEMES.include?(theme.to_s) ? theme.to_s : 'light'
+    end
+
+    def theme_mode
+      %w[dark darkstar].include?(normalized_theme) ? 'dark' : 'light'
+    end
+
+    def theme_highlight_color(default_highlight)
+      case normalized_theme
+      when 'indigo'
+        '#4B0082'
+      when 'darkstar'
+        '#ed0c0c'
+      else
+        default_highlight
+      end
+    end
+
     class << self
+
+      def theme_collection
+        THEMES.map do |value|
+          [I18n.t("fae.user.themes.#{value}", default: value.titleize), value]
+        end
+      end
 
       def update_mfa(enabled, email)
         if enabled == '1'
@@ -127,6 +158,12 @@ module Fae
         end
       end
 
+    end
+
+    private
+
+    def set_default_theme
+      self.theme = 'light' if theme.blank?
     end
 
   end

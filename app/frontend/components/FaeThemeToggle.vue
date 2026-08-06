@@ -15,6 +15,7 @@ const LABELS = {
 }
 
 const label = computed(() => LABELS[theme.value])
+const isSystem = computed(() => theme.value === 'system')
 
 // While on "system" the icon shows what the OS resolved to, so the button
 // always reflects what is on screen.
@@ -27,7 +28,7 @@ const icon = computed(() =>
   <button
     type="button"
     class="fae-button -ghost -icon fae-theme-toggle"
-    :class="{ '-system': theme === 'system' }"
+    :class="{ '-system': isSystem }"
     :title="label"
     :aria-label="label"
     @click="cycleTheme"

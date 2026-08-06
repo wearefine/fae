@@ -59,6 +59,7 @@
   --fae-brand-700: #61662a;
   --fae-brand-800: #4a4f22;
   --fae-brand-900: #383c1c;
+   --fae-highlight: var(--fae-brand-500);
 
   /* Status ramps, three stops each: a light-mode tint, the solid colour, and
      a dark-mode-friendly lift. */
@@ -119,17 +120,35 @@
      to a legible contrast ratio against a surface -- they are different
      values on purpose, since the raw olive fails contrast as body-sized text
      on white. */
-  --fae-accent: light-dark(var(--fae-brand-500), var(--fae-brand-400));
-  --fae-accent-hover: light-dark(var(--fae-brand-600), var(--fae-brand-300));
-  --fae-accent-active: light-dark(var(--fae-brand-700), var(--fae-brand-200));
-  --fae-accent-text: light-dark(var(--fae-brand-700), var(--fae-brand-300));
+   --fae-accent: var(--fae-highlight);
+   --fae-accent-hover: light-dark(
+      color-mix(in srgb, var(--fae-highlight) 88%, black),
+      color-mix(in srgb, var(--fae-highlight) 82%, white)
+   );
+   --fae-accent-active: light-dark(
+      color-mix(in srgb, var(--fae-highlight) 76%, black),
+      color-mix(in srgb, var(--fae-highlight) 70%, white)
+   );
+   --fae-accent-text: light-dark(
+      color-mix(in srgb, var(--fae-highlight) 72%, black),
+      color-mix(in srgb, var(--fae-highlight) 86%, white)
+   );
   --fae-accent-contrast: light-dark(var(--fae-neutral-0), var(--fae-neutral-950));
-  --fae-accent-soft: light-dark(var(--fae-brand-50), color-mix(in srgb, var(--fae-brand-400) 16%, transparent));
-  --fae-accent-soft-hover: light-dark(var(--fae-brand-100), color-mix(in srgb, var(--fae-brand-400) 24%, transparent));
+   --fae-accent-soft: light-dark(
+      color-mix(in srgb, var(--fae-highlight) 12%, white),
+      color-mix(in srgb, var(--fae-highlight) 16%, transparent)
+   );
+   --fae-accent-soft-hover: light-dark(
+      color-mix(in srgb, var(--fae-highlight) 22%, white),
+      color-mix(in srgb, var(--fae-highlight) 24%, transparent)
+   );
 
   /* Text selection needs far more contrast than `accent-soft`, which is tuned
      to sit behind a focus ring rather than behind body text. */
-  --fae-selection-bg: light-dark(var(--fae-brand-200), color-mix(in srgb, var(--fae-brand-400) 42%, transparent));
+   --fae-selection-bg: light-dark(
+      color-mix(in srgb, var(--fae-highlight) 38%, white),
+      color-mix(in srgb, var(--fae-highlight) 42%, transparent)
+   );
   --fae-selection-text: light-dark(var(--fae-neutral-900), var(--fae-neutral-0));
 
   /* Status */
@@ -230,7 +249,6 @@
    Sass palette (--fae-grey-*, --fae-highlight); keep the handful that host
    apps may already have overridden pointing at their semantic replacements. */
 :root {
-  --fae-highlight: var(--fae-accent);
   --fae-highlight-contrast: var(--fae-accent-contrast);
   --fae-body-bg: var(--fae-bg);
   --fae-text-heavy: var(--fae-text-strong);

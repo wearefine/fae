@@ -1,6 +1,7 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import FaeLayout from './layouts/FaeLayout.vue'
+import { FAE_COMPONENT_OVERRIDES, normalizeComponentOverrides } from './overrides.js'
 
 // Fae 5's own stylesheet, built by Vite. Deliberately unrelated to the
 // Sprockets Sass bundle that styles the remaining Slim screens -- see
@@ -31,10 +32,19 @@ function byPageName(modules) {
  * be replaced without forking the engine:
  *
  *   createFaeApp({ pages: import.meta.glob('../pages/**\/*.vue') })
+ *
+ * Host apps can also override engine components globally without replacing an
+ * entire page:
+ *
+ *   createFaeApp({
+ *     pages: import.meta.glob('../pages/**\/*.vue'),
+ *     components: import.meta.glob('../components/**\/*.vue')
+ *   })
  */
-export function createFaeApp({ pages = {} } = {}) {
+export function createFaeApp({ pages = {}, components = {} } = {}) {
   const engine = byPageName(enginePages)
   const host = byPageName(pages)
+  const componentOverrides = normalizeComponentOverrides(components)
 
   return createInertiaApp({
     resolve: (name) => {
@@ -56,9 +66,9 @@ export function createFaeApp({ pages = {} } = {}) {
     },
 
     setup({ el, App, props, plugin }) {
-      createApp({ render: () => h(App, props) })
-        .use(plugin)
-        .mount(el)
+      const app = createApp({ render: () => h(App, props) })
+      app.provide(FAE_COMPONENT_OVERRIDES, componentOverrides)
+      app.use(plugin).mount(el)
     },
   })
 }

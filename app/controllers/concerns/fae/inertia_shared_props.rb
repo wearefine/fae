@@ -32,5 +32,30 @@ module Fae
         logoUrl: (logo.asset_url if logo.present? && logo.asset.present?)
       }
     end
+
+    def fae_inertia_theme
+      default_highlight = fae_inertia_default_highlight_color
+      user_theme = current_user&.respond_to?(:normalized_theme) ? current_user.normalized_theme : 'light'
+      mode = current_user&.respond_to?(:theme_mode) ? current_user.theme_mode : 'light'
+      highlight = if current_user&.respond_to?(:theme_highlight_color)
+                    current_user.theme_highlight_color(default_highlight)
+                  else
+                    default_highlight
+                  end
+
+      {
+        name: user_theme,
+        mode: mode,
+        highlightColor: highlight,
+        defaultHighlightColor: default_highlight
+      }
+    end
+
+    def fae_inertia_default_highlight_color
+      option = @option || Fae::Option.instance
+      hex = option.colorway.to_s.sub(/^#/, '')
+      hex = '9aa142' if hex.blank?
+      "##{hex}"
+    end
   end
 end

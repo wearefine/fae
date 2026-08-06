@@ -2,7 +2,9 @@
 import { computed, ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 
+import FaeBreadcrumbs from '../../components/FaeBreadcrumbs.vue'
 import FaeIndexTable from '../../components/FaeIndexTable.vue'
+import { useFaeComponent } from '../../composables/useFaeComponent.js'
 
 // Inertia passes shared props (currentUser, flash, nav) to every page. This
 // page reads none of them, and its template has multiple root nodes, so
@@ -39,6 +41,7 @@ const count = computed(() =>
 // Collapsed sections, keyed by group title. The legacy grouped index shipped a
 // "Close All" control over the same accordions.
 const collapsed = ref(new Set())
+const FaeIndexTableComponent = useFaeComponent('FaeIndexTable', FaeIndexTable)
 const allCollapsed = computed(
   () => !!props.groups?.length && collapsed.value.size === props.groups.length
 )
@@ -59,9 +62,13 @@ function toggleAll() {
 
 <template>
   <div class="fae-page-header">
-    <div class="fae-page-header__title">
-      <h1>{{ title }}</h1>
-      <span v-if="count" class="fae-page-header__count">{{ count }}</span>
+    <div class="fae-page-header__title -stacked">
+      <FaeBreadcrumbs />
+
+      <div class="fae-page-header__heading">
+        <h1>{{ title }}</h1>
+        <span v-if="count" class="fae-page-header__count">{{ count }}</span>
+      </div>
     </div>
 
     <div class="fae-page-header__actions">
@@ -101,7 +108,8 @@ function toggleAll() {
 
       <!-- v-show, not v-if: collapsing must not throw away a table's local
            drag state, and these lists are small. -->
-      <FaeIndexTable
+      <component
+        :is="FaeIndexTableComponent"
         v-show="!collapsed.has(group.title)"
         :rows="group.rows"
         :columns="columns"
@@ -113,7 +121,8 @@ function toggleAll() {
     </section>
   </template>
 
-  <FaeIndexTable
+  <component
+    :is="FaeIndexTableComponent"
     v-else
     :rows="rows"
     :columns="columns"

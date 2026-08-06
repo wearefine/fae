@@ -1,4 +1,4 @@
-import { onBeforeUnmount, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 
 // Matches the legacy timings in fae/navigation/_navigation.js#showToasts.
@@ -44,6 +44,12 @@ export function useFlashToasts() {
     }, DURATION)
   }
 
+  function onToastEvent(event) {
+    const payload = event?.detail || {}
+    if (!payload.message) return
+    show(payload.type || 'notice', payload.message)
+  }
+
   watch(
     () => page.props.flash,
     (flash) => {
@@ -58,7 +64,12 @@ export function useFlashToasts() {
     { immediate: true }
   )
 
+  onMounted(() => {
+    window.addEventListener('fae:toast', onToastEvent)
+  })
+
   onBeforeUnmount(() => {
+    window.removeEventListener('fae:toast', onToastEvent)
     timers.forEach(clearTimeout)
     timers.clear()
   })

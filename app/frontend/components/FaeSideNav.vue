@@ -1,5 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
+import { Link } from '@inertiajs/vue3'
 
 // Levels 3 and 4 of Fae's navigation structure. Fae::Navigation#side_nav
 // returns nothing until the current path is that deep, so this region is
@@ -55,7 +56,7 @@ function toggle(item) {
           {{ item.text }}
         </button>
 
-        <a v-else class="fae-sidenav__link" :href="item.path">{{ item.text }}</a>
+        <Link v-else class="fae-sidenav__link" :href="item.path">{{ item.text }}</Link>
 
         <ul
           v-if="item.children.length"
@@ -63,14 +64,14 @@ function toggle(item) {
           class="fae-sidenav__sublist"
         >
           <li v-for="child in item.children" :key="child.text">
-            <a
+            <Link
               class="fae-sidenav__sublink"
               :class="[child.className, { '-current': child.current }]"
               :href="child.path"
               :aria-current="child.current ? 'page' : null"
             >
               {{ child.text }}
-            </a>
+            </Link>
           </li>
         </ul>
       </li>

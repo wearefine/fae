@@ -3,6 +3,9 @@ import { computed, useId } from 'vue'
 
 import FaeAssetField from './FaeAssetField.vue'
 import FaeMarkdownEditor from './FaeMarkdownEditor.vue'
+import FaeRankedSelectField from './FaeRankedSelectField.vue'
+import FaeTypeaheadSelect from './FaeTypeaheadSelect.vue'
+import { useFaeComponent } from '../composables/useFaeComponent.js'
 
 /**
  * One labelled form control.
@@ -14,7 +17,7 @@ import FaeMarkdownEditor from './FaeMarkdownEditor.vue'
  */
 const props = defineProps({
   field: { type: Object, required: true },
-  modelValue: { type: [String, Number, Boolean, Object, null], default: '' },
+  modelValue: { type: [String, Number, Boolean, Array, Object, null], default: '' },
   error: { type: String, default: null },
 })
 
@@ -38,6 +41,9 @@ const describedBy = computed(() => {
 const inputType = computed(() =>
   ({ text: 'text' })[props.field.type] || props.field.type
 )
+
+const FaeRankedSelectFieldComponent = useFaeComponent('FaeRankedSelectField', FaeRankedSelectField)
+const FaeTypeaheadSelectComponent = useFaeComponent('FaeTypeaheadSelect', FaeTypeaheadSelect)
 </script>
 
 <template>
@@ -87,6 +93,16 @@ const inputType = computed(() =>
       @input="$emit('update:modelValue', $event.target.value)"
     />
 
+    <component
+      :is="FaeTypeaheadSelectComponent"
+      v-else-if="field.type === 'select' && field.typeahead"
+      :id="inputId"
+      :model-value="modelValue"
+      :options="field.collection || []"
+      :placeholder="field.placeholder || 'Select...'"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
+
     <select
       v-else-if="field.type === 'select'"
       :id="inputId"
@@ -102,6 +118,34 @@ const inputType = computed(() =>
         {{ option.label }}
       </option>
     </select>
+
+    <select
+      v-else-if="field.type === 'multiselect'"
+      :id="inputId"
+      class="fae-field__control"
+      multiple
+      :name="field.inputName"
+      :aria-invalid="!!error"
+      :aria-describedby="describedBy"
+      @change="$emit('update:modelValue', Array.from($event.target.selectedOptions).map((option) => option.value))"
+    >
+      <option
+        v-for="option in field.collection"
+        :key="option.value"
+        :value="option.value"
+        :selected="Array.isArray(modelValue) && modelValue.map(String).includes(String(option.value))"
+      >
+        {{ option.label }}
+      </option>
+    </select>
+
+    <component
+      :is="FaeRankedSelectFieldComponent"
+      v-else-if="field.type === 'ranked_select'"
+      :field="field"
+      :model-value="Array.isArray(modelValue) ? modelValue : []"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
 
     <input
       v-else-if="field.type === 'checkbox'"

@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { computed, onBeforeUnmount, onMounted, ref, watchEffect } from 'vue'
+import { router, usePage } from '@inertiajs/vue3'
+import FaeToasts from '../components/FaeToasts.vue'
 
 /**
  * Chrome for the signed-out screens -- the Vue counterpart of
@@ -16,14 +17,65 @@ const page = usePage()
 
 const branding = computed(() => page.props.branding || {})
 const links = computed(() => page.props.links || [])
+const theme = computed(() => page.props.theme || {})
+const navigating = ref(false)
 
-// Inline rather than toasts: a failed sign in has to stay on screen while the
-// visitor retypes, and .fae-toast auto-dismisses after five seconds.
-const messages = computed(() => Object.entries(page.props.flash || {}))
+let hideProgressTimer
+const stopProgressListeners = []
+
+function showProgress() {
+  if (typeof window === 'undefined') return
+  window.clearTimeout(hideProgressTimer)
+  navigating.value = true
+}
+
+function hideProgress() {
+  if (typeof window === 'undefined') return
+  window.clearTimeout(hideProgressTimer)
+  hideProgressTimer = window.setTimeout(() => {
+    navigating.value = false
+  }, 120)
+}
+
+watchEffect(() => {
+  const mode = theme.value.mode
+  const color = theme.value.highlightColor
+  if (!document?.documentElement) return
+
+  if (mode === 'light' || mode === 'dark') {
+    document.documentElement.setAttribute('data-fae-theme', mode)
+  } else {
+    document.documentElement.removeAttribute('data-fae-theme')
+  }
+
+  if (color) {
+    document.documentElement.style.setProperty('--fae-highlight', color)
+  } else {
+    document.documentElement.style.removeProperty('--fae-highlight')
+  }
+})
+
+onMounted(() => {
+  stopProgressListeners.push(router.on('start', showProgress))
+  stopProgressListeners.push(router.on('finish', hideProgress))
+  stopProgressListeners.push(router.on('error', hideProgress))
+  stopProgressListeners.push(router.on('invalid', hideProgress))
+})
+
+onBeforeUnmount(() => {
+  stopProgressListeners.forEach((stop) => stop?.())
+  stopProgressListeners.length = 0
+
+  if (typeof window !== 'undefined') window.clearTimeout(hideProgressTimer)
+})
 </script>
 
 <template>
   <div class="fae-auth">
+    <div class="fae-app__progress" :class="{ '-active': navigating }" aria-hidden="true">
+      <span class="fae-app__progress-bar"></span>
+    </div>
+
     <div class="fae-auth__panel">
       <div class="fae-auth__brand">
         <img
@@ -36,16 +88,6 @@ const messages = computed(() => Object.entries(page.props.flash || {}))
       </div>
 
       <div class="fae-auth__card">
-        <p
-          v-for="[type, message] in messages"
-          :key="type"
-          class="fae-alert"
-          :class="`-${type}`"
-          role="alert"
-        >
-          {{ message }}
-        </p>
-
         <slot />
       </div>
     </div>
@@ -60,5 +102,7 @@ const messages = computed(() => Object.entries(page.props.flash || {}))
         Admin<template v-if="branding.version"> v{{ branding.version }}</template>
       </p>
     </footer>
+
+    <FaeToasts />
   </div>
 </template>

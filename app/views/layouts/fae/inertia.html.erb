@@ -1,5 +1,19 @@
 <!DOCTYPE html>
-<html>
+<%
+  fae_option = @option || Fae::Option.instance
+  fae_default_highlight = fae_option.colorway.to_s.sub(/^#/, '')
+  fae_default_highlight = '9aa142' if fae_default_highlight.blank?
+  fae_default_highlight = "##{fae_default_highlight}"
+
+  if current_user&.respond_to?(:theme_mode)
+    fae_theme_mode = current_user.theme_mode
+    fae_highlight = current_user.theme_highlight_color(fae_default_highlight)
+  else
+    fae_theme_mode = 'light'
+    fae_highlight = fae_default_highlight
+  end
+%>
+<html data-fae-theme="<%= fae_theme_mode %>">
   <head>
     <title><%= page_title %></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -9,26 +23,11 @@
     <% end %>
     <%= csrf_meta_tags %>
     <%= inertia_ssr_head %>
-    <%#
-      Applies the saved light/dark preference before the first paint. This has
-      to be inline and blocking: Vite's tags below are modules, so they run
-      after the document renders, and the page would flash the system theme
-      before app/frontend/composables/useTheme.js could correct it. Absence of
-      the attribute means "follow the OS", which is the CSS default.
-    %>
-    <%= javascript_tag nonce: true do %>
-      try {
-        var faeTheme = window.localStorage.getItem('fae:theme');
-        if (faeTheme === 'light' || faeTheme === 'dark') {
-          document.documentElement.setAttribute('data-fae-theme', faeTheme);
-        }
-      } catch (e) {}
-    <% end %>
     <%= vite_client_tag %>
     <%= vite_javascript_tag 'fae' %>
   </head>
 
-  <body class="<%= body_class %>">
+  <body class="<%= body_class %>" style="--fae-highlight: <%= fae_highlight %>;">
     <%= yield %>
   </body>
 </html>

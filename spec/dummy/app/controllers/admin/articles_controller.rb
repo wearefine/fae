@@ -32,7 +32,9 @@ module Admin
           name: :article_category_id,
           type: :select,
           label: 'Article Category',
-          collection: ArticleCategory.order(:name)
+          collection: ArticleCategory.order(:name),
+          typeahead: true,
+          placeholder: 'Select Article Category'
         },
         { name: :title, type: :text },
         { name: :body, type: :textarea }

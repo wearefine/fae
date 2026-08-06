@@ -1,5 +1,14 @@
 module Admin
   class PolyThingsController < Fae::NestedBaseController
+    include Fae::InertiaNestedRenderable
+
+    def self.fae_form_fields
+      [
+        { name: :name_en, type: :text },
+        { name: :name_frca, type: :text },
+        { name: :image, type: :image }
+      ]
+    end
 
 
     def new

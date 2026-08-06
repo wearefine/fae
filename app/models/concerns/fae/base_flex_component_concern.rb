@@ -14,6 +14,10 @@ module Fae
     def parent_object
       flex_component&.flex_componentable
     end
+
+    def fae_nested_parent
+      :parent_object
+    end
   
     def component_type_name
       self.class.name.titleize

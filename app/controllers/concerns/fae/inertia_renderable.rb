@@ -18,9 +18,12 @@ module Fae
 
       inertia_share do
         {
+          rootPath: fae.root_path,
           currentUser: fae_inertia_current_user,
           flash: fae_inertia_flash,
-          nav: fae_inertia_nav
+          nav: fae_inertia_nav,
+          utilityNav: fae_inertia_utility_nav,
+          theme: fae_inertia_theme
         }
       end
     end
@@ -38,7 +41,7 @@ module Fae
       @item = @klass.new(item_params)
 
       if @item.save
-        redirect_to @index_path, notice: t('fae.save_notice')
+        redirect_to fae_inertia_success_path(@item), notice: t('fae.save_notice')
       else
         # Only reachable for a model that overrides #new to stop creating a
         # draft; the standard flow always PUTs to an already-persisted record.
@@ -55,7 +58,7 @@ module Fae
       @item.draft = false if @klass.has_fae_draft_support?
 
       if @item.update(item_params)
-        redirect_to @index_path, notice: t('fae.save_notice')
+        redirect_to fae_inertia_success_path(@item), notice: t('fae.save_notice')
       else
         # Redirect rather than re-render: Inertia's protocol has no equivalent
         # of `render action: 'edit'`, and the errors survive the redirect in
@@ -75,6 +78,20 @@ module Fae
     # Cancel button would stop offering to delete the record it created.
     def fae_inertia_draft_param
       params[:draft] == 'true' ? { draft: true } : {}
+    end
+
+    # Opt-in for resources that should remain on edit after a successful save.
+    # Only applies to top-level resources; nested controllers keep their
+    # parent-form redirect flow.
+    def fae_inertia_stay_on_form_after_save?
+      false
+    end
+
+    def fae_inertia_success_path(item)
+      return @index_path unless fae_inertia_stay_on_form_after_save?
+      return @index_path if parent_resource_param.present?
+
+      build_edit_path(item)
     end
 
     def fae_inertia_current_user
@@ -100,6 +117,88 @@ module Fae
         topnav: fae_inertia_nav_level(@fae_topnav_items, 0, :nested_path, :subitems),
         sidenav: fae_inertia_nav_level(@fae_sidenav_items, 2, :path, :sublinks)
       }
+    end
+
+    # Header utility items: a settings dropdown plus the signed-in account menu.
+    def fae_inertia_utility_nav
+      return [] unless current_user.present?
+
+      items = []
+      settings_children = []
+
+      settings_children << {
+        key: 'altTexts',
+        text: t('fae.navbar.alt_text_manager'),
+        path: fae.alt_texts_path
+      }
+
+      if current_user.super_admin_or_admin?
+        settings_children << {
+          key: 'activityLog',
+          text: t('fae.navbar.activity_log'),
+          path: fae.activity_log_path
+        }
+      end
+
+      if current_user.super_admin?
+        settings_children << {
+          key: 'rootSettings',
+          text: t('fae.navbar.root_settings'),
+          path: fae.option_path
+        }
+        settings_children << {
+          key: 'sites',
+          text: t('fae.navbar.sites'),
+          path: fae.sites_path
+        }
+      end
+
+      if @option&.live_url.present?
+        settings_children << {
+          key: 'liveSite',
+          text: t('fae.application.live_site'),
+          path: @option.live_url,
+          external: true
+        }
+      end
+
+      if @option&.stage_url.present?
+        settings_children << {
+          key: 'stageSite',
+          text: t('fae.application.stage_site'),
+          path: @option.stage_url,
+          external: true
+        }
+      end
+
+      if settings_children.any?
+        items << {
+          key: 'settingsMenu',
+          icon: 'gear',
+          ariaLabel: 'Settings',
+          children: settings_children
+        }
+      end
+
+      items << {
+        key: 'accountMenu',
+        icon: 'avatar',
+        ariaLabel: current_user.try(:full_name).presence || current_user.email,
+        children: [
+          {
+            key: 'yourSettings',
+            text: t('fae.navbar.your_settings'),
+            path: fae.settings_path
+          },
+          {
+            key: 'logout',
+            text: t('fae.navbar.logout'),
+            path: fae.destroy_user_session_path
+          }
+        ]
+      }
+
+      items
     end
 
     # Serializes one nav region: a list of items plus their immediate children.
@@ -208,7 +307,7 @@ module Fae
     # :show_caption, :alt_label, :caption_label, :alt_helper_text,
     # :caption_helper_text -- and submit through the association that
     # has_fae_image / has_fae_file declared.
-    def render_fae_form(item = @item, fields:, title: nil)
+    def render_fae_form(item = @item, fields:, title: nil, subnav: nil)
       # Fae::BaseController#new saves the record before redirecting here, so
       # "new" is really an edit of an unsaved-looking row. The draft flag is
       # what tells the Vue form that cancelling should delete it again.
@@ -228,6 +327,7 @@ module Fae
         submitMethod: item.persisted? ? 'put' : 'post',
         paramKey: @klass_singular,
         blocks: fae_inertia_form_blocks(item, fields, draft),
+        subnav: fae_inertia_subnav(subnav),
         draft: draft,
         deletePath: (item.persisted? ? "#{@index_path}/#{item.id}" : nil)
       }
@@ -237,15 +337,43 @@ module Fae
     # top to bottom, so a nested table keeps its position among the inputs.
     def fae_inertia_form_blocks(item, fields, draft)
       fields.filter_map do |entry|
+        section = fae_inertia_section_block_attrs(entry)
+
         if entry[:nested_table].present?
           # An unsaved parent has nothing to hang children off, the same reason
           # the Slim form wrapped its nested tables in `if @item.persisted?`.
           next unless item.persisted?
 
-          { kind: 'nestedTable', table: fae_inertia_nested_table(item, entry, draft) }
+          { kind: 'nestedTable', table: fae_inertia_nested_table(item, entry, draft) }.merge(section)
+        elsif entry[:flex_components_table].present?
+          next unless item.persisted?
+
+          { kind: 'flexComponentsTable', table: fae_inertia_flex_components_table(item, entry, draft) }.merge(section)
         else
-          { kind: 'field', field: fae_inertia_form_field(item, entry) }
+          { kind: 'field', field: fae_inertia_form_field(item, entry) }.merge(section)
         end
+      end
+    end
+
+    def fae_inertia_section_block_attrs(entry)
+      {
+        sectionId: entry[:section_id],
+        sectionTitle: entry[:section_title]
+      }.compact
+    end
+
+    def fae_inertia_subnav(items)
+      Array(items).filter_map do |entry|
+        label, target = if entry.is_a?(Array)
+                          [entry[0].to_s, entry[1].to_s]
+                        else
+                          text = entry.to_s
+                          [text, text.parameterize(separator: '_')]
+                        end
+
+        next if label.blank? || target.blank?
+
+        { label: label, target: target }
       end
     end
 
@@ -292,22 +420,34 @@ module Fae
       name = field[:name].to_s
       type = (field[:type] || :text).to_s
       label = field[:label] || item.class.human_attribute_name(name)
+      ranked = (fae_inertia_ranked_select(item, field, name) if type == 'ranked_select')
 
       {
         name: name,
         type: type,
         label: label,
+        slugSource: fae_inertia_slug_source?(field),
         hint: field[:hint],
         # The h6.helper_text the Slim label carried. Every field type honours
         # it, not just the ones a fae_* helper happened to expose it on.
         helperText: field[:helper_text],
         required: field.fetch(:required) { fae_inertia_required?(item, name) },
-        value: fae_inertia_field_value(item, name, type),
+        value: fae_inertia_field_value(item, name, type, ranked),
         # Opts a textarea into the markdown editor, as `fae_input ... markdown: true` did.
         markdown: field[:markdown].presence,
-        collection: (fae_inertia_collection(field[:collection]) if type == 'select'),
+        typeahead: field[:typeahead] == true,
+        placeholder: field[:placeholder],
+        collection: (type == 'ranked_select' ? fae_inertia_ranked_collection(field, name) : fae_inertia_collection(field[:collection]) if %w[select multiselect ranked_select].include?(type)),
+        ranked: ranked,
         asset: (fae_inertia_asset(item, field, name, type, label) if ASSET_FIELD_TYPES.include?(type))
       }.compact
+    end
+
+    def fae_inertia_slug_source?(field)
+      input_class = field[:input_class].to_s
+      return true if input_class.split(/\s+/).include?('slugger')
+
+      field[:slug_source] == true
     end
 
     # Whether the label gets an asterisk. simple_form derived this from the
@@ -340,10 +480,25 @@ module Fae
       end
     end
 
-    def fae_inertia_field_value(item, name, type)
+    def fae_inertia_field_value(item, name, type, ranked = nil)
       return fae_inertia_asset_value(item, name, type) if ASSET_FIELD_TYPES.include?(type)
 
+      if type == 'ranked_select'
+        return Array(ranked&.dig(:rows)).map { |row| row[:associatedId].to_s }
+      end
+
+      if type == 'multiselect'
+        values = item.public_send(name)
+        return Array(values).map { |entry| entry.respond_to?(:id) ? entry.id : entry }.map(&:to_s)
+      end
+
       value = item.public_send(name)
+
+      # Static-page text fields are has_one Fae::TextField/Fae::TextArea
+      # objects; the form input needs their content, not object inspect.
+      if %w[text textarea].include?(type) && value.respond_to?(:content)
+        return value.content.to_s
+      end
 
       # Everything but a checkbox round-trips as a string: a <select> matches
       # its options by string value, and Rails casts on the way back in, so
@@ -380,6 +535,8 @@ module Fae
         maxSizeMessage: t('fae.exceeded_upload_limit').sub('###', limit.to_s),
         accept: fae_inertia_asset_accept(record),
         deleteConfirmation: t('fae.delete_confirmation'),
+        canGenerateAlt: image && Fae.open_ai_api_key.present?,
+        generateAltPath: (fae.generate_alt_path if image && Fae.open_ai_api_key.present?),
         showAlt: image && field.fetch(:show_alt, true),
         showCaption: image && field.fetch(:show_caption, false),
         altLabel: field[:alt_label] || "#{label} Alt Text",
@@ -394,6 +551,7 @@ module Fae
       return nil if record.blank? || record.asset.blank?
 
       {
+        id: record.id,
         url: record.asset.url,
         # Deleting only strips the asset, keeping the row, so re-uploading
         # updates the same record -- see Fae::ImagesController#delete_image.
@@ -401,6 +559,77 @@ module Fae
         thumbUrl: (record.asset.thumb.url if image && record.asset.thumb.present?),
         filename: record.asset.file&.filename
       }.compact
+    end
+
+    def fae_inertia_ranked_select(item, field, name)
+      join_assoc = field[:join_model].to_s
+      raise ArgumentError, "ranked_select requires join_model for #{name}" if join_assoc.blank?
+
+      join_records = Array(item.public_send(join_assoc)).sort_by { |record| record.try(:position).to_i }
+      associated_name = (field[:association] || name.to_s.sub(/_ids$/, '').pluralize).to_s.singularize
+      join_model = join_assoc.classify
+
+      parent_model = if item.class.superclass.name == 'Fae::StaticPage'
+                       'StaticPage'
+                     else
+                       item.class.name
+                     end
+
+      sort_object = join_model.underscore.pluralize.gsub('/', '__')
+
+      {
+        parentModel: parent_model,
+        parentId: item.id,
+        joinModel: join_model,
+        associatedModel: associated_name.classify,
+        rankedItemPath: fae.ranked_item_path,
+        sortPath: fae.sort_path(sort_object),
+        sortObject: sort_object,
+        rankingTitle: field[:ranking_title] || "#{name.titleize} Ranking",
+        rankingHelperText: field[:ranking_helper_text],
+        rows: join_records.filter_map do |record|
+          associated = record.public_send(associated_name)
+          next if associated.blank?
+
+          {
+            id: record.id,
+            associatedId: associated.id,
+            label: associated.public_send(field[:display_field] || :fae_display_field).to_s,
+            previewImageUrl: (fae_inertia_ranked_preview(associated, field[:preview_image]) if field[:preview_image].present?)
+          }
+        end
+      }
+    end
+
+    def fae_inertia_ranked_collection(field, name)
+      collection = field[:collection]
+      assoc_name = (field[:association] || name.to_s.sub(/_ids$/, '').pluralize).to_s
+
+      if collection.blank?
+        reflection = @klass.reflect_on_association(assoc_name.to_sym)
+        collection = reflection&.klass&.respond_to?(:for_fae_index) ? reflection.klass.for_fae_index : []
+      end
+
+      Array(collection).map do |record|
+        next if record.blank?
+
+        preview = if field[:preview_image].present? && record.respond_to?(field[:preview_image])
+                    fae_inertia_ranked_preview(record, field[:preview_image])
+                  end
+
+        {
+          label: record.respond_to?(:fae_display_field) ? record.fae_display_field.to_s : record.to_s,
+          value: record.respond_to?(:id) ? record.id : record,
+          previewImageUrl: preview
+        }
+      end.compact
+    end
+
+    def fae_inertia_ranked_preview(record, preview_field)
+      image = record.public_send(preview_field)
+      return nil if image.blank? || image.asset.blank?
+
+      image.asset.try(:thumb).try(:url) || image.asset.url
     end
 
     # Read off the mounted uploader rather than hardcoded, so an app that
@@ -453,6 +682,8 @@ module Fae
         helperText: table[:helper_text],
         hideAddButton: table.fetch(:hide_add_button, false),
         hideDeleteButton: table.fetch(:hide_delete_button, false),
+        openRowId: (params[:open_nested_assoc] == assoc && params[:open_nested_row_id].present? ? params[:open_nested_row_id].to_i : nil),
+        openNewRow: (params[:open_nested_assoc] == assoc && params[:open_nested_new] == 'true'),
         paramKey: assoc.singularize,
         # Names the Inertia error bag for this table, so a failed nested save
         # cannot light up the parent form's fields (or a sibling table's).
@@ -463,17 +694,127 @@ module Fae
         # field in the Slim nested form did.
         parentKey: parent.class.reflect_on_association(assoc).foreign_key.to_s,
         parentId: parent.id,
+        extraHidden: fae_inertia_nested_hidden_fields(parent, assoc),
         newFields: fields.map { |field| fae_inertia_form_field(klass.new, field) },
         rows: records.map do |record|
           {
             id: record.id,
             label: record.fae_display_field.to_s,
             path: "#{base_path}/#{record.id}#{query}",
-            cells: cols.index_with { |col| fae_inertia_cell(record, col) },
+            cells: cols.index_with { |col| fae_inertia_nested_cell(record, col) },
             fields: fields.map { |field| fae_inertia_form_field(record, field) }
           }
         end
       }
+    end
+
+    def fae_inertia_nested_cell(record, column)
+      value = record.public_send(column)
+
+      if value.respond_to?(:asset)
+        asset = value.asset
+        return { kind: 'text', text: '' } if asset.blank?
+
+        url = asset.try(:url, :thumb) || asset.try(:thumb).try(:url) || asset.url
+        return { kind: 'image', url: url, text: '' } if url.present?
+
+        return { kind: 'text', text: '' }
+      end
+
+      { kind: 'text', text: fae_inertia_cell(record, column) }
+    end
+
+    # Polymorphic children need both *_id and *_type to resolve the parent.
+    def fae_inertia_nested_hidden_fields(parent, assoc)
+      reflection = parent.class.reflect_on_association(assoc)
+      return {} unless reflection.present? && reflection.polymorphic?
+
+      { reflection.type.to_s => parent.class.name }
+    end
+
+    def fae_inertia_flex_components_table(parent, table, draft = false)
+      assoc = (table[:flex_components_table] || :flex_components).to_s
+      title = table[:title] || assoc.titleize
+      records = parent.public_send(assoc)
+
+      item_class = if parent.class.ancestors.include?(Fae::StaticPage)
+                     'Fae::StaticPage'
+                   else
+                     parent.class.name
+                   end
+
+      query = draft ? '?draft=true' : ''
+      component_options = Fae::FlexComponent.components_for(item_class).map do |label, value|
+        { label: label, value: value }
+      end
+
+      {
+        title: title,
+        helperText: table[:helper_text],
+        createPath: fae.flex_components_path,
+        createParams: {
+          flex_componentable_type: item_class,
+          flex_componentable_id: parent.id
+        },
+        sortPath: fae.sort_path('fae__flex_components'),
+        sortParam: 'fae__flex_components',
+        componentOptions: component_options,
+        openRowId: params[:open_flex_component_id].present? ? params[:open_flex_component_id].to_i : nil,
+        rows: records.map { |record| fae_inertia_flex_component_row(record, query) }
+      }
+    end
+
+    def fae_inertia_flex_component_row(record, query = '')
+      component = record.component_instance
+      controller = fae_inertia_flex_component_controller(component)
+      fields = controller&.respond_to?(:fae_form_fields) ? controller.fae_form_fields : []
+      namespace = self.class.name.deconstantize.underscore
+
+      component_path = if component.present?
+                         "/#{namespace}/#{component.class.name.underscore.pluralize}/#{component.id}#{query}"
+                       end
+
+      {
+        id: record.id,
+        label: record.component_model_human.to_s,
+        preview: record.fae_display_field.to_s,
+        imageUrl: record.preview_image_url,
+        onStage: !!record.on_stage,
+        onProd: !!record.on_prod,
+        onStageTogglePath: fae.toggle_path(record.class.to_s.gsub('::', '__').underscore.pluralize, record.id.to_s, :on_stage),
+        onProdTogglePath: fae.toggle_path(record.class.to_s.gsub('::', '__').underscore.pluralize, record.id.to_s, :on_prod),
+        deletePath: fae.flex_component_path(record),
+        editPath: component_path,
+        form: (
+          if component.present? && fields.any?
+            {
+              action: component_path,
+              method: 'put',
+              paramKey: component.model_name.param_key,
+              errorBag: component.model_name.param_key,
+              fields: fields.map { |field| fae_inertia_form_field(component, field) },
+              tables: fae_inertia_flex_component_tables(component, controller)
+            }
+          end
+        )
+      }.compact
+    end
+
+    def fae_inertia_flex_component_tables(component, controller)
+      return [] unless controller&.respond_to?(:fae_nested_tables)
+
+      Array(controller.fae_nested_tables).filter_map do |table|
+        next unless table[:nested_table].present?
+
+        fae_inertia_nested_table(component, table, params[:draft] == 'true')
+      end
+    end
+
+    def fae_inertia_flex_component_controller(component)
+      return nil if component.blank?
+
+      controller_name = component.class.name.underscore.pluralize.camelize
+      "#{self.class.name.deconstantize}::#{controller_name}Controller".safe_constantize
     end
 
     # The nested resource's own controller declares its form fields, so a table

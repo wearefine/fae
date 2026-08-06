@@ -1,5 +1,25 @@
 module Fae
   class SitesController < Fae::BaseController
+    include Fae::InertiaRenderable
+
+    def index
+      render_fae_index(
+        @klass.for_fae_index,
+        columns: { name: 'Name', updated_at: 'Modified' },
+        inertia_links: true
+      )
+    end
+
+    def edit
+      render_fae_form(
+        fields: [
+          { name: :name, type: :text },
+          { name: :netlify_site, type: :text, label: 'Netlify Site Name' },
+          { name: :netlify_site_id, type: :text, label: 'Netlify Site ID' },
+          { nested_table: :site_deploy_hooks, cols: [:environment, :url], title: 'Deploy Hooks', add_button_text: 'Add Site Deploy Hook' }
+        ]
+      )
+    end
 
     private
 

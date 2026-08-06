@@ -32,17 +32,45 @@ module Fae
     end
 
     def activity_log
-      @items = Fae::Change.order(id: :desc).page(params[:page])
+      @items = fae_activity_log_relation.page(params[:page])
+
+      render inertia: 'Fae/ActivityLog', props: {
+        title: t('fae.application.activity_log_heading'),
+        indexPath: fae.activity_log_path,
+        filters: {
+          title: t('fae.changes.title'),
+          fields: fae_activity_log_filter_fields,
+          values: fae_activity_log_filter_values
+        },
+        sort: {
+          by: params[:sort_by].to_s,
+          direction: params[:sort_direction].presence || 'asc'
+        },
+        rows: @items.map { |change| fae_activity_log_row(change) },
+        pagination: {
+          currentPage: @items.current_page,
+          totalPages: @items.total_pages,
+          totalCount: @items.total_count,
+          perPage: Fae.per_page,
+          prevPage: @items.prev_page,
+          nextPage: @items.next_page
+        },
+        emptyText: t('fae.changes.no_changes')
+      }
     end
 
     def activity_log_filter
-      if params[:commit] == "Reset Search"
-        @items = Fae::Change.order(id: :desc).page(params[:page])
+      if request.inertia?
+        redirect_to fae.activity_log_path(fae_activity_log_filter_values.merge(page: params[:page]).compact)
       else
-        @items = Fae::Change.filter(params).fae_sort(params).page(params[:page])
-      end
+        if params[:commit] == "Reset Search"
+          @items = Fae::Change.order(id: :desc).page(params[:page])
+        else
+          @items = Fae::Change.filter(params).fae_sort(params).page(params[:page])
+        end
 
-      render :activity_log, layout: false
+        render :activity_log, layout: false
+      end
     end
 
     def error404
@@ -82,6 +110,107 @@ module Fae
         list << m.all.sort_by(&:updated_at).flatten
       end
       list.flatten.sort_by(&:updated_at).reverse.first(num)
+    end
+
+    def fae_activity_log_relation
+      values = fae_activity_log_filter_values
+      scope = values.values.any?(&:present?) ? Fae::Change.filter(values) : Fae::Change.order(id: :desc)
+      scope.fae_sort(params)
+    end
+
+    def fae_activity_log_filter_values
+      params.permit(:type, :start_date, :end_date, :date, :user, :model, :search, :sort_by, :sort_direction).to_h
+    end
+
+    def fae_activity_log_filter_fields
+      [
+        {
+          key: 'type',
+          label: t('fae.changes.models.type', default: 'Type'),
+          type: 'select',
+          placeholder: t('fae.all_items', items: t('fae.changes.type').pluralize),
+          options: [
+            { label: t('fae.changes.created'), value: t('fae.changes.created') },
+            { label: t('fae.changes.updated'), value: t('fae.changes.updated') },
+            { label: t('fae.changes.deleted'), value: t('fae.changes.deleted') }
+          ]
+        },
+        {
+          key: 'start_date',
+          label: 'Start Date',
+          type: 'text',
+          placeholder: 'MM/DD/YYYY'
+        },
+        {
+          key: 'end_date',
+          label: 'End Date',
+          type: 'text',
+          placeholder: 'MM/DD/YYYY'
+        },
+        {
+          key: 'date',
+          label: 'Date',
+          type: 'select',
+          placeholder: t('fae.changes.all_time'),
+          options: [
+            { label: t('fae.changes.last_hour'), value: t('fae.changes.last_hour') },
+            { label: t('fae.changes.last_day'), value: t('fae.changes.last_day') },
+            { label: t('fae.changes.last_week'), value: t('fae.changes.last_week') },
+            { label: t('fae.changes.last_month'), value: t('fae.changes.last_month') }
+          ]
+        },
+        {
+          key: 'user',
+          label: t('fae.changes.user'),
+          type: 'select',
+          placeholder: t('fae.all_items', items: t('fae.changes.user').pluralize),
+          options: Fae::User.all.map { |user| { label: user.full_name, value: user.id } }
+        },
+        {
+          key: 'model',
+          label: t('fae.changes.item'),
+          type: 'select',
+          placeholder: t('fae.all_items', items: t('fae.changes.item').pluralize),
+          options: Fae::Change.unique_changeable_types.map { |label, value| { label: label, value: value } }
+        }
+      ]
+    end
+
+    def fae_activity_log_row(change)
+      item = fae_activity_log_item_link(change)
+
+      {
+        id: change.id,
+        user: change.user&.full_name.to_s,
+        itemText: item[:text],
+        itemPath: item[:path],
+        type: change.change_type,
+        attrs: Array(change.updated_attributes).join(', '),
+        modified: helpers.fae_datetime_format(change.updated_at)
+      }
+    end
+
+    def fae_activity_log_item_link(change)
+      type = change.changeable_type.to_s
+      text = "#{type.gsub('Fae::', '')}: "
+
+      display = change.try(:changeable).try(:fae_display_field)
+      display = display.is_a?(Integer) ? display.to_s : display
+      text += display || "##{change.changeable_id}"
+
+      return { text: text, path: nil } if change.changeable.blank?
+
+      begin
+        if type == 'Fae::StaticPage'
+          return { text: text, path: fae.edit_content_block_path(change.changeable.slug) }
+        end
+
+        parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil
+        path = edit_polymorphic_path([main_app, helpers.fae_scope.to_sym, parent, change.changeable])
+        { text: text, path: path }
+      rescue StandardError
+        { text: text, path: nil }
+      end
     end
   end
 end

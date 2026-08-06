@@ -31,7 +31,7 @@ module Fae
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
       if @item.save
-        redirect_to fae_inertia_parent_path(@item), notice: t('fae.save_notice')
+        redirect_to fae_inertia_parent_path(@item, open_row: false), notice: t('fae.save_notice')
       else
         fae_inertia_redirect_with_errors(@item)
       end
@@ -43,7 +43,7 @@ module Fae
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
       if @item.update(permitted_params)
-        redirect_to fae_inertia_parent_path(@item), notice: t('fae.save_notice')
+        redirect_to fae_inertia_parent_path(@item, open_row: false), notice: t('fae.save_notice')
       else
         fae_inertia_redirect_with_errors(@item)
       end
@@ -56,7 +56,7 @@ module Fae
 
       # Resolved before the row goes away, or there would be nothing left to
       # derive the parent's path from.
-      path = fae_inertia_parent_path(@item)
+      path = fae_inertia_parent_path(@item, open_row: false)
 
       if @item.destroy
         redirect_to path, notice: t('fae.delete_notice')
@@ -68,7 +68,7 @@ module Fae
     private
 
     def fae_inertia_redirect_with_errors(item)
-      redirect_to fae_inertia_parent_path(item),
+      redirect_to fae_inertia_parent_path(item, open_row: true),
                   inertia: { errors: fae_inertia_scoped_errors(item) },
                   flash: { alert: t('fae.save_error') }
     end
@@ -76,7 +76,7 @@ module Fae
     # Where a write returns to: the form of the record this one hangs off.
     # Built from the association rather than from anything the client sent, so
     # there is no redirect target to tamper with.
-    def fae_inertia_parent_path(item)
+    def fae_inertia_parent_path(item, open_row: false)
       parent = item.public_send(item.fae_nested_parent)
       # Only reachable when the foreign key was missing, which is itself a
       # validation error -- there is no parent form to go back to.
@@ -84,9 +84,17 @@ module Fae
 
       namespace = params[:controller].rpartition('/').first
       path = "/#{namespace}/#{parent.class.name.underscore.pluralize}/#{parent.id}/edit"
+      query = {}
       # The parent may still be a draft, and losing the flag would stop its
       # Cancel button from deleting the record #new created.
-      path += '?draft=true' if params[:draft] == 'true'
+      query[:draft] = true if params[:draft] == 'true'
+
+      if open_row
+        query[:open_nested_assoc] = item.class.name.demodulize.underscore.pluralize
+        query[:open_nested_row_id] = item.id if item.persisted?
+      end
+
+      path += "?#{query.to_query}" if query.present?
       path
     end
   end

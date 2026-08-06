@@ -1,41 +1,43 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # In the development environment your application's code is reloaded on
-  # every request. This slows down response time but is perfect for development
-  # since you don't have to restart the web server when you make code changes.
-  config.cache_classes = false
+  # Code is not reloaded between requests.
+  config.cache_classes = true
 
-  # Do not eager load code on boot.
-  config.eager_load = false
+  # Eager load code on boot for better performance and memory savings.
+  config.eager_load = true
 
-  # Show full error reports and disable caching.
-  config.consider_all_requests_local       = true
-  config.action_controller.perform_caching = false
+  # Full error reports are disabled and caching is enabled.
+  config.consider_all_requests_local       = false
+  config.action_controller.perform_caching = true
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  # Ensure static files built in deploy are served by Rails when enabled.
+  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RENDER'].present?
 
-  # Print deprecation notices to the Rails logger.
-  config.active_support.deprecation = :log
+  # Compress CSS using a preprocessor.
+  # config.assets.css_compressor = :sass
 
-  # Raise an error on page load if there are pending migrations.
-  config.active_record.migration_error = :page_load
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = false
 
-  # Debug mode disables concatenation and preprocessing of assets.
-  # This option may cause significant delays in view rendering with a large
-  # number of complex assets.
-  config.assets.debug = true
+  # Use a different logger for distributed setups.
+  # config.log_tags = [:request_id]
 
-  # Adds additional error checking when serving assets at runtime.
-  # Checks for improperly declared sprockets dependencies.
-  # Raises helpful error messages.
-  config.assets.raise_runtime_errors = true
+  # Use default logging formatter so PID and timestamp are not suppressed.
+  config.log_formatter = ::Logger::Formatter.new
 
-  # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
+  # Log to STDOUT in container environments.
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
 
-  config.action_mailer.default_url_options = { :host => 'localhost' }
+  # Do not dump schema after migrations in production.
+  config.active_record.dump_schema_after_migration = false
+
+  # Print deprecation notices to the log.
+  config.active_support.deprecation = :notify
 
   logger           = ActiveSupport::Logger.new(STDOUT)
   logger.formatter = config.log_formatter

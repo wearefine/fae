@@ -35,6 +35,9 @@
     - name: Custom JS, CSS and Helpers
       path: docs/topics/custom_js_css.md
       page_title: Custom JS, CSS and Helpers in Fae | A Ruby-Based CMS Gem
+    - name: Frontend Overrides
+      path: docs/topics/frontend_overrides.md
+      page_title: Overriding Fae Vue Pages and Components | A Rails CMS
     - name: Root Settings
       path: docs/topics/root_settings.md
       page_title: Customize Your Root Settings in Fae | A Ruby on Rails CMS
@@ -53,6 +56,9 @@
     - name: Authorization
       path: docs/features/authorization.md
       page_title: User Roles & Authorization in Fae | A CMS for Ruby on Rails
+    - name: Theming
+      path: docs/features/theming.md
+      page_title: Admin Theming in Fae | A Ruby on Rails CMS
     - name: Multi-Language Support
       path: docs/features/multi_language.md
       page_title: Multi-Language CMS Support with Fae | An Open-Source Rails CMS

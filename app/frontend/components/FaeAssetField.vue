@@ -2,6 +2,7 @@
 import { computed, ref, useId, watch } from 'vue'
 
 import FaeImageModal from './FaeImageModal.vue'
+import FaeGenerateAltButton from './FaeGenerateAltButton.vue'
 
 /**
  * An image or file uploader: the Vue counterpart of fae_image_form and
@@ -40,6 +41,7 @@ const captionId = computed(() => `${uid}-${props.field.name}-caption`)
 
 const chosen = computed(() => props.modelValue?.asset || null)
 const message = computed(() => sizeError.value || props.error)
+const generateImageId = computed(() => props.modelValue?.id || stored.value?.id || null)
 
 const describedBy = computed(() => {
   const ids = []
@@ -220,6 +222,14 @@ async function destroy() {
         :value="modelValue?.alt"
         @input="update({ alt: $event.target.value })"
       >
+      <FaeGenerateAltButton
+        v-if="config.canGenerateAlt"
+        :image-id="generateImageId"
+        :image-file="chosen"
+        :path="config.generateAltPath"
+        button-class="fae-button -secondary -sm fae-asset-field__generate"
+        @generated="update({ alt: $event })"
+      />
     </template>
 
     <template v-if="config.showCaption">

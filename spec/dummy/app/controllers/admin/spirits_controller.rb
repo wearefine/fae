@@ -23,7 +23,7 @@ module Admin
           # between the inputs here because that is where the form declares it.
           { nested_table: :sub_spirits, cols: [:name] },
           { name: :description, type: :textarea, markdown: true },
-          { name: :pdf_upload, type: :file, label: 'PDF Upload', helper_text: 'PDF, 5 MB max.' }
+          { name: :pdf_upload, type: :file, label: 'PDF Upload' }
         ]
       )
     end
@@ -35,6 +35,10 @@ module Admin
       @item.build_some_other_cta if @item.some_other_cta.blank?
       @item.build_logo if @item.logo.blank?
       @item.build_pdf_upload if @item.pdf_upload.blank?
+    end
+
+    def fae_inertia_stay_on_form_after_save?
+      true
     end
 
   end

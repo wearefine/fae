@@ -12,13 +12,13 @@ class PolyThing < ApplicationRecord
   end
 
   def fae_display_field
-    name
+    name_en
   end
 
   class << self
 
     def for_fae_index
-      order(:name)
+      order(:name_en)
     end
 
   end

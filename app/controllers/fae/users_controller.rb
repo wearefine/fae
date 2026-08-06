@@ -1,5 +1,7 @@
 module Fae
   class UsersController < ApplicationController
+    include Fae::InertiaRenderable
+
     before_action :admin_only, except: [:settings, :update]
     before_action :set_user, only: [:show, :edit, :update, :destroy]
     before_action :set_role_collection, except: [:index, :destroy]
@@ -20,6 +22,17 @@ module Fae
       @user = current_user
       # set index path to dashboard
       @index_path = root_path
+
+      render inertia: 'Fae/Form', props: {
+        title: t('fae.navbar.your_settings'),
+        indexPath: @index_path,
+        submitPath: user_path(@user),
+        submitMethod: 'patch',
+        paramKey: 'user',
+        blocks: fae_user_settings_fields.map { |field| { kind: 'field', field: field } },
+        draft: false,
+        deletePath: nil
+      }
     end
 
     def create
@@ -38,8 +51,21 @@ module Fae
     def update
       authorize_role
 
-      params[:user].delete(:password) if params[:user][:password].blank?
-      params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
+      if params[:user][:password].blank? || params[:user][:password_confirmation].blank?
+        params[:user].delete(:password)
+        params[:user].delete(:password_confirmation)
+      end
+
+      if request.inertia? && @user == current_user
+        if @user.update(user_params)
+          redirect_to fae.settings_path, notice: t('fae.save_notice')
+        else
+          redirect_to fae.settings_path,
+                      inertia: { errors: fae_inertia_errors(@user) },
+                      flash: { alert: t('fae.save_error') }
+        end
+        return
+      end
 
       if @user.update(user_params)
         path = current_user.super_admin_or_admin? ? users_path : fae.root_path
@@ -59,6 +85,37 @@ module Fae
 
     private
 
+      def fae_user_settings_fields
+        fields = [
+          { name: :first_name, type: :text },
+          { name: :last_name, type: :text },
+          { name: :email, type: :text },
+          {
+            name: :theme,
+            type: :select,
+            typeahead: true,
+            collection: Fae::User.theme_collection
+          },
+          {
+            name: :password,
+            type: :password,
+            helper_text: t('fae.user.password_hint')
+          },
+          { name: :password_confirmation, type: :password }
+        ]
+
+        if current_user.admin? || current_user.super_admin?
+          fields << {
+            name: :role_id,
+            type: :select,
+            label: Fae::User.human_attribute_name(:role),
+            collection: @role_collection.map { |role| [role.name.to_s.titleize, role.id] }
+          }
+        end
+
+        fields.map { |field| fae_inertia_form_field(@user, field) }
+      end
+
       def set_role_collection
         @role_collection = Role.all if current_user.super_admin?
         @role_collection = Role.public_roles if current_user.admin?
@@ -72,7 +129,7 @@ module Fae
         if current_user.super_admin_or_admin?
           params.require(:user).permit!
         elsif @user === current_user
-          params.require(:user).permit(:email, :first_name, :last_name, :password, :password_confirmation)
+          params.require(:user).permit(:email, :first_name, :last_name, :theme, :password, :password_confirmation)
         end
       end
 

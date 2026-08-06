@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { router } from '@inertiajs/vue3'
 
 import FaeNestedForm from './FaeNestedForm.vue'
@@ -19,9 +19,50 @@ const props = defineProps({
 
 // Which form is open: a row id, the string 'new', or nothing. One at a time,
 // as in the legacy version, so the table never grows two forms deep.
-const openId = ref(null)
+const openId = ref(props.table.openNewRow ? 'new' : (props.table.openRowId || null))
+const root = ref(null)
 
 const colspan = computed(() => props.table.columns.length + 1)
+
+watch(
+  () => props.table.openRowId,
+  (next) => {
+    if (next) openId.value = next
+  }
+)
+
+watch(
+  () => props.table.openNewRow,
+  (next) => {
+    if (next) openId.value = 'new'
+  }
+)
+
+watch(openId, async (next) => {
+  if (!next) return
+
+  await nextTick()
+  const selector = next === 'new'
+    ? '[data-nested-form-row="new"]'
+    : `[data-nested-form-row="${next}"]`
+  const target = root.value?.querySelector(selector)
+  target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+})
+
+function cellFor(row, columnKey) {
+  return row.cells?.[columnKey] || { kind: 'text', text: '' }
+}
+
+function cellText(row, columnKey) {
+  const cell = cellFor(row, columnKey)
+  return typeof cell === 'object' ? (cell.text || '') : String(cell || '')
+}
+
+function cellImageUrl(row, columnKey) {
+  const cell = cellFor(row, columnKey)
+  if (typeof cell !== 'object') return null
+  return cell.kind === 'image' ? cell.url : null
+}
 
 function toggle(row) {
   openId.value = openId.value === row.id ? null : row.id
@@ -40,7 +81,7 @@ function destroy(row) {
 </script>
 
 <template>
-  <section class="fae-nested-table">
+  <section ref="root" class="fae-nested-table">
     <div class="fae-nested-table__header">
       <h2>{{ table.title }}</h2>
 
@@ -70,12 +111,34 @@ function destroy(row) {
             <tr :class="{ '-editing': openId === row.id }">
               <td v-for="(col, i) in table.columns" :key="col.key">
                 <button v-if="i === 0" type="button" class="fae-table__link" @click="toggle(row)">
-                  {{ row.cells[col.key] }}
+                  <img
+                    v-if="cellImageUrl(row, col.key)"
+                    :src="cellImageUrl(row, col.key)"
+                    alt=""
+                    class="fae-nested-table__thumb"
+                  >
+                  <template v-else>{{ cellText(row, col.key) }}</template>
                 </button>
-                <template v-else>{{ row.cells[col.key] }}</template>
+                <template v-else>
+                  <img
+                    v-if="cellImageUrl(row, col.key)"
+                    :src="cellImageUrl(row, col.key)"
+                    alt=""
+                    class="fae-nested-table__thumb"
+                  >
+                  <template v-else>{{ cellText(row, col.key) }}</template>
+                </template>
               </td>
 
               <td class="fae-table__actions">
+                <button
+                  type="button"
+                  class="fae-button -secondary -sm"
+                  @click="toggle(row)"
+                >
+                  {{ openId === row.id ? 'Close' : 'Edit' }}
+                </button>
+
                 <button
                   v-if="!table.hideDeleteButton"
                   type="button"
@@ -89,7 +152,7 @@ function destroy(row) {
 
             <!-- The form takes a row of its own directly beneath the record it
                  edits, which is where form/_ajax.js spliced it in. -->
-            <tr v-if="openId === row.id" class="fae-nested-table__form-row">
+            <tr v-if="openId === row.id" class="fae-nested-table__form-row" :data-nested-form-row="String(row.id)">
               <td :colspan="colspan">
                 <FaeNestedForm
                   :fields="row.fields"
@@ -97,6 +160,7 @@ function destroy(row) {
                   method="put"
                   :param-key="table.paramKey"
                   :error-bag="table.errorBag"
+                  :extra-hidden="table.extraHidden || {}"
                   @saved="close"
                   @cancel="close"
                 />
@@ -110,7 +174,7 @@ function destroy(row) {
 
           <!-- Adding appends to the foot of the table, the position the legacy
                add link put it in. -->
-          <tr v-if="openId === 'new'" class="fae-nested-table__form-row">
+          <tr v-if="openId === 'new'" class="fae-nested-table__form-row" data-nested-form-row="new">
             <td :colspan="colspan">
               <FaeNestedForm
                 :fields="table.newFields"
@@ -120,6 +184,7 @@ function destroy(row) {
                 :error-bag="table.errorBag"
                 :parent-key="table.parentKey"
                 :parent-id="table.parentId"
+                :extra-hidden="table.extraHidden || {}"
                 @saved="close"
                 @cancel="close"
               />

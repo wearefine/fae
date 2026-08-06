@@ -4,6 +4,8 @@ import { useForm } from '@inertiajs/vue3'
 
 import FaeFormField from './FaeFormField.vue'
 import { assetSubmitOptions, useAssetFields } from '../composables/useAssetFields.js'
+import { useFaeComponent } from '../composables/useFaeComponent.js'
+import { useSlugger } from '../composables/useSlugger.js'
 import { registerUnsavedChanges } from '../composables/useUnsavedChanges.js'
 
 /**
@@ -27,6 +29,7 @@ const props = defineProps({
   // field in the Slim nested form was.
   parentKey: { type: String, default: null },
   parentId: { type: [Number, String], default: null },
+  extraHidden: { type: Object, default: () => ({}) },
 })
 
 const emit = defineEmits(['saved', 'cancel'])
@@ -34,9 +37,12 @@ const emit = defineEmits(['saved', 'cancel'])
 const form = useForm({
   ...Object.fromEntries(props.fields.map((field) => [field.name, field.value])),
   ...(props.parentKey ? { [props.parentKey]: props.parentId } : {}),
+  ...(props.extraHidden || {}),
 })
 
 const { hasAssets, toParams } = useAssetFields(toRef(props, 'fields'))
+useSlugger({ form, fields: toRef(props, 'fields') })
+const FaeFormFieldComponent = useFaeComponent('FaeFormField', FaeFormField)
 
 // Open forms only: closing one unmounts it, which is also how the user
 // discards it, so the parent stops counting it.
@@ -77,7 +83,8 @@ function onEnter(event) {
   -->
   <div class="fae-nested-form" @keydown.enter="onEnter">
     <div class="fae-nested-form__fields">
-      <FaeFormField
+      <component
+        :is="FaeFormFieldComponent"
         v-for="field in fields"
         :key="field.name"
         :field="field"

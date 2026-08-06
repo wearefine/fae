@@ -1,5 +1,13 @@
 module Fae
   class SiteDeployHooksController < Fae::NestedBaseController
+    include Fae::InertiaNestedRenderable
+
+    def self.fae_form_fields
+      [
+        { name: :environment, type: :text },
+        { name: :url, type: :text, label: 'URL' }
+      ]
+    end
 
 
     private

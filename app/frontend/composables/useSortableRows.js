@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { isRef, ref, unref, watch } from 'vue'
 
 /**
  * Drag-to-reorder for a Fae index table.
@@ -17,10 +17,19 @@ import { ref, watch } from 'vue'
  * @param {object} props the Fae/Index page props (rows, sortPath, sortParam)
  */
 export function useSortableRows(props) {
+  const externalRows = isRef(props.rows) ? props.rows : null
+
+  function readRows() {
+    const rows = typeof props.rows === 'function' ? props.rows() : unref(props.rows)
+    return Array.isArray(rows) ? rows : []
+  }
+
   // A local copy, because dragging reorders the list live and props are
   // read-only. Re-synced whenever the server sends a fresh set of rows.
-  const items = ref([...props.rows])
-  watch(() => props.rows, (rows) => { items.value = [...rows] })
+  const items = externalRows || ref([...readRows()])
+  if (!externalRows) {
+    watch(readRows, (rows) => { items.value = [...rows] }, { deep: true })
+  }
 
   // The row being dragged, and the row whose handle is currently held. The
   // latter gates [draggable] on the <tr>: the row itself is the drag image so
@@ -102,22 +111,27 @@ export function useSortableRows(props) {
 
   async function persist() {
     const order = [...items.value]
-    const body = new URLSearchParams()
-    order.forEach((row) => body.append(`${props.sortParam}[]`, row.id))
 
     try {
-      const response = await fetch(props.sortPath, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-          // #sort only writes positions for XHR requests.
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-CSRF-Token': csrfToken(),
-        },
-        body,
-      })
-      if (!response.ok) throw new Error(`Sort failed: ${response.status}`)
+      if (typeof props.persistOrder === 'function') {
+        await props.persistOrder(order)
+      } else {
+        const body = new URLSearchParams()
+        order.forEach((row) => body.append(`${props.sortParam}[]`, row.id))
+
+        const response = await fetch(props.sortPath, {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            // #sort only writes positions for XHR requests.
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-Token': csrfToken(),
+          },
+          body,
+        })
+        if (!response.ok) throw new Error(`Sort failed: ${response.status}`)
+      }
       failed.value = false
     } catch (error) {
       // Roll back rather than leave the table showing an order the database

@@ -103,7 +103,24 @@ module Fae
 
     # only allow trusted parameters, override to white-list
     def item_params
-      params.require(@klass_singular).permit!
+      fae_normalize_ids_params(params.require(@klass_singular).permit!)
+    end
+
+    # Some clients (notably multipart-style submissions) can serialize
+    # collection id fields as index-keyed hashes, e.g. {"0"=>"5"}, while
+    # ActiveRecord's *_ids= writers expect an array. Coerce only *_ids fields
+    # and leave all other structures untouched.
+    def fae_normalize_ids_params(raw_params)
+      normalized = raw_params.to_h
+
+      normalized.each do |key, value|
+        next unless key.to_s.end_with?('_ids')
+        next unless value.is_a?(ActionController::Parameters) || value.is_a?(Hash)
+
+        normalized[key] = value.to_h.values.flatten.map(&:presence).compact
+      end
+
+      normalized
     end
 
     # if model has images or files, build them here for nesting

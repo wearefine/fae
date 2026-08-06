@@ -2,10 +2,8 @@
  * Signed-out screens: sign in, password reset, unlock, first-user setup.
  * Markup lives in layouts/FaeAuthLayout.vue and components/FaeAuthForm.vue.
  *
- * The legacy .login-* rules put the logo and the form side by side above
- * 700px. That split existed to fill a fixed-width card; here the card sizes to
- * its content, so the logo stacks above the form at every width and the whole
- * panel stays centred in the viewport.
+ * Mirrors the legacy .login-* split layout: logo on the left and form on the
+ * right once the viewport is wide enough.
  */
 
 .fae-auth {
@@ -21,20 +19,25 @@
 
 .fae-auth__panel {
   width: 100%;
-  max-width: 420px;
+  max-width: 700px;
+  background: var(--fae-surface);
+  border: 1px solid var(--fae-border);
+  border-top: 10px solid var(--fae-accent);
+  border-radius: var(--fae-radius-lg);
+  box-shadow: var(--fae-shadow);
 }
 
 .fae-auth__brand {
-  display: grid;
-  justify-items: center;
-  margin-bottom: var(--fae-space-xl);
+  padding: var(--fae-space-xl);
+  text-align: center;
 }
 
 /* Fae::Option's logo is documented as 300x300, but nothing enforces it --
    cap it and let it keep its aspect ratio. */
 .fae-auth__logo {
-  max-width: 220px;
-  max-height: 140px;
+  width: min(100%, 300px);
+  max-height: 220px;
+  object-fit: contain;
 }
 
 .fae-auth__title {
@@ -47,12 +50,7 @@
 
 .fae-auth__card {
   padding: var(--fae-space-xl);
-  background: var(--fae-surface);
-  border: 1px solid var(--fae-border);
-  /* The accent stripe the legacy .login-area carried on its top edge. */
-  border-top: 4px solid var(--fae-accent);
-  border-radius: var(--fae-radius-lg);
-  box-shadow: var(--fae-shadow);
+  border-top: 1px solid var(--fae-border);
 }
 
 .fae-auth__form {
@@ -84,10 +82,34 @@
   justify-items: center;
   gap: var(--fae-space-xs);
   width: 100%;
-  max-width: 420px;
+  max-width: 700px;
   color: var(--fae-text-muted);
   font-size: var(--fae-text-sm);
   text-align: center;
+}
+
+@media (min-width: 700px) {
+  .fae-auth__panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+
+  .fae-auth__brand {
+    display: grid;
+    justify-items: center;
+    padding: var(--fae-space-xl);
+  }
+
+  .fae-auth__logo {
+    width: min(100%, 320px);
+    max-height: 260px;
+  }
+
+  .fae-auth__card {
+    border-top: 0;
+    border-left: 1px solid var(--fae-border);
+  }
 }
 
 .fae-auth__links {
