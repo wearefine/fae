@@ -31,7 +31,7 @@ module Fae
           # item('Privacy', path: fae.edit_content_block_path('privacy')),
           # item('About Us', path: fae.edit_content_block_path('about_us')),
           # item('Components', path: fae.edit_content_block_path('components')),
-          # item('Nested Tables In Form', path: fae.edit_content_block_path('nested_tables_in_form')),
+          item('Nested Tables In Form', path: fae.edit_content_block_path('nested_tables_in_form')),
         ]),
         item('Spirits', path: admin_spirits_path),
         # scaffold inject marker
