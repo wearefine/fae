@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
     <header class="fae-app__header">
       <Link class="fae-app__brand" href="/admin">
         <span class="fae-app__brand-mark" aria-hidden="true">F</span>
-        Faenix
+        Fae
       </Link>
 
       <FaeTopNav :items="topnav" />
