@@ -15,8 +15,8 @@ CarrierWave.configure do |config|
    end
 
    if Rails.env.production?
-      config.asset_host = 'https://s3.us-west-2.amazonaws.com/fae-engine-test-fly'
-      config.fog_directory = 'fae-engine-test-fly'
+      config.asset_host = 'https://s3.us-west-2.amazonaws.com/assets-fae-v5'
+      config.fog_directory = 'assets-fae-v5'
    elsif Rails.env.remote_development?
 
    end

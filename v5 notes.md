@@ -4,3 +4,7 @@
 breadcrumbs
 Current: client-derived, simpler, faster to ship.
 Strict parity: server-derived, more deterministic and legacy-accurate.
+
+TODOS
+[] test full auth workflows (pw reset, etc)
+  [] MFA
