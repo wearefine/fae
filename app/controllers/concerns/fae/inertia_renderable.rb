@@ -404,6 +404,18 @@ module Fae
     end
 
     def fae_inertia_cell(item, key)
+      if fae_inertia_boolean_column?(item, key)
+        return {
+          kind: 'boolean_toggle',
+          value: !!item.public_send(key),
+          path: fae.toggle_path(
+            item.class.to_s.gsub('::', '__').underscore.pluralize,
+            item.id.to_s,
+            key
+          )
+        }
+      end
+
       value = item.public_send(key)
 
       case value
@@ -412,6 +424,10 @@ module Fae
       else
         value.to_s
       end
+    end
+
+    def fae_inertia_boolean_column?(item, key)
+      item.class.columns_hash[key.to_s]&.type == :boolean
     end
 
     # Normalizes one field descriptor into props for FaeFormField.

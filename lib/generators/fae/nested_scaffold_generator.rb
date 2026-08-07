@@ -8,7 +8,6 @@ module Fae
       generate_nested_model_file
       generate_graphql_type
       generate_nested_controller_file
-      generate_view_files
       add_route
       inject_livable
       generate_flex_component_union_type if options.flex_component
@@ -29,16 +28,9 @@ module Fae
       def generate_nested_controller_file
         @attachments = @@attachments
         @polymorphic_name = polymorphic_name
+        @inertia_form_fields = inertia_form_fields
+        @inertia_unsupported_fields = inertia_unsupported_fields
         template "controllers/nested_scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
-      end
-
-      def generate_view_files
-        @form_attrs = set_form_attrs
-        @attachments = @@attachments
-        template "views/table_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/table.html.#{options.template}"
-        template "views/_form_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/_form.html.#{options.template}"
-        template "views/new_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/new.html.#{options.template}"
-        template "views/edit_nested.html.#{options.template}", "app/views/#{options.namespace}/#{plural_file_name}/edit.html.#{options.template}"
       end
 
       def inject_parent_info

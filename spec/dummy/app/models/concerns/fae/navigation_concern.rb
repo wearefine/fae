@@ -28,6 +28,7 @@ module Fae
           item('Privacy', path: edit_admin_privacy_page_path),
         ]),
         item('Spirits', path: admin_spirits_path),
+        item('Widgets', path: admin_widgets_path),
         # scaffold inject marker
       ]
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_07_224500) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_07_224501) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -621,6 +621,20 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_07_224500) do
     t.integer "position"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "widgets", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_widgets_on_draft"
+    t.index ["on_prod"], name: "index_widgets_on_on_prod"
+    t.index ["on_stage"], name: "index_widgets_on_on_stage"
+    t.index ["position"], name: "index_widgets_on_position"
   end
 
   create_table "winemakers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

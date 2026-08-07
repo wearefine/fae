@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 
+import FaeBooleanToggle from './FaeBooleanToggle.vue'
 import { useSortableRows } from '../composables/useSortableRows.js'
 
 /**
@@ -37,6 +38,25 @@ const {
 } = useSortableRows(props)
 
 const linkTag = computed(() => (props.inertiaLinks ? Link : 'a'))
+
+function isToggleCell(cell) {
+  return !!cell && typeof cell === 'object' && cell.kind === 'boolean_toggle' && typeof cell.path === 'string'
+}
+
+function cellText(cell) {
+  if (cell === null || cell === undefined) return ''
+  if (typeof cell === 'object') return cell.text || ''
+  return cell
+}
+
+function updateToggle(rowId, key, value) {
+  const row = items.value.find((entry) => entry.id === rowId)
+  if (!row) return
+
+  const cell = row.cells?.[key]
+  if (!isToggleCell(cell)) return
+  cell.value = !!value
+}
 
 function destroy(row) {
   if (!window.confirm(`Delete "${row.label}"? This cannot be undone.`)) return
@@ -101,10 +121,16 @@ function destroy(row) {
             </td>
 
             <td v-for="(col, i) in columns" :key="col.key">
-              <component :is="linkTag" v-if="i === 0" class="fae-table__link" :href="row.editPath">
-                {{ row.cells[col.key] }}
+              <FaeBooleanToggle
+                v-if="isToggleCell(row.cells[col.key])"
+                :model-value="!!row.cells[col.key].value"
+                :path="row.cells[col.key].path"
+                @update:model-value="updateToggle(row.id, col.key, $event)"
+              />
+              <component :is="linkTag" v-else-if="i === 0" class="fae-table__link" :href="row.editPath">
+                {{ cellText(row.cells[col.key]) }}
               </component>
-              <template v-else>{{ row.cells[col.key] }}</template>
+              <template v-else>{{ cellText(row.cells[col.key]) }}</template>
             </td>
 
             <td class="fae-table__actions">
