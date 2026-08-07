@@ -606,7 +606,9 @@ module Fae
       assoc_name = (field[:association] || name.to_s.sub(/_ids$/, '').pluralize).to_s
 
       if collection.blank?
-        reflection = @klass.reflect_on_association(assoc_name.to_sym)
+        # Static page controllers include this concern but do not set @klass.
+        source_klass = @klass || @item&.class
+        reflection = source_klass&.reflect_on_association(assoc_name.to_sym)
         collection = reflection&.klass&.respond_to?(:for_fae_index) ? reflection.klass.for_fae_index : []
       end
 
