@@ -11,12 +11,11 @@ module Fae
 
       # each item should have a string key of the plural controller name and
       # an array of role names for the value
-      # use "content_blocks/#{page_name}" for content blocks
 
       # example:
       # {
       #  'people' => ['super admin', 'admin'],
-      #  'content_blocks/about_us' => ['super admin']
+      #  'privacy_pages' => ['super admin']
       # }
       def access_map
         {}

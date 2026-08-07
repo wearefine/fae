@@ -1,5 +1,10 @@
 # Pages and Content Blocks
 
+> Note: The `content_blocks` system described below is a legacy static-page flow.
+> For new static pages in Fae v5, prefer singleton resources generated with
+> `rails g fae:scaffold PageName ... --static-page=true`, so each page gets its
+> own model/controller and declares form layout in controller `fae_form_fields`.
+
 Fae has a built in system to handle content blocks that are statically wired to pages in your site. This is for content that isn't tied to an object in your data model, e.g. home, about and terms content.
 
 The system is just your basic inherited singleton with dynamic polymorphic associations. Kidding aside, the complexity of the system is hidden and "it just works&trade;" if you use the generators and/or follow the conventions. This allows for dynamic content blocks that can be added without database migrations and wired up without static IDs!

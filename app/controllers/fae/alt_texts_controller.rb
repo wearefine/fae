@@ -28,12 +28,7 @@ module Fae
     end
 
     def filter
-      if request.inertia?
-        redirect_to fae.alt_texts_path(fae_alt_text_filter_values.merge(page: params[:page]).compact)
-      else
-        @items = Fae::Image.filter(params).fae_sort(params).page(params[:page])
-        render :index, layout: false
-      end
+      redirect_to fae.alt_texts_path(fae_alt_text_filter_values.merge(page: params[:page]).compact)
     end
 
     private

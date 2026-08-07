@@ -36,6 +36,24 @@ function reset() {
   })
   emit('reset')
 }
+
+function filterInputType(field) {
+  if (field.type === 'datepicker') return 'date'
+  return field.type || 'text'
+}
+
+function openDatePicker(event) {
+  const input = event?.target
+  if (!(input instanceof HTMLInputElement)) return
+  if (input.type !== 'date') return
+  if (typeof input.showPicker !== 'function') return
+
+  try {
+    input.showPicker()
+  } catch (error) {
+    // Some browsers restrict showPicker; fallback is native focus behavior.
+  }
+}
 </script>
 
 <template>
@@ -70,8 +88,10 @@ function reset() {
           :id="`filter-${field.key}`"
           v-model="form[field.key]"
           class="fae-field__control"
-          :type="field.type || 'text'"
+          :type="filterInputType(field)"
           :placeholder="field.placeholder || ''"
+          @focus="openDatePicker"
+          @click="openDatePicker"
         >
       </div>
 

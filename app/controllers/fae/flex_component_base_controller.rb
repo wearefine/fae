@@ -10,20 +10,6 @@ module Fae
       []
     end
 
-    def update
-      return super if request.inertia?
-
-      if @item.update(permitted_params)
-        @parent_item = @item.flex_component.flex_componentable
-        
-        flash.now[:notice] = t('fae.save_notice')
-        render template: 'fae/shared/_flex_components_table', formats: :html, locals: { assoc: :flex_components, parent_item: @parent_item }
-      else
-        build_assets
-        render action: 'edit'
-      end
-    end
-    
     private
 
     def fae_inertia_parent_path(item, open_row: false)

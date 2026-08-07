@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resource :privacy_page, only: [:edit, :update]
     resources :article_subcategories
     resources :knobs
     resources :sub_list_items

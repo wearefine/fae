@@ -1,9 +1,8 @@
 module Fae
-  # Opt-in for rendering a Fae screen with Inertia + Vue instead of Slim.
+  # Shared rendering/writing behavior for Fae screens backed by Inertia + Vue.
   #
-  # Fae 5 will fold this into Fae::BaseController, but keeping it as a concern
-  # during the migration lets converted and unconverted screens coexist in the
-  # same app.
+  # Kept as a concern so Fae::BaseController stays focused on core controller
+  # setup while the Inertia layer evolves independently.
   module InertiaRenderable
     extend ActiveSupport::Concern
     include Fae::InertiaErrors
@@ -28,14 +27,7 @@ module Fae
       end
     end
 
-    # The write actions below only diverge from Fae::BaseController when the
-    # request actually came from Inertia. A controller can therefore have a Vue
-    # index and a Slim form at the same time -- the Slim form posts a normal
-    # HTML request and falls straight through to super. That is the state
-    # article_categories is in, and it must keep working.
-
     def create
-      return super unless request.inertia?
       return super if params[:from_existing].present?
 
       @item = @klass.new(item_params)
@@ -53,8 +45,6 @@ module Fae
     end
 
     def update
-      return super unless request.inertia?
-
       @item.draft = false if @klass.has_fae_draft_support?
 
       if @item.update(item_params)
@@ -80,7 +70,7 @@ module Fae
       params[:draft] == 'true' ? { draft: true } : {}
     end
 
-    # Opt-in for resources that should remain on edit after a successful save.
+    # Override for resources that should remain on edit after a successful save.
     # Only applies to top-level resources; nested controllers keep their
     # parent-form redirect flow.
     def fae_inertia_stay_on_form_after_save?
@@ -307,29 +297,43 @@ module Fae
     # :show_caption, :alt_label, :caption_label, :alt_helper_text,
     # :caption_helper_text -- and submit through the association that
     # has_fae_image / has_fae_file declared.
-    def render_fae_form(item = @item, fields:, title: nil, subnav: nil)
+    #
+    # `index_path`, `submit_path`, `submit_method`, `param_key` and
+    # `delete_path` can be overridden for custom route shapes such as singleton
+    # resources.
+    def render_fae_form(item = @item, fields:, title: nil, subnav: nil, index_path: nil, submit_path: nil, submit_method: nil, param_key: nil, delete_path: :auto)
       # Fae::BaseController#new saves the record before redirecting here, so
       # "new" is really an edit of an unsaved-looking row. The draft flag is
       # what tells the Vue form that cancelling should delete it again.
       draft = params[:draft] == 'true'
 
+      index_path ||= @index_path
+      param_key ||= @klass_singular
+
       # The flag has to survive the round trip: it lives only in the query
       # string, and a failed save redirects back here off the submit URL.
-      submit_path = item.persisted? ? "#{@index_path}/#{item.id}" : @index_path
+      submit_path ||= item.persisted? ? "#{index_path}/#{item.id}" : index_path
+      submit_method ||= item.persisted? ? 'put' : 'post'
       submit_path += '?draft=true' if draft
+
+      delete_path = if delete_path == :auto
+                      item.persisted? ? "#{index_path}/#{item.id}" : nil
+                    else
+                      delete_path
+                    end
 
       render inertia: 'Fae/Form', props: {
         title: title || "#{draft ? 'New' : 'Edit'} #{@klass_humanized}".titleize,
-        indexPath: @index_path,
+        indexPath: index_path,
         # Both verbs are supported so this still works for a model that opts
         # out of the draft-on-new behaviour by overriding #new.
         submitPath: submit_path,
-        submitMethod: item.persisted? ? 'put' : 'post',
-        paramKey: @klass_singular,
+        submitMethod: submit_method,
+        paramKey: param_key,
         blocks: fae_inertia_form_blocks(item, fields, draft),
         subnav: fae_inertia_subnav(subnav),
         draft: draft,
-        deletePath: (item.persisted? ? "#{@index_path}/#{item.id}" : nil)
+        deletePath: delete_path
       }
     end
 
@@ -403,7 +407,7 @@ module Fae
       value = item.public_send(key)
 
       case value
-      when Time, DateTime, ActiveSupport::TimeWithZone
+      when Date, Time, DateTime, ActiveSupport::TimeWithZone
         helpers.fae_date_format(value)
       else
         value.to_s
@@ -493,6 +497,26 @@ module Fae
       end
 
       value = item.public_send(name)
+
+      if %w[date datepicker].include?(type)
+        return '' if value.blank?
+
+        return value.to_date.iso8601 if value.respond_to?(:to_date)
+
+        begin
+          return Date.parse(value.to_s).iso8601
+        rescue ArgumentError, TypeError
+          return value.to_s
+        end
+      end
+
+      if type == 'datetime-local'
+        return '' if value.blank?
+
+        return value.strftime('%Y-%m-%dT%H:%M') if value.respond_to?(:strftime)
+
+        return value.to_s
+      end
 
       # Static-page text fields are has_one Fae::TextField/Fae::TextArea
       # objects; the form input needs their content, not object inspect.

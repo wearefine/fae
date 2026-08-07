@@ -60,17 +60,7 @@ module Fae
     end
 
     def activity_log_filter
-      if request.inertia?
-        redirect_to fae.activity_log_path(fae_activity_log_filter_values.merge(page: params[:page]).compact)
-      else
-        if params[:commit] == "Reset Search"
-          @items = Fae::Change.order(id: :desc).page(params[:page])
-        else
-          @items = Fae::Change.filter(params).fae_sort(params).page(params[:page])
-        end
-
-        render :activity_log, layout: false
-      end
+      redirect_to fae.activity_log_path(fae_activity_log_filter_values.merge(page: params[:page]).compact)
     end
 
     def error404
@@ -138,13 +128,13 @@ module Fae
         {
           key: 'start_date',
           label: 'Start Date',
-          type: 'text',
+          type: 'datepicker',
           placeholder: 'MM/DD/YYYY'
         },
         {
           key: 'end_date',
           label: 'End Date',
-          type: 'text',
+          type: 'datepicker',
           placeholder: 'MM/DD/YYYY'
         },
         {
@@ -202,7 +192,7 @@ module Fae
 
       begin
         if type == 'Fae::StaticPage'
-          return { text: text, path: fae.edit_content_block_path(change.changeable.slug) }
+          return { text: text, path: nil }
         end
 
         parent = change.changeable.respond_to?(:fae_parent) ? change.changeable.fae_parent : nil

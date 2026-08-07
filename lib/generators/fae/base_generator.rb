@@ -72,6 +72,9 @@ module Fae
 
     def generate_controller_file
       @attachments = @@attachments
+      @inertia_form_fields = inertia_form_fields
+      @inertia_unsupported_fields = inertia_unsupported_fields
+      @inertia_index_columns = inertia_index_columns
       template "controllers/scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
     end
 
@@ -91,9 +94,15 @@ module Fae
 
     def add_route
       inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do
-        <<~RUBY.indent(4)
-          resources :#{plural_file_name}
-        RUBY
+        if static_page_generation?
+          <<~RUBY.indent(4)
+            resource :#{file_name}, only: [:edit, :update]
+          RUBY
+        else
+          <<~RUBY.indent(4)
+            resources :#{plural_file_name}
+          RUBY
+        end
       end
     end
 
@@ -182,8 +191,97 @@ module Fae
     end
 
     def inject_nav_item
-      line = "item('#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path),\n\s\s\s\s\s\s\s\s"
+      line = if static_page_generation?
+               "item('#{file_name.humanize.titlecase}', path: edit_#{options.namespace}_#{file_name}_path),\n\s\s\s\s\s\s\s\s"
+             else
+               "item('#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path),\n\s\s\s\s\s\s\s\s"
+             end
       inject_into_file 'app/models/concerns/fae/navigation_concern.rb', line, before: '# scaffold inject marker'
+    end
+
+    def static_page_generation?
+      options.respond_to?(:static_page) && options.static_page
+    end
+
+    def inertia_form_fields
+      attributes.filter_map do |arg|
+        next if %w[position on_stage on_prod].include?(arg.name)
+
+        if is_attachment(arg)
+          supported_type = inertia_supported_attachment_type(arg.type)
+          next if supported_type.blank?
+
+          { name: arg.name.to_sym, type: supported_type }
+        elsif is_association(arg)
+          assoc_name = arg.name.to_s.gsub(/_id$/, '')
+          field_name = arg.name.to_s.end_with?('_id') ? arg.name : "#{arg.name}_id"
+
+          {
+            name: field_name.to_sym,
+            type: :select,
+            collection: "#{assoc_name.classify}.for_fae_index"
+          }
+        else
+          {
+            name: arg.name.to_sym,
+            type: inertia_type_for(arg.type)
+          }
+        end
+      end
+    end
+
+    def inertia_unsupported_fields
+      attributes.filter_map do |arg|
+        next unless is_attachment(arg)
+        next unless inertia_supported_attachment_type(arg.type).blank?
+
+        { name: arg.name.to_sym, type: arg.type.to_sym }
+      end
+    end
+
+    def inertia_index_columns
+      primary_name = if @@display_field.present?
+                       @@display_field
+                     else
+                       attributes.find do |arg|
+                         !is_attachment(arg) &&
+                           !is_association(arg) &&
+                           !%w[position on_stage on_prod].include?(arg.name)
+                       end&.name || 'id'
+                     end
+
+      columns = [{ key: primary_name.to_sym, label: primary_name.to_s.titleize }]
+      columns << { key: :updated_at, label: 'Modified' }
+      columns.concat(set_toggle_attrs.map { |attr| { key: attr.to_sym, label: attr.to_s.titleize } })
+      columns
+    end
+
+    def inertia_type_for(type)
+      case type.to_s
+      when 'text'
+        :textarea
+      when 'boolean'
+        :checkbox
+      when 'date'
+        :datepicker
+      when 'datetime', 'timestamp'
+        :'datetime-local'
+      when 'integer', 'float', 'decimal'
+        :number
+      else
+        :text
+      end
+    end
+
+    def inertia_supported_attachment_type(type)
+      case type.to_s
+      when 'image'
+        :image
+      when 'file'
+        :file
+      else
+        nil
+      end
     end
 
     def graphql_object(arg)

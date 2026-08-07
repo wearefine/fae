@@ -56,7 +56,7 @@ module Fae
         params[:user].delete(:password_confirmation)
       end
 
-      if request.inertia? && @user == current_user
+      if @user == current_user
         if @user.update(user_params)
           redirect_to fae.settings_path, notice: t('fae.save_notice')
         else

@@ -98,38 +98,6 @@ feature 'Form Manager' do
     end
   end
 
-  # Fae::StaticPage forms
-
-  scenario 'form manager works for fae pages', js: true do
-    visit fae.edit_content_block_path('contact_us')
-    expect(page).to have_content('Email')
-
-    click_link('Manage Form')
-    fill_in('ContactUsPage_email_label_input', with: 'Email edited')
-    fill_in('ContactUsPage_email_helper_input', with: 'Email helper')
-
-    click_link('Submit')
-    eventually {
-      expect(page).to have_content('Email edited')
-      expect(page).to have_content('Email helper')
-    }
-  end
-
-  # Multi language inputs
-
-  scenario 'form manager works with fae languages feature', js: true do
-    visit fae.edit_content_block_path('contact_us')
-    expect(page).to have_content('Hero (en)')
-
-    click_link('Manage Form')
-    fill_in('ContactUsPage_hero_en_label_input', with: 'Hero (en) edited')
-    fill_in('ContactUsPage_hero_en_helper_input', with: 'Hero (en) helper')
-
-    click_link('Submit')
-    expect(page).to have_content('Hero (en) edited')
-    expect(page).to have_content('Hero (en) helper')
-  end
-
   # ignore field functionality
 
   scenario 'form manager ignores fields flagged as show_form_manager: false', js: true do

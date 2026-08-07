@@ -31,19 +31,10 @@ module Fae
         @item.update(component_id: component.id)
   
         @parent_item = @item.flex_componentable
-        if request.inertia?
-          redirect_to fae_inertia_flex_parent_path(@parent_item, open_flex_component_id: @item.id), notice: t('fae.save_notice')
-        else
-          flash.now[:notice] = t('fae.save_notice')
-          render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
-        end
+        redirect_to fae_inertia_flex_parent_path(@parent_item, open_flex_component_id: @item.id), notice: t('fae.save_notice')
       else
         build_assets
-        if request.inertia?
-          redirect_to fae_inertia_flex_parent_path(@item.flex_componentable), flash: { alert: t('fae.save_error') }
-        else
-          render action: 'new'
-        end
+        redirect_to fae_inertia_flex_parent_path(@item.flex_componentable), flash: { alert: t('fae.save_error') }
       end
     end
   
@@ -51,19 +42,10 @@ module Fae
       @parent_item = @item.flex_componentable
   
       if @item.destroy
-        if request.inertia?
-          redirect_to fae_inertia_flex_parent_path(@parent_item), notice: t('fae.delete_notice')
-          return
-        end
-        flash.now[:notice] = t('fae.delete_notice')
+        redirect_to fae_inertia_flex_parent_path(@parent_item), notice: t('fae.delete_notice')
       else
-        if request.inertia?
-          redirect_to fae_inertia_flex_parent_path(@parent_item), flash: { error: t('fae.delete_error') }
-          return
-        end
-        flash.now[:alert] = t('fae.delete_error')
+        redirect_to fae_inertia_flex_parent_path(@parent_item), flash: { error: t('fae.delete_error') }
       end
-      render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item}
     end
 
     private

@@ -1,8 +1,6 @@
 module Admin
   class ArticlesController < Fae::BaseController
-    # Fae 5 spike: index and form both render via Inertia + Vue. Most other
-    # screens in this app still render Slim, which is the point -- the two
-    # coexist during migration.
+    # Index and form both render through the shared Inertia + Vue layer.
     include Fae::InertiaRenderable
 
     def index

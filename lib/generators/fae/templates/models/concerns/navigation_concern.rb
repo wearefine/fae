@@ -17,8 +17,8 @@ module Fae
     #       ]),
     #     ]),
     #     item('Pages', subitems: [
-    #       item('Home', path: fae.edit_content_block_path('home')),
-    #       item('About Us', path: fae.edit_content_block_path('about_us'))
+    #       item('Home', path: edit_admin_home_page_path),
+    #       item('About Us', path: edit_admin_about_us_page_path)
     #     ])
     #   ]
     # end

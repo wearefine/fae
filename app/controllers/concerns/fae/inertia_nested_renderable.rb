@@ -7,9 +7,6 @@ module Fae
   # re-renders that whole screen from fresh props, nested rows included, while
   # the page component stays mounted so the parent's unsaved input survives.
   #
-  # Every action falls through to super for a non-Inertia request, so a
-  # resource can be reached from a converted parent form and an unconverted
-  # Slim one at the same time.
   module InertiaNestedRenderable
     extend ActiveSupport::Concern
     include Fae::InertiaErrors
@@ -25,8 +22,6 @@ module Fae
     end
 
     def create
-      return super unless request.inertia?
-
       @item = @klass.new(permitted_params)
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
@@ -38,8 +33,6 @@ module Fae
     end
 
     def update
-      return super unless request.inertia?
-
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
       if @item.update(permitted_params)
@@ -50,8 +43,6 @@ module Fae
     end
 
     def destroy
-      return super unless request.inertia?
-
       raise_undefined_parent if @item.fae_nested_parent.blank?
 
       # Resolved before the row goes away, or there would be nothing left to

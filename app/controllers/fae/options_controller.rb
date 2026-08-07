@@ -24,27 +24,15 @@ module Fae
 
     # PATCH/PUT /options/1
     def update
-      if request.inertia?
-        if @option.update(option_params)
-          if @option.previous_changes.include?('site_mfa_enabled')
-            Fae::User.update_mfa(option_params['site_mfa_enabled'], current_user.email)
-          end
-          redirect_to fae.option_path, notice: t('fae.save_notice')
-        else
-          redirect_to fae.option_path,
-                      inertia: { errors: fae_inertia_errors(@option) },
-                      flash: { alert: t('fae.save_error') }
+      if @option.update(option_params)
+        if @option.previous_changes.include?('site_mfa_enabled')
+          Fae::User.update_mfa(option_params['site_mfa_enabled'], current_user.email)
         end
+        redirect_to fae.option_path, notice: t('fae.save_notice')
       else
-        if @option.update(option_params)
-          if @option.previous_changes.include?('site_mfa_enabled')
-            Fae::User.update_mfa(option_params['site_mfa_enabled'], current_user.email)
-          end
-          flash.now[:notice] = 'Option was successfully updated.'
-          redirect_to action: :edit
-        else
-          render :edit
-        end
+        redirect_to fae.option_path,
+                    inertia: { errors: fae_inertia_errors(@option) },
+                    flash: { alert: t('fae.save_error') }
       end
     end
 

@@ -11,7 +11,7 @@ describe Fae::Navigation do
     it 'should return nil when current section is less than three levels' do
       nav = Fae::Navigation.new(current_user)
 
-      expect(nav.side_nav('/admin/content_blocks/home')).to be_nil
+      expect(nav.side_nav('/admin/privacy_page/edit')).to be_nil
     end
 
     it 'should return the current sections third+ levels if present' do
@@ -31,8 +31,8 @@ describe Fae::Navigation do
           { text: 'Locations', nested_path: '/admin/locations' },
           { text: 'Validation Testers', nested_path: '/admin/validation_testers' }
         ],
-        'home'=> [
-          {text: 'Home', nested_path: '/admin/content_blocks/home' }
+        'pri'=> [
+          { text: 'Privacy', nested_path: '/admin/privacy_page/edit' }
         ],
         'event h' => [
           { text: 'Event Hosts', nested_path: '/admin/people' }

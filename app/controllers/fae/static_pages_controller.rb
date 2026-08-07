@@ -21,7 +21,7 @@ module Fae
       else
         build_assocs
         flash.now[:alert] = t('fae.save_error')
-        render template: "#{fae.root_path.gsub('/', '')}/content_blocks/#{params[:slug]}"
+        render params[:slug]
       end
     end
 

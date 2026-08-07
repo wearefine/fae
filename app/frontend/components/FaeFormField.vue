@@ -39,11 +39,24 @@ const describedBy = computed(() => {
 // Anything that is not a textarea, select or checkbox is an <input>; the type
 // name doubles as the input's type attribute.
 const inputType = computed(() =>
-  ({ text: 'text' })[props.field.type] || props.field.type
+  ({ text: 'text', datepicker: 'date' })[props.field.type] || props.field.type
 )
 
 const FaeRankedSelectFieldComponent = useFaeComponent('FaeRankedSelectField', FaeRankedSelectField)
 const FaeTypeaheadSelectComponent = useFaeComponent('FaeTypeaheadSelect', FaeTypeaheadSelect)
+
+function openDatePicker(event) {
+  const input = event?.target
+  if (!(input instanceof HTMLInputElement)) return
+  if (input.type !== 'date') return
+  if (typeof input.showPicker !== 'function') return
+
+  try {
+    input.showPicker()
+  } catch (error) {
+    // Some browsers restrict showPicker; fallback is native focus behavior.
+  }
+}
 </script>
 
 <template>
@@ -170,6 +183,8 @@ const FaeTypeaheadSelectComponent = useFaeComponent('FaeTypeaheadSelect', FaeTyp
       :value="modelValue"
       :aria-invalid="!!error"
       :aria-describedby="describedBy"
+      @focus="openDatePicker"
+      @click="openDatePicker"
       @input="$emit('update:modelValue', $event.target.value)"
     >
 

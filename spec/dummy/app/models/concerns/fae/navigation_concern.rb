@@ -24,14 +24,8 @@ module Fae
           item('Articles', path: admin_articles_path),
           item('Article Categories', path: admin_article_categories_path),
         ]),
-        item('Pages', path: fae.pages_path, subitems: [
-          item('Home', path: fae.edit_content_block_path('home')),
-          # item('Contact Us', path: fae.edit_content_block_path('contact_us')),
-          # item('Global', path: fae.edit_content_block_path('global_content')),
-          # item('Privacy', path: fae.edit_content_block_path('privacy')),
-          # item('About Us', path: fae.edit_content_block_path('about_us')),
-          # item('Components', path: fae.edit_content_block_path('components')),
-          item('Nested Tables In Form', path: fae.edit_content_block_path('nested_tables_in_form')),
+        item('Pages', path: edit_admin_privacy_page_path, subitems: [
+          item('Privacy', path: edit_admin_privacy_page_path),
         ]),
         item('Spirits', path: admin_spirits_path),
         # scaffold inject marker

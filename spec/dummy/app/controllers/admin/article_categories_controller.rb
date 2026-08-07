@@ -1,8 +1,6 @@
 module Admin
   class ArticleCategoriesController < Fae::BaseController
-    # Fae 5 spike: this screen renders via Inertia + Vue. Every other admin
-    # screen in this app still renders Slim, which is the point -- the two
-    # coexist during migration.
+    # Renders with Inertia + Vue using the shared Fae form/index serializers.
     include Fae::InertiaRenderable
 
     def index

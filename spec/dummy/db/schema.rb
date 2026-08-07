@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_05_120000) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_07_224500) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -460,6 +460,20 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_05_120000) do
     t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
+  create_table "privacy_pages", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.text "headline"
+    t.text "body"
+    t.text "body_2"
+    t.string "seo_title"
+    t.text "seo_description"
+    t.string "social_media_title"
+    t.text "social_media_description"
+    t.boolean "draft", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "release_notes", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -521,6 +535,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_05_120000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.date "date"
   end
 
   create_table "static_page_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

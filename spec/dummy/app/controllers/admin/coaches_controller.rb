@@ -1,8 +1,7 @@
 module Admin
   class CoachesController < Fae::BaseController
-    # Fae 5 spike: renders via Inertia + Vue. This screen sits four levels deep
-    # in the navigation structure (Teams > team > Personnel > Coaches), so it is
-    # the one that exercises the side nav.
+    # Renders with Inertia + Vue and exercises deep side-nav hierarchy
+    # (Teams > team > Personnel > Coaches).
     include Fae::InertiaRenderable
 
     before_action :set_parent_context

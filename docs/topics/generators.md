@@ -20,6 +20,7 @@ rails g fae:scaffold [ModelName] [field:type] [field:type]
 | ModelName | singular camel-cased model name |
 | field | the attributes column name |
 | type | the column type (defaults to `string`), find all options in [Rails' documentaion](http://api.rubyonrails.org/classes/ActiveRecord/ConnectionAdapters/TableDefinition.html#method-i-column) |
+| `[--static-page=true]` | generates a singleton resource route (`resource`) and a singleton-style controller using `render_fae_form` |
 
 This is Fae's main generator. It will create the following:
 
@@ -46,6 +47,16 @@ This is Fae's main generator. It will create the following:
 ```bash
 rails g fae:scaffold Person first_name last_name title body:text date_of_birth:date position:integer on_stage:boolean on_prod:boolean head_shot:image bio_pdf:file group:references
 ```
+
+### Singleton Static Page Example
+
+Use `--static-page=true` when you want a one-off page (home/about/privacy/etc.) as a dedicated singleton resource with its own model/controller.
+
+```bash
+rails g fae:scaffold HomePage title:string hero:text body:text hero_image:image --static-page=true
+```
+
+This creates a standard ActiveRecord model, an admin controller that defines its baseline `fae_form_fields` in Ruby, and a singular route like `/admin/home_page/edit`. It also skips generating the legacy Slim CRUD views for that resource.
 
 
 ## Nested Scaffold
@@ -85,14 +96,16 @@ rails g fae:page [PageName] [field:type] [field:type]
 | field   | the name of the content block |
 | type    | the type of the content block |
 
-The page generator scaffolds a page into Fae's content blocks system. More on that later, for now here's what it does:
+The legacy `fae:page` generator has been removed.
 
-- creates or adds to `app/controllers/admin/content_blocks_controller.rb`
-- creates a `#{page_name}_page.rb` model
-- creates a form view in `app/views/admin/content_blocks/#{page_name}.html.slim`
+Use singleton scaffolds instead:
+
+```bash
+rails g fae:scaffold PageName field:type field:type --static-page=true
+```
 
 ### Example
 
 ```bash
-rails g fae:page AboutUs title:string introduction:text body:text header_image:image
+rails g fae:scaffold AboutUsPage title:string introduction:text body:text header_image:image --static-page=true
 ```
