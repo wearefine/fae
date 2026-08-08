@@ -50,6 +50,9 @@ const languageNav = computed(() => {
   return nav && Array.isArray(nav.options) ? nav : null
 })
 
+const translateEnabled = computed(() => !!languageNav.value?.translateEnabled)
+const translatePath = computed(() => String(languageNav.value?.translatePath || ''))
+
 const languageOptions = computed(() => languageNav.value?.options || [])
 
 const languageCodes = computed(() =>
@@ -100,6 +103,9 @@ const showLanguageNav = computed(() => {
   if (!languageNav.value || languageCodes.value.length === 0) return false
   return fields.value.some((field) => fieldLanguage(field))
 })
+
+const fieldNames = computed(() => new Set(fields.value.map((field) => String(field?.name || ''))))
+const translatingFieldName = ref('')
 
 const subnavLinks = computed(() => {
   const links = (props.subnav || []).filter((entry) => entry?.label && entry?.target)
@@ -266,6 +272,90 @@ async function saveLanguagePreference(language) {
     })
   } catch (error) {
     console.error(error)
+  }
+}
+
+function translatorLanguageCode(language) {
+  if (!language) return ''
+
+  const key = String(language)
+  if (key === 'zh') return 'zh-CN'
+  if (key === 'frca') return 'fr-CA'
+  if (key.length === 4) return `${key.slice(0, 2)}-${key.slice(2).toUpperCase()}`
+  return key
+}
+
+function englishSourceCandidates(fieldName, language) {
+  const name = String(fieldName || '')
+  const suffix = `_${language}`
+  if (!name.endsWith(suffix)) return []
+
+  const base = name.slice(0, -suffix.length)
+  return [`${base}_en`, base]
+}
+
+function englishSourceText(field) {
+  const language = fieldLanguage(field)
+  if (!language || language === 'en') return null
+
+  const candidates = englishSourceCandidates(field?.name, language)
+  for (const candidate of candidates) {
+    if (!fieldNames.value.has(candidate)) continue
+    const value = String(form[candidate] ?? '').trim()
+    if (value.length > 0) return value
+  }
+
+  return null
+}
+
+function canTranslateField(field) {
+  if (!translateEnabled.value || !translatePath.value) return false
+  if (!field || field.translate === false) return false
+  if (!['text', 'textarea'].includes(String(field.type || ''))) return false
+
+  const language = fieldLanguage(field)
+  if (!language || language === 'en') return false
+
+  return englishSourceCandidates(field.name, language).some((name) => fieldNames.value.has(name))
+}
+
+async function translateField(fieldName) {
+  const targetField = fields.value.find((field) => String(field.name) === String(fieldName))
+  if (!targetField || !canTranslateField(targetField)) return
+
+  const sourceText = englishSourceText(targetField)
+  if (!sourceText) return
+
+  const language = fieldLanguage(targetField)
+  const translationLanguage = translatorLanguageCode(language)
+  if (!translationLanguage) return
+
+  translatingFieldName.value = String(fieldName)
+
+  try {
+    const payload = new FormData()
+    payload.append('translation_text[language]', translationLanguage)
+    payload.append('translation_text[en_text]', sourceText)
+
+    const response = await fetch(translatePath.value, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-Token': csrfToken(),
+      },
+      body: payload,
+    })
+
+    const data = await response.json()
+    const entry = Array.isArray(data) ? data[0] : null
+    if (entry?.translated_text) {
+      form[String(fieldName)] = entry.translated_text
+    }
+  } catch (error) {
+    console.error(error)
+  } finally {
+    translatingFieldName.value = ''
   }
 }
 
@@ -449,7 +539,10 @@ watch(
             :key="field.name"
             :field="field"
             :error="form.errors[field.name]"
+            :can-translate="canTranslateField(field)"
+            :translating="translatingFieldName === field.name"
             v-model="form[field.name]"
+            @translate="translateField"
           />
         </div>
 

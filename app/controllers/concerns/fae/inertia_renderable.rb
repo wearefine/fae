@@ -118,8 +118,16 @@ module Fae
       {
         options: options,
         selected: selected,
-        savePathBase: "#{fae.root_path.to_s.chomp('/')}/language_preference"
+        savePathBase: "#{fae.root_path.to_s.chomp('/')}/language_preference",
+        translateEnabled: fae_inertia_language_translate_enabled?,
+        translatePath: (fae.translate_text_path if fae_inertia_language_translate_enabled?)
       }
+    end
+
+    def fae_inertia_language_translate_enabled?
+      Fae::Option.instance.translate_language &&
+        ENV['TRANSLATOR_TEXT_SUBSCRIPTION_KEY'].present? &&
+        ENV['TRANSLATOR_TEXT_REGION'].present?
     end
 
     # Fae's navigation is a single tree, split across two chrome regions:
@@ -541,6 +549,7 @@ module Fae
         # The h6.helper_text the Slim label carried. Every field type honours
         # it, not just the ones a fae_* helper happened to expose it on.
         helperText: field[:helper_text],
+        translate: field.fetch(:translate, true),
         required: field.fetch(:required) { fae_inertia_required?(item, name) },
         value: fae_inertia_field_value(item, name, type, ranked),
         # Opts a textarea into the markdown editor, as `fae_input ... markdown: true` did.

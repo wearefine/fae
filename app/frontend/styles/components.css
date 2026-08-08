@@ -734,6 +734,10 @@ textarea.fae-field__control {
   font-size: var(--fae-text-sm);
 }
 
+.fae-field__translate {
+  justify-self: start;
+}
+
 /* The checkbox row is a two-column grid, so helper text needs its own row. */
 .fae-field.-checkbox .fae-field__helper {
   order: 3;

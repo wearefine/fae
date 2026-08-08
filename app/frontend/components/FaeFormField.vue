@@ -19,9 +19,11 @@ const props = defineProps({
   field: { type: Object, required: true },
   modelValue: { type: [String, Number, Boolean, Array, Object, null], default: '' },
   error: { type: String, default: null },
+  canTranslate: { type: Boolean, default: false },
+  translating: { type: Boolean, default: false },
 })
 
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'translate'])
 
 // Scoped to this instance rather than to the field name: a nested table's form
 // can be open alongside the parent form and repeat its field names, and
@@ -187,6 +189,16 @@ function openDatePicker(event) {
       @click="openDatePicker"
       @input="$emit('update:modelValue', $event.target.value)"
     >
+
+    <button
+      v-if="canTranslate"
+      type="button"
+      class="fae-button -secondary -sm fae-field__translate"
+      :disabled="translating"
+      @click="$emit('translate', field.name)"
+    >
+      {{ translating ? 'Translating...' : 'Translate from English' }}
+    </button>
 
     <p v-if="field.hint" :id="`${inputId}-hint`" class="fae-field__hint">{{ field.hint }}</p>
     <p v-if="error" :id="`${inputId}-error`" class="fae-field__error">{{ error }}</p>

@@ -48,6 +48,8 @@ module Fae
 
       resp = translate_request(language, en_text)
 
+      Rails.logger.info("Translation response: #{resp}")
+
       if !resp.kind_of?(Array) && resp['error']
         render json: [error_text: resp['error']['message']]
       else
