@@ -115,13 +115,15 @@ const sections = computed(() => {
   const grouped = props.blocks.reduce((out, block) => {
     const id = block.sectionId || '__default'
     const title = block.sectionTitle || null
+    const helperText = block.sectionHelperText || null
     const last = out[out.length - 1]
 
     if (last?.id === id) {
       if (!last.title && title) last.title = title
+      if (!last.helperText && helperText) last.helperText = helperText
       last.blocks.push(block)
     } else {
-      out.push({ id: id === '__default' ? null : id, title, blocks: [block] })
+      out.push({ id: id === '__default' ? null : id, title, helperText, blocks: [block] })
     }
 
     return out
@@ -141,13 +143,32 @@ const sections = computed(() => {
       return out
     }, [])
 
-    return { id: section.id, title: section.title, blocks: mergedBlocks }
+    return {
+      id: section.id,
+      title: section.title,
+      helperText: section.helperText,
+      blocks: mergedBlocks,
+    }
   })
 })
 
+function sectionHasVisibleContent(section) {
+  if (!section?.blocks?.length) return false
+
+  return section.blocks.some((block) => {
+    if (block.kind === 'field') return visibleFields(block.fields).length > 0
+    return true
+  })
+}
+
 function sectionShowsHeading(section) {
   if (!section?.title) return false
-  return section.blocks.some((block) => block.kind === 'field' && visibleFields(block.fields).length > 0)
+  return sectionHasVisibleContent(section)
+}
+
+function sectionShowsHelperText(section) {
+  if (!section?.helperText) return false
+  return sectionHasVisibleContent(section)
 }
 
 const hasHiddenLanguageErrors = computed(() => {
@@ -416,6 +437,9 @@ watch(
       :data-fae-section="section.id || null"
     >
       <h2 v-if="sectionShowsHeading(section)" class="fae-form-section__title">{{ section.title }}</h2>
+      <p v-if="sectionShowsHelperText(section)" class="fae-form-section__helper-text">
+        {{ section.helperText }}
+      </p>
 
       <template v-for="(block, blockIndex) in section.blocks" :key="`${section.id || sectionIndex}-${block.kind}-${blockIndex}`">
         <div v-if="block.kind === 'field' && visibleFields(block.fields).length" class="fae-panel fae-form">

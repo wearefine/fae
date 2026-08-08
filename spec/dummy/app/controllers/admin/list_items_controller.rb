@@ -4,13 +4,20 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :name, type: :text },
         {
-          name: :people,
-          type: :select,
-          collection: ['Alice', 'Bob', 'Charlie', 'Diana']
-        },
-        { name: :image, type: :image }
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :name, type: :text },
+              {
+                name: :people,
+                type: :select,
+                collection: ['Alice', 'Bob', 'Charlie', 'Diana']
+              },
+              { name: :image, type: :image }
+            ]
+          }
+        }
       ]
     end
 

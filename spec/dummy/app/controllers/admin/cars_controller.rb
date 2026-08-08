@@ -23,12 +23,19 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :name_en, type: :text },
-        { name: :name_frca, type: :text },
-        { name: :name_zh, type: :text },
-        { name: :image_en, type: :image },
-        { name: :image_frca, type: :image },
-        { name: :image_zh, type: :image }
+        {
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :name_en, type: :text },
+              { name: :name_frca, type: :text },
+              { name: :name_zh, type: :text },
+              { name: :image_en, type: :image },
+              { name: :image_frca, type: :image },
+              { name: :image_zh, type: :image }
+            ]
+          }
+        }
       ]
     end
 

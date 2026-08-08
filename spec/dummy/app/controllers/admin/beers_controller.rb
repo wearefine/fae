@@ -12,10 +12,7 @@ module Admin
 
     def edit
       render_fae_form(
-        fields: form_fields,
-        subnav: [
-          ['Poly Things', 'poly_things']
-        ]
+        fields: form_fields
       )
     end
 
@@ -37,28 +34,40 @@ module Admin
 
     def form_fields
       [
-        { name: :on_stage, type: :checkbox },
-        { name: :on_prod, type: :checkbox },
-        { name: :name, type: :text },
-        { name: :image, type: :image },
         {
-          name: :aroma_ids,
-          association: :aromas,
-          type: :ranked_select,
-          join_model: :beer_aromas,
-          label: 'Aromas',
-          helper_text: 'Select aromas and drag to rank them in order of prominence.',
-          ranking_title: 'Aroma Ranking',
-          ranking_helper_text: 'Drag to reorder aromas by prominence',
-          preview_image: :image,
-          collection: Aroma.for_fae_index
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :on_stage, type: :checkbox },
+              { name: :on_prod, type: :checkbox },
+              { name: :name, type: :text },
+              { name: :image, type: :image },
+              {
+                name: :aroma_ids,
+                association: :aromas,
+                type: :ranked_select,
+                join_model: :beer_aromas,
+                label: 'Aromas',
+                helper_text: 'Select aromas and drag to rank them in order of prominence.',
+                ranking_title: 'Aroma Ranking',
+                ranking_helper_text: 'Drag to reorder aromas by prominence',
+                preview_image: :image,
+                collection: Aroma.for_fae_index
+              }
+            ]
+          }
         },
         {
-          nested_table: :poly_things,
-          cols: [:name_en, :image],
-          title: 'Poly Things',
-          section_id: 'poly_things',
-          section_title: 'Poly Things'
+          section: {
+            title: 'Poly Things',
+            fields: [
+              {
+                nested_table: :poly_things,
+                cols: [:name_en, :image],
+                title: 'Poly Things'
+              }
+            ]
+          }
         }
       ]
     end

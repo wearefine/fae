@@ -3,9 +3,16 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :name, type: :text },
-        { name: :name_zh, type: :text },
-        { name: :name_frca, type: :text }
+        {
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :name, type: :text },
+              { name: :name_zh, type: :text },
+              { name: :name_frca, type: :text }
+            ]
+          }
+        }
       ]
     end
 

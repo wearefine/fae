@@ -19,17 +19,24 @@ module Admin
 
     def form_fields
       [
-        { name: :name, type: :text },
-        { name: :name_zh, type: :text },
-        { name: :name_frca, type: :text },
         {
-          nested_table: :article_subcategories,
-          cols: [:name],
-          title: 'Article Subcategories'
-        },
-        {
-          flex_components_table: :flex_components,
-          title: 'Flex Components'
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :name, type: :text },
+              { name: :name_zh, type: :text },
+              { name: :name_frca, type: :text },
+              {
+                nested_table: :article_subcategories,
+                cols: [:name],
+                title: 'Article Subcategories'
+              },
+              {
+                flex_components_table: :flex_components,
+                title: 'Flex Components'
+              }
+            ]
+          }
         }
       ]
     end

@@ -34,12 +34,19 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :title, type: :text },
-        { name: :body, type: :textarea },
-        { name: :date, type: :datepicker },
-        { name: :image, type: :image },
-        { name: :pdf, type: :file },
-        { name: :article_id, type: :select, collection: Article.for_fae_index }
+        {
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :title, type: :text },
+              { name: :body, type: :textarea },
+              { name: :date, type: :datepicker },
+              { name: :image, type: :image },
+              { name: :pdf, type: :file },
+              { name: :article_id, type: :select, collection: Article.for_fae_index }
+            ]
+          }
+        }
       ]
     end
 

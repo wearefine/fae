@@ -23,7 +23,14 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :name, type: :text }
+        {
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :name, type: :text }
+            ]
+          }
+        }
       ]
     end
 

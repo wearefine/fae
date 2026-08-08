@@ -4,14 +4,21 @@ module <%= options.namespace.capitalize %>
 
     def self.fae_form_fields
       [
+        {
+          section: {
+            title: 'Main',
+            fields: [
 <% @inertia_form_fields.each_with_index do |field, index| -%>
 <% comma = index + 1 != @inertia_form_fields.length ? ',' : '' -%>
 <% if field[:type] == :select -%>
-        { name: :<%= field[:name] %>, type: :select, collection: <%= field[:collection] %> }<%= comma %>
+              { name: :<%= field[:name] %>, type: :select, collection: <%= field[:collection] %> }<%= comma %>
 <% else -%>
-        { name: :<%= field[:name] %>, type: :<%= field[:type] %> }<%= comma %>
+              { name: :<%= field[:name] %>, type: :<%= field[:type] %> }<%= comma %>
 <% end -%>
 <% end -%>
+            ]
+          }
+        }
       ]
     end
 <% if @inertia_unsupported_fields.present? %>

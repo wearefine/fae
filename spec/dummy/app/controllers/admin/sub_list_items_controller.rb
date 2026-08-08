@@ -4,8 +4,15 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :name, type: :text, helper_text: 'The name of the sub list item.' },
-        { name: :body, type: :text }
+        {
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :name, type: :text, helper_text: 'The name of the sub list item.' },
+              { name: :body, type: :text }
+            ]
+          }
+        }
       ]
     end
 

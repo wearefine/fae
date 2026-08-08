@@ -4,11 +4,18 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :heading, type: :text },
-        { name: :image, type: :image },
-        { name: :body, type: :textarea, markdown: true },
-        { name: :on_stage, type: :checkbox },
-        { name: :on_prod, type: :checkbox }
+        {
+          section: {
+            title: 'Main',
+            fields: [
+              { name: :heading, type: :text },
+              { name: :image, type: :image },
+              { name: :body, type: :textarea, markdown: true },
+              { name: :on_stage, type: :checkbox },
+              { name: :on_prod, type: :checkbox }
+            ]
+          }
+        }
       ]
     end
 

@@ -330,6 +330,7 @@ module Fae
       # "new" is really an edit of an unsaved-looking row. The draft flag is
       # what tells the Vue form that cancelling should delete it again.
       draft = params[:draft] == 'true'
+      fields = fae_inertia_normalize_form_fields(fields)
 
       index_path ||= @index_path
       param_key ||= @klass_singular
@@ -355,7 +356,7 @@ module Fae
         submitMethod: submit_method,
         paramKey: param_key,
         blocks: fae_inertia_form_blocks(item, fields, draft),
-        subnav: fae_inertia_subnav(subnav),
+        subnav: subnav.nil? ? fae_inertia_subnav_from_fields(fields) : fae_inertia_subnav(subnav),
         draft: draft,
         deletePath: delete_path
       }
@@ -386,8 +387,26 @@ module Fae
     def fae_inertia_section_block_attrs(entry)
       {
         sectionId: entry[:section_id],
-        sectionTitle: entry[:section_title]
+        sectionTitle: entry[:section_title],
+        sectionHelperText: entry[:section_helper_text]
       }.compact
+    end
+
+    def fae_inertia_subnav_from_fields(fields)
+      section_links = []
+      seen_targets = {}
+
+      Array(fields).each do |entry|
+        title = entry[:section_title].to_s.strip
+        target = entry[:section_id].to_s.strip
+        next if title.blank? || target.blank?
+        next if seen_targets[target]
+
+        section_links << { label: title, target: target }
+        seen_targets[target] = true
+      end
+
+      section_links
     end
 
     def fae_inertia_subnav(items)
@@ -403,6 +422,53 @@ module Fae
 
         { label: label, target: target }
       end
+    end
+
+    # Supports both legacy flat declarations and grouped section declarations:
+    #
+    #   [
+    #     { section: { title: 'Main', fields: [{ name: :title, type: :text }] } },
+    #     { name: :seo_title, type: :text, section_id: 'metadata', section_title: 'Metadata' }
+    #   ]
+    #
+    # Section ids default from the section title when omitted.
+    def fae_inertia_normalize_form_fields(fields)
+      Array(fields).flat_map do |raw_entry|
+        entry = fae_inertia_symbolize_hash(raw_entry)
+        next [] if entry.blank?
+
+        section = fae_inertia_symbolize_hash(entry[:section])
+        if section.present?
+          section_title = section[:title].to_s.strip.presence
+          section_id = section[:id].to_s.strip.presence || section_title&.parameterize(separator: '_')
+          section_helper_text = section[:helper_text].to_s.strip.presence
+
+          Array(section[:fields]).filter_map do |section_field|
+            normalized = fae_inertia_symbolize_hash(section_field)
+            next if normalized.blank?
+
+            normalized[:section_id] = section_id if section_id.present? && normalized[:section_id].blank?
+            normalized[:section_title] = section_title if section_title.present? && normalized[:section_title].blank?
+            if section_helper_text.present? && normalized[:section_helper_text].blank?
+              normalized[:section_helper_text] = section_helper_text
+            end
+            normalized
+          end
+        else
+          section_title = entry[:section_title].to_s.strip.presence
+          if section_title.present? && entry[:section_id].blank?
+            entry[:section_id] = section_title.parameterize(separator: '_')
+          end
+
+          [entry]
+        end
+      end
+    end
+
+    def fae_inertia_symbolize_hash(value)
+      return {} unless value.respond_to?(:to_h)
+
+      value.to_h.symbolize_keys
     end
 
     # Matches the generator, which makes an index sortable when the scaffolded
@@ -733,6 +799,7 @@ module Fae
       klass = records.klass
       cols = Array(table[:cols])
       fields = table[:fields] || fae_inertia_nested_controller(assoc).fae_form_fields
+      fields = fae_inertia_normalize_form_fields(fields)
       title = table[:title] || assoc.titleize
 
       # Nested resources are routed as siblings of the parent, which is what
@@ -834,6 +901,7 @@ module Fae
       component = record.component_instance
       controller = fae_inertia_flex_component_controller(component)
       fields = controller&.respond_to?(:fae_form_fields) ? controller.fae_form_fields : []
+      fields = fae_inertia_normalize_form_fields(fields)
       namespace = self.class.name.deconstantize.underscore
 
       component_path = if component.present?

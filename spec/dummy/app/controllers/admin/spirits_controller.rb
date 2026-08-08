@@ -15,15 +15,28 @@ module Admin
     def edit
       render_fae_form(
         fields: [
-          { name: :name, type: :text },
-          { name: :logo, type: :image, helper_text: '1200 x 630 px., JPG' },
-          { name: :date, type: :date },
-          # The sub-spirit form's fields are declared by its own controller, so
-          # this only names the association and the columns to list. It sits
-          # between the inputs here because that is where the form declares it.
-          { nested_table: :sub_spirits, cols: [:name] },
-          { name: :description, type: :textarea, markdown: true },
-          { name: :pdf_upload, type: :file, label: 'PDF Upload' }
+          {
+            section: {
+              title: 'Main',
+              fields: [
+                { name: :name, type: :text },
+                { name: :logo, type: :image, helper_text: '1200 x 630 px., JPG' },
+                { name: :date, type: :date },
+                { name: :description, type: :textarea, markdown: true },
+                { name: :pdf_upload, type: :file, label: 'PDF Upload' }
+              ]
+            }
+          },
+          {
+            section: {
+              title: 'Sub Spirits',
+              # The sub-spirit form's fields are declared by its own controller,
+              # so this only names the association and listed columns.
+              fields: [
+                { nested_table: :sub_spirits, cols: [:name] }
+              ]
+            }
+          }
         ]
       )
     end

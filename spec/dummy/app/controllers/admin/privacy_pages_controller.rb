@@ -12,8 +12,7 @@ module Admin
         index_path: @index_path,
         submit_path: @submit_path,
         submit_method: 'patch',
-        delete_path: nil,
-        subnav: [['Page Metadata', 'page_metadata']]
+        delete_path: nil
       )
     end
 
@@ -30,15 +29,30 @@ module Admin
 
     def self.fae_form_fields
       [
-        { name: :title, type: :text },
-        { name: :headline, type: :text },
-        { name: :body, type: :textarea, markdown: true },
-        { name: :body_2, type: :textarea },
-        { name: :seo_title, type: :text, section_id: 'page_metadata', section_title: 'Page Metadata' },
-        { name: :seo_description, type: :textarea },
-        { name: :social_media_title, type: :text },
-        { name: :social_media_description, type: :textarea },
-        { name: :social_media_image, type: :image }
+        {
+          section: {
+            title: 'Main Fields',
+            helper_text: 'These are the main fields for the page.',
+            fields: [
+              { name: :title, type: :text, helper_text: 'This is the title of the page.' },
+              { name: :headline, type: :text },
+              { name: :body, type: :textarea, markdown: true },
+              { name: :body_2, type: :textarea }
+            ]
+          }
+        },
+        {
+          section: {
+            title: 'Page Metadata',
+            fields: [
+              { name: :seo_title, type: :text },
+              { name: :seo_description, type: :textarea },
+              { name: :social_media_title, type: :text },
+              { name: :social_media_description, type: :textarea },
+              { name: :social_media_image, type: :image }
+            ]
+          }
+        }
       ]
     end
 

@@ -27,15 +27,22 @@ module Admin
     def form_fields
       [
         {
-          name: :article_category_id,
-          type: :select,
-          label: 'Article Category',
-          collection: ArticleCategory.order(:name),
-          typeahead: true,
-          placeholder: 'Select Article Category'
-        },
-        { name: :title, type: :text },
-        { name: :body, type: :textarea }
+          section: {
+            title: 'Main',
+            fields: [
+              {
+                name: :article_category_id,
+                type: :select,
+                label: 'Article Category',
+                collection: ArticleCategory.order(:name),
+                typeahead: true,
+                placeholder: 'Select Article Category'
+              },
+              { name: :title, type: :text },
+              { name: :body, type: :textarea }
+            ]
+          }
+        }
       ]
     end
   end

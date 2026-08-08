@@ -11,7 +11,7 @@ class Car < ApplicationRecord
   end
 
   def self.for_fae_index
-    order(:name_en)
+    where(draft: false).order(:name_en)
   end
 
 end
