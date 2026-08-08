@@ -20,6 +20,7 @@ module Fae
           rootPath: fae.root_path,
           currentUser: fae_inertia_current_user,
           flash: fae_inertia_flash,
+          languageNav: fae_inertia_language_nav,
           nav: fae_inertia_nav,
           utilityNav: fae_inertia_utility_nav,
           theme: fae_inertia_theme
@@ -96,6 +97,29 @@ module Fae
              current_user.email
 
       { id: current_user.id, name: name }
+    end
+
+    # Mirrors the legacy language switcher used by form_header when a form has
+    # translated fields, but ships as data so Vue can decide when to render it.
+    def fae_inertia_language_nav
+      return nil if Fae.languages.blank?
+
+      options = [{ value: 'all', label: 'All Languages' }]
+      options.concat(
+        Fae.languages.map do |language_code, label|
+          { value: language_code.to_s, label: label.to_s }
+        end
+      )
+
+      selected = current_user&.language.to_s
+      valid_values = options.map { |option| option[:value] }
+      selected = 'all' unless valid_values.include?(selected)
+
+      {
+        options: options,
+        selected: selected,
+        savePathBase: "#{fae.root_path.to_s.chomp('/')}/language_preference"
+      }
     end
 
     # Fae's navigation is a single tree, split across two chrome regions:

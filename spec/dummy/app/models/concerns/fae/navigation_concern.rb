@@ -26,9 +26,11 @@ module Fae
         ]),
         item('Pages', path: edit_admin_privacy_page_path, subitems: [
           item('Privacy', path: edit_admin_privacy_page_path),
+          item('Intro Page', path: edit_admin_intro_page_path),
         ]),
         item('Spirits', path: admin_spirits_path),
         item('Widgets', path: admin_widgets_path),
+        item('Cars', path: admin_cars_path),
         # scaffold inject marker
       ]
     end

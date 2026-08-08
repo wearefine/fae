@@ -45,9 +45,61 @@ const props = defineProps({
 
 const page = usePage()
 
+const languageNav = computed(() => {
+  const nav = page.props.languageNav
+  return nav && Array.isArray(nav.options) ? nav : null
+})
+
+const languageOptions = computed(() => languageNav.value?.options || [])
+
+const languageCodes = computed(() =>
+  languageOptions.value
+    .map((option) => String(option?.value || ''))
+    .filter((value) => value.length > 0 && value !== 'all')
+)
+
+const selectedLanguage = ref('all')
+
+watch(
+  languageNav,
+  (next) => {
+    const allowed = new Set((next?.options || []).map((option) => String(option?.value || '')))
+    const preferred = String(next?.selected || 'all')
+    selectedLanguage.value = allowed.has(preferred) ? preferred : 'all'
+  },
+  { immediate: true }
+)
+
 const fields = computed(() =>
   props.blocks.filter((block) => block.kind === 'field').map((block) => block.field)
 )
+
+function fieldLanguage(field) {
+  const name = String(field?.name || '')
+  return languageCodes.value.find((language) => name.endsWith(`_${language}`)) || null
+}
+
+function isLanguageVisible(language) {
+  if (!language) return true
+  if (selectedLanguage.value === 'all') return true
+  if (selectedLanguage.value === 'en') return language === 'en'
+
+  return language === 'en' || language === selectedLanguage.value
+}
+
+function isFieldVisible(field) {
+  return isLanguageVisible(fieldLanguage(field))
+}
+
+function visibleFields(fieldList) {
+  const list = Array.isArray(fieldList) ? fieldList : []
+  return list.filter((field) => isFieldVisible(field))
+}
+
+const showLanguageNav = computed(() => {
+  if (!languageNav.value || languageCodes.value.length === 0) return false
+  return fields.value.some((field) => fieldLanguage(field))
+})
 
 const subnavLinks = computed(() => {
   const links = (props.subnav || []).filter((entry) => entry?.label && entry?.target)
@@ -95,8 +147,26 @@ const sections = computed(() => {
 
 function sectionShowsHeading(section) {
   if (!section?.title) return false
-  return section.blocks.some((block) => block.kind === 'field')
+  return section.blocks.some((block) => block.kind === 'field' && visibleFields(block.fields).length > 0)
 }
+
+const hasHiddenLanguageErrors = computed(() => {
+  if (!showLanguageNav.value || selectedLanguage.value === 'all' || !form.hasErrors) return false
+
+  const hiddenFieldNames = new Set(
+    fields.value
+      .filter((field) => !isFieldVisible(field))
+      .map((field) => String(field.name))
+  )
+
+  if (hiddenFieldNames.size === 0) return false
+
+  return Object.keys(form.errors).some((errorKey) =>
+    Array.from(hiddenFieldNames).some((fieldName) =>
+      errorKey === fieldName || errorKey.startsWith(`${fieldName}.`)
+    )
+  )
+})
 
 const form = useForm(
   Object.fromEntries(fields.value.map((field) => [field.name, field.value]))
@@ -153,6 +223,34 @@ const { cancel, allowUnload } = useFormGuard(
   props,
   () => form.isDirty || nestedUnsavedChanges()
 )
+
+function csrfToken() {
+  return document.querySelector('meta[name="csrf-token"]')?.content || ''
+}
+
+async function saveLanguagePreference(language) {
+  const base = languageNav.value?.savePathBase
+  if (!base) return
+
+  const selected = language || 'all'
+
+  try {
+    await fetch(`${base}/${selected}`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-Token': csrfToken(),
+      },
+    })
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+function showAllLanguages() {
+  selectedLanguage.value = 'all'
+}
 
 function submit() {
   if (nestedUnsavedChanges() && !window.confirm(NESTED_UNSAVED_MESSAGE)) return
@@ -255,6 +353,24 @@ watch(
       </div>
 
       <div class="fae-page-header__actions">
+        <div v-if="showLanguageNav" class="fae-page-header__language">
+          <label for="fae-language-select" class="fae-sr-only">Content language</label>
+          <select
+            id="fae-language-select"
+            v-model="selectedLanguage"
+            class="fae-field__control"
+            @change="saveLanguagePreference(selectedLanguage)"
+          >
+            <option
+              v-for="option in languageOptions"
+              :key="option.value"
+              :value="option.value"
+            >
+              {{ option.label }}
+            </option>
+          </select>
+        </div>
+
         <button type="button" class="fae-button -secondary" @click="cancel">Cancel</button>
         <button type="submit" class="fae-button" :disabled="form.processing">
           {{ form.processing ? 'Saving…' : 'Save' }}
@@ -279,6 +395,13 @@ watch(
       This form has errors.
     </p>
 
+    <p v-if="hasHiddenLanguageErrors" class="fae-alert -alert" role="alert">
+      There are hidden errors. Click "All Languages" in the language nav to view all errors.
+      <button type="button" class="fae-button -secondary -sm" @click="showAllLanguages">
+        All Languages
+      </button>
+    </p>
+
     <!--
       Nested tables render inside the form, where the Slim version put them.
       They still save on their own, which is safe because FaeNestedForm is a
@@ -295,10 +418,10 @@ watch(
       <h2 v-if="sectionShowsHeading(section)" class="fae-form-section__title">{{ section.title }}</h2>
 
       <template v-for="(block, blockIndex) in section.blocks" :key="`${section.id || sectionIndex}-${block.kind}-${blockIndex}`">
-        <div v-if="block.kind === 'field'" class="fae-panel fae-form">
+        <div v-if="block.kind === 'field' && visibleFields(block.fields).length" class="fae-panel fae-form">
           <component
             :is="FaeFormFieldComponent"
-            v-for="field in block.fields"
+            v-for="field in visibleFields(block.fields)"
             :key="field.name"
             :field="field"
             :error="form.errors[field.name]"

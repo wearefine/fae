@@ -96,7 +96,7 @@ module Fae
       inject_into_file "config/routes.rb", after: "namespace :#{options.namespace} do\n", force: true do
         if static_page_generation?
           <<~RUBY.indent(4)
-            resource :#{file_name}, only: [:edit, :update]
+            resource :#{file_name.singularize}, only: [:edit, :update]
           RUBY
         else
           <<~RUBY.indent(4)
@@ -192,7 +192,7 @@ module Fae
 
     def inject_nav_item
       line = if static_page_generation?
-               "item('#{file_name.humanize.titlecase}', path: edit_#{options.namespace}_#{file_name}_path),\n\s\s\s\s\s\s\s\s"
+               "item('#{file_name.singularize.humanize.titlecase}', path: edit_#{options.namespace}_#{file_name.singularize}_path),\n\s\s\s\s\s\s\s\s"
              else
                "item('#{plural_file_name.humanize.titlecase}', path: #{options.namespace}_#{plural_file_name}_path),\n\s\s\s\s\s\s\s\s"
              end
