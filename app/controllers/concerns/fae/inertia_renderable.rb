@@ -491,6 +491,84 @@ module Fae
       end
     end
 
+    # Association input with related-object flyout defaults, similar in spirit
+    # to fae_association but for the Inertia field schema.
+    #
+    # Example:
+    #   fae_flyout_association(:car_category)
+    #   fae_flyout_association(:car_category, placeholder: 'Pick one',
+    #                          related_flyout: { button_label: 'Add Type' })
+    def fae_flyout_association(attribute, **overrides)
+      association_name = attribute.to_s.sub(/_id\z/, '')
+      field_name = attribute.to_s.end_with?('_id') ? attribute.to_s : "#{association_name}_id"
+
+      related_overrides = fae_inertia_symbolize_hash(overrides.delete(:related_flyout))
+
+      label = overrides[:label] || association_name.to_s.humanize.titleize
+      collection = overrides[:collection] || fae_flyout_association_collection(association_name)
+      placeholder = overrides[:placeholder] || "Select #{label}"
+
+      field = {
+        name: field_name.to_sym,
+        type: :select,
+        label: label,
+        collection: collection,
+        placeholder: placeholder,
+      }
+
+      default_flyout = {
+        title: "New #{label}",
+        button_label: "Add #{label}",
+        submit_label: "Create #{label}",
+        path: fae_flyout_association_quick_create_path(association_name),
+        method: 'post',
+        param_key: association_name,
+        value_key: 'id',
+        label_key: 'label',
+        fields: fae_flyout_association_fields(association_name)
+      }
+
+      field[:related_flyout] = default_flyout.merge(related_overrides)
+
+      # Allow explicit field-level overrides after defaults are assembled.
+      field.merge!(overrides.except(:label, :collection, :placeholder))
+      field
+    end
+
+    def fae_flyout_association_collection(association_name)
+      reflection = @klass.reflect_on_association(association_name.to_sym)
+      return [] if reflection.blank?
+
+      associated_klass = reflection.klass
+      return associated_klass.for_fae_index if associated_klass.respond_to?(:for_fae_index)
+
+      if associated_klass.column_names.include?('position')
+        return associated_klass.order(:position)
+      end
+
+      if associated_klass.column_names.include?('name')
+        return associated_klass.order(:name)
+      end
+
+      associated_klass.all
+    end
+
+    def fae_flyout_association_fields(association_name)
+      controller_klass = "Admin::#{association_name.to_s.pluralize.camelize}Controller".safe_constantize
+      return [] unless controller_klass&.respond_to?(:fae_form_fields)
+
+      Array(controller_klass.fae_form_fields).flat_map do |entry|
+        Array(entry.dig(:section, :fields))
+      end
+    end
+
+    def fae_flyout_association_quick_create_path(association_name)
+      helper_name = "quick_create_admin_#{association_name.to_s.pluralize}_path"
+      return public_send(helper_name) if respond_to?(helper_name)
+
+      nil
+    end
+
     # Supports both legacy flat declarations and grouped section declarations:
     #
     #   [
@@ -614,7 +692,6 @@ module Fae
         value: fae_inertia_field_value(item, name, type, ranked),
         # Opts a textarea into the markdown editor, as `fae_input ... markdown: true` did.
         markdown: field[:markdown].presence,
-        typeahead: field[:typeahead] == true,
         placeholder: field[:placeholder],
         relatedFlyout: related_flyout,
         collection: (type == 'ranked_select' ? fae_inertia_ranked_collection(field, name) : fae_inertia_collection(field[:collection]) if %w[select multiselect ranked_select].include?(type)),

@@ -35,7 +35,6 @@ module Admin
                 type: :select,
                 label: 'Article Category',
                 collection: ArticleCategory.order(:name),
-                typeahead: true,
                 placeholder: 'Select Article Category'
               },
               { name: :title, type: :text },

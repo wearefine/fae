@@ -334,29 +334,13 @@ async function saveFlyout() {
 
     <component
       :is="FaeTypeaheadSelectComponent"
-      v-else-if="field.type === 'select' && field.typeahead"
+      v-else-if="field.type === 'select'"
       :id="inputId"
       :model-value="modelValue"
       :options="localOptions"
       :placeholder="field.placeholder || 'Select...'"
       @update:model-value="$emit('update:modelValue', $event)"
     />
-
-    <select
-      v-else-if="field.type === 'select'"
-      :id="inputId"
-      class="fae-field__control"
-      :name="field.inputName"
-      :value="modelValue"
-      :aria-invalid="!!error"
-      :aria-describedby="describedBy"
-      @change="$emit('update:modelValue', $event.target.value)"
-    >
-      <option value="" />
-      <option v-for="option in localOptions" :key="option.value" :value="option.value">
-        {{ option.label }}
-      </option>
-    </select>
 
     <select
       v-else-if="field.type === 'multiselect'"

@@ -93,7 +93,6 @@ module Fae
           {
             name: :theme,
             type: :select,
-            typeahead: true,
             collection: Fae::User.theme_collection
           },
           {

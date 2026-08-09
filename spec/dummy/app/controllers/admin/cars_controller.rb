@@ -27,26 +27,34 @@ module Admin
           section: {
             title: 'Main',
             fields: [
-              {
-                name: :car_category_id,
-                type: :select,
-                label: 'Car Category',
-                collection: CarCategory.order(:name),
-                typeahead: true,
-                placeholder: 'Select Car Category',
-                related_flyout: {
-                  title: 'New Car Category',
-                  button_label: 'Add Category',
-                  submit_label: 'Create Category',
-                  path: quick_create_admin_car_categories_path,
-                  method: 'post',
-                  param_key: 'car_category',
-                  value_key: 'id',
-                  label_key: 'label',
-                  fields: Admin::CarCategoriesController.fae_form_fields
-                    .flat_map { |entry| Array(entry.dig(:section, :fields)) }
-                }
-              },
+              # Simple usage (recommended): infer label, collection, flyout
+              # title/button text, route, param key, and flyout fields.
+              fae_flyout_association(
+                :car_category,
+                related_flyout: true
+              ),
+
+              # Full overrides example:
+              # fae_flyout_association(
+              #   :car_category,
+              #   label: 'Category',
+              #   placeholder: 'Select category',
+              #   related_flyout: {
+              #     title: 'Create Car Category',
+              #     button_label: 'Add Category',
+              #     submit_label: 'Create',
+              #     path: quick_create_admin_car_categories_path,
+              #     method: 'post',
+              #     param_key: 'car_category',
+              #     value_key: 'id',
+              #     label_key: 'label',
+              #     fields: [
+              #       { name: :name, type: :text, required: true, slug_source: true },
+              #       { name: :slug, type: :text },
+              #       { name: :image, type: :image, required: true }
+              #     ]
+              #   }
+              # ),
               { name: :name_en, type: :text },
               { name: :name_frca, type: :text },
               { name: :name_zh, type: :text },
