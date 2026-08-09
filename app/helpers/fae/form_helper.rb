@@ -125,6 +125,9 @@ module Fae
       has_grouped_select_options = options.key?(:grouped_select_options)
       group_select_labels = options.delete(:group_select_labels)
       grouped_select_options = options.delete(:grouped_select_options)
+
+      # needed if your association name is different from the model name (e.g. :suggested_releases instead of :releases)
+      source_attribute_name = options.delete(:source_attribute_name) || attribute.to_s
       
       # Extract select-specific label and helper text options
       options[:label] = options.delete(:select_label) if options[:select_label].present?
@@ -148,10 +151,10 @@ module Fae
       join_records = parent_item.send(join_model).order(:position)
       
       # The attribute name tells us what association to access on each join record for display
-      associated_item_name = attribute.to_s.singularize.to_sym
+      associated_item_name = source_attribute_name.singularize.to_sym
       
       # Get the associated model class name for the AJAX endpoint
-      associated_model = attribute.to_s.classify
+      associated_model = source_attribute_name.classify
       
       # Get the collection for building the options data
       collection = options[:collection] || associated_model.constantize.for_fae_index
