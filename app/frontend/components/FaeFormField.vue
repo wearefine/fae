@@ -1,11 +1,16 @@
 <script setup>
-import { computed, useId } from 'vue'
+import { computed, reactive, ref, watch, useId } from 'vue'
 
 import FaeAssetField from './FaeAssetField.vue'
+import FaeFlyout from './FaeFlyout.vue'
 import FaeMarkdownEditor from './FaeMarkdownEditor.vue'
 import FaeRankedSelectField from './FaeRankedSelectField.vue'
 import FaeTypeaheadSelect from './FaeTypeaheadSelect.vue'
+import { assetSubmitOptions, useAssetFields } from '../composables/useAssetFields.js'
 import { useFaeComponent } from '../composables/useFaeComponent.js'
+import { useSlugger } from '../composables/useSlugger.js'
+
+defineOptions({ name: 'FaeFormField' })
 
 /**
  * One labelled form control.
@@ -21,9 +26,10 @@ const props = defineProps({
   error: { type: String, default: null },
   canTranslate: { type: Boolean, default: false },
   translating: { type: Boolean, default: false },
+  allowRelatedFlyout: { type: Boolean, default: true },
 })
 
-defineEmits(['update:modelValue', 'translate'])
+const emit = defineEmits(['update:modelValue', 'translate'])
 
 // Scoped to this instance rather than to the field name: a nested table's form
 // can be open alongside the parent form and repeat its field names, and
@@ -46,6 +52,71 @@ const inputType = computed(() =>
 
 const FaeRankedSelectFieldComponent = useFaeComponent('FaeRankedSelectField', FaeRankedSelectField)
 const FaeTypeaheadSelectComponent = useFaeComponent('FaeTypeaheadSelect', FaeTypeaheadSelect)
+const FaeFlyoutComponent = useFaeComponent('FaeFlyout', FaeFlyout)
+
+const localOptions = ref([])
+const flyoutOpen = ref(false)
+const flyoutSaving = ref(false)
+const flyoutError = ref('')
+const flyoutFieldErrors = reactive({})
+const flyoutValues = reactive({})
+
+const relatedFlyout = computed(() => {
+  const config = props.field.relatedFlyout
+  if (!props.allowRelatedFlyout) return null
+  if (props.field.type !== 'select' || !config || !config.path) return null
+
+  return {
+    title: String(config.title || 'Create Item'),
+    buttonLabel: String(config.buttonLabel || 'Add'),
+    submitLabel: String(config.submitLabel || 'Create'),
+    path: String(config.path),
+    method: String(config.method || 'post').toUpperCase(),
+    paramKey: String(config.paramKey || 'item'),
+    valueKey: String(config.valueKey || 'id'),
+    labelKey: String(config.labelKey || 'label'),
+    fields: Array.isArray(config.fields) ? config.fields : [],
+  }
+})
+
+watch(
+  () => props.field.collection,
+  (next) => {
+    localOptions.value = Array.isArray(next)
+      ? next.map((entry) => ({ label: entry.label, value: entry.value }))
+      : []
+  },
+  { immediate: true }
+)
+
+const flyoutFields = computed(() => relatedFlyout.value?.fields || [])
+useSlugger({ form: flyoutValues, fields: flyoutFields })
+const { hasAssets: flyoutHasAssets, toParams: flyoutToParams } = useAssetFields(flyoutFields)
+
+function appendFormData(formData, key, value) {
+  if (value === undefined || value === null) return
+
+  if (value instanceof File) {
+    formData.append(key, value)
+    return
+  }
+
+  if (Array.isArray(value)) {
+    value.forEach((entry, index) => {
+      appendFormData(formData, `${key}[${index}]`, entry)
+    })
+    return
+  }
+
+  if (typeof value === 'object') {
+    Object.entries(value).forEach(([childKey, childValue]) => {
+      appendFormData(formData, `${key}[${childKey}]`, childValue)
+    })
+    return
+  }
+
+  formData.append(key, String(value))
+}
 
 function openDatePicker(event) {
   const input = event?.target
@@ -57,6 +128,159 @@ function openDatePicker(event) {
     input.showPicker()
   } catch (error) {
     // Some browsers restrict showPicker; fallback is native focus behavior.
+  }
+}
+
+function csrfToken() {
+  return document.querySelector('meta[name="csrf-token"]')?.content || ''
+}
+
+function showToast(type, message) {
+  if (!message) return
+
+  window.dispatchEvent(new CustomEvent('fae:toast', {
+    detail: { type, message },
+  }))
+}
+
+function resetFlyoutForm() {
+  const config = relatedFlyout.value
+
+  Object.keys(flyoutValues).forEach((key) => {
+    delete flyoutValues[key]
+  })
+
+  Array(config?.fields || []).forEach((field) => {
+    if (field.type === 'checkbox') {
+      flyoutValues[field.name] = false
+      return
+    }
+
+    flyoutValues[field.name] = field.value ?? ''
+  })
+
+  Object.keys(flyoutFieldErrors).forEach((key) => {
+    delete flyoutFieldErrors[key]
+  })
+  flyoutError.value = ''
+}
+
+function openFlyout() {
+  if (!relatedFlyout.value || flyoutSaving.value) return
+  resetFlyoutForm()
+  flyoutOpen.value = true
+}
+
+function closeFlyout() {
+  if (flyoutSaving.value) return
+  flyoutOpen.value = false
+}
+
+async function saveFlyout() {
+  const config = relatedFlyout.value
+  if (!config) return
+
+  const rawPayload = {}
+  const validationErrors = {}
+
+  config.fields.forEach((field) => {
+    const rawValue = flyoutValues[field.name]
+    const value = typeof rawValue === 'string' ? rawValue.trim() : rawValue
+    rawPayload[field.name] = value
+
+    if (field.required && !value) {
+      validationErrors[field.name] = `${field.label || field.name} is required.`
+    }
+  })
+
+  Object.keys(flyoutFieldErrors).forEach((key) => {
+    delete flyoutFieldErrors[key]
+  })
+  Object.assign(flyoutFieldErrors, validationErrors)
+  flyoutError.value = ''
+  if (Object.keys(validationErrors).length) return
+
+  flyoutSaving.value = true
+
+  try {
+    const params = flyoutToParams(rawPayload)
+    const submitMethod = String(config.method || 'post').toLowerCase()
+    const { method, extraParams, forceFormData } = assetSubmitOptions(flyoutHasAssets.value, submitMethod)
+
+    const requestInit = {
+      method: method.toUpperCase(),
+      credentials: 'same-origin',
+      headers: {
+        Accept: 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-Token': csrfToken(),
+      },
+    }
+
+    if (forceFormData) {
+      const formData = new FormData()
+      appendFormData(formData, config.paramKey, params)
+      Object.entries(extraParams).forEach(([extraKey, extraValue]) => {
+        appendFormData(formData, extraKey, extraValue)
+      })
+      requestInit.body = formData
+    } else {
+      requestInit.headers['Content-Type'] = 'application/json'
+      requestInit.body = JSON.stringify({ [config.paramKey]: params, ...extraParams })
+    }
+
+    const response = await fetch(config.path, {
+      ...requestInit,
+    })
+
+    const data = await response.json().catch(() => ({}))
+
+    if (!response.ok) {
+      const errors = data?.errors
+      if (errors && typeof errors === 'object' && !Array.isArray(errors)) {
+        const mapped = {}
+        Object.keys(errors).forEach((key) => {
+          const value = errors[key]
+          mapped[key] = Array.isArray(value) ? value[0] : String(value)
+        })
+        Object.keys(flyoutFieldErrors).forEach((key) => {
+          delete flyoutFieldErrors[key]
+        })
+        Object.assign(flyoutFieldErrors, mapped)
+      }
+
+      if (Array.isArray(data?.messages) && data.messages.length) {
+        flyoutError.value = data.messages[0]
+      } else {
+        flyoutError.value = 'Unable to create this item right now.'
+      }
+      showToast('alert', flyoutError.value)
+      return
+    }
+
+    const optionValue = data?.[config.valueKey]
+    const optionLabel = data?.[config.labelKey]
+
+    if (optionValue === undefined || optionValue === null || !optionLabel) {
+      flyoutError.value = 'Create succeeded, but response data was incomplete.'
+      showToast('alert', flyoutError.value)
+      return
+    }
+
+    const exists = localOptions.value.some((option) => String(option.value) === String(optionValue))
+    if (!exists) {
+      localOptions.value = [...localOptions.value, { value: optionValue, label: String(optionLabel) }]
+    }
+
+    emit('update:modelValue', String(optionValue))
+    flyoutOpen.value = false
+    showToast('notice', `${optionLabel} was created.`)
+  } catch (error) {
+    flyoutError.value = 'Unable to create this item right now.'
+    showToast('alert', flyoutError.value)
+    console.error(error)
+  } finally {
+    flyoutSaving.value = false
   }
 }
 </script>
@@ -113,7 +337,7 @@ function openDatePicker(event) {
       v-else-if="field.type === 'select' && field.typeahead"
       :id="inputId"
       :model-value="modelValue"
-      :options="field.collection || []"
+      :options="localOptions"
       :placeholder="field.placeholder || 'Select...'"
       @update:model-value="$emit('update:modelValue', $event)"
     />
@@ -129,7 +353,7 @@ function openDatePicker(event) {
       @change="$emit('update:modelValue', $event.target.value)"
     >
       <option value="" />
-      <option v-for="option in field.collection" :key="option.value" :value="option.value">
+      <option v-for="option in localOptions" :key="option.value" :value="option.value">
         {{ option.label }}
       </option>
     </select>
@@ -189,6 +413,39 @@ function openDatePicker(event) {
       @click="openDatePicker"
       @input="$emit('update:modelValue', $event.target.value)"
     >
+
+    <button
+      v-if="relatedFlyout"
+      type="button"
+      class="fae-button -secondary -sm fae-field__translate"
+      :disabled="flyoutSaving"
+      @click="openFlyout"
+    >
+      {{ relatedFlyout.buttonLabel }}
+    </button>
+
+    <component :is="FaeFlyoutComponent" :open="flyoutOpen" :title="relatedFlyout?.title" @close="closeFlyout">
+      <div class="fae-flyout__fields">
+        <FaeFormField
+          v-for="flyoutField in relatedFlyout?.fields || []"
+          :key="`flyout-${inputId}-${flyoutField.name}`"
+          :field="flyoutField"
+          :model-value="flyoutValues[flyoutField.name]"
+          :error="flyoutFieldErrors[flyoutField.name]"
+          :allow-related-flyout="false"
+          @update:model-value="flyoutValues[flyoutField.name] = $event"
+        />
+
+        <p v-if="flyoutError" class="fae-field__error">{{ flyoutError }}</p>
+      </div>
+
+      <template #footer>
+        <button type="button" class="fae-button -secondary" :disabled="flyoutSaving" @click="closeFlyout">Cancel</button>
+        <button type="button" class="fae-button" :disabled="flyoutSaving" @click="saveFlyout">
+          {{ flyoutSaving ? 'Creating...' : (relatedFlyout?.submitLabel || 'Create') }}
+        </button>
+      </template>
+    </component>
 
     <button
       v-if="canTranslate"

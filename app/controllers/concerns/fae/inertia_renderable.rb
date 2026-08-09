@@ -598,6 +598,7 @@ module Fae
       type = (field[:type] || :text).to_s
       label = field[:label] || item.class.human_attribute_name(name)
       ranked = (fae_inertia_ranked_select(item, field, name) if type == 'ranked_select')
+      related_flyout = fae_inertia_related_flyout(field)
 
       {
         name: name,
@@ -615,10 +616,76 @@ module Fae
         markdown: field[:markdown].presence,
         typeahead: field[:typeahead] == true,
         placeholder: field[:placeholder],
+        relatedFlyout: related_flyout,
         collection: (type == 'ranked_select' ? fae_inertia_ranked_collection(field, name) : fae_inertia_collection(field[:collection]) if %w[select multiselect ranked_select].include?(type)),
         ranked: ranked,
         asset: (fae_inertia_asset(item, field, name, type, label) if ASSET_FIELD_TYPES.include?(type))
       }.compact
+    end
+
+    def fae_inertia_related_flyout(field)
+      config = fae_inertia_symbolize_hash(field[:related_flyout])
+      return nil if config.blank? || config[:path].blank?
+
+      related_klass = fae_inertia_related_flyout_class(config)
+      related_item = related_klass&.new
+
+      fields = Array(config[:fields]).filter_map do |raw|
+        entry = fae_inertia_symbolize_hash(raw)
+        next if entry.blank? || entry[:name].blank?
+
+        name = entry[:name].to_s
+        type = (entry[:type] || :text).to_s
+        label = (entry[:label] || name.humanize).to_s
+
+        if related_item.present? && ASSET_FIELD_TYPES.include?(type)
+          builder = "build_#{name}"
+          related_item.public_send(builder) if related_item.respond_to?(builder) && related_item.public_send(name).blank?
+        end
+
+        {
+          name: name,
+          type: type,
+          label: label,
+          slugSource: fae_inertia_slug_source?(entry),
+          hint: entry[:hint],
+          helperText: entry[:helper_text],
+          required: if entry.key?(:required)
+                      entry[:required] == true
+                    elsif related_item.present?
+                      fae_inertia_required?(related_item, name)
+                    else
+                      false
+                    end,
+          value: (related_item.present? ? fae_inertia_field_value(related_item, name, type) : nil),
+          placeholder: entry[:placeholder],
+          collection: (fae_inertia_collection(entry[:collection]) if %w[select multiselect].include?(type)),
+          asset: (fae_inertia_asset(related_item, entry, name, type, label) if related_item.present? && ASSET_FIELD_TYPES.include?(type))
+        }.compact
+      end
+
+      {
+        title: config[:title].to_s.presence || 'Create Item',
+        buttonLabel: config[:button_label].to_s.presence || 'Add',
+        submitLabel: config[:submit_label].to_s.presence || 'Create',
+        path: config[:path].to_s,
+        method: config[:method].to_s.presence || 'post',
+        paramKey: config[:param_key].to_s.presence || 'item',
+        valueKey: config[:value_key].to_s.presence || 'id',
+        labelKey: config[:label_key].to_s.presence || 'label',
+        fields: fields
+      }
+    end
+
+    def fae_inertia_related_flyout_class(config)
+      explicit = config[:model_class].to_s.strip
+      klass = explicit.present? ? explicit.safe_constantize : nil
+      return klass if klass.present?
+
+      key = config[:param_key].to_s.strip
+      return nil if key.blank?
+
+      key.classify.safe_constantize
     end
 
     def fae_inertia_slug_source?(field)

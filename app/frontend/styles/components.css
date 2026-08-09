@@ -598,7 +598,7 @@ a.fae-breadcrumbs__link:hover {
   position: fixed;
   bottom: var(--fae-space-3xl);
   left: 50%;
-  z-index: 100;
+  z-index: 140;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -616,8 +616,8 @@ a.fae-breadcrumbs__link:hover {
   color: var(--fae-text-strong);
   font-size: var(--fae-text-sm);
   line-height: var(--fae-line-height);
-  background: var(--fae-surface);
-  border: 1px solid var(--fae-border);
+  background: color-mix(in srgb, var(--fae-bg) 88%, var(--fae-text-strong) 12%);
+  border: 1px solid var(--fae-border-strong);
   border-left: 3px solid var(--fae-text-muted);
   border-radius: var(--fae-radius);
   box-shadow: var(--fae-shadow-lg);
@@ -1373,6 +1373,81 @@ textarea.fae-field__control {
 
 .fae-typeahead__empty {
   color: var(--fae-text-muted);
+}
+
+/* Flyout -------------------------------------------------------------- */
+
+.fae-flyout {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+}
+
+.fae-flyout__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(0 0 0 / 30%);
+  border: 0;
+}
+
+.fae-flyout__panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: min(540px, 100vw);
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--fae-surface);
+  box-shadow: var(--fae-shadow-lg);
+  animation: fae-flyout-in 180ms ease-out;
+}
+
+.fae-flyout__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fae-space-md);
+  padding: var(--fae-space-lg);
+  border-bottom: 1px solid var(--fae-border);
+}
+
+.fae-flyout__header h2 {
+  margin: 0;
+  font-size: var(--fae-text-md);
+  font-weight: var(--fae-weight-semibold);
+}
+
+.fae-flyout__body {
+  overflow: auto;
+  padding: var(--fae-space-lg);
+}
+
+.fae-flyout__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--fae-space-sm);
+  padding: var(--fae-space-lg);
+  border-top: 1px solid var(--fae-border);
+  background: var(--fae-surface);
+}
+
+.fae-flyout__fields {
+  display: grid;
+  gap: var(--fae-space-lg);
+}
+
+@keyframes fae-flyout-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Alt Text Manager ----------------------------------------------------- */

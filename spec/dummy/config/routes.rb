@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
-    resources :car_categories
+    resources :car_categories do
+      post 'quick_create', on: :collection
+    end
     resources :cars
     resource :intro_page, only: [:edit, :update]
     resources :widgets
