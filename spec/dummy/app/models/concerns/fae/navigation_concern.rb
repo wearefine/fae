@@ -31,6 +31,7 @@ module Fae
         item('Spirits', path: admin_spirits_path),
         item('Widgets', path: admin_widgets_path),
         item('Cars', path: admin_cars_path),
+        item('Car Categories', path: admin_car_categories_path),
         # scaffold inject marker
       ]
     end

@@ -12,6 +12,7 @@ module Fae
 
     def edit
       render_fae_form(
+        param_key: 'site',
         fields: [
           { name: :name, type: :text },
           { name: :netlify_site, type: :text, label: 'Netlify Site Name' },

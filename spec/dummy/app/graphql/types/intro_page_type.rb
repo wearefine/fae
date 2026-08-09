@@ -8,7 +8,6 @@ class Types::IntroPageType < Types::BaseObject
   field :date, String, null: true
   field :image, Types::FaeImageType, null: true
   field :pdf, Types::FaeFileType, null: true
-  field :article, Types::ArticleType, null: true
   field :created_at, String, null: false
   field :updated_at, String, null: false
 end

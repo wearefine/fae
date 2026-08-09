@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_08_122601) do
+ActiveRecord::Schema[7.0].define(version: 2026_08_09_193443) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -86,6 +86,18 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_08_122601) do
     t.boolean "draft", default: false
   end
 
+  create_table "car_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.integer "position"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_car_categories_on_draft"
+  end
+
   create_table "cars", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name_en"
     t.string "name_frca"
@@ -93,6 +105,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_08_122601) do
     t.boolean "draft"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "car_category_id"
     t.index ["draft"], name: "index_cars_on_draft"
   end
 

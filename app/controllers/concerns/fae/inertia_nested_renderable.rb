@@ -74,7 +74,13 @@ module Fae
       return fae.root_path if parent.blank?
 
       namespace = params[:controller].rpartition('/').first
-      path = "/#{namespace}/#{parent.class.name.underscore.pluralize}/#{parent.id}/edit"
+      parent_segment = parent.class.name.demodulize.underscore.pluralize
+      namespace_prefix = if namespace == 'fae'
+                           fae.root_path.to_s.chomp('/')
+                         else
+                           "/#{namespace}"
+                         end
+      path = "#{namespace_prefix}/#{parent_segment}/#{parent.id}/edit"
       query = {}
       # The parent may still be a draft, and losing the flag would stop its
       # Cancel button from deleting the record #new created.

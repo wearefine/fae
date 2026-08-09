@@ -202,6 +202,58 @@ module Fae
         }
       end
 
+      if current_user.super_admin_or_admin?
+        deployment_children = []
+
+        if fae_inertia_netlify_enabled? && Fae.netlify[:site].present? && Fae.netlify[:site_id].present?
+          deployment_children << {
+            key: 'deploy-default',
+            text: t('fae.navbar.deployments'),
+            path: fae.deploy_path
+          }
+        end
+
+        deployment_children.concat(Fae::Site.order(:name).filter_map do |site|
+          next unless site.netlify_site.present? && site.netlify_site_id.present?
+
+          {
+            key: "deploy-site-#{site.id}",
+            text: site.name.to_s,
+            path: fae.deploy_path(site_id: site.id)
+          }
+        end)
+
+        deploy_item = if deployment_children.many?
+                        {
+                          key: 'deploymentsMenu',
+                          icon: 'deploy',
+                          ariaLabel: t('fae.navbar.deployments'),
+                          current: params[:controller].to_s == 'fae/deploy',
+                          children: deployment_children
+                        }
+                      elsif deployment_children.one?
+                        {
+                          key: 'deployments',
+                          icon: 'deploy',
+                          text: deployment_children.first[:text],
+                          ariaLabel: t('fae.navbar.deployments'),
+                          path: deployment_children.first[:path],
+                          current: params[:controller].to_s == 'fae/deploy'
+                        }
+                      else
+                        {
+                          key: 'deployments',
+                          icon: 'deploy',
+                          text: t('fae.navbar.deployments'),
+                          ariaLabel: t('fae.navbar.deployments'),
+                          path: fae.deploy_path,
+                          current: params[:controller].to_s == 'fae/deploy'
+                        }
+                      end
+
+        items << deploy_item if deploy_item.present?
+      end
+
       items << {
         key: 'accountMenu',
         icon: 'avatar',
@@ -221,6 +273,13 @@ module Fae
       }
 
       items
+    end
+
+    def fae_inertia_netlify_enabled?
+      Fae.netlify.present? &&
+        Fae.netlify[:api_user].present? &&
+        Fae.netlify[:api_token].present? &&
+        Fae.netlify[:api_base].present?
     end
 
     # Serializes one nav region: a list of items plus their immediate children.

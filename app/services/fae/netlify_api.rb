@@ -46,6 +46,7 @@ module Fae
           http.request(request)
         }
         if response.is_a?(Net::HTTPSuccess)
+          Rails.logger.info("Get response: #{response.body}")
           return JSON.parse(response.body) if response.body.present?
         else
           @logger.info "\n"

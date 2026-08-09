@@ -138,7 +138,18 @@
   background: var(--fae-surface-hover);
 }
 
+.fae-utility-nav__item.-active > .fae-utility-nav__trigger {
+  color: var(--fae-accent-text);
+  background: var(--fae-surface-active);
+}
+
 .fae-utility-nav__gear {
+  width: 18px;
+  height: 18px;
+  fill: currentcolor;
+}
+
+.fae-utility-nav__deploy {
   width: 18px;
   height: 18px;
   fill: currentcolor;

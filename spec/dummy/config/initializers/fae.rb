@@ -20,15 +20,18 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
-  # Removed for now to simplify render.com deploy
+  config.netlify = {
+    api_user: ENV['FINE_NETLIFY_API_USER'],
+    api_token: ENV['FINE_NETLIFY_API_TOKEN'],
+    site: ENV['FINE_NETLIFY_SITE'],
+    site_id: ENV['FINE_NETLIFY_SITE_ID'],
+    api_base: ENV.fetch('FINE_NETLIFY_API_BASE', 'https://api.netlify.com/api/v1/')
+  }
+
+  # Keep test fixtures deterministic when site env vars are not provided.
   if Rails.env.test?
-    config.netlify = {
-      api_user: ENV['FINE_NETLIFY_API_USER'],
-      api_token: ENV['FINE_NETLIFY_API_TOKEN'],
-      site: 'fine-pss',
-      site_id: 'a1b2c3d4',
-      api_base: 'https://api.netlify.com/api/v1/'
-    }
+    config.netlify[:site] ||= 'fine-pss'
+    config.netlify[:site_id] ||= '3747f2e5-e1bb-4c75-90b8-05175850272e'
   end
 
   config.open_ai_api_key = ENV["OPEN_AI_API_KEY"]
