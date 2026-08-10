@@ -1,5 +1,6 @@
 <script setup>
 import { computed, reactive, ref, watch, useId } from 'vue'
+import { usePage } from '@inertiajs/vue3'
 
 import FaeAssetField from './FaeAssetField.vue'
 import FaeFlyout from './FaeFlyout.vue'
@@ -53,6 +54,7 @@ const inputType = computed(() =>
 const FaeRankedSelectFieldComponent = useFaeComponent('FaeRankedSelectField', FaeRankedSelectField)
 const FaeTypeaheadSelectComponent = useFaeComponent('FaeTypeaheadSelect', FaeTypeaheadSelect)
 const FaeFlyoutComponent = useFaeComponent('FaeFlyout', FaeFlyout)
+const page = usePage()
 
 const localOptions = ref([])
 const flyoutOpen = ref(false)
@@ -60,6 +62,20 @@ const flyoutSaving = ref(false)
 const flyoutError = ref('')
 const flyoutFieldErrors = reactive({})
 const flyoutValues = reactive({})
+const flyoutTranslatingFieldName = ref('')
+
+const languageNav = computed(() => {
+  const nav = page.props.languageNav
+  return nav && Array.isArray(nav.options) ? nav : null
+})
+
+const translateEnabled = computed(() => !!languageNav.value?.translateEnabled)
+const translatePath = computed(() => String(languageNav.value?.translatePath || ''))
+const languageCodes = computed(() =>
+  (languageNav.value?.options || [])
+    .map((option) => String(option?.value || ''))
+    .filter((value) => value.length > 0 && value !== 'all')
+)
 
 const relatedFlyout = computed(() => {
   const config = props.field.relatedFlyout
@@ -92,6 +108,97 @@ watch(
 const flyoutFields = computed(() => relatedFlyout.value?.fields || [])
 useSlugger({ form: flyoutValues, fields: flyoutFields })
 const { hasAssets: flyoutHasAssets, toParams: flyoutToParams } = useAssetFields(flyoutFields)
+
+function fieldLanguage(field) {
+  const name = String(field?.name || '')
+  return languageCodes.value.find((language) => name.endsWith(`_${language}`)) || null
+}
+
+function translatorLanguageCode(language) {
+  if (!language) return ''
+
+  const key = String(language)
+  if (key === 'zh') return 'zh-CN'
+  if (key === 'frca') return 'fr-CA'
+  if (key.length === 4) return `${key.slice(0, 2)}-${key.slice(2).toUpperCase()}`
+  return key
+}
+
+function englishSourceCandidates(fieldName, language) {
+  const name = String(fieldName || '')
+  const suffix = `_${language}`
+  if (!name.endsWith(suffix)) return []
+
+  const base = name.slice(0, -suffix.length)
+  return [`${base}_en`, base]
+}
+
+function canTranslateFlyoutField(field) {
+  if (!translateEnabled.value || !translatePath.value) return false
+  if (!field || field.translate === false) return false
+  if (!['text', 'textarea'].includes(String(field.type || ''))) return false
+
+  const language = fieldLanguage(field)
+  if (!language || language === 'en') return false
+
+  const availableFieldNames = new Set(flyoutFields.value.map((entry) => String(entry?.name || '')))
+  return englishSourceCandidates(field.name, language).some((name) => availableFieldNames.has(name))
+}
+
+function englishSourceTextForFlyout(field) {
+  const language = fieldLanguage(field)
+  if (!language || language === 'en') return null
+
+  const availableFieldNames = new Set(flyoutFields.value.map((entry) => String(entry?.name || '')))
+  const candidates = englishSourceCandidates(field?.name, language)
+  for (const candidate of candidates) {
+    if (!availableFieldNames.has(candidate)) continue
+    const value = String(flyoutValues[candidate] ?? '').trim()
+    if (value.length > 0) return value
+  }
+
+  return null
+}
+
+async function translateFlyoutField(fieldName) {
+  const targetField = flyoutFields.value.find((field) => String(field.name) === String(fieldName))
+  if (!targetField || !canTranslateFlyoutField(targetField)) return
+
+  const sourceText = englishSourceTextForFlyout(targetField)
+  if (!sourceText) return
+
+  const language = fieldLanguage(targetField)
+  const translationLanguage = translatorLanguageCode(language)
+  if (!translationLanguage) return
+
+  flyoutTranslatingFieldName.value = String(fieldName)
+
+  try {
+    const payload = new FormData()
+    payload.append('translation_text[language]', translationLanguage)
+    payload.append('translation_text[en_text]', sourceText)
+
+    const response = await fetch(translatePath.value, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-Token': csrfToken(),
+      },
+      body: payload,
+    })
+
+    const data = await response.json().catch(() => null)
+    const entry = Array.isArray(data) ? data[0] : null
+    if (entry?.translated_text) {
+      flyoutValues[String(fieldName)] = entry.translated_text
+    }
+  } catch (error) {
+    console.error(error)
+  } finally {
+    flyoutTranslatingFieldName.value = ''
+  }
+}
 
 function appendFormData(formData, key, value) {
   if (value === undefined || value === null) return
@@ -416,8 +523,11 @@ async function saveFlyout() {
           :field="flyoutField"
           :model-value="flyoutValues[flyoutField.name]"
           :error="flyoutFieldErrors[flyoutField.name]"
+          :can-translate="canTranslateFlyoutField(flyoutField)"
+          :translating="flyoutTranslatingFieldName === flyoutField.name"
           :allow-related-flyout="false"
           @update:model-value="flyoutValues[flyoutField.name] = $event"
+          @translate="translateFlyoutField"
         />
 
         <p v-if="flyoutError" class="fae-field__error">{{ flyoutError }}</p>
