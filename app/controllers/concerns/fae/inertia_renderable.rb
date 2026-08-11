@@ -205,7 +205,7 @@ module Fae
       if current_user.super_admin_or_admin?
         deployment_children = []
 
-        if fae_inertia_netlify_enabled? && Fae::Sites.any? { |site| site.netlify_site.present? && site.netlify_site_id.present? }
+        if fae_inertia_netlify_enabled? && Fae::Site.any? { |site| site.netlify_site.present? && site.netlify_site_id.present? }
           deployment_children << {
             key: 'deploy-default',
             text: t('fae.navbar.deployments'),
