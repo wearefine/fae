@@ -213,7 +213,6 @@ module Fae
         #   }
         # end
 
-        Rails.logger.debug "fae_inertia_netlify_enabled? = #{fae_inertia_netlify_enabled?}"
         if fae_inertia_netlify_enabled? && Fae::Site.any? { |site| site.netlify_site.present? && site.netlify_site_id.present? }
           deployment_children.concat(Fae::Site.order(:name).filter_map do |site|
             next unless site.netlify_site.present? && site.netlify_site_id.present?
@@ -226,7 +225,7 @@ module Fae
           end)
         end
 
-        if deployment_children.any?
+        if deployment_children.length > 1
           deploy_item = {
             key: 'deploymentsMenu',
             icon: 'deploy',
@@ -234,8 +233,17 @@ module Fae
             current: params[:controller].to_s == 'fae/deploy',
             children: deployment_children
           }
-          items << deploy_item
+        else
+          deploy_item = {
+            key: 'deploymentsMenu',
+            icon: 'deploy',
+            ariaLabel: t('fae.navbar.deployments'),
+            current: params[:controller].to_s == 'fae/deploy',
+            path: deployment_children.first[:path]
+          }
         end
+
+        items << deploy_item
 
       end
 

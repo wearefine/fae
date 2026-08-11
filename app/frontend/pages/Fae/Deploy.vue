@@ -153,7 +153,7 @@ function onVisibilityChange() {
 }
 
 function deployTitle(deploy) {
-  if (deploy?.commit_ref) return 'FINE dev update'
+  if (deploy?.committer) return 'Developer update'
   return deploy?.title || '-'
 }
 
