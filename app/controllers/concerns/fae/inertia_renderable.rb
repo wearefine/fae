@@ -205,23 +205,26 @@ module Fae
       if current_user.super_admin_or_admin?
         deployment_children = []
 
+        # if fae_inertia_netlify_enabled? && Fae::Site.any? { |site| site.netlify_site.present? && site.netlify_site_id.present? }
+        #   deployment_children << {
+        #     key: 'deploy-default',
+        #     text: t('fae.navbar.deployments'),
+        #     path: fae.deploy_path
+        #   }
+        # end
+
+        Rails.logger.debug "fae_inertia_netlify_enabled? = #{fae_inertia_netlify_enabled?}"
         if fae_inertia_netlify_enabled? && Fae::Site.any? { |site| site.netlify_site.present? && site.netlify_site_id.present? }
-          deployment_children << {
-            key: 'deploy-default',
-            text: t('fae.navbar.deployments'),
-            path: fae.deploy_path
-          }
+          deployment_children.concat(Fae::Site.order(:name).filter_map do |site|
+            next unless site.netlify_site.present? && site.netlify_site_id.present?
+
+            {
+              key: "deploy-site-#{site.id}",
+              text: site.name.to_s,
+              path: fae.deploy_path(site_id: site.id)
+            }
+          end)
         end
-
-        deployment_children.concat(Fae::Site.order(:name).filter_map do |site|
-          next unless site.netlify_site.present? && site.netlify_site_id.present?
-
-          {
-            key: "deploy-site-#{site.id}",
-            text: site.name.to_s,
-            path: fae.deploy_path(site_id: site.id)
-          }
-        end)
 
         if deployment_children.any?
           deploy_item = {

@@ -23,8 +23,6 @@ Fae.setup do |config|
   config.netlify = {
     api_user: ENV['NETLIFY_API_USER'],
     api_token: ENV['NETLIFY_API_TOKEN'],
-    site: ENV['FINE_NETLIFY_SITE'],
-    site_id: ENV['FINE_NETLIFY_SITE_ID'],
     api_base: ENV.fetch('FINE_NETLIFY_API_BASE', 'https://api.netlify.com/api/v1/')
   }
 
