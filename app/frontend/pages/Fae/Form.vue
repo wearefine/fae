@@ -123,14 +123,24 @@ const sections = computed(() => {
     const id = block.sectionId || '__default'
     const title = block.sectionTitle || null
     const helperText = block.sectionHelperText || null
+    const showTitle = block.sectionShowTitle
     const last = out[out.length - 1]
 
     if (last?.id === id) {
       if (!last.title && title) last.title = title
       if (!last.helperText && helperText) last.helperText = helperText
+      if (typeof last.showTitle === 'undefined' && typeof showTitle !== 'undefined') {
+        last.showTitle = showTitle
+      }
       last.blocks.push(block)
     } else {
-      out.push({ id: id === '__default' ? null : id, title, helperText, blocks: [block] })
+      out.push({
+        id: id === '__default' ? null : id,
+        title,
+        helperText,
+        showTitle,
+        blocks: [block],
+      })
     }
 
     return out
@@ -154,6 +164,7 @@ const sections = computed(() => {
       id: section.id,
       title: section.title,
       helperText: section.helperText,
+      showTitle: section.showTitle,
       blocks: mergedBlocks,
     }
   })
@@ -170,6 +181,7 @@ function sectionHasVisibleContent(section) {
 
 function sectionShowsHeading(section) {
   if (!section?.title) return false
+  if (section?.showTitle === false) return false
   return sectionHasVisibleContent(section)
 }
 
@@ -397,11 +409,22 @@ function clearTransientOpenHints() {
   window.history.replaceState({}, '', `${url.pathname}${url.search}${url.hash}`)
 }
 
+function stickyHeaderOffset() {
+  if (typeof document === 'undefined') return 0
+
+  const stickyHeader = document.querySelector('.fae-page-header.-sticky-form')
+  if (!stickyHeader) return 0
+
+  // The sticky form header sits below the global fixed header via `top`, so
+  // both the inset and the sticky header's own height obscure target content.
+  const stickyTop = Number.parseFloat(window.getComputedStyle(stickyHeader).top) || 0
+  return stickyTop + stickyHeader.getBoundingClientRect().height
+}
+
 function updateActiveSubnav() {
   if (!subnavLinks.value.length || typeof document === 'undefined') return
 
-  const stickyHeader = document.querySelector('.fae-page-header.-sticky-form')
-  const offset = (stickyHeader?.getBoundingClientRect().height || 0) + 8
+  const offset = stickyHeaderOffset() + 8
   let active = subnavLinks.value[0]?.target || ''
 
   for (const link of subnavLinks.value) {
@@ -421,8 +444,7 @@ function scrollToSection(target) {
   const el = document.getElementById(target)
   if (!el) return
 
-  const stickyHeader = document.querySelector('.fae-page-header.-sticky-form')
-  const offset = (stickyHeader?.getBoundingClientRect().height || 0) + 12
+  const offset = stickyHeaderOffset() + 12
   const top = el.getBoundingClientRect().top + window.scrollY - offset
 
   window.scrollTo({ top, behavior: 'smooth' })

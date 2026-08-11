@@ -59,12 +59,12 @@ module Admin
         },
         {
           section: {
-            title: 'Poly Things',
+            # title: 'Poly Things',
             fields: [
               {
                 nested_table: :poly_things,
                 cols: [:name_en, :image],
-                title: 'Poly Things'
+                title: false
               }
             ]
           }

@@ -3,12 +3,7 @@ ruby:
 
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
-  fallback_title      = assoc_name.titleize               # 'Restaurant Bars'
-  title = if local_assigns.key?(:title)
-            local_assigns[:title] == false ? nil : local_assigns[:title].to_s.strip.presence || fallback_title
-          else
-            fallback_title
-          end
+  title               ||= assoc_name.titleize             # 'Restaurant Bars'
   
   # Need to specifiy that the item_class is a StaticPage if the parent_item is a StaticPage
   # or the flex_componentable_type field gets set wrong.

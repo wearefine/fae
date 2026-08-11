@@ -149,7 +149,7 @@ function updateToggle(rowId, key, value) {
 <template>
   <section ref="root" class="fae-flex-components">
     <div class="fae-flex-components__header">
-      <h2 v-if="table.title">{{ table.title }}</h2>
+      <h2>{{ table.title || 'Flex Components' }}</h2>
 
       <div class="fae-flex-components__picker">
         <FaeTypeaheadSelect

@@ -30,6 +30,8 @@ module Admin
           {
             section: {
               title: 'Sub Spirits',
+              # Suppresses title but still uses its jump link, allows the nested table's title to show.
+              show_title: false,
               # The sub-spirit form's fields are declared by its own controller,
               # so this only names the association and listed columns.
               fields: [

@@ -437,7 +437,8 @@ module Fae
       {
         sectionId: entry[:section_id],
         sectionTitle: entry[:section_title],
-        sectionHelperText: entry[:section_helper_text]
+        sectionHelperText: entry[:section_helper_text],
+        sectionShowTitle: entry[:section_show_title]
       }.compact
     end
 
@@ -558,6 +559,11 @@ module Fae
     #     { name: :seo_title, type: :text, section_id: 'metadata', section_title: 'Metadata' }
     #   ]
     #
+    # Set `show_title: false` on a section to keep its anchor/subnav metadata
+    # without rendering a duplicate on-page heading. Useful when the only
+    # content in that section is a nested/flex components table, which has its
+    # own header.
+    #
     # Section ids default from the section title when omitted.
     def fae_inertia_normalize_form_fields(fields)
       Array(fields).flat_map do |raw_entry|
@@ -569,6 +575,7 @@ module Fae
           section_title = section[:title].to_s.strip.presence
           section_id = section[:id].to_s.strip.presence || section_title&.parameterize(separator: '_')
           section_helper_text = section[:helper_text].to_s.strip.presence
+          section_show_title = section.key?(:show_title) ? (section[:show_title] != false) : nil
 
           Array(section[:fields]).filter_map do |section_field|
             normalized = fae_inertia_symbolize_hash(section_field)
@@ -579,12 +586,18 @@ module Fae
             if section_helper_text.present? && normalized[:section_helper_text].blank?
               normalized[:section_helper_text] = section_helper_text
             end
+            if !section_show_title.nil? && normalized[:section_show_title].nil?
+              normalized[:section_show_title] = section_show_title
+            end
             normalized
           end
         else
           section_title = entry[:section_title].to_s.strip.presence
           if section_title.present? && entry[:section_id].blank?
             entry[:section_id] = section_title.parameterize(separator: '_')
+          end
+          if entry.key?(:section_show_title)
+            entry[:section_show_title] = entry[:section_show_title] != false
           end
 
           [entry]
@@ -994,8 +1007,7 @@ module Fae
       cols = Array(table[:cols])
       fields = table[:fields] || fae_inertia_nested_controller(assoc).fae_form_fields
       fields = fae_inertia_normalize_form_fields(fields)
-      title = fae_inertia_table_title(table[:title], assoc.titleize)
-      add_button_title = title.presence || assoc.titleize
+      title = table[:title] || assoc.titleize
 
       # Nested resources are routed as siblings of the parent, which is what
       # _nested_table assumed too when it derived new_/edit_#{assoc}_path.
@@ -1006,7 +1018,7 @@ module Fae
 
       {
         title: title,
-        addButtonText: table[:add_button_text] || t('fae.common.add', title: add_button_title.singularize),
+        addButtonText: table[:add_button_text] || t('fae.common.add', title: title.singularize),
         helperText: table[:helper_text],
         hideAddButton: table.fetch(:hide_add_button, false),
         hideDeleteButton: table.fetch(:hide_delete_button, false),
@@ -1062,7 +1074,7 @@ module Fae
 
     def fae_inertia_flex_components_table(parent, table, draft = false)
       assoc = (table[:flex_components_table] || :flex_components).to_s
-      title = fae_inertia_table_title(table[:title], assoc.titleize)
+      title = table[:title] || assoc.titleize
       records = parent.public_send(assoc)
 
       item_class = if parent.class.ancestors.include?(Fae::StaticPage)
@@ -1151,17 +1163,6 @@ module Fae
     # convention _nested_table used to derive its paths.
     def fae_inertia_nested_controller(assoc)
       "#{self.class.name.deconstantize}::#{assoc.camelize}Controller".constantize
-    end
-
-    # Title precedence for table-like blocks:
-    # - false: disable title inference
-    # - nil/blank: infer from fallback
-    # - any other value: use as-is
-    def fae_inertia_table_title(value, fallback)
-      return nil if value == false
-
-      resolved = value.to_s.strip.presence
-      resolved || fallback
     end
   end
 end
