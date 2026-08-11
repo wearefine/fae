@@ -205,7 +205,7 @@ module Fae
       if current_user.super_admin_or_admin?
         deployment_children = []
 
-        if fae_inertia_netlify_enabled? && Fae.netlify[:site].present? && Fae.netlify[:site_id].present?
+        if fae_inertia_netlify_enabled? && Fae::Sites.any? { |site| site.netlify_site.present? && site.netlify_site_id.present? }
           deployment_children << {
             key: 'deploy-default',
             text: t('fae.navbar.deployments'),
@@ -223,35 +223,17 @@ module Fae
           }
         end)
 
-        deploy_item = if deployment_children.many?
-                        {
-                          key: 'deploymentsMenu',
-                          icon: 'deploy',
-                          ariaLabel: t('fae.navbar.deployments'),
-                          current: params[:controller].to_s == 'fae/deploy',
-                          children: deployment_children
-                        }
-                      elsif deployment_children.one?
-                        {
-                          key: 'deployments',
-                          icon: 'deploy',
-                          text: deployment_children.first[:text],
-                          ariaLabel: t('fae.navbar.deployments'),
-                          path: deployment_children.first[:path],
-                          current: params[:controller].to_s == 'fae/deploy'
-                        }
-                      else
-                        {
-                          key: 'deployments',
-                          icon: 'deploy',
-                          text: t('fae.navbar.deployments'),
-                          ariaLabel: t('fae.navbar.deployments'),
-                          path: fae.deploy_path,
-                          current: params[:controller].to_s == 'fae/deploy'
-                        }
-                      end
+        if deployment_children.any?
+          deploy_item = {
+            key: 'deploymentsMenu',
+            icon: 'deploy',
+            ariaLabel: t('fae.navbar.deployments'),
+            current: params[:controller].to_s == 'fae/deploy',
+            children: deployment_children
+          }
+          items << deploy_item
+        end
 
-        items << deploy_item if deploy_item.present?
       end
 
       items << {
@@ -1012,7 +994,8 @@ module Fae
       cols = Array(table[:cols])
       fields = table[:fields] || fae_inertia_nested_controller(assoc).fae_form_fields
       fields = fae_inertia_normalize_form_fields(fields)
-      title = table[:title] || assoc.titleize
+      title = fae_inertia_table_title(table[:title], assoc.titleize)
+      add_button_title = title.presence || assoc.titleize
 
       # Nested resources are routed as siblings of the parent, which is what
       # _nested_table assumed too when it derived new_/edit_#{assoc}_path.
@@ -1023,7 +1006,7 @@ module Fae
 
       {
         title: title,
-        addButtonText: table[:add_button_text] || t('fae.common.add', title: title.singularize),
+        addButtonText: table[:add_button_text] || t('fae.common.add', title: add_button_title.singularize),
         helperText: table[:helper_text],
         hideAddButton: table.fetch(:hide_add_button, false),
         hideDeleteButton: table.fetch(:hide_delete_button, false),
@@ -1079,7 +1062,7 @@ module Fae
 
     def fae_inertia_flex_components_table(parent, table, draft = false)
       assoc = (table[:flex_components_table] || :flex_components).to_s
-      title = table[:title] || assoc.titleize
+      title = fae_inertia_table_title(table[:title], assoc.titleize)
       records = parent.public_send(assoc)
 
       item_class = if parent.class.ancestors.include?(Fae::StaticPage)
@@ -1168,6 +1151,17 @@ module Fae
     # convention _nested_table used to derive its paths.
     def fae_inertia_nested_controller(assoc)
       "#{self.class.name.deconstantize}::#{assoc.camelize}Controller".constantize
+    end
+
+    # Title precedence for table-like blocks:
+    # - false: disable title inference
+    # - nil/blank: infer from fallback
+    # - any other value: use as-is
+    def fae_inertia_table_title(value, fallback)
+      return nil if value == false
+
+      resolved = value.to_s.strip.presence
+      resolved || fallback
     end
   end
 end

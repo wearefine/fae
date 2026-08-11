@@ -9,8 +9,14 @@ ruby:
 
   # optional locals
   assoc_name          ||= assoc.to_s                      # 'restaurant_bars'
-  title               ||= assoc_name.titleize             # 'Restaurant Bars'
-  add_button_text     ||= t('fae.common.add', title: title.singularize)
+  fallback_title      = assoc_name.titleize               # 'Restaurant Bars'
+  title = if local_assigns.key?(:title)
+            local_assigns[:title] == false ? nil : local_assigns[:title].to_s.strip.presence || fallback_title
+          else
+            fallback_title
+          end
+  add_button_title    = title.presence || fallback_title
+  add_button_text     ||= t('fae.common.add', title: add_button_title.singularize)
   hide_add_button     ||= false
   hide_delete_button  ||= false
   ordered             ||= false

@@ -83,7 +83,7 @@ function destroy(row) {
 <template>
   <section ref="root" class="fae-nested-table">
     <div class="fae-nested-table__header">
-      <h2>{{ table.title }}</h2>
+      <h2 v-if="table.title">{{ table.title }}</h2>
 
       <button
         v-if="!table.hideAddButton"
@@ -169,7 +169,7 @@ function destroy(row) {
           </template>
 
           <tr v-if="!table.rows.length && openId !== 'new'">
-            <td class="fae-table__empty" :colspan="colspan">No {{ table.title }} yet.</td>
+            <td class="fae-table__empty" :colspan="colspan">No {{ table.title || 'items' }} yet.</td>
           </tr>
 
           <!-- Adding appends to the foot of the table, the position the legacy

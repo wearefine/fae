@@ -41,8 +41,8 @@ table class=table_class
 
     - elsif !hide_add_button
       tr
-        td.no-items colspan=colspan.to_s No #{title} yet.
+        td.no-items colspan=colspan.to_s No #{title.presence || 'items'} yet.
     - else
       tr
-        td.no-items colspan=colspan.to_s No #{title} yet.
+        td.no-items colspan=colspan.to_s No #{title.presence || 'items'} yet.
 

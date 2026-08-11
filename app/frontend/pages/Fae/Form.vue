@@ -109,8 +109,9 @@ const translatingFieldName = ref('')
 
 const subnavLinks = computed(() => {
   const links = (props.subnav || []).filter((entry) => entry?.label && entry?.target)
-  const withoutTop = links.filter((entry) => String(entry.target) !== 'top')
-  return [{ label: 'Top', target: 'top' }, ...withoutTop]
+  return links
+  // const withoutTop = links.filter((entry) => String(entry.target) !== 'top')
+  // return [{ label: 'Top', target: 'top' }, ...withoutTop]
 })
 
 const activeSubnavTarget = ref('')
