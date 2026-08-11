@@ -7,7 +7,8 @@ module Admin
       render_fae_index(
         @klass.for_fae_index,
         columns: index_columns,
-        inertia_links: true
+        inertia_links: true,
+        csv_button: true
       )
     end
 

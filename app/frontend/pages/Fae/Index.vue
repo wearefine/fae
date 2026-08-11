@@ -17,6 +17,8 @@ const props = defineProps({
   title: { type: String, required: true },
   newPath: { type: String, default: null },
   newButtonText: { type: String, default: 'Add' },
+  csvPath: { type: String, default: null },
+  csvButtonText: { type: String, default: 'CSV Export' },
   columns: { type: Array, default: () => [] },
   rows: { type: Array, default: () => [] },
   // A sectioned index: [{ title, rows }]. When present it replaces `rows`, and
@@ -45,6 +47,7 @@ const FaeIndexTableComponent = useFaeComponent('FaeIndexTable', FaeIndexTable)
 const allCollapsed = computed(
   () => !!props.groups?.length && collapsed.value.size === props.groups.length
 )
+const csvDownloading = ref(false)
 
 function toggle(title) {
   const next = new Set(collapsed.value)
@@ -57,6 +60,52 @@ function toggleAll() {
   collapsed.value = allCollapsed.value
     ? new Set()
     : new Set(props.groups.map((group) => group.title))
+}
+
+function csvFilenameFromHeader(contentDisposition) {
+  const value = String(contentDisposition || '')
+  const utf8Match = value.match(/filename\*=UTF-8''([^;]+)/i)
+  if (utf8Match?.[1]) return decodeURIComponent(utf8Match[1])
+
+  const quotedMatch = value.match(/filename="([^"]+)"/i)
+  if (quotedMatch?.[1]) return quotedMatch[1]
+
+  const plainMatch = value.match(/filename=([^;]+)/i)
+  if (plainMatch?.[1]) return plainMatch[1].trim()
+
+  return 'export.csv'
+}
+
+async function downloadCsv() {
+  if (!props.csvPath || csvDownloading.value) return
+
+  csvDownloading.value = true
+  try {
+    const response = await fetch(props.csvPath, {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    })
+
+    if (!response.ok) throw new Error(`CSV download failed (${response.status})`)
+
+    const blob = await response.blob()
+    const filename = csvFilenameFromHeader(response.headers.get('content-disposition'))
+    const url = window.URL.createObjectURL(blob)
+
+    const link = document.createElement('a')
+    link.href = url
+    link.download = filename
+    document.body.appendChild(link)
+    link.click()
+    link.remove()
+    window.URL.revokeObjectURL(url)
+  } catch (error) {
+    // Fallback keeps export usable even if fetch/blob is unavailable.
+    window.open(props.csvPath, '_blank', 'noopener')
+  } finally {
+    csvDownloading.value = false
+  }
 }
 </script>
 
@@ -74,6 +123,16 @@ function toggleAll() {
     <div class="fae-page-header__actions">
       <button v-if="groups?.length" type="button" class="fae-button -secondary" @click="toggleAll">
         {{ allCollapsed ? 'Open all' : 'Close all' }}
+      </button>
+
+      <button
+        v-if="csvPath"
+        type="button"
+        class="fae-button -secondary"
+        :disabled="csvDownloading"
+        @click="downloadCsv"
+      >
+        {{ csvDownloading ? 'Exporting...' : csvButtonText }}
       </button>
 
       <component :is="inertiaLinks ? Link : 'a'" v-if="newPath" :href="newPath" class="fae-button">

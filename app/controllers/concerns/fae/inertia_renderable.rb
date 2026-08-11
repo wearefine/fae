@@ -323,16 +323,30 @@ module Fae
     #
     #   render_fae_index(groups: categories.map { |c| { title: c.name, items: c.articles } },
     #                    columns: { title: 'Title' })
-    def render_fae_index(items = nil, columns:, groups: nil, sortable: nil, inertia_links: false)
+    def render_fae_index(items = nil, columns:, groups: nil, sortable: nil, inertia_links: false,
+                         csv_button: false, csv_button_text: nil)
+      if request.format.csv?
+        csv_items = fae_inertia_csv_items(items)
+        return send_data(csv_items.to_csv, filename: fae_inertia_csv_filename(csv_items))
+      end
+
       sortable = fae_inertia_sortable? if sortable.nil?
       keys = columns.keys
       title = @klass_humanized.pluralize.titleize
+      has_rows = if groups.present?
+                   groups.any? { |group| Array(group[:items]).present? }
+                 else
+                   Array(items).present?
+                 end
+      csv_path = ("#{@index_path}.csv" if csv_button && has_rows)
 
       render inertia: 'Fae/Index', props: {
         title: title,
         newPath: @new_path,
         # The button adds one record, so it names one -- as _index_header did.
         newButtonText: t('fae.common.add', title: title.singularize),
+        csvPath: csv_path,
+        csvButtonText: (csv_button_text.presence || t('fae.common.csv_export')),
         columns: columns.map { |key, label| { key: key.to_s, label: label } },
         rows: Array(items).map { |item| fae_inertia_index_row(item, keys) },
         groups: groups&.map do |group|
@@ -350,6 +364,29 @@ module Fae
         # in pages/Fae/Index.vue about <Link> and Slim targets.
         inertiaLinks: inertia_links
       }
+    end
+
+    # Mirror Fae::BaseController#index CSV export behaviour for Inertia-backed
+    # indexes: use the same `for_fae_index` source, and page it when this
+    # controller opts into pagination.
+    def fae_inertia_csv_items(items)
+      return items if items.present?
+
+      if use_pagination
+        @klass.for_fae_index.page(params[:page])
+      else
+        @klass.for_fae_index
+      end
+    end
+
+    def fae_inertia_csv_filename(items)
+      source_name = if items.respond_to?(:name) && items.name.present?
+                      items.name
+                    else
+                      @klass.name
+                    end
+
+      "#{source_name.parameterize}.#{Time.now.to_fs(:filename)}.csv"
     end
 
     # Renders the generic Fae form, the Vue counterpart of a resource's
