@@ -55,6 +55,10 @@ module Fae
       super_admin? || admin?
     end
 
+    def fae_display_field
+      full_name
+    end
+
     def full_name
       "#{first_name} #{last_name}"
     end

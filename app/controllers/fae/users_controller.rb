@@ -9,6 +9,32 @@ module Fae
 
     def index
       @users = current_user.super_admin? ? Fae::User.all : Fae::User.public_users
+      render inertia: 'Fae/Index', props: {
+        title: t('fae.navbar.users'),
+        # intro: t('fae.user.index_intro'),
+        columns: [
+          { key: 'name', label: t('fae.common.name') },
+          { key: 'email', label: t('fae.user.email') },
+          { key: 'role', label: t('fae.user.role') },
+          { key: 'lastSignIn', label: t('fae.user.last_login') }
+        ],
+        rows: @users.map do |user|
+          {
+            id: user.id,
+            label: user.fae_display_field.to_s,
+            editPath: edit_user_path(user),
+            deletePath: user_path(user),
+            cells: {
+              name: user.fae_display_field.to_s,
+              email: user.email,
+              role: user.role.name.to_s.titleize,
+              lastSignIn: (user.last_sign_in_at.present? ? helpers.fae_date_format(user.last_sign_in_at) : '-')
+            }
+          }
+        end,
+        newPath: new_user_path,
+        newButtonText: t('fae.user.add_user')
+      }
     end
 
     def new

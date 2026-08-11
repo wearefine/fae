@@ -37,6 +37,8 @@ en:
       active: 'Active'
       add_user: 'Add User'
       mfa_active: 'MFA Active'
+      email: 'Email'
+      role: 'Role'
       themes:
         light: 'Light'
         dark: 'Dark'

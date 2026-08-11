@@ -148,19 +148,24 @@ module Fae
       items = []
       settings_children = []
 
-      settings_children << {
-        key: 'altTexts',
-        text: t('fae.navbar.alt_text_manager'),
-        path: fae.alt_texts_path
-      }
-
       if current_user.super_admin_or_admin?
+        settings_children << {
+          key: 'users',
+          text: t('fae.navbar.users'),
+          path: fae.users_path
+        }
         settings_children << {
           key: 'activityLog',
           text: t('fae.navbar.activity_log'),
           path: fae.activity_log_path
         }
       end
+
+      settings_children << {
+        key: 'altTexts',
+        text: t('fae.navbar.alt_text_manager'),
+        path: fae.alt_texts_path
+      }
 
       if current_user.super_admin?
         settings_children << {
