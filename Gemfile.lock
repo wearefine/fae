@@ -30,6 +30,7 @@ PATH
       judge-simple_form (~> 1.1.0)
       kaminari
       mini_magick
+      mux_ruby
       rails (>= 5.0)
       remotipart (~> 1.4.0)
       rqrcode
@@ -185,6 +186,9 @@ GEM
     diff-lcs (1.5.0)
     digest (3.1.0)
     erubi (1.12.0)
+    ethon (0.18.0)
+      ffi (>= 1.15.0)
+      logger
     event_stream_parser (1.0.0)
     eventmachine (1.2.7)
     excon (0.92.4)
@@ -292,6 +296,8 @@ GEM
     minitest (5.21.2)
     multi_json (1.15.0)
     multipart-post (2.4.1)
+    mux_ruby (5.1.0)
+      typhoeus (~> 1.0, >= 1.0.1)
     mysql2 (0.5.4)
     nenv (0.3.0)
     net-http (0.4.1)
@@ -462,6 +468,8 @@ GEM
     thor (1.3.0)
     tilt (2.3.0)
     timeout (0.2.0)
+    typhoeus (1.6.0)
+      ethon (>= 0.18.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
