@@ -2,7 +2,7 @@ class Wine < ActiveRecord::Base
   include Fae::BaseModelConcern
   include FlexComponentableConcern
 
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
 
   has_many :releases
   has_many :winemakers

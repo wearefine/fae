@@ -3,7 +3,7 @@ class Winemaker < ActiveRecord::Base
 
   belongs_to :wine, touch: true
 
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
 
   has_one :winemaker_image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy

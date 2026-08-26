@@ -16,7 +16,7 @@ class ReleaseNote < ActiveRecord::Base
     release
   end
 
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
 
 end

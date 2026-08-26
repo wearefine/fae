@@ -4,7 +4,7 @@ class ZigZagItem < ApplicationRecord
         
   belongs_to :zig_zag_component, touch: true
 
-  acts_as_list add_new_at: :top, scope: :zig_zag_component
+  acts_as_list add_new_at: :bottom, scope: :zig_zag_component
   default_scope { order(:position) }
 
   has_fae_image :image

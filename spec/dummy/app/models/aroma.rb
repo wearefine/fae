@@ -11,7 +11,7 @@ class Aroma < ActiveRecord::Base
 
   has_many :static_page_aromas, dependent: :destroy
 
-  acts_as_list add_new_at: :top, scope: :release
+  acts_as_list add_new_at: :bottom, scope: :release
   default_scope { order(:position) }
 
   has_one :image, as: :imageable, class_name: '::Fae::Image', dependent: :destroy

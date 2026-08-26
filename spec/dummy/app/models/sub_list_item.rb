@@ -4,7 +4,7 @@ class SubListItem < ApplicationRecord
         
   belongs_to :list_item, touch: true
 
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
 
   validates :name, presence: true

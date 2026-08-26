@@ -1,5 +1,5 @@
 class StaticPageAroma < ApplicationRecord
-  acts_as_list add_new_at: :top, scope: :static_page
+  acts_as_list add_new_at: :bottom, scope: :static_page
   default_scope { order(:position) }
 
   belongs_to :static_page, class_name: 'Fae::StaticPage'

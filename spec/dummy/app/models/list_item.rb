@@ -4,7 +4,7 @@ class ListItem < ApplicationRecord
         
   belongs_to :static_page, touch: true, class_name: 'Fae::StaticPage'
 
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
 
   has_many :sub_list_items, dependent: :destroy

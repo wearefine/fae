@@ -305,7 +305,7 @@ If your object has already been created you'll have to do a couple steps to make
 2) Add a default scope to the object model to always order by position. Optionally you can config `acts_as_list`
 ```ruby
 class Person < ApplicationRecord
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
   # ...
 ```

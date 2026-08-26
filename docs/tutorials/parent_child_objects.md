@@ -22,7 +22,7 @@ Then update the models to add associations, validations and `acts_as_list` scope
 class ArticleCategory < ApplicationRecord
   include Fae::BaseModelConcern
 
-  acts_as_list add_new_at: :top
+  acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
 
   has_many :articles
@@ -40,7 +40,7 @@ end
 class Article < ApplicationRecord
   include Fae::BaseModelConcern
 
-  acts_as_list add_new_at: :top, scope: :article_category
+  acts_as_list add_new_at: :bottom, scope: :article_category
   default_scope { order(:position) }
 
   belongs_to :article_category

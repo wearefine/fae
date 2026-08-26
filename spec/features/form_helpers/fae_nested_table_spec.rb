@@ -78,7 +78,7 @@ feature 'fae_nested_table' do
     admin_login
     visit edit_admin_wine_path(wine)
 
-    # With acts_as_list add_new_at: :top, newest items get lowest positions
+    # With acts_as_list add_new_at: :bottom, newest items get lowest positions
     [winemaker_1, winemaker_2, winemaker_3].each(&:reload)
     expect(Winemaker.where(wine: wine).order(:position).to_a).to eq([winemaker_3, winemaker_2, winemaker_1])
 

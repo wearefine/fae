@@ -138,7 +138,7 @@ module Fae
         inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
           <<~RUBY.indent(2)
 
-            acts_as_list add_new_at: :top
+            acts_as_list add_new_at: :bottom
             default_scope { order(:position) }
 
           RUBY

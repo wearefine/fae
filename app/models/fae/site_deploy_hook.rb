@@ -4,7 +4,7 @@ module Fae
   
     belongs_to :site, class_name: 'Fae::Site'
 
-    acts_as_list add_new_at: :top, scope: :site
+    acts_as_list add_new_at: :bottom, scope: :site
     default_scope { order(:position) }
 
     validates :url, :environment, presence: true
