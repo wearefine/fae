@@ -427,7 +427,7 @@ module Fae
     # `index_path`, `submit_path`, `submit_method`, `param_key` and
     # `delete_path` can be overridden for custom route shapes such as singleton
     # resources.
-    def render_fae_form(item = @item, fields:, title: nil, subnav: nil, index_path: nil, submit_path: nil, submit_method: nil, param_key: nil, delete_path: :auto)
+    def render_fae_form(item = @item, fields:, title: nil, subnav: nil, index_path: nil, submit_path: nil, submit_method: nil, param_key: nil, delete_path: :auto, page: 'Fae/Form')
       # Fae::BaseController#new saves the record before redirecting here, so
       # "new" is really an edit of an unsaved-looking row. The draft flag is
       # what tells the Vue form that cancelling should delete it again.
@@ -449,7 +449,7 @@ module Fae
                       delete_path
                     end
 
-      render inertia: 'Fae/Form', props: {
+      render inertia: page, props: {
         title: title || "#{draft ? 'New' : 'Edit'} #{@klass_humanized}".titleize,
         indexPath: index_path,
         # Both verbs are supported so this still works for a model that opts
@@ -1070,6 +1070,7 @@ module Fae
       query = draft ? '?draft=true' : ''
 
       {
+        association: assoc,
         title: title,
         addButtonText: table[:add_button_text] || t('fae.common.add', title: title.singularize),
         helperText: table[:helper_text],
@@ -1142,6 +1143,7 @@ module Fae
       end
 
       {
+        association: assoc,
         title: title,
         helperText: table[:helper_text],
         createPath: fae.flex_components_path,

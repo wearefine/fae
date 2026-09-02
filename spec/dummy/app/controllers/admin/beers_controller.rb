@@ -12,7 +12,8 @@ module Admin
 
     def edit
       render_fae_form(
-        fields: form_fields
+        fields: form_fields,
+        page: 'Admin/BeersForm'
       )
     end
 

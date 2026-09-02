@@ -22,10 +22,14 @@ module <%= options.namespace.capitalize %>
         index_path: @index_path,
         submit_path: @submit_path,
         submit_method: 'patch',
-        delete_path: nil
+        delete_path: nil,
+        page: '<%= @inertia_form_page %>'
       )
 <% else %>
-      render_fae_form(fields: self.class.fae_form_fields)
+      render_fae_form(
+        fields: self.class.fae_form_fields,
+        page: '<%= @inertia_form_page %>'
+      )
 <% end %>
     end
 

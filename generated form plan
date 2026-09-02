@@ -1,0 +1,130 @@
+User: background: this is a rails cms engine, "Fae". i'm experimenting with replacing the jquery/slim based UI with InertiaJS/VueJS. 
+A lot of conversions have been made, but now i'm wondering about more closely matching how Fae originally worked with fully generated admin views - like the dummy app uses, with discreet input types in generated form views versus a single abstracted form view like in Form.vue.
+
+GitHub Copilot: You’re weighing two different extension models:
+
+- **Current Vue approach:** Rails serializes a generic form schema into `blocks`, and one large `Form.vue` interprets it.
+- **Original Fae approach:** generated resource-specific views explicitly compose helpers such as `fae_input`, `fae_image_form`, `fae_ranked_select`, and `fae_seo_set_form`, as in `_form.html.slim`.
+
+I’d move the Vue implementation closer to original Fae, but not all the way back to server-rendered templates.
+
+**Recommended Architecture**
+
+Generate a page component for each admin resource:
+
+```vue
+<script setup>
+import { useFaeForm } from 'fae'
+import {
+  FaeFormPage,
+  FaeInput,
+  FaeImageInput,
+  FaeRankedSelect,
+  FaeNestedTable,
+  FaeCtaInput,
+  FaeSeoSet,
+} from 'fae'
+
+const props = defineProps({
+  item: Object,
+  form: Object,
+})
+
+const resource = useFaeForm(props)
+</script>
+
+<template>
+  <FaeFormPage v-bind="resource.page">
+    <FaeInput field="on_stage" />
+    <FaeInput field="on_prod" />
+    <FaeInput field="name" />
+    <FaeImageInput field="image" />
+
+    <FaeRankedSelect
+      field="aromas"
+      join-model="beer_aromas"
+      select-label="Aromas"
+      ranking-title="Aroma Ranking"
+      preview-image="image"
+    />
+
+    <FaeFormSection id="poly_things">
+      <FaeNestedTable association="poly_things" :columns="['name_en', 'image']" />
+      <FaeCtaInput field="test_cta" />
+    </FaeFormSection>
+
+    <FaeFormSection id="seo" title="SEO">
+      <FaeSeoSet field="seo" />
+    </FaeFormSection>
+  </FaeFormPage>
+</template>
+```
+
+`FaeFormPage` would retain the genuinely shared machinery currently concentrated in `Form.vue`:
+
+- Inertia `useForm`
+- submit/cancel behavior
+- asset serialization
+- unsaved-change guards
+- sticky header and subnav
+- language selection and translation
+- error handling
+- theme preview where applicable
+
+The resource component would own:
+
+- field selection and ordering
+- section placement
+- resource-specific component options
+- conditional rendering
+- unusual layouts and custom components
+
+**Why This Is a Better Fit**
+
+The generic schema renderer works while forms remain simple, but it gradually becomes a second template language. `kind`, `sectionId`, `sectionTitle`, `sectionShowTitle`, and type-specific metadata are already the beginning of that language. Every new layout or conditional feature will require changes to the serializer, the schema contract, and the central renderer.
+
+Explicit Vue templates restore several useful Fae properties:
+
+- A generated form is readable and directly editable.
+- Resource-specific customization does not enlarge the global renderer.
+- Vue’s native composition, conditionals, slots, and component resolution remain available.
+- Generated code can serve as a starting point rather than permanent generator-owned output.
+- Application overrides become normal Vue imports/components instead of schema exceptions.
+
+It also improves failure isolation. A custom beer form should not require making the universal form interpreter more complicated.
+
+**Important Boundary**
+
+I would not send raw model records and make each field component discover all its metadata independently. Rails should still describe the field contract: current value, label, errors, choices, permissions, localization, asset state, and relevant URLs.
+
+A good Inertia payload might remain keyed by field:
+
+```js
+{
+  fields: {
+    name: { type: 'text', value: 'Pilsner', label: 'Name' },
+    image: { type: 'image', value: { /* ... */ }, label: 'Image' },
+    aromas: { type: 'rankedSelect', value: [], options: [] }
+  }
+}
+```
+
+Then:
+
+```vue
+<FaeInput field="name" />
+```
+
+can obtain `fields.name` through context provided by `FaeFormPage`. This keeps generated templates concise without hiding their structure.
+
+**Migration Path**
+
+1. Extract `Form.vue` state and behavior into `useFaeFormPage`.
+2. Turn its header, language navigation, subnav, section, and form shell into reusable components.
+3. Let `FaeFormField` continue rendering basic fields initially.
+4. Add explicit wrappers such as `FaeInput`, `FaeImageInput`, and `FaeRankedSelect`.
+5. Create one hand-written beer form matching the Slim form as the architectural test.
+6. Once that works, update the Rails generator to emit resource-specific Vue pages.
+7. Keep the generic `blocks` renderer as a fallback for resources that have not yet migrated.
+
+The key design rule is: **Rails owns data and field metadata; generated Vue pages own composition; shared Fae components own behavior.** That preserves Fae’s generated-view ergonomics without giving up Inertia or rebuilding Slim inside JSON.

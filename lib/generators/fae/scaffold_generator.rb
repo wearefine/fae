@@ -8,6 +8,7 @@ module Fae
       generate_model
       generate_graphql_type
       generate_controller_file
+      generate_form_page
       add_route
       inject_nav_item
       inject_livable

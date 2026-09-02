@@ -10,6 +10,7 @@ import { assetSubmitOptions, useAssetFields } from '../../composables/useAssetFi
 import { useFaeComponent } from '../../composables/useFaeComponent.js'
 import { useSlugger } from '../../composables/useSlugger.js'
 import { useFormGuard } from '../../composables/useFormGuard.js'
+import { provideFaeFormContext } from '../../composables/useFaeFormContext.js'
 import { provideUnsavedChanges } from '../../composables/useUnsavedChanges.js'
 
 // Saving the parent would leave a half-filled nested form behind, so it is
@@ -97,6 +98,24 @@ function isFieldVisible(field) {
 function visibleFields(fieldList) {
   const list = Array.isArray(fieldList) ? fieldList : []
   return list.filter((field) => isFieldVisible(field))
+}
+
+function formField(name) {
+  return fields.value.find((field) => String(field?.name) === String(name)) || null
+}
+
+function tableBlock(kind, association) {
+  return props.blocks.find((block) =>
+    block.kind === kind && String(block.table?.association || '') === String(association)
+  )?.table || null
+}
+
+function nestedTable(association) {
+  return tableBlock('nestedTable', association)
+}
+
+function flexComponentsTable(association = 'flex_components') {
+  return tableBlock('flexComponentsTable', association)
 }
 
 const showLanguageNav = computed(() => {
@@ -215,6 +234,20 @@ const form = useForm(
 const FaeFormFieldComponent = useFaeComponent('FaeFormField', FaeFormField)
 const FaeNestedTableComponent = useFaeComponent('FaeNestedTable', FaeNestedTable)
 const FaeFlexComponentsTableComponent = useFaeComponent('FaeFlexComponentsTable', FaeFlexComponentsTable)
+
+provideFaeFormContext({
+  form,
+  field: formField,
+  fieldVisible: isFieldVisible,
+  nestedTable,
+  flexComponentsTable,
+  formFieldComponent: FaeFormFieldComponent,
+  nestedTableComponent: FaeNestedTableComponent,
+  flexComponentsTableComponent: FaeFlexComponentsTableComponent,
+  canTranslate: canTranslateField,
+  translatingFieldName,
+  translateField,
+})
 
 const { hasAssets, toParams } = useAssetFields(fields)
 useSlugger({ form, fields })
@@ -542,45 +575,60 @@ watch(
       <div> and every control it owns is type="button" -- nothing it contains
       can be swept up by this form's submit.
     -->
-    <section
-      v-for="(section, sectionIndex) in sections"
-      :id="section.id || null"
-      :key="section.id || `section-${sectionIndex}`"
-      class="fae-form-section"
-      :data-fae-section="section.id || null"
+    <slot
+      name="form"
+      :form="form"
+      :field="formField"
+      :field-visible="isFieldVisible"
+      :nested-table="nestedTable"
+      :flex-components-table="flexComponentsTable"
+      :form-field-component="FaeFormFieldComponent"
+      :nested-table-component="FaeNestedTableComponent"
+      :flex-components-table-component="FaeFlexComponentsTableComponent"
+      :can-translate="canTranslateField"
+      :translating-field-name="translatingFieldName"
+      :translate-field="translateField"
     >
-      <h2 v-if="sectionShowsHeading(section)" class="fae-form-section__title">{{ section.title }}</h2>
-      <p v-if="sectionShowsHelperText(section)" class="fae-form-section__helper-text">
-        {{ section.helperText }}
-      </p>
+      <section
+        v-for="(section, sectionIndex) in sections"
+        :id="section.id || null"
+        :key="section.id || `section-${sectionIndex}`"
+        class="fae-form-section"
+        :data-fae-section="section.id || null"
+      >
+        <h2 v-if="sectionShowsHeading(section)" class="fae-form-section__title">{{ section.title }}</h2>
+        <p v-if="sectionShowsHelperText(section)" class="fae-form-section__helper-text">
+          {{ section.helperText }}
+        </p>
 
-      <template v-for="(block, blockIndex) in section.blocks" :key="`${section.id || sectionIndex}-${block.kind}-${blockIndex}`">
-        <div v-if="block.kind === 'field' && visibleFields(block.fields).length" class="fae-panel fae-form">
+        <template v-for="(block, blockIndex) in section.blocks" :key="`${section.id || sectionIndex}-${block.kind}-${blockIndex}`">
+          <div v-if="block.kind === 'field' && visibleFields(block.fields).length" class="fae-panel fae-form">
+            <component
+              :is="FaeFormFieldComponent"
+              v-for="field in visibleFields(block.fields)"
+              :key="field.name"
+              :field="field"
+              :error="form.errors[field.name]"
+              :can-translate="canTranslateField(field)"
+              :translating="translatingFieldName === field.name"
+              v-model="form[field.name]"
+              @translate="translateField"
+            />
+          </div>
+
           <component
-            :is="FaeFormFieldComponent"
-            v-for="field in visibleFields(block.fields)"
-            :key="field.name"
-            :field="field"
-            :error="form.errors[field.name]"
-            :can-translate="canTranslateField(field)"
-            :translating="translatingFieldName === field.name"
-            v-model="form[field.name]"
-            @translate="translateField"
+            :is="FaeNestedTableComponent"
+            v-else-if="block.kind === 'nestedTable'"
+            :table="block.table"
           />
-        </div>
 
-        <component
-          :is="FaeNestedTableComponent"
-          v-else-if="block.kind === 'nestedTable'"
-          :table="block.table"
-        />
-
-        <component
-          :is="FaeFlexComponentsTableComponent"
-          v-else-if="block.kind === 'flexComponentsTable'"
-          :table="block.table"
-        />
-      </template>
-    </section>
+          <component
+            :is="FaeFlexComponentsTableComponent"
+            v-else-if="block.kind === 'flexComponentsTable'"
+            :table="block.table"
+          />
+        </template>
+      </section>
+    </slot>
   </form>
 </template>

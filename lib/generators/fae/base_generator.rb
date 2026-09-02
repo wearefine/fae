@@ -75,7 +75,13 @@ module Fae
       @inertia_form_fields = inertia_form_fields
       @inertia_unsupported_fields = inertia_unsupported_fields
       @inertia_index_columns = inertia_index_columns
+      @inertia_form_page = inertia_form_page
       template "controllers/scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
+    end
+
+    def generate_form_page
+      @inertia_form_fields = inertia_form_fields
+      template "frontend/Form.vue", "app/frontend/pages/#{inertia_form_page}.vue"
     end
 
     def generate_view_files
@@ -281,6 +287,23 @@ module Fae
         :file
       else
         nil
+      end
+    end
+
+    def inertia_form_page
+      "#{options.namespace.camelize}/#{class_name.pluralize}Form"
+    end
+
+    def inertia_vue_component_for(type)
+      case type.to_sym
+      when :image
+        'FaeImageInput'
+      when :file
+        'FaeFileInput'
+      when :ranked_select
+        'FaeRankedSelect'
+      else
+        'FaeInput'
       end
     end
 
