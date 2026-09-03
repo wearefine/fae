@@ -141,10 +141,10 @@
     }
 
     function debounceResizeCallback() {
-      // Always use the placeholder for offset calculation when it exists and is visible,
+      // Use the visible placeholder for offset calculation unless the caller opts out,
       // because when the element is stuck (position: fixed), $el.offset().top returns
       // the fixed position, not the original document position.
-      if ( _this.$placeholder && _this.$placeholder.is(':visible')) {
+      if ( _this.$placeholder && _this.$placeholder.is(':visible') && !_this.options.ignore_placeholder_offsets) {
         setDimensionsTopLeft.call(_this, _this.$placeholder);
       } else if (!_this.$el.hasClass(_this.options.class_name)) {
         // Only update dimensions from $el when it's NOT currently stuck
