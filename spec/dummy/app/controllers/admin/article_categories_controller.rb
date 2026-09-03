@@ -7,12 +7,16 @@ module Admin
       render_fae_index(
         @klass.for_fae_index,
         columns: { name: 'Name', updated_at: 'Modified' },
-        inertia_links: true
+        inertia_links: true,
+        page: 'Admin/ArticleCategories/Index'
       )
     end
 
     def edit
-      render_fae_form(fields: form_fields)
+      render_fae_form(
+        fields: form_fields,
+        page: 'Admin/ArticleCategories/Form'
+      )
     end
 
     private

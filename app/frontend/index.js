@@ -2,6 +2,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import FaeLayout from './layouts/FaeLayout.vue'
 import { FAE_COMPONENT_OVERRIDES, normalizeComponentOverrides } from './overrides.js'
+import { FAE_PAGE_COMPONENTS } from './composables/useFaePageComponent.js'
 
 // Fae 5's own stylesheet, built by Vite. Deliberately unrelated to the
 // Sprockets Sass bundle that styles the remaining Slim screens -- see
@@ -44,6 +45,7 @@ function byPageName(modules) {
 export function createFaeApp({ pages = {}, components = {} } = {}) {
   const engine = byPageName(enginePages)
   const host = byPageName(pages)
+  const pageComponents = { ...engine, ...host }
   const componentOverrides = normalizeComponentOverrides(components)
 
   return createInertiaApp({
@@ -68,6 +70,7 @@ export function createFaeApp({ pages = {}, components = {} } = {}) {
     setup({ el, App, props, plugin }) {
       const app = createApp({ render: () => h(App, props) })
       app.provide(FAE_COMPONENT_OVERRIDES, componentOverrides)
+      app.provide(FAE_PAGE_COMPONENTS, pageComponents)
       app.use(plugin).mount(el)
     },
   })

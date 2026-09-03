@@ -1,11 +1,13 @@
 <script setup>
-import { toRef } from 'vue'
+import { computed, ref, toRef } from 'vue'
 import { useForm } from '@inertiajs/vue3'
 
 import FaeFormField from './FaeFormField.vue'
 import { assetSubmitOptions, useAssetFields } from '../composables/useAssetFields.js'
 import { useFaeComponent } from '../composables/useFaeComponent.js'
+import { useFaePageComponent } from '../composables/useFaePageComponent.js'
 import { useSlugger } from '../composables/useSlugger.js'
+import { provideFaeFormContext } from '../composables/useFaeFormContext.js'
 import { registerUnsavedChanges } from '../composables/useUnsavedChanges.js'
 
 /**
@@ -30,6 +32,8 @@ const props = defineProps({
   parentKey: { type: String, default: null },
   parentId: { type: [Number, String], default: null },
   extraHidden: { type: Object, default: () => ({}) },
+  formComponent: { type: [Object, Function], default: null },
+  formPage: { type: String, default: null },
 })
 
 const emit = defineEmits(['saved', 'cancel'])
@@ -43,6 +47,22 @@ const form = useForm({
 const { hasAssets, toParams } = useAssetFields(toRef(props, 'fields'))
 useSlugger({ form, fields: toRef(props, 'fields') })
 const FaeFormFieldComponent = useFaeComponent('FaeFormField', FaeFormField)
+const generatedFormComponent = useFaePageComponent(props.formPage)
+const nestedFormComponent = computed(() => props.formComponent || generatedFormComponent)
+
+function formField(name) {
+  return props.fields.find((field) => String(field?.name) === String(name)) || null
+}
+
+provideFaeFormContext({
+  form,
+  field: formField,
+  fieldVisible: () => true,
+  formFieldComponent: FaeFormFieldComponent,
+  canTranslate: () => false,
+  translatingFieldName: ref(''),
+  translateField: () => {},
+})
 
 // Open forms only: closing one unmounts it, which is also how the user
 // discards it, so the parent stops counting it.
@@ -83,7 +103,9 @@ function onEnter(event) {
   -->
   <div class="fae-nested-form" @keydown.enter="onEnter">
     <div class="fae-nested-form__fields">
+      <component :is="nestedFormComponent" v-if="nestedFormComponent" />
       <component
+        v-else
         :is="FaeFormFieldComponent"
         v-for="field in fields"
         :key="field.name"

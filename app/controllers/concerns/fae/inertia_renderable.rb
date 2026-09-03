@@ -329,7 +329,7 @@ module Fae
     #   render_fae_index(groups: categories.map { |c| { title: c.name, items: c.articles } },
     #                    columns: { title: 'Title' })
     def render_fae_index(items = nil, columns:, groups: nil, sortable: nil, inertia_links: false,
-                         csv_button: false, csv_button_text: nil)
+               csv_button: false, csv_button_text: nil, page: 'Fae/Index')
       if request.format.csv?
         csv_items = fae_inertia_csv_items(items)
         return send_data(csv_items.to_csv, filename: fae_inertia_csv_filename(csv_items))
@@ -345,7 +345,7 @@ module Fae
                  end
       csv_path = ("#{@index_path}.csv" if csv_button && has_rows)
 
-      render inertia: 'Fae/Index', props: {
+      render inertia: page, props: {
         title: title,
         newPath: @new_path,
         # The button adds one record, so it names one -- as _index_header did.
@@ -1058,7 +1058,8 @@ module Fae
       records = parent.public_send(assoc)
       klass = records.klass
       cols = Array(table[:cols])
-      fields = table[:fields] || fae_inertia_nested_controller(assoc).fae_form_fields
+      nested_controller = fae_inertia_nested_controller(assoc)
+      fields = table[:fields] || nested_controller.fae_form_fields
       fields = fae_inertia_normalize_form_fields(fields)
       title = table[:title] || assoc.titleize
 
@@ -1071,6 +1072,7 @@ module Fae
 
       {
         association: assoc,
+        formPage: "#{nested_controller.name.delete_suffix('Controller').split('::').join('/')}/Form",
         title: title,
         addButtonText: table[:add_button_text] || t('fae.common.add', title: title.singularize),
         helperText: table[:helper_text],
@@ -1188,6 +1190,7 @@ module Fae
               method: 'put',
               paramKey: component.model_name.param_key,
               errorBag: component.model_name.param_key,
+              formPage: "#{controller.name.delete_suffix('Controller').split('::').join('/')}/Form",
               fields: fields.map { |field| fae_inertia_form_field(component, field) },
               tables: fae_inertia_flex_component_tables(component, controller)
             }

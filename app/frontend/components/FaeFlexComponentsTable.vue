@@ -266,6 +266,7 @@ function updateToggle(rowId, key, value) {
                   :method="row.form.method"
                   :param-key="row.form.paramKey"
                   :error-bag="row.form.errorBag"
+                  :form-page="row.form.formPage"
                   @saved="closeEditor"
                   @cancel="closeEditor"
                 />

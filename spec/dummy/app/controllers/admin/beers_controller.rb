@@ -1,7 +1,7 @@
 module Admin
   class BeersController < Fae::BaseController
     def index
-      render inertia: 'Admin/BeersIndex', props: {
+      render inertia: 'Admin/Beers/Index', props: {
         title: 'Index view overridden in host app',
         newPath: @new_path,
         newButtonText: 'Add a Beer, eh!',
@@ -13,7 +13,7 @@ module Admin
     def edit
       render_fae_form(
         fields: form_fields,
-        page: 'Admin/BeersForm'
+        page: 'Admin/Beers/Form'
       )
     end
 

@@ -291,7 +291,7 @@ module Fae
     end
 
     def inertia_form_page
-      "#{options.namespace.camelize}/#{class_name.pluralize}Form"
+      "#{options.namespace.camelize}/#{class_name.pluralize}/Form"
     end
 
     def inertia_vue_component_for(type)

@@ -7,6 +7,7 @@ defineOptions({ name: 'FaeFormNestedTable' })
 
 const props = defineProps({
   association: { type: String, required: true },
+  formComponent: { type: [Object, Function], default: null },
 })
 
 const context = useFaeFormContext()
@@ -18,5 +19,6 @@ const table = computed(() => context.nestedTable(props.association))
     :is="context.nestedTableComponent"
     v-if="table"
     :table="table"
+    :form-component="formComponent"
   />
 </template>

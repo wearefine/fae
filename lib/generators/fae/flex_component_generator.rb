@@ -7,6 +7,7 @@ module Fae
       generate_nested_model_file
       generate_graphql_type
       generate_flex_component_controller_file
+      generate_flex_component_form_page
       add_route
       generate_flex_component_union_type
       add_to_flex_component_base_components
@@ -28,6 +29,11 @@ module Fae
         @inertia_form_fields = inertia_form_fields
         @inertia_unsupported_fields = inertia_unsupported_fields
         template "controllers/flex_component_scaffold_controller.rb", "app/controllers/#{options.namespace}/#{file_name.pluralize}_controller.rb"
+      end
+
+      def generate_flex_component_form_page
+        @inertia_form_fields = inertia_form_fields
+        template "frontend/NestedForm.vue", "app/frontend/pages/#{inertia_form_page}.vue"
       end
 
       def inject_concerns

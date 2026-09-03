@@ -15,6 +15,7 @@ import FaeNestedForm from './FaeNestedForm.vue'
  */
 const props = defineProps({
   table: { type: Object, required: true },
+  formComponent: { type: [Object, Function], default: null },
 })
 
 // Which form is open: a row id, the string 'new', or nothing. One at a time,
@@ -161,6 +162,8 @@ function destroy(row) {
                   :param-key="table.paramKey"
                   :error-bag="table.errorBag"
                   :extra-hidden="table.extraHidden || {}"
+                  :form-component="formComponent"
+                  :form-page="table.formPage"
                   @saved="close"
                   @cancel="close"
                 />
@@ -185,6 +188,8 @@ function destroy(row) {
                 :parent-key="table.parentKey"
                 :parent-id="table.parentId"
                 :extra-hidden="table.extraHidden || {}"
+                :form-component="formComponent"
+                :form-page="table.formPage"
                 @saved="close"
                 @cancel="close"
               />
