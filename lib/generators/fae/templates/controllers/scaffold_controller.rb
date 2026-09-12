@@ -57,7 +57,7 @@ module <%= options.namespace.capitalize %>
 <% if field[:type] == :select -%>
               { name: :<%= field[:name] %>, type: :select, collection: <%= field[:collection] %> }<%= comma %>
 <% else -%>
-              { name: :<%= field[:name] %>, type: :<%= field[:type] %> }<%= comma %>
+              { name: :<%= field[:name] %>, type: :<%= field[:type] %><%= ', slug_source: true' if field[:slug_source] %> }<%= comma %>
 <% end -%>
 <% end -%>
             ]

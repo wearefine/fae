@@ -7,7 +7,8 @@ module Admin
       render_fae_index(
         @klass.for_fae_index,
         columns: index_columns,
-        inertia_links: true
+        inertia_links: true,
+        page: 'Admin/CarCategories/Index'
       )
     end
 
@@ -15,7 +16,10 @@ module Admin
     def edit
       build_assets
 
-      render_fae_form(fields: self.class.fae_form_fields)
+      render_fae_form(
+        fields: self.class.fae_form_fields,
+        page: 'Admin/CarCategories/Form'
+      )
 
     end
 

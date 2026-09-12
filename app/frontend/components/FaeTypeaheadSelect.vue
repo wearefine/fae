@@ -32,10 +32,20 @@ const filtered = computed(() => {
   return props.options.filter((option) => option.label.toLowerCase().includes(term))
 })
 
-const menuOptions = computed(() => [
-  { label: props.placeholder, value: '', key: '__clear__' },
-  ...filtered.value.map((option) => ({ ...option, key: String(option.value) }))
-])
+const menuOptions = computed(() => {
+  const options = [{ label: props.placeholder, value: '', key: '__clear__' }]
+  let previousGroup
+
+  filtered.value.forEach((option) => {
+    if (option.group && option.group !== previousGroup) {
+      options.push({ label: option.group, key: `__group__-${option.group}`, groupHeading: true })
+      previousGroup = option.group
+    }
+    options.push({ ...option, key: String(option.value) })
+  })
+
+  return options
+})
 
 const activeDescendant = computed(() => {
   if (!open.value || highlightedIndex.value < 0) return undefined
@@ -86,10 +96,13 @@ function moveHighlight(delta) {
   const length = menuOptions.value.length
   if (!length) return
 
-  const next = highlightedIndex.value + delta
-  if (next < 0) highlightedIndex.value = length - 1
-  else if (next >= length) highlightedIndex.value = 0
-  else highlightedIndex.value = next
+  let next = highlightedIndex.value
+  do {
+    next += delta
+    if (next < 0) next = length - 1
+    else if (next >= length) next = 0
+  } while (menuOptions.value[next]?.groupHeading)
+  highlightedIndex.value = next
 }
 
 function selectHighlighted() {
@@ -179,16 +192,18 @@ function closeSoon() {
         v-for="(option, index) in menuOptions"
         :id="`${id}-option-${index}`"
         :key="`${id}-${option.key}`"
-        class="fae-typeahead__option"
-        :class="{
-          '-selected': String(option.value) === normalizedValue,
-          '-active': highlightedIndex === index
-        }"
-        role="option"
-        :aria-selected="highlightedIndex === index"
+        :class="[
+          option.groupHeading ? 'fae-typeahead__group' : 'fae-typeahead__option',
+          {
+            '-selected': String(option.value) === normalizedValue,
+            '-active': highlightedIndex === index
+          }
+        ]"
+        :role="option.groupHeading ? 'presentation' : 'option'"
+        :aria-selected="option.groupHeading ? undefined : highlightedIndex === index"
         @mousedown.prevent
-        @mousemove="highlightedIndex = index"
-        @click="option.key === '__clear__' ? clear() : choose(option)"
+        @mousemove="option.groupHeading ? undefined : highlightedIndex = index"
+        @click="option.groupHeading ? undefined : option.key === '__clear__' ? clear() : choose(option)"
       >
         {{ option.label }}
       </li>

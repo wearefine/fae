@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_08_09_193443) do
+ActiveRecord::Schema[7.0].define(version: 2026_09_09_231230) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -75,6 +75,18 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_09_193443) do
     t.index ["position"], name: "index_beer_aromas_on_position"
   end
 
+  create_table "beer_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.integer "position"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_beer_categories_on_draft"
+  end
+
   create_table "beers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "seo_title"
@@ -84,6 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_09_193443) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
+    t.integer "beer_category_id"
   end
 
   create_table "car_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -627,6 +640,15 @@ ActiveRecord::Schema[7.0].define(version: 2026_08_09_193443) do
     t.datetime "updated_at", null: false
     t.string "name_zh"
     t.string "name_frca"
+  end
+
+  create_table "trucks", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_trucks_on_draft"
   end
 
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|

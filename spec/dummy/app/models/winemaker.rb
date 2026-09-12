@@ -20,6 +20,10 @@ class Winemaker < ActiveRecord::Base
     name
   end
 
+  def fae_nested_parent
+    :wine
+  end
+
   def association_type
     if region_type == 1
       :oregon_winemakers

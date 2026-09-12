@@ -13,6 +13,7 @@ module Admin
     def edit
       render_fae_form(
         fields: form_fields,
+        recent_changes: true,
         page: 'Admin/Beers/Form'
       )
     end

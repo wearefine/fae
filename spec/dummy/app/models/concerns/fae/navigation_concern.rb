@@ -4,6 +4,8 @@ module Fae
 
     def structure
       [
+        item('Wines', path: admin_wines_path),
+        item('Releases', path: admin_releases_path),
         item('Beers', path: admin_beers_path),
         item('Press', subitems: [
           item('Articles', path: admin_articles_path),
@@ -17,6 +19,7 @@ module Fae
         item('Widgets', path: admin_widgets_path),
         item('Cars', path: admin_cars_path),
         item('Car Categories', path: admin_car_categories_path),
+        item('Trucks', path: admin_trucks_path),
         # scaffold inject marker
       ]
     end

@@ -87,7 +87,8 @@ module Fae
       query[:draft] = true if params[:draft] == 'true'
 
       if open_row
-        query[:open_nested_assoc] = item.class.name.demodulize.underscore.pluralize
+        association = item.respond_to?(:association_type) ? item.association_type : nil
+        query[:open_nested_assoc] = association.presence || item.class.name.demodulize.underscore.pluralize
         query[:open_nested_row_id] = item.id if item.persisted?
       end
 

@@ -11,6 +11,7 @@ module Fae
     # Field types backed by a has_one Fae::Image / Fae::File rather than a
     # column, so they submit as nested attributes.
     ASSET_FIELD_TYPES = %w[image file].freeze
+    CTA_FIELD_TYPES = %w[cta].freeze
 
     included do
       inertia_config layout: 'fae/inertia'
@@ -427,7 +428,7 @@ module Fae
     # `index_path`, `submit_path`, `submit_method`, `param_key` and
     # `delete_path` can be overridden for custom route shapes such as singleton
     # resources.
-    def render_fae_form(item = @item, fields:, title: nil, subnav: nil, index_path: nil, submit_path: nil, submit_method: nil, param_key: nil, delete_path: :auto, page: 'Fae/Form')
+    def render_fae_form(item = @item, fields:, title: nil, subnav: nil, index_path: nil, submit_path: nil, submit_method: nil, param_key: nil, delete_path: :auto, recent_changes: false, page: 'Fae/Form')
       # Fae::BaseController#new saves the record before redirecting here, so
       # "new" is really an edit of an unsaved-looking row. The draft flag is
       # what tells the Vue form that cancelling should delete it again.
@@ -459,8 +460,33 @@ module Fae
         paramKey: param_key,
         blocks: fae_inertia_form_blocks(item, fields, draft),
         subnav: subnav.nil? ? fae_inertia_subnav_from_fields(fields) : fae_inertia_subnav(subnav),
+        recentChanges: (fae_inertia_recent_changes(item) if recent_changes && item.persisted? && !draft),
         draft: draft,
         deletePath: delete_path
+      }.compact
+    end
+
+    def fae_inertia_recent_changes(item)
+      changes = item.respond_to?(:tracked_changes) ? item.tracked_changes : []
+
+      {
+        title: t('fae.changes.recent'),
+        columns: {
+          user: t('fae.changes.user'),
+          type: t('fae.changes.type'),
+          attrs: t('fae.changes.attrs'),
+          modified: t('fae.changes.modified')
+        },
+        emptyText: t('fae.changes.no_changes'),
+        rows: changes.map do |change|
+          {
+            id: change.id,
+            user: change.user&.full_name.to_s,
+            type: change.change_type,
+            attrs: Array(change.updated_attributes).join(', '),
+            modified: helpers.fae_datetime_format(change.updated_at)
+          }
+        end
       }
     end
 
@@ -701,6 +727,8 @@ module Fae
 
       value = item.public_send(key)
 
+      return value.fae_display_field.to_s if value.respond_to?(:fae_display_field)
+
       case value
       when Date, Time, DateTime, ActiveSupport::TimeWithZone
         helpers.fae_date_format(value)
@@ -742,9 +770,11 @@ module Fae
         markdown: field[:markdown].presence,
         placeholder: field[:placeholder],
         relatedFlyout: related_flyout,
-        collection: (type == 'ranked_select' ? fae_inertia_ranked_collection(field, name) : fae_inertia_collection(field[:collection]) if %w[select multiselect ranked_select].include?(type)),
+        collection: (type == 'ranked_select' ? fae_inertia_ranked_collection(field, name) : fae_inertia_collection(field[:collection]) if %w[select multiselect two_pane_multiselect ranked_select].include?(type)),
+        groups: (fae_inertia_grouped_collection(field[:groups]) if type == 'grouped_select'),
         ranked: ranked,
-        asset: (fae_inertia_asset(item, field, name, type, label) if ASSET_FIELD_TYPES.include?(type))
+        asset: (fae_inertia_asset(item, field, name, type, label) if ASSET_FIELD_TYPES.include?(type)),
+        cta: (fae_inertia_cta(field, name, label) if CTA_FIELD_TYPES.include?(type))
       }.compact
     end
 
@@ -852,12 +882,13 @@ module Fae
 
     def fae_inertia_field_value(item, name, type, ranked = nil)
       return fae_inertia_asset_value(item, name, type) if ASSET_FIELD_TYPES.include?(type)
+      return fae_inertia_cta_value(item, name) if CTA_FIELD_TYPES.include?(type)
 
       if type == 'ranked_select'
         return Array(ranked&.dig(:rows)).map { |row| row[:associatedId].to_s }
       end
 
-      if type == 'multiselect'
+      if %w[multiselect two_pane_multiselect].include?(type)
         values = item.public_send(name)
         return Array(values).map { |entry| entry.respond_to?(:id) ? entry.id : entry }.map(&:to_s)
       end
@@ -1045,6 +1076,37 @@ module Fae
       end
     end
 
+    def fae_inertia_grouped_collection(groups)
+      source = groups.is_a?(Hash) ? groups.to_a : Array(groups)
+
+      source.map do |group|
+        label, collection = group.is_a?(Array) ? group : [group[:label], group[:options]]
+        { label: label.to_s, options: fae_inertia_collection(collection) }
+      end
+    end
+
+    def fae_inertia_cta_value(item, name)
+      record = item.public_send(name)
+
+      {
+        id: record&.id,
+        label: record&.cta_label.to_s,
+        link: record&.cta_link.to_s,
+        altText: record&.cta_alt_text.to_s
+      }
+    end
+
+    def fae_inertia_cta(field, name, label)
+      {
+        paramKey: "#{name}_attributes",
+        labelLabel: field[:cta_label_label] || "#{label} Label",
+        linkLabel: field[:cta_link_label] || "#{label} Link",
+        linkHelperText: field.fetch(:cta_link_helper_text, 'Relative link to an internal page. For external links, include the https://'),
+        altTextLabel: field[:cta_alt_text_label] || "#{label} Alt Text",
+        altTextHelperText: field.fetch(:cta_alt_text_helper_text, 'Descriptive link label text read by screen readers.')
+      }
+    end
+
     # Serializes one has_many table for the parent's form -- the Vue
     # counterpart of fae/shared/_nested_table.
     #
@@ -1058,14 +1120,15 @@ module Fae
       records = parent.public_send(assoc)
       klass = records.klass
       cols = Array(table[:cols])
-      nested_controller = fae_inertia_nested_controller(assoc)
+      nested_controller = fae_inertia_nested_controller(table[:controller] || assoc)
       fields = table[:fields] || nested_controller.fae_form_fields
       fields = fae_inertia_normalize_form_fields(fields)
       title = table[:title] || assoc.titleize
 
       # Nested resources are routed as siblings of the parent, which is what
       # _nested_table assumed too when it derived new_/edit_#{assoc}_path.
-      base_path = "#{@index_path.rpartition('/').first}/#{assoc}"
+      route_segment = (table[:controller] || assoc).to_s
+      base_path = "#{@index_path.rpartition('/').first}/#{route_segment}"
       # Carried so a save on a draft parent redirects back to a form that still
       # knows it is a draft.
       query = draft ? '?draft=true' : ''
@@ -1080,7 +1143,7 @@ module Fae
         hideDeleteButton: table.fetch(:hide_delete_button, false),
         openRowId: (params[:open_nested_assoc] == assoc && params[:open_nested_row_id].present? ? params[:open_nested_row_id].to_i : nil),
         openNewRow: (params[:open_nested_assoc] == assoc && params[:open_nested_new] == 'true'),
-        paramKey: assoc.singularize,
+        paramKey: (table[:param_key] || assoc.singularize).to_s,
         # Names the Inertia error bag for this table, so a failed nested save
         # cannot light up the parent form's fields (or a sibling table's).
         errorBag: assoc.singularize,
@@ -1090,7 +1153,7 @@ module Fae
         # field in the Slim nested form did.
         parentKey: parent.class.reflect_on_association(assoc).foreign_key.to_s,
         parentId: parent.id,
-        extraHidden: fae_inertia_nested_hidden_fields(parent, assoc),
+        extraHidden: fae_inertia_nested_hidden_fields(parent, assoc).merge(table[:extra_hidden] || {}),
         newFields: fields.map { |field| fae_inertia_form_field(klass.new, field) },
         rows: records.map do |record|
           {
@@ -1220,7 +1283,7 @@ module Fae
     # is described by nothing more than its association name -- the same
     # convention _nested_table used to derive its paths.
     def fae_inertia_nested_controller(assoc)
-      "#{self.class.name.deconstantize}::#{assoc.camelize}Controller".constantize
+      "#{self.class.name.deconstantize}::#{assoc.to_s.camelize}Controller".constantize
     end
   end
 end

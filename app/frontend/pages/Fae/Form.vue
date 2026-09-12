@@ -7,6 +7,7 @@ import FaeFormField from '../../components/FaeFormField.vue'
 import FaeFlexComponentsTable from '../../components/FaeFlexComponentsTable.vue'
 import FaeNestedTable from '../../components/FaeNestedTable.vue'
 import { assetSubmitOptions, useAssetFields } from '../../composables/useAssetFields.js'
+import { useCtaFields } from '../../composables/useCtaFields.js'
 import { useFaeComponent } from '../../composables/useFaeComponent.js'
 import { useSlugger } from '../../composables/useSlugger.js'
 import { useFormGuard } from '../../composables/useFormGuard.js'
@@ -38,6 +39,7 @@ const props = defineProps({
   // place the form declared it rather than after every input.
   blocks: { type: Array, default: () => [] },
   subnav: { type: Array, default: () => [] },
+  recentChanges: { type: Object, default: null },
   // True when the record was created by Fae::BaseController#new and has not
   // been deliberately saved yet -- see useFormGuard.
   draft: { type: Boolean, default: false },
@@ -244,12 +246,14 @@ provideFaeFormContext({
   formFieldComponent: FaeFormFieldComponent,
   nestedTableComponent: FaeNestedTableComponent,
   flexComponentsTableComponent: FaeFlexComponentsTableComponent,
+  recentChanges: computed(() => props.recentChanges),
   canTranslate: canTranslateField,
   translatingFieldName,
   translateField,
 })
 
 const { hasAssets, toParams } = useAssetFields(fields)
+const { toParams: ctaToParams } = useCtaFields(fields)
 useSlugger({ form, fields })
 
 const USER_THEME_PREVIEWS = {
@@ -417,7 +421,7 @@ function submit() {
   const { method, extraParams, forceFormData } = assetSubmitOptions(hasAssets.value, props.submitMethod)
 
   form
-    .transform((data) => ({ [props.paramKey]: toParams(data), ...extraParams }))
+    .transform((data) => ({ [props.paramKey]: ctaToParams(toParams(data)), ...extraParams }))
     // A failed save redirects back to this same URL, so the component is not
     // remounted and the user's input survives in `form` while the errors
     // arrive as page props.

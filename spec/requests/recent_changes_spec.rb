@@ -29,3 +29,38 @@ describe 'recent_changes partial' do
   end
 
 end
+
+describe 'recent changes Inertia form component' do
+  before do
+    admin_login
+  end
+
+  it 'serializes tracked changes for an edit form' do
+    beer = FactoryBot.create(:beer)
+    beer.tracked_changes.create!(
+      user: Fae::User.first,
+      change_type: 'updated',
+      updated_attributes: ['name']
+    )
+
+    get Rails.application.routes.url_helpers.edit_admin_beer_path(beer),
+      headers: { 'X-Inertia' => 'true' }
+
+    page = response.parsed_body
+
+    expect(page['component']).to eq('Admin/Beers/Form')
+    expect(page.dig('props', 'recentChanges', 'title')).to eq('Recent Changes')
+    expect(page.dig('props', 'recentChanges', 'rows')).to include(
+      a_hash_including('type' => 'updated', 'attrs' => 'name')
+    )
+  end
+
+  it 'omits recent changes from a draft form' do
+    beer = FactoryBot.create(:beer)
+
+    get Rails.application.routes.url_helpers.edit_admin_beer_path(beer, draft: true),
+      headers: { 'X-Inertia' => 'true' }
+
+    expect(response.parsed_body.dig('props', 'recentChanges')).to be_nil
+  end
+end

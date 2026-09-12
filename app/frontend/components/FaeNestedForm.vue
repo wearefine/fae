@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/vue3'
 
 import FaeFormField from './FaeFormField.vue'
 import { assetSubmitOptions, useAssetFields } from '../composables/useAssetFields.js'
+import { useCtaFields } from '../composables/useCtaFields.js'
 import { useFaeComponent } from '../composables/useFaeComponent.js'
 import { useFaePageComponent } from '../composables/useFaePageComponent.js'
 import { useSlugger } from '../composables/useSlugger.js'
@@ -45,6 +46,7 @@ const form = useForm({
 })
 
 const { hasAssets, toParams } = useAssetFields(toRef(props, 'fields'))
+const { toParams: ctaToParams } = useCtaFields(toRef(props, 'fields'))
 useSlugger({ form, fields: toRef(props, 'fields') })
 const FaeFormFieldComponent = useFaeComponent('FaeFormField', FaeFormField)
 const generatedFormComponent = useFaePageComponent(props.formPage)
@@ -71,7 +73,7 @@ registerUnsavedChanges(() => form.isDirty)
 function submit() {
   const { method, extraParams, forceFormData } = assetSubmitOptions(hasAssets.value, props.method)
 
-  form.transform((data) => ({ [props.paramKey]: toParams(data), ...extraParams }))[method](props.action, {
+  form.transform((data) => ({ [props.paramKey]: ctaToParams(toParams(data)), ...extraParams }))[method](props.action, {
     preserveScroll: true,
     forceFormData,
     // Load-bearing rather than incidental: the response re-renders the parent

@@ -3,10 +3,12 @@ import { computed, reactive, ref, watch, useId } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 
 import FaeAssetField from './FaeAssetField.vue'
+import FaeCtaField from './FaeCtaField.vue'
 import FaeFlyout from './FaeFlyout.vue'
 import FaeMarkdownEditor from './FaeMarkdownEditor.vue'
 import FaeRankedSelectField from './FaeRankedSelectField.vue'
 import FaeTypeaheadSelect from './FaeTypeaheadSelect.vue'
+import FaeTwoPaneMultiselectField from './FaeTwoPaneMultiselectField.vue'
 import { assetSubmitOptions, useAssetFields } from '../composables/useAssetFields.js'
 import { useFaeComponent } from '../composables/useFaeComponent.js'
 import { useSlugger } from '../composables/useSlugger.js'
@@ -57,6 +59,11 @@ const FaeFlyoutComponent = useFaeComponent('FaeFlyout', FaeFlyout)
 const page = usePage()
 
 const localOptions = ref([])
+const groupedOptions = computed(() =>
+  (props.field.groups || []).flatMap((group) =>
+    (group.options || []).map((option) => ({ ...option, group: group.label }))
+  )
+)
 const flyoutOpen = ref(false)
 const flyoutSaving = ref(false)
 const flyoutError = ref('')
@@ -272,6 +279,19 @@ function resetFlyoutForm() {
   flyoutError.value = ''
 }
 
+function flyoutFieldValue(field) {
+  const value = flyoutValues[field.name]
+  if (value !== undefined && value !== null) return value
+  if (['image', 'file'].includes(String(field.type))) return field.value || {}
+  return ''
+}
+
+watch(
+  () => relatedFlyout.value?.fields,
+  resetFlyoutForm,
+  { immediate: true }
+)
+
 function openFlyout() {
   if (!relatedFlyout.value || flyoutSaving.value) return
   resetFlyoutForm()
@@ -401,6 +421,14 @@ async function saveFlyout() {
     @update:model-value="$emit('update:modelValue', $event)"
   />
 
+  <FaeCtaField
+    v-else-if="field.cta"
+    :field="field"
+    :model-value="modelValue"
+    :error="error"
+    @update:model-value="$emit('update:modelValue', $event)"
+  />
+
   <div
     v-else
     class="fae-field"
@@ -441,10 +469,10 @@ async function saveFlyout() {
 
     <component
       :is="FaeTypeaheadSelectComponent"
-      v-else-if="field.type === 'select'"
+      v-else-if="field.type === 'select' || field.type === 'grouped_select'"
       :id="inputId"
       :model-value="modelValue"
-      :options="localOptions"
+      :options="field.type === 'grouped_select' ? groupedOptions : localOptions"
       :placeholder="field.placeholder || 'Select...'"
       @update:model-value="$emit('update:modelValue', $event)"
     />
@@ -468,6 +496,14 @@ async function saveFlyout() {
         {{ option.label }}
       </option>
     </select>
+
+    <FaeTwoPaneMultiselectField
+      v-else-if="field.type === 'two_pane_multiselect'"
+      :id="inputId"
+      :model-value="Array.isArray(modelValue) ? modelValue : []"
+      :options="field.collection || []"
+      @update:model-value="$emit('update:modelValue', $event)"
+    />
 
     <component
       :is="FaeRankedSelectFieldComponent"
@@ -521,7 +557,7 @@ async function saveFlyout() {
           v-for="flyoutField in relatedFlyout?.fields || []"
           :key="`flyout-${inputId}-${flyoutField.name}`"
           :field="flyoutField"
-          :model-value="flyoutValues[flyoutField.name]"
+          :model-value="flyoutFieldValue(flyoutField)"
           :error="flyoutFieldErrors[flyoutField.name]"
           :can-translate="canTranslateFlyoutField(flyoutField)"
           :translating="flyoutTranslatingFieldName === flyoutField.name"

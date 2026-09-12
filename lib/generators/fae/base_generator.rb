@@ -153,7 +153,7 @@ module Fae
         inject_into_file "app/models/#{file_name}.rb", after: "include Fae::BaseModelConcern\n" do
           <<~RUBY.indent(2)
 
-            acts_as_list add_new_at: :top
+            acts_as_list add_new_at: :bottom
             default_scope { order(:position) }
 
           RUBY
@@ -210,7 +210,7 @@ module Fae
     end
 
     def inertia_form_fields
-      attributes.filter_map do |arg|
+      fields = attributes.filter_map do |arg|
         next if %w[position on_stage on_prod].include?(arg.name)
 
         if is_attachment(arg)
@@ -234,6 +234,14 @@ module Fae
           }
         end
       end
+
+      if fields.any? { |field| field[:name] == :slug }
+        source = fields.find { |field| field[:name] == :name } ||
+                 fields.find { |field| field[:name] == :title }
+        source[:slug_source] = true if source.present?
+      end
+
+      fields
     end
 
     def inertia_unsupported_fields
