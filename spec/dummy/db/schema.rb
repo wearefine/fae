@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
+ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -75,6 +75,18 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.index ["position"], name: "index_beer_aromas_on_position"
   end
 
+  create_table "beer_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.integer "position"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_beer_categories_on_draft"
+  end
+
   create_table "beers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "seo_title"
@@ -84,6 +96,30 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
+    t.integer "beer_category_id"
+  end
+
+  create_table "car_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.integer "position"
+    t.boolean "on_stage"
+    t.boolean "on_prod"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_car_categories_on_draft"
+  end
+
+  create_table "cars", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name_en"
+    t.string "name_frca"
+    t.string "name_zh"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "car_category_id"
+    t.index ["draft"], name: "index_cars_on_draft"
   end
 
   create_table "cats", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -368,6 +404,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.boolean "otp_required_for_login"
     t.text "otp_backup_codes", size: :long, collation: "utf8mb4_bin"
     t.boolean "user_mfa_enabled"
+    t.string "theme", default: "light", null: false
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
@@ -387,6 +424,18 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+  end
+
+  create_table "intro_pages", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.text "body"
+    t.date "date"
+    t.integer "article_id"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_intro_pages_on_article_id"
+    t.index ["draft"], name: "index_intro_pages_on_draft"
   end
 
   create_table "jerseys", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -459,6 +508,20 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
   end
 
+  create_table "privacy_pages", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "title"
+    t.text "headline"
+    t.text "body"
+    t.text "body_2"
+    t.string "seo_title"
+    t.text "seo_description"
+    t.string "social_media_title"
+    t.text "social_media_description"
+    t.boolean "draft", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "release_notes", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "title"
     t.text "body"
@@ -519,6 +582,8 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.date "date"
   end
 
   create_table "static_page_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -577,6 +642,15 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.string "name_frca"
   end
 
+  create_table "trucks", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_trucks_on_draft"
+  end
+
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "slug"
@@ -604,6 +678,27 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
     t.integer "position"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
+  end
+
+  create_table "widgets", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.boolean "on_stage", default: true
+    t.boolean "on_prod", default: false
+    t.boolean "draft"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["draft"], name: "index_widgets_on_draft"
+    t.index ["on_prod"], name: "index_widgets_on_on_prod"
+    t.index ["on_stage"], name: "index_widgets_on_on_stage"
+    t.index ["position"], name: "index_widgets_on_position"
+  end
+
+  create_table "wine_beers", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.integer "wine_id"
+    t.integer "beer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "winemakers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -657,4 +752,5 @@ ActiveRecord::Schema[7.0].define(version: 2026_04_16_164721) do
   end
 
   add_foreign_key "articles", "article_categories"
+  add_foreign_key "intro_pages", "articles"
 end

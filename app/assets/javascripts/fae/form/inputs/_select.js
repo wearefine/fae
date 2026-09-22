@@ -93,7 +93,7 @@ Fae.form.select = {
       });
 
       // prevent multiple deselect all actions from being added when nested forms are generated
-      if ($('.multiselect-action_wrap').length === 0) {
+      if ($element.closest(query_input_select).find('.multiselect-action_wrap').length === 0) {
         // Add actions to wraper
         $deselect_all_action.insertAfter($chosen);
       }
@@ -133,7 +133,7 @@ Fae.form.select = {
 
     // Enable or disable actions based on state
     function setAbilities($element) {
-      var $deselect_all = $('.js-multiselect-action-deselect_all');
+      var $deselect_all = $element.closest(query_input_select).find('.js-multiselect-action-deselect_all');
 
       // Only allow deselects when options are selected
       if ($element.find('option:selected').length) {

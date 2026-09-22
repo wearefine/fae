@@ -63,4 +63,24 @@ feature 'fae_multiselect' do
     }
   end
 
+  scenario 'should display a de-select all option for each association', js: true do
+    wine = FactoryBot.create(:wine)
+    2.times { FactoryBot.create(:release) }
+    2.times { FactoryBot.create(:beer) }
+
+    admin_login
+    visit edit_admin_wine_path(wine)
+
+    expect(page).to have_css('div.wine_releases .js-multiselect-action-deselect_all', count: 1)
+    expect(page).to have_css('div.wine_beers .js-multiselect-action-deselect_all', count: 1)
+
+    within('div.wine_releases') do
+      find('.chosen-choices').click
+      find('.chosen-results li', match: :first).click
+      expect(page).to have_css('.js-multiselect-action-deselect_all', visible: true)
+    end
+
+    expect(page).to have_css('div.wine_beers .js-multiselect-action-deselect_all', visible: :hidden)
+  end
+
 end

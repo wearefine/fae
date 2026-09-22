@@ -6,6 +6,9 @@ class Wine < ActiveRecord::Base
 
   has_many :releases
   has_many :winemakers
+  
+  has_many :wine_beers
+  has_many :beers, through: :wine_beers
 
   has_fae_cta :test_cta_en
   has_fae_cta :test_cta_zh
