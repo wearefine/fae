@@ -1,0 +1,24 @@
+FROM ruby:2.5
+
+# OpenSSL 1.1.1's ARM feature probing crashes (SIGILL) on Apple M4 CPUs.
+ENV OPENSSL_armcap=0
+
+# Buster is EOL; its packages now live only on archive.debian.org.
+RUN echo 'deb http://archive.debian.org/debian buster main' > /etc/apt/sources.list
+
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN apt-get update -y
+RUN apt-get install -y \
+      libqt5webkit5-dev \
+      qt5-default \
+      xvfb
+
+ENV app /app
+ENV BUNDLE_PATH /gems
+ENV GEM_HOME /gems
+
+COPY Gemfile* $app/
+
+ENV PATH="$PATH:$BUNDLE_PATH/bin"
+
+COPY . $app/

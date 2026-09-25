@@ -88,6 +88,8 @@ module Fae
         return :imageable
       when 'Fae::File'
         return :fileable
+      when 'Fae::Video'
+        return :videoable
       end
     end
 

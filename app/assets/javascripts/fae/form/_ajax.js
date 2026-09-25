@@ -140,6 +140,7 @@ Fae.form.ajax = {
             $this.find('.nested-form' ).replaceWith($html);
             $this.find('.select select').fae_chosen();
             $this.find('.input.file').fileinputer();
+            Fae.form.video.initUploaders();
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();

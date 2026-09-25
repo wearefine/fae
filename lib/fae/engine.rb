@@ -14,6 +14,7 @@ module Fae
     require 'acts_as_list'
     require 'slim'
     require 'kaminari'
+    require 'mux_ruby'
     require 'fae/version'
 
     config.autoload_paths += %W(#{config.root}/lib)

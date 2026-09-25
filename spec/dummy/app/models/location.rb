@@ -6,4 +6,6 @@ class Location < ActiveRecord::Base
   end
 
   belongs_to :contact, class_name: 'Person'
+
+  has_fae_video :video
 end

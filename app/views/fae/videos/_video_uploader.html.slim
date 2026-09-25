@@ -1,0 +1,50 @@
+ruby:
+  require_locals ['f'], local_assigns
+  item              ||= f.object
+  video_name        ||= :video
+  the_video           = item.send(video_name)
+  label             ||= video_name.to_s.titleize
+  helper_text       ||= ""
+  required          ||= false
+  attached_as       ||= video_name.to_s
+  languages           = f.object.class.try(:fae_fields).try(:[], video_name).try(:[], :languages)
+  language          ||= nil
+  show_form_manager ||= true
+
+- if languages.present?
+  - languages.each do |lang|
+    = render 'fae/videos/video_uploader', f: f, item: item, video_name: "#{video_name}_#{lang}".to_sym, label: "#{label} (#{lang.to_s})", helper_text: helper_text, required: required, attached_as: attached_as, language: lang, show_form_manager: show_form_manager
+
+- else
+  ruby:
+    form_manager_id = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
+    form_manager_id += "_#{language}" if language.present?
+    video_errors = the_video.errors[:upload_id]
+    video_urls = the_video.id.present? ? { 'data-status-url' => fae.video_status_path(the_video.id), 'data-attach-url' => fae.attach_video_upload_path(the_video.id) } : {}
+  - wrapper_html = language.present? ? { data: { language: language } } : {}
+  = f.simple_fields_for video_name, defaults: { wrapper_html: wrapper_html } do |v|
+    .input.field.video*wrapper_html.merge(video_urls) class="#{video_name} #{'field_with_errors' if video_errors.any?}" data-form-manager-id=form_manager_id
+      label class="#{'required' if required}"
+        - if required
+          abbr title="required" *
+
+        = " #{label.html_safe}"
+
+        - if helper_text.present?
+          h6.helper_text
+            span.helper_text_text = helper_text
+
+      - if the_video.uploaded?
+        = render 'fae/videos/video_preview', video: the_video, label: label
+
+      .asset-inputs style="#{'display:none;' if the_video.uploaded?}"
+        mux-uploader.js-mux-uploader data-endpoint=fae.create_video_upload_path
+        - if video_errors.any?
+          span.error = video_errors.to_sentence
+        = v.input :upload_id, as: :hidden, input_html: { class: 'js-mux-upload-id' }
+        = v.input :title, as: :hidden, input_html: { class: 'js-mux-title' }
+        - videoable_type = f.object.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : f.object.class.name
+        = v.input :videoable_type, as: :hidden, input_html: { value: videoable_type }
+        = v.input :attached_as, as: :hidden, input_html: { value: attached_as }
+
+    = v.hidden_field :required, value: required

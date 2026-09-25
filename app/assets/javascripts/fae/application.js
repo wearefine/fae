@@ -41,6 +41,7 @@
 //= require fae/form/inputs/_select
 //= require fae/form/inputs/_text
 //= require fae/form/inputs/_checkbox
+//= require fae/form/inputs/_video
 //= require fae/form/_slugger
 //= require fae/form/_validator
 //= require fae/form/_cancel

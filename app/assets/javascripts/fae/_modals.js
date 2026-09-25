@@ -16,6 +16,7 @@ Fae.modals = {
     this.modalOpen = false;
 
     this.imageModals();
+    this.videoModals();
     this.markdownModalListener();
 
     this.ajaxModalListener();
@@ -38,6 +39,36 @@ Fae.modals = {
       $this.modal({
         minHeight: image_height,
         minWidth: image_width,
+        overlayClose: true
+      });
+    });
+  },
+
+  /**
+   * Click event to open modal with a Mux player
+   */
+  videoModals: function() {
+    $('#js-main-content').on('click', '.js-video-modal', function(e) {
+      e.preventDefault();
+      var $this = $(this);
+
+      var ratio = String($this.attr('data-aspect-ratio') || '16:9').split(':');
+      var width = Math.min(960, Math.round($(window).width() * 0.8));
+      var height = Math.round(width * ratio[1] / ratio[0]) || Math.round(width * 9 / 16);
+      var maxHeight = Math.round($(window).height() * 0.8);
+      if (height > maxHeight) {
+        width = Math.round(width * maxHeight / height);
+        height = maxHeight;
+      }
+
+      var $player = $('<mux-player stream-type="on-demand" autoplay></mux-player>')
+        .attr('playback-id', $this.attr('data-playback-id'))
+        .attr('metadata-video-title', $this.attr('data-title'))
+        .css({ display: 'block', width: width, height: height });
+
+      $player.modal({
+        minHeight: height + 55,
+        minWidth: width + 55,
         overlayClose: true
       });
     });

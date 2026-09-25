@@ -93,6 +93,9 @@ cs:
       logo_helper: 'Použito na login stránce, 300x300px .jpg'
     images:
       alt_helper: 'Krátký popis obsahu obrázku, slouží por uživatele se zrakovým postižením.'
+    videos:
+      processing: 'Processing video. This will update when it is ready.'
+      errored: 'Video processing failed. Delete it and upload again.'
     application:
       user_absent: 'uživatel neexistuje'
       no_logs: 'Žádné záznamy nenalezeny.'

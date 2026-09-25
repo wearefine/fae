@@ -87,6 +87,9 @@ zh-CN:
       logo_helper: 'Used on login page, 300x300px .jpg'
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
+    videos:
+      processing: 'Processing video. This will update when it is ready.'
+      errored: 'Video processing failed. Delete it and upload again.'
     application:
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'

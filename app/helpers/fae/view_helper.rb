@@ -21,6 +21,10 @@ module Fae
       render 'fae/application/file_uploader', f: f, file_name: file_name, label: label, required: required, helper_text: helper_text, show_form_manager: show_form_manager
     end
 
+    def fae_video_form(f, video_name, label: nil, helper_text: nil, required: nil, attached_as: nil, show_form_manager: true)
+      render 'fae/videos/video_uploader', f: f, video_name: video_name, label: label, required: required, helper_text: helper_text, attached_as: attached_as, show_form_manager: show_form_manager
+    end
+
     def fae_content_form(f, attribute, label: nil, hint: nil, helper_text: nil, markdown: nil, markdown_supported: nil, input_options: nil, show_form_manager: true)
       render 'fae/application/content_form', f: f, attribute: attribute, label: label, hint: hint, helper_text: helper_text, markdown: markdown, markdown_supported: markdown_supported, input_options: input_options, show_form_manager: show_form_manager
     end

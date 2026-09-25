@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_04_182247) do
+ActiveRecord::Schema.define(version: 2026_09_24_192205) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -271,6 +271,26 @@ ActiveRecord::Schema.define(version: 2022_03_04_182247) do
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
     t.index ["role_id"], name: "index_fae_users_on_role_id"
     t.index ["unlock_token"], name: "index_fae_users_on_unlock_token", unique: true
+  end
+
+  create_table "fae_videos", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "upload_id"
+    t.string "asset_id"
+    t.string "playback_id"
+    t.string "title"
+    t.string "status"
+    t.float "duration"
+    t.string "aspect_ratio"
+    t.string "videoable_type"
+    t.bigint "videoable_id"
+    t.string "attached_as"
+    t.boolean "required", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["asset_id"], name: "index_fae_videos_on_asset_id"
+    t.index ["attached_as"], name: "index_fae_videos_on_attached_as"
+    t.index ["upload_id"], name: "index_fae_videos_on_upload_id"
+    t.index ["videoable_type", "videoable_id"], name: "index_fae_videos_on_videoable_type_and_videoable_id"
   end
 
   create_table "jerseys", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -7,6 +7,8 @@ html
       link href=@option.favicon.asset_url rel="shortcut icon"
     == stylesheet_link_tag 'fae/application', media: 'all'
     == javascript_include_tag 'fae/application'
+    script src="https://cdn.jsdelivr.net/npm/@mux/mux-uploader"
+    script src="https://cdn.jsdelivr.net/npm/@mux/mux-player"
     == csrf_meta_tags
 
   body class=body_class

@@ -100,6 +100,14 @@ module Fae
         accepts_nested_attributes_for file_name_symbol, allow_destroy: true
       end
 
+      def has_fae_video(video_name_symbol)
+        has_one video_name_symbol, -> { where(attached_as: video_name_symbol.to_s) },
+          as: :videoable,
+          class_name: '::Fae::Video',
+          dependent: :destroy
+        accepts_nested_attributes_for video_name_symbol, allow_destroy: true
+      end
+
     end
 
     private

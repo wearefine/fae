@@ -15,6 +15,7 @@ Fae.form = {
     this.text.init();
     this.select.init();
     this.checkbox.init();
+    this.video.init();
     this.validator.init();
     this.cancel.init();
     this.ajax.init();

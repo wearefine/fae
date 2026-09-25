@@ -25,6 +25,13 @@ Fae::Engine.routes.draw do
   # AJAX
   delete 'files/:id/delete_file' => 'files#delete_file', as: :delete_file
   delete 'images/:id/delete_image' => 'images#delete_image', as: :delete_image
+  delete 'videos/:id/delete_video' => 'videos#delete_video', as: :delete_video
+  post 'videos/create_upload' => 'videos#create_upload', as: :create_video_upload
+  post 'videos/:id/attach_upload' => 'videos#attach_upload', as: :attach_video_upload
+  get 'videos/:id/status' => 'videos#status', as: :video_status
+
+  # Mux webhooks (signature verified, no session)
+  post 'mux/webhook' => 'mux_webhooks#create', as: :mux_webhook
 
   post 'toggle/:object/:id/:attr', to: 'utilities#toggle', as: 'toggle'
   post 'sort/:object', to: 'utilities#sort', as: 'sort'
