@@ -4,6 +4,8 @@ describe 'Mux webhooks' do
 
   let(:secret) { 'mux-test-secret' }
   let(:body) { { type: 'video.asset.ready', data: { id: 'asset123', status: 'ready', playback_ids: [{ id: 'play123', policy: 'public' }] } }.to_json }
+  before { allow_any_instance_of(Fae::Video).to receive(:claim_mux_asset) }
+
   let!(:video) { FactoryGirl.create(:fae_video, asset_id: 'asset123') }
 
   around do |example|

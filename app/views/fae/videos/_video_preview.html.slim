@@ -8,12 +8,17 @@ ruby:
   end
 
 .asset-actions.-video class=('js-video-processing' if video.processing?)
-  - if video.ready?
-    img.js-video-modal src=video.thumbnail_url alt=video_title data-playback-id=video.playback_id data-aspect-ratio=video.aspect_ratio data-title=video_title
+  - if video.id.blank?
+    .asset-title = video.title.presence || label
+  - elsif video.ready?
+    img.js-video-modal src=video.thumbnail_url alt=(video.alt.presence || video_title) data-playback-id=video.playback_id data-aspect-ratio=video.aspect_ratio data-title=video_title
     .asset-title = video_title
   - elsif video.errored?
     .asset-title = t('fae.videos.errored')
   - else
     .asset-title = t('fae.videos.processing')
 
-  = link_to '', fae.delete_video_path(video.id), class: 'asset-delete js-asset-delete js-video-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') } if video.id.present?
+  - if video.id.present?
+    = link_to '', fae.delete_video_path(video.id), class: 'asset-delete js-asset-delete js-video-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+  - else
+    a.asset-delete.js-video-upload-delete href='#'

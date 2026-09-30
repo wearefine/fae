@@ -73,6 +73,11 @@ Fae.form.video = {
           .done(function(data) {
             _this._renderStatus($wrapper, data);
           });
+      } else {
+        var $actions = $('<div class="asset-actions -video" />')
+          .append($('<div class="asset-title" />').text(fileName))
+          .append('<a class="asset-delete js-video-upload-delete" href="#"></a>');
+        _this._renderStatus($wrapper, { html: $actions });
       }
     });
   },
@@ -132,18 +137,30 @@ Fae.form.video = {
     var _this = this;
 
     $(document).on('ajax:success', '.js-video-delete', function() {
-      var $wrapper = $(this).closest('.input.video');
-      $wrapper.find('.js-mux-upload-id, .js-mux-title').val('');
-
-      // Swap in a fresh uploader; the old one is stuck in its "upload complete" state
-      var $old = $wrapper.find('.js-mux-uploader');
-      var $fresh = $('<mux-uploader class="js-mux-uploader"></mux-uploader>').attr('data-endpoint', $old.attr('data-endpoint'));
-      $old.replaceWith($fresh);
-      _this._initUploader($fresh[0]);
-
-      // Preview may have been inserted after the page's own delete handlers were bound
-      $wrapper.find('.asset-actions').stop(true).remove();
-      $wrapper.find('.asset-inputs').stop(true).css('opacity', '').show();
+      _this._resetInput($(this).closest('.input.video'));
     });
+
+    // Unsaved uploads are already tagged orphaned in Mux, so just clear the input
+    $(document).on('click', '.js-video-upload-delete', function(e) {
+      e.preventDefault();
+      _this._resetInput($(this).closest('.input.video'));
+    });
+  },
+
+  /**
+   * @protected
+   */
+  _resetInput: function($wrapper) {
+    $wrapper.find('.js-mux-upload-id, .js-mux-title').val('');
+
+    // Swap in a fresh uploader; the old one is stuck in its "upload complete" state
+    var $old = $wrapper.find('.js-mux-uploader');
+    var $fresh = $('<mux-uploader class="js-mux-uploader"></mux-uploader>').attr('data-endpoint', $old.attr('data-endpoint'));
+    $old.replaceWith($fresh);
+    this._initUploader($fresh[0]);
+
+    // Preview may have been inserted after the page's own delete handlers were bound
+    $wrapper.find('.asset-actions').stop(true).remove();
+    $wrapper.find('.asset-inputs').stop(true).css('opacity', '').show();
   }
 };

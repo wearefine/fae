@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_09_24_192205) do
+ActiveRecord::Schema.define(version: 2026_09_25_180100) do
 
   create_table "acclaims", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "score"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 2026_09_24_192205) do
     t.boolean "required", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "alt"
     t.index ["asset_id"], name: "index_fae_videos_on_asset_id"
     t.index ["attached_as"], name: "index_fae_videos_on_attached_as"
     t.index ["upload_id"], name: "index_fae_videos_on_upload_id"

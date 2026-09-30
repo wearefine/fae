@@ -13,6 +13,8 @@ describe Fae::Video do
     }
   end
 
+  before { allow_any_instance_of(Fae::Video).to receive(:claim_mux_asset) }
+
   describe 'concerns' do
     it 'should allow instance methods through Fae::VideoConcern' do
       video = FactoryGirl.build_stubbed(:fae_video)
@@ -51,12 +53,12 @@ describe Fae::Video do
   end
 
   describe '.create_mux_upload' do
-    it 'should tag the new asset with its source environment' do
+    it 'should tag the new asset with its source environment as orphaned' do
       uploads_api = instance_double(MuxRuby::DirectUploadsApi)
       allow(MuxRuby::DirectUploadsApi).to receive(:new).and_return(uploads_api)
       expect(uploads_api).to receive(:create_direct_upload) do |request|
         expect(request.cors_origin).to eq('http://example.com')
-        expect(request.new_asset_settings.passthrough).to eq("source-#{Rails.env}^")
+        expect(request.new_asset_settings.passthrough).to eq("source-#{Rails.env}^orphaned-#{Rails.env}^")
         double(data: double(id: 'upload123', url: 'https://upload.example'))
       end
 
@@ -91,6 +93,43 @@ describe Fae::Video do
       allow(assets_api).to receive(:update_asset).and_raise(MuxRuby::ApiError.new('boom'))
       video.remove_mux_asset!
       expect(video.reload).not_to be_uploaded
+    end
+  end
+
+  describe 'claiming the Mux asset' do
+    let(:assets_api) { instance_double(MuxRuby::AssetsApi) }
+    let(:video) { FactoryGirl.create(:fae_video, upload_id: 'upload123') }
+
+    before do
+      allow_any_instance_of(Fae::Video).to receive(:claim_mux_asset).and_call_original
+      allow_any_instance_of(Fae::Video).to receive(:sync_with_mux)
+      allow(MuxRuby::AssetsApi).to receive(:new).and_return(assets_api)
+    end
+
+    it 'should remove the orphaned tag once a record has the asset' do
+      video
+      allow(assets_api).to receive(:get_asset).with('assetABC')
+        .and_return(double(data: double(passthrough: "source-#{Rails.env}^orphaned-#{Rails.env}^")))
+      expect(assets_api).to receive(:update_asset) do |asset_id, request|
+        expect(asset_id).to eq('assetABC')
+        expect(request.passthrough).to eq("source-#{Rails.env}^")
+      end
+
+      Fae::Video.process_mux_event('type' => 'video.upload.asset_created', 'data' => { 'id' => 'upload123', 'asset_id' => 'assetABC' })
+    end
+
+    it 'should leave assets without the orphaned tag alone' do
+      allow(assets_api).to receive(:get_asset).and_return(double(data: double(passthrough: "source-#{Rails.env}^")))
+      expect(assets_api).not_to receive(:update_asset)
+
+      video.update!(asset_id: 'assetABC')
+    end
+
+    it 'should not claim when the asset is cleared' do
+      video.update_column(:asset_id, 'assetABC')
+      expect(assets_api).not_to receive(:get_asset)
+
+      video.clear_mux_attributes!
     end
   end
 

@@ -14,13 +14,19 @@ module Fae
     # Mux webhooks can arrive before the parent form is saved, so pull the current state on first save.
     before_save :sync_with_mux, if: -> { upload_id_changed? && upload_id.present? && playback_id.blank? }
     after_commit :soft_delete_mux_asset, on: :destroy
+    after_commit :claim_mux_asset, on: [:create, :update], if: -> { previous_changes.key?('asset_id') && asset_id.present? }
 
+    def self.mux_marker(tag)
+      "#{tag}-#{Rails.env}#{PASSTHROUGH_SEPARATOR}"
+    end
+
+    # Uploads start out orphaned so abandoned forms leave a trace in Mux; the tag is cleared once a record owns the asset.
     def self.create_mux_upload(cors_origin)
       upload_request = MuxRuby::CreateUploadRequest.new(
         cors_origin: cors_origin,
         new_asset_settings: MuxRuby::CreateAssetRequest.new(
           playback_policies: [MuxRuby::PlaybackPolicy::PUBLIC],
-          passthrough: "source-#{Rails.env}#{PASSTHROUGH_SEPARATOR}"
+          passthrough: mux_marker('source') + mux_marker('orphaned')
         )
       )
       MuxRuby::DirectUploadsApi.new.create_direct_upload(upload_request).data
@@ -121,14 +127,22 @@ module Fae
     # The Mux asset is kept; its passthrough is tagged so deleted videos can be found and purged later.
     def soft_delete_mux_asset
       return if asset_id.blank?
+      update_mux_passthrough { |passthrough| passthrough + self.class.mux_marker('deleted') }
+    end
+
+    def claim_mux_asset
+      update_mux_passthrough { |passthrough| passthrough.sub(self.class.mux_marker('orphaned'), '') }
+    end
+
+    def update_mux_passthrough
       assets_api = MuxRuby::AssetsApi.new
       passthrough = assets_api.get_asset(asset_id).data.passthrough.to_s
-      marker = "deleted-#{Rails.env}#{PASSTHROUGH_SEPARATOR}"
-      assets_api.update_asset(asset_id, MuxRuby::UpdateAssetRequest.new(passthrough: passthrough + marker))
+      updated = yield(passthrough)
+      assets_api.update_asset(asset_id, MuxRuby::UpdateAssetRequest.new(passthrough: updated)) unless updated == passthrough
     rescue MuxRuby::NotFoundError
       nil
     rescue MuxRuby::ApiError => e
-      Rails.logger.error("Fae::Video could not soft delete Mux asset #{asset_id}: #{e.message}")
+      Rails.logger.error("Fae::Video could not update Mux asset #{asset_id}: #{e.message}")
     end
 
   end

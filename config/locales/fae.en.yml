@@ -123,6 +123,7 @@ en:
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
     videos:
+      alt_helper: 'Read by search engines and visually impaired readers.'
       processing: 'Processing video. This will update when it is ready.'
       errored: 'Video processing failed. Delete it and upload again.'
     application:

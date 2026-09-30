@@ -6,4 +6,5 @@
 
     = fae_association f, :contact, collection: Person.all, include_blank: 'None'
 
-    = fae_video_form f, :video
+    = fae_video_form f, :video, helper_text: 'Similary to images, preview is available after form is saved'
+    = fae_image_form f, :image
