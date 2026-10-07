@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
+ActiveRecord::Schema[7.0].define(version: 2026_10_07_150404) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"
@@ -75,18 +75,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.index ["position"], name: "index_beer_aromas_on_position"
   end
 
-  create_table "beer_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "slug"
-    t.integer "position"
-    t.boolean "on_stage"
-    t.boolean "on_prod"
-    t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["draft"], name: "index_beer_categories_on_draft"
-  end
-
   create_table "beers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "seo_title"
@@ -96,30 +84,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "draft", default: false
-    t.integer "beer_category_id"
-  end
-
-  create_table "car_categories", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "slug"
-    t.integer "position"
-    t.boolean "on_stage"
-    t.boolean "on_prod"
-    t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["draft"], name: "index_car_categories_on_draft"
-  end
-
-  create_table "cars", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name_en"
-    t.string "name_frca"
-    t.string "name_zh"
-    t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "car_category_id"
-    t.index ["draft"], name: "index_cars_on_draft"
   end
 
   create_table "cats", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -213,7 +177,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.datetime "updated_at", precision: nil
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_files_on_attached_as"
-    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable"
+    t.index ["fileable_type", "fileable_id"], name: "index_fae_files_on_fileable_type_and_fileable_id"
   end
 
   create_table "fae_flex_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -260,7 +224,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.integer "file_size"
     t.boolean "required", default: false
     t.index ["attached_as"], name: "index_fae_images_on_attached_as"
-    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable"
+    t.index ["imageable_type", "imageable_id"], name: "index_fae_images_on_imageable_type_and_imageable_id"
   end
 
   create_table "fae_open_ai_api_calls", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -368,7 +332,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.index ["attached_as"], name: "index_fae_text_fields_on_attached_as"
-    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable"
+    t.index ["contentable_type", "contentable_id"], name: "index_fae_text_fields_on_contentable_type_and_contentable_id"
     t.index ["on_prod"], name: "index_fae_text_fields_on_on_prod"
     t.index ["on_stage"], name: "index_fae_text_fields_on_on_stage"
     t.index ["position"], name: "index_fae_text_fields_on_position"
@@ -404,7 +368,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.boolean "otp_required_for_login"
     t.text "otp_backup_codes", size: :long, collation: "utf8mb4_bin"
     t.boolean "user_mfa_enabled"
-    t.string "theme", default: "light", null: false
     t.index ["confirmation_token"], name: "index_fae_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_fae_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_fae_users_on_reset_password_token", unique: true
@@ -413,10 +376,25 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.check_constraint "json_valid(`otp_backup_codes`)", name: "otp_backup_codes"
   end
 
-  create_table "featured_items_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+  create_table "fae_videos", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "upload_id"
+    t.string "asset_id"
+    t.string "playback_id"
     t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string "status"
+    t.float "duration"
+    t.string "aspect_ratio"
+    t.string "videoable_type"
+    t.bigint "videoable_id"
+    t.string "attached_as"
+    t.boolean "required", default: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "alt"
+    t.index ["asset_id"], name: "index_fae_videos_on_asset_id"
+    t.index ["attached_as"], name: "index_fae_videos_on_attached_as"
+    t.index ["upload_id"], name: "index_fae_videos_on_upload_id"
+    t.index ["videoable_type", "videoable_id"], name: "index_fae_videos_on_videoable_type_and_videoable_id"
   end
 
   create_table "hero_components", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -424,18 +402,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
-  end
-
-  create_table "intro_pages", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "title"
-    t.text "body"
-    t.date "date"
-    t.integer "article_id"
-    t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "index_intro_pages_on_article_id"
-    t.index ["draft"], name: "index_intro_pages_on_draft"
   end
 
   create_table "jerseys", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -505,21 +471,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.string "name_frca"
-    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable"
-  end
-
-  create_table "privacy_pages", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "title"
-    t.text "headline"
-    t.text "body"
-    t.text "body_2"
-    t.string "seo_title"
-    t.text "seo_description"
-    t.string "social_media_title"
-    t.text "social_media_description"
-    t.boolean "draft", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["poly_thingable_type", "poly_thingable_id"], name: "index_poly_things_on_poly_thingable_type_and_poly_thingable_id"
   end
 
   create_table "release_notes", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -578,12 +530,18 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.datetime "updated_at", precision: nil
   end
 
+  create_table "singleton_pages", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "spirits", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "description"
-    t.date "date"
   end
 
   create_table "static_page_aromas", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -642,15 +600,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.string "name_frca"
   end
 
-  create_table "trucks", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
-    t.string "slug"
-    t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["draft"], name: "index_trucks_on_draft"
-  end
-
   create_table "validation_testers", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "name"
     t.string "slug"
@@ -678,20 +627,6 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
     t.integer "position"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
-  end
-
-  create_table "widgets", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
-    t.string "name"
-    t.integer "position"
-    t.boolean "on_stage", default: true
-    t.boolean "on_prod", default: false
-    t.boolean "draft"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["draft"], name: "index_widgets_on_draft"
-    t.index ["on_prod"], name: "index_widgets_on_on_prod"
-    t.index ["on_stage"], name: "index_widgets_on_on_stage"
-    t.index ["position"], name: "index_widgets_on_position"
   end
 
   create_table "wine_beers", charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
@@ -752,5 +687,4 @@ ActiveRecord::Schema[7.0].define(version: 2026_09_22_001536) do
   end
 
   add_foreign_key "articles", "article_categories"
-  add_foreign_key "intro_pages", "articles"
 end

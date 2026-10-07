@@ -1,0 +1,25 @@
+ruby:
+	form_options = {
+		url: admin_singleton_page_path,
+		html: {
+			data: {
+				form_manager_model: @item.fae_form_manager_model_name,
+				form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+			}
+		}
+	}
+= simple_form_for(@item, form_options) do |f|
+  == render 'fae/shared/form_header', header: @klass_name, subnav: ['Body', 'Call to Action'], show_flash_messages: true
+
+  main.content
+    = fae_input f, :name, input_class: 'slugger'
+    = fae_input f, :slug
+
+  section.content#body
+    h2 Body
+    = fae_input f, :body
+    = fae_image_form f, :image
+
+  section.content#cta
+    h2 Call to Action
+    = fae_cta_form f, :cta

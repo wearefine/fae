@@ -53,12 +53,16 @@ module Fae
       end
 
       # Always add an indexed draft boolean column for scaffold-generated objects
-      @@attributes_flat << "draft:boolean:index"
+      @@attributes_flat << "draft:boolean:index" if draft_support?
 
       @@attributes_flat = @@attributes_flat.uniq.join(' ')
     end
 
   private
+
+    def draft_support?
+      true
+    end
 
     ## Generator Methods
 

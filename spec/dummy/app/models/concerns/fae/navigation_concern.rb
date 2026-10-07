@@ -34,6 +34,7 @@ module Fae
           item('Nested Tables In Form', path: fae.edit_content_block_path('nested_tables_in_form')),
         ]),
         item('Spirits', path: admin_spirits_path),
+        item('Singleton Page', path: edit_admin_singleton_page_path),
         # scaffold inject marker
       ]
     end
