@@ -3,6 +3,14 @@
 module Types
   class QueryType < Types::BaseObject
 
+    field :singleton_page, Types::SingletonPageType, null: true do
+      description "Returns the SingletonPage instance"
+    end
+
+    def singleton_page
+      SingletonPage.instance
+    end
+
     field :nested_tables_in_form_page, Types::NestedTablesInFormPageType, null: true do
       description "Returns the NestedTablesInForm Page instance"
     end

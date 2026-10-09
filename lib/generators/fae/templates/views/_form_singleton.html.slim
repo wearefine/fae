@@ -1,0 +1,32 @@
+ruby:
+	form_options = {
+		url: <%= options.namespace %>_<%= file_name %>_path,
+		html: {
+			data: {
+				form_manager_model: @item.fae_form_manager_model_name,
+				form_manager_info: (@form_manager.present? ? @form_manager.to_json : nil)
+			}
+		}
+	}
+= simple_form_for(@item, form_options) do |f|
+  == render 'fae/shared/form_header', header: @klass_name, show_flash_messages: true
+
+  main.content
+<% @form_attrs.each do |attr| -%>
+    = fae_input f, :<%= attr %>
+<% end -%>
+
+<% @association_names.each do |attr| -%>
+    = fae_association f, :<%= attr %>
+<% end -%>
+<% @attachments.each do |attachment| %>
+<% if attachment.type == :image -%>
+    = fae_image_form f, :<%= attachment.name -%>
+<% elsif attachment.type == :file -%>
+    = fae_file_form f, :<%= attachment.name -%>
+<% elsif attachment.type == :seo_set -%>
+    = fae_seo_set_form f, :<%= attachment.name -%>
+<% elsif attachment.type == :cta -%>
+    = fae_cta_form f, :<%= attachment.name -%>
+<% end -%>
+<% end -%>

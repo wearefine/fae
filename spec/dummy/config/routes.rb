@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   namespace :admin do
+    resource :singleton_page, only: [:edit, :update]
     resources :article_subcategories
     resources :knobs
     resources :sub_list_items
