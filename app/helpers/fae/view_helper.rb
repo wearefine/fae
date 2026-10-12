@@ -233,9 +233,10 @@ module Fae
     end
 
     def prepare_form_filter_hash(options)
-      form_hash = { class: 'js-filter-form table-filter-area' }
-      form_hash['data-cookie-key'] = options[:cookie_key] if options[:cookie_key].present?
-      form_hash
+      data = { controller: 'fae-filtering' }
+      data[:cookie_key] = options[:cookie_key] if options[:cookie_key].present?
+      data[:fae_filtering_frame_value] = options[:frame] if options[:frame].present?
+      { class: 'js-filter-form table-filter-area', data: data }
     end
   end
 end

@@ -12,6 +12,11 @@ Fae.form.filtering = {
     this.$pagination = $('.pagination');
     this.has_hash_on_load_and_cookie = false;
 
+    // fae_filter_form pages are handled by the fae-filtering Stimulus controller
+    if (this.$filter_form.is('[data-controller~="fae-filtering"]')) {
+      return;
+    }
+
     // init only on pages with filering, sorting or paging
     if (this.$filter_form.length || this.$pagination.length || $('.js-sort-column').length) {
       this.applyCookies();

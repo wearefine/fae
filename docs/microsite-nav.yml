@@ -125,3 +125,6 @@
     - name: Fae Standards
       path: docs/contributing/standards.md
       page_title: Contributing Standards for Fae | A Rails-Based CMS
+    - name: Migrating JavaScript to Stimulus
+      path: docs/contributing/stimulus_migration.md
+      page_title: Migrating Fae's JavaScript to Stimulus | A Rails-Based CMS

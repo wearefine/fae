@@ -16,6 +16,7 @@
     - If your app sets `config.assets.js_compressor = :uglifier`, switch to `:terser` or remove it. Uglifier can't parse ES modules.
     - If your app overrides Fae's layouts (`layouts/fae/application` or `layouts/devise`), add `== render 'fae/application/importmap_tags'` after `javascript_include_tag 'fae/application'`, and add `data-controller="fae-contrast"` to the `body` tag of `layouts/fae/application`.
 * The `Fae.contrast` JS object has been removed and replaced by the `fae-contrast` Stimulus controller.
+* Filtering, sorting and paging on `fae_filter_form` pages, and the form header's language select, are now handled by the `fae-filtering` and `fae-language` Stimulus controllers. If your `fae.js` redefines methods on `Fae.form.filtering` or `Fae.navigation.language`, move those customizations to a [controller subclass](../topics/custom_js_css.md#extending-or-replacing-faes-controllers). If you override `fae/shared/_form_header`, add `data: { controller: 'fae-language', fae_language_preference_path_value: "/#{fae_path}/language_preference" }` to the language `select_tag` (without it, the legacy module keeps working).
 
 # To v3.1
 

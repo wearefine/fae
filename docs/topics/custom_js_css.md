@@ -61,6 +61,16 @@ application.register("map-picker", MapPickerController)
 
 Controllers connect to matching `data-controller` elements, including markup added after page load (e.g. by Fae's AJAX nested forms).
 
+### Fae's controllers
+
+| Identifier | Attached to | Replaces |
+|---|---|---|
+| `fae-contrast` | `body` in `layouts/fae/application` | `Fae.contrast` |
+| `fae-filtering` | forms rendered by `fae_filter_form` | `Fae.form.filtering` (pages with only pagination or `.js-sort-column` tables still use the legacy module) |
+| `fae-language` | the language select in `fae/shared/_form_header` | `Fae.navigation.language` toggling and preference saving |
+
+When a controller is attached, the legacy module it replaces doesn't run on that markup, so customizations made by redefining methods on the legacy object (e.g. in `fae.js`) won't take effect there. Extend the controller instead.
+
 ### Extending or replacing Fae's controllers
 
 Fae's controllers are registered with a `fae-` prefix (for example `fae-contrast`) and each one is pinned as its own module under `fae/controllers/`. Registering a controller with the same identifier replaces Fae's:

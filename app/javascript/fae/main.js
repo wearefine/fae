@@ -1,9 +1,13 @@
 import { Application } from "@hotwired/stimulus"
 import ContrastController from "fae/controllers/contrast_controller"
+import FilteringController from "fae/controllers/filtering_controller"
+import LanguageController from "fae/controllers/language_controller"
 
 const application = Application.start()
 window.Stimulus = application
 
 application.register("fae-contrast", ContrastController)
+application.register("fae-filtering", FilteringController)
+application.register("fae-language", LanguageController)
 
 export { application }

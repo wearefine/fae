@@ -5,6 +5,7 @@
 - enhancements
     + Load ES modules and Stimulus controllers through a Fae-owned importmap, with a `config/fae_importmap.rb` hook and `rails g fae:importmap` generator for host apps
     + Port the highlight color contrast script to the `fae-contrast` Stimulus controller
+    + Port filtering/sorting/paging for `fae_filter_form` to the `fae-filtering` Stimulus controller, and the form header language toggle to `fae-language`
     + Replace capybara-webkit with Cuprite (headless Chrome) for JS feature specs
 
 ## 3.1

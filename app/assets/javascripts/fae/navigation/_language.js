@@ -14,6 +14,11 @@ Fae.navigation.language = {
     this.el.$select = $('#js-language');
     this.el.$lang_divs = $('div[data-language]');
 
+    // handled by the fae-language Stimulus controller
+    if (this.el.$select.is('[data-controller~="fae-language"]')) {
+      return;
+    }
+
     if (this.el.$select.length) {
       this.setInitialState();
       this.addNavEvents();
