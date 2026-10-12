@@ -1,3 +1,5 @@
+require_relative 'importmap_generator'
+
 module Fae
   class InstallGenerator < Rails::Generators::Base
     source_root ::File.expand_path('../templates', __FILE__)
@@ -10,6 +12,7 @@ module Fae
       # copy templates and generators
       copy_file ::File.expand_path(::File.join(__FILE__, "../templates/tasks/fae_tasks.rake")), "lib/tasks/fae_tasks.rake"
       add_fae_assets
+      invoke Fae::ImportmapGenerator
       add_navigation_concern
       add_authorization_concern
       build_initializer

@@ -9,6 +9,14 @@
 
 ---
 
+# Unreleased
+
+* Fae now loads ES modules and [Stimulus](https://stimulus.hotwired.dev) controllers through its own importmap, alongside the existing Sprockets bundle. No changes are required for existing `app/assets/javascripts/fae.js` customizations.
+    - To add your own modules or controllers to the admin, run `rails g fae:importmap`. See [ES Modules and Stimulus](../topics/custom_js_css.md#es-modules-and-stimulus).
+    - If your app sets `config.assets.js_compressor = :uglifier`, switch to `:terser` or remove it. Uglifier can't parse ES modules.
+    - If your app overrides Fae's layouts (`layouts/fae/application` or `layouts/devise`), add `== render 'fae/application/importmap_tags'` after `javascript_include_tag 'fae/application'`, and add `data-controller="fae-contrast"` to the `body` tag of `layouts/fae/application`.
+* The `Fae.contrast` JS object has been removed and replaced by the `fae-contrast` Stimulus controller.
+
 # To v3.1
 
 * Fae 3.1 has additions to the base schema which require installing and running new migrations

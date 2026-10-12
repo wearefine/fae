@@ -54,13 +54,13 @@ feature 'fae_input' do
     end
 
     within('.release_content') do
-      expect(page).to have_selector('.js-html-editor')
+      expect(page).to have_selector('.trumbowyg-box')
     end
   end
 
   scenario 'should display HTML WYSIWYG when html: true', js: true do
     within('.release_content') do
-      expect(page).to have_selector('.js-html-editor')
+      expect(page).to have_selector('.trumbowyg-box')
     end
   end
 

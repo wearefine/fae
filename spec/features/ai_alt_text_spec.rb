@@ -7,7 +7,7 @@ RSpec.feature 'Generate Alt Text', type: :feature do
 
     # Add the image to the image input
     page.execute_script("$('#beer_image_attributes_asset').css({visibility: 'visible', position: 'static'}) ")
-    attach_file('beer_image_attributes_asset', 'spec/support/assets/test.jpg')
+    attach_file('beer_image_attributes_asset', File.expand_path('../support/assets/test.jpg', __dir__))
 
     find('button', text: 'Generate Alt', match: :first).click
 

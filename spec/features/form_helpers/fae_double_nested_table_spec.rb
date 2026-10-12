@@ -85,10 +85,15 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: "Sub Aroma"
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    dismiss_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.reject_js_confirms
 
     expect(page).to have_css('form#new_sub_aroma')
   end
@@ -109,10 +114,15 @@ feature 'fae_nested_table' do
       fill_in 'Name', with: "Sub Aroma"
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    accept_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.accept_js_confirms
 
     eventually {
       expect(current_path).to eq(admin_releases_path)

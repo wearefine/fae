@@ -7,9 +7,10 @@ html
       link href=@option.favicon.asset_url rel="shortcut icon"
     == stylesheet_link_tag 'fae/application', media: 'all'
     == javascript_include_tag 'fae/application'
+    == render 'fae/application/importmap_tags'
     == csrf_meta_tags
 
-  body class=body_class style=('--highlight-color:' + '#' + @option.colorway if @option.colorway.present?)
+  body class=body_class style=('--highlight-color:' + '#' + @option.colorway if @option.colorway.present?) data-controller="fae-contrast"
     == render 'mobilenav'
     == render 'header'
     .js-form-manager-container

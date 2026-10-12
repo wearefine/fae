@@ -1,15 +1,13 @@
 FROM ruby:3.1.1
 
+# Debian bullseye is EOL; its security updates now live on archive.debian.org
+RUN sed -i 's|http://security.debian.org/debian-security|http://archive.debian.org/debian-security|' /etc/apt/sources.list
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN apt-get update -y
-RUN apt-get install -y \
-      libqt5webkit5-dev \
+RUN apt-get update -y && apt-get install -y --no-install-recommends \
       build-essential \
-      qtbase5-dev \
-      qtchooser \
-      qt5-qmake \
-      qtbase5-dev-tools \
-      xvfb
+      chromium \
+      fonts-liberation \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV app /app
 ENV BUNDLE_PATH /gems

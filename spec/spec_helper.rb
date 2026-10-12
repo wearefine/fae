@@ -29,9 +29,6 @@ RSpec.configure do |config|
 
   Capybara.server = :webrick
 
-  # Use capybara-webkit as the JS driver
-  Capybara.javascript_driver = :webkit
-
   Capybara.default_max_wait_time = 5
 
   # fixes an issue with factories not being registered when running appraisal tests
@@ -78,10 +75,6 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::TemplateAssertions, :type => type
     config.include ::Rails::Controller::Testing::Integration, :type => type
   end
-end
-
-Capybara::Webkit.configure do |config|
-  config.allow_url("secure.gravatar.com")
 end
 
 Shoulda::Matchers.configure do |config|

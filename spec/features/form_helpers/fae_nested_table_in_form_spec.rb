@@ -105,10 +105,15 @@ feature 'fae_nested_table inside main form' do
       fill_in 'Name', with: 'Unsaved Item'
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    dismiss_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.reject_js_confirms
 
     expect(page).to have_css('.js-addedit-form-wrapper')
   end
@@ -124,10 +129,15 @@ feature 'fae_nested_table inside main form' do
       fill_in 'Name', with: 'Unsaved Item'
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    accept_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.accept_js_confirms
 
     eventually {
       expect(current_path).to eq('/admin/pages')
@@ -145,10 +155,15 @@ feature 'fae_nested_table inside main form' do
       fill_in 'Name', with: 'Unsaved Item'
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    dismiss_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.reject_js_confirms
 
     # The nested form's Save button should be re-enabled
     eventually {
@@ -267,10 +282,15 @@ feature 'fae_nested_table inside main form' do
       fill_in 'Name', with: 'Unsaved Sub Item'
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    dismiss_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.reject_js_confirms
 
     expect(page).to have_css('#list_items .js-addedit-form-wrapper .nested-form .js-addedit-form-wrapper')
   end
@@ -295,10 +315,15 @@ feature 'fae_nested_table inside main form' do
       fill_in 'Name', with: 'Unsaved Sub Item'
     end
 
-    within(:css, '.content-header') do
-      click_button 'Save'
+    accept_confirm do
+
+      within(:css, '.content-header') do
+
+        click_button 'Save'
+
+      end
+
     end
-    page.driver.browser.accept_js_confirms
 
     eventually {
       expect(current_path).to eq('/admin/pages')

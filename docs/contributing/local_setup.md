@@ -9,7 +9,7 @@ Before you fire this up locally, you'll need some dependencies installed.
 - ImageMagick
     + the easiest way to install ImageMagick is with Homebrew
     `brew install imagemagick`
-- [QT for capybara-webkit](https://github.com/thoughtbot/capybara-webkit/wiki/Installing-Qt-and-compiling-capybara-webkit#os-x-el-capitan-1011-and-yosemite-1010)
+- Google Chrome or Chromium, used headlessly by [Cuprite](https://github.com/rubycdp/cuprite) for JS feature specs
 
 ## Dummy App
 

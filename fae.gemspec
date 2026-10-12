@@ -24,6 +24,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass', '>= 3.4.0'
   s.add_dependency 'sass-rails', '>= 5.0.7'
   s.add_dependency 'uglifier'
+  s.add_dependency 'importmap-rails', '>= 1.2.1'
+  s.add_dependency 'stimulus-rails'
 
   # other dependencies
   s.add_dependency 'acts_as_list', '~> 0.9.11'

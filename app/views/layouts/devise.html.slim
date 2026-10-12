@@ -8,6 +8,7 @@ html
       link href=@option.favicon.asset_url rel="shortcut icon"
     == stylesheet_link_tag    "fae/application", media: "all"
     == javascript_include_tag "fae/application"
+    == render 'fae/application/importmap_tags'
     == csrf_meta_tags
 
   body.login-body

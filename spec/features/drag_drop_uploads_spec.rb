@@ -30,7 +30,7 @@ feature 'Drag and drop uploads for file fields' do
     JS
   
     # attach file to fake input
-    attach_file("fakeFileInput", 'spec/support/assets/test-2.jpg')
+    attach_file("fakeFileInput", File.expand_path('../support/assets/test-2.jpg', __dir__))
   
     page.execute_script <<-JS
       // Ideal solution would be using 'dataTransfer` object along with 'DragEvent' event in vanilla JS but Capybara webkit driver does not have access to either of those so jquery event must be used instead
@@ -48,7 +48,7 @@ feature 'Drag and drop uploads for file fields' do
   scenario 'should overwrite existing image when new image is dropped', js: true do
     # make input visible so capybara can attach file
     page.execute_script("$('#release_hero_image_attributes_asset').css({visibility: 'visible', position: 'static'}) ")
-    attach_file('release_hero_image_attributes_asset', 'spec/support/assets/test.jpg')
+    attach_file('release_hero_image_attributes_asset', File.expand_path('../support/assets/test.jpg', __dir__))
     expect(find('.hero_image .asset-actions span')).to have_content('test.jpg')
 
     drop_image('.hero_image')

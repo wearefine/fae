@@ -16,8 +16,10 @@ feature 'fae_export_csv' do
     visit admin_releases_path
 
     expect(page).to have_content("Export to CSV")
-    page.find('.button', text: 'Export to CSV').click
-    expect(page).to have_content('This is the introduction')
+    csv_path = page.find('.button', text: 'Export to CSV')[:href]
+    # Browsers download CSVs instead of rendering them, so fetch the file directly
+    csv = page.evaluate_async_script("fetch(arguments[0]).then(r => r.text()).then(arguments[1])", csv_path)
+    expect(csv).to include('This is the introduction')
   end
 
 end

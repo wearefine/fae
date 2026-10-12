@@ -198,21 +198,12 @@ Fae.form.validator = {
       );
 
       if (preventSave) {
-        // Re-enable the nested form's submit button (it was disabled by Rails UJS data-disable-with
-        // when the main form was submitted, since the nested form lives inside the main form)
-        // Use setTimeout to ensure this runs after Rails UJS has finished disabling buttons
+        // Rails UJS disables data-disable-with buttons 13ms after any submit, including this nested form's
+        // button since it lives inside the main form. Timers with equal delays run in the order they were
+        // set, so this re-enables them (restoring their original labels) after UJS has disabled them.
         setTimeout(function() {
-          const $nestedSubmitBtn = $nestedFormWrapper.find('input[type="submit"], button[type="submit"]');
-          $nestedSubmitBtn.each(function() {
-            const $btn = $(this);
-            $btn.prop('disabled', false);
-            if ($btn.is('input')) {
-              $btn.val('Save');
-            } else {
-              $btn.text('Save');
-            }
-          });
-        }, 1);
+          $.rails.enableFormElements($nestedFormWrapper);
+        }, 13);
 
         FCH.smoothScroll($nestedFormWrapper, 500, 100, -100);
       }

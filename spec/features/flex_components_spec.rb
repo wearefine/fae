@@ -31,8 +31,8 @@ RSpec.feature 'FlexComponents management', type: :feature do
       within('#components') do
         click_on(class: 'js-delete-link')
       end
-      expect(page).to_not have_content('Updated Component')
     end
+    expect(page).to_not have_content('Updated Component')
   end
 
   scenario 'User can CRUD flex components on regular models', js: true do
@@ -66,7 +66,7 @@ RSpec.feature 'FlexComponents management', type: :feature do
       within('#components') do
         click_on(class: 'js-delete-link')
       end
-      expect(page).to_not have_content('Updated Component')
     end
+    expect(page).to_not have_content('Updated Component')
   end
 end

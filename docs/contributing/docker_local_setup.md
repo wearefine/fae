@@ -1,11 +1,10 @@
 # Docker Local Setup
 
-1. Update Dockerfile to pull in an x-server lib. This is required for running a headless browser on a linux instance and is needed for running tests
-    ```
-    # place immediately after FROM definition
-    RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-    RUN apt-get update && apt-get install xvfb -y 
-    ```
+The dev image (`Dockerfile.dev`) includes Chromium, which [Cuprite](https://github.com/rubycdp/cuprite) runs headlessly for JS feature specs. After pulling changes to `Dockerfile.dev`, rebuild the image:
+
+```
+docker-compose build app
+```
 
 ## Setup DB
 1. Create the db's
@@ -29,8 +28,11 @@
     ```
 2. Run tests while inside container shell
     ```
-    RAILS_ENV=test xvfb-run -a bundle exec rspec
+    RAILS_ENV=test bundle exec rspec
     ```
+3. Optional environment variables for JS feature specs
+    - `JS_ERRORS=true` fails specs on uncaught JavaScript exceptions
+    - `HEADLESS=false` opens a visible browser window (outside docker only)
 <br>
 
 ## Running tests using Appraisal
