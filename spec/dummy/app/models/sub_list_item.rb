@@ -2,7 +2,7 @@ class SubListItem < ApplicationRecord
   include Fae::BaseModelConcern
   include Livable
         
-  belongs_to :list_item, touch: true
+  belongs_to :list_item, touch: true, optional: true
 
   acts_as_list add_new_at: :bottom
   default_scope { order(:position) }

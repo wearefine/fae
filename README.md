@@ -7,9 +7,11 @@
 
 Like many Rails CMS engines, Fae delivers all the basics to get you up and running quickly: authentication, authorization, a sleek UI, form helpers, image processing and workflows. But unlike other engines, Fae's generated models, controllers, and views are built to customize and scale.
 
-Fae 3.x supports Rails 7. For legacy Rails support you can use Fae 2.x on Rails 5.0 to 5.2.
+The current development version of Fae requires Rails 8.0+ with the Sprockets asset pipeline (see the [Quickstart Guide](docs/quickstart-guide.md)). Fae 3.x and 4.x support Rails 7. For legacy Rails support you can use Fae 2.x on Rails 5.0 to 5.2.
 
 ## Installation
+
+Fae requires the Sprockets asset pipeline. New Rails 8 apps use Propshaft, so first swap `gem "propshaft"` for `gem "sprockets-rails"` and add `app/assets/config/manifest.js` as described in the [Quickstart Guide](docs/quickstart-guide.md).
 
 1) Add the gem to your Gemfile and run `bundle install`
 

@@ -2,7 +2,7 @@ class ZigZagItem < ApplicationRecord
   include Fae::BaseModelConcern
   include Livable
         
-  belongs_to :zig_zag_component, touch: true
+  belongs_to :zig_zag_component, touch: true, optional: true
 
   acts_as_list add_new_at: :bottom, scope: :zig_zag_component
   default_scope { order(:position) }

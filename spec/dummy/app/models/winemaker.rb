@@ -1,7 +1,7 @@
 class Winemaker < ActiveRecord::Base
   include Fae::BaseModelConcern
 
-  belongs_to :wine, touch: true
+  belongs_to :wine, touch: true, optional: true
 
   acts_as_list add_new_at: :bottom
   default_scope { order(:position) }

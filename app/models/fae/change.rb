@@ -3,10 +3,10 @@ module Fae
     include Fae::Sortable
     include Fae::ChangeConcern
 
-    belongs_to :user
+    belongs_to :user, optional: true
     belongs_to :changeable, polymorphic: true
 
-    serialize :updated_attributes
+    serialize :updated_attributes, coder: YAML
 
     class << self
 

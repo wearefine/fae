@@ -3,7 +3,7 @@ class SubSpirit < ApplicationRecord
     
   has_fae_cta :tout_cta
 
-  belongs_to :spirit
+  belongs_to :spirit, optional: true
 
   def fae_display_field
     name

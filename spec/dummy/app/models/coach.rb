@@ -1,7 +1,7 @@
 class Coach < ActiveRecord::Base
   include Fae::BaseModelConcern
 
-  belongs_to :team
+  belongs_to :team, optional: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true

@@ -4,7 +4,7 @@
 
 Before you fire this up locally, you'll need some dependencies installed.
 
-- Ruby 2.3.1 via your version manager of choice
+- Ruby 3.3 via your version manager of choice
 - MySQL
 - ImageMagick
     + the easiest way to install ImageMagick is with Homebrew
@@ -15,7 +15,7 @@ Before you fire this up locally, you'll need some dependencies installed.
 
 There is a dummy app included in the Engine source. To get it running, follow these steps.
 
-After cloning the repo, cd into Fae and install gems into a gemset on Ruby 2.3.1:
+After cloning the repo, cd into Fae and install gems on Ruby 3.3:
 
 ```bash
 cd path/to/fae
@@ -56,26 +56,3 @@ Use [guard](https://github.com/guard/guard-rspec) to have specs autorunning as y
 ```bash
 guard
 ```
-
-### Appraisal
-
-[Appraisal](https://github.com/thoughtbot/appraisal) is an amazing gem that allows us to run the specs against multiple versions of Rails. You can find all support versions in the `Appraisals` file.
-
-To run all appraisals, first install all of the gems of the different appraisal versions with:
-
-```bash
-appraisal
-```
-
-To run tests in all appraisal versions:
-
-```bash
-appraisal rspec
-```
-
-Or you can run a specific version using the name defined in `Appraisals`:
-
-```bash
-appraisal rails_4_2 rspec
-```
-

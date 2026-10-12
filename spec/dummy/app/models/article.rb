@@ -4,7 +4,7 @@ class Article < ApplicationRecord
   acts_as_list add_new_at: :bottom
   default_scope { order(:position) }
 
-  belongs_to :article_category
+  belongs_to :article_category, optional: true
 
   validates :title, presence: true
   validates :article_category, presence: true

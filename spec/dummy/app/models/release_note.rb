@@ -1,7 +1,7 @@
 class ReleaseNote < ActiveRecord::Base
   include Fae::BaseModelConcern
 
-  belongs_to :release, touch: true
+  belongs_to :release, touch: true, optional: true
 
   def fae_nested_parent
     :release

@@ -1,5 +1,19 @@
 require 'devise'
 module Fae
+  # Rails 8 apps are generated with Propshaft, which can't run alongside the
+  # Sprockets pipeline Fae's assets depend on. Checked on load so the error
+  # surfaces before Sprockets complains about a missing manifest.js.
+  def self.check_asset_pipeline!
+    return unless defined?(::Propshaft)
+
+    raise <<~MSG
+      Fae requires Sprockets and can't run alongside Propshaft.
+      Replace `gem "propshaft"` with `gem "sprockets-rails"` in your Gemfile and add app/assets/config/manifest.js.
+      See https://github.com/wearefine/fae/blob/main/docs/quickstart-guide.md
+    MSG
+  end
+  check_asset_pipeline!
+
   class Engine < ::Rails::Engine
     isolate_namespace Fae
 
@@ -24,12 +38,17 @@ module Fae
 
     config.eager_load_paths += %W(#{config.root}/app)
 
+    # Also checked here in case propshaft is required after fae-rails
+    initializer 'fae.check_asset_pipeline' do
+      Fae.check_asset_pipeline!
+    end
+
     # Runs after importmap-rails adds the host's app/javascript so host files of the same name take precedence
     initializer 'fae.assets', after: 'importmap.assets' do |app|
       next unless app.config.respond_to?(:assets)
 
       app.config.assets.paths << root.join('app/javascript')
-      app.config.assets.precompile += %w( fae_importmap_manifest.js )
+      app.config.assets.precompile += %w( fae/manifest.js fae_importmap_manifest.js )
     end
 
     # Fae's admin uses its own importmap so it works regardless of how the host app bundles JS.
@@ -40,8 +59,7 @@ module Fae
       host_importmap = app.root.join('config/fae_importmap.rb')
       Fae.importmap.draw(host_importmap) if host_importmap.exist?
 
-      reloading = app.config.respond_to?(:reloading_enabled?) ? app.config.reloading_enabled? : !app.config.cache_classes
-      if app.config.importmap.sweep_cache && reloading
+      if app.config.importmap.sweep_cache && app.config.reloading_enabled?
         Fae.importmap.cache_sweeper(watches: [root.join('app/javascript'), app.root.join('app/javascript')])
 
         ActiveSupport.on_load(:action_controller_base) do

@@ -7,6 +7,14 @@
     + Port the highlight color contrast script to the `fae-contrast` Stimulus controller
     + Port filtering/sorting/paging for `fae_filter_form` to the `fae-filtering` Stimulus controller, and the form header language toggle to `fae-language`
     + Replace capybara-webkit with Cuprite (headless Chrome) for JS feature specs
+    + Require Rails 8.0+; the dummy app and test suite run on Rails 8.1 and Ruby 3.3 with `load_defaults 8.1`
+    + Raise a clear error on boot when Propshaft is loaded, and add Fae's asset manifest to the precompile list automatically
+    + Remove the Rails 5 Appraisals and the unused `sass`, `appraisal`, `rails-perftest`, `ruby-prof` and `thin` dependencies
+- bugs
+    + Record activity log changes made without a signed-in Fae user when `belongs_to` is required by default
+    + Declare a YAML coder for `Fae::Change#updated_attributes`, required when apps load Rails 7.1+ defaults
+    + Skip ImageMagick processing for SVG thumbnails
+    + Fix nested/flex component tables re-rendering stale HTML after saving, which could undo a delete made right after a save (e.g. flex components on content blocks)
 
 ## 3.1
 

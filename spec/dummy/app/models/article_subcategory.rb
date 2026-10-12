@@ -1,7 +1,7 @@
 class ArticleSubcategory < ApplicationRecord
   include Fae::BaseModelConcern
         
-  belongs_to :article_category, touch: true
+  belongs_to :article_category, touch: true, optional: true
   
   validates :name, presence: true
 

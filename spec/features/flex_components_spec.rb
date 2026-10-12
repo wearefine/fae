@@ -25,6 +25,7 @@ RSpec.feature 'FlexComponents management', type: :feature do
       click_on 'Save'
     end
     expect(page).to have_content('Updated Component')
+    wait_for_animations
 
     # Destroy
     accept_confirm do
@@ -60,6 +61,7 @@ RSpec.feature 'FlexComponents management', type: :feature do
       click_on 'Save'
     end
     expect(page).to have_content('Updated Component')
+    wait_for_animations
 
     # Destroy
     accept_confirm do

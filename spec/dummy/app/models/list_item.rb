@@ -2,7 +2,7 @@ class ListItem < ApplicationRecord
   include Fae::BaseModelConcern
   include Livable
         
-  belongs_to :static_page, touch: true, class_name: 'Fae::StaticPage'
+  belongs_to :static_page, touch: true, class_name: 'Fae::StaticPage', optional: true
 
   acts_as_list add_new_at: :bottom
   default_scope { order(:position) }

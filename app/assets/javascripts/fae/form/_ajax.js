@@ -512,9 +512,9 @@ Fae.form.ajax = {
     }
 
     // if there's a form wrap, slide it up before replacing content
-    console.log($form_wrapper.length);
+    // (once for all wrappers; a per-element callback would re-render stale HTML for each match)
     if ($form_wrapper.length) {
-      $form_wrapper.slideUp(regenerateHTML);
+      $form_wrapper.slideUp().promise().done(regenerateHTML);
 
     } else {
       regenerateHTML();

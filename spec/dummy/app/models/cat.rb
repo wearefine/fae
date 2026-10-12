@@ -1,7 +1,7 @@
 class Cat < ActiveRecord::Base
   include Fae::BaseModelConcern
 
-  belongs_to :aroma
+  belongs_to :aroma, optional: true
 
   def fae_display_field
     name

@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'Rakefile', 'README.md']
 
   # Rails dependencies
-  s.add_dependency 'rails', '>= 5.0'
+  s.add_dependency 'rails', '>= 8.0'
   s.add_dependency 'jquery-rails', '~> 4.3.1'
-  s.add_dependency 'sass', '>= 3.4.0'
-  s.add_dependency 'sass-rails', '>= 5.0.7'
+  s.add_dependency 'sprockets-rails', '>= 3.4'
+  s.add_dependency 'sass-rails', '>= 6.0'
   s.add_dependency 'uglifier'
   s.add_dependency 'importmap-rails', '>= 1.2.1'
   s.add_dependency 'stimulus-rails'
@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'acts_as_list', '~> 0.9.11'
   s.add_dependency 'browser', '~> 2.5.3'
   s.add_dependency 'carrierwave'
+  s.add_dependency 'csv'
   s.add_dependency 'devise'
   s.add_dependency 'jquery-ui-rails', '~> 6.0.1'
   s.add_dependency 'mini_magick'
@@ -45,10 +46,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'ruby-openai'
   s.add_dependency 'settingslogic'
 
-  s.add_development_dependency 'appraisal'
   s.add_development_dependency 'better_errors'
   s.add_development_dependency 'binding_of_caller'
-  s.add_development_dependency 'rails-perftest'
-  s.add_development_dependency 'ruby-prof'
-  s.add_development_dependency 'thin'
 end

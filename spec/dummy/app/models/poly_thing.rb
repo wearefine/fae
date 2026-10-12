@@ -1,7 +1,7 @@
 class PolyThing < ApplicationRecord
   include Fae::BaseModelConcern
 
-  belongs_to :poly_thingable, polymorphic: true
+  belongs_to :poly_thingable, polymorphic: true, optional: true
 
   has_fae_image :image
 

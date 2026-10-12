@@ -16,3 +16,9 @@ def eventually(options = {})
     sleep interval
   end
 end
+
+# Waits for jQuery animations (e.g. FCH.smoothScroll, slideUp) to finish so
+# clicks aren't dispatched at coordinates that move mid-scroll.
+def wait_for_animations
+  eventually { expect(page.evaluate_script('window.jQuery ? jQuery(":animated").length : 0')).to eq(0) }
+end

@@ -8,6 +8,6 @@ class Event < ActiveRecord::Base
   validates :city, inclusion: ["Los Angeles", "San Francisco", "Portland"];
   validates :name, presence: true
 
-  belongs_to :release
+  belongs_to :release, optional: true
   has_many :people
 end

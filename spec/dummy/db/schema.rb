@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2026_10_07_150404) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_07_150404) do
   create_table "acclaims", id: :integer, charset: "utf8mb3", collation: "utf8mb3_general_ci", force: :cascade do |t|
     t.string "score"
     t.string "publication"

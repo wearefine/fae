@@ -1,7 +1,7 @@
 class Aroma < ActiveRecord::Base
   include Fae::BaseModelConcern
 
-  belongs_to :release
+  belongs_to :release, optional: true
   has_many :cats
   has_many :sub_aromas, dependent: :destroy
   

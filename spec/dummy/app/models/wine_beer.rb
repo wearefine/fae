@@ -1,4 +1,4 @@
 class WineBeer < ApplicationRecord
-  belongs_to :wine
-  belongs_to :beer
+  belongs_to :wine, optional: true
+  belongs_to :beer, optional: true
 end

@@ -48,7 +48,8 @@ describe Fae::Role do
     it 'acts_as_list should automatically add new roles to the bottom' do
       role1 = FactoryBot.create(:fae_role, position: 3)
       role2 = FactoryBot.create(:fae_role)
-      expect(role2.reload.position).to eq(4)
+      expect(role2.reload.position).to be > role1.position
+      expect(role2.position).to eq(Fae::Role.unscoped.maximum(:position))
     end
   end
 

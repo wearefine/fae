@@ -1,28 +1,45 @@
 # Quickstart Guide
 
-This installation guide is for a Rails 7.0 application.
+This installation guide is for a Rails 8 application.
 
-If you are starting from scratch, install Rails via:
+If you are starting from scratch, install Rails and create your app via:
 
 ```bash
-gem install rails -v '~> 7.0.0'
+gem install rails -v '~> 8.1'
+rails new my_app -d mysql
 ```
 
 ## Installation
 
-1) Add the gem to your `Gemfile` and run `bundle install`.
+1) Fae uses the Sprockets asset pipeline, while new Rails 8 apps are generated with Propshaft. Swap them in your `Gemfile`:
+
+```ruby
+# gem "propshaft"
+gem "sprockets-rails"
+```
+
+Then create `app/assets/config/manifest.js`:
+
+```JavaScript
+//= link_tree ../images
+//= link_directory ../stylesheets .css
+//= link_tree ../../javascript .js
+//= link_tree ../../../vendor/javascript .js
+```
+
+2) Add the gem to your `Gemfile` and run `bundle install`.
 
 ```ruby
 gem 'fae-rails'
 ```
 
-2) Run Fae's installer.
+3) Run Fae's installer.
 
 ```bash
 rails g fae:install
 ```
 
-3) Start your Rails server and visit http://localhost:3000/admin to setup your super admin user.
+4) Start your Rails server and visit http://localhost:3000/admin to setup your super admin user.
 
 That's it, you are up and running with Fae!
 

@@ -20,8 +20,15 @@ module Fae
       "system/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end
 
+    # SVGs are displayed at their original URL, so their thumb is a plain copy
     version :thumb do
-      process :resize_to_fill => [150,100]
+      process :resize_to_fill => [150,100], if: :raster?
+    end
+
+    private
+
+    def raster?(new_file)
+      new_file.extension.to_s.downcase != 'svg'
     end
 
   end

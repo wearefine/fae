@@ -1,10 +1,12 @@
 # Docker Local Setup
 
-The dev image (`Dockerfile.dev`) includes Chromium, which [Cuprite](https://github.com/rubycdp/cuprite) runs headlessly for JS feature specs. After pulling changes to `Dockerfile.dev`, rebuild the image:
+The dev image (`Dockerfile.dev`) runs Ruby 3.3 on Debian bookworm and includes Chromium, which [Cuprite](https://github.com/rubycdp/cuprite) runs headlessly for JS feature specs. After pulling changes to `Dockerfile.dev`, rebuild the image:
 
 ```
 docker-compose build app
 ```
+
+If the Ruby version changed, reinstall gems into the `gems` volume with `docker-compose run -w /app app bundle install`.
 
 ## Setup DB
 1. Create the db's
@@ -34,26 +36,3 @@ docker-compose build app
     - `JS_ERRORS=true` fails specs on uncaught JavaScript exceptions
     - `HEADLESS=false` opens a visible browser window (outside docker only)
 <br>
-
-## Running tests using Appraisal
-
-1. Start a bash shell in containers /app directory
-    ```
-    docker-compose run -w /app app /bin/bash
-    ```
-2. Download gems for appraisal versions
-    ```
-    appraisal install
-    ```
-3. If you need to update any gems for a specific appraisal gemset
-    ```
-    bundle update --gemfile='/app/gemfiles/rails_5_2.gemfile'
-
-    # change to use whichever gemfile.lock you need updated
-    ```
-4. Run tests against an appraisal gemset. Omit the appraisal name to run tests against all versions
-    ```
-    RAILS_ENV=test appraisal rails_5_2 xvfb-run -a rspec
-    ```
-
-

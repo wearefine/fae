@@ -7,6 +7,8 @@ require "fae-rails"
 
 module Dummy
   class Application < Rails::Application
+    config.load_defaults 8.1
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -21,8 +23,6 @@ module Dummy
     config.i18n.available_locales = [:en, :cs, :frca, :zh]
 
     config.action_controller.include_all_helpers = false
-
-    config.active_record.legacy_connection_handling = false
 
     config.active_record.encryption.primary_key = ENV["PRIMARY_KEY"]
     config.active_record.encryption.deterministic_key = ENV["DETERMINISTIC_KEY"]

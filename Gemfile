@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby '3.1.1'
+ruby '~> 3.3.0'
 
 # Declare your gem's dependencies in fae.gemspec.
 # Bundler will treat runtime dependencies like base dependencies, and
@@ -16,12 +16,9 @@ gemspec
 # gem 'debugger'
 
 # Set the version of Rails for the dummy app
-gem 'rails', '~> 7.0.2'
+gem 'rails', '~> 8.1.0'
 
-# Lock in Rake to a version compatible with rspec-rails 3.0
 gem 'rake'
-
-gem 'sass', require: 'sass'
 
 group :test, :development do
   gem 'rspec-rails'
@@ -30,24 +27,19 @@ end
 
 group :test do
   gem 'webrick'
-  gem 'factory_bot_rails', '~> 4.8.2'
+  gem 'factory_bot_rails'
   gem 'cuprite'
   gem 'capybara-screenshot'
   gem 'guard-rspec'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers', require: false
   gem 'yarjuf'
   gem 'database_cleaner'
   gem 'rails-controller-testing'
 end
 
-gem 'capistrano',  '~> 3.1'
-gem 'capistrano-rails', git: 'https://github.com/wearefine/rails'
-gem 'capistrano-rvm'
-
 gem 'mysql2'
 gem 'pg'
-gem "puma", "~> 5.0"
+gem "puma", ">= 6.0"
 
 gem "fog-aws"
 

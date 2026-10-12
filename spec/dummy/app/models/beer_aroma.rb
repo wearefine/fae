@@ -1,8 +1,8 @@
 class BeerAroma < ApplicationRecord
   include Fae::BaseModelConcern
 
-  belongs_to :beer
-  belongs_to :aroma
+  belongs_to :beer, optional: true
+  belongs_to :aroma, optional: true
 
   acts_as_list scope: :beer
 
