@@ -35,4 +35,8 @@ If the Ruby version changed, reinstall gems into the `gems` volume with `docker-
 3. Optional environment variables for JS feature specs
     - `JS_ERRORS=true` fails specs on uncaught JavaScript exceptions
     - `HEADLESS=false` opens a visible browser window (outside docker only)
+4. After changing SCSS in `app/stylesheets`, rebuild the committed CSS
+    ```
+    docker-compose run -w /app app bundle exec rake fae:css:build
+    ```
 <br>

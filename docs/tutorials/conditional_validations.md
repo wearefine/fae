@@ -5,7 +5,7 @@ In order to add validation that is conditional you must configure FAE and [Judge
 Once you've done this you can require a field based on the value of another. For example: if you only want to require a `slug` field if you check `detail page` checkbox on a project object.
 
 * [Add Validator](#add-validator)
-* [Fae SCSS](#fae-scss)
+* [Fae CSS](#fae-css)
 * [Fae JS](#fae-js)
 
 ---
@@ -76,22 +76,18 @@ and in FAE.js require the file above at the top
 //= require validator
 ```
 
-## Fae SCSS
+## Fae CSS
 
-In `fae.scss` add in some styles for the `hidden` and `is_required_and_hidden` classes.
+In `fae_custom.css` (or `fae_custom.scss`) add in some styles for the `hidden` and `is_required_and_hidden` classes.
 
-```sass
-// Add custom SCSS to this file
-
+```css
 .hidden {
   display: none;
 }
 
-label.is_required_and_hidden {
-  &:before {
-    content: '* ';
-    color: var(--highlight-color);
-  }
+label.is_required_and_hidden::before {
+  content: '* ';
+  color: var(--highlight-color);
 }
 ```
 

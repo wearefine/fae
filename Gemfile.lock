@@ -19,7 +19,6 @@ PATH
       remotipart (~> 1.4.0)
       rqrcode
       ruby-openai
-      sass-rails (>= 6.0)
       settingslogic
       simple_form (<= 5.1)
       slim
@@ -219,6 +218,15 @@ GEM
       reline
     globalid (1.4.0)
       activesupport (>= 6.1)
+    google-protobuf (4.36.2-aarch64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.2-arm64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.36.2-x86_64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
     graphiql-rails (1.10.5)
       railties
     graphql (2.6.11)
@@ -445,6 +453,12 @@ GEM
       event_stream_parser (>= 0.3.0, < 2.0.0)
       faraday (>= 1)
       faraday-multipart (>= 1)
+    sass-embedded (1.105.1-aarch64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.105.1-arm64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.105.1-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -528,6 +542,8 @@ DEPENDENCIES
   rails-controller-testing
   rake
   rspec-rails
+  sass-embedded
+  sass-rails (>= 6.0)
   settingslogic
   shoulda-matchers
   webrick

@@ -1,0 +1,6 @@
+/*
+ * Custom styles for the Fae admin. This file is linked after Fae's own stylesheet, so
+ * rules here override Fae's. To change the UI color, set the colorway in Fae's settings.
+ *
+ * Rename to fae_custom.scss if your app compiles SCSS.
+ */

@@ -22,7 +22,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '>= 8.0'
   s.add_dependency 'jquery-rails', '~> 4.3.1'
   s.add_dependency 'sprockets-rails', '>= 3.4'
-  s.add_dependency 'sass-rails', '>= 6.0'
   s.add_dependency 'uglifier'
   s.add_dependency 'importmap-rails', '>= 1.2.1'
   s.add_dependency 'stimulus-rails'
@@ -46,6 +45,8 @@ Gem::Specification.new do |s|
   s.add_dependency 'ruby-openai'
   s.add_dependency 'settingslogic'
 
+  # Builds the prebuilt admin CSS (rake fae:css:build)
+  s.add_development_dependency 'sass-embedded'
   s.add_development_dependency 'better_errors'
   s.add_development_dependency 'binding_of_caller'
 end

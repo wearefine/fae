@@ -13,9 +13,14 @@
 
 * Fae now requires Rails 8.0 or newer (and therefore Ruby 3.2+). It's tested on Rails 8.1 and Ruby 3.3.
     - Fae still uses the Sprockets asset pipeline. If your app uses Propshaft (the Rails 8 default), replace `gem "propshaft"` with `gem "sprockets-rails"` and add `app/assets/config/manifest.js`. See the [Quickstart Guide](../quickstart-guide.md). Fae raises an error on boot if Propshaft is loaded.
-    - Fae now adds its own assets to the precompile list, so `//= link fae/application.css` and `//= link fae/application.js` are no longer needed in your app's manifest (they're harmless to keep).
+    - Fae adds its own JS to the precompile list, so `//= link fae/application.js` is no longer needed in your app's manifest (it's harmless to keep).
     - Upgrading pulls in new major versions of several of Fae's dependencies, including Devise 5, devise-two-factor 6, CarrierWave 3.1, MiniMagick 5 and Rack 3. Review their upgrade notes if your app customizes them.
-    - Fae no longer depends on the deprecated Ruby `sass` gem. Fae's SCSS is compiled by `sassc` through `sass-rails`, as before. If your app relied on `sass` being installed, add it to your `Gemfile`.
+    - Fae no longer depends on the deprecated Ruby `sass` gem or on `sass-rails`. If your app compiles its own SCSS, make sure `sass-rails` or `dartsass-rails` is in your `Gemfile`.
+* Fae's admin stylesheet is now prebuilt (`fae_admin.css`, no longer `fae/application.css`) and no longer compiles a host `fae.scss`.
+    - Remove `//= link fae/application.css` from `app/assets/config/manifest.js`. Sprockets raises an error for a missing linked file.
+    - Move the contents of `app/assets/stylesheets/fae.scss` to `app/assets/stylesheets/fae_custom.css` (or `fae_custom.scss`), which is linked after Fae's stylesheet. Fae logs a warning at boot if `fae.scss` is still present. Fae's SCSS variables and mixins aren't available there, and `$c-custom-highlight` is gone. Set the colorway in Fae's settings instead, or use the `--highlight-color` CSS custom property.
+    - If your app overrides Fae's layouts (`layouts/fae/application`, `layouts/devise` or `layouts/fae/error`), replace the `stylesheet_link_tag` for `fae/application` with `== render 'fae/application/stylesheet_tags'`.
+    - Fae's SCSS sources moved from `app/assets/stylesheets/fae` to `app/stylesheets/fae`. Apps that `@import`ed them from their own stylesheets need to add that directory to their Sass load path.
 * Activity log changes are now recorded when no Fae user is signed in (for example, changes made from the console, background jobs or seeds). Previously these were silently dropped in apps that require `belongs_to` associations by default.
 * SVG uploads are no longer processed by ImageMagick for their `thumb` version. The thumb is a copy of the original, and Fae already displays SVGs at their original URL.
 * Fae now loads ES modules and [Stimulus](https://stimulus.hotwired.dev) controllers through its own importmap, alongside the existing Sprockets bundle. No changes are required for existing `app/assets/javascripts/fae.js` customizations.

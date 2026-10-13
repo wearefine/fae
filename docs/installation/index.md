@@ -30,30 +30,16 @@ After the installer completes, visit `/admin` and setup your first user account.
 
 Fae supports Rails >= 4.1.
 
-### Sass and sass-rails
+### Sass
 
-Fae requires `sass >= 3.4` and `sass-rails >= 5`.
-
-If you're using Rails 4.1 you'll need to update the versions in the `Gemfile`:
-
-```ruby
-gem 'sass-rails', '~> 5.0.0'
-gem 'sass', '~> 3.4.0'
-```
-
-and run:
-
-```bash
-$ bundle update sass-rails
-$ bundle update sass
-```
+Fae ships its admin CSS prebuilt, so it doesn't depend on any Sass gem. Add `sass-rails` or `dartsass-rails` to your `Gemfile` only if your own stylesheets (including `fae_custom.scss`) use SCSS.
 
 ## fae:install
 
 Fae's installer will do the following:
 
 - add Fae's namespace and route to `config/routes.rb`
-- add `app/assets/stylesheets/fae.scss` for UI color management and custom CSS
+- add `app/assets/stylesheets/fae_custom.css` for custom admin CSS
 - add `app/assets/javascripts/fae.js` for custom JS
 - add `app/controllers/concerns/fae/nav_items.rb` to manage main navigation
 - add Fae's initializer: `config/initializers/fae.rb`

@@ -14,6 +14,12 @@ module Fae
   end
   check_asset_pipeline!
 
+  # Host apps add their own admin styles in app/assets/stylesheets/fae_custom.(css|scss),
+  # which the layouts link after Fae's prebuilt stylesheet.
+  def self.custom_stylesheet?
+    Rails.root.glob('app/assets/stylesheets/fae_custom.*').any?
+  end
+
   class Engine < ::Rails::Engine
     isolate_namespace Fae
 
@@ -49,6 +55,14 @@ module Fae
 
       app.config.assets.paths << root.join('app/javascript')
       app.config.assets.precompile += %w( fae/manifest.js fae_importmap_manifest.js )
+      app.config.assets.precompile << 'fae_custom.css' if Fae.custom_stylesheet?
+    end
+
+    # Fae's stylesheet is prebuilt, so a host fae.scss is no longer compiled into it
+    config.after_initialize do |app|
+      if app.root.join('app/assets/stylesheets/fae.scss').exist? && !Fae.custom_stylesheet?
+        Rails.logger.warn '[Fae] app/assets/stylesheets/fae.scss is no longer used. Move your admin styles to app/assets/stylesheets/fae_custom.css (see the v5 upgrade notes).'
+      end
     end
 
     # Fae's admin uses its own importmap so it works regardless of how the host app bundles JS.

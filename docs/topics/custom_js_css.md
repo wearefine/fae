@@ -2,7 +2,7 @@
 
 * [Fae JS](#fae-js)
 * [ES Modules and Stimulus](#es-modules-and-stimulus)
-* [Fae SCSS](#fae-scss)
+* [Fae CSS](#fae-css)
 * [Custom Helpers](#custom-helpers)
 
 ---
@@ -103,9 +103,13 @@ pin 'sortablejs', to: 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/+esm'
 
 Fae's modules use modern JavaScript syntax. If your app sets `config.assets.js_compressor = :uglifier`, switch to `:terser` (via the [terser](https://github.com/ahorek/terser-ruby) gem) or remove the compressor, since Uglifier can't parse ES modules.
 
-## Fae SCSS
+## Fae CSS
 
-`app/assets/stylesheets/fae.scss` compiles into `fae/application.css`. Styles added to this files will be declared before other Fae styles.
+Fae's admin stylesheet is prebuilt, so there's nothing to compile. Add your own admin styles to `app/assets/stylesheets/fae_custom.css` (or `fae_custom.scss` if your app compiles SCSS). The admin layouts link it after Fae's stylesheet, so your rules override Fae's. The install generator creates this file, and Fae adds it to the precompile list automatically.
+
+To change the UI color, set the colorway in Fae's settings. It's exposed as the `--highlight-color` CSS custom property, which you can use in your own rules.
+
+Fae's SCSS variables and mixins are not available in `fae_custom`.
 
 ## Custom Helpers
 

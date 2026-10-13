@@ -47,6 +47,16 @@ Fire up the server:
 rails server
 ```
 
+## Stylesheets
+
+Fae's SCSS lives in `app/stylesheets` and is compiled by [sass-embedded](https://github.com/sass-contrib/sass-embedded-host-ruby) into the prebuilt, committed `app/assets/builds/fae_admin.css`. After changing any SCSS, rebuild it and commit the result:
+
+```bash
+bundle exec rake fae:css:build
+```
+
+`rake fae:css:watch` rebuilds on every change while you work. A spec fails if the committed CSS is out of date.
+
 ## Testing
 
 The dummy app should stay up-to-date with the latest Rails version we support. Running tests against it will run all specs against that version.

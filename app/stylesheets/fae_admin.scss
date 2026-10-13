@@ -1,0 +1,8 @@
+// Entry point for the Sass half of the prebuilt admin stylesheet (app/assets/builds/fae_admin.css).
+// The vendor CSS in fae/vendor is concatenated ahead of this by tasks/fae_css_builder.rb.
+// Rebuild with `bundle exec rake fae:css:build`.
+
+@import
+  'fae/base',
+  'fae/simplemde_override'
+;

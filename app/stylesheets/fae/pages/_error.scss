@@ -1,5 +1,5 @@
 .error-page {
-  background-image: image-url('fae/error_bg.jpg');
+  background-image: url('fae/error_bg.jpg');
   padding-top: 100px;
 
   section {
@@ -28,7 +28,7 @@
 }
 
 .sad_face {
-  background: image-url('fae/error_sad_face.png');
+  background: url('fae/error_sad_face.png');
   margin: 40px auto 0;
   width: 56px;
   height: 56px;

@@ -20,6 +20,9 @@ gem 'rails', '~> 8.1.0'
 
 gem 'rake'
 
+# The dummy app compiles its own SCSS; Fae itself ships prebuilt CSS
+gem 'sass-rails', '>= 6.0'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'pry'

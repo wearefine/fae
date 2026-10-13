@@ -10,6 +10,7 @@
     + Require Rails 8.0+; the dummy app and test suite run on Rails 8.1 and Ruby 3.3 with `load_defaults 8.1`
     + Raise a clear error on boot when Propshaft is loaded, and add Fae's asset manifest to the precompile list automatically
     + Remove the Rails 5 Appraisals and the unused `sass`, `appraisal`, `rails-perftest`, `ruby-prof` and `thin` dependencies
+    + Ship the admin CSS prebuilt (`fae_admin.css`, compiled with dart-sass via `rake fae:css:build`) and drop the runtime `sass-rails` dependency. Host styles move from `fae.scss` to a separate `fae_custom.css`, linked after Fae's stylesheet. The built CSS resolves fonts and images under both Sprockets and Propshaft
 - bugs
     + Record activity log changes made without a signed-in Fae user when `belongs_to` is required by default
     + Declare a YAML coder for `Fae::Change#updated_attributes`, required when apps load Rails 7.1+ defaults

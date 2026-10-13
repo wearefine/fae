@@ -5,7 +5,7 @@ html
     meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"
     - if @option.favicon.present? && @option.favicon.asset.present?
       link href=@option.favicon.asset_url rel="shortcut icon"
-    == stylesheet_link_tag 'fae/application', media: 'all'
+    == render 'fae/application/stylesheet_tags'
     == javascript_include_tag 'fae/application'
     == render 'fae/application/importmap_tags'
     == csrf_meta_tags
