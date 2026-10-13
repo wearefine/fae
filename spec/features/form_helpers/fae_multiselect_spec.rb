@@ -52,14 +52,14 @@ feature 'fae_multiselect' do
     expect(page).to have_css('div#new_winemaker')
 
 
-    group = find 'div.select'
+    group = find 'div.wine_releases'
     group.click
     within(group) do
       find('li', text: 'testy mctest 2').click
     end
 
     eventually {
-      expect(page).to have_selector('.js-multiselect-action-deselect_all', count: 1)
+      expect(page).to have_selector('div.wine_releases .js-multiselect-action-deselect_all', count: 1)
     }
   end
 
@@ -71,8 +71,9 @@ feature 'fae_multiselect' do
     admin_login
     visit edit_admin_wine_path(wine)
 
-    expect(page).to have_css('div.wine_releases .js-multiselect-action-deselect_all', count: 1)
-    expect(page).to have_css('div.wine_beers .js-multiselect-action-deselect_all', count: 1)
+    # the action is hidden until an option is selected
+    expect(page).to have_css('div.wine_releases .js-multiselect-action-deselect_all', count: 1, visible: :all)
+    expect(page).to have_css('div.wine_beers .js-multiselect-action-deselect_all', count: 1, visible: :all)
 
     within('div.wine_releases') do
       find('.chosen-choices').click

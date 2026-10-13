@@ -139,7 +139,7 @@ module Fae
     end
 
     def nested_table_thumb_url(image)
-      return unless image.asset.file
+      return unless image&.asset&.file
       if image.asset.file.extension.downcase == 'svg'
         image.asset.url
       else

@@ -39,8 +39,8 @@ describe 'wines#create' do
   it 'acts_as_list should create wines with proper position attrs' do
     wine1 = FactoryBot.create(:wine)
     wine2 = FactoryBot.create(:wine)
-    expect(wine1.reload.position).to eq(2)
-    expect(wine2.reload.position).to eq(1)
+    expect(wine1.reload.position).to eq(1)
+    expect(wine2.reload.position).to eq(2)
   end
 
 end

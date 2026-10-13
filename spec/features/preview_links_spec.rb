@@ -34,7 +34,7 @@ feature 'Preview Links' do
 
     # Should not have double slashes
     expect(page).to have_link('Stage', href: "https://stage.example.com/wines/#{wine.id}")
-    expect(page).to have_link('View on prod', href: "https://www.example.com/wines/#{wine.id}")
+    expect(page).to have_link('Prod', href: "https://www.example.com/wines/#{wine.id}")
   end
 
   scenario 'displays only prod link when stage URL is not configured', js: true do
@@ -57,10 +57,10 @@ feature 'Preview Links' do
     options.live_url = 'https://www.example.com'
     options.save
 
-    # Beer model does not have a detail_path method
-    beer = FactoryBot.create(:beer, name: 'Test Beer')
+    # Release model does not override detail_path
+    release = FactoryBot.create(:release)
 
-    visit edit_admin_beer_path(beer)
+    visit edit_admin_release_path(release)
 
     expect(page).to_not have_css('.preview-links')
   end

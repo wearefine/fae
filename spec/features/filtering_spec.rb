@@ -51,12 +51,19 @@ feature 'filtering' do
 
     admin_login
 
+    # the datepicker opens on the current month, so step back to the target month
+    pick_date = lambda do |field, date|
+      find("label[for=\"#{field}\"]").click
+      expect(page).to have_css('.ui-datepicker-calendar')
+      within('#ui-datepicker-div') {
+        months_back = (now.year * 12 + now.month) - (date.year * 12 + date.month)
+        months_back.times { find('.ui-datepicker-prev').click }
+        click_link(date.day.to_s, exact: true)
+      }
+    end
+
     visit fae.activity_log_path
-    find('label[for="filter_start_date"]').click
-    expect(page).to have_css('.ui-datepicker-calendar')
-    within('#ui-datepicker-div') {
-      click_link((now - 2.weeks).day.to_s)
-    }
+    pick_date.call('filter_start_date', now - 2.weeks)
 
     eventually {
       expect(page).to_not have_content 'Release 1'
@@ -65,14 +72,8 @@ feature 'filtering' do
     }
 
     visit fae.activity_log_path
-    find('label[for="filter_start_date"]').click
-    within('#ui-datepicker-div') {
-      click_link((now - 5.weeks).day.to_s)
-    }
-    find('label[for="filter_end_date"]').click
-    within('#ui-datepicker-div') {
-      click_link((now - 2.weeks).day.to_s)
-    }
+    pick_date.call('filter_start_date', now - 5.weeks)
+    pick_date.call('filter_end_date', now - 2.weeks)
 
     eventually {
       expect(page).to have_content 'Release 1'
