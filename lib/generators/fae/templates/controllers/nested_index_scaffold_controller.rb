@@ -25,7 +25,7 @@ module <%= options.namespace.capitalize %>
         flash.now[:notice] = 'Item successfully created.'
         render template: '<%= options.namespace %>/<%= plural_file_name %>/index'
       else
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
 
@@ -35,7 +35,7 @@ module <%= options.namespace.capitalize %>
         flash.now[:notice] = 'Item successfully updated.'
         render template: '<%= options.namespace %>/<%= plural_file_name %>/index'
       else
-        render action: 'edit'
+        render action: 'edit', status: 422
       end
     end
 

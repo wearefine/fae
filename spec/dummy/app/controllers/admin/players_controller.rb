@@ -14,7 +14,7 @@ module Admin
       if @item.save
         redirect_to @index_path, notice: t('fae.save_notice')
       else
-        render action: 'new', error: t('fae.save_error')
+        render action: 'new', error: t('fae.save_error'), status: 422
       end
     end
 

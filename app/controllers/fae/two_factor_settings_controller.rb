@@ -15,7 +15,7 @@ module Fae
     def create
       unless current_user.valid_password?(enable_2fa_params[:password])
         flash.now[:alert] = 'Incorrect password'
-        return render :new
+        return render :new, status: 422
       end
 
       if current_user.validate_and_consume_otp!(enable_2fa_params[:code])
@@ -25,7 +25,7 @@ module Fae
         redirect_to edit_two_factor_settings_path
       else
         flash.now[:alert] = 'Incorrect Code'
-        render :new
+        render :new, status: 422
       end
     end
 

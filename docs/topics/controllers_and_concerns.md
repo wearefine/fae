@@ -44,3 +44,11 @@ end
 ```
 
 This will affect the add button text and index/form page titles.
+## Response Statuses
+
+Fae's controllers follow the conventions used by Rails and [Turbo](https://turbo.hotwired.dev):
+
+* A save that fails validation re-renders the form with a `422` status (`render action: 'edit', status: 422`).
+* A redirect after any non-GET request (create, update, delete) uses `303 See Other`, so clients follow it with a GET. `Fae::ApplicationController` applies this to every `redirect_to` automatically, unless you pass your own `status:`.
+
+If you override `create`, `update` or any other save action in your own controller, render failures with `status: 422`. The generated nested controllers already do. Nested forms loaded over AJAX still work if a controller keeps returning `200` for a failed form, but `422` is what lets a client tell a failure from a success.

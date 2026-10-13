@@ -24,10 +24,10 @@ module Fae
 
       if @user.save
         sign_in(@user)
-        redirect_to fae.root_path
+        redirect_to fae.root_path, status: :see_other
       else
         @option = Fae::Option.instance
-        render action: 'first_user', error: t('fae.save_error')
+        render action: 'first_user', error: t('fae.save_error'), status: 422
       end
     end
 

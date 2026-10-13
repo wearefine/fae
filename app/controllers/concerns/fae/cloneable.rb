@@ -16,7 +16,7 @@ module Fae
       else
         build_assets
         flash.now[:alert] = @cloned_item.errors.full_messages
-        render action: 'edit'
+        render action: 'edit', status: 422
       end
     end
 

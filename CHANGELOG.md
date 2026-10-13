@@ -11,6 +11,7 @@
     + Raise a clear error on boot when Propshaft is loaded, and add Fae's asset manifest to the precompile list automatically
     + Remove the Rails 5 Appraisals and the unused `sass`, `appraisal`, `rails-perftest`, `ruby-prof` and `thin` dependencies
     + Ship the admin CSS prebuilt (`fae_admin.css`, compiled with dart-sass via `rake fae:css:build`) and drop the runtime `sass-rails` dependency. Host styles move from `fae.scss` to a separate `fae_custom.css`, linked after Fae's stylesheet. The built CSS resolves fonts and images under both Sprockets and Propshaft
+    + Respond to failed saves with 422 and redirect with 303 after non-GET requests, and handle 422 responses in the nested form JavaScript, so Fae's forms follow the conventions Turbo expects
 - bugs
     + Record activity log changes made without a signed-in Fae user when `belongs_to` is required by default
     + Declare a YAML coder for `Fae::Change#updated_attributes`, required when apps load Rails 7.1+ defaults

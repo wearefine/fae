@@ -3,6 +3,7 @@ module Fae
     protect_from_forgery with: :exception
     
     include Fae::ApplicationControllerConcern
+    include Fae::SeeOtherRedirects
     
     helper Fae::ViewHelper
     helper Fae::FormHelper

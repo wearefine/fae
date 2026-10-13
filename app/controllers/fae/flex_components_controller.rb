@@ -18,7 +18,7 @@ module Fae
         redirect_to "/admin/#{component.class.to_s.underscore.pluralize}/#{component.id}/edit?draft=true"
       else
         build_assets
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
   
@@ -35,7 +35,7 @@ module Fae
         render partial: 'fae/shared/flex_components_table', locals: {assoc: :flex_components, parent_item: @parent_item, initial_create: true}
       else
         build_assets
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
   

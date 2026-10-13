@@ -19,7 +19,7 @@ module Fae
         flash.now[:notice] = 'Option was successfully updated.'
         redirect_to :action => :edit
       else
-        render :edit
+        render :edit, status: 422
       end
     end
 

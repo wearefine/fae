@@ -46,7 +46,7 @@ module Fae
       else
         build_assets
         flash.now[:alert] = t('fae.save_error')
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
 
@@ -57,7 +57,7 @@ module Fae
       else
         build_assets
         flash.now[:alert] = t('fae.save_error')
-        render action: 'edit'
+        render action: 'edit', status: 422
       end
     end
 

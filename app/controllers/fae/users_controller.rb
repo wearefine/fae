@@ -31,7 +31,7 @@ module Fae
       if @user.save
         redirect_to users_path, notice: t('fae.save_notice')
       else
-        render action: 'new', error: t('fae.save_error')
+        render action: 'new', error: t('fae.save_error'), status: 422
       end
     end
 
@@ -45,7 +45,7 @@ module Fae
         path = current_user.super_admin_or_admin? ? users_path : fae.root_path
         redirect_to path, notice: t('fae.save_notice')
       else
-        render action: 'edit', error: t('fae.save_error')
+        render action: 'edit', error: t('fae.save_error'), status: 422
       end
     end
 

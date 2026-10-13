@@ -384,6 +384,14 @@ Fae.form.ajax = {
           $addeditForm.trigger('ajax:success', [data, 'success', null]);
         },
         error: function(xhr, status, error) {
+          var $addeditForm = $container.closest('.js-addedit-form');
+
+          // Validation failures return the form HTML with a 422; the ajax:error handler re-renders it
+          if (xhr.status === 422 && $.trim(xhr.responseText)) {
+            $addeditForm.trigger('ajax:error', [xhr, status, error]);
+            return;
+          }
+
           console.error('Nested form submission error:', error);
           $submitBtn.prop('disabled', false);
           if ($submitBtn.is('input')) {
@@ -397,13 +405,14 @@ Fae.form.ajax = {
   },
 
   /**
-   * Once form is submitted and receives a successful AJAX response, replace form data and initialize listeners on nested elements
+   * Once form is submitted and receives an AJAX response, replace form data and initialize listeners on nested elements.
+   * Validation failures come back as 422 with the form HTML, successes as 200 with the updated table.
    * @fires {@link navigation.fadeNotices}
    */
   addEditSubmission: function() {
     var _this = this;
 
-    this.$addedit_form.on('ajax:success', function(evt, data, status, xhr){
+    var handleResponse = function(evt, data, status, xhr){
 
       var $target = $(evt.target);
 
@@ -471,7 +480,15 @@ Fae.form.ajax = {
       }
 
       Fae.navigation.lockFooter();
-    });
+    };
+
+    this.$addedit_form
+      .on('ajax:success', handleResponse)
+      .on('ajax:error', function(evt, xhr){
+        if (xhr && xhr.status === 422 && $.trim(xhr.responseText)) {
+          handleResponse.call(this, evt, xhr.responseText, 'error', xhr);
+        }
+      });
   },
 
   /**

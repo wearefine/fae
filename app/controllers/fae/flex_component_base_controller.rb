@@ -9,7 +9,7 @@ module Fae
         render template: 'fae/shared/_flex_components_table', formats: :html, locals: { assoc: :flex_components, parent_item: @parent_item }
       else
         build_assets
-        render action: 'edit'
+        render action: 'edit', status: 422
       end
     end
   

@@ -30,7 +30,7 @@ module Fae
         render template: table_template_path
       else
         build_assets
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
 
@@ -43,7 +43,7 @@ module Fae
         render template: table_template_path
       else
         build_assets
-        render action: 'edit'
+        render action: 'edit', status: 422
       end
     end
 

@@ -24,7 +24,7 @@ module Fae
         @deploy_hooks = DeployHook.all
         render partial: table_template_path
       else
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
 
@@ -34,7 +34,7 @@ module Fae
         @deploy_hooks = DeployHook.all
         render partial: table_template_path
       else
-        render action: 'edit'
+        render action: 'edit', status: 422
       end
     end
 

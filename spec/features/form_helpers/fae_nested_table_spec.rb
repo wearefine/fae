@@ -114,6 +114,49 @@ feature 'fae_nested_table' do
     }
   end
 
+  scenario 'should show validation errors from a 422 response and then save the corrected item', js: true do
+    wine = FactoryBot.create(:wine)
+
+    admin_login
+    visit edit_admin_wine_path(wine)
+
+    click_link 'Add Oregon Winemaker'
+    expect(page).to have_css('#new_winemaker')
+
+    within(:css, '#new_winemaker') do
+      click_button('Save')
+      expect(page).to have_css('.field_with_errors span.error')
+      fill_in 'Name', with: 'Corrected Joe'
+      click_button('Save')
+    end
+
+    eventually {
+      expect(page.find('#oregon_winemakers_section table')).to have_content('Corrected Joe')
+    }
+  end
+
+  # The dummy's WinemakersController#update still renders failures with 200, as host controllers written before 422 do
+  scenario 'should show validation errors from a legacy 200 response', js: true do
+    wine = FactoryBot.create(:wine)
+    FactoryBot.create(:winemaker, name: 'Existing Joe', wine: wine, region_type: 1)
+
+    admin_login
+    visit edit_admin_wine_path(wine)
+
+    click_link 'Existing Joe'
+    within(:css, '.js-nested-form-container') do
+      fill_in 'Name', with: ''
+      click_button('Save')
+      expect(page).to have_css('.field_with_errors span.error')
+      fill_in 'Name', with: 'Renamed Joe'
+      click_button('Save')
+    end
+
+    eventually {
+      expect(page.find('#oregon_winemakers_section table')).to have_content('Renamed Joe')
+    }
+  end
+
   scenario 'should prevent parent form saving when user hits cancel on nested form unsaved changes alert', js: true do
     release = FactoryBot.create(:release)
 

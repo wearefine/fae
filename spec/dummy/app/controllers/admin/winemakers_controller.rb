@@ -25,7 +25,7 @@ module Admin
         render template: 'admin/winemakers/table'
       else
         build_assets
-        render action: 'new'
+        render action: 'new', status: 422
       end
     end
 
@@ -36,6 +36,7 @@ module Admin
         render template: 'admin/winemakers/table'
       else
         build_assets
+        # Deliberately left on 200: host controllers written before Fae returned 422 must keep working
         render action: 'edit'
       end
     end
