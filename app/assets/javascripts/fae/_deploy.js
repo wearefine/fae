@@ -8,8 +8,10 @@
 
 Fae.deploy = {
 
-  ready: function() {
+  init: function() {
     if (!$('body').hasClass('deploy')) return false;
+    // Polling and listeners are per page, so wire up each deploy page once
+    if (!Fae.fresh($('body'), 'deploy').length) return false;
     this.$deployButtons  = $('.js-run-deploy');
     this.deployFinished  = true;
     this.buttonsEnabled  = true;

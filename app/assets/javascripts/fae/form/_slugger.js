@@ -18,11 +18,11 @@ Fae.form.slugger = {
   addListener: function() {
     var _this = this;
 
-    $('.slug').each(function() {
+    Fae.fresh($('.slug'), 'slugger').each(function() {
       var $form = $(this).closest('form, .js-nested-form-container');
       var $sluggers = $form.find('.slugger');
       var $slug = $form.find('.slug');
-      var $select_slugger = $('.select.slugger');
+      var $select_slugger = $form.find('.select.slugger');
 
       if ($slug.val() !== '') {
         $sluggers.removeClass('slugger');
@@ -85,14 +85,17 @@ Fae.form.slugger = {
     // Remove leading and trailing spaces
     // Make them lowercase
     // Remove slashes, quotes or periods
-    // Replace white spaces with a Fae.slug_separator
-    // Remove leading and trailing dashes
+    // Replace white spaces with the configured slug separator
+    // Remove leading and trailing separators
+    var separator = Fae.slugSeparator;
+    var escaped_separator = separator.replace(/[.*+?^${}()|[\]\\\-]/g, '\\$&');
+
     slug_text = slug_text
       .trim()
       .toLowerCase()
-      .replace(/[^<%= Fae.slug_separator %>\w\s]/g, '')
-      .replace(/[<%= Fae.slug_separator %>\s]+/g, '<%= Fae.slug_separator %>')
-      .replace(/(^<%= Fae.slug_separator %>)|(<%= Fae.slug_separator %>$)/g, '');
+      .replace(new RegExp('[^' + escaped_separator + '\\w\\s]', 'g'), '')
+      .replace(new RegExp('[' + escaped_separator + '\\s]+', 'g'), function() { return separator; })
+      .replace(new RegExp('(^' + escaped_separator + ')|(' + escaped_separator + '$)', 'g'), '');
 
     return slug_text;
   }

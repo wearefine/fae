@@ -30,7 +30,7 @@ Fae.form.select = {
       $('.ms-selection .custom-header').text( $instance.$selectionContainer.find($instance.elemsSelector).length + addedItemsStr);
     }
 
-    $('select').each(function(index, elm){
+    Fae.fresh($('select'), 'select').each(function(index, elm){
       var $this = $(this);
 
       if ($this.hasClass('multiselect')) {
@@ -67,7 +67,7 @@ Fae.form.select = {
     var query_eligible_multiselects = query_input_select + ' select[multiple]:not(.multiselect)';
     var select_all_value = 'multiselect_action-select_all';
 
-    var $eligible_multiselects = $(query_eligible_multiselects);
+    var $eligible_multiselects = Fae.fresh($(query_eligible_multiselects), 'multiselect-actions');
     $eligible_multiselects.each(function(index, element) {
       var $element = $(element);
       var $options = $element.find('option');
@@ -111,8 +111,13 @@ Fae.form.select = {
       setAbilities($element);
     });
 
+    // Delegated from the document (namespaced) so re-running init never stacks handlers
+    // and the listeners survive the main content being replaced.
+    var main_content = '#js-main-content ';
+    $(document).off('.faeSelect');
+
     // Watch select for changes and add, remove, or carry out Select All option as needed
-    $('#js-main-content').on('change', query_eligible_multiselects, function(e) {
+    $(document).on('change.faeSelect', main_content + query_eligible_multiselects, function(e) {
       var $element = $(e.currentTarget);
 
       // Set state of possible actions
@@ -126,7 +131,7 @@ Fae.form.select = {
     });
 
     // Handle click on Deselect All btn
-    $('#js-main-content').on('click', '.js-multiselect-action-deselect_all', function(e) {
+    $(document).on('click.faeSelect', main_content + '.js-multiselect-action-deselect_all', function(e) {
       e.preventDefault();
       setAllOptionsSelected(this, false);
     });

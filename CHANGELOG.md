@@ -12,7 +12,13 @@
     + Remove the Rails 5 Appraisals and the unused `sass`, `appraisal`, `rails-perftest`, `ruby-prof` and `thin` dependencies
     + Ship the admin CSS prebuilt (`fae_admin.css`, compiled with dart-sass via `rake fae:css:build`) and drop the runtime `sass-rails` dependency. Host styles move from `fae.scss` to a separate `fae_custom.css`, linked after Fae's stylesheet. The built CSS resolves fonts and images under both Sprockets and Propshaft
     + Respond to failed saves with 422 and redirect with 303 after non-GET requests, and handle 422 responses in the nested form JavaScript, so Fae's forms follow the conventions Turbo expects
+    + Add `Fae.init(root)` as the single entry point for the legacy admin JavaScript, which now runs safely any number of times (page load, AJAX swaps, Turbo renders), and dispatch a `fae:load` event after each run. Nested and flex component forms loaded over AJAX now get the same initialization as the page itself
+    + Move the values Fae's JavaScript used to read from ERB (admin path, slug separator, Judge path, Trumbowyg icon path) to `<meta name="fae-*">` tags rendered by the admin layouts
+    + Bundle the Trumbowyg HTML editor with Fae's JavaScript, so `html: true` inputs no longer need an opt-in `require`
+- breaking
+    + `app/assets/javascripts/fae.js` is no longer compiled into Fae's JavaScript bundle and the installer no longer creates it. Host JavaScript moves to `app/javascript/fae_custom.js` (see the v5 upgrade notes)
 - bugs
+    + Fix the slugger breaking when `Fae.slug_separator` contains regex special characters
     + Record activity log changes made without a signed-in Fae user when `belongs_to` is required by default
     + Declare a YAML coder for `Fae::Change#updated_attributes`, required when apps load Rails 7.1+ defaults
     + Skip ImageMagick processing for SVG thumbnails

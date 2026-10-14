@@ -8,7 +8,8 @@
 Fae.form.ajax = {
 
   init: function() {
-    this.$addedit_form = $('.js-addedit-form, .js-index-addedit-form');
+    // Only elements not yet wired up, so repeated init calls never stack handlers
+    this.$addedit_form = Fae.fresh($('.js-addedit-form, .js-index-addedit-form'), 'ajax-addedit');
     this.$filter_form = $('.js-filter-form');
     this.$nested_form = $('.nested-form');
 
@@ -205,35 +206,13 @@ Fae.form.ajax = {
 
       _this.$nested_form = $('.nested-form');
 
-      // Bind validation to nested form fields added by AJAX
-      Fae.form.validator.bindValidationEvents(_this.$nested_form);
-
-      // Reinitialize form elements
-      Fae.form.dates.initDatepicker();
-      Fae.form.dates.initDateRangePicker();
-      Fae.form.color.initColorpicker();
-      Fae.form.slugger.addListener();
-      Fae.form.validator.length_counter.init();
-      Fae.form.text.initMarkdown();
-      Fae.form.text.initHTML();
-      Fae.form.checkbox.setCheckboxAsActive();
-      Fae.form.select.init();
+      // Initialize everything in the new markup; elements already set up are skipped
+      Fae.init($wrapper);
       Fae.form.formManager.setupAllFields($wrapper.find('.js-nested-form-container, form'));
-      Fae.form.dragDrop.init();
-      Fae.tables.rowSorting();
-      Fae.form.text.initTranslation();
-      Fae.form.text.initGenerateAlt();
-      Fae.altTextManager.ready();
-      Fae.form.text.initGenerateAlt();
-      Fae.form.rankedSelect.init();
-
-      // Refresh cached language divs to include newly loaded nested form fields
-      Fae.navigation.language.el.$lang_divs = $('div[data-language]');
 
       // validate nested form fields on submit
       Fae.form.validator.formValidate(_this.$nested_form);
 
-      $wrapper.find('.hint').hinter();
       console.log('Final scroll check');
       // FCH.smoothScroll($parentTable.find('tbody tr:last-child'), 500, 450, -50);
     });
@@ -449,15 +428,7 @@ Fae.form.ajax = {
             
             $theFormWrapper.find('.nested-form').replaceWith($html);
             $theFormWrapper.find('.select select').fae_chosen();
-            $theFormWrapper.find('.input.file').fileinputer();
-
-            Fae.form.dates.initDatepicker();
-            Fae.form.dates.initDateRangePicker();
-            Fae.form.color.initColorpicker();
-            Fae.form.validator.length_counter.init();
-            Fae.form.checkbox.setCheckboxAsActive();
-            Fae.form.text.initMarkdown();
-            Fae.form.text.initHTML();
+            Fae.init($theFormWrapper);
 
             FCH.smoothScroll($this.find('.js-addedit-form-wrapper'), 500, 100, -100);
           }
@@ -507,8 +478,7 @@ Fae.form.ajax = {
       // .html() is not replacing it properly
       $el.get(0).innerHTML = html;
       $el.find('.select select').fae_chosen();
-      Fae.tables.rowSorting();
-      Fae.form.rankedSelect.init();
+      Fae.init($el);
       // Fae.navigation.fadeNotices();
       Fae.navigation.showToasts();
       
@@ -549,7 +519,7 @@ Fae.form.ajax = {
   filterSubmission: function() {
     var _this = this;
 
-    _this.$filter_form
+    Fae.fresh(_this.$filter_form, 'ajax-filter')
       .on('submit', function() {
         $('.js-reset-btn').show();
       })
@@ -599,7 +569,7 @@ Fae.form.ajax = {
    * Delete or replace file for non-AJAX'd fields
    */
   deleteNoForm: function() {
-    $('.js-asset-delete').on('ajax:success', function(){
+    Fae.fresh($('.js-asset-delete'), 'asset-delete').on('ajax:success', function(){
       var $this = $(this);
       if (!$this.closest('.js-addedit-form-wrapper').length) {
         // handle remove asset links
@@ -617,7 +587,7 @@ Fae.form.ajax = {
    * Attach delete listener to images uploaded
    */
   imageDeleteLinks: function() {
-    $('.imageDeleteLink').click(function(e) {
+    Fae.fresh($('.imageDeleteLink'), 'image-delete').click(function(e) {
       e.preventDefault();
       var $this = $(this);
 
@@ -634,7 +604,7 @@ Fae.form.ajax = {
    * @todo Clean this up, moving listeners into their respective component classes (select, checkbox, etc.)
    */
   htmlListeners: function() {
-    $('#js-main-content, .login-form > form, #simplemodal-data')
+    Fae.fresh($('#js-main-content, .login-form > form, #simplemodal-data'), 'html-listeners')
 
       /**
        * For the delete button on file input

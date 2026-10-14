@@ -8,6 +8,11 @@
 Fae.form.cancel = {
 
   init: function() {
+    // handled by the fae-cancel Stimulus controller
+    if ($('#js-header-cancel').is('[data-controller~="fae-cancel"]')) {
+      return;
+    }
+
     this.detectCancelledUrls();
     this.addCancelParam();
     this.handleDraftCancel();
@@ -30,19 +35,22 @@ Fae.form.cancel = {
   addCancelParam: function() {
     function updateCancel() {
       var $cancel_btn = $('#js-header-cancel');
-      var new_href = $cancel_btn.attr('href') + '?cancelled=true';
-      $cancel_btn.attr('href', new_href);
+      var href = $cancel_btn.attr('href');
+
+      if (href && href.indexOf('cancelled=true') === -1) {
+        $cancel_btn.attr('href', href + '?cancelled=true');
+      }
       $('form').off('change', 'input, textarea, select', updateCancel);
     }
 
-    $('form').on('change', 'input, textarea, select', updateCancel);
+    Fae.fresh($('form'), 'cancel-param').on('change', 'input, textarea, select', updateCancel);
   },
 
   /**
    * Handle cancel button click for draft records - confirm and delete if user agrees
    */
   handleDraftCancel: function() {
-    var $cancel_btn = $('#js-header-cancel');
+    var $cancel_btn = Fae.fresh($('#js-header-cancel'), 'draft-cancel');
     var isDraft = $cancel_btn.attr('data-draft');
     
     // Check for string 'true' (data attributes are always strings via attr())
@@ -78,7 +86,7 @@ Fae.form.cancel = {
    * Warn users when navigating away from a draft form (closing tab, clicking links, etc.)
    */
   handleDraftBeforeUnload: function() {
-    var $cancel_btn = $('#js-header-cancel');
+    var $cancel_btn = Fae.fresh($('#js-header-cancel'), 'draft-unload');
     var isDraft = $cancel_btn.attr('data-draft');
 
     // Only apply to draft forms
@@ -90,17 +98,21 @@ Fae.form.cancel = {
     this.allowUnload = false;
 
     // Allow unload on successful form submission
-    $('form').on('submit', function() {
+    Fae.fresh($('form'), 'draft-unload-submit').on('submit', function() {
       Fae.form.cancel.allowUnload = true;
     });
 
-    window.addEventListener('beforeunload', function(e) {
-      if (Fae.form.cancel.allowUnload) {
-        return;
-      }
-      // Standard way to trigger the browser's confirmation dialog
-      e.preventDefault();
-      e.returnValue = '';
+    // One window listener for the life of the document; it only acts while a draft form is on screen
+    Fae.once('cancel-beforeunload', function() {
+      window.addEventListener('beforeunload', function(e) {
+        if (Fae.form.cancel.allowUnload || $('#js-header-cancel').attr('data-draft') !== 'true') {
+          return;
+        }
+
+        // Standard way to trigger the browser's confirmation dialog
+        e.preventDefault();
+        e.returnValue = '';
+      });
     });
   }
 

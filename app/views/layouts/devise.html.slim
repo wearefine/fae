@@ -7,6 +7,7 @@ html
     - if @option.favicon.present? && @option.favicon.asset.present?
       link href=@option.favicon.asset_url rel="shortcut icon"
     == render 'fae/application/stylesheet_tags'
+    == render 'fae/application/config_tags'
     == javascript_include_tag "fae/application"
     == render 'fae/application/importmap_tags'
     == csrf_meta_tags

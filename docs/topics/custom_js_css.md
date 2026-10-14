@@ -7,28 +7,28 @@
 
 ---
 
-Fae creates two files in your assets pipeline that allow custom JS and CSS in your admin.
+Fae creates files in your app that allow custom JS and CSS in your admin.
 
 ## Fae JS
 
-`app/assets/javascripts/fae.js` compiles into `fae/application.js`. As noted in the file, you can use it as a mainfest (to add a lot of JS) or to simply add JS directly to.
+Your admin JavaScript lives in `app/javascript/fae_custom.js`, an ES module Fae loads on every admin page after its own scripts. Use it for plain jQuery customizations as well as Stimulus controllers (see [ES Modules and Stimulus](#es-modules-and-stimulus) for setup). jQuery and the `Fae` object are globals, and the DOM is parsed by the time the file runs, so you don't need `$(document).ready`.
 
-#### Example: fae.js as a Manifest File
+Fae's legacy JavaScript initializes the page with `Fae.init(root)`. It runs on page load and again whenever markup is added after load (for example, the nested forms Fae loads over AJAX). After each run Fae dispatches a bubbling `fae:load` event on the root element, with the root in `event.detail.root`. Listen for it to set up your own widgets on new markup:
 
 ```JavaScript
-// This file is compiled into fae/application.js
-// use this as another manifest file if you have a lot of javascript to add
-// or just add your javascript directly to this file
-//
-//= require admin/plugins
-//= require admin/main
+// app/javascript/fae_custom.js
+document.addEventListener("fae:load", (event) => {
+  $(event.detail.root).find(".my-widget").myWidget()
+})
 ```
+
+`Fae.init` can run any number of times: elements and listeners that are already set up are skipped. Make your own handlers equally repeatable, either by binding delegated handlers once on `document`, or by guarding element-level setup (`Fae.fresh($(".my-widget"), "my-widget")` returns only the elements not yet marked for that key). If you inject markup yourself, call `Fae.init(element)` on it.
+
+`app/assets/javascripts/fae.js` is no longer compiled into Fae's JavaScript. See the [upgrade notes](../upgrading/index.md) if you have one.
 
 ## ES Modules and Stimulus
 
 Fae is gradually moving its admin UI from jQuery to [Stimulus](https://stimulus.hotwired.dev). New behaviour ships as ES modules loaded through an importmap that belongs to Fae (`Fae.importmap`), separate from your app's own `Rails.application.importmap`. It works whether or not your app uses importmaps, jsbundling, or nothing at all.
-
-The legacy `fae.js` file above is still loaded, so existing customizations keep working.
 
 ### Setup
 
@@ -69,7 +69,7 @@ Controllers connect to matching `data-controller` elements, including markup add
 | `fae-filtering` | forms rendered by `fae_filter_form` | `Fae.form.filtering` (pages with only pagination or `.js-sort-column` tables still use the legacy module) |
 | `fae-language` | the language select in `fae/shared/_form_header` | `Fae.navigation.language` toggling and preference saving |
 
-When a controller is attached, the legacy module it replaces doesn't run on that markup, so customizations made by redefining methods on the legacy object (e.g. in `fae.js`) won't take effect there. Extend the controller instead.
+When a controller is attached, the legacy module it replaces doesn't run on that markup, so customizations made by redefining methods on the legacy object (e.g. in `fae_custom.js`) won't take effect there. Extend the controller instead.
 
 ### Extending or replacing Fae's controllers
 

@@ -5,15 +5,14 @@
  * @namespace
  */
 Fae.modals = {
-  ready: function() {
-    this.$body = $('body');
+  init: function() {
     this.openClass = 'modal-open';
     this.modalClass = 'MODAL_ID-modal-open';
     this.showEvent = 'modal:show';
     this.shownEvent = 'modal:shown';
     this.closeEvent = 'modal:close';
     this.closedEvent = 'modal:closed';
-    this.modalOpen = false;
+    this.modalOpen = !!this.modalOpen;
 
     this.imageModals();
     this.markdownModalListener();
@@ -25,7 +24,8 @@ Fae.modals = {
    * Click event to open modal with only an image
    */
   imageModals: function() {
-    $('#js-main-content').on('click', '.js-image-modal', function(e) {
+    // Delegated from the document (namespaced): init can run repeatedly and the body can be replaced
+    $(document).off('click.faeImageModal').on('click.faeImageModal', '#js-main-content .js-image-modal', function(e) {
       e.preventDefault();
       var $this = $(this);
       var image = new Image();
@@ -95,7 +95,7 @@ Fae.modals = {
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   markdownModalListener: function() {
-    FCH.$document.on('click', '.markdown-support', this.markdownModal);
+    FCH.$document.off('click.faeMarkdownModal').on('click.faeMarkdownModal', '.markdown-support', this.markdownModal);
   },
 
   /**
@@ -122,24 +122,24 @@ Fae.modals = {
           dialog.overlay.fadeIn();
           dialog.container.fadeIn(function() {
             var shownEvent = $.Event(_this.shownEvent, { dialog: dialog, relatedTarget: relatedTarget });
-            _this.$body.trigger(shownEvent);
+            $(document.body).trigger(shownEvent);
           });
           dialog.data.show();
 
           var modalClasses = [_this.createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
 
           _this.modalOpen = true;
-          _this.$body.addClass(modalClasses);
+          $(document.body).addClass(modalClasses);
         },
         onShow: function (dialog) {
           var showEvent = $.Event(_this.showEvent, { dialog: dialog, relatedTarget: relatedTarget });
-          _this.$body.trigger(showEvent);
+          $(document.body).trigger(showEvent);
 
           $(dialog.container).css('height', 'auto')
         },
         onClose: function (dialog) {
           var closeEvent = $.Event(_this.closeEvent, { dialog: dialog, relatedTarget: relatedTarget });
-          _this.$body.trigger(closeEvent);
+          $(document.body).trigger(closeEvent);
 
           // Fade out modal and close
           dialog.container.fadeOut();
@@ -150,8 +150,8 @@ Fae.modals = {
             var modalClasses = [_this.createClassFromModalId(relatedTarget.attr('id')), _this.openClass].join(' ');
 
             _this.modalOpen = false;
-            _this.$body.removeClass(modalClasses);
-            _this.$body.trigger(closedEvent);
+            $(document.body).removeClass(modalClasses);
+            $(document.body).trigger(closedEvent);
           });
         }
       });
@@ -167,7 +167,7 @@ Fae.modals = {
   ajaxModalListener: function () {
     var _this = this;
 
-    FCH.$document.on('click', '.js-fae-modal', function (e) {
+    FCH.$document.off('click.faeAjaxModal').on('click.faeAjaxModal', '.js-fae-modal', function (e) {
       e.preventDefault();
       var $this = $(this);
       var url = $this.attr('href');

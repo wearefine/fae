@@ -16,7 +16,7 @@ Fae.tables = {
    */
   sort_cookie_name: 'Fae_table_sort_preferences',
 
-  ready: function() {
+  init: function() {
     if (FCH.exists('.js-sort-column')) {
       this.dateColumnSorting();
       this.columnSorting();
@@ -49,7 +49,7 @@ Fae.tables = {
     var path = window.location.pathname;
     var cookie_value = Cookies.getJSON(_this.sort_cookie_name);
 
-    $('.js-sort-column')
+    Fae.fresh($('.js-sort-column'), 'column-sorting')
       .tablesorter()
       .on('sortEnd', function(e) {
         var $this = $(this);
@@ -149,7 +149,7 @@ Fae.tables = {
    * Make table rows draggable by user
    */
   rowSorting: function() {
-    $('.js-sort-row').sortable({
+    Fae.fresh($('.js-sort-row'), 'row-sorting').sortable({
       items: 'tbody tr',
       opacity: 0.8,
       handle: ('.sortable-handle'),
@@ -210,7 +210,7 @@ Fae.tables = {
       return;
     }
 
-    $toggle.click(function() {
+    Fae.fresh($toggle, 'collapsible-toggle').click(function() {
       var $this = $(this);
 
       if ($this.hasClass('close-all')) {
@@ -228,7 +228,7 @@ Fae.tables = {
       $this.toggleClass('close-all');
     });
 
-    $('.collapsible h3').click(function() {
+    Fae.fresh($('.collapsible h3'), 'collapsible-heading').click(function() {
       var $this = $(this);
       /** @type {Boolean} */
       var toggleHasCloseAll = $toggle.hasClass('close-all');
@@ -275,7 +275,7 @@ Fae.tables = {
    * Fix a table header to the top of the view on scroll
    */
   stickyTableHeader: function() {
-    var $sticky_tables = $('.content table:not(.stuck-table)');
+    var $sticky_tables = Fae.fresh($('.content table:not(.stuck-table)'), 'sticky-table');
 
     // Add sticky psuedo tables after our main table to hold the fixed header
     $sticky_tables.each(function() {
@@ -319,9 +319,17 @@ Fae.tables = {
       });
     }
 
-    FCH.load.push( Fae.tables.sizeFixedHeader );
-    FCH.resize.push( Fae.tables.sizeFixedHeader );
-    FCH.scroll.push(stickyTableHeaderScroll);
+    // These FCH listeners read the DOM when they fire, so one registration covers every later init
+    Fae.once('tables-fch-listeners', function() {
+      FCH.load.push( Fae.tables.sizeFixedHeader );
+      FCH.resize.push( Fae.tables.sizeFixedHeader );
+      FCH.scroll.push(stickyTableHeaderScroll);
+    });
+
+    // FCH.load already fired if the page is done loading, so size the new headers now
+    if (document.readyState === 'complete') {
+      Fae.tables.sizeFixedHeader();
+    }
   },
 
   /**
@@ -389,7 +397,7 @@ Fae.tables = {
    */
   tooltip: function() {
     // Generate tooltip
-    $('.js-tooltip').each(function() {
+    Fae.fresh($('.js-tooltip'), 'tooltip').each(function() {
       var $this = $(this);
       var $tooltip_element = $('<span />', {
         class: 'tooltip',

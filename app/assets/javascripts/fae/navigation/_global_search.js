@@ -11,6 +11,8 @@ Fae.navigation.global_search = {
     this.$wrapper = $('#js-utility-search-wrapper');
     this.$input = $('#js-global-search');
 
+    if (!Fae.fresh(this.$wrapper.add(this.$input), 'global-search').length) { return; }
+
     this.utilitySearch();
     this.searchListener();
   },

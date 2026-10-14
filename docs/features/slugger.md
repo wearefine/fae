@@ -30,4 +30,4 @@ Fae.setup do |config|
 end
 ```
 
-Note: `slug_separator` is used in a regex to format the string. Certain characters (e.g. `+`) can break the regex, so if slugger stops working after you update this option check the errors in the console to see why.
+Note: the separator reaches the browser through the `fae-slug-separator` meta tag rendered by the admin layouts, and is escaped before it's used in a regex, so characters like `+` are safe.

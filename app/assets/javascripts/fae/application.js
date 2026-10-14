@@ -33,6 +33,8 @@
 //= require fae/vendor/simplemde/simplemde.min
 //= require fae/vendor/simplemde/inline-attachment
 //= require fae/vendor/simplemde/codemirror-4.inline-attachment
+//= require fae/vendor/trumbowyg/trumbowyg
+//= require fae/vendor/trumbowyg/plugins/upload/trumbowyg.upload
 
 //= require fae/admin
 
@@ -64,7 +66,5 @@
 //= require fae/_tables
 //= require fae/_deploy
 //= require fae/_alt_text_manager
-
-//= require fae
 
 //= require fae/fae_init

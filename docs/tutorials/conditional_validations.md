@@ -93,12 +93,12 @@ label.is_required_and_hidden::before {
 
 ## Fae JS
 
-In `fae.js` add in code for the toggling of the button detail page button to show and hide your conditionally required fields. Be sure to require validator js at the top, and init the Validator from the above js in the init or ready function.
+In `app/javascript/fae_custom.js` add in code for the toggling of the button detail page button to show and hide your conditionally required fields. Be sure to import the validator js at the top, and init the Validator from the above js in the init function.
 
 ```javascript
-//= require validator
+import "validator"
 
-var AcmeAdmin = {
+const AcmeAdmin = {
 
   init: function() {
     Validator.init();
@@ -127,7 +127,7 @@ var AcmeAdmin = {
 
 };
 
-$(document).ready(function() {
+document.addEventListener('fae:load', function() {
   AcmeAdmin.init();
 });
 ```

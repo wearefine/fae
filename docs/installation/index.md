@@ -40,7 +40,7 @@ Fae's installer will do the following:
 
 - add Fae's namespace and route to `config/routes.rb`
 - add `app/assets/stylesheets/fae_custom.css` for custom admin CSS
-- add `app/assets/javascripts/fae.js` for custom JS
+- add `config/fae_importmap.rb` and `app/javascript/fae_custom.js` for custom JS
 - add `app/controllers/concerns/fae/nav_items.rb` to manage main navigation
 - add Fae's initializer: `config/initializers/fae.rb`
 - add `config/initializers/judge.rb` for validation config

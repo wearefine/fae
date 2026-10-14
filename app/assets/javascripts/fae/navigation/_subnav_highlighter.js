@@ -25,6 +25,8 @@ Fae.navigation.subnav_highlighter = {
      * @private
      */
     function scrollCallback() {
+      if (!FCH.exists('.content-header-subnav')) { return; }
+
       var scroll_top = FCH.$window.scrollTop();
 
       $('.content').each(function(index) {
@@ -44,7 +46,11 @@ Fae.navigation.subnav_highlighter = {
 
     // highlight the first one on page load
     scrollCallback();
-    FCH.scroll.push(scrollCallback);
+
+    // The callback reads the DOM when it fires, so one registration covers every later init
+    Fae.once('subnav-highlighter-scroll', function() {
+      FCH.scroll.push(scrollCallback);
+    });
   },
 
   /**
@@ -76,6 +82,6 @@ Fae.navigation.subnav_highlighter = {
       }
     }
 
-    $('#js-content-header-subnav a').on('click', scroller);
+    Fae.fresh($('#js-content-header-subnav a'), 'subnav-anchor').on('click', scroller);
   },
 };

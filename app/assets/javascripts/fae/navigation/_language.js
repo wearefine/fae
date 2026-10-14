@@ -19,7 +19,7 @@ Fae.navigation.language = {
       return;
     }
 
-    if (this.el.$select.length) {
+    if (Fae.fresh(this.el.$select, 'language').length) {
       this.setInitialState();
       this.addNavEvents();
     }

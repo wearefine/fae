@@ -33,7 +33,7 @@ Fae.form.validator = {
     if (typeof $scope === 'undefined') {
       $scope = FCH.$document;
     }
-    $scope.on('submit', 'form:not([data-remote=true])', function (e) {
+    $scope.off('submit.faeValidate').on('submit.faeValidate', 'form:not([data-remote=true])', function (e) {
       var $this = $(this);
 
       if ($this.data('passed_validation') !== 'true') {
@@ -135,7 +135,7 @@ Fae.form.validator = {
       $scope = $('body');
     }
 
-    $scope.find('[data-validate]').each(function () {
+    Fae.fresh($scope.find('[data-validate]'), 'validation-events').each(function () {
       var $this = $(this);
 
       if ($this.data('validate').length) {
@@ -217,7 +217,7 @@ Fae.form.validator = {
     const _this = this;
     let imageErrorFound = false;
 
-    $('.input.file').each(function () {
+    Fae.fresh($('.input.file'), 'ssr-file-errors').each(function () {
       $assetInput = $(this);
       if ($assetInput.hasClass('field_with_errors')) {
         const errorMessage = $assetInput.find('.error').text();
@@ -516,9 +516,9 @@ Fae.form.validator = {
         }
       }
 
-      this.$password_confirmation_field.on('blur', validateConfirmation);
+      this.$password_confirmation_field.off('blur.faePasswordConfirmation').on('blur.faePasswordConfirmation', validateConfirmation);
 
-      $('form').on('submit', function (ev) {
+      $('form').off('submit.faePasswordConfirmation').on('submit.faePasswordConfirmation', function (ev) {
         _this.is_valid = true;
         validateConfirmation();
 
@@ -555,7 +555,7 @@ Fae.form.validator = {
     findLengthValidations: function () {
       var _this = this;
 
-      $('[data-validate]').each(function () {
+      Fae.fresh($('[data-validate]'), 'length-counter').each(function () {
         var $this = $(this);
 
         if ($this.data('validate').length) {

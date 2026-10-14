@@ -159,7 +159,7 @@ export default class extends Controller {
       Fae.tables?.columnSorting()
       Fae.tables?.rowSorting()
       Fae.navigation?.lockFooter()
-      Fae.altTextManager?.ready()
+      Fae.altTextManager?.init()
     }
 
     this.addSortingClasses()

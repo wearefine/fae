@@ -182,6 +182,10 @@
     var settings = $.extend( {}, defaults, options );
 
     return this.each(function() {
+      // Stickiness registers FCH listeners, so never apply it twice to one element
+      if (this.faeSticky) { return; }
+      this.faeSticky = true;
+
       var sticker = new Sticky($(this), settings);
     });
 

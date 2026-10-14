@@ -18,12 +18,12 @@ Fae.altTextManager = {
     $button.prop('disabled', false);
   },
 
-  ready: function() {
+  init: function() {
     var emptyLabel = 'No alt text';
-    var $editButton = $('.js-edit-alt-button');
-    var $saveButton = $('.js-save-alt-button');
-    var $cancelButton = $('.js-cancel-alt-button');
-    var $generateButton = $('.js-generate-alt-button-on-alt-manager');
+    var $editButton = Fae.fresh($('.js-edit-alt-button'), 'alt-edit');
+    var $saveButton = Fae.fresh($('.js-save-alt-button'), 'alt-save');
+    var $cancelButton = Fae.fresh($('.js-cancel-alt-button'), 'alt-cancel');
+    var $generateButton = Fae.fresh($('.js-generate-alt-button-on-alt-manager'), 'alt-generate');
     $saveButton.hide();
     $cancelButton.hide();
     $generateButton.hide();

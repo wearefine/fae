@@ -6,7 +6,7 @@
  * @memberof Fae
  */
 Fae.form = {
-  ready: function() {
+  init: function($root) {
     // Mutate DOM to support two column labels for all standard inputs
     this.makeTwoColumnLabels();
 
@@ -18,7 +18,12 @@ Fae.form = {
     this.validator.init();
     this.cancel.init();
     this.ajax.init();
-    this.filtering.init();
+
+    // Filtering, sorting and paging belong to the whole page, so content swapped in by AJAX doesn't restart them
+    if (!$root || $root[0] === document) {
+      this.filtering.init();
+    }
+
     this.slugger.init();
     this.formManager.init();
     this.rankedSelect.init();
@@ -26,17 +31,17 @@ Fae.form = {
     // input type=file customization
     // This doesn't work in IE. It's not worth figuring out why by this point. IE9 gets plain file uploader.
     if (!FCH.IE9) {
-      $('.input.file').fileinputer();
+      Fae.fresh($('.input.file'), 'fileinputer').fileinputer();
     }
-    
+
     // make all the hint areas
-    $('.hint').hinter();
+    Fae.fresh($('.hint'), 'hinter').hinter();
     
     this.dragDrop.init();
   },
 
   makeTwoColumnLabels: function() {
-    $('.input label').each(function() {
+    Fae.fresh($('.input label'), 'two-column-label').each(function() {
       var $element = $(this);
 
       // Bail if we cannot find any helper_text

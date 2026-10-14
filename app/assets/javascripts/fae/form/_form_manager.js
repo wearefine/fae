@@ -33,22 +33,26 @@ Fae.form.formManager = {
     var _this      = this;
     formSelector   = formSelector || 'form:first';
     _this.$theForm = $(formSelector);
+    var $freshForm = Fae.fresh(_this.$theForm, 'form-manager');
 
     // Draw initial label/helper overrides
-    _this.setupAllFields(_this.$theForm);
+    _this.setupAllFields($freshForm);
 
-    $('body').on('click', '.'+_this.launchManagerClass, function(e) {
+    // Document-level and namespaced so repeated init calls never stack listeners
+    $(document).off('.faeFormManager');
+
+    $(document).on('click.faeFormManager', '.'+_this.launchManagerClass, function(e) {
       e.preventDefault();
       _this.$theForm = $(this).parents('form');
       _this._launchManager($(this));
     });
 
-    $('body').on('click', '.'+_this.saveAndCloseManagerClass, function(e) {
+    $(document).on('click.faeFormManager', '.'+_this.saveAndCloseManagerClass, function(e) {
       e.preventDefault();
       _this._saveAndCloseManager($(this));
     });
 
-    $('body').on('click', '.'+_this.cancelManagerClass, function(e) {
+    $(document).on('click.faeFormManager', '.'+_this.cancelManagerClass, function(e) {
       e.preventDefault();
       _this._closeManager($(this));
     });

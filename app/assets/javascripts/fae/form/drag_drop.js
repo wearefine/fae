@@ -8,7 +8,7 @@
 Fae.form.dragDrop = {
 
   init: function () {
-    this.fileInputs = document.querySelectorAll('input[type="file"]');
+    this.fileInputs = Fae.fresh($('input[type="file"]'), 'drag-drop').get();
     if (this.fileInputs.length === 0) return;
 
     this.bindListeners();

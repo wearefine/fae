@@ -15,6 +15,11 @@
     return this.each(function() {
       var $this = $(this);
 
+      // Chosen ignores repeat initialization, but the listeners below would stack
+      if ($this.data('chosen')) {
+        return;
+      }
+
       // remove threshold if show_search class is added from `search: true`
       if ($this.hasClass('select-search')) {
         settings.disable_search_threshold = 0;

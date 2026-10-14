@@ -109,7 +109,7 @@ Fae.form.text = {
    * @has_test {features/form_helpers/fae_input_spec.rb}
    */
   initHTML: function () {
-    var $html_editors = $('.js-html-editor');
+    var $html_editors = Fae.fresh($('.js-html-editor'), 'trumbowyg');
     if(!$html_editors.length) {
       return;
     }
@@ -148,8 +148,7 @@ Fae.form.text = {
  * Find all translate fields and initialize them with button
  */
   initTranslation: function () {
-    // var $translate_button = $('.js-translate-button');
-    $('.js-translate-button').click(function(e) {
+    Fae.fresh($('.js-translate-button'), 'translate').click(function(e) {
       var $this = $(this);
       var translateField;
 
@@ -225,7 +224,7 @@ Fae.form.text = {
     });
   },
   initGenerateAlt: function () {
-    $('.js-generate-alt-button-on-form').on('click', function (e) {
+    Fae.fresh($('.js-generate-alt-button-on-form'), 'generate-alt').on('click', function (e) {
       e.preventDefault();
       var $this = $(this);
       var $altInput = $this.prev('input');

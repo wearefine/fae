@@ -17,8 +17,15 @@ Fae.form.filtering = {
       return;
     }
 
-    // init only on pages with filering, sorting or paging
-    if (this.$filter_form.length || this.$pagination.length || $('.js-sort-column').length) {
+    // init only on pages with filering, sorting or paging, and only once per set of elements
+    var $anchors = Fae.fresh($('.js-filter-form, .pagination, .js-sort-column'), 'filtering');
+
+    if ($anchors.length) {
+      // A previous page's Fryr would otherwise keep listening for hash changes
+      if (this.fry) {
+        this.fry.destroy(true);
+      }
+
       this.applyCookies();
       var window_hash = window.location.hash;
       var has_hash_on_load = window_hash.length > 2;
@@ -72,7 +79,7 @@ Fae.form.filtering = {
       Fae.tables.columnSorting();
       Fae.tables.rowSorting();
       Fae.navigation.lockFooter();
-      Fae.altTextManager.ready();
+      Fae.altTextManager.init();
 
       _this.sortingSetup();
 
@@ -245,10 +252,8 @@ Fae.form.filtering = {
   _addSortingListeners: function() {
     var _this = this;
 
-    // Fizzle if listeneres have already been attached
-    if (this._are_sorting_listeners_setup === true) { return; }
-
-    $('body').on('click', 'th[data-sort]', function() {
+    // Document-level and namespaced so listeners are attached once and survive the body being replaced
+    $(document).off('click.faeSorting').on('click.faeSorting', 'th[data-sort]', function() {
       var $this = $(this);
       var new_direction = 'asc';
 
@@ -267,9 +272,6 @@ Fae.form.filtering = {
         page: ''
       });
     });
-
-    // To ensure listeners are only attached once
-    this._are_sorting_listeners_setup = true;
   },
 
   /**

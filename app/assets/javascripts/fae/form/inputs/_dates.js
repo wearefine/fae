@@ -54,8 +54,10 @@ Fae.form.dates = {
     };
 
     // daterangepicker instantiation
-    if (FCH.exists('.daterangepicker')) {
-      $('.daterangepicker').dateRangePicker({
+    var $ranges = Fae.fresh($('.daterangepicker'), 'daterangepicker');
+
+    if ($ranges.length) {
+      $ranges.dateRangePicker({
         format: 'MMM DD, YYYY',
         separator : ' to ',
         showShortcuts: false,

@@ -39,7 +39,6 @@ module Fae
 
     def add_fae_assets
       copy_file ::File.expand_path(::File.join(__FILE__, '../templates/assets/fae_custom.css')), 'app/assets/stylesheets/fae_custom.css'
-      copy_file ::File.expand_path(::File.join(__FILE__, '../templates/assets/fae.js')), 'app/assets/javascripts/fae.js'
     end
 
     def add_navigation_concern

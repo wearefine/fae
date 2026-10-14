@@ -7,13 +7,16 @@
  */
 Fae.navigation = {
 
-  ready: function() {
+  init: function($root) {
     var _this = this;
-    
-    // Use setTimeout to ensure DOM is fully loaded and flash messages are rendered
-    setTimeout(function() {
-      _this.showToasts();
-    }, 100);
+
+    // Flash messages belong to a full page; AJAX swaps show their own toasts
+    if (!$root || $root[0] === document) {
+      // Use setTimeout to ensure DOM is fully loaded and flash messages are rendered
+      setTimeout(function() {
+        _this.showToasts();
+      }, 100);
+    }
     
     // this.fadeNotices();
     this.openDrawer();
@@ -42,7 +45,7 @@ Fae.navigation = {
   accordionClickEventListener: function() {
     var _this = this;
 
-    $('.js-accordion > a').click(function(e) {
+    Fae.fresh($('.js-accordion > a'), 'accordion').click(function(e) {
       e.preventDefault();
 
       var $parent = $(this).closest('.js-accordion');
@@ -136,7 +139,7 @@ Fae.navigation = {
   openDrawer: function() {
     var $html = $('html');
 
-    $('#js-mobilenav-toggle').click(function(e){
+    Fae.fresh($('#js-mobilenav-toggle'), 'mobilenav-toggle').click(function(e){
       e.preventDefault();
 
       if ($html.hasClass( 'mobile-active' )) {
@@ -151,7 +154,7 @@ Fae.navigation = {
    * Mobile - Collapse sub headers on sub nav click
    */
   clickBack: function() {
-    $('.js-mobile-back').click(function(e){
+    Fae.fresh($('.js-mobile-back'), 'mobile-back').click(function(e){
       e.preventDefault();
 
       $(this)
