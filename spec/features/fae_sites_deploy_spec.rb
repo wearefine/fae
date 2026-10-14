@@ -19,7 +19,7 @@ feature 'Sites Deploy' do
     end
     eventually {
       expect(page).to have_content('Deploy - Test Site')
-      expect(find('main.content')['data-fae-site-id'].to_i).to eq(@site.id)
+      expect(find('main.content')['data-fae-deploy-site-id-value'].to_i).to eq(@site.id)
     }
   end
 

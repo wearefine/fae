@@ -6,10 +6,10 @@ header.content-header.js-content-header
 
 == render 'flash_messages'
 
-main.content data-fae-site-id=@site&.id
+main.content data-controller="fae-deploy" data-fae-deploy-site-id-value=@site&.id data-fae-deploy-list-path-value=fae.deploy_deploys_list_path data-fae-deploy-deploy-path-value=fae.deploy_deploy_site_path
   - if @deploy_hooks.present?
     - @deploy_hooks.each do |deploy_hook|
-      button.button.deploy-button.js-run-deploy data-build-hook-type=deploy_hook.environment href="#" = "#{t('fae.deploy.ctas.deploy')} #{deploy_hook.environment.to_s.titleize}"
+      button.button.deploy-button.js-run-deploy data-fae-deploy-target="button" data-action="click->fae-deploy#deploy" data-build-hook-type=deploy_hook.environment href="#" = "#{t('fae.deploy.ctas.deploy')} #{deploy_hook.environment.to_s.titleize}"
 
 section.content
   p = t('fae.deploy.table.deploying_helper').html_safe

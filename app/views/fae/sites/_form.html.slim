@@ -3,7 +3,7 @@
     = form_header 'Site'
 
     .content-header-buttons
-      a.button#js-header-cancel href=@index_path = t('fae.form.cancel')
+      a.button#js-header-cancel href=@index_path data-controller="fae-cancel" = t('fae.form.cancel')
       input name="commit" type="submit" value=t('fae.form.save')
 
   == render 'fae/shared/errors'

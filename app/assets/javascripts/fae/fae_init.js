@@ -28,7 +28,6 @@
     Fae.navigation.init($root);
     Fae.modals.init();
     Fae.tables.init();
-    Fae.deploy.init();
     Fae.altTextManager.init();
 
     // FCH only dispatches `load` once, so catch up when initializing after the window has loaded

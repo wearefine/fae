@@ -2,7 +2,7 @@
   header.content-header.js-content-header
     h1 Root Settings
     .content-header-buttons
-      a.button#js-header-cancel href=fae.root_path(cancelled: true) = t('fae.form.cancel')
+      a.button#js-header-cancel href=fae.root_path(cancelled: true) data-controller="fae-cancel" = t('fae.form.cancel')
       input name="commit" type="submit" value=t('fae.form.save')
 
   == render 'flash_messages'

@@ -50,35 +50,45 @@ feature 'Form cancel button' do
 
   scenario 'sets up beforeunload handler on draft forms', js: true do
     visit new_admin_release_path
-    
+
     # The new action creates a draft and redirects to edit with draft=true
-    # Check that the beforeunload handler is registered
-    
-    # Verify the draft data attribute is set
     expect(page).to have_css('#js-header-cancel[data-draft="true"]')
-    
-    # Verify the beforeunload handler is attached by checking allowUnload flag exists
-    has_handler = page.evaluate_script('typeof Fae.form.cancel.allowUnload !== "undefined"')
-    expect(has_handler).to be true
-    
-    # Verify allowUnload is initially false (blocking navigation)
-    allow_unload = page.evaluate_script('Fae.form.cancel.allowUnload')
-    expect(allow_unload).to be false
+    eventually { expect(controller_connected?('#js-header-cancel', 'fae-cancel')).to be true }
+
+    # An unload attempt is blocked until the user submits or confirms
+    expect(unload_prevented?).to be true
   end
-  
-  scenario 'sets allowUnload to true on form submission', js: true do
+
+  scenario 'does not warn on unload for forms that are not drafts', js: true do
+    release = FactoryBot.create(:release, name: 'Test Release')
+    visit edit_admin_release_path(release)
+    eventually { expect(controller_connected?('#js-header-cancel', 'fae-cancel')).to be true }
+
+    expect(unload_prevented?).to be false
+  end
+
+  scenario 'allows unload after form submission', js: true do
     visit new_admin_release_path
-    
-    # Verify allowUnload starts as false
-    allow_unload = page.evaluate_script('Fae.form.cancel.allowUnload')
-    expect(allow_unload).to be false
-    
+    eventually { expect(controller_connected?('#js-header-cancel', 'fae-cancel')).to be true }
+    expect(unload_prevented?).to be true
+
     # Trigger form submit event (doesn't need to actually submit)
-    page.execute_script("$('form').trigger('submit')")
-    
-    # Verify allowUnload is now true
-    allow_unload = page.evaluate_script('Fae.form.cancel.allowUnload')
-    expect(allow_unload).to be true
+    page.execute_script("$('form').first().on('submit', function(e) { e.preventDefault() }).trigger('submit')")
+
+    expect(unload_prevented?).to be false
+  end
+
+  scenario 'adds the cancelled param after the form changes', js: true do
+    release = FactoryBot.create(:release, name: 'Test Release')
+    visit edit_admin_release_path(release)
+    eventually { expect(controller_connected?('#js-header-cancel', 'fae-cancel')).to be true }
+
+    fill_in 'release_name', with: 'Changed'
+
+    expect(page).to have_css('#js-header-cancel[href$="?cancelled=true"]')
+    fill_in 'release_name', with: 'Changed again'
+    expect(page).to have_css('#js-header-cancel[href$="?cancelled=true"]')
+    expect(page.find('#js-header-cancel')[:href]).to_not include('cancelled=true?cancelled=true')
   end
 
   scenario 'allows navigation after form submission on draft', js: true do
@@ -101,6 +111,17 @@ feature 'Form cancel button' do
     eventually {
       expect(page.current_path).to eq(admin_releases_path)
     }
+  end
+
+
+  def unload_prevented?
+    page.evaluate_script(<<~JS)
+      (function() {
+        var event = new Event('beforeunload', { cancelable: true });
+        window.dispatchEvent(event);
+        return event.defaultPrevented;
+      })()
+    JS
   end
 
 end

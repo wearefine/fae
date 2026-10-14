@@ -134,12 +134,6 @@ feature 'Stimulus via the Fae importmap' do
     end
   end
 
-  def controller_connected?(selector, identifier)
-    page.evaluate_script(<<~JS)
-      !!(window.Stimulus && window.Stimulus.getControllerForElementAndIdentifier(document.querySelector('#{selector}'), '#{identifier}'))
-    JS
-  end
-
   def foreground_color
     page.evaluate_script("document.body.style.getPropertyValue('--foreground-color')")
   end

@@ -65,7 +65,9 @@ Controllers connect to matching `data-controller` elements, including markup add
 
 | Identifier | Attached to | Replaces |
 |---|---|---|
+| `fae-cancel` | the Cancel button in the form header, options and site forms | `Fae.form.cancel` (the legacy module still runs on overridden markup without the controller) |
 | `fae-contrast` | `body` in `layouts/fae/application` | `Fae.contrast` |
+| `fae-deploy` | `main.content` on the deploy page | `Fae.deploy` |
 | `fae-filtering` | forms rendered by `fae_filter_form` | `Fae.form.filtering` (pages with only pagination or `.js-sort-column` tables still use the legacy module) |
 | `fae-language` | the language select in `fae/shared/_form_header` | `Fae.navigation.language` toggling and preference saving |
 

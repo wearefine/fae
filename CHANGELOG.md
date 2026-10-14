@@ -15,6 +15,7 @@
     + Add `Fae.init(root)` as the single entry point for the legacy admin JavaScript, which now runs safely any number of times (page load, AJAX swaps, Turbo renders), and dispatch a `fae:load` event after each run. Nested and flex component forms loaded over AJAX now get the same initialization as the page itself
     + Move the values Fae's JavaScript used to read from ERB (admin path, slug separator, Judge path, Trumbowyg icon path) to `<meta name="fae-*">` tags rendered by the admin layouts
     + Bundle the Trumbowyg HTML editor with Fae's JavaScript, so `html: true` inputs no longer need an opt-in `require`
+    + Port the form Cancel button to the `fae-cancel` Stimulus controller and the deploy page to `fae-deploy`; both clean up their window and document listeners when removed from the page
 - breaking
     + `app/assets/javascripts/fae.js` is no longer compiled into Fae's JavaScript bundle and the installer no longer creates it. Host JavaScript moves to `app/javascript/fae_custom.js` (see the v5 upgrade notes)
 - bugs
