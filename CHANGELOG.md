@@ -23,6 +23,7 @@
 - breaking
     + Sprockets is no longer supported. Apps must use Propshaft (see the v5 upgrade notes), and Fae's `//= require`-based `fae.js` hook is gone
     + `app/assets/javascripts/fae.js` is no longer compiled into Fae's JavaScript bundle and the installer no longer creates it. Host JavaScript moves to `app/javascript/fae_custom.js` (see the v5 upgrade notes)
+    + Remove the dead `fae_redirect_to_form_on_create` model option from the docs
 - bugs
     + Fix the slugger breaking when `Fae.slug_separator` contains regex special characters
     + Record activity log changes made without a signed-in Fae user when `belongs_to` is required by default

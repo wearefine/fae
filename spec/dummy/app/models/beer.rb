@@ -16,10 +16,6 @@ class Beer < ApplicationRecord
     name
   end
 
-  def fae_redirect_to_form_on_create
-    true
-  end
-
   def detail_path
     "/beers/#{id}"
   end
