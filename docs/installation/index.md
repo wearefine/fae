@@ -32,7 +32,7 @@ Fae supports Rails >= 4.1.
 
 ### Sass
 
-Fae ships its admin CSS prebuilt, so it doesn't depend on any Sass gem. Add `sass-rails` or `dartsass-rails` to your `Gemfile` only if your own stylesheets (including `fae_custom.scss`) use SCSS.
+Fae ships its admin CSS prebuilt, so it doesn't depend on any Sass gem. Propshaft doesn't compile Sass, so if you write your own admin styles in SCSS, add `dartsass-rails` to your `Gemfile` and build `fae_custom.scss` to `app/assets/builds/fae_custom.css`.
 
 ## fae:install
 

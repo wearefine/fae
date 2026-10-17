@@ -1,1 +1,0 @@
-Rails.application.config.assets.precompile += %w( html5shiv.js html5shiv-printshiv.js )

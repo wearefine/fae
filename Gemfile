@@ -20,8 +20,9 @@ gem 'rails', '~> 8.1.0'
 
 gem 'rake'
 
-# The dummy app compiles its own SCSS; Fae itself ships prebuilt CSS
-gem 'sass-rails', '>= 6.0'
+# Only used by `rake fae:js:build` to resolve the legacy JavaScript's requires. Never required at boot:
+# gems such as graphiql-rails switch to Sprockets-only behavior when the constant is defined.
+gem 'sprockets', '~> 4.2', require: false
 
 group :test, :development do
   gem 'rspec-rails'

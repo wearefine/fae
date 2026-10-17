@@ -1,15 +1,16 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any styles
- * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
- * file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+/* Styles for the dummy app's own pages (Fae's admin styles come from fae_admin.css and fae_custom.css) */
+#dummy_content {
+  margin: 30px auto;
+  width: 500px;
+}
+
+#dummy_content section {
+  margin-bottom: 30px;
+}
+
+#dummy_content h2 {
+  font-size: 30px;
+  color: #2B2B2B;
+  padding: 5px 0;
+  font-weight: bold;
+}

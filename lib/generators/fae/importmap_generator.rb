@@ -12,18 +12,5 @@ module Fae
       create_file 'app/javascript/fae_custom/controllers/.keep'
     end
 
-    def link_assets
-      manifest = ::File.join(destination_root, 'app/assets/config/manifest.js')
-      return unless ::File.exist?(manifest)
-
-      content = ::File.read(manifest)
-      return if content.include?('link fae_custom.js')
-
-      append_to_file manifest, "#{"\n" unless content.end_with?("\n") || content.empty?}" + <<~JS
-        //= link fae_custom.js
-        //= link_tree ../../javascript/fae_custom .js
-      JS
-    end
-
   end
 end

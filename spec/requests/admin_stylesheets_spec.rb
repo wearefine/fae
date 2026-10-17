@@ -23,9 +23,9 @@ describe 'admin stylesheets' do
       get href
       css = response.body
 
-      expect(css).to match(%r{url\(/assets/fae/lato-regular-webfont-\h+\.woff\)})
-      expect(css).to match(%r{url\(/assets/fae/error_bg-\h+\.jpg\)})
-      expect(css).not_to include('url("fae/')
+      expect(css).to match(%r{url\("?/assets/fae/lato-regular-webfont-\h+\.woff"?\)})
+      expect(css).to match(%r{url\("?/assets/fae/error_bg-\h+\.jpg"?\)})
+      expect(css).not_to match(%r{url\("?fae/})
     end
   end
 end

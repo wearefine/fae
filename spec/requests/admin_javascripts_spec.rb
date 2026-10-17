@@ -24,7 +24,7 @@ describe 'admin javascripts' do
     end
 
     it 'loads the prebuilt script before the importmap modules' do
-      srcs = response.body.scan(/<script[^>]+src="([^"]+)"/).flatten.map { |src| src[%r{/assets/([\w/.-]+?)(?:-\h{40,})?\.js}, 1] }
+      srcs = response.body.scan(/<script[^>]+src="([^"]+)"/).flatten.map { |src| src[%r{/assets/([\w/.-]+?)(?:-\h{8,})?\.js}, 1] }
 
       expect(srcs.first).to eq('fae_admin')
       expect(response.body.index('fae_admin')).to be < response.body.index('type="importmap"')

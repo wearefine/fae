@@ -8,7 +8,7 @@
     + Port filtering/sorting/paging for `fae_filter_form` to the `fae-filtering` Stimulus controller, and the form header language toggle to `fae-language`
     + Replace capybara-webkit with Cuprite (headless Chrome) for JS feature specs
     + Require Rails 8.0+; the dummy app and test suite run on Rails 8.1 and Ruby 3.3 with `load_defaults 8.1`
-    + Raise a clear error on boot when Propshaft is loaded, and add Fae's asset manifest to the precompile list automatically
+    + Serve assets with Propshaft, the Rails 8 default, instead of Sprockets. Fae no longer needs a `manifest.js` or precompile list, and raises a clear error on boot when `sprockets-rails` is loaded
     + Remove the Rails 5 Appraisals and the unused `sass`, `appraisal`, `rails-perftest`, `ruby-prof` and `thin` dependencies
     + Ship the admin CSS prebuilt (`fae_admin.css`, compiled with dart-sass via `rake fae:css:build`) and drop the runtime `sass-rails` dependency. Host styles move from `fae.scss` to a separate `fae_custom.css`, linked after Fae's stylesheet. The built CSS resolves fonts and images under both Sprockets and Propshaft
     + Ship the legacy admin JavaScript prebuilt (`fae_admin.js`, built with `rake fae:js:build` from `app/legacy_js`), bundling jQuery, jquery_ujs, jQuery UI, remotipart and Judge. The layouts load one script instead of ~50 Sprockets-resolved files, which keeps the JavaScript the same under any asset pipeline. `jquery-rails`, `jquery-ui-rails` and `uglifier` are no longer runtime dependencies
@@ -18,6 +18,7 @@
     + Bundle the Trumbowyg HTML editor with Fae's JavaScript, so `html: true` inputs no longer need an opt-in `require`
     + Port the form Cancel button to the `fae-cancel` Stimulus controller and the deploy page to `fae-deploy`; both clean up their window and document listeners when removed from the page
 - breaking
+    + Sprockets is no longer supported. Apps must use Propshaft (see the v5 upgrade notes), and Fae's `//= require`-based `fae.js` hook is gone
     + `app/assets/javascripts/fae.js` is no longer compiled into Fae's JavaScript bundle and the installer no longer creates it. Host JavaScript moves to `app/javascript/fae_custom.js` (see the v5 upgrade notes)
 - bugs
     + Fix the slugger breaking when `Fae.slug_separator` contains regex special characters

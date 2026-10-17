@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   # Rails dependencies
   s.add_dependency 'rails', '>= 8.0'
-  s.add_dependency 'sprockets-rails', '>= 3.4'
+  s.add_dependency 'propshaft', '>= 1.1'
   s.add_dependency 'importmap-rails', '>= 1.2.1'
   s.add_dependency 'stimulus-rails'
 

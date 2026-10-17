@@ -43,7 +43,6 @@ This creates:
 * `config/fae_importmap.rb`: pins added to Fae's importmap. It's drawn after Fae's own pins.
 * `app/javascript/fae_custom.js`: your entry point, imported on every Fae admin page after Fae's own modules.
 * `app/javascript/fae_custom/controllers/`: a home for your controllers.
-* Two `link` lines in `app/assets/config/manifest.js` so Sprockets serves those files.
 
 Restart your server after adding new pins.
 
@@ -101,13 +100,9 @@ Pin any packages your Fae modules need in `config/fae_importmap.rb`. Your app's 
 pin 'sortablejs', to: 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/+esm'
 ```
 
-### Compression
-
-Fae's modules use modern JavaScript syntax. If your app sets `config.assets.js_compressor = :uglifier`, switch to `:terser` (via the [terser](https://github.com/ahorek/terser-ruby) gem) or remove the compressor, since Uglifier can't parse ES modules.
-
 ## Fae CSS
 
-Fae's admin stylesheet is prebuilt, so there's nothing to compile. Add your own admin styles to `app/assets/stylesheets/fae_custom.css` (or `fae_custom.scss` if your app compiles SCSS). The admin layouts link it after Fae's stylesheet, so your rules override Fae's. The install generator creates this file, and Fae adds it to the precompile list automatically.
+Fae's admin stylesheet is prebuilt, so there's nothing to compile. Add your own admin styles to `app/assets/stylesheets/fae_custom.css` (or build it into `app/assets/builds/fae_custom.css` from `fae_custom.scss` with a Sass builder such as `dartsass-rails`). The admin layouts link it after Fae's stylesheet, so your rules override Fae's. The install generator creates this file.
 
 To change the UI color, set the colorway in Fae's settings. It's exposed as the `--highlight-color` CSS custom property, which you can use in your own rules.
 
