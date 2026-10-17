@@ -36,4 +36,12 @@ Rake::TestTask.new(:test) do |t|
 end
 
 
+namespace :spec do
+  desc 'Run the specs with Turbo Drive enabled for the whole admin'
+  task :turbo do
+    ENV['FAE_TURBO_DRIVE'] = '1'
+    Rake::Task['spec'].invoke
+  end
+end
+
 task default: :spec

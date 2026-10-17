@@ -33,6 +33,7 @@ If the Ruby version changed, reinstall gems into the `gems` volume with `docker-
     RAILS_ENV=test bundle exec rspec
     ```
 3. Optional environment variables for JS feature specs
+    - `FAE_TURBO_DRIVE=1` runs the whole suite with Turbo Drive enabled (also `rake spec:turbo`)
     - `JS_ERRORS=true` fails specs on uncaught JavaScript exceptions
     - `HEADLESS=false` opens a visible browser window (outside docker only)
 4. After changing SCSS in `app/stylesheets` or JavaScript in `app/legacy_js`, rebuild the committed CSS and JS

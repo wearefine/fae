@@ -20,6 +20,9 @@ Fae.setup do |config|
 
   config.use_form_manager = true
 
+  # `rake spec:turbo` runs the whole suite with Turbo Drive on, to prove the admin works under Drive
+  config.turbo_drive = ENV['FAE_TURBO_DRIVE'] == '1'
+
   # Removed for now to simplify render.com deploy
   if Rails.env.test?
     config.netlify = {

@@ -7,7 +7,11 @@ feature 'Turbo', js: true do
     eventually { expect(page.evaluate_script('typeof window.Turbo')).to eq('object') }
   end
 
-  after { Fae.turbo_drive = false }
+  around do |example|
+    original = Fae.turbo_drive
+    example.run
+    Fae.turbo_drive = original
+  end
 
   # Marks the current document, adds a plain link, follows it and reports whether the document survived.
   # A full page load replaces the document and loses the marker; a Turbo visit keeps it.
@@ -28,6 +32,10 @@ feature 'Turbo', js: true do
   end
 
   scenario 'is loaded with Drive off by default' do
+    Fae.turbo_drive = false
+    visit fae.root_path
+    eventually { expect(page.evaluate_script('typeof window.Turbo')).to eq('object') }
+
     expect(page.evaluate_script('Turbo.session.drive')).to be false
     expect(follows_link_without_reload?).to be false
   end
@@ -41,6 +49,9 @@ feature 'Turbo', js: true do
   end
 
   scenario 'opts a region in with data-turbo="true" while Drive is off' do
+    Fae.turbo_drive = false
+    visit fae.root_path
+    eventually { expect(page.evaluate_script('typeof window.Turbo')).to eq('object') }
     page.execute_script("document.querySelector('#js-main-content').setAttribute('data-turbo', 'true')")
 
     expect(follows_link_without_reload?).to be true

@@ -71,6 +71,8 @@ New behaviour should go in Stimulus controllers under `app/javascript/fae` (see 
 
 ## Testing
 
+`bundle exec rake spec:turbo` runs the same suite with Turbo Drive enabled for the whole admin (`FAE_TURBO_DRIVE=1`). It must stay green alongside the default run: it's how we check that Fae's pages and the legacy jQuery JS work under Drive.
+
 The dummy app should stay up-to-date with the latest Rails version we support. Running tests against it will run all specs against that version.
 
 Use [guard](https://github.com/guard/guard-rspec) to have specs autorunning as you change files

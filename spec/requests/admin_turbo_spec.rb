@@ -6,7 +6,11 @@ describe 'Turbo in the admin layout' do
     get Rails.application.routes.url_helpers.admin_wines_path
   end
 
-  after { Fae.turbo_drive = false }
+  around do |example|
+    original = Fae.turbo_drive
+    example.run
+    Fae.turbo_drive = original
+  end
 
   it 'pins Turbo in Fae\'s importmap' do
     imports = JSON.parse(response.body[%r{<script type="importmap"[^>]*>(.*?)</script>}m, 1])['imports']
@@ -19,6 +23,8 @@ describe 'Turbo in the admin layout' do
   end
 
   it 'tells the browser whether Drive is on' do
+    Fae.turbo_drive = false
+    get Rails.application.routes.url_helpers.admin_wines_path
     expect(meta_content('fae-turbo-drive')).to eq('false')
 
     Fae.turbo_drive = true
