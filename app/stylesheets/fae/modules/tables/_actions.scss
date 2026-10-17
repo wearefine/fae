@@ -43,3 +43,8 @@ td {
 .loading-fade {
   opacity: 0.5;
 }
+
+// Turbo marks a frame aria-busy while it loads (see fae_filter_frame)
+turbo-frame[aria-busy="true"] table {
+  @extend .loading-fade;
+}

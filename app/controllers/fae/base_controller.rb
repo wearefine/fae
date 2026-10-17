@@ -9,11 +9,7 @@ module Fae
     helper FormHelper
 
     def index
-      if use_pagination
-        @items = @klass.for_fae_index.page(params[:page])
-      else
-        @items = @klass.for_fae_index
-      end
+      @items = index_scope
       respond_to do |format|
         format.html
         format.csv { send_data @items.to_csv, filename: @items.name.parameterize + "." + Time.now.to_fs(:filename) + '.csv'  }
@@ -85,6 +81,25 @@ module Fae
     end
 
   private
+
+    # Index results, honoring the query string that filter forms in a Turbo frame (`fae_filter_frame`) build:
+    # `filter[...]` for the filters and `sort_by`, `sort_direction` and `page` for sorting and paging. It uses the
+    # same `filter(params)` and `fae_sort(params)` class methods as the POST `filter` action, so the same model code
+    # serves both. Without those params, it's the plain index it always was.
+    def index_scope
+      scope = filter_query? ? @klass.filter(flat_filter_params).fae_sort(flat_filter_params) : @klass.for_fae_index
+      use_pagination ? scope.page(params[:page]) : scope
+    end
+
+    def filter_query?
+      params[:filter].present? || params[:sort_by].present?
+    end
+
+    # Models read filters as top-level params (`params['search']`), the way the filter action receives them
+    def flat_filter_params
+      nested = params[:filter].respond_to?(:to_unsafe_h) ? params[:filter].to_unsafe_h : {}
+      ActionController::Parameters.new(params.to_unsafe_h.except('filter').merge(nested))
+    end
 
     def set_class_variables(class_name = nil)
       klass_base = params[:controller].split('/').last

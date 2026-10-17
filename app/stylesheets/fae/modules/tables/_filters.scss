@@ -11,6 +11,11 @@
     display: none;
   }
 
+  // Rendered by the server (only while a filter is active) in a filter frame, instead of shown by JavaScript
+  .button.js-frame-reset {
+    display: inline-block;
+  }
+
   h4 {
     margin-bottom: 20px;
     color: $c-table-filter-header;

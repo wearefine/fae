@@ -69,6 +69,7 @@ Controllers connect to matching `data-controller` elements, including markup add
 | `fae-contrast` | `body` in `layouts/fae/application` | `Fae.contrast` |
 | `fae-deploy` | `main.content` on the deploy page | `Fae.deploy` |
 | `fae-filtering` | forms rendered by `fae_filter_form` | `Fae.form.filtering` (pages with only pagination or `.js-sort-column` tables still use the legacy module) |
+| `fae-frame-filter` | the `<turbo-frame>` rendered by `fae_filter_frame` | nothing: an alternative to `fae-filtering` that keeps filter state in the URL |
 | `fae-language` | the language select in `fae/shared/_form_header` | `Fae.navigation.language` toggling and preference saving |
 
 When a controller is attached, the legacy module it replaces doesn't run on that markup, so customizations made by redefining methods on the legacy object (e.g. in `fae_custom.js`) won't take effect there. Extend the controller instead.
@@ -123,7 +124,7 @@ With Drive on, a link click or form submission becomes a `fetch` and only the `<
 * `remote: true` forms and `data-method` / `data-confirm` links are still handled by jquery_ujs, once. Turbo skips events jquery_ujs has handled, so they work the same under Drive. Links with `data-method` still do a full page load.
 * Draft forms ask before a Turbo visit leaves them, the same way they warn before the tab closes.
 * Admin pages are excluded from Turbo's snapshot cache (`turbo-cache-control: no-cache`), and Fae's script and stylesheet tags carry `data-turbo-track="reload"`, so a deploy of new assets reloads the page.
-* Turbo Frames and Streams aren't used by Fae's pages yet. Content inside a `<turbo-frame>` is initialized when it loads (`turbo:frame-load`).
+* Turbo Frames are available to your own pages, and Fae uses one for [filtering, sorting and paging](../features/filtering.md#filtering-in-a-turbo-frame) (`fae_filter_frame`). Content inside a `<turbo-frame>` is initialized when it loads (`turbo:frame-load`), the same as markup added any other way. Turbo Streams aren't used yet.
 
 ### Writing Turbo-safe JavaScript
 

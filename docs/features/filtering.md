@@ -17,6 +17,7 @@ end
   - [Class Methods](#class-methods)
   - [Fae Filter Form](#fae-filter-form)
   - [Fae Filter Select](#fae-filter-select)
+* [Filtering in a Turbo Frame](#filtering-in-a-turbo-frame)
 * [Pagination](#pagination)
 * [Column Sorting](#column-sorting)
 * [Row Sorting](#row-sorting)
@@ -149,6 +150,43 @@ Dislays a select tag to be used within a `fae_filter_form`.
 ```
 
 ---
+
+## Filtering in a Turbo Frame
+
+`fae_filter_frame` is an alternative to the `filter` action that keeps the whole state of the list **in the URL**. The filter form, the table and the pagination live in a [Turbo Frame](https://turbo.hotwired.dev/handbook/frames), so filtering, sorting and paging update the results in place without reloading the page, and every state has a URL of its own: `/admin/people?filter[search]=ann&filter[company]=12&sort_by=name&sort_direction=desc&page=2`. Links can be shared and bookmarked, a page that loads with those params is already filtered (no flash of the unfiltered list), and the browser's back button works.
+
+```slim
+/ app/views/admin/people/index.html.slim
+
+.content
+  == fae_filter_frame 'people_results' do
+    == fae_filter_form do
+      == fae_filter_select :company
+      == fae_filter_select :groups
+
+    table
+      thead
+        tr
+          th data-sort="name" Name
+          th.-action-wide data-sort="updated_at" Modified
+      tbody
+        / ...
+
+    == paginate @items
+```
+
+It uses the same `filter(params)` class method and the same `data-sort` headers as the POST filter action, so your model code doesn't change, and **it needs no route**, since it's just the `index` action with a query string. `filter[...]` values reach your `filter(params)` as top-level params (`params['search']`, `params['company']`), as before.
+
+What to know:
+
+* Frame ids are yours to choose, and must be unique on the page.
+* Only the filter form, the pagination links and the sortable headers load into the frame. The frame's `target` is `_top`, so edit links, delete buttons and the like behave the same as anywhere else.
+* The frame has to contain the form, the table and the pagination. They are re-rendered together from the URL, which is why filter controls always show the current filters.
+* `cookie_key` isn't used: the URL is the state. A list opened without params is the unfiltered list.
+* It works with Turbo Drive on or off. With Drive off, only the frame itself navigates, and everything else is a normal page load.
+* The back and forward buttons reload the list at that URL (still correct, just not an in-place swap).
+* If your controller overrides `index`, set `@items = index_scope` to get the query-string handling, which `Fae::BaseController` uses.
+* The legacy `filter` action, the `fae_filter_form` options above and the Fryr hash and cookie behavior are unchanged for pages that don't use a frame.
 
 ## Pagination
 

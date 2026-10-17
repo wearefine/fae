@@ -82,29 +82,45 @@ module Fae
       "#{klass}_#{item.id}"
     end
 
+    # Wraps a filter form, table and pagination in a Turbo frame so filtering, sorting and paging update the results
+    # in place. State lives in the URL (`?filter[search]=x&sort_by=name&page=2`) and the server renders from it, so the
+    # back button and shared links work. A `fae_filter_form` inside the block becomes a GET form that targets the
+    # frame. The frame's own target is `_top`, so edit links and row buttons inside it behave as they do anywhere else.
+    def fae_filter_frame(id, &block)
+      @fae_filter_frame = id.to_s
+      content = capture(&block)
+
+      content_tag 'turbo-frame', content, id: id, target: '_top', data: { turbo_action: 'advance', controller: 'fae-frame-filter' }
+    ensure
+      @fae_filter_frame = nil
+    end
+
     def fae_filter_form(options = {}, &block)
       options = prepare_options_for_filter_form options
-      return if options[:collection].blank?
+      frame = options[:turbo_frame] || @fae_filter_frame
+      # In a frame the form is re-rendered along with the results, so it has to survive a search that finds nothing
+      return if options[:collection].blank? && !(frame && filters_active?)
 
-      form_tag(options[:action], prepare_form_filter_hash(options)) do
+      form_tag(frame ? @index_path : options[:action], prepare_form_filter_hash(options, frame)) do
+        # Changing a filter keeps the current sort
+        if frame
+          concat hidden_field_tag('sort_by', params[:sort_by], id: nil) if params[:sort_by].present?
+          concat hidden_field_tag('sort_direction', params[:sort_direction], id: nil) if params[:sort_direction].present?
+        end
+
         concat prepare_filter_header(options)
 
         if block_given?
           filter_group_wrapper = content_tag(:div, class: 'table-filter-group-wrapper') do
-            link_tag = content_tag(:a,
-                                   t('fae.reset_search'),
-                                   class: 'js-reset-btn button -small hidden',
-                                   href: '#')
             concat capture(&block)
-            concat content_tag(:div,
-                               link_tag,
-                               class: 'table-filter-group')
+            concat content_tag(:div, filter_reset_button(frame), class: 'table-filter-group')
           end
         end
         concat filter_group_wrapper
         # I know this `unless !` looks like it should be an `if` but it's definitely supposed to be `unless !`
         unless !options[:search]
-          concat submit_tag t('fae.apply_filters'), class: 'hidden'
+          # Unnamed, so pressing Enter doesn't put `commit=...` in the URL
+          concat submit_tag t('fae.apply_filters'), class: 'hidden', name: (frame ? nil : 'commit')
         end
       end
     end
@@ -112,13 +128,15 @@ module Fae
     def fae_filter_select(attribute, opts = {})
       options = prepare_options_for_filter_select(attribute, opts)
       # grouped_by takes priority over grouped_options
+      selected = filter_value(attribute)
+
       if options[:grouped_by].present?
-        select_options = filter_generate_select_group(options[:collection], options[:grouped_by], options[:label_method])
+        select_options = filter_generate_select_group(options[:collection], options[:grouped_by], options[:label_method], selected)
       elsif options[:grouped_options].present?
-        select_options = grouped_options_for_select(options[:grouped_options])
+        select_options = grouped_options_for_select(options[:grouped_options], selected)
       else
-        select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method])
-        select_options = options_for_select(options[:options]) if options[:options].present?
+        select_options = options_from_collection_for_select(options[:collection], 'id', options[:label_method], selected)
+        select_options = options_for_select(options[:options], selected) if options[:options].present?
       end
 
       content_tag :div, class: 'table-filter-group' do
@@ -132,7 +150,7 @@ module Fae
       options[:placeholder] = options[:label] if options[:placeholder].nil?
       content_tag :div, class: 'table-filter-group text-input datepicker' do
         concat label_tag "filter[#{attribute}]", options[:label]
-        concat text_field_tag "filter[#{attribute}]", nil, placeholder: options[:placeholder]
+        concat text_field_tag "filter[#{attribute}]", filter_value(attribute), placeholder: options[:placeholder]
       end
     end
 
@@ -152,13 +170,13 @@ module Fae
     def filter_search_field
       content_tag :div, class: 'table-filter-keyword-wrapper' do
         concat text_field_tag('filter[search]',
-                              nil,
+                              filter_value(:search),
                               placeholder: t('fae.keyword_search'))
         concat content_tag(:i, '', class: 'icon-search')
       end
     end
 
-    def filter_generate_select_group(collection, grouped_by, label_method)
+    def filter_generate_select_group(collection, grouped_by, label_method, selected = nil)
       labels = collection.map { |c| c.send(grouped_by).try(:fae_display_field) }.uniq
       grouped_hash = {}
 
@@ -167,7 +185,30 @@ module Fae
         grouped_hash[label] = values.map { |v| [v.send(label_method), v.id] }
       end
 
-      grouped_options_for_select(grouped_hash)
+      grouped_options_for_select(grouped_hash, selected)
+    end
+
+    # What a filter control currently shows: the value in the query string (filter forms in a Turbo frame render
+    # their own state), and nothing otherwise, where JavaScript fills it in from the URL hash
+    def filter_value(attribute)
+      filters = params[:filter]
+      filters[attribute] if filters.respond_to?(:key?)
+    end
+
+    def filters_active?
+      params[:filter].respond_to?(:values) && params[:filter].values.any?(&:present?)
+    end
+
+    def filter_reset_button(frame)
+      return content_tag(:a, t('fae.reset_search'), class: 'js-reset-btn button -small hidden', href: '#') unless frame
+
+      # The page is rendered from the URL, so the link only exists while there is something to reset
+      return unless filters_active?
+
+      content_tag :a, t('fae.reset_search'),
+                  class: 'button -small js-frame-reset',
+                  href: @index_path,
+                  data: { turbo_frame: frame, turbo_action: 'advance' }
     end
 
     def default_collection_from_attribute(attribute)
@@ -232,7 +273,11 @@ module Fae
       end
     end
 
-    def prepare_form_filter_hash(options)
+    def prepare_form_filter_hash(options, turbo_frame = nil)
+      # A frame form is a plain GET form: Turbo submits it, the server renders the results, and no filtering
+      # JavaScript (the Stimulus controller or the legacy module, which both key off `js-filter-form`) is involved
+      return { method: :get, class: 'table-filter-area', data: { turbo_frame: turbo_frame, turbo_action: 'advance' } } if turbo_frame
+
       data = { controller: 'fae-filtering' }
       data[:cookie_key] = options[:cookie_key] if options[:cookie_key].present?
       data[:fae_filtering_frame_value] = options[:frame] if options[:frame].present?

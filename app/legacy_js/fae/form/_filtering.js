@@ -17,14 +17,19 @@ Fae.form.filtering = {
       return;
     }
 
+    // Results inside a `fae_filter_frame` are filtered, sorted and paged by Turbo and the `fae-frame-filter` controller
+    var anchors = function() {
+      return $('.js-filter-form, .pagination, .js-sort-column').not('turbo-frame[data-controller~="fae-frame-filter"] *');
+    };
+
     // The page this module was set up for is gone (e.g. after a Turbo visit), so stop listening for hash changes
-    if (this.fry && !$('.js-filter-form, .pagination, .js-sort-column').length) {
+    if (this.fry && !anchors().length) {
       this.fry.destroy(true);
       this.fry = null;
     }
 
     // init only on pages with filering, sorting or paging, and only once per set of elements
-    var $anchors = Fae.fresh($('.js-filter-form, .pagination, .js-sort-column'), 'filtering');
+    var $anchors = Fae.fresh(anchors(), 'filtering');
 
     if ($anchors.length) {
       // A previous page's Fryr would otherwise keep listening for hash changes
