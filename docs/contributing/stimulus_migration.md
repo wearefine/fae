@@ -1,6 +1,6 @@
 # Migrating Fae's JavaScript to Stimulus
 
-Fae's admin UI is moving from jQuery modules (`app/assets/javascripts/fae`, bundled by Sprockets) to [Stimulus](https://stimulus.hotwired.dev) controllers (`app/javascript/fae`, loaded through `Fae.importmap`). The two run side by side, so behaviour can be migrated one module at a time without rewriting Fae's Slim views.
+Fae's admin UI is moving from jQuery modules (`app/legacy_js/fae`, prebuilt into `app/assets/builds/fae_admin.js`) to [Stimulus](https://stimulus.hotwired.dev) controllers (`app/javascript/fae`, loaded through `Fae.importmap`). The two run side by side, so behaviour can be migrated one module at a time without rewriting Fae's Slim views.
 
 * [Approach](#approach)
 * [Adding a controller](#adding-a-controller)

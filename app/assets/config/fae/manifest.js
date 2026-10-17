@@ -1,3 +1,3 @@
 //= link fae_admin.css
-//= link fae/application.js
+//= link fae_admin.js
 //= link fae/icons/trumbowyg.svg

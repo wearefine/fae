@@ -20,9 +20,7 @@ Gem::Specification.new do |s|
 
   # Rails dependencies
   s.add_dependency 'rails', '>= 8.0'
-  s.add_dependency 'jquery-rails', '~> 4.3.1'
   s.add_dependency 'sprockets-rails', '>= 3.4'
-  s.add_dependency 'uglifier'
   s.add_dependency 'importmap-rails', '>= 1.2.1'
   s.add_dependency 'stimulus-rails'
 
@@ -32,7 +30,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'carrierwave'
   s.add_dependency 'csv'
   s.add_dependency 'devise'
-  s.add_dependency 'jquery-ui-rails', '~> 6.0.1'
   s.add_dependency 'mini_magick'
   s.add_dependency 'judge', '~> 3.1.0'
   s.add_dependency 'judge-simple_form', '~> 1.1.0'
@@ -45,8 +42,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'ruby-openai'
   s.add_dependency 'settingslogic'
 
-  # Builds the prebuilt admin CSS (rake fae:css:build)
+  # Build the prebuilt admin CSS and JS (rake fae:build). jQuery, jQuery UI and the other
+  # libraries the legacy JS bundles are resolved from these gems at build time only.
   s.add_development_dependency 'sass-embedded'
+  s.add_development_dependency 'jquery-rails', '~> 4.3.1'
+  s.add_development_dependency 'jquery-ui-rails', '~> 6.0.1'
   s.add_development_dependency 'better_errors'
   s.add_development_dependency 'binding_of_caller'
 end

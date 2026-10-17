@@ -57,6 +57,18 @@ bundle exec rake fae:css:build
 
 `rake fae:css:watch` rebuilds on every change while you work. A spec fails if the committed CSS is out of date.
 
+## JavaScript
+
+The legacy jQuery admin JavaScript lives in `app/legacy_js`. `fae/application.js` there lists the files in load order, and `rake fae:js:build` concatenates them, plus the jQuery, jQuery UI, jquery_ujs, remotipart and Judge files from their gems, into the prebuilt, committed `app/assets/builds/fae_admin.js`. The layouts load that one file. After changing anything in `app/legacy_js`, rebuild it and commit the result:
+
+```bash
+bundle exec rake fae:js:build
+```
+
+`rake fae:js:watch` rebuilds on every change while you work, and `rake fae:build` builds the CSS and the JS together. A spec fails if the committed JavaScript is out of date. The bundle isn't minified.
+
+New behaviour should go in Stimulus controllers under `app/javascript/fae` (see [Migrating Fae's JavaScript to Stimulus](stimulus_migration.md)), which are loaded through the importmap and don't need a build.
+
 ## Testing
 
 The dummy app should stay up-to-date with the latest Rails version we support. Running tests against it will run all specs against that version.

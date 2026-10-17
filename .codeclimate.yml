@@ -24,7 +24,8 @@ ratings:
   - "**.rb"
   - Gemfile.lock
 exclude_paths:
-- app/assets/javascripts/fae/vendor/*
+- app/legacy_js/fae/vendor/*
+- app/assets/builds/*
 - app/assets/stylesheets/fae/vendor/*
 - spec/**
 - config/deploy/**

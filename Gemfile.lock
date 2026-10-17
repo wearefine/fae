@@ -9,8 +9,6 @@ PATH
       devise
       devise-two-factor
       importmap-rails (>= 1.2.1)
-      jquery-rails (~> 4.3.1)
-      jquery-ui-rails (~> 6.0.1)
       judge (~> 3.1.0)
       judge-simple_form (~> 1.1.0)
       kaminari
@@ -24,7 +22,6 @@ PATH
       slim
       sprockets-rails (>= 3.4)
       stimulus-rails
-      uglifier
 
 GEM
   remote: https://rubygems.org/
@@ -174,8 +171,6 @@ GEM
     event_stream_parser (1.0.0)
     excon (1.7.2)
       logger
-    execjs (2.10.2)
-      json (>= 2)
     factory_bot (6.6.0)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.5.1)
@@ -499,8 +494,6 @@ GEM
     tsort (0.2.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.1)
-      execjs (>= 0.3.0, < 3)
     uri (1.1.2)
     useragent (0.16.11)
     warden (1.2.9)
@@ -534,6 +527,8 @@ DEPENDENCIES
   graphiql-rails
   graphql
   guard-rspec
+  jquery-rails (~> 4.3.1)
+  jquery-ui-rails (~> 6.0.1)
   mysql2
   pg
   pry
