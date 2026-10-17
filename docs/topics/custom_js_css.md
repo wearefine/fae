@@ -2,6 +2,7 @@
 
 * [Fae JS](#fae-js)
 * [ES Modules and Stimulus](#es-modules-and-stimulus)
+* [Turbo](#turbo)
 * [Fae CSS](#fae-css)
 * [Custom Helpers](#custom-helpers)
 
@@ -99,6 +100,22 @@ Pin any packages your Fae modules need in `config/fae_importmap.rb`. Your app's 
 ```ruby
 pin 'sortablejs', to: 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/+esm'
 ```
+
+## Turbo
+
+Fae loads [Turbo](https://turbo.hotwired.dev) in the admin, from the same importmap as Stimulus, so `window.Turbo` is available to your `fae_custom.js`. **Turbo Drive is off by default**: links and forms behave exactly as before and every navigation is a full page load.
+
+To try Drive, either turn it on for the whole admin in `config/initializers/fae.rb`:
+
+```ruby
+Fae.setup do |config|
+  config.turbo_drive = true
+end
+```
+
+or leave it off and opt a page or region in by adding `data-turbo="true"` to an element (everything inside it is driven). Fae's own pages are being made Drive-safe in stages, so treat the global flag as experimental for now.
+
+Admin pages are excluded from Turbo's snapshot cache (`turbo-cache-control: no-cache`), and Fae's script and stylesheet tags carry `data-turbo-track="reload"` so a deploy of new assets reloads the page.
 
 ## Fae CSS
 

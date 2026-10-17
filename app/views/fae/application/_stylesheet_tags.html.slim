@@ -1,3 +1,3 @@
-== stylesheet_link_tag 'fae_admin', media: 'all'
+== stylesheet_link_tag 'fae_admin', media: 'all', data: { turbo_track: 'reload' }
 - if Fae.custom_stylesheet?
-  == stylesheet_link_tag 'fae_custom', media: 'all'
+  == stylesheet_link_tag 'fae_custom', media: 'all', data: { turbo_track: 'reload' }

@@ -1,9 +1,15 @@
 import { Application } from "@hotwired/stimulus"
+import "@hotwired/turbo-rails"
 import CancelController from "fae/controllers/cancel_controller"
 import ContrastController from "fae/controllers/contrast_controller"
 import DeployController from "fae/controllers/deploy_controller"
 import FilteringController from "fae/controllers/filtering_controller"
 import LanguageController from "fae/controllers/language_controller"
+
+// Turbo is always loaded, but Drive only takes over navigation when `Fae.turbo_drive` is set.
+// Otherwise elements opt in with `data-turbo="true"`.
+const driveMeta = document.querySelector('meta[name="fae-turbo-drive"]')
+window.Turbo.session.drive = driveMeta?.content === "true"
 
 const application = Application.start()
 window.Stimulus = application

@@ -34,6 +34,7 @@ module Fae
     require 'propshaft'
     require 'importmap-rails'
     require 'stimulus-rails'
+    require 'turbo-rails'
     require 'devise-two-factor'
     require 'rqrcode'
     require 'openai'

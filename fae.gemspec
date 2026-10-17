@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'propshaft', '>= 1.1'
   s.add_dependency 'importmap-rails', '>= 1.2.1'
   s.add_dependency 'stimulus-rails'
+  s.add_dependency 'turbo-rails', '>= 2.0'
 
   # other dependencies
   s.add_dependency 'acts_as_list', '~> 0.9.11'

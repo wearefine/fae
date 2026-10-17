@@ -66,6 +66,13 @@ Fae.setup do |config|
   # Defaults to false
   # config.use_form_manager = true
 
+  ## turbo_drive
+  # Turbo is always loaded in the admin, but Turbo Drive (page visits without full reloads)
+  # is off by default. Set this to true to turn it on for the whole admin, or leave it off and
+  # opt in per page or region of a page with `data-turbo="true"`.
+  # Defaults to false
+  # config.turbo_drive = true
+
   ## Netlify configs
   # Environment variables are recommended for any sensitive Netlify configuration details.
   # config.netlify = {
