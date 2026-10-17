@@ -18,7 +18,7 @@ feature 'User with OTP two factor enabled' do
     fill_in 'user_password', with: 'letmein'
     click_button 'Submit'
 
-    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to have_css('.flash-toast', visible: :all)
     expect(page).to_not have_content('WELCOME TO FAE')
   end
 
@@ -36,7 +36,7 @@ feature 'User with OTP two factor enabled' do
     fill_in 'user_otp_attempt', with: 'invalid-otp'
     click_button 'Submit'
 
-    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to have_css('.flash-toast', visible: :all)
     expect(page).to_not have_content('WELCOME TO FAE')
   end
 

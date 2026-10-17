@@ -24,7 +24,8 @@ module Fae
       @user = user
 
       session[:otp_user_id] = user.id
-      render 'devise/sessions/two_factor'
+      # A form submission answered with a page, not a redirect, needs a 4xx for Turbo to render it
+      render 'devise/sessions/two_factor', status: :unprocessable_entity
     end
 
     def authenticate_user_with_otp_two_factor(user)

@@ -34,6 +34,10 @@ Devise::FailureApp.class_eval do
     else
       flash.now[:alert] = I18n.t ('devise.failure.invalid') if is_flashing_format?
     end
-    self.response = recall_app(warden_options[:recall]).call(request.env)
+    self.response = recall_app(warden_options[:recall]).call(request.env).tap { |response|
+      # Keep Devise's configurable statuses (Devise.responder), which Fae sets to 422 and 303
+      status = response[0].in?(300..399) ? Devise.responder.redirect_status : Devise.responder.error_status
+      response[0] = ActionDispatch::Response.try(:rack_status_code, status) || Rack::Utils.status_code(status)
+    }
   end
 end

@@ -234,6 +234,11 @@ Devise.setup do |config|
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
 
+  # Failed form submissions respond with 422 and redirects after them with 303, so Turbo (and jquery_ujs)
+  # can tell failures from successes and follow redirects with a GET. Devise defaults to 200 and 302.
+  config.responder.error_status = 422
+  config.responder.redirect_status = 303
+
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.

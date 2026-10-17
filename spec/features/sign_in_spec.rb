@@ -16,8 +16,8 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'password'
     click_button 'Submit'
 
-    # Check for flash-toast element with data-message attribute (exists before JS transforms it)
-    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    # The legacy JS rewrites the raw flash element into a toast shortly after load, so match either form
+    expect(page).to have_css('.flash-toast', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
@@ -27,7 +27,7 @@ feature 'Sign In' do
     fill_in 'user_email', with: 'test@test.com'
     click_button 'Submit'
 
-    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to have_css('.flash-toast', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
@@ -38,7 +38,7 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'password'
     click_button 'Submit'
 
-    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to have_css('.flash-toast', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 
@@ -61,7 +61,7 @@ feature 'Sign In' do
     fill_in 'user_password', with: 'passord1'
     click_button 'Submit'
 
-    expect(page).to have_css('.flash-toast[data-message]', visible: :all)
+    expect(page).to have_css('.flash-toast', visible: :all)
     expect(page).to_not have_content('Welcome')
   end
 

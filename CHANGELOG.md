@@ -16,6 +16,7 @@
     + Add `Fae.init(root)` as the single entry point for the legacy admin JavaScript, which now runs safely any number of times (page load, AJAX swaps, Turbo renders), and dispatch a `fae:load` event after each run. Nested and flex component forms loaded over AJAX now get the same initialization as the page itself
     + Move the values Fae's JavaScript used to read from ERB (admin path, slug separator, Judge path, Trumbowyg icon path) to `<meta name="fae-*">` tags rendered by the admin layouts
     + Bundle the Trumbowyg HTML editor with Fae's JavaScript, so `html: true` inputs no longer need an opt-in `require`
+    + Respond to failed Devise logins, rejected password resets and the two-factor prompt with 422, and redirect with 303, so they work under Turbo Drive
     + Load Turbo in the admin with Drive off by default. `config.turbo_drive = true` turns it on for the whole admin, and `data-turbo="true"` opts a page or region in
     + Port the form Cancel button to the `fae-cancel` Stimulus controller and the deploy page to `fae-deploy`; both clean up their window and document listeners when removed from the page
 - breaking
