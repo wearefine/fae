@@ -5,6 +5,7 @@ Fae's admin UI is moving from jQuery modules (`app/legacy_js/fae`, prebuilt into
 * [Approach](#approach)
 * [Adding a controller](#adding-a-controller)
 * [Handing off from a legacy module](#handing-off-from-a-legacy-module)
+* [Keeping legacy modules Turbo-safe](#keeping-legacy-modules-turbo-safe)
 * [Working with jQuery plugins](#working-with-jquery-plugins)
 * [Testing](#testing)
 * [Turbo](#turbo)
@@ -39,6 +40,16 @@ if (this.el.$select.is('[data-controller~="fae-language"]')) {
 This also keeps the legacy behaviour working for host apps that override the view and render the markup without the controller attribute.
 
 Keep any public state other modules rely on (e.g. `Fae.navigation.language.el.$select`, used by `Fae.form.ajax`) assigned before the early return.
+
+## Keeping legacy modules Turbo-safe
+
+Fae's admin runs under Turbo Drive (it's opt-in for hosts, but the whole suite runs with it on, `rake spec:turbo`), and Drive replaces the `<body>` while the legacy scripts, `window` and `document` stay. When you touch a module in `app/legacy_js`:
+
+* **Guard element setup** with `Fae.fresh($elements, 'key')`, and register one-time window, document and FCH listeners with `Fae.once('key', fn)` or a namespaced `$(document).off('.x').on('x.y', ...)`. `Fae.init` runs for every visit, AJAX swap and frame.
+* **Never push to `FCH.scroll`, `FCH.resize` or `FCH.load` per element.** Register once and read the DOM when the listener fires (see `sticky.js`, which keeps a registry and drops detached elements).
+* **Anything a third-party plugin binds to `window` or `document`** has to be released from the `turbo:before-render` handler in `fae_init.js` (see `destroyDateRangePickers` in `_dates.js`).
+* **Don't cache jQuery objects of `body` or its descendants** across inits.
+* `spec/features/turbo_lifecycle_spec.rb` fails if repeated visits grow the listeners on `window` and `document`, the FCH arrays or jQuery's data store. Run it after changing a module.
 
 ## Working with jQuery plugins
 

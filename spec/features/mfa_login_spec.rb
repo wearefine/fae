@@ -54,7 +54,7 @@ feature 'User with OTP two factor enabled' do
     fill_in 'user_otp_attempt', with: user.current_otp
     click_button 'Submit'
 
-    expect(current_path).to eq(fae.root_path)
+    expect(page).to have_current_path(fae.root_path)
     expect(page).to have_content("WELCOME TO FAE")
   end
 end

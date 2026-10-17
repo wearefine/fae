@@ -18,7 +18,8 @@ feature 'fae_nested_table inside main form' do
     end
 
     eventually {
-      expect(page.find('#list_items table')).to have_content('My New List Item')
+      # the sticky header clone is a second, sometimes visible, table
+      expect(page.find('#list_items table:not(.sticky-table-header)')).to have_content('My New List Item')
       expect(ListItem.all.count).to eq(1)
     }
   end

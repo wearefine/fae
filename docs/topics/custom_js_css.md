@@ -113,9 +113,41 @@ Fae.setup do |config|
 end
 ```
 
-or leave it off and opt a page or region in by adding `data-turbo="true"` to an element (everything inside it is driven). Fae's own pages are being made Drive-safe in stages, so treat the global flag as experimental for now.
+or leave it off and opt a page or region in by adding `data-turbo="true"` to an element (everything inside it is driven). Fae's own admin pages are tested with Drive on (the whole suite runs both ways), but your customizations may not be Drive-safe yet, which is why it's off by default.
 
-Admin pages are excluded from Turbo's snapshot cache (`turbo-cache-control: no-cache`), and Fae's script and stylesheet tags carry `data-turbo-track="reload"` so a deploy of new assets reloads the page.
+### What Drive changes
+
+With Drive on, a link click or form submission becomes a `fetch` and only the `<body>` is swapped. The page's `<head>`, window, document and every script loaded in the head, including Fae's, stay alive. Fae's JavaScript takes care of this for you: it initializes each new body, releases what the old one held, and keeps window and document listeners from piling up.
+
+* Forms that pass Fae's validator are submitted with `requestSubmit()`, so Turbo handles them. A failed save re-renders in place (`422`), and a successful one redirects (`303`) with the flash shown on the next page.
+* `remote: true` forms and `data-method` / `data-confirm` links are still handled by jquery_ujs, once. Turbo skips events jquery_ujs has handled, so they work the same under Drive. Links with `data-method` still do a full page load.
+* Draft forms ask before a Turbo visit leaves them, the same way they warn before the tab closes.
+* Admin pages are excluded from Turbo's snapshot cache (`turbo-cache-control: no-cache`), and Fae's script and stylesheet tags carry `data-turbo-track="reload"`, so a deploy of new assets reloads the page.
+* Turbo Frames and Streams aren't used by Fae's pages yet. Content inside a `<turbo-frame>` is initialized when it loads (`turbo:frame-load`).
+
+### Writing Turbo-safe JavaScript
+
+`fae_custom.js` is a module, so it runs **once** per full page load, not once per visit. Put one-time setup there and per-page setup in a `fae:load` listener. Fae dispatches `fae:load` on `document` after every page load and Turbo visit, and on the root element when it initializes AJAX-loaded markup or a frame (`event.detail.root`).
+
+```JavaScript
+// app/javascript/fae_custom.js
+
+// Once: document-level handlers survive every visit, so bind them here, on `document`
+$(document).on("click", ".js-my-toggle", function () { /* ... */ })
+
+// Per page: runs for the initial load, each Turbo visit and AJAX-loaded content
+document.addEventListener("fae:load", (event) => {
+  Fae.fresh($(event.detail.root).find(".my-widget"), "my-widget").myWidget()
+})
+```
+
+The rules:
+
+* **Never bind on `body` or on elements that a visit replaces** and expect it to survive; bind delegated handlers on `document`, or bind to elements inside a `fae:load` listener (the elements are new on every visit).
+* **Guard element setup with `Fae.fresh($elements, "key")`**, which returns only the elements not yet initialized for that key. `fae:load` can fire more than once for the same element.
+* **Release what you attach outside the page.** Anything bound to `window` or `document` from a per-page setup, plugins that do it internally (like a date picker), timers and observers must be removed when the page goes away. Listen for `turbo:before-render`, or use a Stimulus controller and its `disconnect()`, which Stimulus calls for you.
+* **Prefer Stimulus controllers for new behaviour.** They connect and disconnect with the markup, so none of the above applies.
+* **A form your own JavaScript submits** (for example with `fetch` or `$.ajax`) and that doesn't call `preventDefault()` needs `data-turbo="false"`, or Drive will submit it as well.
 
 ## Fae CSS
 
