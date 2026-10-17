@@ -27,6 +27,18 @@ Fae.form.dates = {
   /**
    * Initialize date range picker
    */
+  /**
+   * Each date range picker binds document and window listeners that outlive its element, so release them
+   * before the element is discarded (e.g. when Turbo replaces the page)
+   */
+  destroyDateRangePickers: function() {
+    $('.daterangepicker').each(function() {
+      var picker = $(this).data('dateRangePicker');
+
+      if (picker && picker.destroy) { picker.destroy(); }
+    });
+  },
+
   initDateRangePicker: function() {
     $.dateRangePickerLanguages['custom'] = {
       'selected': 'Choosed:',

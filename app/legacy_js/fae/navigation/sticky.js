@@ -1,4 +1,4 @@
-/* global FCH */
+/* global Fae, FCH */
 
 (function ( $ ) {
   'use strict';
@@ -126,48 +126,58 @@
     }
   };
 
-  /**
-   * Listen for scroll and smartresize to stick or unstick element
-   */
-  Sticky.prototype.windowListeners = function() {
-    var _this = this;
+  // Every Sticky shares one scroll and one resize listener. Elements removed from the page (e.g. by a Turbo
+  // visit) are dropped on the next event, so the listeners never accumulate across page changes.
+  var instances = [];
 
-    function scrollCallback() {
-      _this.stickIt();
+  function liveInstances() {
+    instances = instances.filter(function(instance) {
+      return $.contains(document.documentElement, instance.$el[0]);
+    });
+
+    return instances;
+  }
+
+  function onScroll() {
+    liveInstances().forEach(function(instance) { instance.stickIt(); });
+  }
+
+  function onResize() {
+    liveInstances().forEach(function(instance) { instance.recalculate(); });
+  }
+
+  Sticky.prototype.recalculate = function() {
+    // Use the visible placeholder for offset calculation unless the caller opts out,
+    // because when the element is stuck (position: fixed), $el.offset().top returns
+    // the fixed position, not the original document position.
+    if ( this.$placeholder && this.$placeholder.is(':visible') && !this.options.ignore_placeholder_offsets) {
+      setDimensionsTopLeft.call(this, this.$placeholder);
+    } else if (!this.$el.hasClass(this.options.class_name)) {
+      // Only update dimensions from $el when it's NOT currently stuck
+      setDimensionsTopLeft.call(this, this.$el);
     }
 
-    function resizePlaceholder() {
-      _this.$placeholder.css( 'height', _this.$el.outerHeight() );
-    }
-
-    function debounceResizeCallback() {
-      // Use the visible placeholder for offset calculation unless the caller opts out,
-      // because when the element is stuck (position: fixed), $el.offset().top returns
-      // the fixed position, not the original document position.
-      if ( _this.$placeholder && _this.$placeholder.is(':visible') && !_this.options.ignore_placeholder_offsets) {
-        setDimensionsTopLeft.call(_this, _this.$placeholder);
-      } else if (!_this.$el.hasClass(_this.options.class_name)) {
-        // Only update dimensions from $el when it's NOT currently stuck
-        setDimensionsTopLeft.call(_this, _this.$el);
-      }
-
-      _this.stickIt();
-    }
-
-    FCH.scroll.push( scrollCallback );
-    FCH.resize.push( FCH.debounce( debounceResizeCallback ) );
-
-    debounceResizeCallback();
+    this.stickIt();
 
     if (this.options.placeholder) {
-      FCH.resize.push( resizePlaceholder );
+      this.$placeholder.css( 'height', this.$el.outerHeight() );
     }
   };
 
   /**
-   * Stick elements within the viewport
-   * @function external:'jQuery.fn'.sticky
+   * Register with the shared scroll and resize listeners to stick or unstick the element
    */
+  Sticky.prototype.windowListeners = function() {
+    instances.push(this);
+
+    Fae.once('sticky-listeners', function() {
+      FCH.scroll.push( onScroll );
+      FCH.resize.push( FCH.debounce( onResize ) );
+    });
+
+    this.recalculate();
+  };
+
   $.fn.sticky = function( options ) {
     var defaults = {
       class_name: 'js-sticky',

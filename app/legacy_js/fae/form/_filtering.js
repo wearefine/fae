@@ -17,6 +17,12 @@ Fae.form.filtering = {
       return;
     }
 
+    // The page this module was set up for is gone (e.g. after a Turbo visit), so stop listening for hash changes
+    if (this.fry && !$('.js-filter-form, .pagination, .js-sort-column').length) {
+      this.fry.destroy(true);
+      this.fry = null;
+    }
+
     // init only on pages with filering, sorting or paging, and only once per set of elements
     var $anchors = Fae.fresh($('.js-filter-form, .pagination, .js-sort-column'), 'filtering');
 

@@ -25859,6 +25859,18 @@ Fae.form.dates = {
   /**
    * Initialize date range picker
    */
+  /**
+   * Each date range picker binds document and window listeners that outlive its element, so release them
+   * before the element is discarded (e.g. when Turbo replaces the page)
+   */
+  destroyDateRangePickers: function() {
+    $('.daterangepicker').each(function() {
+      var picker = $(this).data('dateRangePicker');
+
+      if (picker && picker.destroy) { picker.destroy(); }
+    });
+  },
+
   initDateRangePicker: function() {
     $.dateRangePickerLanguages['custom'] = {
       'selected': 'Choosed:',
@@ -26648,7 +26660,13 @@ Fae.form.validator = {
           // if form is valid, submit it
           $this.data('passed_validation', 'true');
 
-          $this.submit();
+          // requestSubmit fires a real submit event, so Turbo (when it's driving the form) sees the submission.
+          // jQuery's submit() ends in a native form.submit(), which only ever does a full page load.
+          if (typeof $this[0].requestSubmit === 'function') {
+            $this[0].requestSubmit();
+          } else {
+            $this.submit();
+          }
         } else {
           // otherwise scroll to the top to display alerts (unless in a nested form scope)
           Fae.navigation.language.checkForHiddenErrors();
@@ -28448,6 +28466,12 @@ Fae.form.filtering = {
       return;
     }
 
+    // The page this module was set up for is gone (e.g. after a Turbo visit), so stop listening for hash changes
+    if (this.fry && !$('.js-filter-form, .pagination, .js-sort-column').length) {
+      this.fry.destroy(true);
+      this.fry = null;
+    }
+
     // init only on pages with filering, sorting or paging, and only once per set of elements
     var $anchors = Fae.fresh($('.js-filter-form, .pagination, .js-sort-column'), 'filtering');
 
@@ -29383,7 +29407,7 @@ Fae.form.dragDrop = {
   }
 
 };
-/* global FCH */
+/* global Fae, FCH */
 
 (function ( $ ) {
   'use strict';
@@ -29511,48 +29535,58 @@ Fae.form.dragDrop = {
     }
   };
 
-  /**
-   * Listen for scroll and smartresize to stick or unstick element
-   */
-  Sticky.prototype.windowListeners = function() {
-    var _this = this;
+  // Every Sticky shares one scroll and one resize listener. Elements removed from the page (e.g. by a Turbo
+  // visit) are dropped on the next event, so the listeners never accumulate across page changes.
+  var instances = [];
 
-    function scrollCallback() {
-      _this.stickIt();
+  function liveInstances() {
+    instances = instances.filter(function(instance) {
+      return $.contains(document.documentElement, instance.$el[0]);
+    });
+
+    return instances;
+  }
+
+  function onScroll() {
+    liveInstances().forEach(function(instance) { instance.stickIt(); });
+  }
+
+  function onResize() {
+    liveInstances().forEach(function(instance) { instance.recalculate(); });
+  }
+
+  Sticky.prototype.recalculate = function() {
+    // Use the visible placeholder for offset calculation unless the caller opts out,
+    // because when the element is stuck (position: fixed), $el.offset().top returns
+    // the fixed position, not the original document position.
+    if ( this.$placeholder && this.$placeholder.is(':visible') && !this.options.ignore_placeholder_offsets) {
+      setDimensionsTopLeft.call(this, this.$placeholder);
+    } else if (!this.$el.hasClass(this.options.class_name)) {
+      // Only update dimensions from $el when it's NOT currently stuck
+      setDimensionsTopLeft.call(this, this.$el);
     }
 
-    function resizePlaceholder() {
-      _this.$placeholder.css( 'height', _this.$el.outerHeight() );
-    }
-
-    function debounceResizeCallback() {
-      // Use the visible placeholder for offset calculation unless the caller opts out,
-      // because when the element is stuck (position: fixed), $el.offset().top returns
-      // the fixed position, not the original document position.
-      if ( _this.$placeholder && _this.$placeholder.is(':visible') && !_this.options.ignore_placeholder_offsets) {
-        setDimensionsTopLeft.call(_this, _this.$placeholder);
-      } else if (!_this.$el.hasClass(_this.options.class_name)) {
-        // Only update dimensions from $el when it's NOT currently stuck
-        setDimensionsTopLeft.call(_this, _this.$el);
-      }
-
-      _this.stickIt();
-    }
-
-    FCH.scroll.push( scrollCallback );
-    FCH.resize.push( FCH.debounce( debounceResizeCallback ) );
-
-    debounceResizeCallback();
+    this.stickIt();
 
     if (this.options.placeholder) {
-      FCH.resize.push( resizePlaceholder );
+      this.$placeholder.css( 'height', this.$el.outerHeight() );
     }
   };
 
   /**
-   * Stick elements within the viewport
-   * @function external:'jQuery.fn'.sticky
+   * Register with the shared scroll and resize listeners to stick or unstick the element
    */
+  Sticky.prototype.windowListeners = function() {
+    instances.push(this);
+
+    Fae.once('sticky-listeners', function() {
+      FCH.scroll.push( onScroll );
+      FCH.resize.push( FCH.debounce( onResize ) );
+    });
+
+    this.recalculate();
+  };
+
   $.fn.sticky = function( options ) {
     var defaults = {
       class_name: 'js-sticky',
@@ -30953,6 +30987,10 @@ Fae.altTextManager = {
   Fae.init = function(root) {
     var $root = $(root || document);
 
+    if ($root[0] === document) {
+      initializedBody = document.body;
+    }
+
     judge.enginePath = Fae.path + '/judge';
 
     if ($.trumbowyg) {
@@ -30972,6 +31010,30 @@ Fae.altTextManager = {
 
     $root[0].dispatchEvent(new CustomEvent('fae:load', { bubbles: true, detail: { root: $root[0] } }));
   };
+
+  // Turbo swaps the <body> on every visit but keeps this script (and its window and document listeners) alive,
+  // so each new body is initialized fresh. Content loaded into a <turbo-frame> is initialized on its own.
+  var initializedBody = null;
+
+  document.addEventListener('turbo:load', function() {
+    // The first turbo:load fires for the page this script already initialized
+    if (document.body !== initializedBody) { Fae.init(); }
+  });
+
+  document.addEventListener('turbo:frame-load', function(event) {
+    Fae.init(event.target);
+  });
+
+  // The old body is about to be discarded without jQuery knowing, so release its data and any open modal
+  document.addEventListener('turbo:before-render', function() {
+    if (Fae.modals.modalOpen) {
+      $.modal.close();
+      Fae.modals.modalOpen = false;
+    }
+
+    Fae.form.dates.destroyDateRangePickers();
+    $.cleanData([document.body].concat($.makeArray(document.body.getElementsByTagName('*'))));
+  });
 
   // The scripts load in <head>, so the DOM isn't ready yet
   if (document.readyState === 'loading') {

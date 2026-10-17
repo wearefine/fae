@@ -18,6 +18,10 @@
   Fae.init = function(root) {
     var $root = $(root || document);
 
+    if ($root[0] === document) {
+      initializedBody = document.body;
+    }
+
     judge.enginePath = Fae.path + '/judge';
 
     if ($.trumbowyg) {
@@ -37,6 +41,30 @@
 
     $root[0].dispatchEvent(new CustomEvent('fae:load', { bubbles: true, detail: { root: $root[0] } }));
   };
+
+  // Turbo swaps the <body> on every visit but keeps this script (and its window and document listeners) alive,
+  // so each new body is initialized fresh. Content loaded into a <turbo-frame> is initialized on its own.
+  var initializedBody = null;
+
+  document.addEventListener('turbo:load', function() {
+    // The first turbo:load fires for the page this script already initialized
+    if (document.body !== initializedBody) { Fae.init(); }
+  });
+
+  document.addEventListener('turbo:frame-load', function(event) {
+    Fae.init(event.target);
+  });
+
+  // The old body is about to be discarded without jQuery knowing, so release its data and any open modal
+  document.addEventListener('turbo:before-render', function() {
+    if (Fae.modals.modalOpen) {
+      $.modal.close();
+      Fae.modals.modalOpen = false;
+    }
+
+    Fae.form.dates.destroyDateRangePickers();
+    $.cleanData([document.body].concat($.makeArray(document.body.getElementsByTagName('*'))));
+  });
 
   // The scripts load in <head>, so the DOM isn't ready yet
   if (document.readyState === 'loading') {

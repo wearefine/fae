@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 //
 // - Adds `?cancelled=true` to the link once the user edits the form, so the index can say changes weren't saved.
 // - On drafts (`data-draft="true"`), confirms before discarding, turns the link into a DELETE of the draft
-//   (`data-delete-path`), and warns before the page is closed or navigated away from with unsaved work.
+//   (`data-delete-path`), and warns before the page is closed or navigated away from (a full unload or a Turbo visit).
 export default class extends Controller {
   connect() {
     this.allowUnload = false
@@ -12,6 +12,7 @@ export default class extends Controller {
     this.onSubmit = this.onSubmit.bind(this)
     this.confirmDiscard = this.confirmDiscard.bind(this)
     this.onBeforeUnload = this.onBeforeUnload.bind(this)
+    this.onBeforeVisit = this.onBeforeVisit.bind(this)
 
     this.removeCancelledParam()
 
@@ -33,6 +34,7 @@ export default class extends Controller {
       this.useDeleteLink()
       this.element.addEventListener("click", this.confirmDiscard)
       window.addEventListener("beforeunload", this.onBeforeUnload)
+      document.addEventListener("turbo:before-visit", this.onBeforeVisit)
     }
   }
 
@@ -48,6 +50,7 @@ export default class extends Controller {
 
     this.element.removeEventListener("click", this.confirmDiscard)
     window.removeEventListener("beforeunload", this.onBeforeUnload)
+    document.removeEventListener("turbo:before-visit", this.onBeforeVisit)
   }
 
   get isDraft() {
@@ -92,6 +95,15 @@ export default class extends Controller {
     }
 
     this.allowUnload = true
+  }
+
+  // Turbo visits don't unload the page, so beforeunload never fires for them. Ask the same question instead.
+  onBeforeVisit(event) {
+    if (this.allowUnload) return
+
+    if (!window.confirm("You will lose any changes to this draft. Are you sure you want to leave this page?")) {
+      event.preventDefault()
+    }
   }
 
   onBeforeUnload(event) {

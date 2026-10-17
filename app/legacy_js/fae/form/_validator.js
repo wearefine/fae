@@ -100,7 +100,13 @@ Fae.form.validator = {
           // if form is valid, submit it
           $this.data('passed_validation', 'true');
 
-          $this.submit();
+          // requestSubmit fires a real submit event, so Turbo (when it's driving the form) sees the submission.
+          // jQuery's submit() ends in a native form.submit(), which only ever does a full page load.
+          if (typeof $this[0].requestSubmit === 'function') {
+            $this[0].requestSubmit();
+          } else {
+            $this.submit();
+          }
         } else {
           // otherwise scroll to the top to display alerts (unless in a nested form scope)
           Fae.navigation.language.checkForHiddenErrors();
