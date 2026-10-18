@@ -125,6 +125,38 @@ feature 'Turbo visits and the legacy JavaScript', js: true do
     expect(page.evaluate_script('window.faeLoadRoots')).to eq(['element'])
   end
 
+  context 'after a visit that redirects (index, Add New, then the draft form)' do
+    # Turbo dispatches before-render and render a second time for a redirected visit, without replacing the body,
+    # so the live page must not be cleaned up on those. This is the path Add New takes.
+    before do
+      visit admin_beers_path
+      track_turbo
+      page.execute_script("window.confirm = function(message) { window.faeConfirms = (window.faeConfirms || []).concat([message]); return true }")
+
+      find('a.add-button').click
+      expect(page).to have_css('#js-header-cancel[data-draft="true"]')
+      eventually { expect(controller_connected?('#js-header-cancel', 'fae-cancel')).to be true }
+    end
+
+    scenario 'keeps the jQuery handlers and widgets of the new page' do
+      expect(page.evaluate_script('window.faeDocumentMarker')).to be true
+      expect(page.evaluate_script("Object.keys($._data(document.querySelector('form'), 'events') || {}).sort().join()")).to include('submit')
+      expect(page).to have_css('.chosen-container')
+
+      page.find('#beer_aromas_chosen, .chosen-container', match: :first).click
+      expect(page).to have_css('.chosen-container.chosen-with-drop')
+    end
+
+    scenario 'saves without asking whether to leave' do
+      fill_in 'Name', with: 'A Beer'
+      click_button 'Save'
+
+      expect(page).to have_current_path(admin_beers_path)
+      expect(page.evaluate_script('window.faeConfirms')).to be_nil
+      expect(page.evaluate_script('window.faeDocumentMarker')).to be true
+    end
+  end
+
   context 'on a draft form' do
     before do
       visit new_admin_release_path

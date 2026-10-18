@@ -29,10 +29,11 @@ Fae.form.dates = {
    */
   /**
    * Each date range picker binds document and window listeners that outlive its element, so release them
-   * before the element is discarded (e.g. when Turbo replaces the page)
+   * when the element is discarded (e.g. when Turbo replaces the page)
+   * @param {Element} [root=document] - Where to look for pickers, which can be a page that's already detached
    */
-  destroyDateRangePickers: function() {
-    $('.daterangepicker').each(function() {
+  destroyDateRangePickers: function(root) {
+    $(root || document).find('.daterangepicker').each(function() {
       var picker = $(this).data('dateRangePicker');
 
       if (picker && picker.destroy) { picker.destroy(); }

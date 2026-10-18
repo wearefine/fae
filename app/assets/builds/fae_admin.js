@@ -25861,10 +25861,11 @@ Fae.form.dates = {
    */
   /**
    * Each date range picker binds document and window listeners that outlive its element, so release them
-   * before the element is discarded (e.g. when Turbo replaces the page)
+   * when the element is discarded (e.g. when Turbo replaces the page)
+   * @param {Element} [root=document] - Where to look for pickers, which can be a page that's already detached
    */
-  destroyDateRangePickers: function() {
-    $('.daterangepicker').each(function() {
+  destroyDateRangePickers: function(root) {
+    $(root || document).find('.daterangepicker').each(function() {
       var picker = $(this).data('dateRangePicker');
 
       if (picker && picker.destroy) { picker.destroy(); }
@@ -31029,15 +31030,28 @@ Fae.altTextManager = {
     Fae.init(event.target);
   });
 
-  // The old body is about to be discarded without jQuery knowing, so release its data and any open modal
+  // A replaced body is discarded without jQuery knowing, so release its data, its date range pickers and any open
+  // modal. That has to wait until the body really was replaced: Turbo also dispatches before-render and render for the
+  // second pass of a redirected visit, which re-renders nothing, and cleaning then would strip the live page.
+  var outgoingBody = null;
+
   document.addEventListener('turbo:before-render', function() {
+    outgoingBody = document.body;
+  });
+
+  document.addEventListener('turbo:render', function() {
+    var discarded = outgoingBody;
+    outgoingBody = null;
+
+    if (!discarded || discarded === document.body) { return; }
+
     if (Fae.modals.modalOpen) {
       $.modal.close();
       Fae.modals.modalOpen = false;
     }
 
-    Fae.form.dates.destroyDateRangePickers();
-    $.cleanData([document.body].concat($.makeArray(document.body.getElementsByTagName('*'))));
+    Fae.form.dates.destroyDateRangePickers(discarded);
+    $.cleanData([discarded].concat($.makeArray(discarded.getElementsByTagName('*'))));
   });
 
   // The scripts load in <head>, so the DOM isn't ready yet
