@@ -50,7 +50,7 @@ label.checkbox,
     border: 1px solid $c-border;
     background: $c-white;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: $input-border-radius;
   }
 }
 

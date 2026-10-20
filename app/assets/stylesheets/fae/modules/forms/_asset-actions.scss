@@ -8,7 +8,7 @@
   border: 1px solid $c-border;
   background: $c-white;
   font-size: 13px;
-  border-radius: 2px;
+  border-radius: $input-border-radius;
 
   &.active {
     background: $c-white;

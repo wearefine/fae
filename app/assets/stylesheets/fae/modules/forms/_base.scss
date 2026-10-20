@@ -10,7 +10,7 @@ input[type=email] {
   border: 1px solid $c-border;
   font-size: 14px;
   outline: none;
-  border-radius: 2px;
+  border-radius: $input-border-radius;
   max-width: 100%;
 
   &:focus {

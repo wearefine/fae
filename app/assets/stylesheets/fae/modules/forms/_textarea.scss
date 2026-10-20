@@ -8,7 +8,7 @@ textarea {
   min-width: 223px;
   font-family: $f-content;
   outline: none;
-  border-radius: 2px;
+  border-radius: $input-border-radius;
 
   &:focus {
     border-color: $c-focus-border;

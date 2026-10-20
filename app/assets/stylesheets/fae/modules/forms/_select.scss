@@ -35,7 +35,7 @@
     border-top: 1px solid $c-focus-border;
     border-bottom: none;
     box-shadow: none;
-    border-radius: 0;
+    border-radius: $input-border-radius $input-border-radius 0 0;
   }
 }
 
@@ -51,7 +51,7 @@
     @include gradient-vertical($start-color: $c-chosen-gradient-start, $end-color: $c-chosen-gradient-end);
     height: auto;
     padding: 6px 15px;
-    border-radius: 2px;
+    border-radius: $input-border-radius;
     box-shadow: none;
     border-color: $c-mid-grey;
 
@@ -81,6 +81,7 @@
   .chosen-choices {
     padding: 5px;
     border: 1px solid $c-border;
+    border-radius: $input-border-radius;
     background: $c-white;
 
     .li.search-field input[type="text"] {
@@ -127,7 +128,14 @@
 .chosen-container-multi.chosen-with-drop:not(.chosen-drop-up) {
   .chosen-choices {
     border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
+}
+
+.chosen-container-multi.chosen-with-drop.chosen-drop-up .chosen-choices {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .multiselect-action_wrap {
@@ -187,6 +195,7 @@
 .chosen-container {
   .chosen-drop {
     border-color: $c-focus-border;
+    border-radius: 0 0 $input-border-radius $input-border-radius;
   }
 }
 

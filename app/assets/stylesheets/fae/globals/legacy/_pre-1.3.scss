@@ -136,7 +136,7 @@ tbody {
   background: $c-body-bg;
   font-size: 13px;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: $input-border-radius;
 
   &.js-active {
     background: $c-white;
@@ -646,7 +646,7 @@ tbody {
     background: $c-white;
     cursor: pointer;
 
-    border-radius: 2px;
+    border-radius: $input-border-radius;
 
     &:before {
       visibility: hidden;
