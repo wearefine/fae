@@ -33,7 +33,7 @@ module Fae
         else
           response = @client.chat(
             parameters: {
-              model: "gpt-4o-mini",
+              model: Fae.open_ai_model,
               messages: [{ role: "user", content: messages}],
             }
           )
