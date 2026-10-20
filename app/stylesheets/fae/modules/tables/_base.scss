@@ -3,9 +3,21 @@ table {
   border: 1px solid $c-grey;
   border-collapse: separate;
   table-layout: fixed;
+  border-radius: $table-border-radius;
 
   i {
     color: $c-darker-grey;
+  }
+
+  // Cell backgrounds would otherwise square off the rounded table border
+  > :first-child > tr:first-child {
+    > :first-child { border-top-left-radius: $table-border-radius - 1; }
+    > :last-child { border-top-right-radius: $table-border-radius - 1; }
+  }
+
+  > :last-child > tr:last-child {
+    > :first-child { border-bottom-left-radius: $table-border-radius - 1; }
+    > :last-child { border-bottom-right-radius: $table-border-radius - 1; }
   }
 }
 
