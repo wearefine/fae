@@ -4,7 +4,7 @@ input[type=submit],
 button[type=button],
 .add-button,
 .button {
-  border-radius: 3px;
+  border-radius: $button-border-radius;
   display: inline-block;
   font-size: 13px;
   cursor: pointer;

@@ -120,7 +120,7 @@
 }
 .chosen-container-single .chosen-drop {
   margin-top: -1px;
-  border-radius: 0 0 4px 4px;
+  border-radius: 0 0 6px 6px;
   background-clip: padding-box;
 }
 .chosen-container-single.chosen-container-single-nosearch .chosen-search {

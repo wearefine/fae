@@ -3,7 +3,7 @@
     background: rgba($c-white, 0.2);
     width: 100%;
     border: 0;
-    border-radius: 4px;
+    border-radius: $input-border-radius;
     display: block;
     color: $c-white;
   }

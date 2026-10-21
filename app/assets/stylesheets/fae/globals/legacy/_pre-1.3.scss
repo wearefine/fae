@@ -299,7 +299,7 @@ tbody {
 .main_content-header-save {
   a:not(.add-button) {
     @include gradient-vertical($start-color: $c-light-button-gradient-start, $end-color: $c-light-button-gradient-end);
-    border-radius: 3px;
+    border-radius: $button-border-radius;
     color: $c-light-button;
     border: 1px solid $c-border;
     padding: 11px 14px;

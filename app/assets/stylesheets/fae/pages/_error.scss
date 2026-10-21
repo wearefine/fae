@@ -9,7 +9,7 @@
     height: 330px;
     padding: 35px;
     border-top: 8px solid var(--highlight-color);
-    border-radius: 4px;
+    border-radius: $panel-border-radius;
     background: white;
     color: $c-mid-dark-grey;
     line-height: 1.5;

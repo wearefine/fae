@@ -68,9 +68,11 @@ $c-header-bg: $c-darkest-grey !default;
 $c-content-header-bg: $c-white !default;
 
 // Corner rounding
-$table-border-radius: 4px !default;
-$input-border-radius: 4px !default;
-$section-heading-border-radius: 4px !default;
+$table-border-radius: 6px !default;
+$input-border-radius: 6px !default;
+$section-heading-border-radius: 6px !default;
+$panel-border-radius: 6px !default;
+$button-border-radius: 6px !default;
 
 // Tables
 $c-table-th: $c-grey !default;
