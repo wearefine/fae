@@ -122,6 +122,7 @@
   ul {
     background: $c-header-bg;
     border-top: 1px solid $c-dark-grey;
+    border-radius: 0 0 $dropdown-border-radius $dropdown-border-radius;
     visibility: hidden;
     position: absolute;
     left: 0;

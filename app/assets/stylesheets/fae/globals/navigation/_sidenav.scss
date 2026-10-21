@@ -49,6 +49,21 @@
     }
   }
 
+  // Round the ends of the nav; overflow clips highlight and subnav backgrounds to the curve
+  > ul > li {
+    &:first-child {
+      border-top-left-radius: $panel-border-radius;
+      border-top-right-radius: $panel-border-radius;
+      overflow: hidden;
+    }
+
+    &:last-child {
+      border-bottom-left-radius: $panel-border-radius;
+      border-bottom-right-radius: $panel-border-radius;
+      overflow: hidden;
+    }
+  }
+
   // Index pages
   ~ .content,
   // Edit pages

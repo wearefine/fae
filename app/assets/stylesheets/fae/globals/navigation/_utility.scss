@@ -56,6 +56,7 @@
   }
 
   ul {
+    border-radius: 0 0 $dropdown-border-radius $dropdown-border-radius;
     width: 140px;
     padding: 8px 0 12px;
     left: -11px;
