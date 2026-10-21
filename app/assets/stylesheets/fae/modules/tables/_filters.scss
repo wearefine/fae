@@ -4,6 +4,7 @@
   padding: 20px;
   border: 1px solid $c-grey;
   border-bottom: 0;
+  border-radius: $panel-border-radius $panel-border-radius 0 0;
   background: $c-form-table-bg;
 
   input[type=submit],
@@ -29,6 +30,14 @@
     color: $c-dark-grey;
     border-radius: 20px;
   }
+}
+
+// The table below continues the filter area, so its top edge stays square
+.table-filter-area + table,
+.table-filter-area + table > :first-child > tr:first-child > :first-child,
+.table-filter-area + table > :first-child > tr:first-child > :last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 .table-filter-header {
