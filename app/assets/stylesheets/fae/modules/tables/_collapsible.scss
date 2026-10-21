@@ -4,6 +4,8 @@
   &.active {
     h3 {
       border-bottom: none;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
 
       &:after {
         content: fae-icon(arrow_up);
@@ -12,6 +14,13 @@
 
     table:not(.sticky-table-header) {
       display: table;
+    }
+
+    // The open table continues the header, so its top edge stays square
+    table,
+    table > :first-child > tr:first-child > * {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
     }
   }
 
@@ -24,6 +33,7 @@
     padding: 20px 0 20px 37px;
     position: relative;
     border: 1px solid $c-border;
+    border-radius: $panel-border-radius;
     cursor: pointer;
     margin-bottom: 0;
 
