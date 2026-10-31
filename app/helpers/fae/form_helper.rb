@@ -309,9 +309,7 @@ module Fae
     end
 
     def set_form_manager_container_attr(f, options, attribute)
-      form_manager_id = f.object.class.name
-      form_manager_id = f.object.attached_as if f.object.try(:attached_as)
-      form_manager_id += "_#{attribute}"
+      form_manager_id = Fae::FormManager.field_id_for(f.object, attribute)
       if options.key?(:wrapper_html)
         options[:wrapper_html]['data-form-manager-id'] = form_manager_id
       else
@@ -355,7 +353,7 @@ module Fae
 
     def set_maxlength(f, attribute, options)
       column = f.object.class.columns_hash[attribute.to_s]
-      if column.present? && (column.sql_type.include?('varchar') || column.sql_type == 'text')
+      if column.present? && [:string, :text].include?(column.type)
         # Rails 4.1 supports column.limit, 4.2 supports column.cast_type.limit
         limit = column.try(:limit) || column.try(:cast_type).try(:limit)
         if limit.present?

@@ -10,7 +10,7 @@ class Beer < ApplicationRecord
   has_many :beer_aromas, -> { order(:position) }, dependent: :destroy
   has_many :aromas, through: :beer_aromas
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 100 }
 
   def fae_display_field
     name

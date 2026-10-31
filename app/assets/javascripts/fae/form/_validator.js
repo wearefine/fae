@@ -611,7 +611,7 @@ Fae.form.validator = {
      */
     _createCounterDiv: function ($elem) {
       if ($elem.siblings('.counter').length === 0) {
-        var text = 'Maximum Characters: ' + $elem.data('length-max');
+        var text = "Maximum Characters: <span class='characters-max'>" + $elem.data('length-max') + '</span>';
         text += " / <span class='characters-left'></span>";
 
         var $counter_div = $('<div />', {
@@ -643,6 +643,17 @@ Fae.form.validator = {
 
         $count_span.text(text + Math.abs(current));
       }
+    },
+
+    /**
+     * Changes the maximum for an existing counter (e.g. after a Form Manager override)
+     * @param {jQuery} $elem - Input field being counted
+     * @param {integer} max - New maximum character count
+     */
+    updateMaximum: function ($elem, max) {
+      $elem.data('length-max', max);
+      $elem.siblings('.counter').find('.characters-max').text(max);
+      this.updateCounter($elem);
     },
 
     /**

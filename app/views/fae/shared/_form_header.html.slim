@@ -28,7 +28,7 @@ header.content-header.js-content-header
       .content-header-select
         = select_tag 'fae-languages', options_for_select(Fae.languages.map(&:reverse), selected), id: 'js-language', class: 'small_pulldown'
 
-    - if Fae.use_form_manager
+    - if Fae.use_form_manager && current_user.super_admin?
       a.button.js-launch-form-manager href='#' = launch_manager_text
 
     - # For static pages (Fae::StaticPage descendants), don't set draft/delete attributes - they're singletons

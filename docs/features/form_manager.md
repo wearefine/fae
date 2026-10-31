@@ -1,6 +1,7 @@
 # Form Field Label & Helper Text Manager
 
 * [Enabling The Manager](#enabling)
+* [Max Characters](#max-characters)
 * [Upgrading](#upgrading)
 
 ---
@@ -22,6 +23,30 @@ An additional option is available if you want to disallow a field from being edi
 ```slim
 = fae_input f, :name, input_class: 'slugger', show_form_manager: false
 ```
+
+## Max Characters
+
+Text inputs and text areas that have a length validation with a `maximum` also get a "Max Characters" setting in the manager. This includes Fae page content blocks with a `length` validation.
+
+```ruby
+validates :name, length: { maximum: 100 }
+```
+
+The model's `maximum` is the default. A value saved in the manager replaces it, so it can be raised or lowered without changing the model. Leave the setting blank to use the default again. Other length options, such as `minimum`, still apply.
+
+The override is used everywhere the model's maximum is used:
+
+* the server-side validation when the record is saved
+* the client-side validation and the "Maximum Characters / Characters Left" counter
+
+The largest value the manager accepts depends on the database column and the field type:
+
+* If the database reports a column limit (e.g. `t.string :name, limit: 255`), that limit is the ceiling.
+* If it doesn't, text inputs allow up to 255 and text areas allow up to 65,535. A model default above these limits raises the ceiling to match.
+
+On the server, overrides are only capped by a column limit that the database reports.
+
+Only `maximum` values set to a fixed integer can be overridden; validations that use a Proc or Symbol are left as-is.
 
 ## Upgrading
 After updating the FAE gem and bundling

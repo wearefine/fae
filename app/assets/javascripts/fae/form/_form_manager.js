@@ -17,6 +17,10 @@ Fae.form.formManager = {
   cancelManagerClass:       'js-form-manager-cancel',
   saveAndCloseManagerClass: 'js-form-manager-submit',
   helperTextTextElClass:    'helper_text_text',
+  maxLengthInputClass:      'max_length_input',
+  // Used when the database doesn't report a column limit (via the input's maxlength attribute)
+  inputMaxLengthCeiling:    255,
+  textareaMaxLengthCeiling: 65535,
   infoAttr:                 'data-form-manager-info',
   languageAttr:             'data-language',
   requiredEl:               '<abbr title="required">*</abbr> ',
@@ -155,6 +159,7 @@ Fae.form.formManager = {
   },
 
   _gatherAndInjectManagerEls: function() {
+    var _this = this;
     $(_this.$theForm.find('['+_this.containerManagerDataId+']')).each(function(i) {
       var $container    = $(this);
 
@@ -201,7 +206,127 @@ Fae.form.formManager = {
         )
       );
 
+      var $lengthInput = _this._lengthValidatedInput($container);
+      if ($lengthInput) {
+        $fmFieldContainer.append(_this._buildMaxLengthField(containerManagerId, $lengthInput));
+      }
+
     });
+  },
+
+  /**
+   * Text input or textarea within a field container that has a maximum length validation
+   * @param {jQuery} $container - Field wrapper with a data-form-manager-id
+   * @return {jQuery|null}
+   */
+  _lengthValidatedInput: function($container) {
+    var $input = $container.find('input[data-validate], textarea[data-validate]').first();
+    if ($input.length && this._lengthValidation($input)) {
+      return $input;
+    }
+    return null;
+  },
+
+  /**
+   * The Judge length validation (with a maximum) from an input's data-validate
+   * @param {jQuery} $input
+   * @return {Object|null}
+   */
+  _lengthValidation: function($input) {
+    var validations = $input.data('validate');
+    var lengthValidation = null;
+    if ($.isArray(validations)) {
+      $.each(validations, function(i, validation) {
+        if (validation.kind === 'length' && validation.options && validation.options.maximum !== undefined) {
+          lengthValidation = validation;
+          return false;
+        }
+      });
+    }
+    return lengthValidation;
+  },
+
+  _defaultMaxLength: function(lengthValidation) {
+    return lengthValidation.options.fae_default_maximum || lengthValidation.options.maximum;
+  },
+
+  /**
+   * Highest max length allowed for a field: the column limit when the database reports one (rendered as maxlength),
+   * otherwise a limit based on the field type
+   * @param {jQuery} $input
+   * @param {integer} defaultMax - The model's maximum
+   * @return {integer}
+   */
+  _maxLengthCeiling: function($input, defaultMax) {
+    var columnLimit = parseInt($input.attr('maxlength'), 10);
+    if (columnLimit > 0) {
+      return columnLimit;
+    }
+    var typeLimit = $input.is('textarea') ? this.textareaMaxLengthCeiling : this.inputMaxLengthCeiling;
+    return Math.max(typeLimit, defaultMax);
+  },
+
+  _buildMaxLengthField: function(formManagerId, $input) {
+    var lengthValidation = this._lengthValidation($input);
+    var defaultMax       = this._defaultMaxLength(lengthValidation);
+    var currentMax       = lengthValidation.options.maximum;
+    var ceiling          = this._maxLengthCeiling($input, defaultMax);
+
+    return $('<div />', {class: 'single-field'}).append(
+      $('<div />', {class: 'field_title'}).append(
+        $('<label />', {text: 'Max Characters', class: 'fm_label', for: formManagerId + '_max_length_input'})
+      ),
+      $('<input />', {
+        type:                 'number',
+        id:                   formManagerId + '_max_length_input',
+        class:                this.maxLengthInputClass,
+        min:                  Math.max(1, lengthValidation.options.minimum || 1),
+        max:                  ceiling,
+        step:                 1,
+        placeholder:          'Set to ' + defaultMax + ', Max ' + ceiling,
+        'data-default-max':   defaultMax,
+        value:                currentMax !== defaultMax ? currentMax : ''
+      })
+    );
+  },
+
+  /**
+   * Integer within the input's min/max, or '' to use the model's default
+   * @param {jQuery} $maxLengthInput
+   * @return {integer|string}
+   */
+  _sanitizeMaxLength: function($maxLengthInput) {
+    var value = parseInt($maxLengthInput.val(), 10);
+    if (isNaN(value) || value <= 0) {
+      return '';
+    }
+    value = Math.max(value, parseInt($maxLengthInput.attr('min'), 10));
+    value = Math.min(value, parseInt($maxLengthInput.attr('max'), 10));
+    return String(value) === String($maxLengthInput.attr('data-default-max')) ? '' : value;
+  },
+
+  /**
+   * Updates a field's Judge validation and character counter with a new max length
+   * @param {Object} fieldSettings - Saved settings for a field
+   */
+  _applyMaxLength: function(fieldSettings) {
+    var $container = this.$theForm.find('['+this.containerManagerDataId+'="'+fieldSettings.formManagerId+'"]');
+    var $input     = this._lengthValidatedInput($container);
+    if (!$input) { return; }
+
+    var validations      = $input.data('validate');
+    var lengthValidation = this._lengthValidation($input);
+    var oldMax           = lengthValidation.options.maximum;
+    var newMax           = fieldSettings.maxLength === '' ? this._defaultMaxLength(lengthValidation) : parseInt(fieldSettings.maxLength, 10);
+    if (newMax === oldMax) { return; }
+
+    lengthValidation.options.maximum = newMax;
+    if (lengthValidation.messages && lengthValidation.messages.too_long) {
+      lengthValidation.messages.too_long = lengthValidation.messages.too_long.replace(String(oldMax), String(newMax));
+    }
+    $input.attr('data-validate', JSON.stringify(validations)).data('validate', validations);
+
+    Fae.form.validator.length_counter.updateMaximum($input, newMax);
   },
 
   _revealManagerForm: function() {
@@ -245,11 +370,19 @@ Fae.form.formManager = {
         helper:        $container.find('.helper_input').val(),
         required:      requiredValue
       };
+
+      var $maxLengthInput = $container.find('.'+_this.maxLengthInputClass);
+      if ($maxLengthInput.length) {
+        payload.form_manager.fields[formManagerId].maxLength = _this._sanitizeMaxLength($maxLengthInput);
+      }
     });
 
     // Reset the labels/helpers to the custom ones just made
     $.each(payload.form_manager.fields, function(i, fieldSettings) {
       _this._determineFieldSetup(fieldSettings);
+      if (fieldSettings.maxLength !== undefined) {
+        _this._applyMaxLength(fieldSettings);
+      }
     });
 
     $.ajax({

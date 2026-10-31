@@ -19,8 +19,14 @@ module Fae
     require 'rqrcode'
     require 'openai'
     require 'settingslogic'
+    require 'fae/form_manager_length_override'
 
     config.eager_load_paths += %W(#{config.root}/app)
+
+    initializer 'fae.form_manager_length_override' do
+      ActiveModel::Validations::LengthValidator.prepend(Fae::FormManagerLengthOverride::LengthValidator)
+      Judge::Validator.prepend(Fae::FormManagerLengthOverride::JudgeValidator)
+    end
 
     config.to_prepare do
       # Require decorators from main application
