@@ -283,26 +283,29 @@ Fae.form.formManager = {
         min:                  Math.max(1, lengthValidation.options.minimum || 1),
         max:                  ceiling,
         step:                 1,
-        placeholder:          'Set to ' + defaultMax + ', Max ' + ceiling,
+        placeholder:          'Set to ' + currentMax + ', Max ' + ceiling,
         'data-default-max':   defaultMax,
-        value:                currentMax !== defaultMax ? currentMax : ''
+        'data-current-max':   currentMax
       })
     );
   },
 
   /**
-   * Integer within the input's min/max, or '' to use the model's default
+   * Integer within the input's min/max, or '' to use the model's default.
+   * A blank input keeps the current value; entering the default resets the override.
    * @param {jQuery} $maxLengthInput
    * @return {integer|string}
    */
   _sanitizeMaxLength: function($maxLengthInput) {
-    var value = parseInt($maxLengthInput.val(), 10);
+    var defaultMax = String($maxLengthInput.attr('data-default-max'));
+    var value      = parseInt($maxLengthInput.val(), 10);
     if (isNaN(value) || value <= 0) {
-      return '';
+      value = parseInt($maxLengthInput.attr('data-current-max'), 10);
+    } else {
+      value = Math.max(value, parseInt($maxLengthInput.attr('min'), 10));
+      value = Math.min(value, parseInt($maxLengthInput.attr('max'), 10));
     }
-    value = Math.max(value, parseInt($maxLengthInput.attr('min'), 10));
-    value = Math.min(value, parseInt($maxLengthInput.attr('max'), 10));
-    return String(value) === String($maxLengthInput.attr('data-default-max')) ? '' : value;
+    return String(value) === defaultMax ? '' : value;
   },
 
   /**

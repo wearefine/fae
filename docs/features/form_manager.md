@@ -32,7 +32,7 @@ Text inputs and text areas that have a length validation with a `maximum` also g
 validates :name, length: { maximum: 100 }
 ```
 
-The model's `maximum` is the default. A value saved in the manager replaces it, so it can be raised or lowered without changing the model. Leave the setting blank to use the default again. Other length options, such as `minimum`, still apply.
+The model's `maximum` is the default. A value saved in the manager replaces it, so it can be raised or lowered without changing the model. The setting's placeholder shows the current value and the largest value allowed (e.g. "Set to 100, Max 255"). Leaving it blank keeps the current value; enter the model's default to remove the override. Other length options, such as `minimum`, still apply.
 
 The override is used everywhere the model's maximum is used:
 
