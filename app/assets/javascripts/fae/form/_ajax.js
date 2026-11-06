@@ -226,6 +226,7 @@ Fae.form.ajax = {
       Fae.altTextManager.ready();
       Fae.form.text.initGenerateAlt();
       Fae.form.rankedSelect.init();
+      Fae.form.video.initUploaders();
 
       // Refresh cached language divs to include newly loaded nested form fields
       Fae.navigation.language.el.$lang_divs = $('div[data-language]');

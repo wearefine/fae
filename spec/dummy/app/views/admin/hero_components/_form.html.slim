@@ -17,6 +17,7 @@ ruby:
   = fae_input f, :slug
 
   = fae_image_form f, :image
+  = fae_video_form f, :video
   = f.button :submit, t('fae.form.save'), data: { disable_with: t('fae.form.saving') }
   = button_tag 'Cancel', type: 'button', class: 'js-cancel-nested cancel-nested-button', data: { draft: (params[:draft] == 'true' ? 'true' : nil), delete_path: (@item.persisted? && @item.try(:flex_component).present? ? fae.flex_component_path(@item.flex_component) : nil) }
 

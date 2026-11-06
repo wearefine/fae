@@ -157,6 +157,27 @@ fae_video_form f, :hero_loop, show_alt: false, helper_text: 'Plays muted on the 
 
 **Removing a video.** The delete button clears the video from the record right away; the upload field reappears so a new video can be added. The Mux asset itself is kept and tagged as deleted (see [Asset tagging](#asset-tagging)).
 
+### Nested Forms and Flex Components
+
+Video works the same way in [nested forms](../helpers/partials.md#nested-forms) and [flex components](flex_components.md): add `has_fae_video` to the nested or component model, build the video in that model's controller, and add `fae_video_form` to its form. The nested and flex component generators do all three when you pass a `:video` attribute.
+
+```ruby
+# app/models/hero_component.rb
+has_fae_video :video
+
+# app/controllers/admin/hero_components_controller.rb (a Fae::FlexComponentBaseController or Fae::NestedBaseController)
+def build_assets
+  @item.build_video if @item.video.blank?
+end
+```
+
+```slim
+/ app/views/admin/hero_components/_form.html.slim
+= fae_video_form f, :video
+```
+
+The uploader is set up each time the nested form opens. A finished upload is saved when you click the nested form's Save, the same as other nested fields.
+
 ## Adding Video to a Page
 
 Videos can also be [content blocks](../topics/pages.md) on static pages. Add a `Fae::Video` field to the page's `fae_fields`:
