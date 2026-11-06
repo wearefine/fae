@@ -32,6 +32,15 @@ describe 'content_blocks#edit' do
       expect(video.attached_as).to eq(name)
       expect(response.body).to include(fae.attach_video_upload_path(video.id))
     end
+
+    # Matches the image input: Fae's own chooser in place of Mux's drop zone
+    html = Nokogiri::HTML(response.body)
+    uploader = html.at_css('.hero_video mux-uploader.js-mux-uploader')
+    expect(uploader['no-drop']).not_to be_nil
+    expect(uploader['data-invalid-type']).to eq(I18n.t('fae.videos.invalid_type'))
+    chooser = uploader.at_css('.asset-actions.-video-select[slot="file-select"]')
+    expect(chooser.at_css('button.button[type="button"]').text).to eq('Choose File')
+    expect(chooser.at_css('span').text).to eq('No File Chosen')
   end
 
 end

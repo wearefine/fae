@@ -40,7 +40,11 @@ ruby:
         = render 'fae/videos/video_preview', video: the_video, label: label
 
       .asset-inputs style="#{'display:none;' if the_video.uploaded?}"
-        mux-uploader.js-mux-uploader data-endpoint=fae.create_video_upload_path
+        / no-drop swaps Mux's dashed drop zone for the same chooser as image and file inputs; Fae.form.video handles drops on the field instead
+        mux-uploader.js-mux-uploader no-drop=true data-endpoint=fae.create_video_upload_path data-invalid-type=t('fae.videos.invalid_type')
+          .asset-actions.-video-select slot="file-select"
+            button.button type="button" = t('fae.videos.choose_file')
+            span = t('fae.videos.no_file_chosen')
         - if video_errors.any?
           span.error = video_errors.to_sentence
         = v.input :upload_id, as: :hidden, input_html: { class: 'js-mux-upload-id' }

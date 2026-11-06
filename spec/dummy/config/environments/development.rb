@@ -37,5 +37,5 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { :host => 'localhost' }
 
-  config.hosts << 'e9eb-96-35-119-64.ngrok-free.app'
+  
 end
