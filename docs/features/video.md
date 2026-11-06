@@ -26,6 +26,19 @@ In the admin, a video field shows a processing message while Mux works, then a t
 
 ## Setup
 
+### 0. Make sure libcurl is installed
+
+Fae depends on the `mux_ruby` gem, which needs the system **libcurl** library: `mux_ruby` uses `typhoeus`, which uses `ethon`, which loads libcurl when the app boots. This applies to every app on this version of Fae, even one that doesn't use video.
+
+Most full OS images already include libcurl, but slim Docker images such as `ruby:*-slim` don't. Without it, the app fails to boot, which usually shows up first in the `assets:precompile` step of a Docker build. Install it in every image that boots Rails, including both build stages of a multi-stage Dockerfile and your development Dockerfile:
+
+```dockerfile
+# Debian bookworm (e.g. ruby:3.4-slim)
+RUN apt-get update && apt-get install -y --no-install-recommends libcurl4 && rm -rf /var/lib/apt/lists/*
+```
+
+On Debian trixie and later, the package is named `libcurl4t64`; installing `libcurl4` there fails with "package not found". Update the package name if you move to a trixie-based image.
+
 ### 1. Install the migration
 
 `Fae::Video` uses the `fae_videos` table.
