@@ -68,6 +68,9 @@
     - name: Disabling Environments
       path: docs/features/disable_envs.md
       page_title: Disabling Environments in Fae | A Lightweight CMS for Rails
+    - name: Video (Mux)
+      path: docs/features/video.md
+      page_title: Video Hosting with Mux in Fae | A Ruby on Rails CMS
 
 - name: Tutorials
   children:

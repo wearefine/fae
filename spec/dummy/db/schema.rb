@@ -380,6 +380,7 @@ ActiveRecord::Schema[7.0].define(version: 2026_10_07_150404) do
     t.string "upload_id"
     t.string "asset_id"
     t.string "playback_id"
+    t.string "mux_environment"
     t.string "title"
     t.string "status"
     t.float "duration"

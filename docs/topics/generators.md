@@ -42,6 +42,8 @@ This is Fae's main generator. It will create the following:
 
 **:image or :file** will automatically create image/file attachment associations in the model, asset builders in the controller, and file uploaders in the form.
 
+**:video** works the same way for [Mux-hosted video](../features/video.md), adding `has_fae_video` to the model and `fae_video_form` to the form. It also works with `fae:page`.
+
 ### Example
 
 ```bash

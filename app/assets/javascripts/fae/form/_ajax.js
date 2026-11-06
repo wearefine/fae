@@ -441,6 +441,7 @@ Fae.form.ajax = {
             $theFormWrapper.find('.nested-form').replaceWith($html);
             $theFormWrapper.find('.select select').fae_chosen();
             $theFormWrapper.find('.input.file').fileinputer();
+            Fae.form.video.initUploaders();
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();

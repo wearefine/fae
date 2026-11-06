@@ -86,7 +86,7 @@ module Fae
     end
 
     def has_parent?
-      %w(Fae::Image Fae::File Fae::TextField Fae::TextArea Fae::Cta).include? self.class.name
+      %w(Fae::Image Fae::File Fae::TextField Fae::TextArea Fae::Cta Fae::Video).include? self.class.name
     end
 
     def asset_name
@@ -94,7 +94,7 @@ module Fae
     end
 
     def update_parent
-      parent = self.try(:imageable) || self.try(:fileable) || self.try(:contentable) || self.try(:ctaable)
+      parent = self.try(:imageable) || self.try(:fileable) || self.try(:contentable) || self.try(:ctaable) || self.try(:videoable)
       if parent.present?
         latest_change = parent.try(:tracked_changes).try(:first)
         if latest_change.present? && latest_change.change_type == 'updated' && latest_change.updated_at > 2.seconds.ago

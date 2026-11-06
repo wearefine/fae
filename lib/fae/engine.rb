@@ -19,6 +19,7 @@ module Fae
     require 'rqrcode'
     require 'openai'
     require 'settingslogic'
+    require 'mux_ruby'
 
     config.eager_load_paths += %W(#{config.root}/app)
 

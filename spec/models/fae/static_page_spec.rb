@@ -34,6 +34,24 @@ describe Fae::StaticPage do
       expect(ap.header_image_zh).to be_nil
     end
 
+    it 'should attach Fae::Video content blocks, including per-language ones' do
+      allow_any_instance_of(Fae::Video).to receive(:claim_mux_asset)
+      ap = AboutUsPage.instance
+
+      reflection = ap.class.reflect_on_association(:hero_video)
+      expect(reflection.klass).to eq(Fae::Video)
+      expect(reflection.options[:as]).to eq(:videoable)
+
+      video = ap.create_hero_video(attached_as: 'hero_video', asset_id: 'asset123')
+      zh_video = ap.create_intro_video_zh(attached_as: 'intro_video_zh', asset_id: 'assetZH')
+
+      ap = AboutUsPage.instance
+      expect(ap.hero_video).to eq(video)
+      expect(video.videoable_type).to eq('Fae::StaticPage')
+      expect(ap.intro_video_zh).to eq(zh_video)
+      expect(ap.intro_video_en).to be_nil
+    end
+
   end
 
   describe 'dynamic validations' do
@@ -87,6 +105,17 @@ describe Fae::StaticPage do
       expect(@home_page.as_json[:hero_image]['caption']).to eq('look, a mountain')
       expect(@home_page.as_json[:welcome_pdf]).to have_key('asset')
       expect(@home_page.as_json[:welcome_pdf]['asset']['url']).to include('test.pdf')
+    end
+
+    it 'should return Fae::Video associations as a hash with the playback id' do
+      allow_any_instance_of(Fae::Video).to receive(:claim_mux_asset)
+      about_us_page = AboutUsPage.instance
+      about_us_page.create_hero_video(attached_as: 'hero_video', asset_id: 'asset123', playback_id: 'play123', status: 'ready')
+
+      # AboutUsPage#as_json needs every translated text block present, so check this field's JSON directly
+      json = AboutUsPage.instance.send(:field_json, :hero_video)
+      expect(json['playback_id']).to eq('play123')
+      expect(json['status']).to eq('ready')
     end
 
   end

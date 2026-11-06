@@ -1,0 +1,27 @@
+ruby:
+  label ||= video.attached_as.to_s.titleize
+  if video.ready?
+    video_title = video.title.presence || label
+    if video.duration.present?
+      video_title += " (#{Time.at(video.duration).utc.strftime(video.duration >= 3600 ? '%-H:%M:%S' : '%-M:%S')})"
+    end
+  end
+
+.asset-actions.-video class=('js-video-processing' if video.awaiting_mux_webhook?)
+  - if video.id.blank?
+    .asset-title = video.title.presence || label
+  - elsif video.ready?
+    / The asset may have been deleted in the Mux environment that owns it (e.g. on prod after a prod -> dev pull), so the JS swaps in data-unavailable if the thumbnail or player fails
+    img.js-video-modal src=video.thumbnail_url alt=(video.alt.presence || video_title) data-playback-id=video.playback_id data-aspect-ratio=video.aspect_ratio data-title=video_title data-unavailable=t('fae.videos.unavailable')
+    .asset-title = video_title
+  - elsif video.errored?
+    .asset-title = t('fae.videos.errored')
+  - elsif !video.owned_by_current_mux_environment?
+    .asset-title = t('fae.videos.processing_elsewhere', environment: video.mux_environment.presence || t('fae.videos.another_environment'))
+  - else
+    .asset-title = t('fae.videos.processing')
+
+  - if video.id.present?
+    = link_to '', fae.delete_video_path(video.id), class: 'asset-delete js-asset-delete js-video-delete', remote: true, method: :delete, data: { confirm: t('fae.delete_confirmation') }
+  - else
+    a.asset-delete.js-video-upload-delete href='#'
