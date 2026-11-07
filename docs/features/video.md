@@ -9,6 +9,7 @@
 * [Multiple Deployments (prod and dev)](#multiple-deployments-prod-and-dev)
 * [Cleaning Up Orphaned Assets](#cleaning-up-orphaned-assets)
 * [Local Development](#local-development)
+* [Cloning](#cloning)
 * [Limitations](#limitations)
 * [Reference](#reference)
 
@@ -153,7 +154,10 @@ fae_video_form f, :intro_video, label: 'Intro Video', required: true
 fae_video_form f, :hero_loop, show_alt: false, helper_text: 'Plays muted on the homepage.'
 ```
 
-**Uploading before the record is saved.** On an existing record, the upload is saved to the video as soon as it finishes, and the field updates itself when Mux is done processing. On a new record, the upload is saved with the form; the preview appears after you save, once Mux finishes.
+**When an upload is saved.** Every video field works the same way: once the upload finishes, the field shows "Processing" and then swaps in the preview when Mux is done, without saving the form. That includes models with draft support, nested forms and flex components.
+
+- **Saved records** (including drafts, and top-level records, which Fae saves before the new form opens): the upload is saved to the record as soon as it finishes.
+- **Records that haven't been saved yet** (e.g. a new nested item): the field reads the upload's progress straight from Mux, and the upload is saved with the record when the form is saved. Nothing is stored until then, so abandoned forms don't leave rows behind; their Mux assets stay tagged orphaned (see [Asset tagging](#asset-tagging)).
 
 **Removing a video.** The delete button clears the video from the record right away; the upload field reappears so a new video can be added. The Mux asset itself is kept and tagged as deleted (see [Asset tagging](#asset-tagging)).
 
@@ -176,7 +180,7 @@ end
 = fae_video_form f, :video
 ```
 
-The uploader is set up each time the nested form opens. A finished upload is saved when you click the nested form's Save, the same as other nested fields.
+The uploader is set up each time the nested form opens and works the same as on top-level forms, including on new nested items that haven't been saved yet (see [When an upload is saved](#in-the-form)).
 
 ## Adding Video to a Page
 
@@ -306,9 +310,9 @@ script src="https://cdn.jsdelivr.net/npm/@mux/mux-player@3.14.0"
 
 1. When a file is chosen, `<mux-uploader>` asks Fae (`POST /videos/create_upload`) for a [direct upload](https://www.mux.com/docs/guides/upload-files-directly) URL. Fae creates it with a public playback policy, limited to the admin's origin.
 2. The browser uploads the file directly to that URL.
-3. When the upload finishes, the upload ID is saved to the `Fae::Video`. On an existing record this happens immediately (`POST /videos/:id/attach_upload`); on a new record, it happens when the form is saved.
+3. When the upload finishes, the upload ID is saved to the `Fae::Video`. On a saved record this happens immediately: `POST /videos/:id/attach_upload` if the video row exists, or `POST /videos/attach_new_upload`, which creates it. On a record that hasn't been saved yet, it happens when the form is saved.
 4. Mux sends webhooks as the asset is created and processed. Fae finds the video by upload ID or asset ID and updates its `asset_id`, `status`, `playback_id`, `duration` and `aspect_ratio`.
-5. While the video is processing, the form polls `GET /videos/:id/status` every 3 seconds and swaps in the thumbnail when it's ready.
+5. While the video is processing, the form polls every 3 seconds and swaps in the thumbnail when it's ready. Saved videos poll `GET /videos/:id/status`. Unsaved uploads poll `GET /videos/upload_status`, which reads the upload's state from Mux without saving anything. Saving the form also pulls the current state from Mux, so a video that finished before the save is ready right away.
 
 Webhooks can arrive before a new record's form is saved. To cover that, Fae fetches the upload and asset from Mux the first time it saves an upload ID.
 
@@ -383,6 +387,22 @@ Mux needs to reach your webhook URL, so local development needs a public tunnel 
 3. Point a webhook in your development Mux environment at `https://abc123.ngrok-free.app/admin/mux/webhook` and set `MUX_WEBHOOK_SECRET` to its signing secret.
 
 Without webhooks, uploads still work but videos stay "processing" in the admin. Saving a new record pulls in the video's current state from Mux, so a video that finished processing before you saved will still show as ready.
+
+## Cloning
+
+Add the video's association to `associations_for_cloning` to copy it when a record is [cloned](cloning.md):
+
+```ruby
+def associations_for_cloning
+  [:bottle_shot, :intro_video]
+end
+```
+
+The clone gets its own Mux asset, copied from the original's with Mux's [`mux://assets/` input](https://www.mux.com/docs/guides/create-clips-from-your-videos). That way, deleting either video leaves the other one playable. Mux processes the copy as a new asset, so the clone shows "Processing" until it's ready, and the copy is billed like any other upload.
+
+- **Still processing:** a video Mux hasn't finished processing can't be copied yet, so the clone is created without it.
+- **From another environment** (e.g. a prod video on dev after a database pull): this environment's tokens can't copy that asset. The clone points at the same asset instead, which is safe because this environment never changes another environment's assets.
+- **Mux error:** if Mux refuses the copy, the record is still cloned without the video and the error is logged.
 
 ## Limitations
 

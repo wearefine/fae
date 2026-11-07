@@ -7,8 +7,9 @@ ruby:
     end
   end
 
-.asset-actions.-video class=('js-video-processing' if video.awaiting_mux_webhook?)
-  - if video.id.blank?
+/ An unsaved upload with no status couldn't be read from Mux, so there's nothing to wait for
+.asset-actions.-video class=('js-video-processing' if video.awaiting_mux_webhook? && (video.persisted? || video.status.present?))
+  - if video.id.blank? && video.status.blank?
     .asset-title = video.title.presence || label
   - elsif video.ready?
     / The asset may have been deleted in the Mux environment that owns it (e.g. on prod after a prod -> dev pull), so the JS swaps in data-unavailable if the thumbnail or player fails

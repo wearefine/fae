@@ -151,6 +151,49 @@ module Fae
       )
     end
 
+    # A copy of this video for a cloned record (see Fae::Cloneable). The copy gets its own Mux asset, copied from this
+    # one, so deleting either video leaves the other playable. Returns nil if there's nothing to copy yet.
+    def dup_for_clone
+      return if asset_id.blank?
+
+      copy = dup
+      # The upload belongs to the original: webhooks for it must only find the original, and a new upload_id would
+      # also stamp the copy as owned by this environment
+      copy.upload_id = nil
+
+      # Another environment's asset can't be copied with this environment's tokens, but this environment never
+      # changes it either, so the copy can share it
+      return copy unless owned_by_current_mux_environment?
+
+      # Mux can only copy a finished asset; a video that's still processing isn't cloned
+      return unless ready?
+
+      asset = MuxRuby::AssetsApi.new.create_asset(
+        MuxRuby::CreateAssetRequest.new(
+          inputs: [MuxRuby::InputSettings.new(url: "mux://assets/#{asset_id}")],
+          playback_policies: [MuxRuby::PlaybackPolicy::PUBLIC],
+          passthrough: self.class.mux_marker('source')
+        )
+      ).data
+      copy.assign_mux_asset(asset)
+      # The new asset reports these once it's ready; until then show the source's
+      copy.duration ||= duration
+      copy.aspect_ratio ||= aspect_ratio
+      copy
+    rescue MuxRuby::ApiError => e
+      Rails.logger.error("Fae::Video could not copy Mux asset #{asset_id}: #{e.message}")
+      nil
+    end
+
+    # Pulls the upload's current state from Mux. Also used for uploads that aren't saved yet (see VideosController#upload_status).
+    def sync_with_mux
+      upload = MuxRuby::DirectUploadsApi.new.get_direct_upload(upload_id).data
+      self.status = upload.status
+      assign_mux_asset(MuxRuby::AssetsApi.new.get_asset(upload.asset_id).data) if upload.asset_id.present?
+    rescue MuxRuby::ApiError => e
+      Rails.logger.error("Fae::Video could not sync upload #{upload_id} with Mux: #{e.message}")
+    end
+
     def remove_mux_asset!
       soft_delete_mux_asset
       clear_mux_attributes!
@@ -171,13 +214,6 @@ module Fae
       self.mux_environment = self.class.mux_environment
     end
 
-    def sync_with_mux
-      upload = MuxRuby::DirectUploadsApi.new.get_direct_upload(upload_id).data
-      self.status = upload.status
-      assign_mux_asset(MuxRuby::AssetsApi.new.get_asset(upload.asset_id).data) if upload.asset_id.present?
-    rescue MuxRuby::ApiError => e
-      Rails.logger.error("Fae::Video could not sync upload #{upload_id} with Mux: #{e.message}")
-    end
 
     # The Mux asset is kept; its passthrough is tagged so deleted videos can be found and purged later.
     def soft_delete_mux_asset

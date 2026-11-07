@@ -60,8 +60,11 @@ module Fae
       old_record = @item.send(association)
 
       if old_record.present?
-        new_record = old_record.dup
-        if ['::Fae::Image','::Fae::File','::Fae::Cta'].include?(type.options[:class_name])
+        # Videos get their own copy of the Mux asset (or nothing, if the original can't be copied yet)
+        new_record = old_record.is_a?(Fae::Video) ? old_record.dup_for_clone : old_record.dup
+        return if new_record.nil?
+
+        if ['::Fae::Image','::Fae::File','::Fae::Cta','::Fae::Video'].include?(type.options[:class_name])
           new_record.send("#{type.options[:as]}_id" + '=', @cloned_item.id) if new_record.send("#{type.options[:as]}_id").present?
           new_record.send("#{type.options[:as]}_type" + '=', @cloned_item.class.name) if new_record.send("#{type.options[:as]}_type").present?
           new_record.save

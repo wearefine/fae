@@ -176,13 +176,29 @@ Fae.form.video = {
       if (attachUrl) {
         $.ajax({ url: attachUrl, type: 'POST', dataType: 'json', data: { upload_id: uploadId, title: fileName } })
           .done(function(data) {
+            // attach_new_upload just created the row: point the field at it so saving the form updates that row
+            $wrapper.find('.js-mux-video-id').val(data.id);
+            $wrapper.attr({ 'data-attach-url': data.attach_url, 'data-status-url': data.status_url });
             _this._renderStatus($wrapper, data);
           });
       } else {
-        var $actions = $('<div class="asset-actions -video" />')
-          .append($('<div class="asset-title" />').text(fileName))
-          .append('<a class="asset-delete js-video-upload-delete" href="#"></a>');
-        _this._renderStatus($wrapper, { html: $actions });
+        // Nothing to attach to until the form is saved, so follow the upload's processing in Mux directly
+        var statusUrl = $uploader.data('upload-status-url') + '?' + $.param({ upload_id: uploadId, title: fileName });
+        $wrapper.attr('data-status-url', statusUrl);
+        $.ajax({ url: statusUrl, dataType: 'json', cache: false })
+          .done(function(data) {
+            // Ignore a late answer for an upload that's already been removed
+            if ($wrapper.attr('data-status-url') === statusUrl && $wrapper.find('.js-mux-upload-id').val() === uploadId) {
+              _this._renderStatus($wrapper, data);
+            }
+          })
+          .fail(function() {
+            // Still saved with the form; just show the file name
+            var $actions = $('<div class="asset-actions -video" />')
+              .append($('<div class="asset-title" />').text(fileName))
+              .append('<a class="asset-delete js-video-upload-delete" href="#"></a>');
+            _this._renderStatus($wrapper, { html: $actions });
+          });
       }
     });
   },
@@ -193,8 +209,7 @@ Fae.form.video = {
    */
   _pollStatus: function($wrapper) {
     var _this = this;
-    var url = $wrapper.attr('data-status-url');
-    if (!url || $wrapper.data('videoPolling')) {
+    if (!$wrapper.attr('data-status-url') || $wrapper.data('videoPolling')) {
       return;
     }
     $wrapper.data('videoPolling', true);
@@ -206,9 +221,14 @@ Fae.form.video = {
           return;
         }
 
+        // Read each time: removing an unsaved upload and choosing another file points the field at the new upload
+        var url = $wrapper.attr('data-status-url');
         $.ajax({ url: url, dataType: 'json', cache: false })
           .done(function(data) {
-            if (data.processing) {
+            // The field moved on to another upload while this request was out; keep following that one
+            if (url !== $wrapper.attr('data-status-url')) {
+              poll();
+            } else if (data.processing) {
               poll();
             } else {
               $wrapper.data('videoPolling', false);

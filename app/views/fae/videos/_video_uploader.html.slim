@@ -22,9 +22,17 @@ ruby:
   ruby:
     form_manager_id = show_form_manager ? "#{item.class.name}_#{attached_as}" : nil
     video_errors = the_video.errors[:upload_id]
-    video_urls = the_video.id.present? ? { 'data-status-url' => fae.video_status_path(the_video.id), 'data-attach-url' => fae.attach_video_upload_path(the_video.id) } : {}
+    video_urls = if the_video.id.present?
+      { 'data-status-url' => fae.video_status_path(the_video.id), 'data-attach-url' => fae.attach_video_upload_path(the_video.id) }
+    elsif item.persisted?
+      # Video only built in memory (e.g. build_assets in a nested form): the row is created when the upload finishes
+      { 'data-attach-url' => fae.attach_new_video_upload_path(owner_type: item.class.name, owner_id: item.id, attached_as: attached_as) }
+    else
+      {}
+    end
   - wrapper_html = language.present? ? { data: { language: language } } : {}
-  = f.simple_fields_for video_name, defaults: { wrapper_html: wrapper_html } do |v|
+  / include_id: false so the id is a field the JS can fill in once attach_new_upload creates the row
+  = f.simple_fields_for video_name, include_id: false, defaults: { wrapper_html: wrapper_html } do |v|
     .input.field.video*wrapper_html.merge(video_urls) class="#{video_name} #{'field_with_errors' if video_errors.any?}" data-form-manager-id=form_manager_id
       label class="#{'required' if required}"
         - if required
@@ -41,12 +49,14 @@ ruby:
 
       .asset-inputs style="#{'display:none;' if the_video.uploaded?}"
         / no-drop swaps Mux's dashed drop zone for the same chooser as image and file inputs; Fae.form.video handles drops on the field instead
-        mux-uploader.js-mux-uploader no-drop=true data-endpoint=fae.create_video_upload_path data-invalid-type=t('fae.videos.invalid_type')
+        / Unsaved records have nothing to attach to, so the field polls the upload itself until the form is saved
+        mux-uploader.js-mux-uploader no-drop=true data-endpoint=fae.create_video_upload_path data-upload-status-url=fae.video_upload_status_path data-invalid-type=t('fae.videos.invalid_type')
           .asset-actions.-video-select slot="file-select"
             button.button type="button" = t('fae.videos.choose_file')
             span = t('fae.videos.no_file_chosen')
         - if video_errors.any?
           span.error = video_errors.to_sentence
+        = v.input :id, as: :hidden, input_html: { class: 'js-mux-video-id' }
         = v.input :upload_id, as: :hidden, input_html: { class: 'js-mux-upload-id' }
         = v.input :title, as: :hidden, input_html: { class: 'js-mux-title' }
         - videoable_type = f.object.class.superclass.name == 'Fae::StaticPage' ? 'Fae::StaticPage' : f.object.class.name
