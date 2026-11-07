@@ -40,5 +40,13 @@ Finally, add the following to config/application.rb
 
 Once this is all done, go to '/admin/root' and check the `Multi-Factor Authentication Enabled?` field and save.  This will start the process of setting up mfa on your currently logged in account.
 
+## Logging in
+
+The login form only asks for an email and password. Users who have MFA set up are taken to a second step after their password is accepted, where they enter the code from their authenticator app (or one of their backup codes). Users without MFA are signed in straight away.
+
+The MFA step expires after 5 minutes, after which the user has to start again from the login form. Invalid codes count toward the same lockout as invalid passwords (see `config.maximum_attempts` in the Devise initializer).
+
+## Managing users
+
 Admins and Super Admins have the ability to toggle the mfa feature for other users.  Going to `/admin/users`, the toggle titled `MFA Active` can deactivate or reactivate the MFA login requirements for individual users.  (NOTE: deactivating/reactivating MFA for a user does NOT retain their previous set up, causing them to have to set it up from scatch again.)
 

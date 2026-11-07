@@ -2,7 +2,7 @@
 # there's a bug in Devise 3.4.1 in the scope_url private method
 # the fix is on master, yet is unreleased
 # chances are this can be removed after the next Devise release
-# recall update is to allow different error messages depending on if MFA is enabled
+# recall always shows the generic invalid credentials message
 Devise::FailureApp.class_eval do
   def scope_url
     context = send(Devise.available_router_name)
@@ -29,11 +29,7 @@ Devise::FailureApp.class_eval do
       end
     end
 
-    if Fae::Option.instance.site_mfa_enabled
-      flash.now[:alert] = I18n.t ('devise.failure.invalid_mfa') if is_flashing_format?
-    else
-      flash.now[:alert] = I18n.t ('devise.failure.invalid') if is_flashing_format?
-    end
+    flash.now[:alert] = I18n.t('devise.failure.invalid') if is_flashing_format?
     self.response = recall_app(warden_options[:recall]).call(request.env)
   end
 end
