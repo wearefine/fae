@@ -1,0 +1,10 @@
+.login-form
+  = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { method: :post, id: 'login_form' }) do |f|
+    = fae_input f, :otp_attempt,
+      label: 'MFA Code',
+      required: false,
+      helper_text: 'Enter the code from your authenticator app, or one of your backup codes. Contact an admin if you don’t have access to either.',
+      input_html: { autofocus: true, autocomplete: 'one-time-code', autocapitalize: 'off', spellcheck: false }
+    .login-form-actions
+      = link_to 'Back to Sign In', new_session_path(resource_name), class: 'login-form-actions-back'
+      = f.button :submit, 'Verify', class: 'login-form-actions-submit'
