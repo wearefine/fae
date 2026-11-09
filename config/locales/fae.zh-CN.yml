@@ -90,6 +90,16 @@ zh-CN:
       mfa_helper: 'Enabling will require you to IMMEDIATELY set up your MFA'
     images:
       alt_helper: 'Read by search engines and visually impaired readers.'
+    videos:
+      alt_helper: 'Read by search engines and visually impaired readers.'
+      processing: 'Processing video. This will update when it is ready.'
+      errored: 'Video processing failed. Delete it and upload again.'
+      choose_file: 'Choose File'
+      no_file_chosen: 'No File Chosen'
+      invalid_type: 'Please choose a video file.'
+      processing_elsewhere: 'Processing in %{environment}. It will be playable here after the next database sync from %{environment}.'
+      another_environment: 'another environment'
+      unavailable: 'Video unavailable. It may have been deleted in the environment that uploaded it.'
     application:
       user_absent: 'user no longer exists'
       no_logs: 'No logs available.'

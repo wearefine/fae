@@ -2,6 +2,7 @@ class Beer < ApplicationRecord
   include Fae::BaseModelConcern
 
   has_fae_image :image
+  has_fae_video :video
   has_fae_seo_set :seo
   has_fae_cta :test_cta
   has_many :poly_things, as: :poly_thingable

@@ -2,6 +2,8 @@ class ArticleSubcategory < ApplicationRecord
   include Fae::BaseModelConcern
         
   belongs_to :article_category, touch: true
+
+  has_fae_video :video
   
   validates :name, presence: true
 

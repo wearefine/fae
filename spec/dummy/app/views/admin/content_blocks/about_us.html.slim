@@ -8,5 +8,7 @@
     = fae_content_form f, :introduction, markdown: true, input_options: { input_html: { class: 'js-intro-field' } }
     = fae_content_form f, :body, markdown_supported: true
     = fae_image_form f, :header_image
+    = fae_video_form f, :hero_video
+    = fae_video_form f, :intro_video
 
 == render 'fae/shared/recent_changes'

@@ -83,4 +83,13 @@ Fae.setup do |config|
   ## OpenAI API prompt
   # This will override the default prompt for the OpenAI API image description.
   # config.open_ai_describe_image_prompt = "Describe this image in 150 characters or less. Avoid references to 'The image'."
+
+  ## Mux video
+  # Name of the Mux environment this deployment's tokens belong to, e.g. 'production' or 'development'.
+  # Give each deployment its own Mux environment. Defaults to ENV['MUX_ENVIRONMENT'], then Rails.env.
+  # config.mux_environment = ENV['MUX_ENVIRONMENT']
+  #
+  # Mux Data environment key for your site's players (pass as mux-player's env-key).
+  # Defaults to ENV['MUX_DATA_ENV_KEY'].
+  # config.mux_data_env_key = ENV['MUX_DATA_ENV_KEY']
 end

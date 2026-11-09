@@ -65,6 +65,8 @@ module Fae
         connect_object "Fae::Image"
       when "file"
         connect_object "Fae::File"
+      when "video"
+        connect_object "Fae::Video"
       when "cta"
         connect_object "Fae::Cta"
       else

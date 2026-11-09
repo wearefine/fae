@@ -81,3 +81,28 @@
   padding: 10px 7px 0 0;
   color: $c-darkest-grey;
 }
+
+.video mux-uploader {
+  width: 90%;
+  min-width: 223px;
+  max-width: 515px;
+  --progress-bar-fill-color: var(--highlight-color, #{$c-custom-highlight});
+  --progress-bar-background-color: #{$c-border};
+
+  // Mux wraps the file-select slot in an inline-block; let the chooser fill the field like the image input does
+  &::part(file-select) {
+    display: block;
+  }
+
+  &::part(status),
+  &::part(progress) {
+    font-size: 13px;
+    color: $c-text-sub;
+  }
+
+  .-video-select {
+    width: 100%;
+    max-width: none;
+    cursor: pointer;
+  }
+}

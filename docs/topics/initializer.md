@@ -16,3 +16,5 @@ Fae's default config can be overwritten in a `config/initializers/fae.rb` file.
 | disabled_environments | array | [] | This option will disable Fae complete when the app is running on one of the defined environments |
 | per_page | integer | 25 | Sets the default number of items shown in paginated lists |
 | use_cache | boolean | false | Determines whether or not Fae will utilize cache internally. See [docs](https://github.com/wearefine/fae/blob/master/docs/topics/caching.md) |
+| mux_environment | string | ENV['MUX_ENVIRONMENT'] | Name of the Mux environment this deployment's tokens belong to. Stamped on uploaded videos and checked before Fae changes assets in Mux. Falls back to `Rails.env` when blank. See [Video (Mux)](../features/video.md#multiple-deployments-prod-and-dev). |
+| mux_data_env_key | string | ENV['MUX_DATA_ENV_KEY'] | Mux Data environment key for your site's video players. See [Video (Mux)](../features/video.md#displaying-video-on-your-site). |

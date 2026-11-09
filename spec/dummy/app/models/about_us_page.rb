@@ -18,7 +18,9 @@ class AboutUsPage < Fae::StaticPage
           }
         }
       },
-      header_image: { type: Fae::Image, languages: Fae.languages.keys }
+      header_image: { type: Fae::Image, languages: Fae.languages.keys },
+      hero_video: { type: Fae::Video },
+      intro_video: { type: Fae::Video, languages: Fae.languages.keys }
     }
   end
 

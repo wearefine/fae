@@ -226,6 +226,7 @@ Fae.form.ajax = {
       Fae.altTextManager.ready();
       Fae.form.text.initGenerateAlt();
       Fae.form.rankedSelect.init();
+      Fae.form.video.initUploaders();
 
       // Refresh cached language divs to include newly loaded nested form fields
       Fae.navigation.language.el.$lang_divs = $('div[data-language]');
@@ -441,6 +442,7 @@ Fae.form.ajax = {
             $theFormWrapper.find('.nested-form').replaceWith($html);
             $theFormWrapper.find('.select select').fae_chosen();
             $theFormWrapper.find('.input.file').fileinputer();
+            Fae.form.video.initUploaders();
 
             Fae.form.dates.initDatepicker();
             Fae.form.dates.initDateRangePicker();

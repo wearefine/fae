@@ -24,7 +24,7 @@ Setup the base GraphQL files:
 rails generate graphql:install
 ```
 
-Add Fae specific GraphQL types for `Fae::Image` and `Fae::File` to your parent app.
+Add Fae specific GraphQL types for `Fae::Image` and `Fae::File` (and `Fae::Video`, if you use [video](../features/video.md)) to your parent app.
 
 `app/graphql/types/fae_image_type.rb`
 ```ruby
@@ -60,6 +60,27 @@ class Types::FaeFileType < Types::BaseObject
   field :id, ID, null: false
   field :asset_url, String, null: true
   field :file_size, Integer, null: true
+  field :created_at, String, null: false
+  field :updated_at, String, null: false
+end
+```
+
+`app/graphql/types/fae_video_type.rb`
+```ruby
+class Types::FaeVideoType < Types::BaseObject
+
+  graphql_name 'FaeVideo'
+  description 'A Fae::Video object, hosted on Mux'
+
+  field :id, ID, null: false
+  field :playback_id, String, null: true
+  field :status, String, null: true
+  field :ready, Boolean, null: false, method: :ready?
+  field :title, String, null: true
+  field :alt, String, null: true
+  field :duration, Float, null: true
+  field :aspect_ratio, String, null: true
+  field :thumbnail_url, String, null: true
   field :created_at, String, null: false
   field :updated_at, String, null: false
 end

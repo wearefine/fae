@@ -4,6 +4,7 @@ class HeroComponent < ApplicationRecord
   # has_flex_component name
   
   has_fae_image :image
+  has_fae_video :video
 
   def fae_display_field
     title

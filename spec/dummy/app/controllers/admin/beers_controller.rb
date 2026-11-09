@@ -6,6 +6,7 @@ module Admin
     def build_assets
       @item.build_test_cta if @item.test_cta.blank?
       @item.build_image if @item.image.blank?
+      @item.build_video if @item.video.blank?
       if @item.seo.blank?
         @item.build_seo
         @item.seo.build_social_media_image

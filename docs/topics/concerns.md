@@ -16,6 +16,7 @@ You have the option to override the class altogether, but the concern model will
 | Fae::TextArea              | app/models/concerns/text_area_concern.rb |
 | Fae::TextField             | app/models/concerns/text_field_concern.rb |
 | Fae::User                  | app/models/concerns/user_concern.rb |
+| Fae::Video                 | app/models/concerns/video_concern.rb |
 
 ## Example: Adding OAuth2 logic to Fae::User
 

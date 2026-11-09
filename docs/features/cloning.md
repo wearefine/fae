@@ -49,7 +49,7 @@ That's all for basic set-up.
 
 If you want complete control over which attributes and associations are cloned, we wouldn't call you a control freak. We've baked in some nice simple methods to make this possible.
 
-**Note:** Asset cloning is supported.
+**Note:** Asset cloning is supported. Cloned [videos](video.md#cloning) get their own copy of the Mux asset.
 
 ## Whitelisting Attributes
 

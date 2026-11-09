@@ -6,6 +6,7 @@ class Admin::ReleasesController < Fae::BaseController
     @item.build_bottle_shot if @item.bottle_shot.blank?
     @item.build_hero_image if @item.hero_image.blank?
     @item.build_label_pdf if @item.label_pdf.blank?
+    @item.build_video if @item.video.blank?
   end
 
   def attributes_for_cloning
@@ -13,7 +14,7 @@ class Admin::ReleasesController < Fae::BaseController
   end
 
   def associations_for_cloning
-    [:aromas, :events, :bottle_shot, :label_pdf]
+    [:aromas, :events, :bottle_shot, :label_pdf, :video]
   end
 
   def use_pagination

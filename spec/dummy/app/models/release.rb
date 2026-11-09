@@ -35,6 +35,7 @@ class Release < ActiveRecord::Base
   has_fae_image :bottle_shot
 
   has_fae_image :hero_image
+  has_fae_video :video
 
   has_one :label_pdf, as: :fileable, class_name: '::Fae::File', dependent: :destroy
   accepts_nested_attributes_for :label_pdf, allow_destroy: true

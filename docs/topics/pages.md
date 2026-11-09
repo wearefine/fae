@@ -25,6 +25,9 @@ Content blocks are defined in the model and called in the form view. The `type` 
 | Fae::TextArea | text | fae_content_form |
 | Fae::Image | image | fae_image_form |
 | Fae::File | file | fae_file_form |
+| Fae::Video | video | fae_video_form |
+
+Video content blocks need Mux to be set up first; see [Video (Mux)](../features/video.md).
 
 For the following example, we will use a page called `AboutUs`, which will have content blocks for `hero_image`, `title`, `introduction`, `body` and `annual_report`.
 
@@ -99,6 +102,7 @@ Chances are you'll need to add content blocks to a page after it's been generate
   - `fae_content_form` for `Fae::TextField` and `Fae::TextArea`
   - `fae_image_form` for `Fae::Image`
   - `fae_file_form` for `Fae::File`
+  - `fae_video_form` for `Fae::Video`
 
 ## Getting Your Content Blocks
 

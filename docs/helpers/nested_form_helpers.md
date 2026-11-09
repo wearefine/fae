@@ -2,6 +2,7 @@
 
 * [Fae Image Form](#fae-image-form)
 * [Fae File Form](#fae-file-form)
+* [Fae Video Form](#fae-video-form)
 * [Fae Content Form](#fae-content-form)
 * [Fae Filter Select](#fae-filter-select)
 
@@ -59,6 +60,31 @@ image_label: nil, alt_label: nil, caption_label: nil, omit: nil, show_thumb: nil
 
 ```ruby
 fae_file_form f, :tasting_notes_pdf, helper_text: 'PDF format only'
+```
+
+## Fae Video Form
+
+```ruby
+fae_video_form
+```
+
+*Fae::Video association only.* Uploads go directly to Mux; see [Video (Mux)](../features/video.md) for setup.
+
+| option | type | default | description |
+| ------ | ---- | ------- | ----------- |
+| label | string | video_name.to_s.titleize | the uploader's label |
+| helper_text | string | | the uploader's helper text |
+| alt_label | string | "#{label} Alt Text" | the alt field's label |
+| alt_helper_text | string | "Read by search engines and visually impaired readers." | the alt field's helper text |
+| show_alt | boolean | true | displays the alt field, label, and helper text |
+| required | boolean | false | requires a video to be uploaded before the form can be saved |
+| attached_as | symbol | video_name.to_s | Sets the `attached_as` attribute. Customize this if your `attached_as` condition doesn't match the association name. |
+| show_form_manager | boolean | true | include the field in the Form Manager |
+
+**Examples**
+
+```ruby
+fae_video_form f, :intro_video, label: 'Intro Video', required: true
 ```
 
 ## Fae Content Form
