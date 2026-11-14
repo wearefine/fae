@@ -66,6 +66,11 @@ module Fae
 
       def set_user
         @user = Fae::User.find(params[:id])
+        # prevent admins (non-super-admins) from acting on super admin accounts
+        # super admins are otherwise hidden from admins (see public_users, public_roles)
+        if @user.super_admin? && !current_user.super_admin? && @user != current_user
+          show_404
+        end
       end
 
       def user_params
